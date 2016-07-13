@@ -166,12 +166,12 @@ CLEAR_OUT_TOON_BLDG_TIME = 4
 TO_SUIT_BLDG_TIME = 8
 
 buildingMinMax = {
-    ToontownGlobals.SillyStreet: [config.GetInt('silly-street-building-min', 7),
-                                  config.GetInt('silly-street-building-max', 13)],
-    ToontownGlobals.LoopyLane: [config.GetInt('loopy-lane-building-min', 7),
-                                config.GetInt('loopy-lane-building-max', 13)],
-    ToontownGlobals.PunchlinePlace: [config.GetInt('punchline-place-building-min', 7),
-                                     config.GetInt('punchline-place-building-max', 13)],
+    ToontownGlobals.SillyStreet: [config.GetInt('silly-street-building-min', 0),
+                                  config.GetInt('silly-street-building-max', 3)],
+    ToontownGlobals.LoopyLane: [config.GetInt('loopy-lane-building-min', 0),
+                                config.GetInt('loopy-lane-building-max', 3)],
+    ToontownGlobals.PunchlinePlace: [config.GetInt('punchline-place-building-min', 0),
+                                     config.GetInt('punchline-place-building-max', 3)],
     ToontownGlobals.BarnacleBoulevard: [config.GetInt('barnacle-boulevard-building-min', 1),
                                         config.GetInt('barnacle-boulevard-building-max', 5)],
     ToontownGlobals.SeaweedStreet: [config.GetInt('seaweed-street-building-min', 1),
@@ -197,11 +197,11 @@ buildingMinMax = {
     ToontownGlobals.PolarPlace: [config.GetInt('polar-place-building-min', 5),
                                  config.GetInt('polar-place-building-max', 10)],
     ToontownGlobals.LullabyLane: [config.GetInt('lullaby-lane-building-min', 6),
-                                  config.GetInt('lullaby-lane-building-max', 13)],
+                                  config.GetInt('lullaby-lane-building-max', 12)],
     ToontownGlobals.PajamaPlace: [config.GetInt('pajama-place-building-min', 6),
-                                  config.GetInt('pajama-place-building-max', 13)],
+                                  config.GetInt('pajama-place-building-max', 12)],
     ToontownGlobals.BedtimeBoulevard: [config.GetInt('bedtime-boulevard-building-min', 6),
-                                  config.GetInt('bedtime-boulevard-building-max', 13)],
+                                  config.GetInt('bedtime-boulevard-building-max', 12)],
     ToontownGlobals.SellbotHQ: [0, 0],
     ToontownGlobals.SellbotFactoryExt: [0, 0],
     ToontownGlobals.CashbotHQ: [0, 0],
@@ -210,9 +210,9 @@ buildingMinMax = {
 }
 
 buildingChance = {
-    ToontownGlobals.SillyStreet: config.GetFloat('silly-street-building-chance', 100.0),
-    ToontownGlobals.LoopyLane: config.GetFloat('loopy-lane-building-chance', 100.0),
-    ToontownGlobals.PunchlinePlace: config.GetFloat('punchline-place-building-chance', 100.0),
+    ToontownGlobals.SillyStreet: config.GetFloat('silly-street-building-chance', 2.0),
+    ToontownGlobals.LoopyLane: config.GetFloat('loopy-lane-building-chance', 2.0),
+    ToontownGlobals.PunchlinePlace: config.GetFloat('punchline-place-building-chance', 2.0),
     ToontownGlobals.BarnacleBoulevard: config.GetFloat('barnacle-boulevard-building-chance', 75.0),
     ToontownGlobals.SeaweedStreet: config.GetFloat('seaweed-street-building-chance', 75.0),
     ToontownGlobals.LighthouseLane: config.GetFloat('lighthouse-lane-building-chance', 75.0),
