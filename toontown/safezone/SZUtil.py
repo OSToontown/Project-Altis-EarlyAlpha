@@ -43,7 +43,7 @@ def startCloudSky(hood, parent=camera, effects=CompassEffect.PRot | CompassEffec
     hood.sky.setDepthTest(0)
     hood.sky.setDepthWrite(0)
     hood.sky.setBin('background', 100)
-   # hood.sky.find('**/Sky').reparentTo(hood.sky, -1)
+    hood.sky.find('**/Sky').reparentTo(hood.sky, -1)
     hood.sky.reparentTo(parent)
     hood.sky.setZ(0.0)
     hood.sky.setHpr(0.0, 0.0, 0.0)
