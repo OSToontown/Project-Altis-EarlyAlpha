@@ -3793,7 +3793,7 @@ MapPageYouAreAtHome = 'You are at\nyour estate'
 MapPageYouAreAtSomeonesHome = 'You are at %s estate'
 MapPageGoTo = 'Go To\n%s'
 OptionsPageTitle = 'Options'
-ExtraOptionsPageTitle = 'Extra'
+SpecialOptionsPageTitle = 'Special'
 OptionsTabTitle = 'Options\n& Codes'
 OptionsPageExitToontown = 'Exit Toontown'
 OptionsPageMusic = 'Music Volume:'
@@ -4479,10 +4479,10 @@ ColorShopLegs = 'Legs'
 ColorShopParts = 'Multi Color'
 ColorShopAll = 'Single Color'
 ClothesShopShorts = 'Shorts'
-ClothesShopShirt = 'Shirts'
+ClothesShopShirt = 'Shirt'
 ClothesShopBottoms = 'Bottoms'
-ClothesShopShirtsStyle = 'Shirts Style'
-ClothesShopShirtsColor = 'Shirts Color'
+ClothesShopShirtsStyle = 'Shirt Style'
+ClothesShopShirtsColor = 'Shirt Color'
 ClothesShopShortsStyle = 'Shorts Style'
 ClothesShopShortsColor = 'Shorts Color'
 ClothesShopBottomsStyle = 'Bottoms Style'
@@ -8492,8 +8492,7 @@ CogLevelLabelOff = 'The cog level GUI is off.'
 
 HouseNames = ("Bungalow", "Tiki", "Teepee", "Castle", "Cupcake", "Cabin")
 CatalogPurchaseHouseType = "When you buy a new house type, the current one is replaced by it. To recover the old type, you'll need to buy it back. Continue?"
-BugReportButton = 'Report a Bug'
-BugReportNotice = 'Attention!\n\nThis button will open a browser which will send you to a third party bug tracker website. This site requires an Ubuntu One account to login. It may ask you to create an account.\n\nAre you sure you want to continue?'
+
 # Buffs
 
 buffIdStrings = {
@@ -8587,10 +8586,6 @@ def convertSecondsToDate(seconds):
     return '%d:%02d:%02d' % (h, m, s)
 
 ToonDefeatedMessage = '%s was defeated!'
-
-BugReportButton = 'Report a Bug'
-BugReportNotice = 'Attention!\n\nThis button will open a browser which will send you to a third party bug tracker website. This site requires an Ubuntu One account to login. It may ask you to create an account.\n\nAre you sure you want to continue?'
-
 CodeRedemptionWarning = 'NOTICE: All codes can only be entered once!'
 
 CogInterfaceLabelOn = 'The cog battle interface is on.'

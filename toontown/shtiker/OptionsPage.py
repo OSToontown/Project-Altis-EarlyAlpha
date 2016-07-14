@@ -13,7 +13,6 @@ from otp.speedchat import SpeedChat
 from toontown.toonbase import TTLocalizer, ToontownGlobals
 from toontown.toon import Toon
 from toontown.toontowngui import TTDialog
-import webbrowser
 
 
 speedChatStyles = (
@@ -120,7 +119,7 @@ speedChatStyles = (
         (210 / 255.0, 200 / 255.0, 180 / 255.0)
     )
 )
-PageMode = PythonUtil.Enum('Options, Codes, Extra')
+PageMode = PythonUtil.Enum('Options, Codes, Special')
 
 
 class OptionsPage(ShtikerPage.ShtikerPage):
@@ -131,7 +130,7 @@ class OptionsPage(ShtikerPage.ShtikerPage):
 
         self.optionsTabPage = None
         self.codesTabPage = None
-        self.extraOptionsTabPage = None
+        self.specialOptionsTabPage = None
         self.title = None
         self.optionsTab = None
         self.codesTab = None
@@ -144,8 +143,8 @@ class OptionsPage(ShtikerPage.ShtikerPage):
         self.optionsTabPage.hide()
         self.codesTabPage = CodesTabPage(self)
         self.codesTabPage.hide()
-        self.extraOptionsTabPage = ExtraOptionsTabPage(self)
-        self.extraOptionsTabPage.hide()
+        self.specialOptionsTabPage = SpecialOptionsTabPage(self)
+        self.specialOptionsTabPage.hide()
 
         self.title = DirectLabel(
             parent=self, relief=None, text=TTLocalizer.OptionsPageTitle,
@@ -176,16 +175,16 @@ class OptionsPage(ShtikerPage.ShtikerPage):
             image2_color=rolloverColor, image3_color=diabledColor,
             text_fg=Vec4(0.2, 0.1, 0, 1), command=self.setMode,
             extraArgs=[PageMode.Codes], pos=(-0.12, 0, 0.77))
-        self.extraOptionsTab = DirectButton(
-            parent=self, relief=None, text=TTLocalizer.ExtraOptionsPageTitle,
-            text_scale=TTLocalizer.OPextraOptionsTab, text_align=TextNode.ALeft,
+        self.specialOptionsTab = DirectButton(
+            parent=self, relief=None, text=TTLocalizer.SpecialOptionsPageTitle,
+            text_scale=TTLocalizer.OPspecialOptionsTab, text_align=TextNode.ALeft,
             text_pos=(0.027, 0.0, 0.0),
             image=gui.find('**/tabs/polySurface2'), image_pos=(0.12, 1, -0.91),
             image_hpr=(0, 0, -90), image_scale=(0.033, 0.033, 0.035),
             image_color=normalColor, image1_color=clickColor,
             image2_color=rolloverColor, image3_color=diabledColor,
             text_fg=Vec4(0.2, 0.1, 0, 1), command=self.setMode,
-            extraArgs=[PageMode.Extra], pos=(0.42, 0, 0.77))
+            extraArgs=[PageMode.Special], pos=(0.42, 0, 0.77))
         gui.removeNode()
 
     def enter(self):
@@ -196,7 +195,7 @@ class OptionsPage(ShtikerPage.ShtikerPage):
     def exit(self):
         self.optionsTabPage.exit()
         self.codesTabPage.exit()
-        self.extraOptionsTabPage.exit()
+        self.specialOptionsTabPage.exit()
         
         ShtikerPage.ShtikerPage.exit(self)
 
@@ -221,9 +220,9 @@ class OptionsPage(ShtikerPage.ShtikerPage):
             self.codesTab.destroy()
             self.codesTab = None
         
-        if self.extraOptionsTab is not None:
-            self.extraOptionsTab.destroy()
-            self.extraOptionsTab = None
+        if self.specialOptionsTab is not None:
+            self.specialOptionsTab.destroy()
+            self.specialOptionsTab = None
 
         ShtikerPage.ShtikerPage.unload(self)
 
@@ -242,24 +241,24 @@ class OptionsPage(ShtikerPage.ShtikerPage):
             self.optionsTabPage.enter()
             self.codesTab['state'] = DGG.NORMAL
             self.codesTabPage.exit()
-            self.extraOptionsTab['state'] = DGG.NORMAL
-            self.extraOptionsTabPage.exit()
+            self.specialOptionsTab['state'] = DGG.NORMAL
+            self.specialOptionsTabPage.exit()
         elif mode == PageMode.Codes:
             self.title['text'] = TTLocalizer.CdrPageTitle
             self.optionsTab['state'] = DGG.NORMAL
             self.optionsTabPage.exit()
-            self.extraOptionsTab['state'] = DGG.NORMAL
-            self.extraOptionsTabPage.exit()
+            self.specialOptionsTab['state'] = DGG.NORMAL
+            self.specialOptionsTabPage.exit()
             self.codesTab['state'] = DGG.DISABLED
             self.codesTabPage.enter()
-        elif mode == PageMode.Extra:
-            self.title['text'] = TTLocalizer.ExtraOptionsPageTitle
+        elif mode == PageMode.Special:
+            self.title['text'] = TTLocalizer.SpecialOptionsPageTitle
             self.optionsTab['state'] = DGG.NORMAL
             self.optionsTabPage.exit()
             self.codesTab['state'] = DGG.NORMAL
             self.codesTabPage.exit()
-            self.extraOptionsTab['state'] = DGG.DISABLED
-            self.extraOptionsTabPage.enter()
+            self.specialOptionsTab['state'] = DGG.DISABLED
+            self.specialOptionsTabPage.enter()
 
 class OptionsTabPage(DirectFrame):
     notify = directNotify.newCategory('OptionsTabPage')
@@ -696,8 +695,8 @@ class CodesTabPage(DirectFrame):
         self.codeInput['focus'] = 1
         self.submitButton['state'] = DGG.NORMAL
 
-class ExtraOptionsTabPage(DirectFrame):
-    notify = directNotify.newCategory('ExtraOptionsTabPage')
+class SpecialOptionsTabPage(DirectFrame):
+    notify = directNotify.newCategory('SpecialOptionsTabPage')
 
     def __init__(self, parent = aspect2d):
         self.parent = parent
@@ -741,8 +740,6 @@ class ExtraOptionsTabPage(DirectFrame):
         self.tpTransition_toggleButton = DirectButton(parent=self, relief=None, image=button_image, image_scale=button_image_scale, text='', text_scale=options_text_scale, text_pos=button_textpos, pos=(buttonbase_xcoord, 0.0, buttonbase_ycoord - 2 * textRowHeight), command=self.__doToggleTpTransition)
         self.fpsMeter_toggleButton = DirectButton(parent=self, relief=None, image=button_image, image_scale=button_image_scale, text='', text_scale=options_text_scale, text_pos=button_textpos, pos=(buttonbase_xcoord, 0.0, buttonbase_ycoord - 3 * textRowHeight), command=self.__doToggleFpsMeter)
         self.teleport_toggleButton = DirectButton(parent=self, relief=None, image=button_image, image_scale=button_image_scale, text='', text_scale=options_text_scale, text_pos=button_textpos, pos=(buttonbase_xcoord, 0.0, buttonbase_ycoord - 4 * textRowHeight), command=self.__doToggleTeleport)
-        self.bugReportButton = DirectButton(parent=self, relief=None, text=TTLocalizer.BugReportButton, image=button_image, image_scale=button_image_scale, text_pos=(0, -0.01), text_fg=(0, 0, 0, 1),
-        command=self.showReportNotice, pos=(0.0, 0.0, -0.6), text_scale=(0.045))
         guiButton.removeNode()
         circleModel.removeNode()
 
@@ -763,7 +760,6 @@ class ExtraOptionsTabPage(DirectFrame):
 
     def exit(self):
         self.ignoreAll()
-        self.destroyReportNotice()
         self.hide()
         
         for chooser in self.optionChoosers.values():
@@ -790,9 +786,6 @@ class ExtraOptionsTabPage(DirectFrame):
         del self.teleport_label
         self.teleport_toggleButton.destroy()
         del self.teleport_toggleButton
-        self.bugReportButton.destroy()
-        del self.bugReportButton
-        self.destroyReportNotice()
         
         for chooser in self.optionChoosers.values():
             optionChooser.unload()
@@ -878,18 +871,3 @@ class ExtraOptionsTabPage(DirectFrame):
         if index != -1 and index != base.localAvatar.getFishingRod():
             base.localAvatar.requestFishingRod(index)
     
-    def destroyReportNotice(self):
-        if hasattr(self, 'dialog'):
-            self.dialog.destroy()
-            del self.dialog
-
-    def showReportNotice(self):
-        self.destroyReportNotice()
-        self.dialog = TTDialog.TTDialog(style=TTDialog.YesNo, text=TTLocalizer.BugReportNotice, command=self.confirmBugReport)
-        self.dialog.show()
-
-    def confirmBugReport(self, value):
-        self.destroyReportNotice()
-
-        if value > 0:
-            webbrowser.open(ToontownGlobals.BugReportSite, new=2, autoraise=True)
