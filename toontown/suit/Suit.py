@@ -76,8 +76,10 @@ tbc = (('cigar-smoke', 'cigar-smoke', 8),
 tl = (('cigar-smoke', 'cigar-smoke', 8),
  ('pen-squirt', 'fountain-pen', 7),
  ('glower', 'glower', 5),
+ ('throw-paper', 'throw-paper', 5),
  ('magic1', 'magic1', 5),
  ('song-and-dance', 'song-and-dance', 8),
+ ('magic2', 'magic2', 5),
  ('golf-club-swing', 'golf-club-swing', 5))
 cc = (('speak', 'speak', 5),
  ('glower', 'glower', 5),
@@ -113,12 +115,12 @@ mh = (('magic1', 'magic1', 5),
  ('speak', 'speak', 5),
  ('golf-club-swing', 'golf-club-swing', 5),
  ('song-and-dance', 'song-and-dance', 8))
-pm = (('effort', 'effort', 5),
- ('magic2', 'magic2', 5),
- ('magic3', 'magic3', 5),
- ('throw-paper', 'throw-paper', 5),
- ('stomp', 'stomp', 5),
- ('quick-jump', 'jump', 6))
+pm = (('cigar-smoke', 'cigar-smoke', 8),
+ ('pen-squirt', 'fountain-pen', 7),
+ ('glower', 'glower', 5),
+ ('magic1', 'magic1', 5),
+ ('song-and-dance', 'song-and-dance', 8),
+ ('golf-club-swing', 'golf-club-swing', 5))
 sc = (('throw-paper', 'throw-paper', 3.5), ('watercooler', 'watercooler', 5), ('pickpocket', 'pickpocket', 5))
 pp = (('throw-paper', 'throw-paper', 5), ('glower', 'glower', 5), ('finger-wag', 'fingerwag', 5))
 tw = (('throw-paper', 'throw-paper', 3.5),
