@@ -2,3 +2,12 @@ Release Note History:
 
 1.0.0:
 1. Official Release
+
+1.1.0:
+1. Improvements for Toxic Leader and Big Fish
+2. Improved Spooky sound effect
+3. Fixed Music Looping bug in Cashbot HQ
+4. More Unites
+5. Level 13 Cogs in Mints and Lawbot DA Offices
+6. 2.0 Cogs in Boss Battles
+7. New and Improved Library
