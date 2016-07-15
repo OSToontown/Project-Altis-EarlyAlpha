@@ -2954,46 +2954,6 @@ class Toon(Avatar.Avatar, ToonHead):
         track.append(kionTrack)
         return track
 
-    def __doSqueaky(self, lerpTime, toSqueaky):
-        track = Sequence()
-        squeakyTrack = Parallel()
-
-        def getDustCloudIval():
-            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=1)
-            dustCloud.setBillboardAxis(2.0)
-            dustCloud.setZ(3)
-            dustCloud.setScale(0.4)
-            dustCloud.createTrack()
-            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
-
-        if lerpTime > 0.0:
-            dust = getDustCloudIval()
-            track.append(Func(dust.start))
-            track.append(Wait(0.5))
-            
-        if toSqueaky:
-            self.oldStyle = self.style.clone()
-            self.oldHat = self.hat
-            dna = ToonDNA.ToonDNA()
-            dna.newToonFromProperties('mss', 'ms', 'm', 'm', 2, 0, 2, 2, 14, 9, 10, 9, 1, 14)
-            squeakyTrack.append(Func(self.updateToonDNA, dna, True))
-            if hasattr(self, 'animFSM'):
-                state = self.animFSM.getCurrentState()
-                squeakyTrack.append(Func(self.animFSM.request, 'off'))
-                squeakyTrack.append(Func(self.animFSM.request, state))
-            squeakyTrack.append(Func(self.nametag.setDisplayName, 'Squeaky'))
-        else:
-            squeakyTrack.append(Func(self.updateToonDNA, self.oldStyle))
-            if hasattr(self, 'animFSM'):
-                state = self.animFSM.getCurrentState()
-                squeakyTrack.append(Func(self.animFSM.request, 'off'))
-                squeakyTrack.append(Func(self.animFSM.request, state))
-            squeakyTrack.append(Func(self.nametag.setDisplayName, self.nametag.name))
-            squeakyTrack.append(Func(self.setHat, self.oldHat[0], self.oldHat[1], self.oldHat[2]))
-            squeakyTrack.append(Func(self.generateToonAccessories))
-        track.append(squeakyTrack)
-        return track
-
     def __doCheesyEffect(self, effect, lerpTime):
         if effect == ToontownGlobals.CEBigHead:
             return self.__doHeadScale(2.5, lerpTime)
@@ -3049,8 +3009,6 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doLilOldman(lerpTime, toOldman=True)
         elif effect == ToontownGlobals.CEKion:
             return self.__doKion(lerpTime, toKion=True)
-        elif effect == ToontownGlobals.CESqueaky:
-            return self.__doSqueaky(lerpTime, toSqueaky=True)
         elif effect == ToontownGlobals.CEVirtual:
             return self.__doVirtual()
         elif effect == ToontownGlobals.CEGhost:
@@ -3115,8 +3073,6 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doLilOldman(lerpTime, toOldman=False)
         elif effect == ToontownGlobals.CEKion:
             return self.__doKion(lerpTime, toKion=False)
-        elif effect == ToontownGlobals.CESqueaky:
-            return self.__doSqueaky(lerpTime, toSqueaky=False)
         elif effect == ToontownGlobals.CEVirtual:
             return self.__doUnVirtual()
         elif effect == ToontownGlobals.CEGhost:
