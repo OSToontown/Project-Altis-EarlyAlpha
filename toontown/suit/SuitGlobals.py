@@ -23,11 +23,7 @@ suitProperties = {'f': (4.0 / cSize, SuitDNA.corpPolyColor, ['flunky', 'glasses'
                   'hh': (6.5 / aSize, SuitDNA.corpPolyColor, ['headhunter'], '', 7.45),
                   'cr': (6.75 / cSize, VBase4(0.85, 0.55, 0.55, 1.0), ['flunky'], 'corporate-raider.jpg', 8.23),
                   'tbc': (7.0 / aSize, VBase4(0.75, 0.95, 0.75, 1.0), ['bigcheese'], '', 9.34),
-<<<<<<< HEAD
-                  'tl': (7.0 / aSize, SuitDNA.corpPolyColor, ['headhoncho'], 'head-honcho.jpg', 9.34),
-=======
                   'hho': (7.3 / aSize, SuitDNA.corpPolyColor, ['headhoncho'], 'head-honcho.jpg', 9.5),
->>>>>>> 8e7f5955e7ee09be86d0d1892903b4168ac73079
                   # Lawbots
                   'bf': (4.0 / cSize, SuitDNA.legalPolyColor, ['tightwad'], 'bottom-feeder.jpg', 4.81),
                   'b': (4.375 / bSize, VBase4(0.95, 0.95, 1.0, 1.0), ['movershaker'], 'blood-sucker.jpg', 6.17),
@@ -37,11 +33,7 @@ suitProperties = {'f': (4.0 / cSize, SuitDNA.corpPolyColor, ['flunky', 'glasses'
                   'sd': (5.65 / bSize, VBase4(0.5, 0.8, 0.75, 1.0), ['telemarketer'], 'spin_doctor.jpg', 7.9),
                   'le': (7.125 / aSize, VBase4(2.55, 0.55, 0, 1.0), ['legaleagle'], '', 8.27),
                   'bw': (7.0 / aSize, SuitDNA.legalPolyColor, ['bigwig'], '', 8.69),
-<<<<<<< HEAD
-                  'lk': (7.3 / aSize, VBase4(.45, 0.45, .45, 1.0), ['barrister'], '', 8.75),
-=======
                   'br': (7.0 / aSize, VBase4(.45, 0.45, .45, 1.0), ['barrister'], '', 8.69),
->>>>>>> 8e7f5955e7ee09be86d0d1892903b4168ac73079
                   # Cashbots
                   'sc': (3.6 / cSize, SuitDNA.moneyPolyColor, ['coldcaller'], '', 4.77),
                   'pp': (3.55 / aSize, VBase4(1.0, 0.5, 0.6, 1.0), ['pennypincher'], '', 5.26),
@@ -61,9 +53,5 @@ suitProperties = {'f': (4.0 / cSize, SuitDNA.corpPolyColor, ['flunky', 'glasses'
                   'tf': (5.25 / aSize, SuitDNA.corpPolyColor, ['twoface'], '', 6.95),
                   'm': (5.75 / aSize, SuitDNA.salesPolyColor, ['twoface'], 'mingler.jpg', 7.61),
                   'mh': (7.0 / aSize, VBase4(0.95, 0.95, 1.0, 1.0), ['yesman'], '', 8.95),
-<<<<<<< HEAD
-                  'pm': (7.3 / aSize, VBase4(1, 1, .29, 1.0), ['toxicleader'], '', 9.5),
-=======
                   'tl': (7.3 / aSize, VBase4(1, 1, .29, 1.0), ['toxicleader'], '', 10),
->>>>>>> 8e7f5955e7ee09be86d0d1892903b4168ac73079
                   }
