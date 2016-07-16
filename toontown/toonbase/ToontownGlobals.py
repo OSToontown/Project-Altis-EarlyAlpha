@@ -1611,7 +1611,7 @@ GloveCost = 2000
 BMovementSpeed = 0
 BMovementSpeedMultiplier = 1.3
 
-BugReportSite = 'https://bugs.launchpad.net/toontown-united/+filebug'
+BugReportSite = 'https://github.com/Spiderlover/Toontown-2-Revised/issues'
 NPCCollisionDelay = 2.5
 
 CostPerLaffRestock = 3
