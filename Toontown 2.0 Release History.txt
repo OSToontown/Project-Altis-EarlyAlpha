@@ -11,3 +11,9 @@ Release Note History:
 5. Level 13 Cogs in Mints and Lawbot DA Offices
 6. 2.0 Cogs in Boss Battles
 7. New and Improved Library
+
+1.2.0:
+1. New Fish Species (Thanks to MasterLoopyBM)
+2. Level 13 Cogs in Bossbot Country Club
+3. New Cog Head Models
+4. New Cheesy Effect
