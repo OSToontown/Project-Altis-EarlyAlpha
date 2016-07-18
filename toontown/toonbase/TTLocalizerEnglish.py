@@ -7203,7 +7203,8 @@ FishGenusNames = {0: 'Balloon Fish',
  28: 'Cutthroat Trout',
  30: 'Piano Tuna',
  32: 'Peanut Butter & Jellyfish',
- 34: 'Devil Ray'}
+ 34: 'Devil Ray',
+ 36: 'Whale Lord'}
 FishSpeciesNames = {0: ('Balloon Fish',
      'Hot Air Balloon Fish',
      'Weather Balloon Fish',
@@ -7266,7 +7267,10 @@ FishSpeciesNames = {0: ('Balloon Fish',
       'Crunchy PB&J Fish',
       'Strawberry PB&J Fish',
       'Concord Grape PB&J Fish'),
- 34: ('Devil Ray',)}
+ 34: ('Devil Ray',),
+ 36: ('Blue Whale Lord',
+      'Baleen Whale Lord',
+      'Beluga Whale Lord')}
 CogPartNames = ('Upper Left Leg',
  'Lower Left Leg',
  'Left Foot',
