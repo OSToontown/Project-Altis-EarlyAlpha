@@ -460,9 +460,9 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
  'tl' :["Prepare for a Nuclear disaster.",
          'My attacks are toxic to toons!',
 		 "'My leadership skils are rather 'toxic'."
-		 'Hey, would you like some candy?'
-		 'Toons are poisonous to Cogs while I am posinous to toons.' 
-		 'Nuclear is my middle name!'
+		 'Hey, would you like some candy?',
+		 'Toons are poisonous to Cogs while I am posinous to toons.',
+		 'Nuclear is my middle name!',
          'Steer Nuclear!'],
  'nc': ['Looks like your number is up.',
         'I hope you prefer extra crunchy.',
