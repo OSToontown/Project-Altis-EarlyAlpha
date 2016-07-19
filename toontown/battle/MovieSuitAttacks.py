@@ -954,9 +954,10 @@ def doFillWithLead(attack):
         colorTrack.append(resetParts(torsoParts))
         colorTrack.append(resetParts(legsParts))
         colorTrack.append(Func(battle.movie.clearRestoreColor))
-        return Parallel(suitTrack, pencilPropTrack, sharpenerPropTrack, sprayTrack, headTrack, torsoTrack, legsTrack, colorTrack, toonTrack)
+        soundTrack = getSoundTrack('SA_fill_with_lead.ogg', delay=2.2, duration=2.4, node=suit)
+        return Parallel(suitTrack, pencilPropTrack, soundTrack, sharpenerPropTrack, sprayTrack, headTrack, torsoTrack, legsTrack, colorTrack, toonTrack)
     else:
-        return Parallel(suitTrack, pencilPropTrack, sharpenerPropTrack, sprayTrack, toonTrack)
+        return Parallel(suitTrack, pencilPropTrack, soundTrack, sharpenerPropTrack, sprayTrack, toonTrack)
 
 
 def doFountainPen(attack):
