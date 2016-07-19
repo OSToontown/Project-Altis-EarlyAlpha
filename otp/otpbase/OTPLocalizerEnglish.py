@@ -425,9 +425,15 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
          "I've been told I'm very strong.",
          'Careful, I know your expiration date.',
          "Watch out, I'm a whiz at this game.",
+		 "A Toon, you say? Teleme more."
+         'Grate timing, I was just about to send in my Flunkies.'
+		 "I hope I'm not too sharp for you."
          'Beating you will be a brieeze.'],
 'hho': ["The boss will be impressed if I defeat you.",
-         'Defeating you will allow me to be headed towards my promotion.',
+        'I will do anything for my boss.'
+         'Defeating you will allow me to be headed towards my next promotion.',
+		 "I'm already ahead of the game."
+		 'Bossing toons around is my greatest pleasure.' 
          "Prepare to be attacked head-on!"],
  'cr': ['RAID!',
         "You don't fit in my corporation.",
@@ -442,18 +448,22 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
  'mh': ['Are you ready for my take?',
         'Lights, camera, action!',
         "Let's start rolling.",
-        'Today the role of defeated toon, will be played by - YOU!',
+        'There you are! Today the role of defeated Toon will be played by - YOU!',
         'This scene will go on the cutting room floor.',
         'I already know my motivation for this scene.',
         'Are you ready for your final scene?',
         "I'm ready to roll your end credits.",
         'I told you not to call me.',
         "Let's get on with the show.",
-        "There's no business like it!",
+        "There's no business like Hollywood!",
         "I hope you don't forget your lines."],
  'tl' :["Prepare for a Nuclear disaster.",
          'My attacks are toxic to toons!',
-         "I'm hoping for that promotion."],
+		 "'My leadership skils are rather 'toxic'."
+		 'Hey, would you like some candy?'
+		 'Toons are poisonous to Cogs while I am posinous to toons.' 
+		 'Nuclear is my middle name!'
+         'Steer Nuclear!'],
  'nc': ['Looks like your number is up.',
         'I hope you prefer extra crunchy.',
         "Now you're really in a crunch.",
@@ -497,11 +507,16 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         'You should know not to talk to strangers.'],
  'bfh': ["Big business means BIG MONEY!",
         "I'm only doing this for the money.",
-        'How much will you pay for me to spare you?',
+        'How much will you pay me to spare you?',
         'If you fear change, leave it here.',
         'This better make me money.',
+		'I love money!' 
+		'You will find me swimming in cash!' 
+		'All toons are expendable.' 
+		'I am bigger than any fish you will ever catch.' 
         "Something's rather fishy in here. No, its just me!",
         "I'll buy your house for what it's worth: One Penny.",
+		'Believe it or not, I am not as big as the money I make.' 
         "I've started over twenty business. Guess how much money I'm making?"],
  'bs': ['Never turn your back on me.',
         "You won't be coming back.",
@@ -538,6 +553,8 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         "I've got the court under my wing."],
  'br': ["This doesn't seem very legal to me.",
         "According to my books, all Toons are guilty until proven innocent.",
+		'I will have you locked away Toon!' 
+		'I capture toons and cage them for the Vice President.' 
         "There are many laws in Toontown and you have broken one of them.",
         'I find you guilty for illegally buying those gags.'],
  'sd': ["You'll never know when I'll stop.",
@@ -624,6 +641,7 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         'You should have missed my call.',
         "You won't be able to get rid of me now.",
         'This a bad time? Good.',
+		"Caller ID can't stop me."
         'I was planning on running into you.',
         'I will be reversing the charges for this call.',
         'I have some costly items for you today.',
@@ -636,6 +654,7 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         "Let's hurry, I'm having lunch with 'Mr. Hollywood.'",
         "Have I mentioned I know 'The Mingler?'",
         "You'll never forget me.",
+		'Even the boss knows my name.' 
         'I know all the right people to bring you down.',
         "I think I'll just drop in.",
         "I'm in the mood to drop some Toons.",
