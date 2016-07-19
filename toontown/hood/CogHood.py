@@ -8,7 +8,7 @@ class CogHood(Hood):
 
     ID = None
     LOADER_CLASS = None
-    SKY_FILE = 'phase_9/models/cogHQ/cog_sky'
+    SKY_FILE = 'phase_3.5/models/props/Sellbot_sky'
     TITLE_COLOR = (0.5, 0.5, 0.5, 1.0)
 
     def __init__(self, parentFSM, doneEvent, dnaStore, hoodId):
