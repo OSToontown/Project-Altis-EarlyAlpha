@@ -111,7 +111,8 @@ FishButtonDict = {-1: ('mickeyButton',),
  28: ('troutButton',),
  30: ('pianotunaButton',),
  32: ('PBJfishButton',),
- 34: ('DevilrayButton',)}
+ 34: ('DevilrayButton',),
+ 36: ('DevilrayButton',)}
 TutorialIntro = 1
 TutorialMark = 2
 TutorialCard = 3
