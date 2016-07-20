@@ -53,6 +53,7 @@ CETutorialTom = 25
 CEOldman = 26
 CEKion = 27
 CESqueaky = 28
+CEFreddy = 29
 CEGhost = 'g'
 CEName2Id = {
  'normal': CENormal,
@@ -83,7 +84,8 @@ CEName2Id = {
  'tutorialtom': CETutorialTom,
  'oldman': CEOldman,
  'kion': CEKion,
- 'squeaky': CESqueaky
+ 'squeaky': CESqueaky,
+ 'freddy': CEFreddy
 }
 BeanToonScale = 2.9
 GiantToonScale = 2.1

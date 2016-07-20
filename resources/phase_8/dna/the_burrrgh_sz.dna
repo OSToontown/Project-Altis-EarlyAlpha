@@ -1037,33 +1037,28 @@ group "theBurrrgh" [
     pos [ 100.11 152.01 -0.54 ]
     nhpr [ 150 0 0 ]
     sign [
-     code [ "tunnel_sign_blue" ]
+     code [ "sign_cogHQ" ]
      pos [ 0 0 -0.830334 ]
      scale [ 1.18118 1 1.20103 ]
      baseline [
-      code [ "mickey" ]
-      color [ 0 0.501961 0.752941 1 ]
-      pos [ 0.0633007 0 -0.559566 ]
-      scale [ 1.68608 1 1.31726 ]
-      kern [ -0.00178057 ]
-      stomp [ 0.0262698 ]
-      width [ 37.081 ]
-      height [ 37.081 ]
+      code [ "humanist" ]
+      color [ 1 0 0 1 ]
+      pos [ -0.17 0 0.32 ]
+      scale [ 2 1 2.2  ]
+      wiggle [ 1.5802 ]
+      stomp [ 0.050618 ]
       flags [ "d" ]
       text [
-       letters [ "P" ]
+       letters [ "W" ]
       ]
       text [
-       letters [ "E" ]
+       letters [ "A" ]
+      ]
+      text [
+       letters [ "R" ]
       ]
       text [
        letters [ "N" ]
-      ]
-      text [
-       letters [ "G" ]
-      ]
-      text [
-       letters [ "U" ]
       ]
       text [
        letters [ "I" ]
@@ -1072,74 +1067,82 @@ group "theBurrrgh" [
        letters [ "N" ]
       ]
       text [
-       letters [ " " ]
+       letters [ "G" ]
       ]
       text [
-       letters [ "P" ]
+       letters [ "!" ]
       ]
       text [
-       letters [ "L" ]
-      ]
-      text [
-       letters [ "A" ]
-      ]
-      text [
-       letters [ "C" ]
-      ]
-      text [
-       letters [ "E" ]
+       letters [ "!" ]
       ]
      ]
      baseline [
-      code [ "mickey" ]
-      color [ 0 0.501961 0.752941 1 ]
-      pos [ 0.11 0 -1.85129 ]
-      scale [ 1.04591 1 1.17771 ]
+      code [ "suit" ]
+      pos [ 0.11 0 -1.51 ]
+      scale [ 0.9 1 1.3 ]
       kern [ 0.02 ]
       wiggle [ 0.30413 ]
       stumble [ 0.004736 ]
       stomp [ 0.04 ]
-      width [ 37.4411 ]
-      height [ 37.4411 ]
       flags [ "d" ]
       text [
        letters [ "T" ]
       ]
       text [
+       letters [ "O" ]
+      ]
+      text [
+       letters [ " " ]
+      ]
+      text [
+       letters [ "C" ]
+      ]
+      text [
+       letters [ "O" ]
+      ]
+      text [
+       letters [ "G" ]
+      ]
+      text [
+       letters [ " " ]
+      ]
+      text [
        letters [ "H" ]
       ]
       text [
        letters [ "E" ]
       ]
       text [
-       letters [ " " ]
+       letters [ "A" ]
       ]
       text [
-       letters [ "B" ]
+       letters [ "D" ]
+      ]
+      text [
+       letters [ "Q" ]
+      ]
+      text [
+       letters [ "U" ]
+      ]
+      text [
+       letters [ "A" ]
       ]
       text [
        letters [ "R" ]
       ]
       text [
-       letters [ "R" ]
+       letters [ "T" ]
+      ]
+      text [
+       letters [ "E" ]
       ]
       text [
        letters [ "R" ]
       ]
       text [
-       letters [ "G" ]
-      ]
-      text [
-       letters [ "H" ]
-      ]
+       letters [ "S" ]
      ]
-     baseline [
-      pos [ 0 0 1.61849 ]
-      scale [ 2.8058 1 2.25258 ]
-      graphic [
-       code [ "plutoSZ" ]
-      ]
-     ]
+	 ]
     ]
    ]
   ]
