@@ -7270,7 +7270,8 @@ FishSpeciesNames = {0: ('Balloon Fish',
  34: ('Devil Ray',),
  36: ('Blue Whale Lord',
       'Baleen Whale Lord',
-      'Beluga Whale Lord')}
+      'Beluga Whale Lord',
+      'Nar Whale Lord')}
 CogPartNames = ('Upper Left Leg',
  'Lower Left Leg',
  'Left Foot',
@@ -8828,6 +8829,7 @@ FpsMeterLabelOn = 'The frame rate meter is on.'
 FpsMeterLabelOff = 'The frame rate meter is off.'
 
 DefaultDoodleName = 'Smiley'
+LoopysSandwich = "Loopy's Sandvich"
 
 Blacklist = [
  "$1ut",

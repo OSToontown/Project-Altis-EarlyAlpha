@@ -625,6 +625,10 @@ __fishDict = {0: ((1,
       (9,
        12,
        6,
+       (TTG.DonaldsDock, Anywhere)),
+      (16,
+       25,
+       8,
        (TTG.DonaldsDock, Anywhere)))}
 
 def getSpecies(genus):
@@ -640,9 +644,9 @@ ROD_WEIGHT_MAX_INDEX = 1
 ROD_CAST_COST_INDEX = 2
 __rodDict = {0: (0, 4, 1),
  1: (0, 8, 2),
- 2: (0, 12, 3),
- 3: (0, 16, 4),
- 4: (0, 20, 5)}
+ 2: (0, 16, 3),
+ 3: (0, 24, 4),
+ 4: (0, 32, 5)}
 
 def getNumRods():
     return len(__rodDict)
