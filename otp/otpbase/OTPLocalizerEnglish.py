@@ -568,7 +568,7 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
  'br': ["This doesn't seem very legal to me.",
         "According to my books, all Toons are guilty until proven innocent.",
 		'I will have you locked away Toon!',
-		'I find you in contempt of the court!' 
+		'I find you in contempt of the court!', 
 		'I capture toons and cage them for the Vice President.',
         "There are many laws in Toontown and you have broken one of them.",
         'I find you guilty for illegally buying those gags.'],
