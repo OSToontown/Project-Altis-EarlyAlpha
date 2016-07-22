@@ -29,6 +29,6 @@ Release Note History:
 7. Fishing Tweaks (Thanks to MasterLoopyBM)
 8. Rank 7 Cogs can now roam streets in appropriate playgrounds
 9. Fixed Cog Attack Percentage bug
-10. Bug Fish for Fish Bingo
+10. Bug Fix for Fish Bingo
 11. Fisherman Freddy SOS Card and Cheesy Effect
 12. Tweaks for the Cashbot Mint
