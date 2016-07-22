@@ -18,7 +18,7 @@ ColdCallerHead = VBase4(0.25, 0.35, 1.0, 1.0) # Head used by Cold Caller
 suitProperties = {'f': (4.0 / cSize, SuitDNA.corpPolyColor, ['flunky', 'glasses'], '', 4.88),
                   'p': (3.35 / bSize, SuitDNA.corpPolyColor, ['pencilpusher'], '', 5.0),
                   'ym': (4.125 / aSize, VBase4(0.95, 0.95, 1.0, 1.0), ['yesman'], '', 5.28),
-                  'mm': (1.25 / cSize, SuitDNA.corpPolyColor, ['micromanager'], '', 3.25),
+                  'mm': (1.25 / cSize, SuitDNA.corpPolyColor, ['micromanager'], '', 2.0),
                   'ds': (4.5 / bSize, SuitDNA.moneyPolyColor, ['beancounter'], '', 6.08),
                   'hh': (6.5 / aSize, SuitDNA.corpPolyColor, ['headhunter'], '', 7.45),
                   'cr': (6.75 / cSize, VBase4(0.85, 0.55, 0.55, 1.0), ['flunky'], 'corporate-raider.jpg', 8.23),
@@ -52,6 +52,6 @@ suitProperties = {'f': (4.0 / cSize, SuitDNA.corpPolyColor, ['flunky', 'glasses'
                   'ms': (4.75 / bSize, SuitDNA.corpPolyColor, ['movershaker'], '', 6.7),
                   'tf': (5.25 / aSize, SuitDNA.corpPolyColor, ['twoface'], '', 6.95),
                   'm': (5.75 / aSize, SuitDNA.salesPolyColor, ['twoface'], 'mingler.jpg', 7.61),
-                  'mh': (7.0 / aSize, VBase4(0.95, 0.95, 1.0, 1.0), ['yesman'], '', 8.95),
+                  'mh': (7.0 / aSize, VBase4(0.95, 0.95, 1.0, 1.0), ['yesman'], 'mr_hollywood.jpg', 8.95),
                   'tl': (7.3 / aSize, VBase4(1, 1, .29, 1.0), ['toxicleader'], '', 10),
                   }
