@@ -118,7 +118,7 @@ NAMETAG_COLORS = {
 }
 
 ARROW_COLORS = {
-    CCSuit: (0.4, 0.4, 0.4, 1.0),
+    CCSuit: (0.5, 0.5, 0.5, 1.0),
 }
 
 DEFAULT_WORDWRAPS = {
