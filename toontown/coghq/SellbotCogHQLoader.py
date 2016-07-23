@@ -89,7 +89,7 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
             self.botcam1.setPos(-0.01,-39.3,24)
             self.botcam1.loop('botcamneutral')
             self.bossroom.reparentTo(self.geom)
-            self.bossroom.setPos(25,140,600)
+            self.bossroom.setPos(25,140,500)
             self.factoryPOV = Actor("phase_9/models/cogHQ/SellbotFactoryExterior")
             self.factoryPOV.reparentTo(self.geom)
             self.factoryPOV.setPos(615,-150,0)
