@@ -2154,6 +2154,7 @@ GlobalEntities = {1000: {'type': 'levelMgr',
         'goonType': 'pg',
         'gridId': 20025,
         'hFov': 80.0,
+        'strength': 20, #Red
         'velocity': 6.0 },
     20043: {
         'type': 'goon',
@@ -2168,6 +2169,7 @@ GlobalEntities = {1000: {'type': 'levelMgr',
         'goonType': 'pg',
         'gridId': 20025,
         'hFov': 80.0,
+        'strength': 20, #Red
         'velocity': 5.0 },
     20046: {
         'type': 'goon',
@@ -2182,6 +2184,7 @@ GlobalEntities = {1000: {'type': 'levelMgr',
         'goonType': 'pg',
         'gridId': 20025,
         'hFov': 70,
+        'strength': 20, #Red
         'velocity': 6.0 },
     20047: {
         'type': 'goon',
@@ -2196,6 +2199,7 @@ GlobalEntities = {1000: {'type': 'levelMgr',
         'goonType': 'pg',
         'gridId': 20025,
         'hFov': 80.0,
+        'strength': 20, #Red
         'velocity': 6.0 },
     20052: {
         'type': 'goon',
@@ -2225,6 +2229,7 @@ GlobalEntities = {1000: {'type': 'levelMgr',
         'goonType': 'pg',
         'gridId': 20025,
         'hFov': 80.0,
+        'strength': 20, #Red
         'velocity': 5.5 },
     20056: {
         'type': 'goon',
