@@ -54,7 +54,8 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
             self.geom = loader.loadModel(self.cogHQExteriorModelPath)
             factoryPOV = loader.loadModel('phase_9/models/cogHQ/SellbotFactoryPov')
             factoryPOV.reparentTo(self.geom)
-            factoryPOV.setPosHpr(580.62, -139.52, 15.22, 272.73, 0, 0)
+            factoryPOV.setPosHpr(400.62, -139.52, 15.22, 272.73, 0, 0)
+            factoryPOV.setScale(0.5)
             dgLinkTunnel = self.geom.find('**/Tunnel1')
             dgLinkTunnel.setName('linktunnel_dg_5316_DNARoot')
             factoryLinkTunnel = self.geom.find('**/Tunnel2')
@@ -87,14 +88,18 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
                 doorTrigger.setY(doorTrigger.getY() - 1.5)  # Fixes the misplaced door trigger.
                 doorFrame.node().setEffect(DecalEffect.make())
             self.botcam1 = Actor("phase_9/models/char/BotCam-zero.bam",{"botcamneutral":"phase_9/models/char/BotCam-neutral.bam"})
+            self.bossroom = Actor("phase_9/models/cogHQ/BossRoomHQ.bam")
             self.botcam1.reparentTo(self.geom)
             self.botcam1.setPos(-0.01,-39.3,24)
             self.botcam1.loop('botcamneutral')
+            self.bossroom.reparentTo(self.geom)
+            self.bossroom.setPos(42,25,298)
+            self.bossroom.setScale(0.1)
             #self.outskirtsPOV = Actor("phase_9/models/cogHQ/SellbotLegFactoryOld.bam")
             #self.outskirtsPOV.reparentTo(self.geom)
             #self.outskirtsPOV.setPos(-525,-150,20)
             #self.outskirtsPOV.setScale(0.2)
-			
+
 		
         elif zoneId == ToontownGlobals.SellbotFactoryExt:
             self.geom = loader.loadModel(self.factoryExteriorModelPath)
