@@ -52,6 +52,9 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
         zoneId = zoneId - zoneId % 100
         if zoneId == ToontownGlobals.SellbotHQ:
             self.geom = loader.loadModel(self.cogHQExteriorModelPath)
+            factoryPOV = loader.loadModel('phase_9/models/cogHQ/SellbotFactoryPov')
+            factoryPOV.reparentTo(self.geom)
+            factoryPOV.setPosHpr(580.62, -139.52, 15.22, 272.73, 0, 0)
             dgLinkTunnel = self.geom.find('**/Tunnel1')
             dgLinkTunnel.setName('linktunnel_dg_5316_DNARoot')
             factoryLinkTunnel = self.geom.find('**/Tunnel2')
@@ -87,10 +90,11 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
             self.botcam1.reparentTo(self.geom)
             self.botcam1.setPos(-0.01,-39.3,24)
             self.botcam1.loop('botcamneutral')
-            self.factoryPOV = Actor("phase_9/models/cogHQ/SellbotFactoryExterior")
-            self.factoryPOV.reparentTo(self.geom)
-            self.factoryPOV.setPos(615,-150,0)
-            self.factoryPOV.setH(275)
+            #self.outskirtsPOV = Actor("phase_9/models/cogHQ/SellbotLegFactoryOld.bam")
+            #self.outskirtsPOV.reparentTo(self.geom)
+            #self.outskirtsPOV.setPos(-525,-150,20)
+            #self.outskirtsPOV.setScale(0.2)
+			
 		
         elif zoneId == ToontownGlobals.SellbotFactoryExt:
             self.geom = loader.loadModel(self.factoryExteriorModelPath)
