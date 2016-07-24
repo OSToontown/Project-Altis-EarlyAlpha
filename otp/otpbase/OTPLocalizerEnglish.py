@@ -2442,11 +2442,3 @@ def timeElapsedString(timeDelta):
         return '%s minutes ago' % (timeDelta.seconds / 60)
 
 AsciiNotSupported = 'Sorry, but Toontown 2.0 does not support non-ASCII characters.'
-AccessToString = {
- 200: '\x01amaranth\x01Community Manager\x02',
- 300: '\x01caribbeanGreen\x01Moderator\x02',
- 400: '\x01amber\x01Artist\x02',
- 500: '\x01androidGreen\x01Developer\x02',
- 600: '\x01cobalt\x01Admin\x02',
- 700: '\x01azure\x01System Admin\x02'
-}

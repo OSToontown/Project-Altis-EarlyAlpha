@@ -268,8 +268,6 @@ from toontown.toon import DistributedNPCFisherman/AI
 from toontown.toon import DistributedNPCPartyPerson/AI
 from toontown.toon import DistributedNPCPetclerk/AI
 from toontown.toon import DistributedNPCKartClerk/AI
-from toontown.toon import DistributedNPCGlove/AI
-from toontown.toon import DistributedNPCLaffRestock/AI
 from toontown.building import DistributedKnockKnockDoor/AI
 from toontown.building import DistributedElevator/AI
 from toontown.building import DistributedElevatorFSM/AI
@@ -1811,16 +1809,6 @@ dclass DistributedNPCKartClerk : DistributedNPCToonBase {
   buyKart(uint8) airecv clsend;
   buyAccessory(uint8) airecv clsend;
   transactionDone() airecv clsend;
-};
-
-dclass DistributedNPCLaffRestock : DistributedNPCToonBase {
-  restock(uint8) airecv clsend;
-  restockResult(uint8) broadcast;
-};
-
-dclass DistributedNPCGlove : DistributedNPCToonBase {
-  changeGlove(uint8) airecv clsend;
-  changeGloveResult(uint32 avId, uint8) broadcast;
 };
 
 dclass DistributedKnockKnockDoor : DistributedAnimatedProp {
