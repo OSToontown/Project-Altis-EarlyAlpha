@@ -21,7 +21,6 @@ FLBillboard = 64
 FLPhone = 128
 FLCrate = 256
 FLChair = 512
-FLTV = 1024
 FLTrunk = 2048
 FLBoysOnly = 4096
 FLGirlsOnly = 8192
@@ -753,18 +752,15 @@ FurnitureTypes = {
  1530: ('phase_5.5/models/estate/bugRoomTV',
         None,
         None,
-        675,
-        FLTV),
+        675),
  1531: ('phase_5.5/models/estate/bugRoomTV_50inch',
         None,
         None,
-        1250,
-        FLTV),
+        1250),
  1532: ('phase_5.5/models/estate/bugRoomTV_100inch',
         None,
         None,
-        5000,
-        FLTV),		
+        5000),
  1600: ('phase_5.5/models/estate/vaseA_short',
         None,
         None,
