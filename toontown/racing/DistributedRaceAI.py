@@ -354,7 +354,6 @@ class DistributedRaceAI(DistributedObjectAI, FSM):
         av.b_setTickets(av.getTickets() + winnings)
         if av.getTickets() > RaceGlobals.MaxTickets:
             av.b_setTickets(RaceGlobals.MaxTickets)
-        av.addStat(ToontownGlobals.STAT_RACING)
         points = []
         if self.circuitPoints:
             avIndex = self.avatars.index(avId)

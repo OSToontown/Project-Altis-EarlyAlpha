@@ -586,7 +586,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             self.NPCFriendsDict[npcFriend] = self.maxCallsPerNPC
         self.d_setNPCFriendsDict(self.NPCFriendsDict)
         self.air.questManager.toonMadeNPCFriend(self, numCalls, method)
-        self.addStat(ToontownGlobals.STAT_SOS, numCalls)
         return 1
 
     def attemptSubtractNPCFriend(self, npcFriend):
@@ -949,9 +948,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             self.hp = min(self.hp, self.maxHp)
             if sendTotal:
                 self.d_setHp(self.hp)
-        
-        if self.hp <= 0:
-            self.addStat(ToontownGlobals.STAT_SAD)
 
     def b_setMaxHp(self, maxHp):
         if self.maxHp == maxHp:
@@ -2038,7 +2034,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
         msgs.append([textId, 1])
         self.b_setResistanceMessages(msgs)
-        self.addStat(ToontownGlobals.STAT_UNITES)
 
     def removeResistanceMessage(self, textId):
         msgs = self.getResistanceMessages()
@@ -2317,7 +2312,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         if overflowMoney > 0:
             bankMoney = self.bankMoney + overflowMoney
             self.b_setBankMoney(bankMoney)
-        self.addStat(ToontownGlobals.STAT_BEANS_EARNT, deltaMoney)
 
     def takeMoney(self, deltaMoney, bUseBank = True):
         totalMoney = self.money
@@ -2331,7 +2325,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             self.b_setMoney(0)
         else:
             self.b_setMoney(self.money - deltaMoney)
-        self.addStat(ToontownGlobals.STAT_BEANS_SPENT, deltaMoney)
         return True
 
     def b_setMoney(self, money):
@@ -3473,7 +3466,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             return 0
         elif self.flowerBasket.addFlower(species, variety):
             self.d_setFlowerBasket(*self.flowerBasket.getNetLists())
-            self.addStat(ToontownGlobals.STAT_FLOWERS)
             return 1
         else:
             self.notify.warning('addFlowerToBasket: addFlower failed')
@@ -3731,10 +3723,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         self.specialInventory[0] = pinkSlips
         self.b_setSpecialInventory(self.specialInventory)
     
-    def b_setCrateKeys(self, crateKeys):
-        self.specialInventory[1] = crateKeys
-        self.b_setSpecialInventory(self.specialInventory)
-    
     def b_setSpecialInventory(self, specialInventory):
         self.d_setSpecialInventory(specialInventory)
         self.setSpecialInventory(specialInventory)
@@ -3748,13 +3736,9 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
     def getPinkSlips(self):
         return self.specialInventory[0]
     
-    def getCrateKeys(self):
-        return self.specialInventory[1]
-
     def addPinkSlips(self, amountToAdd):
         pinkSlips = min(self.getPinkSlips() + amountToAdd, 255)
         self.b_setPinkSlips(pinkSlips)
-        self.addStat(ToontownGlobals.STAT_SLIPS, amountToAdd)
 
     def removePinkSlips(self, amount):
         if hasattr(self, 'autoRestockPinkSlips') and self.autoRestockPinkSlips:
@@ -3762,12 +3746,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         pinkSlips = max(self.getPinkSlips() - amount, 0)
         self.b_setPinkSlips(pinkSlips)
     
-    def addCrateKeys(self, amountToAdd):
-        self.b_setCrateKeys(min(self.getCrateKeys() + amountToAdd, 255))
-
-    def removeCrateKeys(self, amount):
-        self.b_setCrateKeys(max(self.getCrateKeys() - amount, 0))
-
     def b_setNametagStyle(self, nametagStyle):
         self.d_setNametagStyle(nametagStyle)
         self.setNametagStyle(nametagStyle)
@@ -4279,33 +4257,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
     def hasEPP(self, dept):
         return dept in self.epp
     
-    def b_setStats(self, stats):
-        self.d_setStats(stats)
-        self.setStats(stats)
-
-    def d_setStats(self, stats):
-        self.sendUpdate('setStats', [stats])
-
-    def setStats(self, stats):
-        self.stats = stats
-    
-    def getStats(self):
-        return self.stats
-    
-    def getStat(self, index):
-        return self.stats[index]
-    
-    def addStat(self, index, amount=1):
-        if amount <= 0:
-            return
-
-        self.stats[index] += amount
-        self.d_setStats(self.stats)
-    
-    def wipeStats(self):
-        self.stats = [0] * 22
-        self.d_setStats(self.stats)
-
 @magicWord(category=CATEGORY_PROGRAMMER, types=[str, int, int])
 def cheesyEffect(value, hood=0, expire=0):
     """
@@ -4537,17 +4488,6 @@ def fires(count):
         return 'Your fire count must be in range (0-255).'
     target.b_setPinkSlips(count)
     return '%s was given %d fires.' % (target.getName(), count)
-
-@magicWord(category=CATEGORY_PROGRAMMER, types=[int])
-def crateKeys(count):
-    """
-    Modifies the invoker's crate key count.
-    """
-    target = spellbook.getTarget()
-    if not 0 <= count <= 255:
-        return 'Your crate key must be in range (0-255).'
-    target.b_setCrateKeys(count)
-    return 'You were given %d crate keys.' % count
 
 @magicWord(category=CATEGORY_PROGRAMMER, types=[int])
 def maxMoney(maxMoney):

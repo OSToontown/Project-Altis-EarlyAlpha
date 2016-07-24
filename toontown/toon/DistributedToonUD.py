@@ -523,5 +523,3 @@ class DistributedToonUD(DistributedObjectUD):
     def setWishNameState(self, todo0):
         pass
     
-    def setStats(self, todo0):
-        pass

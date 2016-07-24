@@ -13,13 +13,6 @@ import SuitDNA
 import random
 AllBossCogs = []
 
-BOSS_TO_STAT = {
- 's': ToontownGlobals.STAT_VP,
- 'm': ToontownGlobals.STAT_CFO,
- 'l': ToontownGlobals.STAT_CJ,
- 'c': ToontownGlobals.STAT_CEO
-}
-
 class DistributedBossCogAI(DistributedAvatarAI.DistributedAvatarAI):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedBossCogAI')
 
@@ -51,7 +44,6 @@ class DistributedBossCogAI(DistributedAvatarAI.DistributedAvatarAI):
         self.attackCode = None
         self.attackAvId = 0
         self.hitCount = 0
-        self.keyReward = config.GetBool('get-key-reward-always', False) or random.random() <= 0.15
         AllBossCogs.append(self)
 
     def delete(self):
@@ -189,9 +181,6 @@ class DistributedBossCogAI(DistributedAvatarAI.DistributedAvatarAI):
 
     def getState(self):
         return self.state
-    
-    def getKeyReward(self):
-        return self.keyReward
 
     def formatReward(self):
         return 'unspecified'
@@ -269,7 +258,7 @@ class DistributedBossCogAI(DistributedAvatarAI.DistributedAvatarAI):
         pass
 
     def enterEpilogue(self):
-        self.giveKeyReward()
+        pass
 
     def exitEpilogue(self):
         pass
@@ -618,21 +607,3 @@ class DistributedBossCogAI(DistributedAvatarAI.DistributedAvatarAI):
     def doNextAttack(self, task):
         self.b_setAttackCode(ToontownGlobals.BossCogNoAttack)
     
-    def giveKeyReward(self):
-        if not self.keyReward:
-            return
-        
-        for toonId in self.involvedToons:
-            toon = self.air.doId2do.get(toonId)
-
-            if toon:
-                toon.addCrateKeys(1)
-    
-    def addStats(self):
-        stat = BOSS_TO_STAT[self.dept]
-
-        for toonId in self.involvedToons:
-            toon = self.air.doId2do.get(toonId)
-            
-            if toon:
-                toon.addStat(stat)

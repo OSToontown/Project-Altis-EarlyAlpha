@@ -8,7 +8,7 @@ set EVENTLOGGER_IP=127.0.0.1:7198
 set BASE_CHANNEL=1000000
 
 echo ===============================
-echo Starting Toontown 2.0 UberDOG server...
+echo Starting Project Altis UberDOG server...
 echo ppython: "C:\Panda3D-1.10.0\python\ppython.exe"
 echo Base channel: %BASE_CHANNEL%
 echo Max channels: %MAX_CHANNELS%

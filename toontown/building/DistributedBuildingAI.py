@@ -292,7 +292,6 @@ class DistributedBuildingAI(DistributedObjectAI.DistributedObjectAI):
                 self.air.writeServerEvent('buildingDefeated', t, '%s|%s|%s|%s' % (self.track, self.numFloors, self.zoneId, victorList))
             if toon is not None:
                 self.air.questManager.toonKilledBuilding(toon, self.track, self.difficulty, self.numFloors, self.zoneId, 0)
-                toon.addStat(ToontownGlobals.STAT_BLDG)
         for i in xrange(0, 4):
             victor = victorList[i]
             if (victor is None) or (victor not in self.air.doId2do):
@@ -330,7 +329,6 @@ class DistributedBuildingAI(DistributedObjectAI.DistributedObjectAI):
 
             if toon != None:
                 self.air.questManager.toonKilledBuilding(toon, self.track, self.difficulty, 5, self.zoneId, 1)
-                toon.addStat(ToontownGlobals.STAT_COGDO)
                 continue
 
         victorList.extend([None, None, None, None])

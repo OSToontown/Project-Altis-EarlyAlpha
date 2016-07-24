@@ -1,7 +1,7 @@
 from direct.distributed.DistributedObjectAI import DistributedObjectAI
 from toontown.catalog.CatalogItemList import CatalogItemList
 from toontown.catalog import CatalogItem
-from toontown.catalog.CatalogFurnitureItem import CatalogFurnitureItem, FLTrunk, FLCloset, FLBank, FLPhone, FLCrate, FLChair
+from toontown.catalog.CatalogFurnitureItem import CatalogFurnitureItem, FLTrunk, FLCloset, FLBank, FLPhone, FLChair
 from toontown.catalog.CatalogWallpaperItem import CatalogWallpaperItem
 from toontown.catalog.CatalogMouldingItem import CatalogMouldingItem
 from toontown.catalog.CatalogFlooringItem import CatalogFlooringItem
@@ -12,7 +12,6 @@ from DistributedPhoneAI import DistributedPhoneAI
 from DistributedClosetAI import DistributedClosetAI
 from DistributedTrunkAI import DistributedTrunkAI
 from DistributedBankAI import DistributedBankAI
-from DistributedRewardCrateAI import DistributedRewardCrateAI
 from DistributedChairAI import DistributedChairAI
 from otp.ai.MagicWordGlobal import *
 
@@ -245,8 +244,6 @@ class DistributedFurnitureManagerAI(DistributedObjectAI):
             do = DistributedBankAI(self.air, self, item)
         elif item.getFlags() & FLPhone:
             do = DistributedPhoneAI(self.air, self, item)
-        elif item.getFlags() & FLCrate:
-            do = DistributedRewardCrateAI(self.air, self, item)
         elif item.getFlags() & FLChair:
             do = DistributedChairAI(self.air, self, item)
         else:

@@ -19,7 +19,6 @@ FLOnTable = 16
 FLIsTable = 32
 FLBillboard = 64
 FLPhone = 128
-FLCrate = 256
 FLChair = 512
 FLTrunk = 2048
 FLBoysOnly = 4096
@@ -923,13 +922,7 @@ FurnitureTypes = {
          None,
          None,
          200,
-         FLPainting),
- 10040: ('phase_10/models/cashbotHQ/CBWoodCrate',
-         None,
-         None,
-         0,
-         FLCrate,
-         0.5)
+         FLPainting)
 }
 
 class CatalogFurnitureItem(CatalogAtticItem.CatalogAtticItem):

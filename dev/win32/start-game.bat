@@ -1,6 +1,6 @@
 @echo off
 
-title Toontown 2.0 Game Launcher
+title Project Altis Game Launcher
 
 echo Choose your connection method!
 echo.
@@ -29,7 +29,7 @@ if %INPUT%==1 (
 echo.
 
 echo ===============================
-echo Starting Toontown 2.0
+echo Starting Project Altis
 echo ppython: "C:\Panda3D-1.10.0\python\ppython.exe"
 
 if %INPUT%==1 (

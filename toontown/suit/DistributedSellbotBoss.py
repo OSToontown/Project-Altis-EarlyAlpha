@@ -458,9 +458,6 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         else:
             speech += TTLocalizer.CagedToonMaxed % (ToontownGlobals.MaxCogSuitLevel + 1)
         
-        if self.keyReward:
-            speech += TTLocalizer.BossRTKeyReward
-
         return speech
         
         return speech

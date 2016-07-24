@@ -19,7 +19,7 @@ vfs-mount resources/server /server
 model-path /
 
 # Server:
-server-version 1.2.1
+server-version 1.0.0
 min-access-level 700
 accountdb-type developer
 shard-low-pop 50
@@ -30,7 +30,7 @@ want-rpc-server #f
 rpc-server-endpoint http://localhost:8080/
 
 # DClass file:
-dc-file dependencies/astron/dclass/tt2.dc
+dc-file dependencies/astron/dclass/altis.dc
 
 # Core features:
 want-pets #t
@@ -57,8 +57,3 @@ want-instant-delivery #t
 cogdo-pop-factor 1.5
 cogdo-ratio 0.5
 default-directnotify-level info
-
-# Crates:
-dont-destroy-crate #t
-get-key-reward-always #t
-get-crate-reward-always #t

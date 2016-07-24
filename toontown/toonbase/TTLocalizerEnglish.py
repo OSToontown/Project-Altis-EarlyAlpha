@@ -1919,7 +1919,7 @@ AvatarPanelGroupRetract = 'Retract Invitation'
 AvatarPanelGroupMember = 'Already In Group'
 AvatarPanelGroupMemberKick = 'Remove'
 AvatarPanelCast = 'Cast Member'
-AvatarPanelCastInfo = '%s is a Toontown 2.0 Cast Member.'
+AvatarPanelCastInfo = '%s is a Project Altis Cast Member.'
 ReportPanelTitle = 'Report A Toon'
 ReportPanelBody = 'This feature will send a complete report to a Moderator. Instead of sending a report, you might choose to do one of the following:\n\n  - Teleport to another district\n  - Use "Ignore" on the toon\'s panel\n\nDo you really want to report %s to a Moderator?'
 ReportPanelBodyFriends = 'This feature will send a complete report to a Moderator. Instead of sending a report, you might choose to do one of the following:\n\n  - Teleport to another district\n  - Break your friendship\n\nDo you really want to report %s to a Moderator?\n\n(This will also break your friendship)'
@@ -2728,7 +2728,7 @@ SuitAttackTaunts = {'Audit': ["I believe your books don't balance.",
               "You aren't above the law!",
               'There should be a law against you.',
               "There's no ex post facto with me!",
-              "The opinions expressed in this attack are not those of Toontown 2.0.",
+              "The opinions expressed in this attack are not those of Project Altis.",
               'We cannot be held responsible for damages suffered in this attack.',
               'Your results for this attack may vary.',
               'This attack is void where prohibited.',
@@ -3441,7 +3441,7 @@ MusicEncntrGeneralBg = 'Encounter With Cogs'
 MusicTcSzActivity = 'Toontorial Medley'
 MusicTcSz = 'Strolling Along'
 MusicCreateAToon = 'The New Toon in Town'
-MusicTtTheme = 'The Toontown 2.0 Theme'
+MusicTtTheme = 'The Project Altis Theme'
 MusicTtTheme = 'The Toontown Theme'
 MusicMinigameRace = 'Slow and Steady'
 MusicTcNbrhood = 'Toontown Central'
@@ -4008,8 +4008,6 @@ HealthForceAcknowledgeMessage = 'You cannot leave the playground until your Laff
 InventoryTotalGags = 'Total gags\n%d / %d'
 InventoryPinkSlips = '%s Pink Slips'
 InventoryPinkSlip = '1 Pink Slip'
-InventoryCrateKeys = '%s Crate Keys'
-InventoryCrateKey = '1 Crate Key'
 InventoryDelete = 'DELETE'
 InventoryDone = 'DONE'
 InventoryDeleteHelp = 'Click on a gag to DELETE it.'
@@ -4487,7 +4485,7 @@ ClothesShopShortsStyle = 'Shorts Style'
 ClothesShopShortsColor = 'Shorts Color'
 ClothesShopBottomsStyle = 'Bottoms Style'
 ClothesShopBottomsColor = 'Bottoms Color'
-PromptTutorial = "Congratulations!!\nYou are Toontown 2.0's newest citizen!\n\nWould you like to continue to the Toontorial or teleport directly to Toontown Central?"
+PromptTutorial = "Congratulations!!\nYou are Project Altis's newest citizen!\n\nWould you like to continue to the Toontorial or teleport directly to Toontown Central?"
 MakeAToonSkipTutorial = 'Skip Toontorial'
 MakeAToonEnterTutorial = 'Enter Toontorial'
 MakeAToonDone = 'Done'
@@ -5240,8 +5238,7 @@ FurnitureNames = {100: 'Armchair',
  10000: 'Short Pumpkin',
  10010: 'Tall Pumpkin',
  10020: 'Winter Tree',
- 10030: 'Winter Wreath',
- 10040: 'Cog Nation Crate'}
+ 10030: 'Winter Wreath'}
 ClothingArticleNames = ('Shirt',
  'Shirt',
  'Shirt',
@@ -7010,7 +7007,7 @@ TipDict = {TIP_NONE: ('',),
                'Open or close your Shticker Book by pressing the "F8" key.',
                'You can look up by pressing the "Page Up" key and look down by pressing the "Page Down" key.',
                'Press the "Control" key to jump.',
-               'Press the "F9" key to take a screenshot, which will be saved in your Toontown 2.0 folder on your computer.',
+               'Press the "F9" key to take a screenshot, which will be saved in your Project Altis folder on your computer.',
                'You can change your screen resolution, adjust audio, and control other options on the Options Page in the Shticker Book.',
                "Try on your friend's clothing at the closet in their house.",
                'You can go to your house using the "Go Home" button on your map.',
@@ -7024,7 +7021,7 @@ TipDict = {TIP_NONE: ('',),
                'Change to different views of your Toon by pressing the Tab Key.',
                'Sometimes you can find several different ToonTasks offered for the same reward. Shop around!',
                'Finding friends with similar ToonTasks is a fun way to progress through the game.',
-               'You never need to save your Toontown progress. The Toontown 2.0 servers continually save all the necessary information.',
+               'You never need to save your Toontown progress. The Project Altis servers continually save all the necessary information.',
                'You can whisper to other Toons either by clicking on them or by selecting them from your Friends List.',
                'Some SpeedChat phrases play emotion animations on your Toon.',
                'If the area you are in is crowded, try changing Districts. Go to the District Page in the Shticker Book and select a different one.',
@@ -8703,51 +8700,9 @@ CEOSpeech = [
  "Wait, what's going on? I can't see but I hear explosions."
 ] # Len of words + 10
 
-CrateRewardMessage1 = 'Nice! You have earned a crate! It will arrive in your mailbox shortly.'
-CrateRewardMessage2 = 'You can open it with keys from boss battles.'
-CrateRewardMessages = [CrateRewardMessage1, CrateRewardMessage2]
-CrateNotOwner = 'Sorry, this is not your crate.'
-CrateNoKeys = 'Sorry, but you have no keys. You can find some in the cog facilities.'
-CrateAskToUse = 'Would you like to use a key to open this crate?'
-CrateBeanPrize = "Congratulations! You found %s jellybeans. They've been automatically added to your jellybean bank!"
-CrateBuffPrize = 'Congratulations! %s'
-CrateNametagPrize = "Congratulations! You've received a nametag. Check your mailbox to find out which one!"
-CrateEmotePrize = "Congratulations! You've unlocked a new emote. Check your mailbox to pick it up!"
-CrateClothingPrize = "Congratulations! You've received a new clothing item. Check your mailbox to check it out!"
-CrateAccessoryPrize = 'Congratulations! You found a new accessory for your Toon. Check your mailbox and rock it!'
-
-Stats = [
- 'Cogs defeated: %s',
- 'V2.0 cogs defeated: %s',
- 'Skelecogs defeated: %s',
- 'Jellybeans spent: %s',
- 'Jellybeans earnt: %s',
- 'Tasks completed: %s',
- 'Total VP defeats: %s',
- 'Total CFO defeats: %s',
- 'Total CJ defeats: %s',
- 'Total CEO defeats: %s',
- 'Gone sad: %s times',
- 'Buildings liberated: %s',
- 'Offices defeated: %s',
- 'Items ordered: %s',
- 'Fish caught: %s',
- 'Flowers picked: %s',
- 'Races completed: %s',
- 'Golf holes played: %s',
- 'Total SOS cards: %s',
- 'Total unites: %s',
- 'Total pink slips: %s',
- 'Total gags used: %s'
-]
-StatPageTitle = 'Statistics'
-StatPageClear = 'Clear'
-StatPageClearAsk = 'Are you sure you want to clear your stats? This is an irreversible action!'
-StatPageClearDone = 'Your stats have been cleared.'
-
 ChairAskToUse = 'Would you like to sit on this chair?'
 
-FriendSecretIntro = "If you are playing Toontown 2.0 with someone you know in the real world, you can become True Friends.  You can chat using the keyboard with your True Friends.  Other Toons won't understand what you're saying.\n\nYou do this by getting a True Friend Code.  Tell the True Friend Code to your friend, but not to anyone else.  When your friend types in your True Friend Code on his or her screen, you'll be True Friends in Toontown!"
+FriendSecretIntro = "If you are playing Project Altis with someone you know in the real world, you can become True Friends.  You can chat using the keyboard with your True Friends.  Other Toons won't understand what you're saying.\n\nYou do this by getting a True Friend Code.  Tell the True Friend Code to your friend, but not to anyone else.  When your friend types in your True Friend Code on his or her screen, you'll be True Friends in Toontown!"
 FriendSecretGetSecret = 'Get a True Friend Code'
 FriendSecretEnterSecret = 'If you have a True Friend Code from someone you know, type it here.'
 FriendSecretOK = lOK

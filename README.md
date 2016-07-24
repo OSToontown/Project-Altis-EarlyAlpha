@@ -1,5 +1,5 @@
-# Toontown-2-Revised
-single-player remake of Disney's Toontown Online
+# Project Altis
+remake of Disney's Toontown Online
 
 # Current Team
 

@@ -1,5 +1,5 @@
 # Window settings:
-window-title Toontown 2.0
+window-title Project Altis
 win-origin -1 -1
 icon-filename phase_3/etc/icon.ico
 cursor-filename phase_3/etc/toonmono.cur
@@ -101,7 +101,6 @@ show-total-population #t
 want-mat-all-tailors #t
 estate-day-night #t
 want-garden-game #f
-want-language-selection #t
 
 # Developer options:
 want-dev #f

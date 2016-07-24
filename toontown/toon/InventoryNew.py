@@ -125,11 +125,6 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         elif localAvatar.getPinkSlips() == 1:
             textTotal += TTLocalizer.InventoryPinkSlip
             textTotal += '\n'
-        
-        if localAvatar.getCrateKeys() > 1:
-            textTotal += TTLocalizer.InventoryCrateKeys % localAvatar.getCrateKeys()
-        elif localAvatar.getCrateKeys() == 1:
-            textTotal += TTLocalizer.InventoryCrateKey
 
         self.totalLabel['text'] = textTotal
 

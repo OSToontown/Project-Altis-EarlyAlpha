@@ -44,8 +44,7 @@ class ShtikerBook(DirectFrame, StateData.StateData):
          TTLocalizer.GardenPageTitle,
          TTLocalizer.GolfPageTitle,
          TTLocalizer.PhotoPageTitle,
-         TTLocalizer.EventsPageName,
-         TTLocalizer.StatPageTitle]
+         TTLocalizer.EventsPageName]
     
     def createPageTabFrame(self, x):
         frame = DirectFrame(parent=self, relief=None, pos=(x, 0, 0.66), scale=1.25)
@@ -255,10 +254,6 @@ class ShtikerBook(DirectFrame, StateData.StateData):
         elif pageName == TTLocalizer.PhotoPageTitle:
             iconGeom = iconModels = loader.loadModel('phase_4/models/minigames/photogame_filmroll')
             iconScale = (1.9, 1.5, 1.5)
-            iconModels.detachNode()
-        elif pageName == TTLocalizer.StatPageTitle:
-            iconGeom = iconModels = loader.loadModel('phase_3.5/models/gui/name_star')
-            iconColor = (0, 0.6, 1, 1)
             iconModels.detachNode()
         if pageName == TTLocalizer.OptionsPageTitle:
             pageName = TTLocalizer.OptionsTabTitle

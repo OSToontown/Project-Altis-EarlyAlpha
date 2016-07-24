@@ -16,7 +16,6 @@ from otp.otpbase import OTPGlobals
 from toontown.estate import GardenGlobals
 
 def recurseParent(intoNode, ParentName):
-	# funny fact: cogtown had a func like this
     parent = intoNode.getParent(0)
     if not parent or parent.getName() == 'render':
         return 0

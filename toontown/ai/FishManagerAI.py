@@ -51,7 +51,6 @@ class FishManagerAI:
             netlist = av.fishTank.getNetLists()
             av.d_setFishTank(netlist[0], netlist[1], netlist[2])
             del self.requestedFish[av.doId]
-            av.addStat(ToontownGlobals.STAT_FISH)
             return [itemType, genus, species, weight]
         if itemType == FishGlobals.FishItem:
             success, genus, species, weight = FishGlobals.getRandomFishVitals(zoneId, av.getFishingRod())
@@ -69,7 +68,6 @@ class FishManagerAI:
             netlist = av.fishTank.getNetLists()
             av.d_setFishTank(netlist[0], netlist[1], netlist[2])
             messenger.send('topToonsManager-event', [av.doId, TopToonsGlobals.CAT_FISH, 1])
-            av.addStat(ToontownGlobals.STAT_FISH)
             return [itemType, genus, species, weight]
         elif itemType == FishGlobals.BootItem:
             return [itemType, 0, 0, 0]
@@ -94,7 +92,6 @@ class FishManagerAI:
                 netlist = av.fishTank.getNetLists()
                 av.d_setFishTank(netlist[0], netlist[1], netlist[2])
                 messenger.send('topToonsManager-event', [av.doId, TopToonsGlobals.CAT_FISH, 1])
-                av.addStat(ToontownGlobals.STAT_FISH)
                 return [itemType, genus, species, weight]
         else:
             money = FishGlobals.Rod2JellybeanDict[av.getFishingRod()]

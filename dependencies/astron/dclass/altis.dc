@@ -292,7 +292,6 @@ from toontown.estate import DistributedBank/AI
 from toontown.estate import DistributedCloset/AI
 from toontown.estate import DistributedTrunk/AI
 from toontown.estate import DistributedPhone/AI
-from toontown.estate import DistributedRewardCrate/AI
 from toontown.estate import DistributedChair/AI
 from toontown.effects import DistributedFireworkShow/AI
 from toontown.estate import DistributedFireworksCannon/AI
@@ -753,10 +752,8 @@ dclass DistributedToon : DistributedPlayer {
   setNextKnockHeal(uint32) ram airecv;
   setTFRequest(uint32[] = [0, 0]) ram airecv;
   setEPP(uint8[] = []) required ownrecv db;
-  setStats(uint32[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) required ownrecv db;
   requestNametagStyle(uint8) airecv ownsend;
   requestFishingRod(uint8) airecv ownsend;
-  wipeStats() airecv ownsend;
   takeMoney(int16) airecv ownsend;
   attemptSubtractNPCFriend(uint32 npcId) ownsend airecv;
 };
@@ -839,7 +836,6 @@ dclass DistributedBossCog : DistributedNode {
   setToonIds(uint32[], uint32[], uint32[]) broadcast ram;
   setBattleIds(uint8, uint32, uint32) broadcast ram;
   setArenaSide(uint8) broadcast ram;
-  setKeyReward(bool) required broadcast ram;
   avatarEnter() airecv clsend;
   avatarExit() airecv clsend;
   avatarNearEnter() airecv clsend;
@@ -989,7 +985,6 @@ dclass DistributedBattleTutorial : DistributedBattle {
 };
 
 dclass DistributedLevelBattle : DistributedBattle {
-  announceCrateReward() broadcast;
 };
 
 dclass DistributedBattleFactory : DistributedLevelBattle {
@@ -2067,11 +2062,6 @@ dclass DistributedPhone : DistributedFurnitureItem {
   purchaseItemComplete();
   requestGiftAvatar(uint32) airecv clsend;
   setGiftAvatar(blob);
-};
-
-dclass DistributedRewardCrate : DistributedFurnitureItem {
-  requestKeyUsage() airecv clsend;
-  useKeyResponse(uint8, uint32);
 };
 
 dclass DistributedChair : DistributedFurnitureItem {

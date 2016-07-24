@@ -4,7 +4,7 @@ daemon:
 general:
     eventlogger: 127.0.0.1:7198
     dc_files:
-        - ../dclass/tt2.dc
+        - ../dclass/altis.dc
 
 messagedirector:
     bind: 127.0.0.1:7100
@@ -33,7 +33,7 @@ uberdogs:
 roles:
     - type: clientagent
       bind: 0.0.0.0:7199
-      version: "1.2.1"
+      version: "1.0.0"
       client:
        relocate: true
        add_interest: enabled

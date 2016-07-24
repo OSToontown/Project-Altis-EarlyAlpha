@@ -1637,9 +1637,6 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         else:
             speech += TTLocalizer.WitnessToonMaxed % (ToontownGlobals.MaxCogSuitLevel + 1)
         
-        if self.keyReward:
-            speech += TTLocalizer.BossRTKeyReward
-
         return speech
 
     def __positionToonsInFrontOfCannons(self):
