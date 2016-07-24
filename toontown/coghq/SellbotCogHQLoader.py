@@ -84,12 +84,9 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
                 doorTrigger.setY(doorTrigger.getY() - 1.5)  # Fixes the misplaced door trigger.
                 doorFrame.node().setEffect(DecalEffect.make())
             self.botcam1 = Actor("phase_9/models/char/BotCam-zero.bam",{"botcamneutral":"phase_9/models/char/BotCam-neutral.bam"})
-            self.bossroom = Actor("phase_9/models/cogHQ/BossRoomHQ.bam")
             self.botcam1.reparentTo(self.geom)
             self.botcam1.setPos(-0.01,-39.3,24)
             self.botcam1.loop('botcamneutral')
-            self.bossroom.reparentTo(self.geom)
-            self.bossroom.setPos(25,140,500)
             self.factoryPOV = Actor("phase_9/models/cogHQ/SellbotFactoryExterior")
             self.factoryPOV.reparentTo(self.geom)
             self.factoryPOV.setPos(615,-150,0)
