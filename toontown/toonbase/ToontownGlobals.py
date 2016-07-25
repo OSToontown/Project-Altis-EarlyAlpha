@@ -1606,15 +1606,11 @@ AV_TOUCH_CHECK_DIST_Z = 5.0
 AV_TOUCH_CHECK_TIMELIMIT_CL = 0.002
 AV_TOUCH_COUNT_LIMIT = 5
 AV_TOUCH_COUNT_TIME = 300
-GloveCost = 2000
 
 BMovementSpeed = 0
 BMovementSpeedMultiplier = 1.3
 
-BugReportSite = 'https://github.com/Spiderlover/Toontown-2-Revised/issues'
 NPCCollisionDelay = 2.5
-
-CostPerLaffRestock = 3
 
 FISHSALE_COMPLETE = 0
 FISHSALE_TROPHY = 1
@@ -1625,12 +1621,6 @@ CLERK_TOOKTOOLONG = 2
 
 KnockKnockHeal = 12
 KnockKnockCooldown = 600
-
-CHAIR_START = 0
-CHAIR_STOP = 1
-CHAIR_NONE = 0
-CHAIR_EXIT = 1
-CHAIR_UNEXPECTED_EXIT = 2
 
 MAX_TF_TRIES = 5
 TF_COOLDOWN_SECS = 60 * 60 * 24
@@ -1654,16 +1644,3 @@ COLOR_SATURATION_MIN = 0.5
 COLOR_SATURATION_MAX = 0.8
 COLOR_VALUE_MIN = 0.5
 COLOR_VALUE_MAX = 0.8
-
-TELEPORT_BUTTON_DEFAULT_COST = 50
-TELEPORT_BUTTON_COSTS = {
- ToontownCentral: 5,
- DonaldsDock: 15,
- DaisyGardens: 30,
- MinniesMelodyland: 45,
- TheBrrrgh: 60,
- DonaldsDreamland: 75
-}
-
-def getTeleportButtonCost(hoodId):
-    return TELEPORT_BUTTON_COSTS.get(hoodId, TELEPORT_BUTTON_DEFAULT_COST)

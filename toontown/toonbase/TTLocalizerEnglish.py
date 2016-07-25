@@ -5204,9 +5204,6 @@ FurnitureNames = {100: 'Armchair',
  1500: 'Radio',
  1510: 'Radio',
  1520: 'Radio',
- 1530: 'Television',
- 1531: '50" HD Television',
- 1532: '100" HD Television', 
  1600: 'Short Vase',
  1610: 'Tall Vase',
  1620: 'Short Vase',
@@ -8663,8 +8660,6 @@ CEOSpeech = [
  'I am very delighted by this news, I just wanted to thank you all for working so hard for this news.',
  "Wait, what's going on? I can't see but I hear explosions."
 ]
-
-ChairAskToUse = 'Would you like to sit on this chair?'
 
 FriendSecretIntro = "If you are playing Project Altis with someone you know in the real world, you can become True Friends.  You can chat using the keyboard with your True Friends.  Other Toons won't understand what you're saying.\n\nYou do this by getting a True Friend Code.  Tell the True Friend Code to your friend, but not to anyone else.  When your friend types in your True Friend Code on his or her screen, you'll be True Friends in Toontown!"
 FriendSecretGetSecret = 'Get a True Friend Code'

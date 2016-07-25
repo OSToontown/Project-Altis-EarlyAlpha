@@ -4046,27 +4046,6 @@ class BuffReward(Reward):
     def getPosterString(self):
         return TTLocalizer.getBuffPosterString(self.getBuffId())
 
-class EPPReward(Reward):
-    trackNames = [TTLocalizer.Bossbot,
-                  TTLocalizer.Lawbot,
-                  TTLocalizer.Cashbot,
-                  TTLocalizer.Sellbot]
-     
-    def sendRewardAI(self, av):
-        av.addEPP(self.reward[0])
-    
-    def countReward(self, qrc):
-        pass
-    
-    def getCogTrackName(self):
-        return EPPReward.trackNames[self.reward[0]]
-    
-    def getString(self):
-        return TTLocalizer.QuestsEPPReward % self.getCogTrackName()
-    
-    def getPosterString(self):
-        return TTLocalizer.QuestsEPPRewardPoster % self.getCogTrackName()       
-
 
 def getRewardClass(id):
     reward = RewardDict.get(id)
@@ -4460,11 +4439,7 @@ RewardDict = {
     3001: (BuffReward, ToontownGlobals.BMovementSpeed, 30),
     3002: (BuffReward, ToontownGlobals.BMovementSpeed, 60),
     3003: (BuffReward, ToontownGlobals.BMovementSpeed, 180),
-    3004: (BuffReward, ToontownGlobals.BMovementSpeed, 360),
-    10000: (EPPReward, 0), # Bossbot
-    10001: (EPPReward, 1), # Lawbot
-    10002: (EPPReward, 2), # Cashbot
-    10003: (EPPReward, 3) # Sellbot
+    3004: (BuffReward, ToontownGlobals.BMovementSpeed, 360)
 }
 
 BuffRewardIds = [3001, 3002, 3003, 3004]
