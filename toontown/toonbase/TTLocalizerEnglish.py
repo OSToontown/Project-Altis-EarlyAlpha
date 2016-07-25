@@ -3793,11 +3793,12 @@ MapPageYouAreAtHome = 'You are at\nyour estate'
 MapPageYouAreAtSomeonesHome = 'You are at %s estate'
 MapPageGoTo = 'Go To\n%s'
 OptionsPageTitle = 'Options'
-ExtraOptionsPageTitle = 'Extra'
 OptionsTabTitle = 'Options\n& Codes'
 OptionsPageExitToontown = 'Exit Toontown'
 OptionsPageMusic = 'Music Volume:'
 OptionsPageSFX = 'SFX Volume:'
+OptionsPageMusicOnLabel = 'Music is on.'
+OptionsPageMusicOffLabel = 'Music is off.'
 OptionsPageSFXOnLabel = 'Sound Effects are on.'
 OptionsPageSFXOffLabel = 'Sound Effects are off.'
 OptionsPageToonChatSoundsOnLabel = 'Type Chat Sounds are on.'
@@ -8467,30 +8468,10 @@ InteractivePropTrackBonusTerms = {0: 'Super Toon-Up!',
  4: 'Super Throw!',
  5: 'Super Squirt!',
  6: ''}
-GloveInvalidColorMessage = "That's an unpainted color."
-GloveSameColorMessage = "You're already wearing those gloves!"
-GloveNoMoneyMessage = "You don't have enough jellybeans!"
-GloveMoreMoneyMessage = 'You need %s jellybeans to buy new gloves!'
-GloveSuccessMessage = 'Have fun with your new gloves!'
-GlovePickColorMessage = 'Feel free to choose!'
-GloveGuiTitle = 'Choose a glove color!'
-GloveGuiNotice = 'Costs %s jellybeans.'
-GloveGuiBuy = 'Buy'
-GloveGuiSameColor = 'You already have these!'
-LanguageButtonText = 'Language'
-LanguageSelectorTitle = 'Choose your language!'
-LanguageSelectorCurrent = 'Current language: %s'
-LanguageSelectorAvailable = 'Available languages:'
-LanguageSelectorBack = 'Back'
-LanguageSelectorConfirm = 'Are you sure you want to change your language to %s? This will close your game.'
-LanguageSelectorSameLanguage = "You're already using that language!"
-CogLevelLabelOn = 'The cog level GUI is on.'
-CogLevelLabelOff = 'The cog level GUI is off.'
 
 HouseNames = ("Bungalow", "Tiki", "Teepee", "Castle", "Cupcake", "Cabin")
 CatalogPurchaseHouseType = "When you buy a new house type, the current one is replaced by it. To recover the old type, you'll need to buy it back. Continue?"
-BugReportButton = 'Report a Bug'
-BugReportNotice = 'Attention!\n\nThis button will open a browser which will send you to a third party bug tracker website. This site requires an Github account to login. It may ask you to create an account.\n\nAre you sure you want to continue?'
+
 # Buffs
 
 buffIdStrings = {
@@ -8563,12 +8544,7 @@ DonaldChatter = ["I'm glad you're here today!",
 NPCFriendUnavailable = 'Unavailable'
 FireTalkMessage = "You're fired!"
 
-RestockAskMessage = "Would you like to\nrestock %s laff for %s jellybeans?"
-RestockNoMoneyGuiMessage = "\n\x01WLRed\x01Not enough jellybeans\x02"
-RestockFullLaffMessage = "You're already happy!"
-RestockLessLaffMessage = "Why would you want to be less happy than you are right now?"
-RestockNoMoneyMessage = "You don't have enough jellybeans for that!"
-RestockSuccessfulMessage = "You're welcome! Have fun!"
+
 InVP = ' in a V.P. Battle'
 InFieldOffice = ' in a Sellbot Field Office'
 CogPanelLevel = 'Level %s'
@@ -8584,17 +8560,7 @@ def convertSecondsToDate(seconds):
     return '%d:%02d:%02d' % (h, m, s)
 
 ToonDefeatedMessage = '%s was defeated!'
-
-BugReportButton = 'Report a Bug'
-BugReportNotice = 'Attention!\n\nThis button will open a browser which will send you to a third party bug tracker website. This site requires an Ubuntu One account to login. It may ask you to create an account.\n\nAre you sure you want to continue?'
-
 CodeRedemptionWarning = 'NOTICE: All codes can only be entered once!'
-
-CogInterfaceLabelOn = 'The cog battle interface is on.'
-CogInterfaceLabelOff = 'The cog battle interface is off.'
-FieldOfViewLabel = 'Field of View:'
-NametagStyleLabel = 'Nametag Style:'
-FishingPoleLabel = 'Fishing Rod:'
 
 BossLocations = {
  'c': 'Bossbot Clubhouse\nBanquet',
@@ -8751,20 +8717,11 @@ BattleSOSPopupHP = '%s %s HP\n'
 
 DetailPanelSOS = 'SOS Cards'
 
-TeleportLabelOn = 'Accepting teleports.'
-TeleportLabelOff = 'Not accepting teleports.'
-TeleportPanelNoTeleport = '%s needs some time alone right now.'
-
 InventoryDeleteAll = 'DELETE ALL'
 InventoryDeleteConfirm = "Are you sure you want to delete all your gags? Don't worry, your level 7 gags are safe!"
 
 ClothesGUICount = '%s/%s'
-
-FpsMeterLabelOn = 'The frame rate meter is on.'
-FpsMeterLabelOff = 'The frame rate meter is off.'
-
 DefaultDoodleName = 'Smiley'
-LoopysSandwich = "Loopy's Sandvich"
 
 Blacklist = [
  "$1ut",
