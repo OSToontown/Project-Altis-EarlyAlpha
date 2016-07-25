@@ -3800,8 +3800,8 @@ OptionsPageMusic = 'Music Volume:'
 OptionsPageSFX = 'SFX Volume:'
 OptionsPageSFXOnLabel = 'Sound Effects are on.'
 OptionsPageSFXOffLabel = 'Sound Effects are off.'
-OptionsPageToonChatSoundsOnLabel = '   Type Chat Sounds are on.'
-OptionsPageToonChatSoundsOffLabel = '   Type Chat Sounds are off.'
+OptionsPageToonChatSoundsOnLabel = 'Type Chat Sounds are on.'
+OptionsPageToonChatSoundsOffLabel = 'Type Chat Sounds are off.'
 OptionsPageFriendsEnabledLabel = 'Accepting new friend requests.'
 OptionsPageFriendsDisabledLabel = 'Not accepting friend requests.'
 OptionsPageWhisperEnabledLabel = 'Allowing whispers from anyone.'
@@ -8592,8 +8592,6 @@ CodeRedemptionWarning = 'NOTICE: All codes can only be entered once!'
 
 CogInterfaceLabelOn = 'The cog battle interface is on.'
 CogInterfaceLabelOff = 'The cog battle interface is off.'
-TpTransitionLabelOn = 'The teleport transition is on.'
-TpTransitionLabelOff = 'The teleport transition is off.'
 FieldOfViewLabel = 'Field of View:'
 NametagStyleLabel = 'Nametag Style:'
 FishingPoleLabel = 'Fishing Rod:'
@@ -8698,7 +8696,7 @@ CEOSpeech = [
  'And thus we, the Cog Nation, are striving.',
  'I am very delighted by this news, I just wanted to thank you all for working so hard for this news.',
  "Wait, what's going on? I can't see but I hear explosions."
-] # Len of words + 10
+]
 
 ChairAskToUse = 'Would you like to sit on this chair?'
 
@@ -8735,11 +8733,6 @@ ColorAll = 'All'
 ShardPagePreferred = 'Preferred'
 ShardPageShardTitle = '%s Population: %s'
 ShardPageTeleport = 'Teleport to\n%s'
-
-TeleportButton = 'Teleport'
-TeleportButtonNoMoney = 'Sorry, but you need %s jellybeans to teleport!'
-TeleportButtonConfirm = 'Would you like to spend %s jellybeans to teleport?'
-TeleportButtonTakenOver = 'Sorry, but this shop has been taken over by the Cogs!'
 
 BattleCogPopup = '\x01androidGreen\x01Group attacks:\x02\n%s\n\n\x01androidGreen\x01Regular attacks:\x02\n%s'
 BattleCogPopupAttack = '%s %s HP'
