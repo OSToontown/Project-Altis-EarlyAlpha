@@ -101,11 +101,6 @@ def teleportIn(attack, npc, pos = Point3(0, 0, 0), hpr = Vec3(180.0, 0.0, 0.0)):
     h = Func(npc.loop, 'neutral')
     seq = Sequence(a, b, c, d, e, ee, f, g, h)
     seq.append(Func(npc.clearChat))
-    if npc.getName() == 'Magic Cat':
-        magicCatTrack = Sequence()
-        magicCatTrack.append(Func(npc.setChatAbsolute, "I've got this, so start dancing!", CFSpeech | CFTimeout))
-        magicCatTrack.append(Func(attack['toon'].loop, 'victory'))
-        seq.append(magicCatTrack)
     return seq
 
 
