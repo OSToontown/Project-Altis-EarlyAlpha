@@ -4,7 +4,6 @@ from otp.distributed.OtpDoGlobals import *
 from otp.distributed.DistributedDirectoryAI import DistributedDirectoryAI
 from toontown.distributed.ToontownInternalRepository import ToontownInternalRepository
 import toontown.minigame.MinigameCreatorAI
-from toontown.uberdog.TopToonsManagerUD import TopToonsManagerUD
 
 if config.GetBool('want-rpc-server', False):
     from toontown.rpc.ToontownRPCServer import ToontownRPCServer
@@ -15,7 +14,6 @@ class ToontownUberRepository(ToontownInternalRepository):
         ToontownInternalRepository.__init__(self, baseChannel, serverId, dcSuffix='UD')
 
         self.notify.setInfo(True)
-        self.wantTopToons = self.config.GetBool('want-top-toons', True)
 
     def handleConnected(self):
         ToontownInternalRepository.handleConnected(self)
@@ -39,6 +37,3 @@ class ToontownUberRepository(ToontownInternalRepository):
         self.chatAgent = simbase.air.generateGlobalObject(OTP_DO_ID_CHAT_MANAGER, 'ChatAgent')
         self.friendsManager = simbase.air.generateGlobalObject(OTP_DO_ID_TT_FRIENDS_MANAGER, 'TTFriendsManager')
         self.globalPartyMgr = simbase.air.generateGlobalObject(OTP_DO_ID_GLOBAL_PARTY_MANAGER, 'GlobalPartyManager')
-        if self.wantTopToons:
-            self.topToonsMgr = TopToonsManagerUD(self)
-

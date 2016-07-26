@@ -32,7 +32,6 @@ from toontown.toonbase import TTLocalizer, ToontownBattleGlobals, ToontownGlobal
 from toontown.toonbase.ToontownGlobals import *
 from NPCToons import npcFriends
 import Experience, InventoryBase, ToonDNA, random, time
-from toontown.uberdog import TopToonsGlobals
 
 if simbase.wantPets:
     from toontown.pets import PetLookerAI, PetObserve
@@ -2295,8 +2294,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         return self.maxBankMoney
 
     def addMoney(self, deltaMoney):
-        if deltaMoney > 0:
-            messenger.send('topToonsManager-event', [self.doId, TopToonsGlobals.CAT_JELLYBEAN, deltaMoney])
         money = deltaMoney + self.money
         pocketMoney = min(money, self.maxMoney)
         self.b_setMoney(pocketMoney)

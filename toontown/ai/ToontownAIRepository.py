@@ -50,7 +50,6 @@ from toontown.toon import NPCToons
 from toontown.toonbase import ToontownGlobals
 from toontown.tutorial.TutorialManagerAI import TutorialManagerAI
 from toontown.uberdog.DistributedPartyManagerAI import DistributedPartyManagerAI
-from toontown.uberdog.TopToonsManagerAI import TopToonsManagerAI
 #from toontown.uberdog.DistributedLobbyManagerAI import DistributedLobbyManagerAI
 import threading
 
@@ -86,7 +85,6 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.wantCogbuildings = self.config.GetBool('want-cogbuildings', True)
         self.wantCogdominiums = self.config.GetBool('want-cogdominiums', True)
         self.wantTrackClsends = self.config.GetBool('want-track-clsends', False)
-        self.wantTopToons = self.config.GetBool('want-top-toons', True)
         self.baseXpMultiplier = self.config.GetFloat('base-xp-multiplier', 1.0)
 
         self.cogSuitMessageSent = False
@@ -100,8 +98,6 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.newsManager.generateWithRequired(2)
         self.safeZoneManager = SafeZoneManagerAI(self)
         self.safeZoneManager.generateWithRequired(2)
-        self.topToonsMgr = TopToonsManagerAI(self)
-        #self.topToonsMgr.generateWithRequired(2)
         self.tutorialManager = TutorialManagerAI(self)
         self.tutorialManager.generateWithRequired(2)
         self.friendManager = FriendManagerAI(self)
@@ -122,8 +118,6 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.codeRedemptionMgr.generateWithRequired(2)
         self.buildingQueryMgr = DistributedBuildingQueryMgrAI(self)
         self.buildingQueryMgr.generateWithRequired(2)
-        if self.wantTopToons:
-            self.topToonsMgr = TopToonsManagerAI(self)
         if self.wantKarts:
             self.leaderboardMgr = LeaderboardMgrAI(self)
         if self.wantFishing:

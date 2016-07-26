@@ -6,7 +6,6 @@ from PhoneGlobals import *
 from toontown.toonbase import ToontownGlobals
 from toontown.catalog import CatalogItem, CatalogInvalidItem, GiftAvatar
 from toontown.catalog.CatalogItemList import CatalogItemList
-from toontown.uberdog import TopToonsGlobals
 
 import json
 
@@ -207,9 +206,8 @@ class DistributedPhoneAI(DistributedFurnitureItemAI):
     
     def sendGiftPurchaseResponse(self, context, avId, returnCode):
         if returnCode in (ToontownGlobals.P_ItemOnOrder, ToontownGlobals.P_ItemAvailable):
-            messenger.send('topToonsManager-event', [avId, TopToonsGlobals.CAT_CATALOG | TopToonsGlobals.CAT_GIFTS, 1])
 
-        self.sendUpdateToAvatarId(avId, 'requestGiftPurchaseResponse', [context, returnCode])
+            self.sendUpdateToAvatarId(avId, 'requestGiftPurchaseResponse', [context, returnCode])
 
     def requestPurchaseMessage(self, context, blob, optional):
         av = self.__getCaller()
@@ -220,9 +218,8 @@ class DistributedPhoneAI(DistributedFurnitureItemAI):
         returnCode = self.attemptPurchase(context, av, blob, optional)
         
         if returnCode in (ToontownGlobals.P_ItemOnOrder, ToontownGlobals.P_ItemAvailable):
-            messenger.send('topToonsManager-event', [av.doId, TopToonsGlobals.CAT_CATALOG, 1])
         
-        self.sendUpdateToAvatarId(av.doId, 'requestPurchaseResponse', [context, returnCode])
+            self.sendUpdateToAvatarId(av.doId, 'requestPurchaseResponse', [context, returnCode])
         
     def requestGiftPurchaseMessage(self, context, targetId, blob, optional):
         av = self.__getCaller()

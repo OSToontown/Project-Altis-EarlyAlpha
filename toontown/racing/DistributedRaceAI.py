@@ -3,7 +3,6 @@ from direct.distributed.ClockDelta import *
 from direct.distributed.DistributedObjectAI import DistributedObjectAI
 from direct.fsm.FSM import FSM
 from direct.task import Task
-from toontown.uberdog import TopToonsGlobals
 import random
 
 from toontown.racing import RaceGlobals
@@ -371,13 +370,11 @@ class DistributedRaceAI(DistributedObjectAI, FSM):
                 self.sendUpdate('endCircuitRace')
 
     def calculateTrophies(self, avId, won, qualify, time):
-        if won:
-            messenger.send('topToonsManager-event', [avId, TopToonsGlobals.CAT_RACE_WON, 1])
         av = self.air.doId2do[avId]
         kartingHistory = av.getKartingHistory()
         avTrophies = av.getKartingTrophies()
         numTrophies = 0
-        for i in xrange(30):
+        for i in range(30):
             if avTrophies[i] != 0:
                 numTrophies += 1
         oldLaffBoost = int(numTrophies/10)
@@ -389,7 +386,7 @@ class DistributedRaceAI(DistributedObjectAI, FSM):
             if kartingHistory[3] > RaceGlobals.TotalWonRaces:
                 avTrophies[RaceGlobals.TotalWins] = 1
                 trophies.append(RaceGlobals.TotalWins)
-            for i in xrange(3):
+            for i in range(3):
                 if kartingHistory[genre] >= RaceGlobals.WonRaces[i] and avTrophies[RaceGlobals.AllWinsList[genre][i]] != 1:
                     avTrophies[RaceGlobals.AllWinsList[genre][i]] = 1
                     trophies.append(RaceGlobals.AllWinsList[genre][i])
@@ -399,13 +396,10 @@ class DistributedRaceAI(DistributedObjectAI, FSM):
             if kartingHistory[7] >= RaceGlobals.TotalQualifiedRaces and avTrophies[RaceGlobals.TotalQuals] != 1:
                 avTrophies[RaceGlobals.TotalQuals] = 1
                 trophies.append(RaceGlobals.TotalQuals)
-            for i in xrange(3):
+            for i in range(3):
                 if kartingHistory[genre + 4] >= RaceGlobals.QualifiedRaces[i] and avTrophies[RaceGlobals.AllQualsList[genre][i]] != 1:
                     avTrophies[RaceGlobals.AllQualsList[genre][i]] = 1
                     trophies.append(RaceGlobals.AllQualsList[genre][i])
-        for i, history in enumerate(kartingHistory):
-            if history > 255:
-                kartingHistory[i] = 255
         av.b_setKartingHistory(kartingHistory)
         pKartingBest = av.getKartingPersonalBestAll()
         trackIndex = TTLocalizer.KartRace_TrackNames.keys().index(self.trackId)
@@ -422,7 +416,7 @@ class DistributedRaceAI(DistributedObjectAI, FSM):
                 trophies.append(RaceGlobals.GrandTouring)
         newLaffBoost = int((len(trophies) + numTrophies)/10)
         if newLaffBoost - oldLaffBoost != 0:
-            for i in xrange(newLaffBoost):
+            for i in range(newLaffBoost):
                 if avTrophies[RaceGlobals.TrophyCups[i]] != 1:
                     avTrophies[RaceGlobals.TrophyCups[i]] = 1
                     trophies.append(RaceGlobals.TrophyCups[i])

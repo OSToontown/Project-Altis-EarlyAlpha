@@ -4,7 +4,6 @@ from otp.ai.MagicWordGlobal import *
 from toontown.fishing import FishGlobals
 from toontown.fishing.FishBase import FishBase
 from toontown.toonbase import TTLocalizer, ToontownGlobals
-from toontown.uberdog import TopToonsGlobals
 
 
 class FishManagerAI:
@@ -67,7 +66,6 @@ class FishManagerAI:
             av.fishTank.addFish(fish)
             netlist = av.fishTank.getNetLists()
             av.d_setFishTank(netlist[0], netlist[1], netlist[2])
-            messenger.send('topToonsManager-event', [av.doId, TopToonsGlobals.CAT_FISH, 1])
             return [itemType, genus, species, weight]
         elif itemType == FishGlobals.BootItem:
             return [itemType, 0, 0, 0]
@@ -91,7 +89,6 @@ class FishManagerAI:
                 av.fishTank.addFish(fish)
                 netlist = av.fishTank.getNetLists()
                 av.d_setFishTank(netlist[0], netlist[1], netlist[2])
-                messenger.send('topToonsManager-event', [av.doId, TopToonsGlobals.CAT_FISH, 1])
                 return [itemType, genus, species, weight]
         else:
             money = FishGlobals.Rod2JellybeanDict[av.getFishingRod()]

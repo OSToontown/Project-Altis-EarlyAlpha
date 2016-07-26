@@ -29,7 +29,6 @@ want-chinese-checkers #t
 want-checkers #t
 want-house-types #f
 want-gifting #t
-want-top-toons #f
 want-emblems #f
 
 # Chat:
