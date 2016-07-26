@@ -56,7 +56,6 @@ class Walk(StateData.StateData):
         if base.localAvatar.hp > 0:
             base.localAvatar.startTrackAnimToSpeed()
             base.localAvatar.setWalkSpeedNormal()
-            base.localAvatar.applyBuffs()
         else:
             self.fsm.request('slowWalking')
 
@@ -65,7 +64,6 @@ class Walk(StateData.StateData):
 
     def enterSwimming(self, swimSound):
         base.localAvatar.setWalkSpeedNormal()
-        base.localAvatar.applyBuffs()
         self.swimSound = swimSound
         self.swimSoundPlaying = 0
         base.localAvatar.b_setAnimState('swim', base.localAvatar.animMultiplier)

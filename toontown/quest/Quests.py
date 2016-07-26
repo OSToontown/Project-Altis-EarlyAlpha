@@ -4029,24 +4029,6 @@ class CogSuitPartReward(Reward):
         return TTLocalizer.QuestsCogSuitPartRewardPoster % {'cogTrack': self.getCogTrackName(),
          'part': self.getCogPartName()}
 
-
-class BuffReward(Reward):
-    def sendRewardAI(self, av):
-        av.addBuff(self.getBuffId(), self.getBuffTime())
-
-    def getBuffId(self):
-        return self.reward[0]
-
-    def getBuffTime(self):
-        return self.reward[1]
-
-    def getString(self):
-        return TTLocalizer.getBuffString(self.getBuffId(), self.getBuffTime())
-
-    def getPosterString(self):
-        return TTLocalizer.getBuffPosterString(self.getBuffId())
-
-
 def getRewardClass(id):
     reward = RewardDict.get(id)
     if reward:
@@ -4433,16 +4415,8 @@ RewardDict = {
     4213: (CogSuitPartReward, 'c', CogDisguiseGlobals.leftArmHand),
     4214: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightArmUpper),
     4215: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightArmLower),
-    4216: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightArmHand),
-    # Buff rewards (BuffID, Time):
-    # Movement Speed Increase
-    3001: (BuffReward, ToontownGlobals.BMovementSpeed, 30),
-    3002: (BuffReward, ToontownGlobals.BMovementSpeed, 60),
-    3003: (BuffReward, ToontownGlobals.BMovementSpeed, 180),
-    3004: (BuffReward, ToontownGlobals.BMovementSpeed, 360)
+    4216: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightArmHand)
 }
-
-BuffRewardIds = [3001, 3002, 3003, 3004]
 
 def getNumTiers():
     return len(RequiredRewardTrackDict) - 1
@@ -4528,23 +4502,23 @@ RequiredRewardTrackDict = {
 OptionalRewardTrackDict = {
     TT_TIER: (),
     TT_TIER + 1: (),
-    TT_TIER + 2: (1000, 601, 601, 602, 602, 2205, 2206, 2205, 2206, 3001, 3001, 3001, 3001),
-    TT_TIER + 3: (601, 601, 602, 602, 2205, 2206, 2205, 2206, 3002, 3001, 3001, 3001),
-    DD_TIER: (1000, 602, 602, 603, 603, 2101, 2102, 2105, 2106, 3002, 3002, 3002, 3001),
-    DD_TIER + 1: (1000, 602, 602, 603, 603, 2101, 2102, 2105, 2106, 3002, 3002, 3002, 3001),
-    DD_TIER + 2: (1000, 602, 602, 603, 603, 2101, 2102, 2105, 2106, 3002, 3002, 3002, 3002),
-    DG_TIER: (1000, 603, 603, 604, 604, 2501, 2502, 2503, 2504, 2505, 2506, 3002, 3002, 3002, 3002),
-    MM_TIER: (1000, 604, 604, 605, 605, 2403, 2404, 2405, 2406, 2407, 2408, 2409, 3002, 3002, 3002, 3002),
-    MM_TIER + 1: (1000, 604, 604, 605, 605, 2403, 2404, 2405, 2406, 2407, 2408, 2409, 3003, 3003, 3002, 3002),
-    MM_TIER + 2: (1000, 604, 604, 605, 605, 2403, 2404, 2405, 2406, 2407, 2408, 2409, 3003, 3003, 3002, 3002),
-    BR_TIER: (1000, 2305, 2306, 2307, 2308, 2309, 2310, 2311, 3003, 3003, 3003, 3003),
-    BR_TIER + 1: (1000, 2305, 2306, 2307, 2308, 2309, 2310, 2311, 3003, 3003, 3003, 3003),
-    BR_TIER + 2: (1000, 2305, 2306, 2307, 2308, 2309, 2310, 2311, 3003, 3003, 3003, 3003),
-    DL_TIER: (2901, 2902, 2907, 2908, 2909, 2910, 2911, 3003, 3003, 3004, 3004),
-    DL_TIER + 1: (1000, 2923, 2924, 2927, 2928, 2929, 2930, 2931, 3003, 3003, 3004, 3004),
-    DL_TIER + 2: (2941, 2942, 2943, 2944, 2947, 2948, 2949, 2950, 2951, 3004, 3004, 3004, 3004),
-    DL_TIER + 3: (1000, 2961, 2962, 2963, 2964, 2965, 2966, 2967, 2968, 2969, 2970, 2971, 3004, 3004, 3004, 3004),
-    ELDER_TIER: (1000, 1000, 613, 614, 615, 616, 617, 618, 2961, 2962, 2963, 2964, 2965, 2966, 2967, 2968, 2969, 2970, 2971, 3004, 3004, 3004)
+    TT_TIER + 2: (1000, 601, 601, 602, 602, 2205, 2206, 2205, 2206),
+    TT_TIER + 3: (601, 601, 602, 602, 2205, 2206, 2205, 2206),
+    DD_TIER: (1000, 602, 602, 603, 603, 2101, 2102, 2105, 2106),
+    DD_TIER + 1: (1000, 602, 602, 603, 603, 2101, 2102, 2105, 2106),
+    DD_TIER + 2: (1000, 602, 602, 603, 603, 2101, 2102, 2105, 2106),
+    DG_TIER: (1000, 603, 603, 604, 604, 2501, 2502, 2503, 2504, 2505, 2506),
+    MM_TIER: (1000, 604, 604, 605, 605, 2403, 2404, 2405, 2406, 2407, 2408, 2409),
+    MM_TIER + 1: (1000, 604, 604, 605, 605, 2403, 2404, 2405, 2406, 2407, 2408, 2409),
+    MM_TIER + 2: (1000, 604, 604, 605, 605, 2403, 2404, 2405, 2406, 2407, 2408, 2409),
+    BR_TIER: (1000, 2305, 2306, 2307, 2308, 2309, 2310, 2311),
+    BR_TIER + 1: (1000, 2305, 2306, 2307, 2308, 2309, 2310, 2311),
+    BR_TIER + 2: (1000, 2305, 2306, 2307, 2308, 2309, 2310, 2311),
+    DL_TIER: (2901, 2902, 2907, 2908, 2909, 2910, 2911),
+    DL_TIER + 1: (1000, 2923, 2924, 2927, 2928, 2929, 2930, 2931),
+    DL_TIER + 2: (2941, 2942, 2943, 2944, 2947, 2948, 2949, 2950, 2951),
+    DL_TIER + 3: (1000, 2961, 2962, 2963, 2964, 2965, 2966, 2967, 2968, 2969, 2970, 2971),
+    ELDER_TIER: (1000, 1000, 613, 614, 615, 616, 617, 618, 2961, 2962, 2963, 2964, 2965, 2966, 2967, 2968, 2969, 2970, 2971)
 }
 
 def isRewardOptional(tier, rewardId):

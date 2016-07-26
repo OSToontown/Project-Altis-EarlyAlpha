@@ -173,7 +173,6 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         self.gmNameTagEnabled = 0
         self.gmNameTagColor = 'whiteGM'
         self.gmNameTagString = ''
-        self.buffs = []
         self.redeemedCodes = []
         self.ignored = []
         self.reported = []
@@ -2474,10 +2473,6 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
     def setAnimalSound(self, index):
         self.animalSound = index
 
-    def setBuffs(self, buffs):
-        self.buffs = buffs
-        self.applyBuffs()
-
     def setRedeemedCodes(self, redeemedCodes):
         self.redeemedCodes = redeemedCodes
 
@@ -2527,23 +2522,6 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
     def isTrueFriends(self, doId):
         return base.cr.wantTrueFriends() and doId in self.trueFriends
 
-    def applyBuffs(self):
-        for id, timestamp in enumerate(self.buffs):
-            if id == ToontownGlobals.BMovementSpeed:
-                if not timestamp:
-                    return
-                if self.zoneId is None:
-                    return
-                if ZoneUtil.isDynamicZone(self.zoneId):
-                    return
-                if ZoneUtil.getWhereName(self.zoneId, True) not in ('playground', 'street', 'toonInterior', 'cogHQExterior', 'factoryExterior'):
-                    return
-                self.controlManager.setSpeeds(
-                    ToontownGlobals.ToonForwardSpeed * ToontownGlobals.BMovementSpeedMultiplier,
-                    ToontownGlobals.ToonJumpForce,
-                    ToontownGlobals.ToonReverseSpeed * ToontownGlobals.BMovementSpeedMultiplier,
-                    ToontownGlobals.ToonRotateSpeed * ToontownGlobals.BMovementSpeedMultiplier)
-    
 @magicWord(category=CATEGORY_COMMUNITY_MANAGER)
 def globalTeleport():
     """
