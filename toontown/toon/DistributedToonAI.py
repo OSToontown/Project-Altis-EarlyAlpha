@@ -566,7 +566,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
     def resetNPCFriendsDict(self):
         self.b_setNPCFriendsDict([])
 
-    def attemptAddNPCFriend(self, npcFriend, method=Quests.WithCheat):
+    def attemptAddNPCFriend(self, npcFriend):
         numCalls = simbase.air.config.GetInt('sos-card-reward', 1)
 
         if numCalls <= 0:
