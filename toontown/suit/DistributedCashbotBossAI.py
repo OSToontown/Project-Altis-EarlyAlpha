@@ -11,7 +11,6 @@ from direct.fsm import FSM
 import DistributedBossCogAI
 import SuitDNA
 import random
-from otp.ai.MagicWordGlobal import *
 import math
 
 class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
@@ -490,61 +489,3 @@ class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
     def enterEpilogue(self):
         DistributedBossCogAI.DistributedBossCogAI.enterEpilogue(self)
         self.d_setRewardId(self.rewardId)
-
-
-@magicWord(category=CATEGORY_ADMINISTRATOR)
-def restartCraneRound():
-    """
-    Restarts the crane round in the CFO.
-    """
-    invoker = spellbook.getInvoker()
-    boss = None
-    for do in simbase.air.doId2do.values():
-        if isinstance(do, DistributedCashbotBossAI):
-            if invoker.doId in do.involvedToons:
-                boss = do
-                break
-    if not boss:
-        return "You aren't in a CFO!"
-    boss.exitIntroduction()
-    boss.b_setState('PrepareBattleThree')
-    boss.b_setState('BattleThree')
-    return 'Restarting the crane round...'
-
-
-@magicWord(category=CATEGORY_ADMINISTRATOR)
-def skipCFO():
-    """
-    Skips to the final round of the CFO.
-    """
-    invoker = spellbook.getInvoker()
-    boss = None
-    for do in simbase.air.doId2do.values():
-        if isinstance(do, DistributedCashbotBossAI):
-            if invoker.doId in do.involvedToons:
-                boss = do
-                break
-    if not boss:
-        return "You aren't in a CFO!"
-    if boss.state in ('PrepareBattleThree', 'BattleThree'):
-        return "You can't skip this round."
-    boss.exitIntroduction()
-    boss.b_setState('PrepareBattleThree')
-    return 'Skipping the first round...'
-
-@magicWord(category=CATEGORY_ADMINISTRATOR)
-def killCFO():
-    """
-    Kills the CFO.
-    """
-    invoker = spellbook.getInvoker()
-    boss = None
-    for do in simbase.air.doId2do.values():
-        if isinstance(do, DistributedCashbotBossAI):
-            if invoker.doId in do.involvedToons:
-                boss = do
-                break
-    if not boss:
-        return "You aren't in a CFO"
-    boss.b_setState('Victory')
-    return 'Killed CFO.'

@@ -94,9 +94,6 @@ class DistributedBattleFinal(DistributedBattleBase.DistributedBattleBase):
         
         bossDept = self.bossCog.dna.dept
         
-        if bossDept in TTLocalizer.SendCogBossTaunts:
-            self.bossCog.setChatAbsolute(random.choice(TTLocalizer.SendCogBossTaunts[bossDept]), CFSpeech | CFTimeout)
-
         if self.battleSide:
             openDoor = Func(self.bossCog.doorB.request, 'open')
             closeDoor = Func(self.bossCog.doorB.request, 'close')

@@ -6,7 +6,6 @@ import math
 from pandac.PandaModules import Point3
 import random
 
-from otp.ai.MagicWordGlobal import *
 from toontown.battle import BattleExperienceAI
 from toontown.battle import DistributedBattleDinersAI
 from toontown.battle import DistributedBattleWaitersAI
@@ -918,53 +917,3 @@ def getCEO(toon):
                 return object
     
     return None
-
-@magicWord(category=CATEGORY_ADMINISTRATOR)
-def skipCEOBanquet():
-    """
-    Skips to the banquet stage of the CEO.
-    """
-    boss = getCEO(spellbook.getInvoker())
-    if not boss:
-        return "You aren't in a CEO!"
-    if boss.state in ('PrepareBattleTwo', 'BattleTwo'):
-        return "You can't skip this round."
-    boss.exitIntroduction()
-    boss.b_setState('PrepareBattleTwo')
-
-@magicWord(category=CATEGORY_ADMINISTRATOR)
-def skipCEO():
-    """
-    Skips to the third round of the CEO.
-    """
-    boss = getCEO(spellbook.getInvoker())
-    if not boss:
-        return "You aren't in a CEO!"
-    if boss.state in ('PrepareBattleThree', 'BattleThree'):
-        return "You can't skip this round."
-    boss.exitIntroduction()
-    boss.b_setState('PrepareBattleThree')
-
-@magicWord(category=CATEGORY_ADMINISTRATOR)
-def skipCEOFinal():
-    """
-    Skips to the final round of the CEO.
-    """
-    boss = getCEO(spellbook.getInvoker())
-    if not boss:
-        return "You aren't in a CEO!"
-    if boss.state in ('PrepareBattleFour', 'BattleFour'):
-        return "You can't skip this round."
-    boss.exitIntroduction()
-    boss.b_setState('PrepareBattleFour')
-
-@magicWord(category=CATEGORY_ADMINISTRATOR)
-def killCEO():
-    """
-    Kills the CEO.
-    """
-    boss = getCEO(spellbook.getInvoker())
-    if not boss:
-        return "You aren't in a CEO!"
-    boss.b_setState('Victory')
-    return 'Killed CEO.'

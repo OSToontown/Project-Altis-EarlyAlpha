@@ -12,7 +12,6 @@ from toontown.toon import NPCToons
 from toontown.toonbase import TTLocalizer
 from toontown.toonbase import ToontownGlobals
 from toontown.quest import Quests
-from otp.ai.MagicWordGlobal import *
 
 
 class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
@@ -393,49 +392,3 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
 
     def enterReward(self):
         DistributedBossCogAI.DistributedBossCogAI.enterReward(self)
-
-def getVP(invoker):
-    for do in simbase.air.doId2do.values():
-        if isinstance(do, DistributedSellbotBossAI):
-            if invoker.doId in do.involvedToons:
-                return do
-
-@magicWord(category=CATEGORY_ADMINISTRATOR)
-def secondVP():
-    """
-    Skips to the second round of the VP.
-    """
-    invoker = spellbook.getInvoker()
-    boss = getVP(invoker)
-    if not boss:
-        return "You aren't in a VP!"
-    boss.exitIntroduction()
-    boss.b_setState('RollToBattleTwo')
-    return 'Skipping to the second round...'
-                
-@magicWord(category=CATEGORY_ADMINISTRATOR)
-def skipVP():
-    """
-    Skips to the final round of the VP.
-    """
-    invoker = spellbook.getInvoker()
-    boss = getVP(invoker)
-    if not boss:
-        return "You aren't in a VP!"
-    if boss.state in ('PrepareBattleThree', 'BattleThree'):
-        return "You can't skip this round."
-    boss.exitIntroduction()
-    boss.b_setState('PrepareBattleThree')
-    return 'Skipping the first round...'
-
-@magicWord(category=CATEGORY_ADMINISTRATOR)
-def killVP():
-    """
-    Kills the VP.
-    """
-    invoker = spellbook.getInvoker()
-    boss = getVP(invoker)
-    if not boss:
-        return "You aren't in a VP!"
-    boss.b_setState('Victory')
-    return 'Killed VP.'
