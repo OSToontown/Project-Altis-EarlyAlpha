@@ -547,7 +547,7 @@ class DistributedBossbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         seq = Sequence(self.makePrepareBattleThreeMovie(), Func(self.__onToBattleThree), name=intervalName)
         seq.start()
         self.storeInterval(seq, intervalName)
-        base.playMusic(self.betweenPhaseMusic, looping=1, volume=0.9)
+        base.playMusic(self.phaseThreeMusic, looping=1, volume=0.9)
 
     def calcNotDeadList(self):
         if not self.notDeadList:
@@ -559,7 +559,7 @@ class DistributedBossbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
 
     def exitPrepareBattleThree(self):
         self.clearInterval('PrepareBattleThreeMovie')
-        self.betweenPhaseMusic.stop()
+        self.phaseThreeMusic.stop()
 
     def __onToBattleThree(self, elapsedTime = 0):
         self.doneBarrier('PrepareBattleThree')
@@ -606,7 +606,7 @@ class DistributedBossbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.toonsToBattlePosition(self.toonsA, self.battleANode)
         self.toonsToBattlePosition(self.toonsB, self.battleBNode)
         self.releaseToons()
-        base.playMusic(self.battleThreeMusic, looping=1, volume=0.9)
+        base.playMusic(self.phaseThreeMusic, looping=1, volume=0.9)
 
     def exitBattleThree(self):
         self.cleanupBattles()
