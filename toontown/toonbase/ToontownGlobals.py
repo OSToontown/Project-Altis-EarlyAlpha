@@ -1495,6 +1495,7 @@ DinerBattleBPosHpr = (-20,
  0,
  0,
  0)
+BossbotOilDamage = 5
 BossbotBossMaxDamage = 500
 BossbotMaxSpeedDamage = 90
 BossbotSpeedRecoverRate = 20

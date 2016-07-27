@@ -31,11 +31,33 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
         self.factoryExteriorModelPath = 'phase_11/models/lawbotHQ/LB_DA_Lobby'
         self.cogHQLobbyModelPath = 'phase_12/models/bossbotHQ/CogGolfLobby'
         self.geom = None
+        self.activeGeysers = None
         return
 
     def load(self, zoneId):
         CogHQLoader.CogHQLoader.load(self, zoneId)
         Toon.loadBossbotHQAnims()
+
+    def __fountainDamageTick(self, task):
+        base.localAvatar.b_stun(ToontownGlobals.BossbotOilDamage)
+        task.delayTime = 5.0
+        return task.again
+
+    def startFountainDamage(self, collision):
+        taskMgr.add(self.__fountainDamageTick, 'oil-fountain-tick')
+
+    def stopFountainDamage(self, collision):
+        taskMgr.remove('oil-fountain-tick')
+
+    def startCollisionDetection(self):
+        self.accept('enterFountain_Geom:oil_trigger', self.startFountainDamage)
+        self.accept('exitFountain_Geom:oil_trigger', self.stopFountainDamage)
+
+    def stopCollisionDetection(self):
+        taskMgr.remove('oil-fountain-tick')
+        self.ignore('enterFountain_Geom:oil_trigger')
+        self.ignore('exitFountain_Geom:oil_trigger')
+
 
     def unloadPlaceGeom(self):
         if self.geom:
@@ -88,7 +110,9 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
         makeSign('TunnelEntrance', 'Sign_2', 1000)
         makeSign('Gate_3', 'Sign_3', 10600)
         makeSign('Gate_4', 'Sign_4', 10500)
-        makeSign('GateHouse', 'Sign_5', 10200)
+       # makeSign('GateHouse', 'Sign_5', 10200)
+        #makeSign('GateHouse_2', 'Sign_5', 10300, TTLocalizer.BCHQLofficeText)
+
 
     def unload(self):
         CogHQLoader.CogHQLoader.unload(self)
@@ -103,6 +127,48 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
         self.exitPlace()
         self.placeClass = None
         return
+    
+    def makeGeysers(self):
+        self.activeGeysers = []
+        geyser = loader.loadModel('phase_12/models/bossbotHQ/ttr_m_ara_bbhq_geyser')
+        for geyserSpot in self.geom.findAllMatches('**/geyser*').getPaths():
+            geyser.copyTo(geyserSpot)
+            geyser.setScale(0.0)
+
+        for count in ACTIVE_GEYSERS:
+            taskMgr.add(self.__makeGeyserIval, 'geyser-task-' + str(count))
+
+        geyser.removeNode()
+
+    def __makeGeyserIval(self, task):
+        geyser = random.choice(self.geom.findAllMatches('**/ttr_m_ara_bbhq_geyser*').getPaths())
+        while geyser in self.activeGeysers:
+            geyser = random.choice(self.geom.findAllMatches('**/ttr_m_ara_bbhq_geyser*').getPaths())
+
+        length = random.randint(5, 15)
+        task.delayTime = length + 3
+        scale = random.randint(5, 18) / 10
+
+        def geyserIval(node, scale, length):
+            count = 0
+            length = random.randint(5, 12)
+            geyserIval = Sequence()
+            while count < length:
+                geyserIval.append(node.scaleInterval(1.25, scale + 0.1, blendType='easeInOut'))
+                geyserIval.append(node.scaleInterval(1.25, scale, blendType='easeInOut'))
+                count += 2.5
+
+            return geyserIval
+
+        geyserSequence = Sequence(Func(self.activeGeysers.append, geyser), geyser.scaleInterval(1.5, scale, blendType='easeOut'), geyserIval(geyser, scale, length), geyser.scaleInterval(1.5, 0.0, blendType='easeIn'), Func(self.activeGeysers.remove, geyser))
+        geyserSequence.start()
+        return task.again
+
+    def destroyGeysers(self):
+        for count in ACTIVE_GEYSERS:
+            taskMgr.remove('geyser-task-' + str(count))
+
+        self.activeGeysers = []
 
     def getExteriorPlaceClass(self):
         self.notify.debug('getExteriorPlaceClass')
