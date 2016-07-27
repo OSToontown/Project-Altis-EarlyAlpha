@@ -923,3 +923,20 @@ def skipcJ():
     boss.exitIntroduction()
     boss.b_setState('PrepareBattleThree')
     return 'Skipping the first round...'
+
+@magicWord(category=CATEGORY_ADMINISTRATOR)
+def killCJ():
+    """
+    Kills the CJ.
+    """
+    invoker = spellbook.getInvoker()
+    boss = None
+    for do in simbase.air.doId2do.values():
+        if isinstance(do, DistributedLawbotBossAI):
+            if invoker.doId in do.involvedToons:
+                boss = do
+                break
+    if not boss:
+        return "You aren't in a CJ"
+    boss.b_setState('Victory')
+    return 'Killed CJ.'
