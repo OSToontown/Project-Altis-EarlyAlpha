@@ -12,6 +12,7 @@ import DistributedBossCogAI
 import SuitDNA
 import random
 import math
+from otp.ai.MagicWordGlobal import *
 
 class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedCashbotBossAI')
@@ -489,3 +490,23 @@ class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
     def enterEpilogue(self):
         DistributedBossCogAI.DistributedBossCogAI.enterEpilogue(self)
         self.d_setRewardId(self.rewardId)
+
+@magicWord(category=CATEGORY_ADMINISTRATOR)
+def skipCFO():
+    """
+    Skips to the final round of the CFO.
+    """
+    invoker = spellbook.getInvoker()
+    boss = None
+    for do in simbase.air.doId2do.values():
+        if isinstance(do, DistributedCashbotBossAI):
+            if invoker.doId in do.involvedToons:
+                boss = do
+                break
+    if not boss:
+        return "You aren't in a VP!"
+    if boss.state in ('PrepareBattleThree', 'BattleThree'):
+        return "You can't skip this round."
+    boss.exitIntroduction()
+    boss.b_setState('PrepareBattleThree')
+    return 'Skipping the first round...'

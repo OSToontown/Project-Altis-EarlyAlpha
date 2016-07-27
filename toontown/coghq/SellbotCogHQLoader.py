@@ -95,10 +95,10 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
             self.bossroom.reparentTo(self.geom)
             self.bossroom.setPos(42,25,298)
             self.bossroom.setScale(0.1)
-            #self.outskirtsPOV = Actor("phase_9/models/cogHQ/SellbotLegFactoryOld.bam")
-            #self.outskirtsPOV.reparentTo(self.geom)
-            #self.outskirtsPOV.setPos(-525,-150,20)
-            #self.outskirtsPOV.setScale(0.2)
+            self.outskirtsPOV = Actor("phase_9/models/cogHQ/SellbotLegFactoryOld.bam")
+            self.outskirtsPOV.reparentTo(self.geom)
+            self.outskirtsPOV.setPos(-525,-150,20)
+            self.outskirtsPOV.setScale(0.2)
 
 		
         elif zoneId == ToontownGlobals.SellbotFactoryExt:

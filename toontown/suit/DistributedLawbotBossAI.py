@@ -14,6 +14,7 @@ from toontown.toon import NPCToons
 from toontown.building import SuitBuildingGlobals
 import SuitDNA
 import random
+from otp.ai.MagicWordGlobal import *
 from toontown.coghq import DistributedLawbotBossGavelAI
 from toontown.suit import DistributedLawbotBossSuitAI
 from toontown.coghq import DistributedLawbotCannonAI
@@ -799,7 +800,8 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
          'bs',
          'sd',
          'le',
-         'bw']
+         'bw',
+         'br']
         for i in xrange(self.numLawyers):
             suit = DistributedLawbotBossSuitAI.DistributedLawbotBossSuitAI(self.air, None)
             suit.dna = SuitDNA.SuitDNA()
@@ -901,3 +903,23 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
     def calcAndSetBattleDifficulty(self):
         self.toonLevels = self.getToonDifficulty()
         self.b_setBattleDifficulty(self.toonLevels)
+
+@magicWord(category=CATEGORY_ADMINISTRATOR)
+def skipcJ():
+    """
+    Skips to the final round of the CJ.
+    """
+    invoker = spellbook.getInvoker()
+    boss = None
+    for do in simbase.air.doId2do.values():
+        if isinstance(do, DistributedLawbotBossAI):
+            if invoker.doId in do.involvedToons:
+                boss = do
+                break
+    if not boss:
+        return "You aren't in a CJ!"
+    if boss.state in ('PrepareBattleThree', 'BattleThree'):
+        return "You can't skip this round."
+    boss.exitIntroduction()
+    boss.b_setState('PrepareBattleThree')
+    return 'Skipping the first round...'
