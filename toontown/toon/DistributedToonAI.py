@@ -4502,6 +4502,37 @@ def name(name=''):
     else:
         return "%s's name is now empty!" % _name
 
+@magicWord(category=CATEGORY_ADMINISTRATOR, types=[int])
+def resistanceRanger():
+    """
+    Applies the Resistance Ranger Clothes
+    """
+    invoker = spellbook.getTarget()
+
+    dna = ToonDNA.ToonDNA()
+    dna.makeFromNetString(invoker.getDNAString())
+
+    dna.topTex = 111
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.topTexColor = 26
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.sleeveTex = 98
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.sleeveTexColor = 26
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.botTex = 41
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.botTexColor = 26
+    invoker.b_setDNAString(dna.makeNetString())
+
+    target = spellbook.getTarget()
+    target.b_setNametagStyle(6)
+
 @magicWord(category=CATEGORY_SYSTEM_ADMINISTRATOR, types=[int])
 def squish(laff):
     """
@@ -4940,6 +4971,14 @@ def suit(command, suitName = 'f'):
         if returnCode[0] == 'success':
             return 'Toons took over the cog building!'
         return "Couldn't allow toons to take over cog building because " + returnCode[1]
+    elif command == 'invasion':
+        returnCode = invoker.doCogInvasion(SuitDNA.suitHeadTypes.index(suitName))
+        return returnCode
+    elif command == 'invasionend':
+        returnCode = 'Ending Invasion..'
+        simbase.air.suitInvasionManager.cleanupTasks()
+        simbase.air.suitInvasionManager.cleanupInvasion()
+        return returnCode
     else:
         return 'Invalid command.'
 
