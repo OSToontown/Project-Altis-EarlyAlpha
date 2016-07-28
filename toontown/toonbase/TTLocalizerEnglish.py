@@ -8542,11 +8542,7 @@ FireTalkMessage = "You're fired!"
 
 InVP = ' in a V.P. Battle'
 InFieldOffice = ' in a Sellbot Field Office'
-CogPanelLevel = 'Level %s'
-CogPanelSkeleton = 'Skeleton'
-CogPanelVirtual = 'Virtual'
-CogPanelRevives = 'v%s.0'
-CogPanelWaiter = 'Waiter'
+
 
 def convertSecondsToDate(seconds):
     m, s = divmod(seconds, 60)

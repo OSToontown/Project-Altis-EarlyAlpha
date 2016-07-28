@@ -12,7 +12,7 @@ from toontown.suit.SuitInvasionGlobals import IFSkelecog, IFWaiter, IFV2
 class SuitPlannerInteriorAI:
     notify = DirectNotifyGlobal.directNotify.newCategory('SuitPlannerInteriorAI')
 
-    def __init__(self, numFloors, bldgLevel, bldgTrack, zone, randomRevives=False):
+    def __init__(self, numFloors, bldgLevel, bldgTrack, zone, randomRevives=True):
         self.dbg_4SuitsPerFloor = config.GetBool('4-suits-per-floor', 0)
         self.dbg_1SuitPerFloor = config.GetBool('1-suit-per-floor', 0)
         self.zoneId = zone

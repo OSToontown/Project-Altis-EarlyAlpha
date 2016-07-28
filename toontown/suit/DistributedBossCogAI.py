@@ -452,19 +452,19 @@ class DistributedBossCogAI(DistributedAvatarAI.DistributedAvatarAI):
             self.b_setState(self.postBattleState)
         return
 
-    def invokeSuitPlanner(self, buildingCode, skelecog, skelecogRandom=0, randomRevives=True):
-        planner = SuitPlannerInteriorAI.SuitPlannerInteriorAI(1, buildingCode, self.dna.dept, self.zoneId, randomRevives=randomRevives)
+    def invokeSuitPlanner(self, buildingCode, skelecog, skelecogRandom=0):
+        planner = SuitPlannerInteriorAI.SuitPlannerInteriorAI(1, buildingCode, self.dna.dept, self.zoneId)
         planner.respectInvasions = 0
         suits = planner.genFloorSuits(0)
         if skelecog:
             for suit in suits['activeSuits']:
-                wantSkelecog = 0
+                wantSkelecog = 1
                 if skelecogRandom:
                     wantSkelecog = random.randint(0, 1)
                 suit.b_setSkelecog(wantSkelecog)
 
             for reserve in suits['reserveSuits']:
-                wantSkelecog = 0
+                wantSkelecog = 1
                 if skelecogRandom:
                     wantSkelecog = random.randint(0, 1)
                 suit = reserve[0]

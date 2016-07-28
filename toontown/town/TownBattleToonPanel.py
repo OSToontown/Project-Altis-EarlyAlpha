@@ -40,9 +40,6 @@ class TownBattleToonPanel(DirectFrame):
         self.passNode.hide()
         self.laffMeter = None
         self.whichText = DirectLabel(parent=self, relief=None, text='', pos=(0.1, 0, -0.08), text_scale=0.05)
-        self.hoverButton = DirectButton(parent=self, relief=None, image_scale=(0.07, 0, 0.06), pos=(0.105, 0, 0.05), image='phase_3/maps/invisible.png', pressEffect=0)
-        self.hoverButton.setTransparency(True)
-        self.hoverButton.bind(DGG.EXIT, self.battle.hideRolloverFrame)
         self.hide()
         gui.removeNode()
     
@@ -104,7 +101,6 @@ class TownBattleToonPanel(DirectFrame):
         self.whichText.hide()
         self.passNode.hide()
         self.cleanupSosHead()
-        self.hoverButton.unbind(DGG.ENTER)
         if self.hasGag:
             self.gag.removeNode()
             self.hasGag = 0
@@ -136,7 +132,6 @@ class TownBattleToonPanel(DirectFrame):
             sosType = TextEncoder.upper(sosType)
             count = max(0, self.avatar.getNPCFriendCount(targetIndex) - 1)
             info = TTLocalizer.BattleSOSPopup % (sosType, NPCToons.getNPCName(targetIndex), hpString if hp else '', rarity, count)
-            self.hoverButton.bind(DGG.ENTER, self.battle.showRolloverFrame, extraArgs=[self, TTLocalizer.BattleHoverSos, info])
         elif track == BattleBase.SOS or track == BattleBase.PETSOS:
             self.sosText.show()
         elif track >= MIN_TRACK_INDEX and track <= MAX_TRACK_INDEX:
@@ -154,7 +149,6 @@ class TownBattleToonPanel(DirectFrame):
                 damage = int(getAvPropDamage(track, level, curExp, organic))
                 numItems = max(0, self.avatar.inventory.numItem(track, level) - 1)
                 info = TTLocalizer.BattleGagPopup % (self.avatar.inventory.getToonupDmgStr(track, 0), damage, numItems)
-                self.hoverButton.bind(DGG.ENTER, self.battle.showRolloverFrame, extraArgs=[self, TTLocalizer.BattleHoverGag, info])
 
                 if self.avatar.checkGagBonus(track, level):
                     self.gag.setColor((1, 0, 0, 1) if track == 1 and level == 5 else (0, 1, 0, 1))
@@ -195,8 +189,6 @@ class TownBattleToonPanel(DirectFrame):
             del self.gag
         self.gagNode.removeNode()
         del self.gagNode
-        self.hoverButton.removeNode()
-        del self.hoverButton
         self.cleanupSosHead()
         DirectFrame.destroy(self)
 
