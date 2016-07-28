@@ -110,8 +110,6 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
         makeSign('TunnelEntrance', 'Sign_2', 1000)
         makeSign('Gate_3', 'Sign_3', 10600)
         makeSign('Gate_4', 'Sign_4', 10500)
-       # makeSign('GateHouse', 'Sign_5', 10200)
-        #makeSign('GateHouse_2', 'Sign_5', 10300, TTLocalizer.BCHQLofficeText)
 
 
     def unload(self):

@@ -42,10 +42,7 @@ class TownBattle(StateData.StateData):
         self.track = -1
         self.level = -1
         self.target = 0
-        self.toonAttacks = [(-1, 0, 0),
-         (-1, 0, 0),
-         (-1, 0, 0),
-         (-1, 0, 0)]
+        self.toonAttacks = [(-1, 0, 0)] * 4
         self.fsm = ClassicFSM.ClassicFSM('TownBattle', [
             State.State('Off',
                 self.enterOff,
@@ -126,8 +123,7 @@ class TownBattle(StateData.StateData):
          TownBattleToonPanel.TownBattleToonPanel(2),
          TownBattleToonPanel.TownBattleToonPanel(3))
         self.timer = ToontownTimer.ToontownTimer()
-        self.timer.reparentTo(base.a2dTopRight)
-        self.timer.setPos(-0.151, 0, -0.158)
+        self.timer.posInTopRightCorner()
         self.timer.setScale(0.4)
         self.timer.hide()
         return
@@ -159,7 +155,6 @@ class TownBattle(StateData.StateData):
         self.parentFSMState.addChild(self.fsm)
         if not self.isLoaded:
             self.load()
-        print 'Battle Event %s' % event
         self.battleEvent = event
         self.fsm.enterInitialState()
         base.localAvatar.laffMeter.start()
@@ -307,10 +302,7 @@ class TownBattle(StateData.StateData):
             for toonPanel in self.toonPanels:
                 toonPanel.hide()
 
-        self.toonAttacks = [(-1, 0, 0),
-         (-1, 0, 0),
-         (-1, 0, 0),
-         (-1, 0, 0)]
+        self.toonAttacks = [(-1, 0, 0)] * 4
         self.target = 0
         if hasattr(self, 'timer'):
             self.timer.hide()
@@ -429,10 +421,9 @@ class TownBattle(StateData.StateData):
         self.notify.debug('adjustCogsAndToons() numCogs: %s self.numCogs: %s' % (numCogs, self.numCogs))
         self.notify.debug('adjustCogsAndToons() luredIndices: %s self.luredIndices: %s' % (luredIndices, self.luredIndices))
         self.notify.debug('adjustCogsAndToons() trappedIndices: %s self.trappedIndices: %s' % (trappedIndices, self.trappedIndices))
-        toonIds = map(lambda toon: toon.doId, toons)
+        toonIds = [toon.doId for toon in toons]
         self.notify.debug('adjustCogsAndToons() toonIds: %s self.toons: %s' % (toonIds, self.toons))
         maxSuitLevel = 0
-        cogFireCostIndex = 0
         for cog in cogs:
             maxSuitLevel = max(maxSuitLevel, cog.getActualLevel())
 
@@ -669,15 +660,10 @@ class TownBattle(StateData.StateData):
             self.fsm.request('SOS')
 
     def __isCogChoiceNecessary(self):
-        if self.numCogs > 1 and not self.__isGroupAttack(self.track, self.level):
-            return 1
-        else:
-            return 0
+        return self.numCogs > 1 and not self.__isGroupAttack(self.track, self.level)
 
     def __isGroupAttack(self, trackNum, levelNum):
-        retval = BattleBase.attackAffectsGroup(trackNum, levelNum)
-        return retval
+        return BattleBase.attackAffectsGroup(trackNum, levelNum)
 
     def __isGroupHeal(self, levelNum):
-        retval = BattleBase.attackAffectsGroup(HEAL_TRACK, levelNum)
-        return retval
+        return self.__isGroupAttack(HEAL_TRACK, levelNum)
