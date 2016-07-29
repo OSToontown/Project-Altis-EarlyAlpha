@@ -101,6 +101,7 @@ GlobalStreetNames = {20000: ('to', 'on', 'Tutorial Terrace'),
  9300: ('to', 'on', 'Bedtime Boulevard'),
  10000: ('to the', 'in the', 'Bossbot HQ Country Club'),
  10100: ('to the', 'in the', 'Bossbot HQ Country Club Bridge'),
+ #10300: ('to the', 'in the', 'Executive Offices'),
  10500: ('to the', 'in the', 'The Front Three'),
  10600: ('to the', 'in the', 'The Middle Six'),
  10700: ('to the', 'in the', 'The Back Nine'),
@@ -1886,18 +1887,22 @@ ChatGarblerMonkey = ['ooh', 'ooo', 'ahh']
 ChatGarblerBear = ['growl', 'grrr']
 ChatGarblerPig = ['oink', 'oik', 'snort']
 ChatGarblerDefault = ['blah']
+Boardbot = 'Boardbot' 
 Bossbot = 'Bossbot'
 Lawbot = 'Lawbot'
 Cashbot = 'Cashbot'
 Sellbot = 'Sellbot'
+BoardbotS = 'a Boardbot'
 BossbotS = 'a Bossbot'
 LawbotS = 'a Lawbot'
 CashbotS = 'a Cashbot'
 SellbotS = 'a Sellbot'
+BoardbotP = 'Boardbots'
 BossbotP = 'Bossbots'
 LawbotP = 'Lawbots'
 CashbotP = 'Cashbots'
 SellbotP = 'Sellbots'
+BoardbotSkelS = 'a Boardbot Skelecog'
 BossbotSkelS = 'a Bossbot Skelecog'
 LawbotSkelS = 'a Lawbot Skelecog'
 CashbotSkelS = 'a Cashbot Skelecog'
@@ -8541,7 +8546,11 @@ FireTalkMessage = "You're fired!"
 
 InVP = ' in a V.P. Battle'
 InFieldOffice = ' in a Sellbot Field Office'
-
+CogPanelLevel = 'Level %s'
+CogPanelSkeleton = 'Skeleton'
+CogPanelVirtual = 'Virtual'
+CogPanelRevives = 'v%s.0'
+CogPanelWaiter = 'Waiter'
 
 def convertSecondsToDate(seconds):
     m, s = divmod(seconds, 60)

@@ -78,7 +78,8 @@ suitCTypes = ['f',
  'bfh',
  'cc',
  'gh']
-suitDepts = ['c',
+suitDepts = ['b',
+ 'c',
  'l',
  'm',
  's']
@@ -86,15 +87,18 @@ suitDeptZones = [ToontownGlobals.BossbotHQ,
  ToontownGlobals.LawbotHQ,
  ToontownGlobals.CashbotHQ,
  ToontownGlobals.SellbotHQ]
-suitDeptFullnames = {'c': TTLocalizer.Bossbot,
+suitDeptFullnames = {'b': TTLocalizer.Boardbot,
+ 'c': TTLocalizer.Bossbot,
  'l': TTLocalizer.Lawbot,
  'm': TTLocalizer.Cashbot,
  's': TTLocalizer.Sellbot}
-suitDeptFullnamesP = {'c': TTLocalizer.BossbotP,
+suitDeptFullnamesP = {'b': TTLocalizer.BoardbotP,
+ 'c': TTLocalizer.BossbotP,
  'l': TTLocalizer.LawbotP,
  'm': TTLocalizer.CashbotP,
  's': TTLocalizer.SellbotP}
-suitDeptFilenames = {'c': 'boss',
+suitDeptFilenames = {'b': 'board',
+ 'c': 'boss',
  'l': 'law',
  'm': 'cash',
  's': 'sell'
@@ -106,7 +110,10 @@ suitDeptModelPaths = {'c': '**/CorpIcon',
  'm': '**/MoneyIcon',
  2: '**/MoneyIcon',
  's': '**/SalesIcon',
- 3: '**/SalesIcon'}
+ 3: '**/SalesIcon',
+  'b': '**/BoardIcon',
+ 4: '**/BoardIcon'}
+boardPolyColor = VBase4(.45, 0.45, .45, 1.0)
 corpPolyColor = VBase4(0.95, 0.75, 0.75, 1.0)
 legalPolyColor = VBase4(0.75, 0.75, 0.95, 1.0)
 moneyPolyColor = VBase4(0.65, 0.95, 0.85, 1.0)
