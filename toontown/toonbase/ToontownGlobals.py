@@ -221,15 +221,15 @@ CogDeptNames = [TTLocalizer.Bossbot,
  TTLocalizer.Cashbot,
  TTLocalizer.Sellbot]
 
-def cogHQZoneId2deptIndex(zone):
-    if zone >= 13000 and zone <= 13999:
+def cogHQZoneId2deptIndex(zone): #On and Off Switch for Cog HQs. Controls the type that roams throughout.
+    if zone >= 13000 and zone <= 13999: #Lawbot HQ
         return 1
-    elif zone >= 12000:
+    elif zone >= 12000:  #Cashbot HQ
         return 2
-    elif zone >= 11000:
+    elif zone >= 11000: #Sellbot HQ
         return 3
     else:
-        return 0
+        return 0 #Bossbot HQ
 
 
 def cogHQZoneId2dept(zone):
