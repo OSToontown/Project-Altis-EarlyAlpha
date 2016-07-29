@@ -89,15 +89,18 @@ suitDeptZones = [ToontownGlobals.BossbotHQ,
 suitDeptFullnames = {'c': TTLocalizer.Bossbot,
  'l': TTLocalizer.Lawbot,
  'm': TTLocalizer.Cashbot,
- 's': TTLocalizer.Sellbot}
+ 's': TTLocalizer.Sellbot,
+ 'b': TTLocalizer.Boardbot}
 suitDeptFullnamesP = {'c': TTLocalizer.BossbotP,
  'l': TTLocalizer.LawbotP,
  'm': TTLocalizer.CashbotP,
- 's': TTLocalizer.SellbotP}
+ 's': TTLocalizer.SellbotP,
+ 'b': TTLocalizer.BoardbotP}
 suitDeptFilenames = {'c': 'boss',
  'l': 'law',
  'm': 'cash',
- 's': 'sell'
+ 's': 'sell',
+ 'b': 'board'
 }
 suitDeptModelPaths = {'c': '**/CorpIcon',
  0: '**/CorpIcon',
@@ -106,11 +109,14 @@ suitDeptModelPaths = {'c': '**/CorpIcon',
  'm': '**/MoneyIcon',
  2: '**/MoneyIcon',
  's': '**/SalesIcon',
- 3: '**/SalesIcon'}
+ 3: '**/SalesIcon',
+  'b': '**/BoardIcon',
+ 3: '**/BoardIcon'}
 corpPolyColor = VBase4(0.95, 0.75, 0.75, 1.0)
 legalPolyColor = VBase4(0.75, 0.75, 0.95, 1.0)
 moneyPolyColor = VBase4(0.65, 0.95, 0.85, 1.0)
 salesPolyColor = VBase4(0.95, 0.75, 0.95, 1.0)
+boardPolyColor = VBase4(.45, 0.45, .45, 1.0)
 suitsPerLevel = [1,
  1,
  1,
@@ -120,7 +126,7 @@ suitsPerLevel = [1,
  1,
  1,
  1]
-suitsPerDept = 9
+suitsPerDept = 8
 goonTypes = ['pg', 'sg']
 
 def getSuitBodyType(name):

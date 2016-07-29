@@ -6,7 +6,8 @@ from otp.otpbase import OTPGlobals
 PartsPerSuit = (17,
  14,
  12,
- 10)
+ 10,               
+ 17)
 PartsPerSuitBitmasks = (131071,
  130175,
  56447,
