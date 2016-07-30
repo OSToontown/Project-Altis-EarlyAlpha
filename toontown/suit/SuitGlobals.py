@@ -51,7 +51,7 @@ suitProperties = {'f': (4.0 / cSize, SuitDNA.corpPolyColor, ['flunky', 'glasses'
                   'm': (5.75 / aSize, SuitDNA.salesPolyColor, ['twoface'], 'mingler.jpg', 7.61),
                   'mh': (7.0 / aSize, VBase4(0.95, 0.95, 1.0, 1.0), ['yesman'], '', 8.95),
                   # Boardbots
-                  'cm': (4.0 / cSize, SuitDNA.boardPolyColor, ['tightwad'], 'bottom-feeder.jpg', 4.81),
+                  'cm': (4.0 / cSize, SuitDNA.boardPolyColor, ['tightwad'], 'conman.jpg', 4.81),
                   'b2': (3.75 / bSize, SuitDNA.boardPolyColor, ['telemarketer'], '', 5.24),
                   'b3': (4.35 / bSize, SuitDNA.boardPolyColor, ['telemarketer'], '', 5.24),
                   'b4': (4.75 / bSize, SuitDNA.boardPolyColor, ['telemarketer'], '', 5.24),
