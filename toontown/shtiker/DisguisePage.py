@@ -46,7 +46,7 @@ class DisguisePage(ShtikerPage.ShtikerPage):
             elif dept == 's':
                 tabIndex = 4
                 textPos = (1.57, -1.05)
-            elif dept == 'b':
+            elif dept == 'bd':
                 tabIndex = 5
                 textPos = (1.57, -1.68)
             pageGeom = gui.find('**/page%d' % tabIndex)
@@ -187,6 +187,8 @@ class DisguisePage(ShtikerPage.ShtikerPage):
             self.progressTitle = self.cogbuckTitle
         elif SuitDNA.suitDepts[index] == 'l':
             self.progressTitle = self.juryNoticeTitle
+        elif SuitDNA.suitDepts[index] == 'bd':
+            self.progressTitle = self.boardGearsTitle
         elif SuitDNA.suitDepts[index] == 'c':
             self.progressTitle = self.stockOptionTitle
         else:
