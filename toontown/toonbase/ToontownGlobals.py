@@ -207,7 +207,7 @@ cogDept2index = {'c': 0,
  'l': 1,
  'm': 2,
  's': 3,
- 'b': 4}
+ 'bd': 4}
 cogIndex2dept = invertDict(cogDept2index)
 HQToSafezone = {SellbotHQ: DaisyGardens,
  CashbotHQ: DonaldsDreamland,

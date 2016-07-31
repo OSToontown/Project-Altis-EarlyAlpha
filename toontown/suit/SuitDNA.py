@@ -121,14 +121,13 @@ suitDeptModelPaths = {'c': '**/CorpIcon',
  's': '**/SalesIcon',
  3: '**/SalesIcon',
   'bd': '**/BoardIcon',
- 3: '**/BoardIcon'}
+ 4: '**/BoardIcon'}
 corpPolyColor = VBase4(0.95, 0.75, 0.75, 1.0)
 legalPolyColor = VBase4(0.75, 0.75, 0.95, 1.0)
 moneyPolyColor = VBase4(0.65, 0.95, 0.85, 1.0)
 salesPolyColor = VBase4(0.95, 0.75, 0.95, 1.0)
 boardPolyColor = VBase4(.45, 0.45, .45, 1.0)
 suitsPerLevel = [1,
- 1,
  1,
  1,
  1,

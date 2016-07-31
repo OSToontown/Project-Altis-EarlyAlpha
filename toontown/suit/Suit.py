@@ -593,7 +593,7 @@ class Suit(Avatar.Avatar):
             return
         if dept == 'c':
             tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_boss.jpg')
-        elif dept == 'b':
+        elif dept == 'bd':
             tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_boss.jpg')
         elif dept == 's':
             tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_sales.jpg')

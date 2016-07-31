@@ -212,6 +212,8 @@ class SuitPage(ShtikerPage.ShtikerPage):
         icon = icons.find('**/sales_icon')
         self.salesRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=(icon, icon, icon), image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.575), command=self.toggleRadar, extraArgs=[3])
         self.radarButtons.append(self.salesRadarButton)
+        self.boardRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=icon, image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.575), command=self.toggleRadar, extraArgs=[4])
+        icon = icons.find('**/board_icon')
         for radarButton in self.radarButtons:
             radarButton.building = 0
             radarButton.buildingRadarLabel = None
@@ -234,6 +236,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
         self.radarOn = [0,
          0,
          0,
+         0,               
          0]
         priceScale = 0.1
         emblemIcon = loader.loadModel('phase_3.5/models/gui/tt_m_gui_gen_emblemIcons')
@@ -605,6 +608,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
             buildingList = [0,
              0,
              0,
+             0,               
              0]
         button = self.radarButtons[deptNum]
         if button.building:

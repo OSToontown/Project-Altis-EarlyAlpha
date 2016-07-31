@@ -42,7 +42,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     POP_UPKEEP_DELAY = 10
     POP_ADJUST_DELAY = 300
     PATH_COLLISION_BUFFER = 5
-    TOTAL_MAX_SUITS = 50
+    TOTAL_MAX_SUITS = 58
     MIN_PATH_LEN = 40
     MAX_PATH_LEN = 300
     MIN_TAKEOVER_PATH_LEN = 2
@@ -540,7 +540,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
                                 oldestAge = age
                 if oldestAge > timeout:
                     self.notify.info('Street %d has %d buildings; reclaiming %0.2f-hour-old building.' % (self.zoneId, len(suitBuildings), oldestAge / 3600.0))
-                    oldest.b_setVictorList([0, 0, 0, 0])
+                    oldest.b_setVictorList([0, 0, 0, 0, 0])
                     oldest.updateSavedBy(None)
                     oldest.toonTakeOver()
         self.__waitForNextUpkeep()
@@ -655,7 +655,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             'c': 0,
             'l': 0,
             'm': 0,
-            's': 0
+            's': 0,
+            'bd': 0
         }
         for sp in self.air.suitPlanners.values():
             sp.countNumBuildingsPerTrack(numPerTrack)
@@ -950,7 +951,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     def buildingListQuery(self):
         buildingDict = {}
         self.countNumBuildingsPerTrack(buildingDict)
-        buildingList = [0, 0, 0, 0]
+        buildingList = [0, 0, 0, 0, 0]
         for dept in SuitDNA.suitDepts:
             if dept in buildingDict:
                 buildingList[SuitDNA.suitDepts.index(dept)] = buildingDict[dept]
