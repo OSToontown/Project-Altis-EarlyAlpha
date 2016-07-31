@@ -470,7 +470,7 @@ class SuitPlannerBase:
     SUIT_HOOD_INFO_MIN = 1
     SUIT_HOOD_INFO_MAX = 2
     SUIT_HOOD_INFO_BMIN = 3
-    SUIT_HOOD_INFO_BMAX = 4
+    SUIT_HOOD_INFO_BMAX = 5
     SUIT_HOOD_INFO_BWEIGHT = 5
     SUIT_HOOD_INFO_SMAX = 6
     SUIT_HOOD_INFO_JCHANCE = 7
@@ -481,11 +481,13 @@ class SuitPlannerBase:
     TOTAL_BWEIGHT_PER_TRACK = [0,
      0,
      0,
+     0,                          
      0]
     TOTAL_BWEIGHT_PER_HEIGHT = [0,
      0,
      0,
      0,
+     0,                           
      0]
     for currHoodInfo in SuitHoodInfo:
         weight = currHoodInfo[SUIT_HOOD_INFO_BWEIGHT]
@@ -495,6 +497,7 @@ class SuitPlannerBase:
          0,
          0,
          0,
+         0,          
          0]
         for level in levels:
             minFloors, maxFloors = SuitBuildingGlobals.SuitBuildingInfo[level - 1][0]
