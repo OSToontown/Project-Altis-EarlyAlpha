@@ -309,16 +309,7 @@ class QuestPoster(DirectFrame):
         objectiveStrings = quest.getObjectiveStrings()
         captions = map(string.capwords, quest.getObjectiveStrings())
         imageColor = Vec4(*self.colors['white'])        
-        if isinstance(quest, Quests.TexturedQuest) and quest.hasFrame():
-            frame = quest.getFrame()
-            frameBgColor = frame[1]
-            lIconGeom = frame[0]
-            lIconGeomScale = 0.13
-            if not fComplete:
-                infoText = quest.getLocationName()
-                if infoText == '':
-                    infoText = TTLocalizer.QuestPosterAnywhere
-        elif quest.getType() == Quests.DeliverGagQuest or quest.getType() == Quests.DeliverItemQuest:
+        if quest.getType() == Quests.DeliverGagQuest or quest.getType() == Quests.DeliverItemQuest:
             frameBgColor = 'red'
             if quest.getType() == Quests.DeliverGagQuest:
                 invModel = loader.loadModel('phase_3.5/models/gui/inventory_icons')
