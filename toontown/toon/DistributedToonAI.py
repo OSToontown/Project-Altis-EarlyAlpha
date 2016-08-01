@@ -4307,13 +4307,14 @@ def maxToon(missingTrack=None):
     # Max out their Cog suits:
     target.b_setCogParts(
         [
-            CogDisguiseGlobals.PartsPerSuitBitmasks[0],  # Bossbot
-            CogDisguiseGlobals.PartsPerSuitBitmasks[1],  # Lawbot
-            CogDisguiseGlobals.PartsPerSuitBitmasks[2],  # Cashbot
-            CogDisguiseGlobals.PartsPerSuitBitmasks[3]   # Sellbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[0],  # Boardbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[1],  # Bossbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[2],  # Lawbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[3],   # Cashbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[4],   # Sellbot
         ]
     )
-    target.b_setCogLevels([53] * 4)
+    target.b_setCogLevels([13] * 4)
     target.b_setCogTypes([7, 7, 7, 7])
 
     # Max their Cog gallery:
@@ -4321,8 +4322,8 @@ def maxToon(missingTrack=None):
     target.b_setCogCount(list(CogPageGlobals.COG_QUOTAS[1]) * deptCount)
     cogStatus = [CogPageGlobals.COG_COMPLETE2] * SuitDNA.suitsPerDept
     target.b_setCogStatus(cogStatus * deptCount)
-    target.b_setCogRadar([1, 1, 1, 1])
-    target.b_setBuildingRadar([1, 1, 1, 1])
+    target.b_setCogRadar([1, 1, 1, 1, 1])
+    target.b_setBuildingRadar([1, 1, 1, 1, 1])
 
     # Max out their racing tickets:
     target.b_setTickets(99999)

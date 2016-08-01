@@ -14,8 +14,18 @@ cSize = 4.14 # Size of body type 'c'
 
 ColdCallerHead = VBase4(0.25, 0.35, 1.0, 1.0) # Head used by Cold Caller
 
-            # Bossbots
-suitProperties = {'f': (4.0 / cSize, SuitDNA.corpPolyColor, ['flunky', 'glasses'], '', 4.88),
+               
+                 #Boardbots
+suitProperties = {'cm': (4.0 / cSize, SuitDNA.boardPolyColor, ['tightwad'], 'conman.jpg', 4.81),
+                  'b2': (3.75 / bSize, SuitDNA.boardPolyColor, ['telemarketer'], '', 5.24),
+                  'b3': (4.35 / bSize, SuitDNA.boardPolyColor, ['telemarketer'], '', 5.24),
+                  'b4': (4.75 / bSize, SuitDNA.boardPolyColor, ['telemarketer'], '', 5.24),
+                  'b5': (4.75 / bSize, SuitDNA.boardPolyColor, ['telemarketer'], '', 5.24),
+                  'tl': (6.5 / aSize, VBase4(1, 1, .29, 1.0), ['toxicleader'], '', 10),
+                  'bfh': (7.8 / cSize, VBase4(1, .3, .3, 1.0), ['bigfish'], '', 9.7),
+                  'hho': (7.0 / aSize, SuitDNA.boardPolyColor, ['headhoncho'], 'head-honcho.jpg', 9.5),
+                  #Bossbots
+                  'f': (4.0 / cSize, SuitDNA.corpPolyColor, ['flunky', 'glasses'], '', 4.88),
                   'p': (3.35 / bSize, SuitDNA.corpPolyColor, ['pencilpusher'], '', 5.0),
                   'ym': (4.125 / aSize, VBase4(0.95, 0.95, 1.0, 1.0), ['yesman'], '', 5.28),
                   'mm': (1.25 / cSize, SuitDNA.corpPolyColor, ['micromanager'], '', 2.0),
@@ -50,13 +60,5 @@ suitProperties = {'f': (4.0 / cSize, SuitDNA.corpPolyColor, ['flunky', 'glasses'
                   'tf': (5.25 / aSize, SuitDNA.corpPolyColor, ['twoface'], '', 6.95),
                   'm': (5.75 / aSize, SuitDNA.salesPolyColor, ['twoface'], 'mingler.jpg', 7.61),
                   'mh': (7.0 / aSize, VBase4(0.95, 0.95, 1.0, 1.0), ['yesman'], '', 8.95),
-                  # Boardbots
-                  'cm': (4.0 / cSize, SuitDNA.boardPolyColor, ['tightwad'], 'conman.jpg', 4.81),
-                  'b2': (3.75 / bSize, SuitDNA.boardPolyColor, ['telemarketer'], '', 5.24),
-                  'b3': (4.35 / bSize, SuitDNA.boardPolyColor, ['telemarketer'], '', 5.24),
-                  'b4': (4.75 / bSize, SuitDNA.boardPolyColor, ['telemarketer'], '', 5.24),
-                  'b5': (4.75 / bSize, SuitDNA.boardPolyColor, ['telemarketer'], '', 5.24),
-                  'tl': (6.5 / aSize, VBase4(1, 1, .29, 1.0), ['toxicleader'], '', 10),
-                  'bfh': (7.8 / cSize, VBase4(1, .3, .3, 1.0), ['bigfish'], '', 9.7),
-                  'hho': (7.0 / aSize, SuitDNA.boardPolyColor, ['headhoncho'], 'head-honcho.jpg', 9.5),
+                  
                   }

@@ -34,21 +34,21 @@ class DisguisePage(ShtikerPage.ShtikerPage):
         self.tabs = []
         self.pageFrame = DirectFrame(parent=self.frame, relief=None)
         for dept in SuitDNA.suitDepts:
-            if dept == 'c':
+            if dept == 't':
                 tabIndex = 1
                 textPos = (1.57, 0.75)
-            elif dept == 'l':
+            elif dept == 'c':
                 tabIndex = 2
                 textPos = (1.57, 0.12)
-            elif dept == 'm':
+            elif dept == 'l':
                 tabIndex = 3
                 textPos = (1.57, -0.47)
-            elif dept == 's':
+            elif dept == 'm':
                 tabIndex = 4
                 textPos = (1.57, -1.05)
-            elif dept == 'bd':
+            elif dept == 's':
                 tabIndex = 5
-                textPos = (1.57, -1.68)
+                textPos = (1.57, -1.40)
             pageGeom = gui.find('**/page%d' % tabIndex)
             tabGeom = gui.find('**/tab%d' % tabIndex)
             tab = DirectButton(parent=self.pageFrame, relief=None, geom=tabGeom, geom_color=DeptColors[tabIndex - 1], text=SuitDNA.suitDeptFullnames[dept], text_font=ToontownGlobals.getSuitFont(), text_pos=textPos, text_roll=-90, text_scale=TTLocalizer.DPtab, text_align=TextNode.ACenter, text1_fg=Vec4(1, 0, 0, 1), text2_fg=Vec4(0.5, 0.4, 0.4, 1), text3_fg=Vec4(0.4, 0.4, 0.4, 1), command=self.doTab, extraArgs=[len(self.tabs)], pressEffect=0)

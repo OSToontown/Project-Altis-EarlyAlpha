@@ -87,46 +87,46 @@ suitCTypes = ['f',
  'cc',
  'gh',
  'cm']
-suitDepts = ['c',
+suitDepts = ['t',
+ 'c',
  'l',
  'm',
- 's',
- 'bd']
+ 's']
 suitDeptZones = [ToontownGlobals.BossbotHQ,
  ToontownGlobals.LawbotHQ,
  ToontownGlobals.CashbotHQ,
  ToontownGlobals.SellbotHQ]
-suitDeptFullnames = {'c': TTLocalizer.Bossbot,
+suitDeptFullnames = {'t': TTLocalizer.Boardbot,
+ 'c': TTLocalizer.Bossbot,
  'l': TTLocalizer.Lawbot,
  'm': TTLocalizer.Cashbot,
- 's': TTLocalizer.Sellbot,
- 'bd': TTLocalizer.Boardbot}
-suitDeptFullnamesP = {'c': TTLocalizer.BossbotP,
+ 's': TTLocalizer.Sellbot}
+suitDeptFullnamesP = {'t': TTLocalizer.BoardbotP,
+ 'c': TTLocalizer.BossbotP,
  'l': TTLocalizer.LawbotP,
  'm': TTLocalizer.CashbotP,
- 's': TTLocalizer.SellbotP,
- 'bd': TTLocalizer.BoardbotP}
-suitDeptFilenames = {'c': 'boss',
+ 's': TTLocalizer.SellbotP}
+suitDeptFilenames = {'t': 'board',
+ 'c': 'boss',
  'l': 'law',
  'm': 'cash',
- 's': 'sell',
- 'bd': 'board'
+ 's': 'sell'
 }
-suitDeptModelPaths = {'c': '**/CorpIcon',
- 0: '**/CorpIcon',
+suitDeptModelPaths = {'t': '**/BoardIcon',
+ 0: '**/BoardIcon',
+'c': '**/CorpIcon',
+ 1: '**/CorpIcon',
  'l': '**/LegalIcon',
- 1: '**/LegalIcon',
+ 2: '**/LegalIcon',
  'm': '**/MoneyIcon',
- 2: '**/MoneyIcon',
+ 3: '**/MoneyIcon',
  's': '**/SalesIcon',
- 3: '**/SalesIcon',
-  'bd': '**/BoardIcon',
- 4: '**/BoardIcon'}
+ 4: '**/SalesIcon'}
+boardPolyColor = VBase4(.45, 0.45, .45, 1.0)
 corpPolyColor = VBase4(0.95, 0.75, 0.75, 1.0)
 legalPolyColor = VBase4(0.75, 0.75, 0.95, 1.0)
 moneyPolyColor = VBase4(0.65, 0.95, 0.85, 1.0)
 salesPolyColor = VBase4(0.95, 0.75, 0.95, 1.0)
-boardPolyColor = VBase4(.45, 0.45, .45, 1.0)
 suitsPerLevel = [1,
  1,
  1,
@@ -159,6 +159,8 @@ def getSuitDept(name):
         return suitDepts[2]
     elif index < suitsPerDept * 4:
         return suitDepts[3]
+    elif index < suitsPerDept * 5:
+        return suitDepts[4]
     else:
         print 'Unknown dept for suit name: ', name
         return None
@@ -187,7 +189,7 @@ def getSuitName(deptIndex, typeIndex):
 
 
 def getRandomSuitType(level, rng = random):
-    return random.randint(max(level - 4, 1), min(level, 9))
+    return random.randint(max(level - 5, 1), min(level, 9))
 
 
 def getRandomSuitByDept(dept):

@@ -203,31 +203,31 @@ PartyHood = 18000
 HoodsAlwaysVisited = [17000, 18000]
 DynamicZonesBegin = 22000
 DynamicZonesEnd = 1 << 20
-cogDept2index = {'c': 0,
- 'l': 1,
- 'm': 2,
- 's': 3,
- 'bd': 4}
+cogDept2index = {'t': 0,
+ 'c': 1,
+ 'l': 2,
+ 'm': 3,
+ 's': 4}
 cogIndex2dept = invertDict(cogDept2index)
 HQToSafezone = {SellbotHQ: DaisyGardens,
  CashbotHQ: DonaldsDreamland,
  LawbotHQ: TheBrrrgh,
  BossbotHQ: DonaldsDock}
-CogDeptNames = [TTLocalizer.Bossbot,
+CogDeptNames = [TTLocalizer.Boardbot,
+ TTLocalizer.Bossbot,
  TTLocalizer.Lawbot,
  TTLocalizer.Cashbot,
- TTLocalizer.Sellbot,
- TTLocalizer.Boardbot]
+ TTLocalizer.Sellbot]
 
 def cogHQZoneId2deptIndex(zone): #On and Off Switch for Cog HQs. Controls the type that roams throughout.
     if zone >= 13000 and zone <= 13999: #Lawbot HQ
-        return 1
-    elif zone >= 12000:  #Cashbot HQ
         return 2
-    elif zone >= 11000: #Sellbot HQ
+    elif zone >= 12000:  #Cashbot HQ
         return 3
+    elif zone >= 11000: #Sellbot HQ
+        return 4
     else:
-        return 0 #Bossbot HQ
+        return 1 #Bossbot HQ
 
 
 def cogHQZoneId2dept(zone):
@@ -510,46 +510,46 @@ PieCodeColors = {PieCodeBossCog: None,
                      1),
  PieCodeToon: None}
 suitIndex = {
-'f' : 0,
-'p' : 1,
-'ym' : 2,
-'mm' : 3,
-'ds' : 4,
-'hh' : 5,
-'cr' : 6,
-'tbc' : 7,
-'bf' : 8,
-'b' : 9,
-'dt' : 10,
-'ac' : 11,
-'bs' : 12,
-'sd' : 13,
-'le' : 14,
-'bw' : 15,
-'sc' : 16,
-'pp' : 17,
-'tw' : 18,
-'bc' : 19,
-'nc' : 20,
-'mb' : 21,
-'ls' : 22,
-'rb' : 23,
-'cc' : 24,
-'tm' : 25,
-'nd' : 26,
-'gh' : 27,
-'ms' : 28,
-'tf' : 29,
-'m' : 30,
-'mh' : 31,
-'cm' : 32,
-'b2' : 33,
-'b3' : 34,
-'b4' : 35,
-'b5' : 36,
-'tl' : 37,
-'bfh' : 38,
-'hho' : 39 
+'cm' : 0,
+'b2' : 1,
+'b3' : 2,
+'b4' : 3,
+'b5' : 4, 
+'tl' : 5,
+'bfh' : 6,
+'hho' : 7,   
+'f' :  8,
+'p' : 9,
+'ym' : 10,
+'mm' : 11,
+'ds' : 12,
+'hh' : 13,
+'cr' : 14,
+'tbc' : 15,
+'bf' : 16,
+'b' : 17,
+'dt' : 18,
+'ac' : 19,
+'bs' : 20,
+'sd' : 21,
+'le' : 22,
+'bw' : 23,
+'sc' : 24,
+'pp' : 25,
+'tw' : 26,
+'bc' : 27,
+'nc' : 28,
+'mb' : 29,
+'ls' : 30,
+'rb' : 31,
+'cc' : 32,
+'tm' : 33,
+'nd' : 34,
+'gh' : 35,
+'ms' : 36,
+'tf' : 37,
+'m' :  38,
+'mh' : 39
 }
 BossCogRollSpeed = 7.5
 BossCogTurnSpeed = 20

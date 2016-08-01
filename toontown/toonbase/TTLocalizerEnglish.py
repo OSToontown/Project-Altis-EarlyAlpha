@@ -1886,26 +1886,27 @@ ChatGarblerMonkey = ['ooh', 'ooo', 'ahh']
 ChatGarblerBear = ['growl', 'grrr']
 ChatGarblerPig = ['oink', 'oik', 'snort']
 ChatGarblerDefault = ['blah']
+Boardbot = 'Boardbot'
 Bossbot = 'Bossbot'
 Lawbot = 'Lawbot'
 Cashbot = 'Cashbot'
 Sellbot = 'Sellbot'
-Boardbot = 'Boardbot'
+BoardbotS = 'a Boardbot'
 BossbotS = 'a Bossbot'
 LawbotS = 'a Lawbot'
 CashbotS = 'a Cashbot'
 SellbotS = 'a Sellbot'
-BoardbotS = 'a Boardbot'
+BoardbotP = 'Boardbots'
 BossbotP = 'Bossbots'
 LawbotP = 'Lawbots'
 CashbotP = 'Cashbots'
 SellbotP = 'Sellbots'
-BoardbotP = 'Boardbots'
+BoardbotSkelS = 'a Boardbot Skelecog'
 BossbotSkelS = 'a Bossbot Skelecog'
 LawbotSkelS = 'a Lawbot Skelecog'
 CashbotSkelS = 'a Cashbot Skelecog'
 SellbotSkelS = 'a Sellbot Skelecog'
-BoardbotSkelS = 'a Boardbot Skelecog'
+BoardbotSkelP = 'Bossbot Skelecogs'
 BossbotSkelP = 'Bossbot Skelecogs'
 LawbotSkelP = 'Lawbot Skelecogs'
 CashbotSkelP = 'Cashbot Skelecogs'
@@ -2248,7 +2249,8 @@ RewardPanelNewGag = 'New %(gagName)s gag for %(avName)s!'
 RewardPanelUberGag = '%(avName)s earned the %(gagName)s gag with %(exp)s experience points!'
 RewardPanelEndTrack = 'Yay! %(avName)s has reached the end of the %(gagName)s Gag Track!'
 RewardPanelMeritsMaxed = 'Maxed'
-RewardPanelMeritBarLabels = ['Stock Options',
+RewardPanelMeritBarLabels = ['Board Gears',
+ 'Stock Options',
  'Jury Notices',
  'Cogbucks',
  'Merits']
