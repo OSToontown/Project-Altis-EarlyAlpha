@@ -2,6 +2,7 @@ from direct.directnotify.DirectNotifyGlobal import *
 from direct.distributed import DistributedObjectAI
 from direct.task import Task
 import random
+
 import DistributedSuitAI
 import SuitDNA
 import SuitPlannerBase
@@ -25,8 +26,6 @@ if config.GetBool('want-lawbot-cogdo', True):
     ALLOWED_FO_TRACKS += 'l'
 if config.GetBool('want-cashbot-cogdo', False):
     ALLOWED_FO_TRACKS += 'c'
-if config.GetBool('want-boardbot-cogdo', False):
-    ALLOWED_FO_TRACKS += 't'
 if config.GetBool('want-bossbot-cogdo', False):
     ALLOWED_FO_TRACKS += 'b'
 if config.GetBool('want-omni-cogdo', False):
@@ -38,11 +37,11 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     notify = directNotify.newCategory('DistributedSuitPlannerAI')
     CogdoPopFactor = config.GetFloat('cogdo-pop-factor', 1.5)
     CogdoRatio = min(1.0, max(0.0, config.GetFloat('cogdo-ratio', DEFAULT_COGDO_RATIO)))
-    MAX_SUIT_TYPES = 6
+    MAX_SUIT_TYPES = 7
     POP_UPKEEP_DELAY = 10
     POP_ADJUST_DELAY = 300
     PATH_COLLISION_BUFFER = 5
-    TOTAL_MAX_SUITS = 58
+    TOTAL_MAX_SUITS = 50
     MIN_PATH_LEN = 40
     MAX_PATH_LEN = 300
     MIN_TAKEOVER_PATH_LEN = 2
@@ -540,7 +539,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
                                 oldestAge = age
                 if oldestAge > timeout:
                     self.notify.info('Street %d has %d buildings; reclaiming %0.2f-hour-old building.' % (self.zoneId, len(suitBuildings), oldestAge / 3600.0))
-                    oldest.b_setVictorList([0, 0, 0, 0, 0])
+                    oldest.b_setVictorList([0, 0, 0, 0])
                     oldest.updateSavedBy(None)
                     oldest.toonTakeOver()
         self.__waitForNextUpkeep()
@@ -652,7 +651,6 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         totalWeightPerTrack = self.TOTAL_BWEIGHT_PER_TRACK[:]
         totalWeightPerHeight = self.TOTAL_BWEIGHT_PER_HEIGHT[:]
         numPerTrack = {
-            't': 0,
             'c': 0,
             'l': 0,
             'm': 0,
@@ -660,7 +658,6 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         }
         for sp in self.air.suitPlanners.values():
             sp.countNumBuildingsPerTrack(numPerTrack)
-            numPerTrack['t'] += sp.pendingBuildingTracks.count('c')
             numPerTrack['c'] += sp.pendingBuildingTracks.count('c')
             numPerTrack['l'] += sp.pendingBuildingTracks.count('l')
             numPerTrack['m'] += sp.pendingBuildingTracks.count('m')
@@ -952,7 +949,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     def buildingListQuery(self):
         buildingDict = {}
         self.countNumBuildingsPerTrack(buildingDict)
-        buildingList = [0, 0, 0, 0, 0]
+        buildingList = [0, 0, 0, 0]
         for dept in SuitDNA.suitDepts:
             if dept in buildingDict:
                 buildingList[SuitDNA.suitDepts.index(dept)] = buildingDict[dept]

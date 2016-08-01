@@ -31,22 +31,18 @@ largeSuits = ['f',
  'hh',
  'cr',
  'tbc',
- 'hho',            
  'bs',
  'sd',
  'le',
  'bw',
- 'br',             
  'nc',
  'mb',
  'ls',
  'rb',
- 'bfh',
  'ms',
  'tf',
  'm',
- 'mh',
- 'tl']
+ 'mh']
 shotDirection = 'left'
 
 def avatarDodge(leftAvatars, rightAvatars, leftData, rightData):
@@ -262,12 +258,12 @@ def createSuitReviveTrack(suit, toon, battle, npcs = []):
     suitTrack.append(Func(insertReviveSuit, suit, deathSuit, battle, suitPos, suitHpr))
     suitTrack.append(ActorInterval(deathSuit, 'lose', duration=SUIT_LOSE_REVIVE_DURATION))
     suitTrack.append(Func(removeReviveSuit, suit, deathSuit, name='remove-death-suit'))
-    suitTrack.append(ActorInterval(suit, 'slip-forward', startTime=2.48, duration=0.1))
-    suitTrack.append(ActorInterval(suit, 'slip-forward', startTime=2.58))
+    suitTrack.append(ActorInterval(suit, 'slip-backward', startTime=2.48, duration=0.1))
+    suitTrack.append(ActorInterval(suit, 'slip-backward', startTime=2.58))
     suitTrack.append(Func(suit.loop, 'neutral'))
     suitTrack.append(Func(suit.setHP, suit.getMaxHP()))
     spinningSound = base.loadSfx('phase_3.5/audio/sfx/Cog_Death.ogg')
-    deathSound = base.loadSfx('phase_3.5/audio/sfx/ENC_cogfall_apart.ogg')
+    deathSound = base.loadSfx('phase_3.5/audio/sfx/ENC_cogfall_apart.ogg' % random.randint(1, 6))
     deathSoundTrack = Sequence(Wait(0.8), SoundInterval(spinningSound, duration=1.2, startTime=1.5, volume=0.2), SoundInterval(spinningSound, duration=3.0, startTime=0.6, volume=0.8), SoundInterval(deathSound, volume=0.32))
     BattleParticles.loadParticles()
     smallGears = BattleParticles.createParticleEffect(file='gearExplosionSmall')
@@ -312,7 +308,7 @@ def createSuitDeathTrack(suit, toon, battle, npcs = []):
     suitTrack.append(Func(removeDeathSuit, suit, deathSuit, name='remove-death-suit'))
     suitTrack.append(Func(notify.debug, 'after removeDeathSuit'))
     spinningSound = base.loadSfx('phase_3.5/audio/sfx/Cog_Death.ogg')
-    deathSound = base.loadSfx('phase_3.5/audio/sfx/ENC_cogfall_apart.ogg')
+    deathSound = base.loadSfx('phase_3.5/audio/sfx/ENC_cogfall_apart.ogg' % random.randint(1, 6))
     deathSoundTrack = Sequence(Wait(0.8), SoundInterval(spinningSound, duration=1.2, startTime=1.5, volume=0.2), SoundInterval(spinningSound, duration=3.0, startTime=0.6, volume=0.8), SoundInterval(deathSound, volume=0.32))
     BattleParticles.loadParticles()
     smallGears = BattleParticles.createParticleEffect(file='gearExplosionSmall')
@@ -530,8 +526,6 @@ def getSuitRakeOffset(suit):
         return 2.1
     elif suitName == 'tbc':
         return 1.4
-    elif suitName == 'hho':
-        return 1.4
     elif suitName == 'bs':
         return 0.4
     elif suitName == 'sd':
@@ -539,8 +533,6 @@ def getSuitRakeOffset(suit):
     elif suitName == 'le':
         return 1.3
     elif suitName == 'bw':
-        return 1.4
-    elif suitName == 'br':
         return 1.4
     elif suitName == 'nc':
         return 0.6
@@ -550,8 +542,6 @@ def getSuitRakeOffset(suit):
         return 1.4
     elif suitName == 'rb':
         return 1.6
-    elif suitName == 'bfh':
-        return 1.85
     elif suitName == 'ms':
         return 0.7
     elif suitName == 'tf':
@@ -560,8 +550,6 @@ def getSuitRakeOffset(suit):
         return 0.9
     elif suitName == 'mh':
         return 1.3
-    elif suitName == 'tl':
-        return 1.4
     else:
         notify.warning('getSuitRakeOffset(suit) - Unknown suit name: %s' % suitName)
         return 0

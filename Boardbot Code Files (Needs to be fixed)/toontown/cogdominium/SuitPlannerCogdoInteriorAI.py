@@ -13,6 +13,7 @@ MAX_RESERVES = {
                 'm': BASE_RESERVE * 1.1,
                 'l': BASE_RESERVE * 1.25,
                 'c': BASE_RESERVE * 1.5,
+                't': BASE_RESERVE * 1.75,
                }
 
 def filterReviveChance(track, revive):

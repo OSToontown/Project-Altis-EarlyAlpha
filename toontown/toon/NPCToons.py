@@ -917,7 +917,6 @@ HQnpcFriends = {
  2024: (ToontownBattleGlobals.HEAL_TRACK, 5, ToontownGlobals.MaxHpLimit, 5),
  2025: (ToontownBattleGlobals.DROP_TRACK, 5, 250, 5),
  2026: (ToontownBattleGlobals.SOUND_TRACK, 5, 80, 5),
- 2140: (ToontownBattleGlobals.HEAL_TRACK, 5, ToontownGlobals.MaxHpLimit, 5),
  3007: (ToontownBattleGlobals.TRAP_TRACK, 4, 100, 4),
  1001: (ToontownBattleGlobals.TRAP_TRACK, 4, 70, 4),
  3112: (ToontownBattleGlobals.LURE_TRACK, 5, 0, 5),
@@ -968,7 +967,6 @@ FOnpcFriends = {
  2024: (ToontownBattleGlobals.HEAL_TRACK, 5, ToontownGlobals.MaxHpLimit, 5),
  2025: (ToontownBattleGlobals.DROP_TRACK, 5, 200, 5),
  2026: (ToontownBattleGlobals.SOUND_TRACK, 5, 80, 5),
- 2140: (ToontownBattleGlobals.HEAL_TRACK, 5, ToontownGlobals.MaxHpLimit, 5),
  20000: (ToontownBattleGlobals.SOUND_TRACK, 5, 80, 5),
  7023: (ToontownBattleGlobals.LURE_TRACK, 3, 0, 2)
 }
