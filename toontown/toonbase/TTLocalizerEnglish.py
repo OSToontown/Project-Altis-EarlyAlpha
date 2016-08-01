@@ -102,9 +102,9 @@ GlobalStreetNames = {20000: ('to', 'on', 'Tutorial Terrace'),
  10000: ('to the', 'in the', 'Bossbot HQ Country Club'),
  10100: ('to the', 'in the', 'Bossbot HQ Country Club Bridge'),
  10200: ('to', 'in', 'The Clubhouse'),
- 10500: ('to', 'in', 'The Front Three'),
- 10600: ('to', 'in', 'The Middle Six'),
- 10700: ('to', 'in', 'The Back Nine'),
+ 10500: ('to the', 'in the', 'The Front Three'),
+ 10600: ('to the', 'in the', 'The Middle Six'),
+ 10700: ('to the', 'in the', 'The Back Nine'),
  11000: ('to the', 'in the', 'Sellbot HQ Junkyard'),
  11100: ('to the', 'in the', 'Sellbot HQ Towers Lobby'),
  11200: ('to the', 'in the', 'Sellbot Factory Exterior'),
@@ -8542,11 +8542,7 @@ FireTalkMessage = "You're fired!"
 
 InVP = ' in a V.P. Battle'
 InFieldOffice = ' in a Sellbot Field Office'
-CogPanelLevel = 'Level %s'
-CogPanelSkeleton = 'Skeleton'
-CogPanelVirtual = 'Virtual'
-CogPanelRevives = 'v%s.0'
-CogPanelWaiter = 'Waiter'
+
 
 def convertSecondsToDate(seconds):
     m, s = divmod(seconds, 60)

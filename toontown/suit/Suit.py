@@ -699,13 +699,3 @@ class Suit(Avatar.Avatar):
         else:
             return SuitDialogArray
     
-    def getTypeText(self):
-        if self.virtual:
-            return TTLocalizer.CogPanelVirtual
-        elif self.isWaiter:
-            return TTLocalizer.CogPanelWaiter
-        elif self.skeleRevives:
-            return TTLocalizer.CogPanelRevives % (self.skeleRevives + 1)
-        elif self.isSkelecog:
-            return TTLocalizer.CogPanelSkeleton
-        return ''
