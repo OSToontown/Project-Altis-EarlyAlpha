@@ -370,9 +370,6 @@ class SuitPage(ShtikerPage.ShtikerPage):
         for dept in xrange(0, len(SuitDNA.suitDepts)):
             row = []
             color = PANEL_COLORS[dept]
-            if dept in xrange(0, len(SuitDNA.suitDepts)):
-                pass
-            else:
                 self.panels[cog].count += 1
             for type in xrange(0, SuitDNA.suitsPerDept):
                 panel = DirectLabel(parent=self.panelNode, pos=(xStart + type * xOffset, 0.0, yStart - dept * yOffset), relief=None, state=DGG.NORMAL, image=self.panelModel, image_scale=(1, 1, 1), image_color=color, text=TTLocalizer.SuitPageMystery, text_scale=0.045, text_fg=(0, 0, 0, 1), text_pos=(0, 0.185, 0), text_font=ToontownGlobals.getSuitFont(), text_wordwrap=7)

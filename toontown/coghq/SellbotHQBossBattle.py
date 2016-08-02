@@ -25,27 +25,14 @@ class SellbotHQBossBattle(CogHQBossBattle.CogHQBossBattle):
         CogHQBossBattle.CogHQBossBattle.exit(self)
         self.__cleanupHighSky()
 
-    def startSky(self):
-        self.sky = loader.loadModel('phase_9/models/cogHQ/cog_sky')
-        self.sky.reparentTo(camera)
-        self.sky.setZ(0.0)
-        self.sky.setHpr(0.0, 0.0, 0.0)
-        ce = CompassEffect.make(NodePath(), CompassEffect.PRot | CompassEffect.PZ)
-        self.sky.node().setEffect(ce)
-        self.sky.setBin('background', 0)
-
-    def stopSky(self):
-        taskMgr.remove('skyTrack')
-        self.sky.removeNode()
-
     def __setupHighSky(self):
-        self.startSky()
-        sky = self.sky
-        sky.setH(250)
-        sky.setZ(-200)
+        self.loader.hood.startSky()
+        sky = self.loader.hood.sky
+        sky.setH(150)
+        sky.setZ(-100)
 
     def __cleanupHighSky(self):
-        sky = self.sky
+        self.loader.hood.stopSky()
+        sky = self.loader.hood.sky
         sky.setH(0)
         sky.setZ(0)
-        self.stopSky()

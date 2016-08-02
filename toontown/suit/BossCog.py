@@ -112,7 +112,7 @@ class BossCog(Avatar.Avatar):
             pelvis = self.getPart('torso')
             pelvis.setZ(9.75)
         else:
-            self.attach('torso', 'legs', 'joint_pelvis')
+             self.attach('torso', 'legs', 'joint_pelvis')
         self.rotateNode = self.attachNewNode('rotate')
         geomNode = self.getGeomNode()
         geomNode.reparentTo(self.rotateNode)
