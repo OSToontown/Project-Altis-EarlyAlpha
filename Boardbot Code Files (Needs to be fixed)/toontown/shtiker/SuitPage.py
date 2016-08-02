@@ -212,8 +212,6 @@ class SuitPage(ShtikerPage.ShtikerPage):
         icon = icons.find('**/sales_icon')
         self.salesRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=(icon, icon, icon), image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.575), command=self.toggleRadar, extraArgs=[3])
         self.radarButtons.append(self.salesRadarButton)
-        self.boardRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=icon, image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.575), command=self.toggleRadar, extraArgs=[4])
-        icon = icons.find('**/board_icon')
         for radarButton in self.radarButtons:
             radarButton.building = 0
             radarButton.buildingRadarLabel = None
@@ -234,7 +232,6 @@ class SuitPage(ShtikerPage.ShtikerPage):
         del gui
         self.makePanels()
         self.radarOn = [0,
-         0,
          0,
          0,               
          0]
@@ -373,6 +370,10 @@ class SuitPage(ShtikerPage.ShtikerPage):
         for dept in xrange(0, len(SuitDNA.suitDepts)):
             row = []
             color = PANEL_COLORS[dept]
+            if dept in xrange(0, len(SuitDNA.suitDepts)):
+                pass
+            else:
+                self.panels[cog].count += 1
             for type in xrange(0, SuitDNA.suitsPerDept):
                 panel = DirectLabel(parent=self.panelNode, pos=(xStart + type * xOffset, 0.0, yStart - dept * yOffset), relief=None, state=DGG.NORMAL, image=self.panelModel, image_scale=(1, 1, 1), image_color=color, text=TTLocalizer.SuitPageMystery, text_scale=0.045, text_fg=(0, 0, 0, 1), text_pos=(0, 0.185, 0), text_font=ToontownGlobals.getSuitFont(), text_wordwrap=7)
                 panel.scale = 0.55
@@ -578,6 +579,10 @@ class SuitPage(ShtikerPage.ShtikerPage):
             panel.count = 0
         for cog in cogList:
             self.panels[cog].count += 1
+            if cog - ((len(SuitDNA.suitDepts)-1) * SuitDNA.suitsPerDept - 1) > 0:
+                pass
+            else:
+                self.panels[cog].count += 1
         for panel in panels:
             panel.cogRadarLabel['text'] = TTLocalizer.SuitPageCogRadar % panel.count
             if self.radarOn[deptNum]:
