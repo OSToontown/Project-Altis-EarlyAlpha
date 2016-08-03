@@ -76,12 +76,14 @@ class BossCog(Avatar.Avatar):
 
     def generateBossCog(self):
         self.throwSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_frisbee_gears.ogg')
-        self.swingSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_swipe.ogg')
+        self.swingSfx = loader.loadSfx ('phase_9/audio/sfx/CHQ_VP_boss_cog_wwipe.ogg')
         self.spinSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_spin.ogg')
         self.rainGearsSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_raining_gears.ogg')
         self.swishSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_swish.ogg')
         self.boomSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_boom.ogg')
         self.deathSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_big_death.ogg')
+        self.treadsSfx = loader.loadSfx('CHQ_VP_tractor_treads.ogg')
+        self.headshakeSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_headshake.ogg')
         self.upSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_raise_up.ogg')
         self.downSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_collapse.ogg')
         self.reelSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_reeling_backwards.ogg')
@@ -205,10 +207,12 @@ class BossCog(Avatar.Avatar):
     def rollLeftTreads(self, duration, rate):
         start = self.treadsLeftPos
         self.treadsLeftPos += duration * rate
+        self.Sfx1 = ('phase_9/audio/sfx/CHQ_VP_tractor_treads.ogg')
         return self.__rollTreadsInterval(self.treadsLeft, start=start, duration=duration, rate=rate)
 
     def rollRightTreads(self, duration, rate):
         start = self.treadsRightPos
+        self.Sfx2 = ('phase_9/audio/sfx/CHQ_VP_tractor_treads.ogg')
         self.treadsRightPos += duration * rate
         return self.__rollTreadsInterval(self.treadsRight, start=start, duration=duration, rate=rate)
 

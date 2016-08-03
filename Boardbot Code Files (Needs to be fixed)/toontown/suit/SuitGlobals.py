@@ -21,9 +21,9 @@ suitProperties = {'cm': (4.0 / cSize, SuitDNA.boardPolyColor, ['tightwad'], 'con
                   'b3': (4.35 / bSize, SuitDNA.boardPolyColor, ['telemarketer'], '', 5.24),
                   'b4': (4.75 / bSize, SuitDNA.boardPolyColor, ['telemarketer'], '', 5.24),
                   'b5': (4.75 / bSize, SuitDNA.boardPolyColor, ['telemarketer'], '', 5.24),
-                  'tl': (6.5 / aSize, VBase4(1, 1, .29, 1.0), ['toxicleader'], '', 10),
+                  'tl': (5.25 / aSize, VBase4(1, 1, .29, 1.0), ['toxicleader'], '', 6.95),
                   'bfh': (7.8 / cSize, VBase4(1, .3, .3, 1.0), ['bigfish'], '', 9.7),
-                  'hho': (7.0 / aSize, SuitDNA.boardPolyColor, ['headhoncho'], 'head-honcho.jpg', 9.5),
+                  'hho': (7.0 / aSize, SuitDNA.boardPolyColor, ['headhoncho'], 'head-honcho.jpg', 8.95),
                   #Bossbots
                   'f': (4.0 / cSize, SuitDNA.corpPolyColor, ['flunky', 'glasses'], '', 4.88),
                   'p': (3.35 / bSize, SuitDNA.corpPolyColor, ['pencilpusher'], '', 5.0),
