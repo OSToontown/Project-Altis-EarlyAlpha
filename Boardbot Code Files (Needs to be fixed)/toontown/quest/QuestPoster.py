@@ -418,7 +418,7 @@ class QuestPoster(DirectFrame):
             elif track == 's':
                 lIconGeom = loader.loadModel('phase_4/models/modules/suit_landmark_sales')
             elif track == 't':
-                lIconGeom = loader.loadModel('phase_4/models/modules/suit_landmark_board')
+                lIconGeom = loader.loadModel('phase_4/models/modules/suit_landmark_corp')
             else:
                 bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
                 lIconGeom = bookModel.find('**/COG_building')

@@ -203,11 +203,11 @@ PartyHood = 18000
 HoodsAlwaysVisited = [17000, 18000]
 DynamicZonesBegin = 22000
 DynamicZonesEnd = 1 << 20
-cogDept2index = {'t': 0,
- 'c': 1,
- 'l': 2,
- 'm': 3,
- 's': 4}
+cogDept2index = {'c': 0,
+ 'l': 1,
+ 'm': 2,
+ 's': 3,
+ 't': 4}
 cogIndex2dept = invertDict(cogDept2index)
 HQToSafezone = {SellbotHQ: DaisyGardens,
  CashbotHQ: DonaldsDreamland,
@@ -221,13 +221,13 @@ CogDeptNames = [TTLocalizer.Boardbot,
 
 def cogHQZoneId2deptIndex(zone): #On and Off Switch for Cog HQs. Controls the type that roams throughout.
     if zone >= 13000 and zone <= 13999: #Lawbot HQ
-        return 2
+        return 1
     elif zone >= 12000:  #Cashbot HQ
-        return 3
+        return 2
     elif zone >= 11000: #Sellbot HQ
-        return 4
+        return 3
     else:
-        return 1 #Bossbot HQ
+        return 0 #Bossbot HQ
 
 
 def cogHQZoneId2dept(zone):
