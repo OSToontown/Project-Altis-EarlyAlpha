@@ -16,14 +16,17 @@ BUILDING_RADAR_POS = (0.375,
  -0.225,
  -0.5)
 PANEL_COLORS = (Vec4(0.8, 0.78, 0.77, 1),
+ Vec4(0.8, 0.78, 0.77, 1),
  Vec4(0.75, 0.78, 0.8, 1),
  Vec4(0.75, 0.82, 0.79, 1),
  Vec4(0.825, 0.76, 0.77, 1))
-PANEL_COLORS_COMPLETE1 = (Vec4(0.7, 0.725, 0.545, 1),
+PANEL_COLORS_COMPLETE1 = (Vec4(0.8, 0.78, 0.77, 1),
+ Vec4(0.7, 0.725, 0.545, 1),
  Vec4(0.625, 0.725, 0.65, 1),
  Vec4(0.6, 0.75, 0.525, 1),
  Vec4(0.675, 0.675, 0.55, 1))
-PANEL_COLORS_COMPLETE2 = (Vec4(0.9, 0.725, 0.32, 1),
+PANEL_COLORS_COMPLETE2 = (Vec4(0.95, 0.78, 0.77, 1),
+ Vec4(0.9, 0.725, 0.32, 1),
  Vec4(0.825, 0.725, 0.45, 1),
  Vec4(0.8, 0.75, 0.325, 1),
  Vec4(0.875, 0.675, 0.35, 1))
@@ -359,7 +362,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
         base.panels = []
         xStart = -0.66
         yStart = -0.18
-        xOffset = 0.177
+        xOffset = 0.199
         yOffset = 0.284
         gui = loader.loadModel('phase_3.5/models/gui/suit_detail_panel')
         gui.find('**/avatar_panel/shadow').setColor(1, 1, 1, 0.5)
@@ -370,10 +373,9 @@ class SuitPage(ShtikerPage.ShtikerPage):
         for dept in xrange(0, len(SuitDNA.suitDepts)):
             row = []
             color = PANEL_COLORS[dept]
-                self.panels[cog].count += 1
             for type in xrange(0, SuitDNA.suitsPerDept):
                 panel = DirectLabel(parent=self.panelNode, pos=(xStart + type * xOffset, 0.0, yStart - dept * yOffset), relief=None, state=DGG.NORMAL, image=self.panelModel, image_scale=(1, 1, 1), image_color=color, text=TTLocalizer.SuitPageMystery, text_scale=0.045, text_fg=(0, 0, 0, 1), text_pos=(0, 0.185, 0), text_font=ToontownGlobals.getSuitFont(), text_wordwrap=7)
-                panel.scale = 0.55
+                panel.scale = 0.6
                 panel.setScale(panel.scale)
                 panel.quotaLabel = None
                 panel.head = None
