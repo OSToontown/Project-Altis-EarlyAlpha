@@ -3034,6 +3034,46 @@ class Toon(Avatar.Avatar, ToonHead):
         track.append(freddyTrack)
         return track
 
+    def __doBilly(self, lerpTime, toBilly):
+        track = Sequence()
+        billyTrack = Parallel()
+
+        def getDustCloudIval():
+            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=1)
+            dustCloud.setBillboardAxis(2.0)
+            dustCloud.setZ(3)
+            dustCloud.setScale(0.4)
+            dustCloud.createTrack()
+            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
+
+        if lerpTime > 0.0:
+            dust = getDustCloudIval()
+            track.append(Func(dust.start))
+            track.append(Wait(0.5))
+            
+        if toBilly:
+            self.oldStyle = self.style.clone()
+            self.oldHat = self.hat
+            dna = ToonDNA.ToonDNA()
+            dna.newToonFromProperties('dls', 'ls', 'l', 'm', 10, 0, 10, 10, 1, 9, 1, 9, 1, 10)
+            billyTrack.append(Func(self.updateToonDNA, dna, True))
+            if hasattr(self, 'animFSM'):
+                state = self.animFSM.getCurrentState()
+                billyTrack.append(Func(self.animFSM.request, 'off'))
+                billyTrack.append(Func(self.animFSM.request, state))
+            billyTrack.append(Func(self.nametag.setDisplayName, 'Fisherman Billy'))
+        else:
+            billyTrack.append(Func(self.updateToonDNA, self.oldStyle))
+            if hasattr(self, 'animFSM'):
+                state = self.animFSM.getCurrentState()
+                billyTrack.append(Func(self.animFSM.request, 'off'))
+                billyTrack.append(Func(self.animFSM.request, state))
+            billyTrack.append(Func(self.nametag.setDisplayName, self.nametag.name))
+            billyTrack.append(Func(self.setHat, self.oldHat[0], self.oldHat[1], self.oldHat[2]))
+            billyTrack.append(Func(self.generateToonAccessories))
+        track.append(billyTrack)
+        return track
+
     def __doCheesyEffect(self, effect, lerpTime):
         if effect == ToontownGlobals.CEBigHead:
             return self.__doHeadScale(2.5, lerpTime)
@@ -3093,6 +3133,8 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doSqueaky(lerpTime, toSqueaky=True)
         elif effect == ToontownGlobals.CEFreddy:
             return self.__doFreddy(lerpTime, toFreddy=True)
+        elif effect == ToontownGlobals.CEBilly:
+            return self.__doBilly(lerpTime, toBilly=True)
         elif effect == ToontownGlobals.CEVirtual:
             return self.__doVirtual()
         elif effect == ToontownGlobals.CEGhost:
@@ -3161,6 +3203,8 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doSqueaky(lerpTime, toSqueaky=False)
         elif effect == ToontownGlobals.CEFreddy:
             return self.__doFreddy(lerpTime, toFreddy=False)
+        elif effect == ToontownGlobals.CEBilly:
+            return self.__doBilly(lerpTime, toBilly=False)
         elif effect == ToontownGlobals.CEVirtual:
             return self.__doUnVirtual()
         elif effect == ToontownGlobals.CEGhost:

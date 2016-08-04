@@ -80,69 +80,145 @@ speedChatStyles = ((2000,
   (170 / 255.0, 120 / 255.0, 20 / 255.0),
   (165 / 255.0, 120 / 255.0, 50 / 255.0),
   (210 / 255.0, 200 / 255.0, 180 / 255.0)))
-PageMode = PythonUtil.Enum('Options, Codes')
+PageMode = PythonUtil.Enum('Options, Codes, Bonus')
 
 class OptionsPage(ShtikerPage.ShtikerPage):
-    notify = DirectNotifyGlobal.directNotify.newCategory('OptionsPage')
+    notify = directNotify.newCategory('OptionsPage')
 
     def __init__(self):
         ShtikerPage.ShtikerPage.__init__(self)
 
+        self.optionsTabPage = None
+        self.codesTabPage = None
+        self.bonusTabPage = None
+        self.title = None
+        self.optionsTab = None
+        self.codesTab = None
+        self.bonusOptionsTab = None
+
     def load(self):
         ShtikerPage.ShtikerPage.load(self)
+
         self.optionsTabPage = OptionsTabPage(self)
         self.optionsTabPage.hide()
         self.codesTabPage = CodesTabPage(self)
         self.codesTabPage.hide()
-        titleHeight = 0.61
-        self.title = DirectLabel(parent=self, relief=None, text=TTLocalizer.OptionsPageTitle, text_scale=0.12, pos=(0, 0, titleHeight))
+        self.bonusTabPage = BonusTabPage(self)
+        self.bonusTabPage.hide()
+
+        self.title = DirectLabel(
+            parent=self, relief=None, text=TTLocalizer.OptionsPageTitle,
+            text_scale=0.12, pos=(0, 0, 0.61))
+
+        gui = loader.loadModel('phase_3.5/models/gui/fishingBook.bam')
         normalColor = (1, 1, 1, 1)
         clickColor = (0.8, 0.8, 0, 1)
         rolloverColor = (0.15, 0.82, 1.0, 1)
         diabledColor = (1.0, 0.98, 0.15, 1)
-        gui = loader.loadModel('phase_3.5/models/gui/fishingBook')
-        self.optionsTab = DirectButton(parent=self, relief=None, text=TTLocalizer.OptionsPageTitle, text_scale=TTLocalizer.OPoptionsTab, text_align=TextNode.ALeft, text_pos=(0.01, 0.0, 0.0), image=gui.find('**/tabs/polySurface1'), image_pos=(0.55, 1, -0.91), image_hpr=(0, 0, -90), image_scale=(0.033, 0.033, 0.035), image_color=normalColor, image1_color=clickColor, image2_color=rolloverColor, image3_color=diabledColor, text_fg=Vec4(0.2, 0.1, 0, 1), command=self.setMode, extraArgs=[PageMode.Options], pos=(-0.36, 0, 0.77))
-        self.codesTab = DirectButton(parent=self, relief=None, text=TTLocalizer.OptionsPageCodesTab, text_scale=TTLocalizer.OPoptionsTab, text_align=TextNode.ALeft, text_pos=(-0.035, 0.0, 0.0), image=gui.find('**/tabs/polySurface2'), image_pos=(0.12, 1, -0.91), image_hpr=(0, 0, -90), image_scale=(0.033, 0.033, 0.035), image_color=normalColor, image1_color=clickColor, image2_color=rolloverColor, image3_color=diabledColor, text_fg=Vec4(0.2, 0.1, 0, 1), command=self.setMode, extraArgs=[PageMode.Codes], pos=(0.11, 0, 0.77))
-        return
+        self.optionsTab = DirectButton(
+            parent=self, relief=None, text=TTLocalizer.OptionsPageTitle,
+            text_scale=TTLocalizer.OPoptionsTab, text_align=TextNode.ALeft,
+            text_pos=(0.01, 0.0, 0.0), image=gui.find('**/tabs/polySurface1'),
+            image_pos=(0.55, 1, -0.91), image_hpr=(0, 0, -90),
+            image_scale=(0.033, 0.033, 0.035), image_color=normalColor,
+            image1_color=clickColor, image2_color=rolloverColor,
+            image3_color=diabledColor, text_fg=Vec4(0.2, 0.1, 0, 1),
+            command=self.setMode, extraArgs=[PageMode.Options],
+            pos=(-0.74, 0, 0.77))
+        self.codesTab = DirectButton(
+            parent=self, relief=None, text=TTLocalizer.OptionsPageCodesTab,
+            text_scale=TTLocalizer.OPoptionsTab, text_align=TextNode.ALeft,
+            text_pos=(-0.035, 0.0, 0.0),
+            image=gui.find('**/tabs/polySurface2'), image_pos=(0.12, 1, -0.91),
+            image_hpr=(0, 0, -90), image_scale=(0.033, 0.033, 0.035),
+            image_color=normalColor, image1_color=clickColor,
+            image2_color=rolloverColor, image3_color=diabledColor,
+            text_fg=Vec4(0.2, 0.1, 0, 1), command=self.setMode,
+            extraArgs=[PageMode.Codes], pos=(-0.32, 0, 0.77))
+        self.bonusOptionsTab = DirectButton(
+            parent=self, relief=None, text=TTLocalizer.BonusTitle,
+            text_scale=TTLocalizer.OPbonusOptionsTab, text_align=TextNode.ALeft,
+            text_pos=(0.027, 0.0, 0.0),
+            image=gui.find('**/tabs/polySurface2'), image_pos=(0.12, 1, -0.91),
+            image_hpr=(0, 0, -90), image_scale=(0.033, 0.033, 0.035),
+            image_color=normalColor, image1_color=clickColor,
+            image2_color=rolloverColor, image3_color=diabledColor,
+            text_fg=Vec4(0.2, 0.1, 0, 1), command=self.setMode,
+            extraArgs=[PageMode.Bonus], pos=(0.16, 0, 0.77))
+        gui.removeNode()
 
     def enter(self):
         self.setMode(PageMode.Options, updateAnyways=1)
+
         ShtikerPage.ShtikerPage.enter(self)
 
     def exit(self):
         self.optionsTabPage.exit()
         self.codesTabPage.exit()
+        self.bonusTabPage.exit()
+        
         ShtikerPage.ShtikerPage.exit(self)
 
     def unload(self):
-        self.optionsTabPage.unload()
-        del self.title
+        if self.optionsTabPage is not None:
+            self.optionsTabPage.unload()
+            self.optionsTabPage = None
+
+        if self.codesTabPage is not None:
+            self.codesTabPage.unload()
+            self.codesTabPage = None
+
+        if self.title is not None:
+            self.title.destroy()
+            self.title = None
+
+        if self.optionsTab is not None:
+            self.optionsTab.destroy()
+            self.optionsTab = None
+
+        if self.codesTab is not None:
+            self.codesTab.destroy()
+            self.codesTab = None
+        
+        if self.bonusOptionsTab is not None:
+            self.bonusOptionsTab.destroy()
+            self.bonusOptionsTab = None
+
         ShtikerPage.ShtikerPage.unload(self)
 
-    def setMode(self, mode, updateAnyways = 0):
+    def setMode(self, mode, updateAnyways=0):
         messenger.send('wakeup')
+
         if not updateAnyways:
             if self.mode == mode:
                 return
-            else:
-                self.mode = mode
+
+        self.mode = mode
+
         if mode == PageMode.Options:
-            self.mode = PageMode.Options
             self.title['text'] = TTLocalizer.OptionsPageTitle
             self.optionsTab['state'] = DGG.DISABLED
             self.optionsTabPage.enter()
             self.codesTab['state'] = DGG.NORMAL
             self.codesTabPage.exit()
+            self.bonusOptionsTab['state'] = DGG.NORMAL
+            self.bonusTabPage.exit()
         elif mode == PageMode.Codes:
-            self.mode = PageMode.Codes
             self.title['text'] = TTLocalizer.CdrPageTitle
             self.optionsTab['state'] = DGG.NORMAL
             self.optionsTabPage.exit()
             self.codesTab['state'] = DGG.DISABLED
             self.codesTabPage.enter()
-        else:
-            raise StandardError, 'OptionsPage::setMode - Invalid Mode %s' % mode
-
+            self.bonusOptionsTab['state'] = DGG.NORMAL
+            self.bonusTabPage.exit()
+        elif mode == PageMode.Bonus:
+            self.title['text'] = TTLocalizer.BonusTitle
+            self.optionsTab['state'] = DGG.NORMAL
+            self.optionsTabPage.exit()
+            self.codesTab['state'] = DGG.NORMAL
+            self.codesTabPage.exit()
+            self.bonusOptionsTab['state'] = DGG.DISABLED
+            self.bonusTabPage.enter()
 
 class OptionsTabPage(DirectFrame):
     notify = DirectNotifyGlobal.directNotify.newCategory('OptionsTabPage')
@@ -623,3 +699,43 @@ class CodesTabPage(DirectFrame):
         self.codeInput['state'] = DGG.NORMAL
         self.codeInput['focus'] = 1
         self.submitButton['state'] = DGG.NORMAL
+
+class BonusTabPage(DirectFrame):
+    notify = directNotify.newCategory('BonusTabPage')
+
+    def __init__(self, parent = aspect2d):
+        self.parent = parent
+        self.currentSizeIndex = None
+
+        DirectFrame.__init__(self, parent=self.parent, relief=None, pos=(0.0, 0.0, 0.0), scale=(1.0, 1.0, 1.0))
+
+        self.load()
+
+    def destroy(self):
+        self.parent = None
+        DirectFrame.destroy(self)
+
+    def load(self):
+        guiButton = loader.loadModel('phase_3/models/gui/quit_button')
+        circleModel = loader.loadModel('phase_3/models/gui/tt_m_gui_mat_nameShop')
+        titleHeight = 0.61
+        textStartHeight = 0.45
+        textRowHeight = 0.145
+        leftMargin = -0.72
+        buttonbase_xcoord = 0.35
+        buttonbase_ycoord = 0.45
+        button_image_scale = (0.7, 1, 1)
+        button_textpos = (0, -0.02)
+        options_text_scale = 0.052
+        disabled_arrow_color = Vec4(0.6, 0.6, 0.6, 1.0)
+        button_image = (guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR'))
+        self.speed_chat_scale = 0.055
+        guiButton.removeNode()
+
+    def enter(self):
+        self.show()
+        self.settingsChanged = 0
+
+    def exit(self):
+        self.ignoreAll()
+        self.hide()
