@@ -34,19 +34,19 @@ class DisguisePage(ShtikerPage.ShtikerPage):
         self.tabs = []
         self.pageFrame = DirectFrame(parent=self.frame, relief=None)
         for dept in SuitDNA.suitDepts:
-            if dept == 't':
+            if dept == 'c':
                 tabIndex = 1
                 textPos = (1.57, 0.75)
-            elif dept == 'c':
+            elif dept == 'l':
                 tabIndex = 2
                 textPos = (1.57, 0.12)
-            elif dept == 'l':
+            elif dept == 'm':
                 tabIndex = 3
                 textPos = (1.57, -0.47)
-            elif dept == 'm':
+            elif dept == 's':
                 tabIndex = 4
                 textPos = (1.57, -1.05)
-            elif dept == 's':
+            elif dept == 't':
                 tabIndex = 5
                 textPos = (1.57, -1.40)
             pageGeom = gui.find('**/page%d' % tabIndex)
@@ -187,7 +187,7 @@ class DisguisePage(ShtikerPage.ShtikerPage):
             self.progressTitle = self.cogbuckTitle
         elif SuitDNA.suitDepts[index] == 'l':
             self.progressTitle = self.juryNoticeTitle
-        elif SuitDNA.suitDepts[index] == 'bd':
+        elif SuitDNA.suitDepts[index] == 't':
             self.progressTitle = self.boardGearsTitle
         elif SuitDNA.suitDepts[index] == 'c':
             self.progressTitle = self.stockOptionTitle

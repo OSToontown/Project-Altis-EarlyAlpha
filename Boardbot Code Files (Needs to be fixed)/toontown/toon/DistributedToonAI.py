@@ -4307,14 +4307,14 @@ def maxToon(missingTrack=None):
     # Max out their Cog suits:
     target.b_setCogParts(
         [
-            CogDisguiseGlobals.PartsPerSuitBitmasks[0],  # Boardbot
-            CogDisguiseGlobals.PartsPerSuitBitmasks[1],  # Bossbot
-            CogDisguiseGlobals.PartsPerSuitBitmasks[2],  # Lawbot
-            CogDisguiseGlobals.PartsPerSuitBitmasks[3],   # Cashbot
-            CogDisguiseGlobals.PartsPerSuitBitmasks[4],   # Sellbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[0], # Bossbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[1], # Lawbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[2], # Cashbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[3], # Sellbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[4], # Boardbot
         ]
     )
-    target.b_setCogLevels([13] * 5)
+    target.b_setCogLevels([12] * 5)
     target.b_setCogTypes([7, 7, 7, 7, 7])
 
     # Max their Cog gallery:
