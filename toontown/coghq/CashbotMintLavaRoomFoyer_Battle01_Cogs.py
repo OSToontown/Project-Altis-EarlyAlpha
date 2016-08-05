@@ -1,5 +1,6 @@
 from SpecImports import *
 import random
+from toontown.toonbase import ToontownGlobals
 CogParent = 10000
 BattleParent = 10005
 BattleCellId = 0
@@ -7,42 +8,38 @@ BattleCells = {BattleCellId: {'parentEntId': BattleParent,
                 'pos': Point3(0, 0, 0)}}
 CogData = [{'parentEntId': CogParent,
   'boss': 1,
-  'level': random.choice([12, 13]),
+  'level': 12,
   'battleCell': BattleCellId,
   'pos': Point3(-6, 0, 0),
   'h': 180,
   'behavior': 'stand',
   'path': None,
-  'skeleton': 0,
-  'revives': random.choice([1])},
+  'skeleton': 1},
  {'parentEntId': CogParent,
   'boss': 0,
-  'level': random.choice([6, 7, 8, 9, 10, 11, 12, 13]),
+  'level': 11,
   'battleCell': BattleCellId,
   'pos': Point3(-2, 0, 0),
   'h': 180,
   'behavior': 'stand',
   'path': None,
-  'skeleton': 0,
-  'revives': random.choice([0, 1])},
+  'skeleton': 0},
  {'parentEntId': CogParent,
   'boss': 0,
-  'level': random.choice([6, 7, 8, 9, 10, 11, 12, 13]),
+  'level': 11,
   'battleCell': BattleCellId,
   'pos': Point3(2, 0, 0),
   'h': 180,
   'behavior': 'stand',
   'path': None,
-  'skeleton': 0,
-  'revives': random.choice([0, 1])},
+  'skeleton': 0},
  {'parentEntId': CogParent,
   'boss': 0,
-  'level': random.choice([6, 7, 8, 9, 10, 11, 12, 13]),
+  'level': 11,
   'battleCell': BattleCellId,
   'pos': Point3(6, 0, 0),
   'h': 180,
   'behavior': 'stand',
   'path': None,
-  'skeleton': 0,
-  'revives': random.choice([0, 1])}]
+  'skeleton': 0}]
 ReserveCogData = []
