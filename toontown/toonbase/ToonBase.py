@@ -159,7 +159,20 @@ class ToonBase(OTPBase.OTPBase):
         self.localAvatarStyle = None
 
         self.filters = CommonFilters(self.win, self.cam)
-        self.wantCogInterface = settings.get('cogInterface', True)
+        self.wantWASD = settings.get('want-WASD', False)
+
+        self.Move_Up = 'arrow_up'
+        self.Move_Left = 'arrow_left'       
+        self.Move_Down = 'arrow_down'
+        self.Move_Right = 'arrow_right'
+        self.JUMP = 'control'
+        
+        if self.wantWASD:
+            self.Move_Up = 'w'
+            self.Move_Left = 'a'            
+            self.Move_Down = 's'
+            self.Move_Right = 'd'
+            self.JUMP = 'shift'
 
     def openMainWindow(self, *args, **kw):
         result = OTPBase.OTPBase.openMainWindow(self, *args, **kw)

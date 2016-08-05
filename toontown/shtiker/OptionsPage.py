@@ -730,12 +730,55 @@ class BonusTabPage(DirectFrame):
         disabled_arrow_color = Vec4(0.6, 0.6, 0.6, 1.0)
         button_image = (guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR'))
         self.speed_chat_scale = 0.055
+        self.WASD_Label = DirectLabel(parent=self, relief=None, text='', text_align=TextNode.ALeft, text_scale=options_text_scale, text_wordwrap=16, pos=(leftMargin, 0, textStartHeight - textRowHeight))
+        self.WASD_toggleButton = DirectButton(parent=self, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=button_image_scale, text='', text_scale=options_text_scale, text_pos=button_textpos, pos=(buttonbase_xcoord, 0.0, buttonbase_ycoord - textRowHeight), command=self.__doToggleWASD)
         guiButton.removeNode()
 
     def enter(self):
         self.show()
         self.settingsChanged = 0
+        self.__setWASDButton()
 
     def exit(self):
         self.ignoreAll()
         self.hide()
+
+    def unload(self):
+        self.WASD_Label.destroy()
+        del self.WASD_Label
+        self.WASD_toggleButton.destroy()
+        del self.WASD_toggleButton
+
+    def __doToggleWASD(self):
+        messenger.send('wakeup')
+        if base.wantWASD:
+            base.wantWASD = False
+            base.Move_Up = 'arrow_up'
+            base.Move_Down = 'arrow_down'
+            base.Move_Left = 'arrow_left'
+            base.Move_Right = 'arrow_right'
+            base.JUMP = 'control'
+            settings['want-WASD'] = False
+            base.localAvatar.controlManager.reload()
+            base.localAvatar.chatMgr.reloadWASD()
+            base.localAvatar.setSystemMessage(0, 'WASD Support has been deactivated.')            
+        else:
+            base.wantWASD = True
+            base.Move_Up = 'w'
+            base.Move_Down = 's'
+            base.Move_Left = 'a'
+            base.Move_Right = 'd'
+            base.JUMP = 'shift'
+            settings['want-WASD'] = True
+            base.localAvatar.controlManager.reload()
+            base.localAvatar.chatMgr.reloadWASD()            
+            base.localAvatar.setSystemMessage(0, 'WASD Support has been activated.')
+        self.settingsChanged = 1
+        self.__setWASDButton()
+
+    def __setWASDButton(self):
+        self.WASD_Label['text'] = 'WASD Support:'        
+        if base.wantWASD:
+            self.WASD_toggleButton['text'] = 'On'
+        else:
+            self.WASD_toggleButton['text'] = 'Off'
