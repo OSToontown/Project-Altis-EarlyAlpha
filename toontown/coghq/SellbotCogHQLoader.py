@@ -97,7 +97,7 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
             self.bossroom.setScale(0.1)
             self.outskirtsPOV = Actor("phase_9/models/cogHQ/SellbotLegFactoryOld.bam")
             self.outskirtsPOV.reparentTo(self.geom)
-            self.outskirtsPOV.setPos(-525,-150,20)
+            self.outskirtsPOV.setPos(-525,-150,17)
             self.outskirtsPOV.setScale(0.2)
 
 		
