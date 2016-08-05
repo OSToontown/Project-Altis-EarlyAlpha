@@ -27,9 +27,9 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
 
         self.musicFile = random.choice(['phase_12/audio/bgm/Bossbot_Entry_v1.ogg', 'phase_12/audio/bgm/Bossbot_Entry_v2.ogg', 'phase_12/audio/bgm/Bossbot_Entry_v3.ogg'])
         self.skyFile = 'phase_12/models/bossbotHQ/ttr_m_bossbothq_sky'
-        self.cogHQExteriorModelPath = 'phase_12/models/bossbotHQ/CogGolfExterior'
+        self.cogHQExteriorModelPath = 'phase_12/models/bossbotHQ/CogGolfHub'
         self.factoryExteriorModelPath = 'phase_11/models/lawbotHQ/LB_DA_Lobby'
-        self.cogHQLobbyModelPath = 'phase_12/models/bossbotHQ/CogGolfLobby'
+        self.cogHQLobbyModelPath = 'phase_12/models/bossbotHQ/CogGolfCourtyard'
         self.geom = None
         return
 
@@ -56,20 +56,16 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
             top = self.geom.find('**/TunnelEntrance')
             origin = top.find('**/tunnel_origin')
             origin.setH(-33.33)
-            self.extra = Actor("phase_12/models/bossbotHQ/ttr_m_bossbothq_sky")
-            self.extra.reparentTo(self.geom)
-            self.extra.setPos(0,0,0)
-            self.extra.setScale(2.0)
+            self.watertower1 = Actor("phase_6/models/cogHQ/WaterTowerSimple")
+            self.watertower1.reparentTo(self.geom)
+            self.watertower1.setPos(200,20,0)
+            #self.watertower1.setScale(0.5)
         
         elif zoneId == ToontownGlobals.BossbotLobby:
             if base.config.GetBool('want-qa-regression', 0):
                 self.notify.info('QA-REGRESSION: COGHQ: Visit BossbotLobby')
             self.notify.debug('cogHQLobbyModelPath = %s' % self.cogHQLobbyModelPath)
             self.geom = loader.loadModel(self.cogHQLobbyModelPath)
-            self.extra = Actor("phase_12/models/bossbotHQ/ttr_m_bossbothq_sky")
-            self.extra.reparentTo(self.geom)
-            self.extra.setPos(0,0,0)
-            self.extra.setScale(2.0)
         else:
             self.notify.warning('loadPlaceGeom: unclassified zone %s' % zoneId)
         CogHQLoader.CogHQLoader.loadPlaceGeom(self, zoneId)
