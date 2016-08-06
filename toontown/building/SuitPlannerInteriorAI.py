@@ -12,14 +12,13 @@ from toontown.suit.SuitInvasionGlobals import IFSkelecog, IFWaiter, IFV2
 class SuitPlannerInteriorAI:
     notify = DirectNotifyGlobal.directNotify.newCategory('SuitPlannerInteriorAI')
 
-    def __init__(self, numFloors, bldgLevel, bldgTrack, zone, randomRevives=False):
+    def __init__(self, numFloors, bldgLevel, bldgTrack, zone):
         self.dbg_4SuitsPerFloor = config.GetBool('4-suits-per-floor', 0)
         self.dbg_1SuitPerFloor = config.GetBool('1-suit-per-floor', 0)
         self.zoneId = zone
         self.numFloors = numFloors
         self.respectInvasions = 1
-        self.randomRevives = randomRevives
-        dbg_defaultSuitName = simbase.config.GetString('suitType', 'random')
+        dbg_defaultSuitName = simbase.config.GetString('suit-type', 'random')
         if dbg_defaultSuitName == 'random':
             self.dbg_defaultSuitType = None
         else:
@@ -70,10 +69,7 @@ class SuitPlannerInteriorAI:
                 activeDict['type'] = type
                 activeDict['track'] = bldgTrack
                 activeDict['level'] = level
-                if self.randomRevives:
-                    activeDict['revives'] = random.choice([0, 1])
-                else:
-                    activeDict['revives'] = revives
+                activeDict['revives'] = revives
                 activeDicts.append(activeDict)
 
             infoDict['activeSuits'] = activeDicts
@@ -87,10 +83,7 @@ class SuitPlannerInteriorAI:
                 reserveDict['type'] = type
                 reserveDict['track'] = bldgTrack
                 reserveDict['level'] = level
-                if self.randomRevives:
-                    reserveDict['revives'] = random.choice([0, 1])
-                else:
-                    reserveDict['revives'] = revives
+                reserveDict['revives'] = revives
                 reserveDict['joinChance'] = joinChances[currReserve]
                 reserveDicts.append(reserveDict)
 
