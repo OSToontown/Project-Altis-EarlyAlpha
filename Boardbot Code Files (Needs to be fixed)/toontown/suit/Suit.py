@@ -107,36 +107,31 @@ mh = (('magic1', 'magic1', 5),
  ('speak', 'speak', 5),
  ('golf-club-swing', 'golf-club-swing', 5),
  ('song-and-dance', 'song-and-dance', 8))
-cm = (('pickpocket', 'pickpocket', 5),
- ('rubber-stamp', 'rubber-stamp', 5),
- ('shredder', 'shredder', 3.5),
- ('watercooler', 'watercooler', 5))
-b2 = (('speak', 'speak', 5),
+ca = (('pickpocket', 'pickpocket', 5),
+ ('speak', 'speak', 5),
+ ('throw-paper', 'throw-paper', 3.5))
+cn = (('speak', 'speak', 5),
  ('throw-paper', 'throw-paper', 5),
- ('pickpocket', 'pickpocket', 5),
- ('roll-o-dex', 'roll-o-dex', 5),
+ ('effort', 'effort', 5),     
+ ('magic3', 'magic3', 5),
  ('finger-wag', 'finger-wag', 5))
-b3 = (('speak', 'speak', 5),
+mg = (('speak', 'speak', 5),
+ ('glower', 'glower', 5),     
  ('throw-paper', 'throw-paper', 5),
- ('pickpocket', 'pickpocket', 5),
- ('roll-o-dex', 'roll-o-dex', 5),
+ ('throw-object', 'throw-object', 5),
+ ('magic3', 'magic3', 5),
  ('finger-wag', 'finger-wag', 5))
-b4 = (('speak', 'speak', 5),
+pr = (('phone', 'phone', 5),
  ('throw-paper', 'throw-paper', 5),
- ('pickpocket', 'pickpocket', 5),
- ('roll-o-dex', 'roll-o-dex', 5),
- ('finger-wag', 'finger-wag', 5))
-b5 = (('speak', 'speak', 5),
- ('throw-paper', 'throw-paper', 5),
- ('pickpocket', 'pickpocket', 5),
- ('roll-o-dex', 'roll-o-dex', 5),
- ('finger-wag', 'finger-wag', 5))
+ ('throw-object', 'throw-object', 5),      
+ ('roll-o-dex', 'roll-o-dex', 5))
+bsh = (('throw-paper', 'throw-paper', 3.5),
+ ('pen-squirt', 'fountain-pen', 5),      
+ ('glower', 'glower', 5))
 tl = (('cigar-smoke', 'cigar-smoke', 8),
  ('pen-squirt', 'fountain-pen', 7),
  ('glower', 'glower', 5),
- ('magic1', 'magic1', 5),
- ('song-and-dance', 'song-and-dance', 8),
- ('golf-club-swing', 'golf-club-swing', 5))
+ ('magic1', 'magic1', 5))
 bfh = (('magic1', 'magic1', 5), ('throw-paper', 'throw-paper', 3.5), ('glower', 'glower', 5), ('watercooler', 'watercooler', 5), ('effort', 'effort', 5))
 hho = (('cigar-smoke', 'cigar-smoke', 8),
  ('pen-squirt', 'fountain-pen', 7),
