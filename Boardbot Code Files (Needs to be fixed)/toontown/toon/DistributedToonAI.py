@@ -162,7 +162,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         self.reported = []
         self.trueFriends = []
         self.fishBingoTutorialDone = False
-        self.nextKnockHeal = 0
         self.tfRequest = (0, 0)
 
     def generate(self):
@@ -4166,19 +4165,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
     def getTrueFriends(self, trueFriends):
         return self.trueFriends
 
-    def setNextKnockHeal(self, nextKnockHeal):
-        self.nextKnockHeal = nextKnockHeal
-
-    def d_setNextKnockHeal(self, nextKnockHeal):
-        self.sendUpdate('setNextKnockHeal', [nextKnockHeal])
-
-    def b_setNextKnockHeal(self, nextKnockHeal):
-        self.setNextKnockHeal(nextKnockHeal)
-        self.d_setNextKnockHeal(nextKnockHeal)
-
-    def getNextKnockHeal(self):
-        return self.nextKnockHeal
-    
     def setTFRequest(self, tfRequest):
         self.tfRequest = tfRequest
 
