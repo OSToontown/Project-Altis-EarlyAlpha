@@ -38,12 +38,3 @@ class DistributedKnockKnockDoorAI(DistributedAnimatedPropAI.DistributedAnimatedP
         DistributedAnimatedPropAI.DistributedAnimatedPropAI.exitPlaying(self)
         taskMgr.remove(self.doLaterTask)
         self.doLaterTask = None
-
-    def requestToonup(self):
-        av = self.air.doId2do.get(self.air.getAvatarIdFromSender())
-
-        if (not av) or av.getHp() == av.getMaxHp() or av.getNextKnockHeal() > time.time():
-            return
-
-        av.toonUp(ToontownGlobals.KnockKnockHeal)
-        av.b_setNextKnockHeal(int(time.time() + ToontownGlobals.KnockKnockCooldown))
