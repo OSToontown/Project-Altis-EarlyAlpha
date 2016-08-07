@@ -100,7 +100,7 @@ GlobalStreetNames = {20000: ('to', 'on', 'Tutorial Terrace'),
  9200: ('to', 'on', 'Pajama Place'),
  9300: ('to', 'on', 'Slumber Street'),
  10000: ('to the', 'in the', 'Bossbot HQ Country Club'),
- 10100: ('to the', 'in the', 'Bossbot HQ Country Club Bridge'),
+ 10100: ('to the', 'in the', 'Bossbot HQ Country Club Lobby'),
  10500: ('to the', 'in the', 'The Front Three'),
  10600: ('to the', 'in the', 'The Middle Six'),
  10700: ('to the', 'in the', 'The Back Nine'),
@@ -114,13 +114,16 @@ GlobalStreetNames = {20000: ('to', 'on', 'Tutorial Terrace'),
  12500: ('to the', 'in the', 'Cashbot Coin Mint'),
  12600: ('to the', 'in the', 'Cashbot Dollar Mint'),
  12700: ('to the', 'in the', 'Cashbot Bullion Mint'),
- 13000: ('to the', 'in the', 'Lawbot HQ Courthouseyard'),
+ 13000: ('to the', 'in the', 'Lawbot HQ Courtyard'),
  13100: ('to the', 'in the', 'Courthouse Lobby'),
  13200: ('to the', 'in the', "DA's Office Lobby"),
  13300: ('to the', 'in the', 'Lawbot A Office'),
  13400: ('to the', 'in the', 'Lawbot B Office'),
  13500: ('to the', 'in the', 'Lawbot C Office'),
- 13600: ('to the', 'in the', 'Lawbot D Office')}
+ 13600: ('to the', 'in the', 'Lawbot D Office'),
+ 14000: ('to the', 'in the', 'Main Courtyard'),
+ 14100: ('to', 'on', '???'),
+ 14100: ('to', 'on', '???')}
 DonaldsDock = ('to', 'in', lDonaldsDock)
 ToontownCentral = ('to', 'in', lToontownCentral)
 TheBrrrgh = ('to', 'in', lTheBrrrgh)
@@ -130,6 +133,7 @@ OutdoorZone = ('to', 'in', lOutdoorZone)
 FunnyFarm = ('to the', 'in the', 'Funny Farm')
 GoofySpeedway = ('to', 'in', lGoofySpeedway)
 DonaldsDreamland = ('to', 'in', lDonaldsDreamland)
+BoardbotHQ = ('to', 'in', 'Boardbot HQ')
 BossbotHQ = ('to', 'in', 'Bossbot HQ')
 SellbotHQ = ('to', 'in', 'Sellbot HQ')
 CashbotHQ = ('to', 'in', 'Cashbot HQ')
