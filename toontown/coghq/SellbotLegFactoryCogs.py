@@ -14,6 +14,7 @@ WestSiloParent = 20094
 WestSiloBattleCellParent = 10047
 EastSiloParent = 20096
 EastSiloBattleCellParent = 10068
+LavaFoyerParent = 7000
 LobbyCell = 0
 BoilerCell = 1
 PipeLeftCell = 2
@@ -25,6 +26,7 @@ CenterSiloCell = 7
 SigRoomCell = 8
 WestSiloCell = 9
 EastSiloCell = 10
+LavaFoyerCell = 11 
 BattleCells = {LobbyCell: {'parentEntId': LobbyParent,
              'pos': Point3(0, 0, 0)},
  BoilerCell: {'parentEntId': BoilerParent,
@@ -46,7 +48,9 @@ BattleCells = {LobbyCell: {'parentEntId': LobbyParent,
  WestSiloCell: {'parentEntId': WestSiloBattleCellParent,
                 'pos': Point3(0, 0, 0)},
  EastSiloCell: {'parentEntId': EastSiloBattleCellParent,
-                'pos': Point3(-20, -10, 0)}}
+                'pos': Point3(-20, -10, 0)},
+ LavaFoyerCell: {'parentEntId': LavaFoyerParent,
+                'pos': Point3(0, 0, 0)}}
 CogData = [{'type': random.choice(['cc', 'tm', 'nd', 'gh', 'ms', 'tf', 'm', 'mh']),
   'parentEntId': LobbyParent,
   'boss': 0,
@@ -266,6 +270,36 @@ CogData = [{'type': random.choice(['cc', 'tm', 'nd', 'gh', 'ms', 'tf', 'm', 'mh'
   'h': 0,
   'behavior': 'chase',
   'path': 20102,
+  'skeleton': random.choice([0])},
+ {'type': random.choice(['cc', 'tm', 'nd', 'gh', 'ms', 'tf', 'm', 'mh']),
+  'parentEntId': LavaFoyerParent,
+  'boss': 0,
+  'level': random.choice([4, 5, 6, 7]),
+  'battleCell': LavaFoyerCell,
+  'pos': Point3(-10, 0, 0),
+  'h': 0,
+  'behavior': 'stand',
+  'path': None,
+  'skeleton': random.choice([0])},
+ {'type': random.choice(['cc', 'tm', 'nd', 'gh', 'ms', 'tf', 'm', 'mh']),
+  'parentEntId': LavaFoyerParent,
+  'boss': 0,
+  'level': random.choice([4, 5, 6, 7]),
+  'battleCell': LavaFoyerCell,
+  'pos': Point3(5, 0, 0),
+  'h': 0,
+  'behavior': 'chase',
+  'path': 20067,
+  'skeleton': random.choice([0])},
+ {'type': random.choice(['cc', 'tm', 'nd', 'gh', 'ms', 'tf', 'm', 'mh']),
+  'parentEntId': LavaFoyerParent,
+  'boss': 0,
+  'level': random.choice([4, 5, 6, 7]),
+  'battleCell': LavaFoyerCell,
+  'pos': Point3(-6, 0, 0),
+  'h': 0,
+  'behavior': 'chase',
+  'path': 20068,
   'skeleton': random.choice([0])},
  {'type': random.choice(['cc', 'tm', 'nd', 'gh', 'ms', 'tf', 'm', 'mh']),
   'parentEntId': PipeLeftParent,
