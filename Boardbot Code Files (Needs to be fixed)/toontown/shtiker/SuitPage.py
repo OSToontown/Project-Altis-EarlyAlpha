@@ -14,7 +14,8 @@ RADAR_DELAY = 0.2
 BUILDING_RADAR_POS = (0.375,
  0.065,
  -0.225,
- -0.5)
+ -0.5,
+ -0.775)
 PANEL_COLORS = (Vec4(0.8, 0.78, 0.77, 1),
  Vec4(0.8, 0.78, 0.77, 1),
  Vec4(0.75, 0.78, 0.8, 1),
@@ -203,6 +204,9 @@ class SuitPage(ShtikerPage.ShtikerPage):
         del frameModel
         self.title = DirectLabel(parent=self.iconNode, relief=None, text=TTLocalizer.SuitPageTitle, text_scale=0.1, text_pos=(0.04, 0), textMayChange=0)
         self.radarButtons = []
+        icon = icons.find('**/board_icon')
+        self.corpRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=icon, image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.575), command=self.toggleRadar, extraArgs=[0])
+        self.radarButtons.append(self.corpRadarButton)
         icon = icons.find('**/corp_icon')
         self.corpRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=icon, image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.575), command=self.toggleRadar, extraArgs=[0])
         self.radarButtons.append(self.corpRadarButton)
@@ -236,7 +240,8 @@ class SuitPage(ShtikerPage.ShtikerPage):
         self.makePanels()
         self.radarOn = [0,
          0,
-         0,               
+         0,
+         0,                
          0]
         priceScale = 0.1
         emblemIcon = loader.loadModel('phase_3.5/models/gui/tt_m_gui_gen_emblemIcons')

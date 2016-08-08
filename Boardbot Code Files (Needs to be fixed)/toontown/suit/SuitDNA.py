@@ -91,7 +91,7 @@ suitDepts = ['c',
  'l',
  'm',
  's',
- 't']
+ 'g']
 suitDeptZones = [ToontownGlobals.BossbotHQ,
  ToontownGlobals.LawbotHQ,
  ToontownGlobals.CashbotHQ,
@@ -100,17 +100,17 @@ suitDeptFullnames = {'c': TTLocalizer.Bossbot,
  'l': TTLocalizer.Lawbot,
  'm': TTLocalizer.Cashbot,
  's': TTLocalizer.Sellbot,
- 't': TTLocalizer.Boardbot}
+ 'g': TTLocalizer.Boardbot}
 suitDeptFullnamesP = {'c': TTLocalizer.BossbotP,
  'l': TTLocalizer.LawbotP,
  'm': TTLocalizer.CashbotP,
  's': TTLocalizer.SellbotP,
- 't': TTLocalizer.BoardbotP}
+ 'g': TTLocalizer.BoardbotP}
 suitDeptFilenames = {'c': 'boss',
  'l': 'law',
  'm': 'cash',
  's': 'sell',
- 't': 'board'                     
+ 'g': 'board'                     
 }
 suitDeptModelPaths = {'c': '**/CorpIcon',
  0: '**/CorpIcon',
@@ -120,7 +120,7 @@ suitDeptModelPaths = {'c': '**/CorpIcon',
  2: '**/MoneyIcon',
  's': '**/SalesIcon',
  3: '**/SalesIcon',
-'t': '**/HackerIcon',
+'g': '**/HackerIcon',
  4: '**/HackerIcon'}
 corpPolyColor = VBase4(0.95, 0.75, 0.75, 1.0)
 legalPolyColor = VBase4(0.75, 0.75, 0.95, 1.0)

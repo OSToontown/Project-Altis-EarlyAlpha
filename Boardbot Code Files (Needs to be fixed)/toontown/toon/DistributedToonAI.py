@@ -1183,7 +1183,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def setCogParts(self, parts):
         if not parts:
-            self.notify.warning('cogParts set to bad value: %s. Resetting to [0,0,0,0]' % parts)
+            self.notify.warning('cogParts set to bad value: %s. Resetting to [0,0,0,0,0]' % parts)
             self.cogParts = [0,
              0,
              0,
@@ -1249,7 +1249,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def setCogMerits(self, merits):
         if not merits:
-            self.notify.warning('cogMerits set to bad value: %s. Resetting to [0,0,0,0]' % merits)
+            self.notify.warning('cogMerits set to bad value: %s. Resetting to [0,0,0,0,0]' % merits)
             self.cogMerits = [0,
              0,
              0,                 
@@ -4300,7 +4300,7 @@ def maxToon(missingTrack=None):
             CogDisguiseGlobals.PartsPerSuitBitmasks[4], # Boardbot
         ]
     )
-    target.b_setCogLevels([12] * 5)
+    target.b_setCogLevels([11] * 5)
     target.b_setCogTypes([7, 7, 7, 7, 7])
 
     # Max their Cog gallery:

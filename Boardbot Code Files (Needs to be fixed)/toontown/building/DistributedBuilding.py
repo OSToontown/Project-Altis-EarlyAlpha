@@ -20,7 +20,7 @@ import sys
 FO_DICT = {'s': 'tt_m_ara_cbe_fieldOfficeMoverShaker',
  'l': 'tt_m_ara_cbe_fieldOfficeLegalEagle',
  'm': 'tt_m_ara_cbe_fieldOfficeMoverShaker',
- 't': 'tt_m_ara_cbe_fieldOfficeMoverShaker',          
+ 'g': 'tt_m_ara_cbe_fieldOfficeMoverShaker',          
  'c': 'tt_m_ara_cbe_fieldOfficeMoverShaker'}
 
 class DistributedBuilding(DistributedObject.DistributedObject):
@@ -63,6 +63,7 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         self.victorList = [0,
          0,
          0,
+         0,                   
          0]
         self.waitingMessage = None
         self.cogDropSound = None

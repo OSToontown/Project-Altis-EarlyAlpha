@@ -341,11 +341,11 @@ def attachSuitHead(node, suitName):
 
 class Suit(Avatar.Avatar):
     __module__ = __name__
-    medallionColors = {'t': Vec4(0.863, 0.776, 0.769, 1.0),
-     'c': Vec4(0.863, 0.776, 0.769, 1.0),
+    medallionColors = {'c': Vec4(0.863, 0.776, 0.769, 1.0),
      's': Vec4(0.843, 0.745, 0.745, 1.0),
      'l': Vec4(0.749, 0.776, 0.824, 1.0),
-     'm': Vec4(0.749, 0.769, 0.749, 1.0)}
+     'm': Vec4(0.749, 0.769, 0.749, 1.0),
+     'g': Vec4(0.863, 0.776, 0.769, 1.0)}
 
     def __init__(self):
         try:
@@ -588,7 +588,7 @@ class Suit(Avatar.Avatar):
             return
         if dept == 'c':
             tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_boss.jpg')
-        elif dept == 't':
+        elif dept == 'g':
             tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_board.jpg')
         elif dept == 's':
             tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_sales.jpg')

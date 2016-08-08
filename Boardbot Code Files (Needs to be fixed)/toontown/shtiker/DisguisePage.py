@@ -46,7 +46,7 @@ class DisguisePage(ShtikerPage.ShtikerPage):
             elif dept == 's':
                 tabIndex = 4
                 textPos = (1.57, -1.05)
-            elif dept == 't':
+            elif dept == 'g':
                 tabIndex = 5
                 textPos = (1.57, -1.40)
             pageGeom = gui.find('**/page%d' % tabIndex)
