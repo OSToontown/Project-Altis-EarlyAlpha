@@ -4767,7 +4767,7 @@ GlobalEntities = {1000: {'type': 'levelMgr',
          'parentEntId': 18,
          'pos': Point3(0, 0, 0),
          'hpr': Point3(0, 0, 0),
-         'scale': }}
+         'scale': 1}}
 Scenario0 = {}
 levelSpec = {'globalEntities': GlobalEntities,
  'scenarios': [Scenario0]}
