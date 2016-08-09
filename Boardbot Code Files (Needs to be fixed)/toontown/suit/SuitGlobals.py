@@ -16,7 +16,7 @@ ColdCallerHead = VBase4(0.25, 0.35, 1.0, 1.0) # Head used by Cold Caller
 
                
                  #Boardbots
-suitProperties = {'ca': (4.0 / cSize, SuitDNA.boardPolyColor, ['tightwad'], 'conartist.jpg', 4.81),
+suitProperties = {'ca': (4.0 / cSize, SuitDNA.boardPolyColor, ['flunky'], 'conartist.jpg', 4.81),
                   'cn': (3.75 / bSize, SuitDNA.boardPolyColor, ['downsizer', 'hatjp187187'], '', 5.5),
                   'mg': (4.5 / aSize, SuitDNA.boardPolyColor, ['legaleagle'], 'suit-heads_palette_3cmla_22.jpg', 5.5),
                   'pr': (4.63 / aSize, SuitDNA.boardPolyColor, ['telemarketer'], 'proprietor.jpg', 5.9),
