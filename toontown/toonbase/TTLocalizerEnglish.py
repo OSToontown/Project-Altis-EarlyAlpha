@@ -100,8 +100,7 @@ GlobalStreetNames = {20000: ('to', 'on', 'Tutorial Terrace'),
  9200: ('to', 'on', 'Pajama Place'),
  9300: ('to', 'on', 'Slumber Street'),
  10000: ('to the', 'in the', 'Bossbot HQ Country Club'),
- 10100: ('to the', 'in the', 'Bossbot HQ Country Club Bridge'),
- 10200: ('to', 'in', 'The Clubhouse'),
+ 10100: ('to the', 'in the', 'Bossbot HQ Country Club Lobby'),
  10500: ('to the', 'in the', 'The Front Three'),
  10600: ('to the', 'in the', 'The Middle Six'),
  10700: ('to the', 'in the', 'The Back Nine'),
@@ -115,13 +114,16 @@ GlobalStreetNames = {20000: ('to', 'on', 'Tutorial Terrace'),
  12500: ('to the', 'in the', 'Cashbot Coin Mint'),
  12600: ('to the', 'in the', 'Cashbot Dollar Mint'),
  12700: ('to the', 'in the', 'Cashbot Bullion Mint'),
- 13000: ('to the', 'in the', 'Lawbot HQ Courthouseyard'),
+ 13000: ('to the', 'in the', 'Lawbot HQ Courtyard'),
  13100: ('to the', 'in the', 'Courthouse Lobby'),
  13200: ('to the', 'in the', "DA's Office Lobby"),
  13300: ('to the', 'in the', 'Lawbot A Office'),
  13400: ('to the', 'in the', 'Lawbot B Office'),
  13500: ('to the', 'in the', 'Lawbot C Office'),
- 13600: ('to the', 'in the', 'Lawbot D Office')}
+ 13600: ('to the', 'in the', 'Lawbot D Office'),
+ 14000: ('to the', 'in the', 'Main Courtyard'),
+ 14100: ('to', 'on', '???'),
+ 14100: ('to', 'on', '???')}
 DonaldsDock = ('to', 'in', lDonaldsDock)
 ToontownCentral = ('to', 'in', lToontownCentral)
 TheBrrrgh = ('to', 'in', lTheBrrrgh)
@@ -131,6 +133,7 @@ OutdoorZone = ('to', 'in', lOutdoorZone)
 FunnyFarm = ('to the', 'in the', 'Funny Farm')
 GoofySpeedway = ('to', 'in', lGoofySpeedway)
 DonaldsDreamland = ('to', 'in', lDonaldsDreamland)
+BoardbotHQ = ('to', 'in', 'Boardbot HQ')
 BossbotHQ = ('to', 'in', 'Bossbot HQ')
 SellbotHQ = ('to', 'in', 'Sellbot HQ')
 CashbotHQ = ('to', 'in', 'Cashbot HQ')
@@ -612,10 +615,10 @@ QuestDialogDict = {
        LEAVING: QuestsDefaultLeaving},
  164: {QUEST: 'You look like you could use some new gags.\x07Go see %s, maybe he can help you out._where_' % Flippy},
  165: {QUEST: 'Hi there.\x07Looks like you need to practice training your gags.\x07Every time you hit a Cog with one of your gags, your experience increases.\x07When you get enough experience, you will be able to use an even better gag.\x07Go practice your gags by defeating 4 Cogs.'},
- 166: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in four different types.\x07They are Lawbots, Cashbots, Sellbots, and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Bossbots.'},
- 167: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in four different types.\x07They are Lawbots, Cashbots, Sellbots, and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Lawbots.'},
- 168: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in four different types.\x07They are Lawbots, Cashbots, Sellbots, and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Sellbots.'},
- 169: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in four different types.\x07They are Lawbots, Cashbots, Sellbots, and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Cashbots.'},
+ 166: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in five different types.\x07They are Lawbots, Cashbots, Sellbots, Bossbots, and Boardbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Bossbots.'},
+ 167: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in five different types.\x07They are Lawbots, Cashbots, Sellbots, Bossbots, and Boardbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Lawbots.'},
+ 168: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in five different types.\x07They are Lawbots, Cashbots, Sellbots, Bossbots, and Boardbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Sellbots.'},
+ 169: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in five different types.\x07They are Lawbots, Cashbots, Sellbots, Bossbots, and Boardbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Cashbots.'},
  170: {QUEST: 'Nice work, now you know the difference between the 4 types of Cogs.\x07I think you are ready to start training for your third gag track.\x07Go talk to _toNpcName_ to choose your next gag track - he can give you some expert advice._where_'},
  171: {QUEST: 'Nice work, now you know the difference between the 4 types of Cogs.\x07I think you are ready to start training for your third gag track.\x07Go talk to _toNpcName_ to choose your next gag track - he can give you some expert advice._where_'},
  172: {QUEST: 'Nice work, now you know the difference between the 4 types of Cogs.\x07I think you are ready to start training for your third gag track.\x07Go talk to _toNpcName_ to choose your next gag track - she can give you some expert advice._where_'},
@@ -1887,22 +1890,27 @@ ChatGarblerMonkey = ['ooh', 'ooo', 'ahh']
 ChatGarblerBear = ['growl', 'grrr']
 ChatGarblerPig = ['oink', 'oik', 'snort']
 ChatGarblerDefault = ['blah']
+Boardbot = 'Boardbot'
 Bossbot = 'Bossbot'
 Lawbot = 'Lawbot'
 Cashbot = 'Cashbot'
 Sellbot = 'Sellbot'
+BoardbotS = 'a Boardbot'
 BossbotS = 'a Bossbot'
 LawbotS = 'a Lawbot'
 CashbotS = 'a Cashbot'
 SellbotS = 'a Sellbot'
+BoardbotP = 'Boardbots'
 BossbotP = 'Bossbots'
 LawbotP = 'Lawbots'
 CashbotP = 'Cashbots'
 SellbotP = 'Sellbots'
+BoardbotSkelS = 'a Boardbot Skelecog'
 BossbotSkelS = 'a Bossbot Skelecog'
 LawbotSkelS = 'a Lawbot Skelecog'
 CashbotSkelS = 'a Cashbot Skelecog'
 SellbotSkelS = 'a Sellbot Skelecog'
+BoardbotSkelP = 'Bossbot Skelecogs'
 BossbotSkelP = 'Bossbot Skelecogs'
 LawbotSkelP = 'Lawbot Skelecogs'
 CashbotSkelP = 'Cashbot Skelecogs'
@@ -2245,7 +2253,8 @@ RewardPanelNewGag = 'New %(gagName)s gag for %(avName)s!'
 RewardPanelUberGag = '%(avName)s earned the %(gagName)s gag with %(exp)s experience points!'
 RewardPanelEndTrack = 'Yay! %(avName)s has reached the end of the %(gagName)s Gag Track!'
 RewardPanelMeritsMaxed = 'Maxed'
-RewardPanelMeritBarLabels = ['Stock Options',
+RewardPanelMeritBarLabels = ['Pie Chart Pieces',
+ 'Stock Options',
  'Jury Notices',
  'Cogbucks',
  'Merits']
@@ -2279,7 +2288,6 @@ SuitDownsizer = 'Downsizer'
 SuitHeadHunter = 'Head Hunter'
 SuitCorporateRaider = 'Corporate Raider'
 SuitTheBigCheese = 'The Big Cheese'
-SuitHeadHoncho = 'Head Honcho'
 SuitColdCaller = 'Cold Caller'
 SuitTelemarketer = 'Tele\x03marketer'
 SuitNameDropper = 'Name Dropper'
@@ -2288,7 +2296,6 @@ SuitMoverShaker = 'Mover & Shaker'
 SuitTwoFace = 'Two-Face'
 SuitTheMingler = 'The Mingler'
 SuitMrHollywood = 'Mr. Hollywood'
-SuitToxicLeader = 'Toxic Leader'
 SuitShortChange = 'Short Change'
 SuitPennyPincher = 'Penny Pincher'
 SuitTightwad = 'Tightwad'
@@ -2297,7 +2304,14 @@ SuitNumberCruncher = 'Number Cruncher'
 SuitMoneyBags = 'Money Bags'
 SuitLoanShark = 'Loan Shark'
 SuitRobberBaron = 'Robber Baron'
+SuitConArtist = 'Con Artist'
+SuitConnoisseur = 'Connoisseur'
+SuitMagnate = 'Magnate'
+SuitProprietor = 'Proprietor'
+SuitBigShot = 'Big Shot'
+SuitToxicLeader = 'Toxic Leader'
 SuitBigFish = 'Big Fish'
+SuitHeadHoncho = 'Head Honcho'
 SuitBottomFeeder = 'Bottom Feeder'
 SuitBloodsucker = 'Blood\x03sucker'
 SuitDoubleTalker = 'Double Talker'
@@ -2306,7 +2320,6 @@ SuitBackStabber = 'Back Stabber'
 SuitSpinDoctor = 'Spin Doctor'
 SuitLegalEagle = 'Legal Eagle'
 SuitBigWig = 'Big Wig'
-SuitBarrister = 'Barrister'
 SuitFlunkyS = 'a Flunky'
 SuitPencilPusherS = 'a Pencil Pusher'
 SuitYesmanS = 'a Yesman'
@@ -2314,17 +2327,15 @@ SuitMicromanagerS = 'a Micromanager'
 SuitDownsizerS = 'a Downsizer'
 SuitHeadHunterS = 'a Head Hunter'
 SuitCorporateRaiderS = 'a Corporate Raider'
-SuitTheBigCheeseS = 'a The Big Cheese'
-SuitHeadHonchoS = 'a Head Honcho'
+SuitTheBigCheeseS = 'a Big Cheese'
 SuitColdCallerS = 'a Cold Caller'
 SuitTelemarketerS = 'a Telemarketer'
 SuitNameDropperS = 'a Name Dropper'
 SuitGladHanderS = 'a Glad Hander'
 SuitMoverShakerS = 'a Mover & Shaker'
 SuitTwoFaceS = 'a Two-Face'
-SuitTheMinglerS = 'a The Mingler'
+SuitTheMinglerS = 'a Mingler'
 SuitMrHollywoodS = 'a Mr. Hollywood'
-SuitToxicLeaderS = 'a Toxic Leader'
 SuitShortChangeS = 'a Short Change'
 SuitPennyPincherS = 'a Penny Pincher'
 SuitTightwadS = 'a Tightwad'
@@ -2333,7 +2344,14 @@ SuitNumberCruncherS = 'a Number Cruncher'
 SuitMoneyBagsS = 'a Money Bags'
 SuitLoanSharkS = 'a Loan Shark'
 SuitRobberBaronS = 'a Robber Baron'
+SuitConArtistS = 'a Con Artist'
+SuitConnoisseurS = 'a Connoisseur'
+SuitMagnateS = 'a Magnate'
+SuitProprietorS = 'a Proprietor'
+SuitBigShotS = 'a Big Shot'
+SuitToxicLeaderS = 'a Toxic Leader'
 SuitBigFishS = 'a Big Fish'
+SuitHeadHonchoS = 'a Head Honcho'
 SuitBottomFeederS = 'a Bottom Feeder'
 SuitBloodsuckerS = 'a Bloodsucker'
 SuitDoubleTalkerS = 'a Double Talker'
@@ -2342,7 +2360,6 @@ SuitBackStabberS = 'a Back Stabber'
 SuitSpinDoctorS = 'a Spin Doctor'
 SuitLegalEagleS = 'a Legal Eagle'
 SuitBigWigS = 'a Big Wig'
-SuitBarristerS = 'a Barrister'
 SuitFlunkyP = 'Flunkies'
 SuitPencilPusherP = 'Pencil Pushers'
 SuitYesmanP = 'Yesmen'
@@ -2350,17 +2367,15 @@ SuitMicromanagerP = 'Micromanagers'
 SuitDownsizerP = 'Downsizers'
 SuitHeadHunterP = 'Head Hunters'
 SuitCorporateRaiderP = 'Corporate Raiders'
-SuitTheBigCheeseP = 'The Big Cheeses'
-SuitHeadHonchoP = 'Head Honchos'
+SuitTheBigCheeseP = 'Big Cheeses'
 SuitColdCallerP = 'Cold Callers'
 SuitTelemarketerP = 'Telemarketers'
 SuitNameDropperP = 'Name Droppers'
 SuitGladHanderP = 'Glad Handers'
 SuitMoverShakerP = 'Movers & Shakers'
 SuitTwoFaceP = 'Two-Faces'
-SuitTheMinglerP = 'The Minglers'
+SuitTheMinglerP = 'Minglers'
 SuitMrHollywoodP = 'Mr. Hollywoods'
-SuitToxicLeaderP = 'Toxic Leaders'
 SuitShortChangeP = 'Short Changes'
 SuitPennyPincherP = 'Penny Pinchers'
 SuitTightwadP = 'Tightwads'
@@ -2369,7 +2384,14 @@ SuitNumberCruncherP = 'Number Crunchers'
 SuitMoneyBagsP = 'Money Bags'
 SuitLoanSharkP = 'Loan Sharks'
 SuitRobberBaronP = 'Robber Barons'
+SuitConArtistP = 'Con Artists'
+SuitConnoisseurP = 'Connoisseurs'
+SuitMagnateP = 'Magnates'
+SuitProprietorP = 'Proprietors'
+SuitBigShotP = 'Big Shots'
+SuitToxicLeaderP = 'Toxic Leaders'
 SuitBigFishP = 'Big Fish'
+SuitHeadHonchoP = 'Head Honchos'
 SuitBottomFeederP = 'Bottom Feeders'
 SuitBloodsuckerP = 'Bloodsuckers'
 SuitDoubleTalkerP = 'Double Talkers'
@@ -2378,7 +2400,6 @@ SuitBackStabberP = 'Back Stabbers'
 SuitSpinDoctorP = 'Spin Doctors'
 SuitLegalEagleP = 'Legal Eagles'
 SuitBigWigP = 'Big Wigs'
-SuitBarristerP = 'Barristers'
 SuitFaceoffDefaultTaunts = ['Boo!']
 SuitAttackDefaultTaunts = ['Take that!', 'Take a memo on this!']
 SuitAttackNames = {'Audit': 'Audit!',
@@ -7068,7 +7089,7 @@ TipDict = {TIP_NONE: ('',),
                'Enter Goofy Speedway through the tire-shaped tunnel in Toontown Central Playground.',
                'Earn Laff points at Goofy Speedway.',
                'Goofy Speedway has six different race tracks. '),
- TIP_STREET: ('There are four types of Cogs: Lawbots, Cashbots, Sellbots, and Bossbots.',
+ TIP_STREET: ('There are five types of Cogs: Lawbots, Cashbots, Sellbots, Bossbots, and Boardbots.',
               'Each Gag Track has different amounts of accuracy and damage.',
               'Sound gags will affect all Cogs but will wake up any lured Cogs.',
               'Defeating Cogs in strategic order can greatly increase your chances of winning battles.',

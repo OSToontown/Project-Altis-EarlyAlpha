@@ -85,14 +85,14 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         self.glasses = (0, 0, 0)
         self.backpack = (0, 0, 0)
         self.shoes = (0, 0, 0)
-        self.cogTypes = [0, 0, 0, 0]
-        self.cogLevel = [0, 0, 0, 0]
-        self.cogParts = [0, 0, 0, 0]
-        self.cogRadar = [0, 0, 0, 0]
+        self.cogTypes = [0, 0, 0, 0, 0]
+        self.cogLevel = [0, 0, 0, 0, 0]
+        self.cogParts = [0, 0, 0, 0, 0]
+        self.cogRadar = [0, 0, 0, 0, 0]
         self.cogIndex = -1
         self.disguisePageFlag = 0
         self.sosPageFlag = 0
-        self.buildingRadar = [0, 0, 0, 0]
+        self.buildingRadar = [0, 0, 0, 0, 0]
         self.fishingRod = 0
         self.fishingTrophies = []
         self.trackArray = []
@@ -1056,6 +1056,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             self.cogRadar = [0,
              0,
              0,
+             0,                
              0]
         else:
             self.cogRadar = radar
@@ -1076,6 +1077,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             self.buildingRadar = [0,
              0,
              0,
+             0,                     
              0]
         else:
             self.buildingRadar = radar
@@ -1096,6 +1098,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             self.cogTypes = [0,
              0,
              0,
+             0,                
              0]
         else:
             for i in xrange(len(types)):
@@ -1124,6 +1127,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             self.cogLevels = [0,
              0,
              0,
+             0,                 
              0]
         else:
             self.cogLevels = levels
@@ -1179,10 +1183,11 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def setCogParts(self, parts):
         if not parts:
-            self.notify.warning('cogParts set to bad value: %s. Resetting to [0,0,0,0]' % parts)
+            self.notify.warning('cogParts set to bad value: %s. Resetting to [0,0,0,0,0]' % parts)
             self.cogParts = [0,
              0,
              0,
+             0,                 
              0]
         else:
             self.cogParts = parts
@@ -1244,9 +1249,10 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def setCogMerits(self, merits):
         if not merits:
-            self.notify.warning('cogMerits set to bad value: %s. Resetting to [0,0,0,0]' % merits)
+            self.notify.warning('cogMerits set to bad value: %s. Resetting to [0,0,0,0,0]' % merits)
             self.cogMerits = [0,
              0,
+             0,                 
              0,
              0]
         else:
@@ -4158,7 +4164,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def getTrueFriends(self, trueFriends):
         return self.trueFriends
-    
+
     def setTFRequest(self, tfRequest):
         self.tfRequest = tfRequest
 
@@ -4185,7 +4191,7 @@ def cheesyEffect(value, hood=0, expire=0):
         if value not in OTPGlobals.CEName2Id:
             return 'Invalid cheesy effect value: %s' % value
         value = OTPGlobals.CEName2Id[value]
-    elif not 0 <= value <= 30:
+    elif not 0 <= value <= 29:
         return 'Invalid cheesy effect value: %d' % value
     if (hood != 0) and (not 1000 <= hood < ToontownGlobals.DynamicZonesBegin):
         return 'Invalid hood ID: %d' % hood
@@ -4287,22 +4293,22 @@ def maxToon(missingTrack=None):
     # Max out their Cog suits:
     target.b_setCogParts(
         [
-            CogDisguiseGlobals.PartsPerSuitBitmasks[0],  # Bossbot
-            CogDisguiseGlobals.PartsPerSuitBitmasks[1],  # Lawbot
-            CogDisguiseGlobals.PartsPerSuitBitmasks[2],  # Cashbot
-            CogDisguiseGlobals.PartsPerSuitBitmasks[3]   # Sellbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[0], # Bossbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[1], # Lawbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[2], # Cashbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[3], # Sellbot
         ]
     )
-    target.b_setCogLevels([53] * 4)
-    target.b_setCogTypes([7, 7, 7, 7])
+    target.b_setCogLevels([11] * 5)
+    target.b_setCogTypes([7, 7, 7, 7, 7])
 
-    # Max their Cog gallery:
-    deptCount = len(SuitDNA.suitDepts)
+   # Max their Cog gallery:
+    '''deptCount = len(SuitDNA.suitDepts)
     target.b_setCogCount(list(CogPageGlobals.COG_QUOTAS[1]) * deptCount)
-    cogStatus = [CogPageGlobals.COG_COMPLETE2] * SuitDNA.suitsPerDept
+    target.b_setCogStatus([CogPageGlobals.COG_COMPLETE2] * 40)
     target.b_setCogStatus(cogStatus * deptCount)
-    target.b_setCogRadar([1, 1, 1, 1])
-    target.b_setBuildingRadar([1, 1, 1, 1])
+    target.b_setCogRadar([1, 1, 1, 1, 1])
+    target.b_setBuildingRadar([1, 1, 1, 1])'''
 
     # Max out their racing tickets:
     target.b_setTickets(99999)
@@ -4487,6 +4493,37 @@ def name(name=''):
         return "Set %s's name to %s!" % (_name, name)
     else:
         return "%s's name is now empty!" % _name
+
+@magicWord(category=CATEGORY_ADMINISTRATOR, types=[int])
+def resistanceRanger():
+    """
+    Applies the Resistance Ranger Clothes
+    """
+    invoker = spellbook.getTarget()
+
+    dna = ToonDNA.ToonDNA()
+    dna.makeFromNetString(invoker.getDNAString())
+
+    dna.topTex = 111
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.topTexColor = 26
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.sleeveTex = 98
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.sleeveTexColor = 26
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.botTex = 41
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.botTexColor = 26
+    invoker.b_setDNAString(dna.makeNetString())
+
+    target = spellbook.getTarget()
+    target.b_setNametagStyle(6)
 
 @magicWord(category=CATEGORY_SYSTEM_ADMINISTRATOR, types=[int])
 def squish(laff):
@@ -4926,6 +4963,14 @@ def suit(command, suitName = 'f'):
         if returnCode[0] == 'success':
             return 'Toons took over the cog building!'
         return "Couldn't allow toons to take over cog building because " + returnCode[1]
+    elif command == 'invasion':
+        returnCode = invoker.doCogInvasion(SuitDNA.suitHeadTypes.index(suitName))
+        return returnCode
+    elif command == 'invasionend':
+        returnCode = 'Ending Invasion..'
+        simbase.air.suitInvasionManager.cleanupTasks()
+        simbase.air.suitInvasionManager.cleanupInvasion()
+        return returnCode
     else:
         return 'Invalid command.'
 

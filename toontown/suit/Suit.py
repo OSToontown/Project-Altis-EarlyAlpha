@@ -73,14 +73,6 @@ tbc = (('cigar-smoke', 'cigar-smoke', 8),
  ('glower', 'glower', 5),
  ('song-and-dance', 'song-and-dance', 8),
  ('golf-club-swing', 'golf-club-swing', 5))
-hho = (('cigar-smoke', 'cigar-smoke', 8),
- ('pen-squirt', 'fountain-pen', 7),
- ('glower', 'glower', 5),
- ('throw-paper', 'throw-paper', 5),
- ('magic1', 'magic1', 5),
- ('song-and-dance', 'song-and-dance', 8),
- ('magic2', 'magic2', 5),
- ('golf-club-swing', 'golf-club-swing', 5))
 cc = (('speak', 'speak', 5),
  ('glower', 'glower', 5),
  ('phone', 'phone', 3.5),
@@ -115,11 +107,39 @@ mh = (('magic1', 'magic1', 5),
  ('speak', 'speak', 5),
  ('golf-club-swing', 'golf-club-swing', 5),
  ('song-and-dance', 'song-and-dance', 8))
+ca = (('pickpocket', 'pickpocket', 5),
+ ('speak', 'speak', 5),
+ ('throw-paper', 'throw-paper', 3.5))
+cn = (('speak', 'speak', 5),
+ ('throw-paper', 'throw-paper', 5),
+ ('effort', 'effort', 5),     
+ ('magic3', 'magic3', 5),
+ ('finger-wag', 'finger-wag', 5))
+mg = (('speak', 'speak', 5),
+ ('glower', 'glower', 5),     
+ ('throw-paper', 'throw-paper', 5),
+ ('throw-object', 'throw-object', 5),
+ ('magic3', 'magic3', 5),
+ ('finger-wag', 'finger-wag', 5))
+pr = (('phone', 'phone', 5),
+ ('throw-paper', 'throw-paper', 5),
+ ('throw-object', 'throw-object', 5),      
+ ('roll-o-dex', 'roll-o-dex', 5))
+bsh = (('throw-paper', 'throw-paper', 3.5),
+ ('pen-squirt', 'fountain-pen', 5),      
+ ('glower', 'glower', 5))
 tl = (('cigar-smoke', 'cigar-smoke', 8),
  ('pen-squirt', 'fountain-pen', 7),
  ('glower', 'glower', 5),
+ ('magic1', 'magic1', 5))
+bfh = (('magic1', 'magic1', 5), ('throw-paper', 'throw-paper', 3.5), ('glower', 'glower', 5), ('watercooler', 'watercooler', 5), ('effort', 'effort', 5))
+hho = (('cigar-smoke', 'cigar-smoke', 8),
+ ('pen-squirt', 'fountain-pen', 7),
+ ('glower', 'glower', 5),
+ ('throw-paper', 'throw-paper', 5),
  ('magic1', 'magic1', 5),
  ('song-and-dance', 'song-and-dance', 8),
+ ('magic2', 'magic2', 5),
  ('golf-club-swing', 'golf-club-swing', 5))
 sc = (('throw-paper', 'throw-paper', 3.5), ('watercooler', 'watercooler', 5), ('pickpocket', 'pickpocket', 5))
 pp = (('throw-paper', 'throw-paper', 5), ('glower', 'glower', 5), ('finger-wag', 'fingerwag', 5))
@@ -132,7 +152,6 @@ nc = (('phone', 'phone', 5), ('throw-object', 'throw-object', 5))
 mb = (('magic1', 'magic1', 5), ('throw-paper', 'throw-paper', 3.5))
 ls = (('throw-paper', 'throw-paper', 5), ('throw-object', 'throw-object', 5), ('hold-pencil', 'hold-pencil', 5))
 rb = (('cigar-smoke', 'cigar-smoke', 8), ('magic1', 'magic1', 5), ('pickpocket', 'pickpocket', 5), ('golf-club-swing', 'golf-club-swing', 5))
-bfh = (('magic1', 'magic1', 5), ('throw-paper', 'throw-paper', 3.5), ('glower', 'glower', 5), ('watercooler', 'watercooler', 5), ('effort', 'effort', 5))
 bf = (('pickpocket', 'pickpocket', 5),
  ('rubber-stamp', 'rubber-stamp', 5),
  ('shredder', 'shredder', 3.5),
@@ -325,7 +344,8 @@ class Suit(Avatar.Avatar):
     medallionColors = {'c': Vec4(0.863, 0.776, 0.769, 1.0),
      's': Vec4(0.843, 0.745, 0.745, 1.0),
      'l': Vec4(0.749, 0.776, 0.824, 1.0),
-     'm': Vec4(0.749, 0.769, 0.749, 1.0)}
+     'm': Vec4(0.749, 0.769, 0.749, 1.0),
+     'g': Vec4(0.863, 0.776, 0.769, 1.0)}
 
     def __init__(self):
         try:
@@ -568,6 +588,8 @@ class Suit(Avatar.Avatar):
             return
         if dept == 'c':
             tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_boss.jpg')
+        elif dept == 'g':
+            tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_board.jpg')
         elif dept == 's':
             tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_sales.jpg')
         elif dept == 'l':

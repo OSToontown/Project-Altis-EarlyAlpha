@@ -3,10 +3,8 @@ from direct.task.Task import Task
 import SummonCogDialog
 from direct.gui.DirectGui import *
 from panda3d.core import *
-from toontown.toonbase import ToontownGlobals
-from toontown.toonbase import TTLocalizer
-from toontown.suit import SuitDNA
-from toontown.suit import Suit
+from toontown.toonbase import ToontownGlobals, TTLocalizer
+from toontown.suit import SuitDNA, Suit
 from toontown.battle import SuitBattleGlobals
 from CogPageGlobals import *
 SCALE_FACTOR = 1.5
@@ -59,10 +57,6 @@ SHADOW_SCALE_POS = ((1.225,
   -0.0225,
   10,
   -0.025),
- (0.9,
-  -0.0225,
-  10,
-  -0.025),
  (1.25,
   0,
   10,
@@ -89,10 +83,6 @@ SHADOW_SCALE_POS = ((1.225,
   -0.01),
  (1.125,
   0.005,
-  10,
-  -0.035),
- (0.85,
-  -0.005,
   10,
   -0.035),
  (0.85,
@@ -131,10 +121,6 @@ SHADOW_SCALE_POS = ((1.225,
   0,
   10,
   -0.03),
- (0.9,
-  0,
-  10,
-  -0.03),
  (1.15,
   0,
   10,
@@ -166,10 +152,6 @@ SHADOW_SCALE_POS = ((1.225,
  (0.9,
   0.0025,
   10,
-  -0.03),
- (0.9,
-  0.0025,
-  10,
   -0.03))
 
 class SuitPage(ShtikerPage.ShtikerPage):
@@ -180,7 +162,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
     def load(self):
         ShtikerPage.ShtikerPage.load(self)
         frameModel = loader.loadModel('phase_3.5/models/gui/suitpage_frame')
-        frameModel.setScale(0.0233125, 0.02, 0.045) 
+        frameModel.setScale(0.0253125, 0.03, 0.045)
         frameModel.setPos(0, 10, -0.575)
         self.guiTop = NodePath('guiTop')
         self.guiTop.reparentTo(self)
@@ -219,16 +201,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
         self.panelModel = gui.find('**/card')
         self.shadowModels = []
         for index in xrange(1, len(SuitDNA.suitHeadTypes) + 1):
-            if index < 9:
-                self.shadowModels.append(gui.find('**/shadow' + str(index)))
-            elif index > 9 and index < 18:
-                self.shadowModels.append(gui.find('**/shadow' + str(index - 1))) 
-            elif index > 18 and index < 27:
-                self.shadowModels.append(gui.find('**/shadow' + str(index - 2)))
-            elif index > 27 and index < 36:
-                self.shadowModels.append(gui.find('**/shadow' + str(index - 3)))
-            else:
-                self.shadowModels.append(gui.find('**/shadow' + str(32))) 
+            self.shadowModels.append(gui.find('**/shadow' + str(index)))
         del gui
         self.makePanels()
         self.radarOn = [0,
@@ -259,8 +232,6 @@ class SuitPage(ShtikerPage.ShtikerPage):
         for panel in self.panels:
             panel.destroy()
         del self.panels
-        for shadow in self.shadowModels:
-            shadow.removeNode()
 
         self.panelModel.removeNode()
         ShtikerPage.ShtikerPage.unload(self)
@@ -359,7 +330,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
         base.panels = []
         xStart = -0.66
         yStart = -0.18
-        xOffset = 0.177
+        xOffset = 0.199
         yOffset = 0.284
         gui = loader.loadModel('phase_3.5/models/gui/suit_detail_panel')
         gui.find('**/avatar_panel/shadow').setColor(1, 1, 1, 0.5)
@@ -367,12 +338,12 @@ class SuitPage(ShtikerPage.ShtikerPage):
         self.rolloverFrame.setBin('gui-popup', 0)
         self.rolloverFrame.hide()
         gui.removeNode()
-        for dept in xrange(0, len(SuitDNA.suitDepts)):
+        for dept in xrange(0, len(SuitDNA.suitDepts) - 1):
             row = []
             color = PANEL_COLORS[dept]
             for type in xrange(0, SuitDNA.suitsPerDept):
                 panel = DirectLabel(parent=self.panelNode, pos=(xStart + type * xOffset, 0.0, yStart - dept * yOffset), relief=None, state=DGG.NORMAL, image=self.panelModel, image_scale=(1, 1, 1), image_color=color, text=TTLocalizer.SuitPageMystery, text_scale=0.045, text_fg=(0, 0, 0, 1), text_pos=(0, 0.185, 0), text_font=ToontownGlobals.getSuitFont(), text_wordwrap=7)
-                panel.scale = 0.55
+                panel.scale = 0.6
                 panel.setScale(panel.scale)
                 panel.quotaLabel = None
                 panel.head = None
@@ -447,7 +418,6 @@ class SuitPage(ShtikerPage.ShtikerPage):
         index = self.panels.index(panel)
         if not base.localAvatar.hasCogSummons(index):
             panel.summonButton.hide()
-        return
 
     def addBuildingRadarLabel(self, button):
         gui = loader.loadModel('phase_3.5/models/gui/suit_detail_panel')
@@ -467,6 +437,8 @@ class SuitPage(ShtikerPage.ShtikerPage):
             panel.head.hide()
         if panel.shadow:
             panel.shadow.hide()
+        if panel.summonButton:
+            panel.summonButton.hide()
         self.rolloverFrame.hide()
         panel.hoverButton.unbind(DGG.ENTER)
         panel.hoverButton.unbind(DGG.EXIT)
@@ -493,6 +465,11 @@ class SuitPage(ShtikerPage.ShtikerPage):
                 panel.shadow.show()
             else:
                 self.addSuitHead(panel, suitName)
+            if base.localAvatar.hasCogSummons(index):
+                if panel.summonButton:
+                    panel.summonButton.show()
+                else:
+                    self.addSummonButton(panel)
         elif status == COG_DEFEATED:
             count = str(base.localAvatar.cogCounts[index])
             if base.localAvatar.cogs[index] < COG_COMPLETE1:
@@ -526,16 +503,17 @@ class SuitPage(ShtikerPage.ShtikerPage):
     def updatePage(self):
         index = 0
         cogs = base.localAvatar.cogs
-        status = cogs[index]
-        for dept in xrange(0, len(SuitDNA.suitDepts)):
+        for dept in xrange(0, len(SuitDNA.suitDepts)-1):
             for type in xrange(0, SuitDNA.suitsPerDept):
-                self.updateCogStatus(dept, type, status)
+                self.updateCogStatus(dept, type, cogs[index])
                 index += 1
         self.updateCogRadarButtons(base.localAvatar.cogRadar)
         self.updateBuildingRadarButtons(base.localAvatar.buildingRadar)
 
     def updateCogStatus(self, dept, type, status):
-        if dept < 0 or dept > len(SuitDNA.suitDepts):
+        if dept == 5:
+            pass # no monobots allowed
+        if dept < 0 or dept > len(SuitDNA.suitDepts)-1:
             print 'ucs: bad cog dept: ', dept
         elif type < 0 or type > SuitDNA.suitsPerDept:
             print 'ucs: bad cog type: ', type
@@ -574,7 +552,10 @@ class SuitPage(ShtikerPage.ShtikerPage):
         for panel in panels:
             panel.count = 0
         for cog in cogList:
-            self.panels[cog].count += 1
+            if cog - ((len(SuitDNA.suitDepts)-1) * SuitDNA.suitsPerDept - 1) > 0: # any cog with id 33-1 or over...
+                pass # monobot go away
+            else:
+                self.panels[cog].count += 1
         for panel in panels:
             panel.cogRadarLabel['text'] = TTLocalizer.SuitPageCogRadar % panel.count
             if self.radarOn[deptNum]:

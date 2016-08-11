@@ -14,7 +14,6 @@ suitHeadTypes = ['f',
  'hh',
  'cr',
  'tbc',
- 'hho',
  'bf',
  'b',
  'dt',
@@ -23,7 +22,6 @@ suitHeadTypes = ['f',
  'sd',
  'le',
  'bw',
- 'br',
  'sc',
  'pp',
  'tw',
@@ -32,7 +30,6 @@ suitHeadTypes = ['f',
  'mb',
  'ls',
  'rb',
- 'bfh',
  'cc',
  'tm',
  'nd',
@@ -41,11 +38,17 @@ suitHeadTypes = ['f',
  'tf',
  'm',
  'mh',
- 'tl']
+ 'ca',
+ 'cn',
+ 'mg',
+ 'pr',
+ 'bsh',
+ 'tl',
+ 'bfh',
+ 'hho']
 suitATypes = ['ym',
  'hh',
  'tbc',
- 'hho',
  'dt',
  'bs',
  'le',
@@ -57,7 +60,10 @@ suitATypes = ['ym',
  'tf',
  'm',
  'mh',
- 'tl']
+ 'mg',
+ 'pr',
+ 'tl',
+ 'hho']
 suitBTypes = ['p',
  'ds',
  'b',
@@ -67,7 +73,8 @@ suitBTypes = ['p',
  'br',
  'ls',
  'tm',
- 'ms']
+ 'ms',
+ 'cn']
 suitCTypes = ['f',
  'mm',
  'cr',
@@ -77,11 +84,14 @@ suitCTypes = ['f',
  'mb',
  'bfh',
  'cc',
- 'gh']
+ 'gh',
+ 'ca',
+ 'bsh']
 suitDepts = ['c',
  'l',
  'm',
- 's']
+ 's',
+ 'g']
 suitDeptZones = [ToontownGlobals.BossbotHQ,
  ToontownGlobals.LawbotHQ,
  ToontownGlobals.CashbotHQ,
@@ -89,15 +99,18 @@ suitDeptZones = [ToontownGlobals.BossbotHQ,
 suitDeptFullnames = {'c': TTLocalizer.Bossbot,
  'l': TTLocalizer.Lawbot,
  'm': TTLocalizer.Cashbot,
- 's': TTLocalizer.Sellbot}
+ 's': TTLocalizer.Sellbot,
+ 'g': TTLocalizer.Boardbot}
 suitDeptFullnamesP = {'c': TTLocalizer.BossbotP,
  'l': TTLocalizer.LawbotP,
  'm': TTLocalizer.CashbotP,
- 's': TTLocalizer.SellbotP}
+ 's': TTLocalizer.SellbotP,
+ 'g': TTLocalizer.BoardbotP}
 suitDeptFilenames = {'c': 'boss',
  'l': 'law',
  'm': 'cash',
- 's': 'sell'
+ 's': 'sell',
+ 'g': 'board'                     
 }
 suitDeptModelPaths = {'c': '**/CorpIcon',
  0: '**/CorpIcon',
@@ -106,11 +119,14 @@ suitDeptModelPaths = {'c': '**/CorpIcon',
  'm': '**/MoneyIcon',
  2: '**/MoneyIcon',
  's': '**/SalesIcon',
- 3: '**/SalesIcon'}
+ 3: '**/SalesIcon',
+'g': '**/HackerIcon',
+ 4: '**/HackerIcon'}
 corpPolyColor = VBase4(0.95, 0.75, 0.75, 1.0)
 legalPolyColor = VBase4(0.75, 0.75, 0.95, 1.0)
 moneyPolyColor = VBase4(0.65, 0.95, 0.85, 1.0)
 salesPolyColor = VBase4(0.95, 0.75, 0.95, 1.0)
+boardPolyColor = VBase4(.45, 0.45, .45, 1.0)
 suitsPerLevel = [1,
  1,
  1,
@@ -118,9 +134,8 @@ suitsPerLevel = [1,
  1,
  1,
  1,
- 1,
  1]
-suitsPerDept = 9
+suitsPerDept = 8
 goonTypes = ['pg', 'sg']
 
 def getSuitBodyType(name):
@@ -144,6 +159,8 @@ def getSuitDept(name):
         return suitDepts[2]
     elif index < suitsPerDept * 4:
         return suitDepts[3]
+    elif index < suitsPerDept * 5:
+        return suitDepts[4]
     else:
         print 'Unknown dept for suit name: ', name
         return None
@@ -172,7 +189,7 @@ def getSuitName(deptIndex, typeIndex):
 
 
 def getRandomSuitType(level, rng = random):
-    return random.randint(max(level - 4, 1), min(level, 9))
+    return random.randint(max(level - 5, 1), min(level, 9))
 
 
 def getRandomSuitByDept(dept):

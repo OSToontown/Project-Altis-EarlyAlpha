@@ -103,6 +103,11 @@ class BossCog(Avatar.Avatar):
         filePrefix = ModelDict[dna.dept]
         if filePrefix == 'phase_12/models/char/bossbotBoss':
             self.loadModel(filePrefix + '-legs-zero', 'legs')
+            self.loadModel(GenericModel + '-legs-zero', 'legs')
+            self.doorA = self.__setupDoor('**/joint_doorFront', 'doorA', self.doorACallback, VBase3(0, 0, 0), VBase3(0, 0, -80), CollisionPolygon(Point3(5, -4, 0.32), Point3(0, -4, 0), Point3(0, 4, 0), Point3(5, 4, 0.32)))
+            self.doorB = self.__setupDoor('**/joint_doorRear', 'doorB', self.doorBCallback, VBase3(0, 0, 0), VBase3(0, 0, 80), CollisionPolygon(Point3(-5, 4, 0.84), Point3(0, 4, 0), Point3(0, -4, 0), Point3(-5, -4, 0.84)))
+            self.doorA.request('Closed')
+            self.doorB.request('Closed')
         else:
             self.loadModel(GenericModel + '-legs-zero', 'legs')
         self.loadModel(filePrefix + '-torso-zero', 'torso')
@@ -112,7 +117,7 @@ class BossCog(Avatar.Avatar):
         if filePrefix == 'phase_12/models/char/bossbotBoss':
             self.attach('torso', 'legs', 'joint_legs')
             pelvis = self.getPart('torso')
-            pelvis.setZ(9.75)
+            #pelvis.setZ(9.75)
         else:
              self.attach('torso', 'legs', 'joint_pelvis')
         self.rotateNode = self.attachNewNode('rotate')

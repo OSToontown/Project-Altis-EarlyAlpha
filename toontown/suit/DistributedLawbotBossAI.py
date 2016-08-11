@@ -645,7 +645,7 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
         self.d_setBattleExperience()
         self.b_setState('Reward')
         BattleExperienceAI.assignRewards(self.involvedToons, self.toonSkillPtsGained, self.suitsKilled, ToontownGlobals.dept2cogHQ(self.dept), self.helpfulToons)
-        preferredDept = random.randrange(len(SuitDNA.suitDepts))
+        preferredDept = random.randrange(len(SuitDNA.suitDepts)-1)
         #typeWeights = ['single'] * 70 + ['building'] * 27 + ['invasion'] * 3
         preferredSummonType = random.choice(['building', 'invasion', 'cogdo', 'skelinvasion', 'waiterinvasion', 'v2invasion'])
         for toonId in self.involvedToons:
@@ -711,7 +711,7 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
                     break
 
             possibleCogLevel = range(SuitDNA.suitsPerDept)
-            possibleDeptIndex = range(len(SuitDNA.suitDepts))
+            possibleDeptIndex = range(len(SuitDNA.suitDepts)-1)
             possibleSummonType = ['building', 'invasion', 'cogdo', 'skelinvasion', 'waiterinvasion', 'v2invasion']
             #typeWeights = ['single'] * 70 + ['building'] * 27 + ['invasion'] * 3
             if not foundOne:

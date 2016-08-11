@@ -1,8 +1,7 @@
 import ShtikerPage
 from direct.gui.DirectGui import *
 from panda3d.core import *
-from toontown.toonbase import ToontownGlobals
-from toontown.toonbase import TTLocalizer
+from toontown.toonbase import ToontownGlobals, TTLocalizer
 from toontown.suit import SuitDNA
 from toontown.battle import SuitBattleGlobals
 from toontown.minigame import MinigamePowerMeter
@@ -10,7 +9,8 @@ from toontown.coghq import CogDisguiseGlobals
 DeptColors = (Vec4(0.647, 0.608, 0.596, 1.0),
  Vec4(0.588, 0.635, 0.671, 1.0),
  Vec4(0.596, 0.714, 0.659, 1.0),
- Vec4(0.761, 0.678, 0.69, 1.0))
+ Vec4(0.761, 0.678, 0.69, 1.0),
+ Vec4(0.761, 0.32, 0.24, 1.0))
 NumParts = max(CogDisguiseGlobals.PartsPerSuit)
 PartNames = ('lUpleg', 'lLowleg', 'lShoe', 'rUpleg', 'rLowleg', 'rShoe', 'lShoulder', 'rShoulder', 'chest', 'waist', 'hip', 'lUparm', 'lLowarm', 'lHand', 'rUparm', 'rLowarm', 'rHand')
 
