@@ -512,7 +512,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
 
     def updateCogStatus(self, dept, type, status):
         if dept == 5:
-            pass # no monobots allowed
+            pass # no Boardbots allowed
         if dept < 0 or dept > len(SuitDNA.suitDepts)-1:
             print 'ucs: bad cog dept: ', dept
         elif type < 0 or type > SuitDNA.suitsPerDept:
@@ -553,7 +553,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
             panel.count = 0
         for cog in cogList:
             if cog - ((len(SuitDNA.suitDepts)-1) * SuitDNA.suitsPerDept - 1) > 0: # any cog with id 33-1 or over...
-                pass # monobot go away
+                pass # Boardbot go away
             else:
                 self.panels[cog].count += 1
         for panel in panels:

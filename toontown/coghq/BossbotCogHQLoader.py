@@ -56,11 +56,6 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
             top = self.geom.find('**/TunnelEntrance')
             origin = top.find('**/tunnel_origin')
             origin.setH(-33.33)
-            self.watertower1 = Actor("phase_6/models/cogHQ/WaterTowerSimple")
-            self.watertower1.reparentTo(self.geom)
-            self.watertower1.setPos(200,20,0)
-            #self.watertower1.setScale(0.5)
-        
         elif zoneId == ToontownGlobals.BossbotLobby:
             if base.config.GetBool('want-qa-regression', 0):
                 self.notify.info('QA-REGRESSION: COGHQ: Visit BossbotLobby')
