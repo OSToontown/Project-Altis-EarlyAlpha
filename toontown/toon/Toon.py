@@ -447,6 +447,7 @@ class Toon(Avatar.Avatar, ToonHead):
         self.isDisguised = 0
         self.defaultColorScale = None
         self.jar = None
+        self.setBlend(frameBlend = True)
         self.headMeter = None
         self.gmIcon = None
         self.partyHat = None
@@ -580,6 +581,7 @@ class Toon(Avatar.Avatar, ToonHead):
             self.sendLogSuspiciousEvent('nakedToonDNA %s was requested' % newDNA.torso)
             newDNA.torso = newDNA.torso + 's'
         self.setDNA(newDNA)
+        self.setBlend(frameBlend = True)
 
     def setDNA(self, dna):
         if hasattr(self, 'isDisguised'):
@@ -643,6 +645,7 @@ class Toon(Avatar.Avatar, ToonHead):
         self.rescaleToon()
         self.resetHeight()
         self.setupToonNodes()
+        self.setBlend(frameBlend = True)
 
     def setupToonNodes(self):
         rightHand = NodePath('rightHand')

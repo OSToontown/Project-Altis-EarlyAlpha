@@ -21,7 +21,8 @@ NUM_FLOORS_DICT = {
                    's': 1,
                    'l': 2,
                    'm':1,
-                   'c': 1
+                   'c': 1,
+                   'g': 1
                    }
 
 BATTLE_INTRO_DURATION = 10

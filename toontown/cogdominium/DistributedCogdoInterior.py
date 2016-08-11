@@ -25,11 +25,13 @@ from CogdoElevatorMovie import CogdoElevatorMovie
 SUITE_DICT = {'s': 'tt_m_ara_crg_penthouse_sell',
  'l': 'tt_m_ara_crg_penthouse_law',
  'm': 'tt_m_ara_crg_penthouse_sell',
- 'c': 'tt_m_ara_crg_penthouse_sell'}
+ 'c': 'tt_m_ara_crg_penthouse_sell',
+ 'g': 'tt_m_ara_crg_penthouse_sell'}
 PAINTING_DICT = {'s': 'tt_m_ara_crg_paintingMoverShaker',
  'l': 'tt_m_ara_crg_paintingLegalEagle',
  'm': 'tt_m_ara_crg_paintingMoverShaker',
- 'c': 'tt_m_ara_crg_paintingMoverShaker'}
+ 'c': 'tt_m_ara_crg_paintingMoverShaker',
+ 'g': 'tt_m_ara_crg_paintingMoverShaker'}
 
 from otp.nametag.NametagConstants import *
 

@@ -46,6 +46,7 @@ class BossCog(Avatar.Avatar):
         self.healthBar = SuitHealthBar.SuitHealthBar()
         self.animDoneEvent = 'BossCogAnimDone'
         self.animIvalName = 'BossCogAnimIval'
+        self.setBlend(frameBlend = True)
         self.warningSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_GOON_tractor_beam_alarmed.ogg')
 
     def delete(self):
@@ -63,6 +64,7 @@ class BossCog(Avatar.Avatar):
         self.dna = SuitDNA.SuitDNA()
         self.dna.makeFromNetString(dnaString)
         self.setDNA(self.dna)
+        self.setBlend(frameBlend = True)
 
     def setDNA(self, dna):
         if self.style:
@@ -156,6 +158,7 @@ class BossCog(Avatar.Avatar):
             self.treadsRight = treadsModel.find('**/left_tread')
             self.doorA.request('Closed')
             self.doorB.request('Closed')
+        self.setBlend(frameBlend = True)
        
     def initializeBodyCollisions(self, collIdStr):
         Avatar.Avatar.initializeBodyCollisions(self, collIdStr)
