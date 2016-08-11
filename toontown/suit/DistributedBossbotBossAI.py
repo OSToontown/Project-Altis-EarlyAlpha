@@ -10,6 +10,7 @@ from toontown.battle import BattleExperienceAI
 from toontown.battle import DistributedBattleDinersAI
 from toontown.battle import DistributedBattleWaitersAI
 from toontown.building import SuitBuildingGlobals
+from toontown.coghq.BanquetTableBase import BanquetTableBase
 from toontown.coghq import DistributedBanquetTableAI
 from toontown.coghq import DistributedFoodBeltAI
 from toontown.coghq import DistributedGolfSpotAI
@@ -69,6 +70,7 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         self.battleFourDuration = simbase.air.config.GetInt('battle-four-duration', 1800)
         self.overtimeOneStart = float(self.overtimeOneTime) / self.battleFourDuration
         self.moveAttackAllowed = True
+        self.numAngeredDiners = 0
 
     def delete(self):
         self.notify.debug('DistributedBossbotBossAI.delete')
@@ -269,7 +271,21 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         for belt in self.foodBelts:
             belt.goInactive()
 
+    def destroyDiners(self):
+        for table in self.tables:
+            for i in xrange(table.numDiners):
+                dinerStatus = table.dinerStatus[i]
+
+                if i in table.numFoodEaten.keys():
+                    table.b_setDinerStatus(i, BanquetTableBase.DEAD)
+                    continue
+
+                elif dinerStatus == BanquetTableBase.EATING:
+                    table.b_setDinerStatus(i, BanquetTableBase.DEAD)
+
+
     def __doneBattleTwo(self, avIds):
+        self.destroyDiners()
         self.b_setState('PrepareBattleThree')
 
     def requestGetFood(self, beltIndex, foodIndex, foodNum):
@@ -345,7 +361,8 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
                 info = self.notDeadList[i]
                 suitType = info[2] - 4
                 suitLevel = info[2]
-                suit = self.__genSuitObject(self.zoneId, suitType, 'c', suitLevel, 1)
+                bldgTrack = info[3]
+                suit = self.__genSuitObject(self.zoneId, suitType, bldgTrack, suitLevel, 1)
             diners.append((suit, 100))
 
         active = []
@@ -747,7 +764,7 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
             toon = simbase.air.doId2do.get(toonId)
             if toon:
                 totalToons += 1
-                totalCogSuitTier += toon.cogTypes[1]
+                totalCogSuitTier += toon.cogTypes[0]
 
         averageTier = math.floor(totalCogSuitTier / totalToons) + 1
         return int(averageTier)
@@ -914,6 +931,17 @@ def getCEO(toon):
                 return object
     
     return None
+	
+    def alertDiners(self):
+        self.__doneBattleTwo(self.involvedToons)
+
+    def incrementDinersAngered(self):
+        self.numAngeredDiners += 1
+        if self.numAngeredDiners >= ToontownGlobals.BossbotMaxAngeredCogs and self.state in 'BattleTwo':
+            self.alertDiners()
+
+    def decrementDinersAngered(self):
+        self.numAngeredDiners = max(0, self.numAngeredDiners - 1)
 
 @magicWord(category=CATEGORY_ADMINISTRATOR, types=[str])
 def skipCEO(battle='next'):
@@ -978,3 +1006,22 @@ def killCEO():
         return "You aren't in a CEO!"
     boss.b_setState('Victory')
     return 'Killed CEO.'
+
+@magicWord(category=CATEGORY_ADMINISTRATOR)
+def skipWaiters():
+    """
+    Skips to the final round of the CEO.
+    """
+    invoker = spellbook.getInvoker()
+    boss = None
+    for do in simbase.air.doId2do.values():
+        if isinstance(do, DistributedBossbotBossAI):
+            if invoker.doId in do.involvedToons:
+                boss = do
+                break
+    if not boss:
+        return "You aren't in a CEO!"
+    if boss.state in ('PrepareBattleThree', 'BattleThree'):
+        return "You can't skip this round."
+    boss.exitIntroduction()
+    boss.b_setState('PrepareBattleTwo')
