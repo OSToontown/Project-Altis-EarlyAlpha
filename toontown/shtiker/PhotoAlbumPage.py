@@ -230,7 +230,7 @@ class PhotoAlbumPage(ShtikerPage.ShtikerPage):
         files = os.listdir(self.photoPath)
         photos = []
         for fileName in files:
-            if fileName[0:17] == 'stride-screenshot' and fileName[-4:] == '.jpg':
+            if fileName[0:17] == 'altis-screenshot' and fileName[-4:] == '.jpg':
                 photos.append(fileName)
 
         return photos
