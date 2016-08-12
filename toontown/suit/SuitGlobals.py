@@ -59,6 +59,6 @@ suitProperties = {'ca': (4.0 / cSize, SuitDNA.boardPolyColor, ['flunky'], 'conar
                   'ms': (4.75 / bSize, SuitDNA.corpPolyColor, ['movershaker'], '', 6.7),
                   'tf': (5.25 / aSize, SuitDNA.corpPolyColor, ['twoface'], '', 6.95),
                   'm': (5.75 / aSize, SuitDNA.salesPolyColor, ['twoface'], 'mingler.jpg', 7.61),
-                  'mh': (7.0 / aSize, VBase4(0.95, 0.95, 1.0, 1.0), ['yesman'], '', 8.95),
+                  'mh': (7.0 / aSize, VBase4(0.95, 0.95, 1.0, 1.0), ['yesman'], 'mr_hollywood.jpg', 8.95),
                   
                   }
