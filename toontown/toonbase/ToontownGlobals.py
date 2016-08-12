@@ -1611,9 +1611,6 @@ AV_TOUCH_CHECK_TIMELIMIT_CL = 0.002
 AV_TOUCH_COUNT_LIMIT = 5
 AV_TOUCH_COUNT_TIME = 300
 
-BMovementSpeed = 0
-BMovementSpeedMultiplier = 1.3
-
 NPCCollisionDelay = 2.5
 
 FISHSALE_COMPLETE = 0
