@@ -116,8 +116,6 @@ class DistributedBanquetTableAI(DistributedObjectAI.DistributedObjectAI, FSM.FSM
 
     def foodServed(self, chairIndex):
 
-        if self.dinerStatus[chairIndex] == self.ANGRY:
-            self.boss.decrementDinersAngered()
         self.b_setDinerStatus(chairIndex, self.EATING)
         eatingDur = self.dinerInfo[chairIndex][1]
         if chairIndex in self.transitionTasks:
@@ -151,7 +149,6 @@ class DistributedBanquetTableAI(DistributedObjectAI.DistributedObjectAI, FSM.FSM
         self.numFoodEaten[chairIndex] = 0
         if chairIndex in self.transitionTasks:
             self.removeTask(self.transitionTasks[chairIndex])
-        self.boss.incrementDinersAngered()
 
     def goInactive(self):
         self.b_setState('Inactive')

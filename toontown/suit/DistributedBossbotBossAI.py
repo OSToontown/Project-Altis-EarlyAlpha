@@ -70,7 +70,6 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         self.battleFourDuration = simbase.air.config.GetInt('battle-four-duration', 1800)
         self.overtimeOneStart = float(self.overtimeOneTime) / self.battleFourDuration
         self.moveAttackAllowed = True
-        self.numAngeredDiners = 0
 
     def delete(self):
         self.notify.debug('DistributedBossbotBossAI.delete')
@@ -935,13 +934,6 @@ def getCEO(toon):
     def alertDiners(self):
         self.__doneBattleTwo(self.involvedToons)
 
-    def incrementDinersAngered(self):
-        self.numAngeredDiners += 1
-        if self.numAngeredDiners >= ToontownGlobals.BossbotMaxAngeredCogs and self.state in 'BattleTwo':
-            self.alertDiners()
-
-    def decrementDinersAngered(self):
-        self.numAngeredDiners = max(0, self.numAngeredDiners - 1)
 
 @magicWord(category=CATEGORY_ADMINISTRATOR, types=[str])
 def skipCEO(battle='next'):
