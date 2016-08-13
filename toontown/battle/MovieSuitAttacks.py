@@ -1550,7 +1550,10 @@ def doDownsize(attack):
      1.49])
     toonTrack = getToonTrack(attack, damageDelay=damageDelay, splicedDamageAnims=damageAnims, dodgeDelay=0.6, dodgeAnimNames=['sidestep'])
     if dmg > 0:
-        return Parallel(suitTrack, sprayTrack, cloudTrack, shrinkTrack, toonTrack)
+        shrinkSound = globalBattleSoundCache.getSound('SA_head_shrink_only.ogg')
+        growSound = globalBattleSoundCache.getSound('SA_head_grow_back_only.ogg')
+        soundTrack = Sequence(Wait(2.1), SoundInterval(shrinkSound, duration=2.1, node=suit), Wait(1.6), SoundInterval(growSound, node=suit))
+        return Parallel(suitTrack, sprayTrack, cloudTrack, shrinkTrack, soundTrack, toonTrack)
     else:
         return Parallel(suitTrack, sprayTrack, toonTrack)
 
@@ -1727,6 +1730,9 @@ def doGlowerPower(attack):
     if suitName == 'hh':
         leftPosPoints = [Point3(0.3, 4.3, 5.3), MovieUtil.PNT3_ZERO]
         rightPosPoints = [Point3(-0.3, 4.3, 5.3), MovieUtil.PNT3_ZERO]
+    elif suitName == 'bsh':
+        leftPosPoints = [Point3(0.4, 3.8, 5.0), MovieUtil.PNT3_ZERO]
+        rightPosPoints = [Point3(-0.4, 3.8, 5.0), MovieUtil.PNT3_ZERO]
     elif suitName == 'tbc':
         leftPosPoints = [Point3(0.6, 4.5, 6), MovieUtil.PNT3_ZERO]
         rightPosPoints = [Point3(-0.6, 4.5, 6), MovieUtil.PNT3_ZERO]
@@ -1955,6 +1961,10 @@ def doEvilEye(attack):
         posPoints = [Point3(-0.46, 4.85, 5.28), VBase3(-155.0, -20.0, 0.0)]
     elif suitName == 'tf':
         posPoints = [Point3(-0.4, 3.65, 5.01), VBase3(-155.0, -20.0, 0.0)]
+    elif suitName == 'mg':
+        posPoints = [Point3(-0.64, 4.45, 2.91), VBase3(-155.0, -20.0, 0.0)]
+    elif suitName == 'tl':
+        posPoints = [Point3(-0.4, 3.65, 4.60), VBase3(-155.0, -20.0, 0.0)]
     elif suitName == 'le':
         posPoints = [Point3(-0.64, 4.45, 5.91), VBase3(-155.0, -20.0, 0.0)]
     else:
