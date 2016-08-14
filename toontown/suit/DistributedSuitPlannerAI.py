@@ -373,7 +373,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             cogdoTakeover=None, minPathLen=None, maxPathLen=None):
         possibles = []
         backup = []
-
+        if cogdoTakeover is None:
+            cogdoTakeover = False
         if toonBlockTakeover is not None:
             suit.attemptingTakeover = 1
             blockNumber = toonBlockTakeover
@@ -386,9 +387,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
                 if not NPCToons.isZoneProtected(intZoneId):
                     if blockNumber in self.buildingFrontDoors:
                         possibles.append((blockNumber, self.buildingFrontDoors[blockNumber]))
-            if cogdoTakeover is None:
-                if suit.dna.dept in ALLOWED_FO_TRACKS:
-                    cogdoTakeover = random.random() < self.CogdoRatio
+
         elif self.buildingMgr:
             for blockNumber in self.buildingMgr.getSuitBlocks():
                 track = self.buildingMgr.getBuildingTrack(blockNumber)
@@ -573,11 +572,11 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             return
         building.suitTakeOver(suitTrack, difficulty, buildingHeight)
 
-    def cogdoTakeOver(self, blockNumber, difficulty, buildingHeight, dept):
+    def cogdoTakeOver(self, blockNumber, difficulty, buildingHeight):
         if self.pendingBuildingHeights.count(buildingHeight) > 0:
             self.pendingBuildingHeights.remove(buildingHeight)
         building = self.buildingMgr.getBuilding(blockNumber)
-        building.cogdoTakeOver(difficulty, buildingHeight, dept)
+        building.cogdoTakeOver(difficulty, buildingHeight)
 
     def recycleBuilding(self):
         bmin = SuitBuildingGlobals.buildingMinMax[self.zoneId][0]
