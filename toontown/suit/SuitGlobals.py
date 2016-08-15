@@ -17,7 +17,7 @@ ColdCallerHead = VBase4(0.25, 0.35, 1.0, 1.0) # Head used by Cold Caller
                
                  #Boardbots
 suitProperties = {'ca': (4.0 / cSize, SuitDNA.boardPolyColor, ['flunky'], 'conartist.jpg', 4.81),
-                  'cn': (3.75 / bSize, SuitDNA.boardPolyColor, ['downsizer', 'hatjp187187'], '', 5.5),
+                  'cn': (3.75 / bSize, SuitDNA.boardPolyColor, ['downsizer', 'group', 'group1'], '', 5.5),
                   'mg': (4.5 / aSize, SuitDNA.boardPolyColor, ['legaleagle'], 'suit-heads_palette_3cmla_22.jpg', 5.5),
                   'pr': (4.63 / aSize, SuitDNA.boardPolyColor, ['telemarketer'], 'proprietor.jpg', 5.9),
                   'bsh': (5.3 / cSize, VBase4(0.95, 0.95, 1.0, 1.0), ['gladhander'], 'tutorial_suits_palette_3cmla_11.jpg', 6.7),
@@ -27,7 +27,7 @@ suitProperties = {'ca': (4.0 / cSize, SuitDNA.boardPolyColor, ['flunky'], 'conar
                   #Bossbots
                   'f': (4.0 / cSize, SuitDNA.corpPolyColor, ['flunky', 'glasses'], '', 4.88),
                   'p': (3.35 / bSize, SuitDNA.corpPolyColor, ['pencilpusher'], '', 5.0),
-                  'ym': (4.125 / aSize, VBase4(0.95, 0.95, 1.0, 1.0), ['yesman'], '', 5.28),
+                  'ym': (4.125 / aSize, VBase4(0.95, 0.95, 1.0, 1.0), ['yesman'], 'yes_man.jpg', 5.28),
                   'mm': (1.25 / cSize, SuitDNA.corpPolyColor, ['micromanager'], '', 2.0),
                   'ds': (4.5 / bSize, SuitDNA.moneyPolyColor, ['beancounter'], '', 6.08),
                   'hh': (6.5 / aSize, SuitDNA.corpPolyColor, ['headhunter'], '', 7.45),
@@ -39,7 +39,7 @@ suitProperties = {'ca': (4.0 / cSize, SuitDNA.boardPolyColor, ['flunky'], 'conar
                   'dt': (4.25 / aSize, SuitDNA.legalPolyColor, ['twoface'], 'double-talker.jpg', 5.63),
                   'ac': (4.35 / bSize, SuitDNA.legalPolyColor, ['ambulancechaser'], '', 6.39),
                   'bs': (4.5 / aSize, VBase4(2.55, 0.5, 1.50, 1.0), ['backstabber'], '', 6.71),
-                  'sd': (5.65 / bSize, VBase4(0.5, 0.8, 0.75, 1.0), ['telemarketer'], 'spin_doctor.jpg', 7.9),
+                  'sd': (5.65 / bSize, VBase4(0.5, 0.8, 0.75, 1.0), ['telemarketer','scopejp187187', 'bandjp187187' ], '', 7.9),
                   'le': (7.125 / aSize, VBase4(2.55, 0.55, 0, 1.0), ['legaleagle'], '', 8.27),
                   'bw': (7.0 / aSize, SuitDNA.legalPolyColor, ['bigwig'], '', 8.69),
                   # Cashbots
@@ -53,7 +53,7 @@ suitProperties = {'ca': (4.0 / cSize, SuitDNA.boardPolyColor, ['flunky'], 'conar
                   'rb': (7.0 / aSize, VBase4(0.25, 0.25, 0.5, 1.0), ['yesman'], 'robber-baron.jpg', 8.23),
                   # Sellbots
                   'cc': (3.5 / cSize, VBase4(0.55, 0.65, 1.0, 1.0), ['coldcaller'], '', 4.63),
-                  'tm': (3.75 / bSize, SuitDNA.corpPolyColor, ['telemarketer'], '', 5.24),
+                  'tm': (3.75 / bSize, SuitDNA.corpPolyColor, ['telemarketer'], 'telemarketer.jpg', 5.24),
                   'nd': (4.35 / aSize, SuitDNA.salesPolyColor, ['numbercruncher'], 'name-dropper.jpg', 5.98),
                   'gh': (4.75 / cSize, VBase4(0.95, 0.95, 1.0, 1.0), ['gladhander'], '', 6.4),
                   'ms': (4.75 / bSize, SuitDNA.corpPolyColor, ['movershaker'], '', 6.7),
