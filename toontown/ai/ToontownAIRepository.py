@@ -51,7 +51,7 @@ from toontown.toonbase import ToontownGlobals
 from toontown.tutorial.TutorialManagerAI import TutorialManagerAI
 from toontown.uberdog.DistributedPartyManagerAI import DistributedPartyManagerAI
 #from toontown.uberdog.DistributedLobbyManagerAI import DistributedLobbyManagerAI
-from multiprocessing import Process
+from threading import Thread
 
 class ToontownAIRepository(ToontownInternalRepository):
     
@@ -195,8 +195,8 @@ class ToontownAIRepository(ToontownInternalRepository):
         ToontownInternalRepository.handleConnected(self)
         
         # create district process and execute it.
-        process = Process(target=self.startDistrict)
-        process.daemon = True
+        process = Thread(target=self.startDistrict)
+        process.setDaemon(True)
         process.start()
     
     def startDistrict(self):
