@@ -12,7 +12,6 @@ class ToontownLoader(Loader.Loader):
         self.inBulkBlock = None
         self.blockName = None
         self.loadingScreen = ToontownLoadingScreen.ToontownLoadingScreen()
-        return
 
     def destroy(self):
         self.loadingScreen.destroy()
@@ -28,6 +27,7 @@ class ToontownLoader(Loader.Loader):
         if self.inBulkBlock:
             Loader.Loader.notify.warning("Tried to start a block ('%s'), but am already in a block ('%s')" % (name, self.blockName))
             return None
+        
         self.inBulkBlock = 1
         self._lastTickT = globalClock.getRealTime()
         self.blockName = name
@@ -38,9 +38,11 @@ class ToontownLoader(Loader.Loader):
         if not self.inBulkBlock:
             Loader.Loader.notify.warning("Tried to end a block ('%s'), but not in one" % name)
             return None
+        
         if name != self.blockName:
             Loader.Loader.notify.warning("Tried to end a block ('%s'), other then the current one ('%s')" % (name, self.blockName))
             return None
+        
         self.inBulkBlock = None
         expectedCount, loadedCount = self.loadingScreen.end()
         now = globalClock.getRealTime()
@@ -48,6 +50,7 @@ class ToontownLoader(Loader.Loader):
          expectedCount,
          loadedCount,
          now - self._loadStartT))
+        
         return
 
     def abortBulkLoad(self):
@@ -55,14 +58,17 @@ class ToontownLoader(Loader.Loader):
             Loader.Loader.notify.info("Aborting block ('%s')" % self.blockName)
             self.inBulkBlock = None
             self.loadingScreen.abort()
+        
         return
 
     def tick(self):
         if self.inBulkBlock:
             now = globalClock.getRealTime()
+            
             if now - self._lastTickT > self.TickPeriod:
                 self._lastTickT += self.TickPeriod
                 self.loadingScreen.tick()
+                
                 try:
                     base.cr.considerHeartbeat()
                 except:
@@ -70,10 +76,13 @@ class ToontownLoader(Loader.Loader):
 
     def loadModel(self, *args, **kw):
         ret = Loader.Loader.loadModel(self, *args, **kw)
+        
         if ret:
             gsg = base.win.getGsg()
+            
             if gsg:
                 ret.prepareScene(gsg)
+        
         self.tick()
         return ret
 
@@ -85,16 +94,21 @@ class ToontownLoader(Loader.Loader):
     def loadTexture(self, texturePath, alphaPath = None, okMissing = False):
         ret = Loader.Loader.loadTexture(self, texturePath, alphaPath, okMissing=okMissing)
         self.tick()
+        
         if alphaPath:
             self.tick()
+        
         return ret
 
     def pdnaModel(self, *args, **kw):
         ret = Loader.Loader.loadModel(self, *args, **kw)
+        
         if ret:
             gsg = base.win.getGsg()
+            
             if gsg:
                 ret.prepareScene(gsg)
+        
         return ret
 
     def pdnaFont(self, *args, **kw):
