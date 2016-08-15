@@ -184,12 +184,17 @@ class ToontownAIRepository(ToontownInternalRepository):
         process.start()
     
     def startDistrict(self):
+        # wait for the district object to actually generate, then create child do's.
+        self.acceptOnce('district-announce-generate', self.districtGenerated)
+        
         self.districtId = self.allocateChannel()
         self.notify.info('Creating ToontownDistrictAI(%d)...' % self.districtId)
         self.distributedDistrict = ToontownDistrictAI(self)
         self.distributedDistrict.setName(self.districtName)
         self.distributedDistrict.generateWithRequiredAndId(
             self.districtId, self.getGameDoId(), 2)
+    
+    def districtGenerated(self):
         self.notify.info('Claiming ownership of channel ID: %d...' % self.districtId)
         self.claimOwnership(self.districtId)
 
