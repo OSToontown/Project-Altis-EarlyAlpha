@@ -51,7 +51,7 @@ from toontown.toonbase import ToontownGlobals
 from toontown.tutorial.TutorialManagerAI import TutorialManagerAI
 from toontown.uberdog.DistributedPartyManagerAI import DistributedPartyManagerAI
 #from toontown.uberdog.DistributedLobbyManagerAI import DistributedLobbyManagerAI
-import threading
+from multiprocessing import Process
 
 class ToontownAIRepository(ToontownInternalRepository):
     def __init__(self, baseChannel, stateServerChannel, districtName):
@@ -177,7 +177,11 @@ class ToontownAIRepository(ToontownInternalRepository):
 
     def handleConnected(self):
         ToontownInternalRepository.handleConnected(self)
-        threading.Thread(target=self.startDistrict).start()
+        
+        # create district process and execute it.
+        process = Process(target=self.startDistrict)
+        process.daemon = True
+        process.start()
     
     def startDistrict(self):
         self.districtId = self.allocateChannel()
