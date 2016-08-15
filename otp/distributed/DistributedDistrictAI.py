@@ -8,7 +8,7 @@ class DistributedDistrictAI(DistributedObjectAI):
     available = 0
     
     def announceGenerate(self):
-        DistrbutedObjectAI.announceGenerate(self)
+        DistributedObjectAI.announceGenerate(self)
         
         # reply to the ai with district generated.
         messenger.send('district-announce-generate')
