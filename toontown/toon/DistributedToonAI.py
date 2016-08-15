@@ -4961,7 +4961,7 @@ def suit(command, suitName = 'f'):
             return 'Toons took over the cog building!'
         return "Couldn't allow toons to take over cog building because " + returnCode[1]
     elif command == 'invasion':
-        returnCode = invoker.doCogInvasion(SuitDNA.suitHeadTypes.index(suitName))
+        returnCode = invoker.doCogInvasion(SuitDNA.suitDepts.index(suitName), SuitDNA.suitHeadTypes.index(suitName))
         return returnCode
     elif command == 'invasionend':
         returnCode = 'Ending Invasion..'
