@@ -1,9 +1,11 @@
 from direct.stdpy import threading
+from libpandadna import DNALoader, DNADoor
 
-from libpandadna import *
-
-class DNABulkLoader:
+class DNABulkLoader(object):
+    
     def __init__(self, storage, files):
+        super(DNABulkLoader, self).__init__()
+        
         self.dnaStorage = storage
         self.dnaFiles = files
 
@@ -11,27 +13,25 @@ class DNABulkLoader:
         for file in self.dnaFiles:
             print 'Reading DNA file...', file
             loadDNABulk(self.dnaStorage, file)
+        
         del self.dnaStorage
         del self.dnaFiles
 
 def loadDNABulk(dnaStorage, file):
     dnaLoader = DNALoader()
-    file = '/' + file
-    dnaLoader.loadDNAFile(dnaStorage, file)
+    dnaLoader.loadDNAFile(dnaStorage, '/%s' % file)
 
 def loadDNAFile(dnaStorage, file):
     print 'Reading DNA file...', file
     dnaLoader = DNALoader()
-    file = '/' + file
-    node = dnaLoader.loadDNAFile(dnaStorage, file)
+    node = dnaLoader.loadDNAFile(dnaStorage, '/%s' % file)
+    
     if node.node().getNumChildren() > 0:
         return node.node()
 
 def loadDNAFileAI(dnaStorage, file):
     dnaLoader = DNALoader()
-    file = '/' + file
-    data = dnaLoader.loadDNAFileAI(dnaStorage, file)
-    return data
+    return dnaLoader.loadDNAFileAI(dnaStorage, '/%s' % file)
 
 def setupDoor(a, b, c, d, e, f):
     try:
