@@ -1,5 +1,5 @@
 from direct.stdpy import threading
-from libpandadna import DNALoader, DNADoor, DNAStorage, DNAGroup, DNAVisGroup, DNASuitPoint
+from libpandadna import DNALoader, DNADoor, DNAStorage, DNAGroup, DNAVisGroup, DNASuitPoint, DNAInteractiveProp
 
 class DNABulkLoader(object):
     
