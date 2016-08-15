@@ -576,6 +576,9 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         if self.pendingBuildingHeights.count(buildingHeight) > 0:
             self.pendingBuildingHeights.remove(buildingHeight)
         building = self.buildingMgr.getBuilding(blockNumber)
+        if not building:
+            return
+
         building.cogdoTakeOver(difficulty, buildingHeight)
 
     def recycleBuilding(self):
