@@ -10,7 +10,7 @@ class DistributedReportMgrAI(DistributedObjectAI):
         DistributedObjectAI.__init__(self, air)
         self.reports = []
         self.interval = config.GetInt('report-interval', 600)
-        taskMgr.add('schedule-report', self.scheduleReport())
+        taskMgr.add('schedule-report', self.scheduleReport)
 
     def scheduleReport(self, task):
         self.sendAllReports()
