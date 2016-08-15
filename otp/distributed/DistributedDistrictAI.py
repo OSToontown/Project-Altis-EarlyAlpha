@@ -6,6 +6,12 @@ class DistributedDistrictAI(DistributedObjectAI):
 
     name = 'District'
     available = 0
+    
+    def announceGenerate(self):
+        DistrbutedObjectAI.announceGenerate(self)
+        
+        # reply to the ai with district generated.
+        messenger.send('district-announce-generate')
 
     def setName(self, name):
         self.name = name
