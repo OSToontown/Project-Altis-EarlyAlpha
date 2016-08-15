@@ -54,12 +54,10 @@ from toontown.uberdog.DistributedPartyManagerAI import DistributedPartyManagerAI
 from multiprocessing import Process
 
 class ToontownAIRepository(ToontownInternalRepository):
+    
     def __init__(self, baseChannel, stateServerChannel, districtName):
-        ToontownInternalRepository.__init__(
-            self, baseChannel, stateServerChannel, dcSuffix='AI')
-
+        ToontownInternalRepository.__init__(self, baseChannel, stateServerChannel, dcSuffix='AI')
         self.districtName = districtName
-
         self.notify.setInfo(True)  # Our AI repository should always log info.
         self.hoods = []
         self.cogHeadquarters = []
@@ -74,8 +72,8 @@ class ToontownAIRepository(ToontownInternalRepository):
 
         self.zoneAllocator = UniqueIdAllocator(ToontownGlobals.DynamicZonesBegin,
                                                ToontownGlobals.DynamicZonesEnd)
+        
         self.zoneDataStore = AIZoneDataStore()
-
         self.wantFishing = self.config.GetBool('want-fishing', True)
         self.wantHousing = self.config.GetBool('want-housing', True)
         self.wantPets = self.config.GetBool('want-pets', True)
@@ -86,7 +84,6 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.wantCogdominiums = self.config.GetBool('want-cogdominiums', True)
         self.wantTrackClsends = self.config.GetBool('want-track-clsends', False)
         self.baseXpMultiplier = self.config.GetFloat('base-xp-multiplier', 1.0)
-
         self.cogSuitMessageSent = False
 
     def createManagers(self):
@@ -118,22 +115,28 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.codeRedemptionMgr.generateWithRequired(2)
         self.buildingQueryMgr = DistributedBuildingQueryMgrAI(self)
         self.buildingQueryMgr.generateWithRequired(2)
+        
         if self.wantKarts:
             self.leaderboardMgr = LeaderboardMgrAI(self)
+        
         if self.wantFishing:
             self.fishManager = FishManagerAI(self)
+        
         if self.wantHousing:
             self.estateManager = EstateManagerAI(self)
             self.estateManager.generateWithRequired(2)
             self.catalogManager = CatalogManagerAI(self)
             self.catalogManager.generateWithRequired(2)
+        
         if self.wantPets:
             self.petMgr = PetManagerAI(self)
+        
         if self.wantParties:
             self.partyManager = DistributedPartyManagerAI(self)
             self.partyManager.generateWithRequired(2)
             self.globalPartyMgr = self.generateGlobalObject(
                 OTP_DO_ID_GLOBAL_PARTY_MANAGER, 'GlobalPartyManager')
+        
         #self.lobbyManager = DistributedLobbyManagerAI(self)
         #self.lobbyManager.generateWithRequired(2)
         #self.globalLobbyMgr = self.generateGlobalObject(
@@ -141,36 +144,49 @@ class ToontownAIRepository(ToontownInternalRepository):
 
     def createSafeZones(self):
         NPCToons.generateZone2NpcDict()
+        
         if self.config.GetBool('want-toontown-central', True):
             self.hoods.append(TTHoodAI.TTHoodAI(self))
+        
         if self.config.GetBool('want-donalds-dock', True):
             self.hoods.append(DDHoodAI.DDHoodAI(self))
+        
         if self.config.GetBool('want-daisys-garden', True):
             self.hoods.append(DGHoodAI.DGHoodAI(self))
+        
         if self.config.GetBool('want-minnies-melodyland', True):
             self.hoods.append(MMHoodAI.MMHoodAI(self))
+        
         if self.config.GetBool('want-the-brrrgh', True):
             self.hoods.append(BRHoodAI.BRHoodAI(self))
+        
         if self.config.GetBool('want-donalds-dreamland', True):
             self.hoods.append(DLHoodAI.DLHoodAI(self))
+        
         if self.config.GetBool('want-goofy-speedway', True):
             self.hoods.append(GSHoodAI.GSHoodAI(self))
+        
         if self.config.GetBool('want-outdoor-zone', True):
             self.hoods.append(OZHoodAI.OZHoodAI(self))
+        
         if self.config.GetBool('want-golf-zone', True):
             self.hoods.append(GZHoodAI.GZHoodAI(self))
 
     def createCogHeadquarters(self):
         NPCToons.generateZone2NpcDict()
+        
         if self.config.GetBool('want-sellbot-headquarters', True):
             self.factoryMgr = FactoryManagerAI.FactoryManagerAI(self)
             self.cogHeadquarters.append(SellbotHQAI.SellbotHQAI(self))
+        
         if self.config.GetBool('want-cashbot-headquarters', True):
             self.mintMgr = MintManagerAI.MintManagerAI(self)
             self.cogHeadquarters.append(CashbotHQAI.CashbotHQAI(self))
+        
         if self.config.GetBool('want-lawbot-headquarters', True):
             self.lawOfficeMgr = LawOfficeManagerAI.LawOfficeManagerAI(self)
             self.cogHeadquarters.append(LawbotHQAI.LawbotHQAI(self))
+        
         if self.config.GetBool('want-bossbot-headquarters', True):
             self.countryClubMgr = CountryClubManagerAI.CountryClubManagerAI(self)
             self.cogHeadquarters.append(BossbotHQAI.BossbotHQAI(self))
@@ -197,18 +213,20 @@ class ToontownAIRepository(ToontownInternalRepository):
     def districtGenerated(self):
         self.notify.info('Claiming ownership of channel ID: %d...' % self.districtId)
         self.claimOwnership(self.districtId)
-
+        
         self.districtStats = ToontownDistrictStatsAI(self)
         self.districtStats.setDistrictId(self.districtId)
         self.districtStats.generateWithRequiredAndId(
             self.allocateChannel(), self.getGameDoId(), 3)
+        
         self.notify.info('Created ToontownDistrictStats(%d)' % self.districtStats.doId)
-
         self.notify.info('Creating managers...')
         self.createManagers()
+        
         if self.config.GetBool('want-safe-zones', True):
             self.notify.info('Creating safe zones...')
             self.createSafeZones()
+        
         if self.config.GetBool('want-cog-headquarters', True):
             self.notify.info('Creating Cog headquarters...')
             self.createCogHeadquarters()
@@ -222,19 +240,23 @@ class ToontownAIRepository(ToontownInternalRepository):
         datagram.addServerHeader(channelId, self.ourChannel, STATESERVER_OBJECT_SET_AI)
         datagram.addChannel(self.ourChannel)
         self.send(datagram)
-
-    def lookupDNAFileName(self, zoneId):
+    
+    @classmethod
+    def lookupDNAFileName(cls, zoneId):
         zoneId = ZoneUtil.getCanonicalZoneId(zoneId)
         hoodId = ZoneUtil.getCanonicalHoodId(zoneId)
         hood = ToontownGlobals.dnaMap[hoodId]
+        
         if hoodId == zoneId:
             zoneId = 'sz'
             phaseNum = ToontownGlobals.phaseMap[hoodId]
         else:
             phaseNum = ToontownGlobals.streetPhaseMap[hoodId]
+        
         return 'phase_%s/dna/%s_%s.pdna' % (phaseNum, hood, zoneId)
-
-    def loadDNAFileAI(self, dnastore, filename):
+    
+    @classmethod
+    def loadDNAFileAI(cls, dnastore, filename):
         return loadDNAFileAI(dnastore, filename)
 
     def incrementPopulation(self):
