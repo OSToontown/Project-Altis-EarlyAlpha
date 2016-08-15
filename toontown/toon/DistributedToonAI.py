@@ -88,11 +88,11 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         self.cogTypes = [0, 0, 0, 0, 0]
         self.cogLevel = [0, 0, 0, 0, 0]
         self.cogParts = [0, 0, 0, 0, 0]
-        self.cogRadar = [0, 0, 0, 0, 0]
+        self.cogRadar = [0, 0, 0, 0]
         self.cogIndex = -1
         self.disguisePageFlag = 0
         self.sosPageFlag = 0
-        self.buildingRadar = [0, 0, 0, 0, 0]
+        self.buildingRadar = [0, 0, 0, 0]
         self.fishingRod = 0
         self.fishingTrophies = []
         self.trackArray = []
@@ -1056,7 +1056,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             self.cogRadar = [0,
              0,
              0,
-             0,                
              0]
         else:
             self.cogRadar = radar
@@ -1077,7 +1076,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             self.buildingRadar = [0,
              0,
              0,
-             0,                     
              0]
         else:
             self.buildingRadar = radar
@@ -4191,7 +4189,7 @@ def cheesyEffect(value, hood=0, expire=0):
         if value not in OTPGlobals.CEName2Id:
             return 'Invalid cheesy effect value: %s' % value
         value = OTPGlobals.CEName2Id[value]
-    elif not 0 <= value <= 29:
+    elif not 0 <= value <= 31:
         return 'Invalid cheesy effect value: %d' % value
     if (hood != 0) and (not 1000 <= hood < ToontownGlobals.DynamicZonesBegin):
         return 'Invalid hood ID: %d' % hood
@@ -4303,12 +4301,11 @@ def maxToon(missingTrack=None):
     target.b_setCogTypes([7, 7, 7, 7, 7])
 
    # Max their Cog gallery:
-    '''deptCount = len(SuitDNA.suitDepts)
+    deptCount = len(SuitDNA.suitDepts)
     target.b_setCogCount(list(CogPageGlobals.COG_QUOTAS[1]) * deptCount)
     target.b_setCogStatus([CogPageGlobals.COG_COMPLETE2] * 40)
-    target.b_setCogStatus(cogStatus * deptCount)
-    target.b_setCogRadar([1, 1, 1, 1, 1])
-    target.b_setBuildingRadar([1, 1, 1, 1])'''
+    target.b_setCogRadar([1, 1, 1, 1])
+    target.b_setBuildingRadar([1, 1, 1, 1])
 
     # Max out their racing tickets:
     target.b_setTickets(99999)

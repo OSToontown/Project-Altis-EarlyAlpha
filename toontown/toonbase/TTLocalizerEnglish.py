@@ -102,9 +102,9 @@ GlobalStreetNames = {20000: ('to', 'on', 'Tutorial Terrace'),
  10000: ('to the', 'in the', 'Bossbot HQ Country Club'),
  10100: ('to the', 'in the', 'Bossbot HQ Lobby'),
  10200: ('to the', 'in the', 'Country Club'),
- 10500: ('to the', 'in the', 'The Front Three'),
- 10600: ('to the', 'in the', 'The Middle Six'),
- 10700: ('to the', 'in the', 'The Back Nine'),
+ 10500: ('to the', 'in', 'The Front Three'),
+ 10600: ('to the', 'in', 'The Middle Six'),
+ 10700: ('to the', 'in', 'The Back Nine'),
  11000: ('to the', 'in the', 'Sellbot HQ Junkyard'),
  11100: ('to the', 'in the', 'Sellbot HQ Towers Lobby'),
  11200: ('to the', 'in the', 'Sellbot Factory Exterior'),
@@ -2254,11 +2254,12 @@ RewardPanelNewGag = 'New %(gagName)s gag for %(avName)s!'
 RewardPanelUberGag = '%(avName)s earned the %(gagName)s gag with %(exp)s experience points!'
 RewardPanelEndTrack = 'Yay! %(avName)s has reached the end of the %(gagName)s Gag Track!'
 RewardPanelMeritsMaxed = 'Maxed'
-RewardPanelMeritBarLabels = ['Pie Chart Pieces',
+RewardPanelMeritBarLabels = [
  'Stock Options',
  'Jury Notices',
  'Cogbucks',
- 'Merits']
+ 'Merits',
+ 'Pie Chart Pieces']
 RewardPanelMeritAlert = 'Ready for promotion!'
 RewardPanelCogPart = 'You gained a Cog disguise part!'
 RewardPanelPromotion = 'Ready for promotion in %s  track!'

@@ -196,6 +196,7 @@ LawbotStageIntA = 13300
 LawbotStageIntB = 13400
 LawbotStageIntC = 13500
 LawbotStageIntD = 13600
+BoardbotHQ = 14000
 Tutorial = 15000
 MyEstate = 16000
 GolfZone = 17000

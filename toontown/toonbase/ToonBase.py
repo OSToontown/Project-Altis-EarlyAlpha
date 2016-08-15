@@ -26,7 +26,6 @@ from otp.margins.MarginManager import MarginManager
 from toontown.toonbase import TTLocalizer
 from toontown.toonbase import ToontownBattleGlobals
 from toontown.toontowngui import TTDialog
-from DisplayOptions import DisplayOptions
 
 tempdir = tempfile.mkdtemp()
 vfs = VirtualFileSystem.getGlobalPtr()
@@ -48,10 +47,7 @@ class ToonBase(OTPBase.OTPBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('ToonBase')
 
     def __init__(self):
-        self.display = DisplayOptions()
         OTPBase.OTPBase.__init__(self)
-        base.enableMusic(self.display.settings.getBool('game', 'music', True))
-        base.enableSoundEffects(self.display.settings.getBool('game', 'sfx', True))
         self.disableShowbaseMouse()
         self.addCullBins()
         self.debugRunningMultiplier /= OTPGlobals.ToonSpeedFactor

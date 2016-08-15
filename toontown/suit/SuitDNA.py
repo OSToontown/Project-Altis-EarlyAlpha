@@ -95,7 +95,8 @@ suitDepts = ['c',
 suitDeptZones = [ToontownGlobals.BossbotHQ,
  ToontownGlobals.LawbotHQ,
  ToontownGlobals.CashbotHQ,
- ToontownGlobals.SellbotHQ]
+ ToontownGlobals.SellbotHQ,
+ ToontownGlobals.BoardbotHQ]
 suitDeptFullnames = {'c': TTLocalizer.Bossbot,
  'l': TTLocalizer.Lawbot,
  'm': TTLocalizer.Cashbot,
@@ -189,7 +190,12 @@ def getSuitName(deptIndex, typeIndex):
 
 
 def getRandomSuitType(level, rng = random):
-    return random.randint(max(level - 4, 1), min(level, 8))
+    try:
+        returnval = random.randint(max(level - 4, 1), min(level, 8))
+    except:
+        returnval = 8
+
+    return returnval
 
 
 def getRandomSuitByDept(dept):

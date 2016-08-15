@@ -356,11 +356,11 @@ class OptionsTabPage(DirectFrame):
     def __doToggleMusic(self):
         messenger.send('wakeup')
         if base.musicActive:
-            base.display.settings.updateSetting('game', 'music', False)
             base.enableMusic(0)
+            settings['music'] = False
         else:
-            base.display.settings.updateSetting('game', 'music', True)
             base.enableMusic(1)
+            settings['music'] = True
         self.settingsChanged = 1
         self.__setMusicButton()
 
@@ -376,10 +376,10 @@ class OptionsTabPage(DirectFrame):
         messenger.send('wakeup')
         if base.sfxActive:
             base.enableSoundEffects(0)
-            base.display.settings.updateSetting('game', 'sfx', False)
+            settings['sfx'] = False
         else:
             base.enableSoundEffects(1)
-            base.display.settings.updateSetting('game', 'sfx', True)
+            settings['sfx'] = True
         self.settingsChanged = 1
         self.__setSoundFXButton()
 
@@ -387,10 +387,10 @@ class OptionsTabPage(DirectFrame):
         messenger.send('wakeup')
         if base.toonChatSounds:
             base.toonChatSounds = 0
-            base.display.settings.updateSetting('game', 'toon-chat-sounds', False)
+            settings['toonChatSounds'] = False
         else:
             base.toonChatSounds = 1
-            base.display.settings.updateSetting('game', 'toon-chat-sounds', True)
+            settings['toonChatSounds'] = True
         self.settingsChanged = 1
         self.__setToonChatSoundsButton()
 
