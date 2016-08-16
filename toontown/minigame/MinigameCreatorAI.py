@@ -20,7 +20,6 @@ import DistributedPhotoGameAI
 import DistributedTugOfWarGameAI
 import DistributedTwoDGameAI
 import DistributedVineGameAI
-import DistributedSurfersGameAI
 from otp.ai.MagicWordGlobal import *
 from toontown.toonbase import ToontownGlobals
 
@@ -58,7 +57,6 @@ def createMinigame(air, playerArray, trolleyZone, minigameZone=None,
     mgCtors = {
         ToontownGlobals.RaceGameId: DistributedRaceGameAI.DistributedRaceGameAI,
         ToontownGlobals.CannonGameId: DistributedCannonGameAI.DistributedCannonGameAI,
-        ToontownGlobals.SurfersGameId: DistributedSurfersGameAI.DistributedSurfersGameAI,
         ToontownGlobals.TagGameId: DistributedTagGameAI.DistributedTagGameAI,
         ToontownGlobals.PatternGameId: DistributedPatternGameAI.DistributedPatternGameAI,
         ToontownGlobals.RingGameId: DistributedRingGameAI.DistributedRingGameAI,
