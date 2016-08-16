@@ -124,7 +124,7 @@ GlobalStreetNames = {20000: ('to', 'on', 'Tutorial Terrace'),
  13600: ('to the', 'in the', 'Lawbot D Office'),
  14000: ('to the', 'in the', 'Main Courtyard'),
  14100: ('to', 'on', '???'),
- 14100: ('to', 'on', '???')}
+ 14500: ('to', 'on', '???')}
 DonaldsDock = ('to', 'in', lDonaldsDock)
 ToontownCentral = ('to', 'in', lToontownCentral)
 TheBrrrgh = ('to', 'in', lTheBrrrgh)

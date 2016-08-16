@@ -80,6 +80,7 @@ cc = (('speak', 'speak', 5),
 tm = (('speak', 'speak', 5),
  ('throw-paper', 'throw-paper', 5),
  ('pickpocket', 'pickpocket', 5),
+ ('phone', 'phone', 5),    
  ('roll-o-dex', 'roll-o-dex', 5),
  ('finger-wag', 'finger-wag', 5))
 nd = (('pickpocket', 'pickpocket', 5),
