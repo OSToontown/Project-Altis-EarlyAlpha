@@ -263,6 +263,7 @@ def createSuitReviveTrack(suit, toon, battle, npcs = []):
     suitTrack.append(Func(insertReviveSuit, suit, deathSuit, battle, suitPos, suitHpr))
     suitTrack.append(ActorInterval(deathSuit, 'lose', duration=SUIT_LOSE_REVIVE_DURATION))
     suitTrack.append(Func(removeReviveSuit, suit, deathSuit, name='remove-death-suit'))
+    suitTrack.append(ActorInterval(suit, 'slip-backward'))
     suitTrack.append(Func(suit.loop, 'neutral'))
     suitTrack.append(Func(suit.setHP, suit.getMaxHP()))
     spinningSound = base.loadSfx('phase_3.5/audio/sfx/Cog_Death.ogg')
