@@ -12,6 +12,7 @@ from toontown.hood import DDHood
 from toontown.hood import MMHood
 from toontown.hood import BRHood
 from toontown.hood import DGHood
+from toontown.hood import FFHood
 from toontown.hood import DLHood
 from toontown.hood import GSHood
 from toontown.hood import OZHood
@@ -35,6 +36,7 @@ class PlayGame(StateData.StateData):
      ToontownGlobals.MinniesMelodyland: MMHood.MMHood,
      ToontownGlobals.DaisyGardens: DGHood.DGHood,
      ToontownGlobals.DonaldsDreamland: DLHood.DLHood,
+     ToontownGlobals.FunnyFarm: FFHood.FFHood,
      ToontownGlobals.GoofySpeedway: GSHood.GSHood,
      ToontownGlobals.OutdoorZone: OZHood.OZHood,
      ToontownGlobals.Tutorial: TutorialHood.TutorialHood,
@@ -51,6 +53,7 @@ class PlayGame(StateData.StateData):
      ToontownGlobals.MinniesMelodyland: 'MMHood',
      ToontownGlobals.DaisyGardens: 'DGHood',
      ToontownGlobals.DonaldsDreamland: 'DLHood',
+     ToontownGlobals.FunnyFarm: 'FFHood',
      ToontownGlobals.GoofySpeedway: 'GSHood',
      ToontownGlobals.OutdoorZone: 'OZHood',
      ToontownGlobals.Tutorial: 'TutorialHood',

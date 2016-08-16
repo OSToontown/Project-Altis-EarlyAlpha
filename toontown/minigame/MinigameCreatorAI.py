@@ -32,6 +32,11 @@ def createMinigame(air, playerArray, trolleyZone, minigameZone=None,
     if minigameZone is None:
         minigameZone = air.allocateZone()
     acquireMinigameZone(minigameZone)
+    if trolleyZone == ToontownGlobals.FunnyFarm:
+        trolleyZone = config.GetInt('funny-farm-trolley-fake-hood', ToontownGlobals.DonaldsDreamland)
+        # the games below need to be disabled on FF bc there's no support for them!
+        excludeList.extend([ToontownGlobals.MazeGameId, ToontownGlobals.CogThiefGameId, ToontownGlobals.PhotoGameId])
+		
     mgId = None
     mgDiff = None
     mgSzId = None
