@@ -3831,7 +3831,7 @@ MapPageYouAreAtHome = 'You are at\nyour estate'
 MapPageYouAreAtSomeonesHome = 'You are at %s estate'
 MapPageGoTo = 'Go To\n%s'
 OptionsPageTitle = 'Options'
-BonusTitle = 'Bonus'
+BonusTitle = 'Key-Map'
 OptionsTabTitle = 'Options\n& Codes'
 OptionsPageExitToontown = 'Exit Toontown'
 OptionsPageMusic = 'Music Volume:'
@@ -9896,3 +9896,9 @@ Blacklist = [
  "xrated",
  "xxx"
 ]
+ 
+RemapPrompt = 'Choose the keys you wish to remap.'
+RemapPopup = 'Press the button you wish to remap this control to.'
+
+Controls = ['Move Up:', 'Move Left:', 'Move Down:', 'Move Right:',
+            'Jump:', 'Action Key:', 'Options Hotkey:', 'Chatbox Hotkey:']

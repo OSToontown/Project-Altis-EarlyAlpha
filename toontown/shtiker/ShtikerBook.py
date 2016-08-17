@@ -23,6 +23,8 @@ class ShtikerBook(DirectFrame, StateData.StateData):
         self.currPageTabIndex = None
         self.pageTabFrames = [self.createPageTabFrame(x) for x in (-0.93, 0.93)]
         self.currPageIndex = None
+        self.tempLeft = None
+        self.tempRight = None
         self.entered = 0
         self.safeMode = 0
         self.__obscured = 0
@@ -75,10 +77,14 @@ class ShtikerBook(DirectFrame, StateData.StateData):
         self.__setButtonVisibility()
         self.show()
         self.showPageArrows()
+        self.tempLeft = 'arrow_left'
+        self.tempRight = 'arrow_right'
         if not self.safeMode:
             self.accept('shtiker-page-done', self.__pageDone)
             self.accept(ToontownGlobals.StickerBookHotkey, self.__close)
             self.accept(ToontownGlobals.OptionsPageHotkey, self.__close)
+            self.accept('disable-hotkeys', self.__disableHotkeys)
+            self.accept('enable-hotkeys', self.__enableHotkeys)
             for tab in self.pageTabFrames:
                 tab.show()
         self.pages[self.currPageIndex].enter()
@@ -115,8 +121,10 @@ class ShtikerBook(DirectFrame, StateData.StateData):
         self.ignore('shtiker-page-done')
         self.ignore(ToontownGlobals.StickerBookHotkey)
         self.ignore(ToontownGlobals.OptionsPageHotkey)
-        self.ignore('arrow_right')
-        self.ignore('arrow_left')
+        self.ignore(self.tempRight)
+        self.ignore(self.tempLeft)
+        self.ignore('disable-hotkeys')
+        self.ignore('enable-hotkeys')
         if base.config.GetBool('want-qa-regression', 0):
             self.notify.info('QA-REGRESSION: SHTICKERBOOK: Close')
 
@@ -161,6 +169,8 @@ class ShtikerBook(DirectFrame, StateData.StateData):
         del self.openSound
         del self.closeSound
         del self.pageSound
+        del self.tempLeft
+        del self.tempRight
 
     def addPage(self, page, pageName = 'Page'):
         if pageName not in self.pageOrder:
@@ -381,8 +391,8 @@ class ShtikerBook(DirectFrame, StateData.StateData):
             self.nextArrow.show()
 
     def __checkForPage(self):
-        self.accept('arrow_right', self.__pageChange, [1])
-        self.accept('arrow_left', self.__pageChange, [-1])
+        self.accept(base.MOVE_RIGHT, self.__pageChange, [1])
+        self.accept(base.MOVE_LEFT, self.__pageChange, [-1])
 
     def disableBookCloseButton(self):
         if self.bookCloseButton:
@@ -400,3 +410,11 @@ class ShtikerBook(DirectFrame, StateData.StateData):
     def enableAllPageTabs(self):
         for button in self.pageTabs:
             button['state'] = DGG.NORMAL
+             
+    def __disableHotkeys(self):
+        self.ignore(ToontownGlobals.StickerBookHotkey)
+        self.ignore(ToontownGlobals.OptionsPageHotkey)
+        
+    def __enableHotkeys(self):
+        self.accept(ToontownGlobals.StickerBookHotkey, self.__close)
+        self.accept(ToontownGlobals.OptionsPageHotkey, self.__close)
