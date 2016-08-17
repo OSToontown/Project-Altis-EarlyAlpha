@@ -252,6 +252,8 @@ def doSuitAttack(attack):
         suitTrack = doWithdrawal(attack)
     elif name == WRITE_OFF:
         suitTrack = doWriteOff(attack)
+    elif name == OVERDRAFT:
+        suitTrack = doOverdraft(attack)
     else:
         notify.warning('unknown attack: %d substituting Finger Wag' % name)
         suitTrack = doDefault(attack)
@@ -3674,3 +3676,31 @@ def doPeckingOrder(attack):
     damageAnims.append(['cringe', 0.01, 0.43])
     toonTrack = getToonTrack(attack, damageDelay=4.2, splicedDamageAnims=damageAnims, dodgeDelay=2.8, dodgeAnimNames=['sidestep'], showMissedExtraTime=1.1)
     return Parallel(suitTrack, toonTrack, birdTracks)
+
+def doOverdraft(attack):
+    suit = attack['suit']
+    battle = attack['battle']
+    target = attack['target']
+    toon = target['toon']
+    pad = globalPropPool.getProp('pad')
+    pencil = globalPropPool.getProp('pencil')
+    BattleParticles.loadParticles()
+    checkmark = MovieUtil.copyProp(BattleParticles.getParticle('dollar-sign'))
+    checkmark.setBillboardPointEye()
+    suitTrack = getSuitTrack(attack)
+    padPosPoints = [Point3(-0.25, 1.38, -0.08), VBase3(-19.078, -6.603, -171.594)]
+    padPropTrack = getPropTrack(pad, suit.getLeftHand(), padPosPoints, 0.5, 2.57, Point3(1.89, 1.89, 1.89))
+    missPoint = lambda checkmark = checkmark, toon = toon: __toonMissPoint(checkmark, toon)
+    pencilPosPoints = [Point3(-0.47, 1.08, 0.28), VBase3(21.045, 12.702, -176.374)]
+    extraArgsForShowProp = [pencil, suit.getRightHand()]
+    extraArgsForShowProp.extend(pencilPosPoints)
+    pencilPropTrack = Sequence(Wait(0.5), Func(__showProp, *extraArgsForShowProp), LerpScaleInterval(pencil, 0.5, Point3(1.5, 1.5, 1.5), startScale=Point3(0.01)), Wait(2), Func(battle.movie.needRestoreRenderProp, checkmark), Func(checkmark.reparentTo, render), Func(checkmark.setScale, 1.6), Func(checkmark.setPosHpr, pencil, 0, 0, 0, 0, 0, 0), Func(checkmark.setP, 0), Func(checkmark.setR, 0))
+    pencilPropTrack.append(getPropThrowTrack(attack, checkmark, [__toonFacePoint(toon)], [missPoint]))
+    pencilPropTrack.append(Func(MovieUtil.removeProp, checkmark))
+    pencilPropTrack.append(Func(battle.movie.clearRenderProp, checkmark))
+    pencilPropTrack.append(Wait(0.3))
+    pencilPropTrack.append(LerpScaleInterval(pencil, 0.5, MovieUtil.PNT3_NEARZERO))
+    pencilPropTrack.append(Func(MovieUtil.removeProp, pencil))
+    toonTrack = getToonTrack(attack, 3.4, ['slip-forward'], 2.4, ['sidestep'])
+    soundTrack = Sequence(Wait(2.3), SoundInterval(globalBattleSoundCache.getSound('SA_writeoff_pen_only.ogg'), duration=0.9, node=suit), SoundInterval(globalBattleSoundCache.getSound('SA_writeoff_ding_only.ogg'), node=suit))
+    return Parallel(suitTrack, toonTrack, padPropTrack, pencilPropTrack, soundTrack)

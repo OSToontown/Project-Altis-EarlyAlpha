@@ -3176,6 +3176,22 @@ SuitAttributes = {'f': {'name': TTLocalizer.SuitFlunky,
                       20,
                       20,
                       20)),
+                    ('Overdraft',
+                     (9,
+                      11,
+                      12,
+                      13,
+                      15),
+                     (55,
+                      65,
+                      75,
+                      85,
+                      95),
+                     (20,
+                      20,
+                      20,
+                      20,
+                      20)),
                     ('WriteOff',
                      (6,
                       8,
@@ -4125,7 +4141,8 @@ SuitAttacks = {'Audit': ('phone', ATK_TGT_SINGLE),
  'Tremor': ('stomp', ATK_TGT_GROUP),
  'Watercooler': ('watercooler', ATK_TGT_SINGLE),
  'Withdrawal': ('magic1', ATK_TGT_SINGLE),
- 'WriteOff': ('hold-pencil', ATK_TGT_SINGLE)}
+ 'WriteOff': ('hold-pencil', ATK_TGT_SINGLE),
+ 'Overdraft': ('hold-pencil', ATK_TGT_SINGLE)}
 AUDIT = SuitAttacks.keys().index('Audit')
 BITE = SuitAttacks.keys().index('Bite')
 BOUNCE_CHECK = SuitAttacks.keys().index('BounceCheck')
@@ -4193,6 +4210,7 @@ TREMOR = SuitAttacks.keys().index('Tremor')
 WATERCOOLER = SuitAttacks.keys().index('Watercooler')
 WITHDRAWAL = SuitAttacks.keys().index('Withdrawal')
 WRITE_OFF = SuitAttacks.keys().index('WriteOff')
+OVERDRAFT = SuitAttacks.keys().index('Overdraft')
 
 def getFaceoffTaunt(suitName, doId):
     if suitName in SuitFaceoffTaunts:

@@ -2472,7 +2472,8 @@ SuitAttackNames = {'Audit': 'Audit!',
  'Tremor': 'Tremor!',
  'Watercooler': 'Watercooler!',
  'Withdrawal': 'Withdrawal!',
- 'WriteOff': 'Write Off!'}
+ 'WriteOff': 'Write Off!',
+ 'Overdraft': 'Overdraft!'}
 SuitAttackTaunts = {'Audit': ["I believe your books don't balance.",
            "Looks like you're in the red.",
            'Let me help you with your books.',
@@ -3117,7 +3118,13 @@ SuitAttackTaunts = {'Audit': ["I believe your books don't balance.",
               'You can forget about a bonus.',
               "I'll shuffle your accounts around.",
               "You're about to suffer some losses.",
-              'This is going to hurt your bottom line.']}
+              'This is going to hurt your bottom line.'],
+ 'Overdraft': ["It looks like you've been spending too many beans.",
+               "I'm going to have to cut you off.",
+			   "You need to stop spending so much beans, toon.",
+			   "You toons and your bean spending.",
+			   "Looks like I'm gonna have to take that out of your bank.",
+			   "Your bean bank won't be so full after this."]}
 WaitingForOtherToons = 'Waiting for other toons...'
 WaitingForOtherToonsDots = 'Waiting for other toons%s'
 ElevatorHopOff = 'Hop off'
