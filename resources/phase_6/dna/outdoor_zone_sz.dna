@@ -216,68 +216,94 @@ group "daisysGarden" [
    ]
   ]
  ]
- prop "prop_outdoor_zone_entrance_DNARoot" [
-  code [ "prop_outdoor_zone_entrance" ]
-  pos [ -47.8387 -143.259 0.1 ]
-  nhpr [ 180 0 0.1 ]
-  sign [
-   code [ "DD_sign2" ]
-   pos [ 0 0 0 ]
-   nhpr [ 0 0 -2.0 ]
-   scale [ 1.85 1 1.35 ]
-   baseline [
-    code [ "TT_Comedy" ]
-    color [ 0.439216 0.247059 0.184314 1 ]
-    pos [ 0 0 -0.3 ]
-    scale [ 1.1 1 1.7 ]
-    wiggle [ 7 ]
-    stumble [ 0.1 ]
-	width [ 2 ]
-    text [
-     letters [ "" ]
+ prop "linktunnel_oz_6101_DNARoot" [
+    code [ "prop_outdoor_zone_entrance" ]
+    pos [ -47.8387 -143.259 0.1 ]
+    nhpr [ 180 0 0.1 ]
+    sign [
+     code [ "DD_sign2" ]
+     pos [ 0 0 0 ]
+     nhpr [ 0 0 -2.0 ]
+     scale [ 1.85 1 1.35 ]
+     baseline [
+      code [ "TT_Comedy" ]
+      color [ 0.439216 0.247059 0.184314 1 ]
+      pos [ 0 0 -0.3 ]
+      scale [ 1.1 1 1.7 ]
+      wiggle [ 7 ]
+      stumble [ 0.1 ]
+      text [
+       letters [ "W" ]
+      ]
+      text [
+       letters [ "a" ]
+      ]
+      text [
+       letters [ "l" ]
+      ]
+      text [
+       letters [ "n" ]
+      ]
+      text [
+       letters [ "u" ]
+      ]
+      text [
+       letters [ "t" ]
+      ]
+      text [
+       letters [ " " ]
+      ]
+      text [
+       letters [ "W" ]
+      ]
+      text [
+       letters [ "a" ]
+      ]
+      text [
+       letters [ "y" ]
+      ]
+     ]
+     baseline [
+      code [ "TT_Comedy" ]
+      color [ 0.439216 0.247059 0.184314 1 ]
+      pos [ 0 0 -1.2 ]
+      scale [ 1.2 1 1.2 ]
+      wiggle [ 3 ]
+      stomp [ 0.0367716 ]
+      text [
+       letters [ "A" ]
+      ]
+      text [
+       letters [ "c" ]
+      ]
+      text [
+       letters [ "o" ]
+      ]
+      text [
+       letters [ "r" ]
+      ]
+      text [
+       letters [ "n" ]
+      ]
+      text [
+       letters [ " " ]
+      ]
+      text [
+       letters [ "A" ]
+      ]
+      text [
+       letters [ "c" ]
+      ]
+      text [
+       letters [ "r" ]
+      ]
+      text [
+       letters [ "e" ]
+      ]
+      text [
+       letters [ "s" ]
+      ]
+     ]
     ]
    ]
-   baseline [
-    code [ "TT_Comedy" ]
-    color [ 0.439216 0.247059 0.184314 1 ]
-    pos [ 0 0 -1.2 ]
-    scale [ 1.2 1 1.2 ]
-    wiggle [ 3 ]
-    stomp [ 0.0367716 ]
-    text [
-     letters [ " " ]
-    ]
-    text [
-     letters [ " " ]
-    ]
-    text [
-     letters [ " " ]
-    ]
-    text [
-     letters [ " " ]
-    ]
-    text [
-     letters [ " " ]
-    ]
-    text [
-     letters [ " " ]
-    ]
-    text [
-     letters [ " " ]
-    ]
-    text [
-     letters [ " " ]
-    ]
-    text [
-     letters [ " " ]
-    ]
-    text [
-     letters [ " " ]
-    ]
-    text [
-     letters [ " " ]
-    ]
    ]
-  ]
- ]
-]
