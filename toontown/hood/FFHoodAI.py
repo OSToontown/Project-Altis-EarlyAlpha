@@ -1,27 +1,24 @@
-from direct.directnotify import DirectNotifyGlobal
-import HoodDataAI
-from toontown.toonbase import ToontownGlobals
+from toontown.hood import HoodAI
 from toontown.safezone import DistributedTrolleyAI
-from toontown.safezone import FFTreasurePlannerAI
-from toontown.toon import DistributedNPCFishermanAI
+from toontown.toonbase import ToontownGlobals
 
-class FFHoodAI(HoodAI.HoodAI):
-    notify = DirectNotifyGlobal.directNotify.newCategory('FFHoodAI')
-    numStreets = 1
-    
-    def __init__(self, air, zoneId = None):
-        hoodId = ToontownGlobals.FunnyFarm
-        if zoneId == None:
-            zoneId = hoodId
-        self.classicChar = None
-        
-        HoodDataAI.HoodDataAI.__init__(self, air, zoneId, hoodId)
-    
+class DLHoodAI(HoodAI.HoodAI):
+    def __init__(self, air):
+        HoodAI.HoodAI.__init__(self, air,
+                               ToontownGlobals.FunnyFarm,
+                               ToontownGlobals.FunnyFarm)
+
+        self.trolley = None
+
+        self.startup()
+
     def startup(self):
-        HoodDataAI.HoodDataAI.startup(self)
-        trolley = DistributedTrolleyAI.DistributedTrolleyAI(self.air)
-        trolley.generateWithRequired(self.zoneId)
-        trolley.start()
-        self.addDistObj(trolley)
-        self.treasurePlanner = FFTreasurePlannerAI.FFTreasurePlannerAI(self.zoneId)
-        self.treasurePlanner.start()
+        HoodAI.HoodAI.startup(self)
+
+        if simbase.config.GetBool('want-minigames', True):
+            self.createTrolley()
+
+    def createTrolley(self):
+        self.trolley = DistributedTrolleyAI.DistributedTrolleyAI(self.air)
+        self.trolley.generateWithRequired(self.zoneId)
+        self.trolley.start()

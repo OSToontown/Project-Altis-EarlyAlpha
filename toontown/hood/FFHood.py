@@ -1,59 +1,52 @@
-from pandac.PandaModules import *
-import ToonHood
-import SkyUtil
-from toontown.town import FFTownLoader
-from toontown.safezone import FFSafeZoneLoader
-from toontown.toonbase.ToontownGlobals import *
+from otp.ai.MagicWordGlobal import *
+from toontown.safezone.FFSafeZoneLoader import FFSafeZoneLoader
+from toontown.town.FFTownLoader import FFTownLoader
+from toontown.toonbase import ToontownGlobals
+from toontown.hood.ToonHood import ToonHood
 
-class FFHood(ToonHood.ToonHood):
-    def __init__(self, parentFSM, doneEvent, dnaStore, hoodId):
-        ToonHood.ToonHood.__init__(self, parentFSM, doneEvent, dnaStore, hoodId)
-        self.id = FunnyFarm
-        self.townLoaderClass = FFTownLoader.FFTownLoader
-        self.safeZoneLoaderClass = FFSafeZoneLoader.FFSafeZoneLoader
-        self.storageDNAFile = 'phase_14/dna/storage_FF.dna'
-        self.holidayStorageDNADict = {WINTER_DECORATIONS: ['phase_14/dna/winter_storage_FF.dna'],
-         WACKY_WINTER_DECORATIONS: ['phase_14/dna/winter_storage_FF.dna'],
-         HALLOWEEN_PROPS: ['phase_14/dna/halloween_props_storage_FF.dna'],
-         SPOOKY_PROPS: ['phase_14/dna/halloween_props_storage_FF.dna']}
-        self.skyFile = 'phase_3.5/models/props/TT_sky'
-        self.spookySkyFile = 'phase_3.5/models/props/BR_sky'
-        self.titleColor = (0.3, 0.6, 1.0, 1.0)
+class FFHood(ToonHood):
+    notify = directNotify.newCategory('FFHood')
+
+    ID = ToontownGlobals.FunnyFarm
+    TOWNLOADER_CLASS = FFTownLoader
+    SAFEZONELOADER_CLASS = FFSafeZoneLoader
+    STORAGE_DNA = 'phase_8/dna/storage_FF.pdna'
+    SKY_FILE = 'phase_8/models/props/DL_sky'
+    TITLE_COLOR = (1.0, 0.9, 0.5, 1.0)
+
+    HOLIDAY_DNA = {
+      ToontownGlobals.CHRISTMAS: ['phase_14/dna/winter_storage_FF.pdna'],
+      ToontownGlobals.HALLOWEEN: ['phase_14/dna/halloween_props_storage_FF.pdna']}
 
     def load(self):
-        ToonHood.ToonHood.load(self)
-        self.parentFSM.getStateNamed('FFHood').addChild(self.fsm)
+        ToonHood.load(self)
+        self.fog = Fog('FFFog')
 
-    def unload(self):
-        self.parentFSM.getStateNamed('FFHood').removeChild(self.fsm)
-        ToonHood.ToonHood.unload(self)
+    def setFog(self):
+        if base.wantFog:
+            self.fog.setColor(0.9, 0.9, 0.9)
+            self.fog.setExpDensity(0.020)
+            render.clearFog()
+            render.setFog(self.fog)
+            self.sky.clearFog()
+            self.sky.setFog(self.fog)
 
-    def skyTrack(self, task):
-        return SkyUtil.cloudSkyTrack(task)
-
-    def startSky(self):
-        self.sky.setTransparency(TransparencyAttrib.MDual, 1)
-        self.notify.debug('The sky is: %s' % self.sky)
-        if not self.sky.getTag('sky') == 'Regular':
-            self.endSpookySky()
-        SkyUtil.startCloudSky(self)
-
-    def startSpookySky(self):
-        if hasattr(self, 'sky') and self.sky:
-            self.stopSky()
-        self.sky = loader.loadModel(self.spookySkyFile)
-        self.sky.setTag('sky', 'Halloween')
-        self.sky.setScale(1.0)
-        self.sky.setDepthTest(0)
-        self.sky.setDepthWrite(0)
-        self.sky.setColor(0.5, 0.5, 0.5, 1)
-        self.sky.setBin('background', 100)
-        self.sky.setFogOff()
-        self.sky.reparentTo(camera)
-        self.sky.setTransparency(TransparencyAttrib.MDual, 1)
-        fadeIn = self.sky.colorScaleInterval(1.5, Vec4(1, 1, 1, 1), startColorScale=Vec4(1, 1, 1, 0.25), blendType='easeInOut')
-        fadeIn.start()
-        self.sky.setZ(0.0)
-        self.sky.setHpr(0.0, 0.0, 0.0)
-        ce = CompassEffect.make(NodePath(), CompassEffect.PRot | CompassEffect.PZ)
-        self.sky.node().setEffect(ce)
+@magicWord(category=CATEGORY_CREATIVE)
+def spooky():
+    """
+    Activates the 'spooky' effect on the current area.
+    """
+    hood = base.cr.playGame.hood
+    if not hasattr(hood, 'startSpookySky'):
+        return "Couldn't find spooky sky."
+    if hasattr(hood, 'magicWordSpookyEffect'):
+        return 'The spooky effect is already active!'
+    hood.magicWordSpookyEffect = True
+    hood.startSpookySky()
+    fadeOut = base.cr.playGame.getPlace().loader.geom.colorScaleInterval(
+        1.5, Vec4(0.55, 0.55, 0.65, 1), startColorScale=Vec4(1, 1, 1, 1),
+        blendType='easeInOut')
+    fadeOut.start()
+    spookySfx = base.loadSfx('phase_4/audio/sfx/spooky.ogg')
+    spookySfx.play()
+    return 'Activating the spooky effect...'
