@@ -11,6 +11,7 @@ VPElevatorFov = 53.0
 CFOElevatorFov = 43.0
 CJElevatorFov = 59.0
 CEOElevatorFov = 59.0
+ChairmanElevatorFov = 59.0
 CBElevatorFov = 42.0
 CeilingBitmask = BitMask32(256)
 FloorEventBitmask = BitMask32(16)
@@ -162,6 +163,8 @@ TenorTerrace = 4300
 ElmStreet = 5100
 MapleStreet = 5200
 OakStreet = 5300
+WalnutWay = 6100
+BarkingBoulevard = 7100
 LullabyLane = 9100
 PajamaPlace = 9200
 BedtimeBoulevard = 9300
@@ -181,6 +184,7 @@ BossbotCountryClubIntC = 10700
 SellbotHQ = 11000
 SellbotLobby = 11100
 SellbotFactoryExt = 11200
+SellbotMegaFactoryExt = 11300
 SellbotFactoryInt = 11500
 SellbotMegaCorpInt = 11600
 CashbotHQ = 12000
@@ -197,6 +201,7 @@ LawbotStageIntB = 13400
 LawbotStageIntC = 13500
 LawbotStageIntD = 13600
 BoardbotHQ = 14000
+BoardbotLobby = 14100
 Tutorial = 15000
 MyEstate = 16000
 GolfZone = 17000
@@ -227,6 +232,8 @@ def cogHQZoneId2deptIndex(zone): #On and Off Switch for Cog HQs. Controls the ty
         return 2
     elif zone >= 11000: #Sellbot HQ
         return 3
+    elif zone >= 14000: #Boardbot HQ
+        return 4
     else:
         return 0 #Bossbot HQ
 
@@ -239,7 +246,8 @@ def dept2cogHQ(dept):
     dept2hq = {'c': BossbotHQ,
      'l': LawbotHQ,
      'm': CashbotHQ,
-     's': SellbotHQ}
+     's': SellbotHQ,
+     'g': BoardbotHQ}
     return dept2hq[dept]
 
 MintNumFloors = {CashbotMintIntA: 20,

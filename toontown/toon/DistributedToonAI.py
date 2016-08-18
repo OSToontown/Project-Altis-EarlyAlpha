@@ -4295,9 +4295,10 @@ def maxToon(missingTrack=None):
             CogDisguiseGlobals.PartsPerSuitBitmasks[1], # Lawbot
             CogDisguiseGlobals.PartsPerSuitBitmasks[2], # Cashbot
             CogDisguiseGlobals.PartsPerSuitBitmasks[3], # Sellbot
+            CogDisguiseGlobals.PartsPerSuitBitmasks[4], # Boardbot
         ]
     )
-    target.b_setCogLevels([11] * 5)
+    target.b_setCogLevels([12] * 5)
     target.b_setCogTypes([7, 7, 7, 7, 7])
 
    # Max their Cog gallery:
@@ -4651,7 +4652,7 @@ def cogIndex(index):
     """
     Modifies the invoker's Cog index.
     """
-    if not -1 <= index <= 3:
+    if not -1 <= index <= 4:
         return 'Invalid Cog index.'
     invoker = spellbook.getInvoker()
     invoker.b_setCogIndex(index)
