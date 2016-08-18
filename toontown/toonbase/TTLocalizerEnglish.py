@@ -8610,11 +8610,6 @@ GroupAskAccess = 'Would you like to teleport %s %s in %s?'
 
 GagPopup = '%s: %s\nGags: %s'
 
-ColorfulToon = 'Vibrant'
-ColorAdvanced = 'Advanced'
-ColorBasic = 'Basic'
-ColorAll = 'All'
-
 ShardPagePreferred = 'Preferred'
 ShardPageShardTitle = '%s Population: %s'
 ShardPageTeleport = 'Teleport to\n%s'
