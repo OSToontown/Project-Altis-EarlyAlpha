@@ -8619,27 +8619,12 @@ ShardPagePreferred = 'Preferred'
 ShardPageShardTitle = '%s Population: %s'
 ShardPageTeleport = 'Teleport to\n%s'
 
-BattleCogPopup = '\x01androidGreen\x01Group attacks:\x02\n%s\n\n\x01androidGreen\x01Regular attacks:\x02\n%s'
-BattleCogPopupAttack = '%s %s HP'
-BattleCogPopupAttackDanger = '\x01red\x01' + BattleCogPopupAttack + '\x02'
-BattleCogPopupDanger = '\x01red\x01Dangerous!\x02\n\n'
-BattleCogPopupDangerColor = '\x01red'
-
-SuitPageAttackFormat = 'Levels: %s-%s\n\n' + BattleCogPopup
-SuitPageNoAttacks = 'None'
-
-BattleGagPopup = '%s: %s\nGags left: %s'
-BattleSOSPopup = '\x01azure\x01%s\x02\n%s\n%s%s stars\nSOS left: %s'
-BattleSOSPopupHeal = 'Heals'
-BattleSOSPopupHarm = 'Deals'
-BattleSOSPopupHP = '%s %s HP\n'
-
+ClothesGUICount = '%s/%s'
 DetailPanelSOS = 'SOS Cards'
 
 InventoryDeleteAll = 'DELETE ALL'
 InventoryDeleteConfirm = "Are you sure you want to delete all your gags? Don't worry, your level 7 gags are safe!"
 
-ClothesGUICount = '%s/%s'
 DefaultDoodleName = 'Smiley'
 
 Blacklist = [

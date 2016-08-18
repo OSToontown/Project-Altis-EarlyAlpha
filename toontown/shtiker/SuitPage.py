@@ -481,19 +481,6 @@ class SuitPage(ShtikerPage.ShtikerPage):
             panel['image_color'] = PANEL_COLORS_COMPLETE1[index / SuitDNA.suitsPerDept]
         elif status == COG_COMPLETE2:
             panel['image_color'] = PANEL_COLORS_COMPLETE2[index / SuitDNA.suitsPerDept]
-        if status in (COG_DEFEATED, COG_COMPLETE1, COG_COMPLETE2):
-            name = SuitDNA.suitHeadTypes[index]
-            attributes = SuitBattleGlobals.SuitAttributes[name]
-            level = attributes['level']
-            groupAttacks, singleAttacks = SuitBattleGlobals.getAttacksByType(attributes)
-            info = TTLocalizer.SuitPageAttackFormat % (level + 1, level + 5, self.getAttackStrings(groupAttacks), self.getAttackStrings(singleAttacks))
-            
-            panel.hoverButton.bind(DGG.ENTER, self.showInfo, extraArgs=[panel, info])
-            panel.hoverButton.bind(DGG.EXIT, self.hideInfo)
-    
-    def getAttackStrings(self, attacks):
-        string = '\n'.join(['%s %s' % (TTLocalizer.SuitAttackNames[attack[0]], '-'.join(str(x) for x in attack[1])) for attack in attacks])
-        return string if string else TTLocalizer.SuitPageNoAttacks
 
     def updateAllCogs(self, status):
         for index in xrange(0, len(base.localAvatar.cogs)):
