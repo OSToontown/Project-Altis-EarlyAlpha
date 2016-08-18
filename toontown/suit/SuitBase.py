@@ -62,9 +62,8 @@ class SuitBase:
 
     def setLevel(self, level):
         self.level = level
-        nameWLevel = TTLocalizer.SuitBaseNameWithoutType % {'name': self.name,
+        nameWLevel = TTLocalizer.SuitBaseNameWithLevel % {'name': self.name,
          'dept': self.getStyleDept(),
-		 'type': '',
          'level': self.getActualLevel()}
         self.setDisplayName(nameWLevel)
         attributes = SuitBattleGlobals.SuitAttributes[self.dna.name]
