@@ -259,6 +259,12 @@ def loadPhaseAnims(phaseStr = 'phase_3', loadFlag = 1):
         animList = Phase10AnimList
     elif phaseStr == 'phase_12':
         animList = Phase12AnimList
+    elif phaseStr == 'phase_13':
+        animList = Phase12AnimList
+    elif phaseStr == 'phase_14':
+        animList = Phase12AnimList
+    elif phaseStr == 'phase_15':
+        animList = Phase12AnimList
     else:
         self.notify.error('Unknown phase string %s' % phaseStr)
     for key in LegDict.keys():
@@ -304,7 +310,10 @@ def compileGlobalAnimList():
      'phase_6',
      'phase_9',
      'phase_10',
-     'phase_12']
+     'phase_12',
+     'phase_13',
+     'phase_14',
+     'phase_15']
     for animList in phaseList:
         phaseStr = phaseStrList[phaseList.index(animList)]
         for key in LegDict.keys():
@@ -3274,6 +3283,8 @@ class Toon(Avatar.Avatar, ToonHead):
                 suitType = 'bf'
             elif SuitDNA.suitDepts[deptIndex] == 'c':
                 suitType = 'f'
+            elif SuitDNA.suitDepts[deptIndex] == 'g':
+                suitType = 'ca'
             else:
                 self.notify.warning('Suspicious: Incorrect rental suit department requested')
                 suitType = 'cc'
@@ -3335,7 +3346,7 @@ class Toon(Avatar.Avatar, ToonHead):
                 name = self.getName()
             suitDept = SuitDNA.suitDepts.index(SuitDNA.getSuitDept(suitType))
             suitName = SuitBattleGlobals.SuitAttributes[suitType]['name']
-            self.nametag.setDisplayName(TTLocalizer.SuitBaseNameWithLevel % {'name': name,
+            self.nametag.setDisplayName(TTLocalizer.SuitBaseNameWithoutType % {'name': name,
              'dept': suitName,
              'level': self.cogLevels[suitDept] + 1})
             self.nametag.setWordwrap(9.0)
