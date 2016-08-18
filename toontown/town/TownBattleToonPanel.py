@@ -148,7 +148,6 @@ class TownBattleToonPanel(DirectFrame):
                 organic = self.avatar.checkGagBonus(track, level)
                 damage = int(getAvPropDamage(track, level, curExp, organic))
                 numItems = max(0, self.avatar.inventory.numItem(track, level) - 1)
-                info = TTLocalizer.BattleGagPopup % (self.avatar.inventory.getToonupDmgStr(track, 0), damage, numItems)
 
                 if self.avatar.checkGagBonus(track, level):
                     self.gag.setColor((1, 0, 0, 1) if track == 1 and level == 5 else (0, 1, 0, 1))
