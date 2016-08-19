@@ -8615,7 +8615,6 @@ ShardPageShardTitle = '%s Population: %s'
 ShardPageTeleport = 'Teleport to\n%s'
 
 ClothesGUICount = '%s/%s'
-DetailPanelSOS = 'SOS Cards'
 
 InventoryDeleteAll = 'DELETE ALL'
 InventoryDeleteConfirm = "Are you sure you want to delete all your gags? Don't worry, your level 7 gags are safe!"

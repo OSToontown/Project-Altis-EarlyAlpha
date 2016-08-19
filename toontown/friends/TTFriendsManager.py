@@ -27,7 +27,7 @@ class TTFriendsManager(DistributedObjectGlobal):
     def d_getAvatarDetails(self, avId):
         self.sendUpdate('getAvatarDetails', [avId])
 
-    def friendDetails(self, avId, inventory, trackAccess, hp, maxHp, defaultShard, lastHood, dnaString, experience, trackBonusLevel, npcFriends):
+    def friendDetails(self, avId, inventory, trackAccess, hp, maxHp, defaultShard, lastHood, dnaString, experience, trackBonusLevel):
         fields = [
             ['setExperience' , experience],
             ['setTrackAccess' , trackAccess],
@@ -37,8 +37,7 @@ class TTFriendsManager(DistributedObjectGlobal):
             ['setMaxHp' , maxHp],
             ['setDefaultShard' , defaultShard],
             ['setLastHood' , lastHood],
-            ['setDNAString' , dnaString],
-            ['setNPCFriendsDict', npcFriends]
+            ['setDNAString' , dnaString]
         ]
         base.cr.n_handleGetAvatarDetailsResp(avId, fields=fields)
 

@@ -4252,17 +4252,3 @@ def getAttackTaunt(attackName, index = None):
 
 SuitAttackTaunts = TTLocalizer.SuitAttackTaunts
 DisabledAttacks = ('Gavel', 'SandTrap', 'FloodTheMarket', 'FiveOClockShadow')
-
-def getAttacksByType(attributes):
-    groupAttacks = []
-    singleAttacks = []
-
-    for attack in sorted(attributes['attacks'], key=lambda x: x[0]):
-        if attack[0] in DisabledAttacks:
-            continue
-        if SuitAttacks[attack[0]][1] == ATK_TGT_GROUP:
-            groupAttacks.append(attack)
-        else:
-            singleAttacks.append(attack)
-    
-    return groupAttacks, singleAttacks
