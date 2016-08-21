@@ -339,10 +339,10 @@ class SuitPlannerBase:
        10,
        15,
        0),
-      (6,
-       7,
+      (7,
        8,
-       9),
+       9,
+       10),
       []],
      [9200,
       1,
@@ -362,12 +362,12 @@ class SuitPlannerBase:
        85,
        5,
        0),
-      (6,
-       7,
+      (7,
        8,
-       9),
+       9,
+       10),
       []],
-	  [9300,
+      [9300,
       1,
       5,
       0,
@@ -531,6 +531,7 @@ class SuitPlannerBase:
      0,
      0,
      0,                           
+     0,
      0]
     for currHoodInfo in SuitHoodInfo:
         weight = currHoodInfo[SUIT_HOOD_INFO_BWEIGHT]
@@ -541,6 +542,7 @@ class SuitPlannerBase:
          0,
          0,
          0,          
+         0,
          0]
         for level in levels:
             minFloors, maxFloors = SuitBuildingGlobals.SuitBuildingInfo[level - 1][0]
@@ -558,6 +560,8 @@ class SuitPlannerBase:
         TOTAL_BWEIGHT_PER_HEIGHT[2] += weight * heights[2]
         TOTAL_BWEIGHT_PER_HEIGHT[3] += weight * heights[3]
         TOTAL_BWEIGHT_PER_HEIGHT[4] += weight * heights[4]
+        TOTAL_BWEIGHT_PER_HEIGHT[5] += weight * heights[5]
+        TOTAL_BWEIGHT_PER_HEIGHT[6] += weight * heights[6]
 
     def __init__(self):
         self.suitWalkSpeed = ToontownGlobals.SuitWalkSpeed

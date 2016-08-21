@@ -136,7 +136,7 @@ class DistributedBuildingMgrAI:
             building.realTrack = blockData.get('track', 'c')
             building.difficulty = int(blockData.get('difficulty', 1))
             building.numFloors = int(blockData.get('numFloors', 1))
-            building.numFloors = max(1, min(5, building.numFloors))
+            building.numFloors = max(1, min(7, building.numFloors))
             building.becameSuitTime = blockData.get('becameSuitTime', time.time())
             if blockData['state'] == 'suit':
                 building.setState('suit')

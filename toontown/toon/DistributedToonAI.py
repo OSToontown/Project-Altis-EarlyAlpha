@@ -4189,7 +4189,7 @@ def cheesyEffect(value, hood=0, expire=0):
         if value not in OTPGlobals.CEName2Id:
             return 'Invalid cheesy effect value: %s' % value
         value = OTPGlobals.CEName2Id[value]
-    elif not 0 <= value <= 31:
+    elif not 0 <= value <= 32:
         return 'Invalid cheesy effect value: %d' % value
     if (hood != 0) and (not 1000 <= hood < ToontownGlobals.DynamicZonesBegin):
         return 'Invalid hood ID: %d' % hood
@@ -4942,10 +4942,10 @@ def track(command, track, value=None):
 @magicWord(category=CATEGORY_ADMINISTRATOR, types=[str, str])
 def suit(command, suitName = 'f'):
     invoker = spellbook.getInvoker()
-    command = command.lower()
     if suitName not in SuitDNA.suitHeadTypes:
         return 'Invalid suit name: ' + suitName
     suitFullName = SuitBattleGlobals.SuitAttributes[suitName]['name']
+    command = command.lower()
     if command == 'spawn':
         returnCode = invoker.doSummonSingleCog(SuitDNA.suitHeadTypes.index(suitName))
         if returnCode[0] == 'success':
@@ -4956,19 +4956,6 @@ def suit(command, suitName = 'f'):
         if returnCode[0] == 'success':
             return 'Successfully spawned a Cog building with: ' + suitFullName
         return "Couldn't spawn a Cog building with: " + suitFullName
-    elif command == 'nobuilding':
-        returnCode = invoker.doToonBuildingTakeover()
-        if returnCode[0] == 'success':
-            return 'Toons took over the cog building!'
-        return "Couldn't allow toons to take over cog building because " + returnCode[1]
-    elif command == 'invasion':
-        returnCode = invoker.doCogInvasion(SuitDNA.suitDepts.index(suitName), SuitDNA.suitHeadTypes.index(suitName))
-        return returnCode
-    elif command == 'invasionend':
-        returnCode = 'Ending Invasion..'
-        simbase.air.suitInvasionManager.cleanupTasks()
-        simbase.air.suitInvasionManager.cleanupInvasion()
-        return returnCode
     else:
         return 'Invalid command.'
 

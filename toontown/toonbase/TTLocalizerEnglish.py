@@ -3121,10 +3121,10 @@ SuitAttackTaunts = {'Audit': ["I believe your books don't balance.",
               'This is going to hurt your bottom line.'],
  'Overdraft': ["It looks like you've been spending too many beans.",
                "I'm going to have to cut you off.",
-			   "You need to stop spending so much beans, toon.",
-			   "You toons and your bean spending.",
-			   "Looks like I'm gonna have to take that out of your bank.",
-			   "Your bean bank won't be so full after this."]}
+               "You need to stop spending so many beans, toon.",
+               "You toons and your bean spending.",
+               "Looks like I'm gonna have to take that out of your bank.",
+               "Your bean bank won't be so full after this."]}
 WaitingForOtherToons = 'Waiting for other toons...'
 WaitingForOtherToonsDots = 'Waiting for other toons%s'
 ElevatorHopOff = 'Hop off'

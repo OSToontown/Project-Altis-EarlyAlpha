@@ -48,11 +48,11 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     SUITS_ENTER_BUILDINGS = 1
     SUIT_BUILDING_NUM_SUITS = 1.5
     SUIT_BUILDING_TIMEOUT = [
-        None, None, None, None, None, None,
-        72, 60, 48, 36, 24, 12, 6, 3, 1, 0.5
+        None, None, None, None, None, None, None,
+        84, 72, 60, 48, 36, 24, 12, 6, 3, 1, 0.5
     ]
     TOTAL_SUIT_BUILDING_PCT = 18 * CogdoPopFactor
-    BUILDING_HEIGHT_DISTRIBUTION = [14, 18, 25, 23, 20]
+    BUILDING_HEIGHT_DISTRIBUTION = [14, 18, 25, 23, 20, 14, 18, 25, 23, 20], 
     defaultSuitName = simbase.config.GetString('suitType', 'random')
     if defaultSuitName == 'random':
         defaultSuitName = None
@@ -552,7 +552,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             return Task.done
         min = hoodInfo[self.SUIT_HOOD_INFO_MIN]
         max = hoodInfo[self.SUIT_HOOD_INFO_MAX]
-        adjustment = random.choice((-2, -1, -1, 0, 0, 0, 1, 1, 2))
+        adjustment = random.choice((-3, -2, -2, -2, -1, -1, 0, 0, 0, 1, 1, 2, 2, 2, 3))
         self.suitCountAdjust += adjustment
         desiredNum = self.calcDesiredNumFlyInSuits()
         if desiredNum < min:

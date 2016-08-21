@@ -299,7 +299,7 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         return nodePath
 
     def loadElevator(self, newNP, cogdo = False):
-        self.floorIndicator = [None, None, None, None, None]
+        self.floorIndicator = [None, None, None, None, None, None, None]
         self.elevatorNodePath = hidden.attachNewNode('elevatorNodePath')
         if cogdo:
             self.elevatorModel = loader.loadModel('phase_5/models/cogdominium/tt_m_ara_csa_elevatorB')
@@ -435,8 +435,6 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             return
         dnaStore = self.cr.playGame.dnaStore
         level = int(self.difficulty / 2) + 1
-        if level > 5:
-            self.notify.warning('Level is bigger than 5: %s' % level)
         suitNP = dnaStore.findNode('suit_landmark_' + chr(self.track) + str(min(level, 5)))
         zoneId = dnaStore.getZoneFromBlockNumber(self.block)
         newParentNP = base.cr.playGame.hood.loader.zoneDict[zoneId]
