@@ -14,13 +14,13 @@ class PetMood:
     ExcitedMoods = ('excitement', 'playfulness')
     UnhappyMoods = ('boredom', 'restlessness', 'loneliness', 'sadness', 'fatigue', 'hunger', 'anger')
     DisabledDominants = ('restlessness', 'playfulness')
-    AssertiveDominants = ('fatigue',)
+    AssertiveDominants = ('loneliness', 'hunger', 'boredom')
     HOUR = 1.0
     MINUTE = HOUR / 60.0
     DAY = 24.0 * HOUR
     WEEK = 7 * DAY
     LONGTIME = 5000 * WEEK
-    TBoredom = 12 * HOUR
+    TBoredom = 23 * HOUR
     TRestlessness = 18 * HOUR
     TPlayfulness = -1 * HOUR
     TLoneliness = 24 * HOUR
@@ -176,31 +176,32 @@ class PetMood:
         self.lastDriftTime = now
         if dt <= 0.0:
             return
-        if curMood is None:
-            curMood = self
-
-        def doDrift(curValue, timeToMedian, dt = float(dt)):
-            newValue = curValue + dt / (timeToMedian * 7200)
-            return clampScalar(newValue, 0.0, 1.0)
-
-        self.boredom = doDrift(curMood.boredom, self.tBoredom)
-        self.loneliness = doDrift(curMood.loneliness, self.tLoneliness)
-        self.sadness = doDrift(curMood.sadness, self.tSadness)
-        self.fatigue = doDrift(curMood.fatigue, self.tFatigue)
-        self.hunger = doDrift(curMood.hunger, self.tHunger)
-        self.confusion = doDrift(curMood.confusion, self.tConfusion)
-        self.excitement = doDrift(curMood.excitement, self.tExcitement)
-        self.surprise = doDrift(curMood.surprise, self.tSurprise)
-        self.affection = doDrift(curMood.affection, self.tAffection)
-        abuse = average(curMood.hunger, curMood.hunger, curMood.hunger, curMood.boredom, curMood.loneliness)
-        tipPoint = 0.6
-        if abuse < tipPoint:
-            tAnger = lerp(self.tAngerDec, -PetMood.LONGTIME, abuse / tipPoint)
         else:
-            tAnger = lerp(PetMood.LONGTIME, self.tAngerInc, (abuse - tipPoint) / (1.0 - tipPoint))
-        self.anger = doDrift(curMood.anger, tAnger)
-        self.announceChange()
-        return
+            if curMood is None:
+                curMood = self
+
+            def doDrift(curValue, timeToMedian, dt = float(dt)):
+                newValue = curValue + dt / (timeToMedian * 7200)
+                return min(max(newValue, 0.0), 1.0)
+
+            self.boredom = doDrift(curMood.boredom, self.tBoredom)
+            self.loneliness = doDrift(curMood.loneliness, self.tLoneliness)
+            self.sadness = doDrift(curMood.sadness, self.tSadness)
+            self.fatigue = doDrift(curMood.fatigue, self.tFatigue)
+            self.hunger = doDrift(curMood.hunger, self.tHunger)
+            self.confusion = doDrift(curMood.confusion, self.tConfusion)
+            self.excitement = doDrift(curMood.excitement, self.tExcitement)
+            self.surprise = doDrift(curMood.surprise, self.tSurprise)
+            self.affection = doDrift(curMood.affection, self.tAffection)
+            abuse = average(curMood.hunger, curMood.hunger, curMood.hunger, curMood.boredom, curMood.loneliness)
+            tipPoint = 0.6
+            if abuse < tipPoint:
+                tAnger = lerp(self.tAngerDec, -PetMood.LONGTIME, abuse / tipPoint)
+            else:
+                tAnger = lerp(PetMood.LONGTIME, self.tAngerInc, (abuse - tipPoint) / (1.0 - tipPoint))
+            self.anger = doDrift(curMood.anger, tAnger)
+            self.announceChange()
+            return
 
     def _driftMoodTask(self, task = None):
         self.driftMood()

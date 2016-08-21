@@ -585,7 +585,24 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
                 self.cameraPositions.remove(camPos)
             self.nextCameraPos(1)
 
-    def posCamera(self, lerp, time):
+    def printCameraPositions(self):
+        print '['
+        for i in xrange(len(self.cameraPositions)):
+            self.printCameraPosition(i)
+            print ','
+
+        print ']'
+
+    def printCameraPosition(self, index):
+        cp = self.cameraPositions[index]
+        print '(Point3(%0.2f, %0.2f, %0.2f),' % (cp[0][0], cp[0][1], cp[0][2])
+        print 'Point3(%0.2f, %0.2f, %0.2f),' % (cp[1][0], cp[1][1], cp[1][2])
+        print 'Point3(%0.2f, %0.2f, %0.2f),' % (cp[2][0], cp[2][1], cp[2][2])
+        print 'Point3(%0.2f, %0.2f, %0.2f),' % (cp[3][0], cp[3][1], cp[3][2])
+        print '%d,' % cp[4]
+        print ')',
+
+    def posCamera(self, lerp, duration):
         if not lerp:
             self.positionCameraWithPusher(self.getCompromiseCameraPos(), self.getLookAtPoint())
         else:
@@ -603,7 +620,7 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
             camera.setPos(savePos)
             camera.setHpr(saveHpr)
             taskMgr.remove('posCamera')
-            camera.lerpPosHpr(x, y, z, h, p, r, time, task='posCamera')
+            camera.posQuatInterval(duration, Vec3(x, y, z), Vec3(h, p, r), name='posCamera').start()
 
     def getClampedAvatarHeight(self):
         return max(self.getHeight(), 3.0)
