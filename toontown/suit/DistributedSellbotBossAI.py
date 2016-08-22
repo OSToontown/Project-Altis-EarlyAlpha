@@ -26,7 +26,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         FSM.FSM.__init__(self, 'DistributedSellbotBossAI')
         self.doobers = []
         self.cagedToonNpcId = random.choice(NPCToons.HQnpcFriends.keys())
-        self.bossMaxDamage = ToontownGlobals.SellbotBossMaxDamage
+        self.bossMaxDamage = 250
         self.recoverRate = 0
         self.recoverStartTime = 0
 
@@ -92,7 +92,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
             return
         toon = simbase.air.doId2do.get(avId)
         if toon:
-            toon.b_setNumPies(self.numPies)
+            toon.b_setNumPies(50)
             toon.__touchedCage = 1
             self.__goodJump(avId)
 
@@ -121,7 +121,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
     def __doAreaAttack(self):
         self.b_setAttackCode(ToontownGlobals.BossCogAreaAttack)
         if self.recoverRate:
-            newRecoverRate = min(200, self.recoverRate * 1.2)
+            newRecoverRate = min(200, self.recoverRate * 1.1)
         else:
             newRecoverRate = 2
         now = globalClock.getFrameTime()
@@ -190,9 +190,9 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
 
     def generateSuits(self, battleNumber):
         if battleNumber == 1:
-            return self.invokeSuitPlanner(9, 0)
+            return self.invokeSuitPlanner(11, 0)
         else:
-            return self.invokeSuitPlanner(10, 1)
+            return self.invokeSuitPlanner(12, 1)
 
     def removeToon(self, avId):
         toon = simbase.air.doId2do.get(avId)
