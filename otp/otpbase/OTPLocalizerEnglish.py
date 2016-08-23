@@ -221,6 +221,7 @@ SCMenuFieldOffice = 'FIELD OFFICES'
 SCMenuIdesOfMarch = 'GREEN'
 ScMenuBugs = 'Bugs'
 SCMenuQuotes = 'FAMOUS QUOTES'
+SCMenuDisney = 'DISNEY'
 FriendInviteeTooManyFriends = '%s would like to be your friend, but you already have too many friends on your list!'
 FriendInviteeInvitation = '%s would like to be your friend.'
 FriendInviteeOK = lOK
@@ -1354,8 +1355,8 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  10011: "We finish each other's sandwiches!",
  10012: "It's called a hustle, sweetheart.",
  10013: "What do you call a three-humped camel? Pregnant!",
- 10014: "Life isn't some cartoon musical where you sing a little song and all your insipid dreams magically come true. So let it go.",
- 10015: "It's the eye of the tiger, the thrill of the fight!",
+ 10014: "Life isn't some cartoon musical where you sing a little song and all your insipid dreams come true.",
+ 10015: "Hakuna Matata, it means no worries for the rest of your days!",
  10016: "On a scale of one to ten, how would you rate your pain?",
  10017: "I am programmed to assess everyone's health care needs.",
  10018: "Those that suffer a loss require support from friends and loved ones.",
@@ -1364,6 +1365,16 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  10021: "I will have you all in my teeth!",
  10022: "You have a metal arm? That is AWESOME, dude!",
  10023: "You have the right to remain silent!",
+ 10024: "You. You're afraid. That you will never be as strong as Darth Vader.",
+ 10025: "I find your lack of faith disturbing.",
+ 10026: "Guys, stop. We gotta talk this through.",
+ 10027: "I once had strings, but now I'm free... There are no strings on me!", 
+ 10028: "It's a small underworld, after all!",
+ 10029: "No! I didn't have anything to do with this!",
+ 10030: 'Game on!',
+ 10031: "Kids, don't use formula one race cars to chase hedgehogs.",
+ 10032: "I don't get involved in fights that I can't win.",
+ 10033: "It's the eye of the tiger, the thrill of the fight!",
  20000: SuitBrushOffs[None][0],
  20001: SuitBrushOffs[None][1],
  20002: SuitBrushOffs[None][2],
