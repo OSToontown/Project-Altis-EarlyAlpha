@@ -20,6 +20,7 @@ import sys
 FO_DICT = {'s': 'tt_m_ara_cbe_fieldOfficeMoverShaker',
  'l': 'tt_m_ara_cbe_fieldOfficeLegalEagle',
  'm': 'tt_m_ara_cbe_fieldOfficeMoverShaker',
+ 'g': 'tt_m_ara_cbe_fieldOfficeMoverShaker',           
  'c': 'tt_m_ara_cbe_fieldOfficeMoverShaker'}
 
 class DistributedBuilding(DistributedObject.DistributedObject):
@@ -62,6 +63,7 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         self.victorList = [0,
          0,
          0,
+         0,                  
          0]
         self.waitingMessage = None
         self.cogDropSound = None
@@ -320,8 +322,16 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             self.cab = self.elevatorModel.find('**/elevator')
             cogIcons = loader.loadModel('phase_3/models/gui/cog_icons')
             dept = chr(self.track)
-            if dept in SuitDNA.suitDeptModelPaths:
-                corpIcon = cogIcons.find(SuitDNA.suitDeptModelPaths[dept]).copyTo(self.cab)
+            if dept == 'c':
+                corpIcon = cogIcons.find('**/CorpIcon').copyTo(self.cab)
+            elif dept == 's':
+                corpIcon = cogIcons.find('**/SalesIcon').copyTo(self.cab)
+            elif dept == 'l':
+                corpIcon = cogIcons.find('**/LegalIcon').copyTo(self.cab)
+            elif dept == 'm':
+                corpIcon = cogIcons.find('**/MoneyIcon').copyTo(self.cab)
+            elif dept == 'g':
+                corpIcon = cogIcons.find('**/HackerIcon').copyTo(self.cab)
             corpIcon.setPos(0, 6.79, 6.8)
             corpIcon.setScale(3)
             from toontown.suit import Suit
@@ -337,6 +347,7 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         self.elevatorNodePath.reparentTo(self.suitDoorOrigin)
         self.normalizeElevator()
         return
+
 
     def loadAnimToSuitSfx(self):
         if base.config.GetBool('want-qa-regression', 0):

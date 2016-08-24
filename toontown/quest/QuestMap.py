@@ -64,6 +64,7 @@ class QuestMap(DirectFrame):
         lIcon = icons.find('**/LegalIcon')
         mIcon = icons.find('**/MoneyIcon')
         sIcon = icons.find('**/SalesIcon')
+        gIcon = icons.find('**/HackerIcon')
         cogInfoTextColor = (0.2, 0.2, 0.2, 1)
         textPos = (1.2, -0.2)
         textScale = 0.8
@@ -75,6 +76,8 @@ class QuestMap(DirectFrame):
         self.mInfo.setPos(0.8, 0, 0.5)
         self.sInfo = DirectLabel(parent=self.cogInfoFrame, text_fg=cogInfoTextColor, text='', text_pos=textPos, text_scale=textScale, geom=sIcon, geom_pos=(-0.2, 0, 0), geom_scale=0.8, relief=None)
         self.sInfo.setPos(0.8, 0, -0.5)
+        self.gInfo = DirectLabel(parent=self.cogInfoFrame, text_fg=cogInfoTextColor, text='', text_pos=textPos, text_scale=textScale, geom=sIcon, geom_pos=(-0.2, 0, 0), geom_scale=0.8, relief=None)
+        self.gInfo.setPos(0.8, 0, 0.5)
         icons.removeNode()
         return
 
@@ -86,6 +89,7 @@ class QuestMap(DirectFrame):
         self.lInfo['text'] = '%s%%' % currPercentage[1]
         self.mInfo['text'] = '%s%%' % currPercentage[2]
         self.sInfo['text'] = '%s%%' % currPercentage[3]
+        self.gInfo['text'] = '%s%%' % currPercentage[4]
         return
 
     def destroy(self):
