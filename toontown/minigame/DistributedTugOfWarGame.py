@@ -1,3 +1,4 @@
+import random
 from panda3d.core import *
 from toontown.toonbase.ToonBaseGlobal import *
 from direct.interval.IntervalGlobal import *
@@ -358,13 +359,25 @@ class DistributedTugOfWarGame(DistributedMinigame):
         self.gameType = index
         self.suitLevel = suit
         if suit == 1:
-            self.suitType = 'ym'
+            self.suitType = random.choice(['f','p','ym','mm','ds','hh','cr','tbc',
+            'bf','b','dt','ac','bs','sd','le','bw','sc','pp','tw','bc','nc','mb',
+            'ls','rb','cc','tm','nd','gh','ms','tf','m','mh','ca','cn','mg','pr',
+            'bsh','tl','bfh','hho'])
         elif suit == 2:
-            self.suitType = 'tf'
+            self.suitType = random.choice(['f','p','ym','mm','ds','hh','cr','tbc',
+            'bf','b','dt','ac','bs','sd','le','bw','sc','pp','tw','bc','nc','mb',
+            'ls','rb','cc','tm','nd','gh','ms','tf','m','mh','ca','cn','mg','pr',
+            'bsh','tl','bfh','hho'])
         elif suit == 3:
-            self.suitType = 'cr'
+            self.suitType = random.choice(['f','p','ym','mm','ds','hh','cr','tbc',
+            'bf','b','dt','ac','bs','sd','le','bw','sc','pp','tw','bc','nc','mb',
+            'ls','rb','cc','tm','nd','gh','ms','tf','m','mh','ca','cn','mg','pr',
+            'bsh','tl','bfh','hho'])
         elif suit == 4:
-            self.suitType = 'bfh'
+            self.suitType = random.choice(['f','p','ym','mm','ds','hh','cr','tbc',
+            'bf','b','dt','ac','bs','sd','le','bw','sc','pp','tw','bc','nc','mb',
+            'ls','rb','cc','tm','nd','gh','ms','tf','m','mh','ca','cn','mg','pr',
+            'bsh','tl','bfh','hho'])
 
     def setGameReady(self):
         if not self.hasLocalToon:
