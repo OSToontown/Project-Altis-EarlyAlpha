@@ -359,25 +359,13 @@ class DistributedTugOfWarGame(DistributedMinigame):
         self.gameType = index
         self.suitLevel = suit
         if suit == 1:
-            self.suitType = random.choice(['f','p','ym','mm','ds','hh','cr','tbc',
-            'bf','b','dt','ac','bs','sd','le','bw','sc','pp','tw','bc','nc','mb',
-            'ls','rb','cc','tm','nd','gh','ms','tf','m','mh','ca','cn','mg','pr',
-            'bsh','tl','bfh','hho'])
+            self.suitType = random.choice(['f','p','bf','b','sc','pp','cc','tm','ca','cn'])
         elif suit == 2:
-            self.suitType = random.choice(['f','p','ym','mm','ds','hh','cr','tbc',
-            'bf','b','dt','ac','bs','sd','le','bw','sc','pp','tw','bc','nc','mb',
-            'ls','rb','cc','tm','nd','gh','ms','tf','m','mh','ca','cn','mg','pr',
-            'bsh','tl','bfh','hho'])
+            self.suitType = random.choice(['ym','mm','dt','ac','tw','bc','nd','gh','mg','pr'])
         elif suit == 3:
-            self.suitType = random.choice(['f','p','ym','mm','ds','hh','cr','tbc',
-            'bf','b','dt','ac','bs','sd','le','bw','sc','pp','tw','bc','nc','mb',
-            'ls','rb','cc','tm','nd','gh','ms','tf','m','mh','ca','cn','mg','pr',
-            'bsh','tl','bfh','hho'])
+            self.suitType = random.choice(['ds','hh','bs','sd','nc','mb','ms','tf','bsh','tl'])
         elif suit == 4:
-            self.suitType = random.choice(['f','p','ym','mm','ds','hh','cr','tbc',
-            'bf','b','dt','ac','bs','sd','le','bw','sc','pp','tw','bc','nc','mb',
-            'ls','rb','cc','tm','nd','gh','ms','tf','m','mh','ca','cn','mg','pr',
-            'bsh','tl','bfh','hho'])
+            self.suitType = random.choice(['cr','tbc','le','bw','ls','rb','m','mh','bfh','hho'])
 
     def setGameReady(self):
         if not self.hasLocalToon:
