@@ -162,7 +162,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.stingMusic.stop()
         self.battleTwoMusic.stop()
         self.battleThreeMusic.stop()
-        self.epilogueMusic.stop()
+        self.epilogueTwoMusic.stop()
         if self.juryTimer:
             self.juryTimer.destroy()
             del self.juryTimer
@@ -1126,7 +1126,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         seq.start()
         self.storeInterval(seq, intervalName)
         self.accept('doneChatPage', self.__doneEpilogue)
-        base.playMusic(self.epilogueMusic, looping=1, volume=0.9)
+        base.playMusic(self.epilogueTwoMusic, looping=1, volume=0.9)
 
     def __doneEpilogue(self, elapsedTime = 0):
         self.notify.debug('----- __doneEpilogue')
