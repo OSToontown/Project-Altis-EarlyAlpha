@@ -255,5 +255,3 @@ class ToonHood(Hood):
     def setNoFog(self):
         if base.wantFog:
             render.clearFog()
-            self.sky.clearFog()
-            SZUtil.stopUnderwaterFog()

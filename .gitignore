@@ -2,3 +2,8 @@
 *.log
 *.json
 *.yaml
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/Project-Altis.iml
+.idea/modules.xml
+.idea/misc.xml

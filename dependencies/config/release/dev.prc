@@ -19,6 +19,65 @@ vfs-mount resources/phase_14 /phase_14
 vfs-mount resources/server /server
 model-path /
 
+
+# Better GL performance
+gl-finish #f
+gl-force-no-error #t
+gl-check-errors #f
+gl-force-no-flush #t
+gl-force-no-scissor #t
+gl-debug #f
+
+text-minfilter linear
+text-magfilter linear
+text-page-size 128 128
+
+show-frame-rate-meter #t
+
+texture-anisotropic-degree 0
+texture-magfilter linear
+texture-minfilter linear
+lock-to-one-cpu #f
+support-threads #t
+gl-immutable-texture-storage #t
+gl-dump-compiled-shaders #f
+gl-cube-map-seamless #t
+
+# No stack trace on assertion
+assert-abort #f
+
+# File system should be case sensitive
+# NOTICE: Set this to #f if you are using tempfile. Because it returns
+# wrong cased directory paths :(
+vfs-case-sensitive #f
+
+# Trying this for performance
+uniquify-transforms #t
+uniquify-states #t
+
+# Frame rate meter
+frame-rate-meter-milliseconds #f
+frame-rate-meter-update-interval 1.0
+frame-rate-meter-text-pattern %0.2f fps
+frame-rate-meter-ms-text-pattern %0.3f ms
+frame-rate-meter-layer-sort 1000
+frame-rate-meter-scale 0.04
+frame-rate-meter-side-margins 0.4
+
+# No stencil
+support-stencil #f
+framebuffer-stencil #f
+
+# Framebuffers use SRGB
+framebuffer-srgb #f
+
+# Framebuffers need no multisamples
+framebuffer-multisample #f
+multisamples 0
+
+# Don't rescale textures which are no power-of-2
+textures-power-2 none
+
 # Server:
 server-version 1.0.0
 min-access-level 700

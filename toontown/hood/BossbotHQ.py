@@ -12,8 +12,6 @@ class BossbotHQ(CogHood):
     def load(self):
         CogHood.load(self)
 
-        self.sky.hide()
-
     def enter(self, requestStatus):
         CogHood.enter(self, requestStatus)
 
