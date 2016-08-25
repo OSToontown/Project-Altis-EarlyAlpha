@@ -9,7 +9,7 @@ Swag Foreman - 3D Modeler & Animator
 InvisibleMario - Game Developer
 SkippsDev - Networking Assistant
 Malverde - Game & Networking Developer
-Old Geezer - [Awaiting Title]
+Old Geezer - Game Developer & 3D Modeler
 Barks - [Awaiting Title]
 Dylan - [Awaiting Title]
 
