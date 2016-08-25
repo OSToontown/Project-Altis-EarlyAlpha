@@ -12,7 +12,8 @@ class BossbotHQ(CogHood):
     def load(self):
         CogHood.load(self)
 
-        self.sky.hide()
+        if not settings.get('render-pipeline', False):
+            self.sky.hide()
 
     def enter(self, requestStatus):
         CogHood.enter(self, requestStatus)

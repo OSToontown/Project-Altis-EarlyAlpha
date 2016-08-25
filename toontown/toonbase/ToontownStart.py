@@ -78,6 +78,8 @@ if 'loadDisplay' not in settings:
     settings['loadDisplay'] = 'pandagl'
 if 'toonChatSounds' not in settings:
     settings['toonChatSounds'] = True
+if 'render-pipeline' not in settings:
+    settings['render-pipeline'] = True
 if 'language' not in settings:
     settings['language'] = 'English'
 if 'cogInterface' not in settings:
