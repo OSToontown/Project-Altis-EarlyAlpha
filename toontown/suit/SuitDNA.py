@@ -45,7 +45,7 @@ suitHeadTypes = ['f',
  'bsh',
  'tl',
  'bfh',
- 'cw']
+ 'hho']
 suitATypes = ['ym',
  'hh',
  'tbc',
@@ -63,7 +63,7 @@ suitATypes = ['ym',
  'mg',
  'pr',
  'tl',
- 'cw']
+ 'hho']
 suitBTypes = ['p',
  'ds',
  'b',

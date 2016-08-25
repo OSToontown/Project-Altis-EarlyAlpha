@@ -32,11 +32,12 @@ largeSuits = ['f',
  'hh',
  'cr',
  'tbc',
- 'cw',            
+ 'hho',            
  'bs',
  'sd',
  'le',
- 'bw',            
+ 'bw',
+ 'br',             
  'nc',
  'mb',
  'ls',
@@ -531,7 +532,7 @@ def getSuitRakeOffset(suit):
         return 2.1
     elif suitName == 'tbc':
         return 1.4
-    elif suitName == 'cw':
+    elif suitName == 'hho':
         return 1.4
     elif suitName == 'bs':
         return 0.4
@@ -540,6 +541,8 @@ def getSuitRakeOffset(suit):
     elif suitName == 'le':
         return 1.3
     elif suitName == 'bw':
+        return 1.4
+    elif suitName == 'br':
         return 1.4
     elif suitName == 'nc':
         return 0.6

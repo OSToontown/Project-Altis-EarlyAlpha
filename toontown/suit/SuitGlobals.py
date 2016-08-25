@@ -23,7 +23,7 @@ suitProperties = {'ca': (4.0 / cSize, SuitDNA.boardPolyColor, ['flunky'], 'conar
                   'bsh': (5.3 / cSize, VBase4(0.95, 0.95, 1.0, 1.0), ['gladhander'], 'tutorial_suits_palette_3cmla_11.jpg', 6.7),
                   'tl': (5.5 / aSize, VBase4(1, 1, .29, 1.0), ['toxicleader'], '', 7.2),
                   'bfh': (7.8 / cSize, VBase4(1, .3, .3, 1.0), ['bigfish'], '', 10.0),
-                  'cw': (7.0 / aSize, SuitDNA.boardPolyColor, ['headhoncho'], 'chair-warmer.jpg', 8.23),
+                  'hho': (7.0 / aSize, SuitDNA.boardPolyColor, ['headhoncho'], 'head-honcho.jpg', 8.23),
                   #Bossbots
                   'f': (4.0 / cSize, SuitDNA.corpPolyColor, ['flunky', 'glasses'], '', 4.88),
                   'p': (3.35 / bSize, SuitDNA.corpPolyColor, ['pencilpusher'], '', 5.0),

@@ -134,7 +134,7 @@ tl = (('cigar-smoke', 'cigar-smoke', 8),
  ('glower', 'glower', 5),
  ('magic1', 'magic1', 5))
 bfh = (('magic1', 'magic1', 5), ('throw-paper', 'throw-paper', 3.5), ('glower', 'glower', 5), ('watercooler', 'watercooler', 5), ('effort', 'effort', 5))
-cw = (('cigar-smoke', 'cigar-smoke', 8),
+hho = (('cigar-smoke', 'cigar-smoke', 8),
  ('pen-squirt', 'fountain-pen', 7),
  ('glower', 'glower', 5),
  ('throw-paper', 'throw-paper', 5),
