@@ -84,7 +84,7 @@ class Hood(StateData.StateData):
             if base.cr.newsManager.isHolidayRunning(key):
                 for storageFile in value:
                     files.append(storageFile)
-
+    if not settings.get('render-pipeline', False):
         if not base.cr.newsManager.isHolidayRunning(ToontownGlobals.HALLOWEEN) or not self.spookySkyFile:
             self.sky = loader.loadModel(self.skyFile)
             self.sky.setTag('sky', 'Regular')
@@ -107,8 +107,9 @@ class Hood(StateData.StateData):
         del self.parentFSM
         self.dnaStore.resetHood()
         del self.dnaStore
-        self.sky.removeNode()
-        del self.sky
+        if hasattr(self, 'sky'):
+            self.sky.removeNode()
+            del self.sky
         self.ignoreAll()
         ModelPool.garbageCollect()
         TexturePool.garbageCollect()
@@ -211,6 +212,8 @@ class Hood(StateData.StateData):
             messenger.send(self.doneEvent)
 
     def startSky(self):
+        if settings.get('render-pipeline', False):
+            return
         self.sky.reparentTo(camera)
         self.sky.setZ(0.0)
         self.sky.setHpr(0.0, 0.0, 0.0)
@@ -218,6 +221,8 @@ class Hood(StateData.StateData):
         self.sky.node().setEffect(ce)
 
     def stopSky(self):
+        if settings.get('render-pipeline', False):
+            return
         taskMgr.remove('skyTrack')
         self.sky.reparentTo(hidden)
 

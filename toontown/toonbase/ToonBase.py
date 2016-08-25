@@ -1,4 +1,6 @@
 import atexit
+from pipeline.RenderingPipeline import RenderingPipeline
+from pipeline.DirectionalLight import DirectionalLight
 from direct.directnotify import DirectNotifyGlobal
 from direct.filter.CommonFilters import CommonFilters
 from direct.gui import DirectGuiGlobals
@@ -174,6 +176,41 @@ class ToonBase(OTPBase.OTPBase):
             ToontownGlobals.OptionsPageHotkey = keymap.get('OPTIONS-PAGE', ToontownGlobals.OptionsPageHotkey)
         
         self.CHAT_HOTKEY = keymap.get('CHAT_HOTKEY', 'r')
+
+        if settings.get('render-pipeline', False):
+            self.renderPipeline = RenderingPipeline(self)
+
+            # Set the base path for the pipeline. This is required as we are in
+            # a subdirectory
+            self.renderPipeline.getMountManager().setBasePath("../resources")
+
+            # Also set the write path
+            self.renderPipeline.getMountManager().setWritePath("../resources/temp")
+
+            # Load the default settings
+            self.renderPipeline.loadSettings("config/pipeline.ini")
+
+            # Now create the pipeline
+            self.renderPipeline.create()
+
+            # Create a sun light
+            dPos = Vec3(60, -30, 120)
+            dirLight = DirectionalLight()
+            dirLight.setDirection(dPos)
+            dirLight.setShadowMapResolution(512)
+            dirLight.setPos(dPos)
+            dirLight.setColor(Vec3(1, 1, 0.8))
+            dirLight.setPssmTarget(base.cam, base.camLens)
+            dirLight.setCastsShadows(True)
+            self.renderPipeline.addLight(dirLight)
+
+            self.skybox = self.renderPipeline.getDefaultSkybox()
+            self.skybox.reparentTo(render)
+
+            # Tell the GI which light casts the GI
+            self.renderPipeline.setGILightSource(dirLight)
+            self.renderPipeline.fillTextureStages(render)
+            self.renderPipeline.onSceneInitialized()
 
     def openMainWindow(self, *args, **kw):
         result = OTPBase.OTPBase.openMainWindow(self, *args, **kw)

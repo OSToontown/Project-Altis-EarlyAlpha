@@ -29,8 +29,9 @@ class BRHood(ToonHood):
             self.fog.setExpDensity(0.020)
             render.clearFog()
             render.setFog(self.fog)
-            self.sky.clearFog()
-            self.sky.setFog(self.fog)
+            if hasattr(self, 'sky'):
+                self.sky.clearFog()
+                self.sky.setFog(self.fog)
 
 @magicWord(category=CATEGORY_CREATIVE)
 def spooky():
