@@ -211,8 +211,6 @@ class ToonHood(Hood):
         return SZUtil.cloudSkyTrack(task)
 
     def startSky(self):
-        if settings.get('render-pipeline', False):
-            return
         if not self.sky.getTag('sky') == 'Regular':
             self.endSpookySky()
         SZUtil.startCloudSky(self)
@@ -257,6 +255,3 @@ class ToonHood(Hood):
     def setNoFog(self):
         if base.wantFog:
             render.clearFog()
-            if not settings.get('render-pipeline', False):
-                self.sky.clearFog()
-				SZUtil.stopUnderwaterFog()
