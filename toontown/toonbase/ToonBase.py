@@ -182,10 +182,10 @@ class ToonBase(OTPBase.OTPBase):
 
             # Set the base path for the pipeline. This is required as we are in
             # a subdirectory
-            self.renderPipeline.getMountManager().setBasePath("../resources")
+            self.renderPipeline.getMountManager().setBasePath("resources")
 
             # Also set the write path
-            self.renderPipeline.getMountManager().setWritePath("../resources/temp")
+            self.renderPipeline.getMountManager().setWritePath("resources/temp")
 
             # Load the default settings
             self.renderPipeline.loadSettings("config/pipeline.ini")
