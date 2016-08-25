@@ -365,7 +365,7 @@ class DistributedTugOfWarGame(DistributedMinigame):
         elif suit == 3:
             self.suitType = random.choice(['ds','hh','bs','sd','nc','mb','ms','tf','bsh','tl'])
         elif suit == 4:
-            self.suitType = random.choice(['cr','tbc','le','bw','ls','rb','m','mh','bfh','hho'])
+            self.suitType = random.choice(['cr','tbc','le','bw','ls','rb','m','mh','bfh','cw'])
 
     def setGameReady(self):
         if not self.hasLocalToon:
