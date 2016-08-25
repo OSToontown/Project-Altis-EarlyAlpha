@@ -380,8 +380,8 @@ class RenderingPipeline(DebugObject):
         # Store globals, as cython can't handle them
         self.debug("Setting up globals")
         Globals.load(self.showbase)
-        Globals.font = loader.loadFont("pipeline_data/Font/SourceSansPro-Semibold.otf")
-        Globals.font.setPixelsPerUnit(25)
+        #Globals.font = loader.loadFont("pipeline_data/Font/SourceSansPro-Semibold.otf")
+        #Globals.font.setPixelsPerUnit(25)
 
         self._size = LVecBase2i(self.showbase.win.getXSize(), self.showbase.win.getYSize())
 
