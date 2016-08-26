@@ -57,6 +57,8 @@ CEFreddy = 29
 CEBilly = 30
 CEDroopy = 31
 CEPunchy = 32
+CEFurball = 33
+CEBarney = 34
 CEGhost = 'g'
 CEName2Id = {
  'normal': CENormal,
@@ -91,7 +93,9 @@ CEName2Id = {
  'freddy': CEFreddy,
  'billy': CEBilly,
  'droopy': CEDroopy,
- 'punchy': CEPunchy
+ 'punchy': CEPunchy,
+ 'furball': CEFurball,
+ 'barney': CEBarney
 }
 BeanToonScale = 2.9
 GiantToonScale = 2.1
