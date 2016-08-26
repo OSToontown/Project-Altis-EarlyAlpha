@@ -8,7 +8,7 @@ class ToontownControlManager(ControlManager.ControlManager):
     # Instead of checking config.prc, get wantWASD from ToonBase
     wantWASD = base.wantCustomControls
 
-    def __init__(self, enable=True, passMessagesThrough=False):
+    def __init__(self, enable=True, passMessagesThrough=True):
         self.passMessagesThrough = passMessagesThrough
         self.inputStateTokens = []
         self.WASDTurnTokens = []
@@ -30,10 +30,8 @@ class ToontownControlManager(ControlManager.ControlManager):
 
         self.isEnabled = 1
         keymap = settings.get('keymap', {})
-
         # Keep track of what we do on the inputState so we can undo it later on
-        ist = self.inputStateTokens
-        ist.extend((
+        self.inputStateTokens.extend((
             inputState.watch('run', 'runningEvent', 'running-on', 'running-off'),
             inputState.watch('forward', 'force-forward', 'force-forward-stop'),
         ))
