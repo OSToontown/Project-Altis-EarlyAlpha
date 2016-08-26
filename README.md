@@ -3,14 +3,14 @@ remake of Disney's Toontown Online
   
 # Current Team
  
-1. Josh Zimmer - Game Developer & Project Manager
-2. KHDecoder - Developer & Texture Artist
-3. Swag Foreman - 3D Modeler & Animator
-4. InvisibleMario - Game Developer
-5. SkippsDev - Networking Assistant
-6. Malverde - Game & Networking Developer
-7. Old Geezer - Game Developer & 3D Modeler
-8. Barks - [Awaiting Title]
+* Josh Zimmer - Game Developer & Project Manager
+* KHDecoder - Developer & Texture Artist
+* Swag Foreman - 3D Modeler & Animator
+* InvisibleMario - Game Developer
+* SkippsDev - Networking Assistant
+* Malverde - Game & Networking Developer
+* Old Geezer - Game Developer & 3D Modeler
+* Barks - [Awaiting Title]
 
 
 # Thanks
