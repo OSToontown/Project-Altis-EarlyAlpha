@@ -1964,9 +1964,9 @@ def doEvilEye(attack):
     elif suitName == 'tf':
         posPoints = [Point3(-0.4, 3.65, 5.01), VBase3(-155.0, -20.0, 0.0)]
     elif suitName == 'mg':
-        posPoints = [Point3(-0.64, 4.45, 2.91), VBase3(-155.0, -20.0, 0.0)]
-    elif suitName == 'tl':
-        posPoints = [Point3(-0.4, 3.65, 4.60), VBase3(-155.0, -20.0, 0.0)]
+        posPoints = [Point3(-0.64, 4.45, 5.5), VBase3(-155.0, -20.0, 0.0)]
+    elif suitName == 'txm':
+        posPoints = [Point3(-0.4, 3.65, 4.58), VBase3(-155.0, -20.0, 0.0)]
     elif suitName == 'le':
         posPoints = [Point3(-0.64, 4.45, 5.91), VBase3(-155.0, -20.0, 0.0)]
     else:

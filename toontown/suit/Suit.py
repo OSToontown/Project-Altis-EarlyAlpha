@@ -100,8 +100,7 @@ tf = (('phone', 'phone', 5),
 m = (('speak', 'speak', 5),
  ('magic2', 'magic2', 5),
  ('magic1', 'magic1', 5),
- ('golf-club-swing', 'golf-club-swing', 5),
- ('cigar-smoke', 'cigar-smoke', 8))
+ ('golf-club-swing', 'golf-club-swing', 5))
 mh = (('magic1', 'magic1', 5),
  ('smile', 'smile', 5),
  ('magic2', 'magic2', 5),
@@ -116,23 +115,23 @@ cn = (('speak', 'speak', 5),
  ('effort', 'effort', 5),     
  ('magic3', 'magic3', 5),
  ('finger-wag', 'finger-wag', 5))
+sw = (('phone', 'phone', 5),
+ ('pickpocket', 'pickpocket', 5),
+ ('throw-paper', 'throw-paper', 5),    
+ ('roll-o-dex', 'roll-o-dex', 5))
+mdm = (('smile', 'smile', 5),
+ ('roll-o-dex', 'roll-o-dex', 5),      
+ ('magic3', 'magic3', 5))
+txm = (('cigar-smoke', 'cigar-smoke', 8),
+ ('pen-squirt', 'fountain-pen', 7),
+ ('glower', 'glower', 5),
+ ('magic1', 'magic1', 5))
 mg = (('speak', 'speak', 5),
  ('glower', 'glower', 5),     
  ('throw-paper', 'throw-paper', 5),
  ('throw-object', 'throw-object', 5),
- ('magic3', 'magic3', 5),
+ ('magic1', 'magic1', 5),
  ('finger-wag', 'finger-wag', 5))
-pr = (('phone', 'phone', 5),
- ('throw-paper', 'throw-paper', 5),
- ('throw-object', 'throw-object', 5),      
- ('roll-o-dex', 'roll-o-dex', 5))
-bsh = (('throw-paper', 'throw-paper', 3.5),
- ('pen-squirt', 'fountain-pen', 5),      
- ('glower', 'glower', 5))
-tl = (('cigar-smoke', 'cigar-smoke', 8),
- ('pen-squirt', 'fountain-pen', 7),
- ('glower', 'glower', 5),
- ('magic1', 'magic1', 5))
 bfh = (('magic1', 'magic1', 5), ('throw-paper', 'throw-paper', 3.5), ('glower', 'glower', 5), ('watercooler', 'watercooler', 5), ('effort', 'effort', 5))
 hho = (('cigar-smoke', 'cigar-smoke', 8),
  ('pen-squirt', 'fountain-pen', 7),
@@ -164,8 +163,7 @@ b = (('effort', 'effort', 5),
 dt = (('rubber-stamp', 'rubber-stamp', 5),
  ('throw-paper', 'throw-paper', 5),
  ('speak', 'speak', 5),
- ('finger-wag', 'fingerwag', 5),
- ('throw-paper', 'throw-paper', 5))
+ ('finger-wag', 'fingerwag', 5))
 ac = (('throw-object', 'throw-object', 5),
  ('roll-o-dex', 'roll-o-dex', 5),
  ('stomp', 'stomp', 5),
@@ -183,19 +181,10 @@ le = (('speak', 'speak', 5),
  ('glower', 'glower', 5),
  ('throw-paper', 'throw-paper', 5))
 bw = (('finger-wag', 'fingerwag', 5),
- ('cigar-smoke', 'cigar-smoke', 8),
  ('gavel', 'gavel', 8),
  ('magic1', 'magic1', 5),
  ('throw-object', 'throw-object', 5),
  ('throw-paper', 'throw-paper', 5))
-br = (('speak', 'speak', 5),
- ('magic2', 'magic2', 5),
- ('magic3', 'magic3', 5),
-  ('throw-object', 'throw-object', 5),
- ('throw-paper', 'throw-paper', 5),
- ('magic1', 'magic1', 5),
- ('gavel', 'gavel', 8),
- ('golf-club-swing', 'golf-club-swing', 5))
 if not base.config.GetBool('want-new-cogs', 0):
     ModelDict = {'a': ('/models/char/suitA-', 4),
      'b': ('/models/char/suitB-', 4),

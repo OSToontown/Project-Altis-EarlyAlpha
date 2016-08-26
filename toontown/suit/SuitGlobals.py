@@ -16,12 +16,12 @@ ColdCallerHead = VBase4(0.25, 0.35, 1.0, 1.0) # Head used by Cold Caller
 
                
                  #Boardbots
-suitProperties = {'ca': (4.0 / cSize, SuitDNA.boardPolyColor, ['flunky'], 'conartist.jpg', 4.81),
-                  'cn': (3.75 / bSize, VBase4(0.95, 0.95, 1.0, 1.0), ['downsizer', 'group', 'group1'], '', 5.5),
-                  'mg': (4.5 / aSize, SuitDNA.boardPolyColor, ['legaleagle'], 'suit-heads_palette_3cmla_22.jpg', 5.5),
-                  'pr': (4.63 / aSize, SuitDNA.boardPolyColor, ['telemarketer'], 'proprietor.jpg', 5.9),
-                  'bsh': (5.3 / cSize, VBase4(0.95, 0.95, 1.0, 1.0), ['gladhander'], 'tutorial_suits_palette_3cmla_11.jpg', 6.7),
-                  'tl': (5.5 / aSize, VBase4(1, 1, .29, 1.0), ['toxicleader'], '', 7.2),
+suitProperties = {'ca': (4.0 / cSize, SuitDNA.boardPolyColor, ['flunky'], 'conartist.jpg', 4.88),
+                  'cn': (3.75 / bSize, VBase4(0.95, 0.95, 1.0, 1.0), ['downsizer', 'group', 'group1'], '', 5.24),
+                  'sw': (4.34 / aSize, SuitDNA.boardPolyColor, ['telemarketer'], 'swindler.jpg', 5.45),
+                  'mdm': (5.0 / aSize, SuitDNA.boardPolyColor, ['twoface'], 'middleman.jpg', 6.7),
+                  'txm': (5.25 / aSize, VBase4(1, 1, .29, 1.0), ['toxicleader'], '', 7.2),
+                  'mg': (6.5 / aSize, SuitDNA.boardPolyColor, ['legaleagle'], 'magnate.jpg', 7.26),
                   'bfh': (7.8 / cSize, VBase4(1, .3, .3, 1.0), ['bigfish'], '', 10.0),
                   'hho': (7.0 / aSize, SuitDNA.boardPolyColor, ['headhoncho'], 'head-honcho.jpg', 8.23),
                   #Bossbots
