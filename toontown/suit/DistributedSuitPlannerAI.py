@@ -684,7 +684,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         while numToAssign > 0:
             smallestCount = None
             smallestTracks = []
-            for trackIndex in xrange(4):
+            for trackIndex in xrange(5):
                 if totalWeightPerTrack[trackIndex]:
                     track = SuitDNA.suitDepts[trackIndex]
                     count = numPerTrack[track]
@@ -739,6 +739,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
                     totalWeightPerTrack[1] -= weight * tracks[1]
                     totalWeightPerTrack[2] -= weight * tracks[2]
                     totalWeightPerTrack[3] -= weight * tracks[3]
+                    totalWeightPerTrack[3] -= weight * tracks[4]
                     totalWeightPerHeight[0] -= weight * heights[0]
                     totalWeightPerHeight[1] -= weight * heights[1]
                     totalWeightPerHeight[2] -= weight * heights[2]
@@ -954,7 +955,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     def buildingListQuery(self):
         buildingDict = {}
         self.countNumBuildingsPerTrack(buildingDict)
-        buildingList = [0, 0, 0, 0]
+        buildingList = [0, 0, 0, 0, 0]
         for dept in SuitDNA.suitDepts:
             if dept in buildingDict:
                 buildingList[SuitDNA.suitDepts.index(dept)] = buildingDict[dept]
