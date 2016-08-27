@@ -526,6 +526,7 @@ class Suit(Avatar.Avatar):
         legTex = loader.loadTexture('phase_3.5/maps/waiter_m_leg.jpg')
         legTex.setMinfilter(Texture.FTLinearMipmapLinear)
         legTex.setMagfilter(Texture.FTLinear)
+        modelRoot.find('**/hands').setColor(1, 1, 1)
         armTex = loader.loadTexture('phase_3.5/maps/waiter_m_sleeve.jpg')
         armTex.setMinfilter(Texture.FTLinearMipmapLinear)
         armTex.setMagfilter(Texture.FTLinear)
