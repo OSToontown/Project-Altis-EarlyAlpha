@@ -13,18 +13,13 @@ set INPUT=-1
 set /P INPUT=Selection: 
 
 if %INPUT%==1 (
-    set TT_GAMESERVER=127.0.0.1
+    set TT_GAMESERVER=25.115.212.228
+	set TT_PLAYCOOKIE=barks
 ) else (
     goto selection
 )
 
 echo.
-
-if %INPUT%==1 (
-    set /P ttUsername="Username: "
-) else (
-    set /P TT_PLAYCOOKIE=Username: 
-)
 
 echo.
 
