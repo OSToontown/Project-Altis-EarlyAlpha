@@ -8,6 +8,8 @@ from otp.avatar import PlayerBase
 from otp.distributed import OtpDoGlobals
 from otp.otpbase import OTPLocalizer
 
+from toontown.toonbase.ToontownGlobals import ToontownGlobals
+
 class DistributedPlayerAI(DistributedAvatarAI.DistributedAvatarAI, PlayerBase.PlayerBase):
 
     def __init__(self, air):
@@ -154,8 +156,20 @@ def maintenance(minutes):
             taskMgr.doMethodLater(next, countdown, 'maintenance-task',
                                   extraArgs=[minutes])
 
+    if ToontownGlobals.enable_maintenance == True:
+        countdown(minutes)
+    else:
+        return "The maintenance command is disabled! Enable it before trying to execute the maintenance command!"
 
-    countdown(minutes)
+@magicWord(category=CATEGORY_SYSTEM_ADMINISTRATOR, types=[str])
+def enableMaintenance(state):
+    if state.lower() == "true":
+        ToontownGlobals.enable_maintenance = True
+    elif state.lower() == "false":
+        ToontownGlobals.enable_maintenance = False
+    elif state != True or state != False:
+        return "Please specify whether it is true or false."
+
 
 @magicWord(category=CATEGORY_SYSTEM_ADMINISTRATOR, types=[str, str, int])
 def accessLevel(accessLevel, storage='PERSISTENT', showGM=1):
