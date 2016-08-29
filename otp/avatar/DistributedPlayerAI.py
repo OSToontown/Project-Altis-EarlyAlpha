@@ -165,8 +165,10 @@ def maintenance(minutes):
 def enableMaintenance(state):
     if state.lower() == "true":
         ToontownGlobals.enable_maintenance = True
+        return "The maintenance command has been enabled!"
     elif state.lower() == "false":
         ToontownGlobals.enable_maintenance = False
+        return "The maintenance command has been disabled!"
     elif state != True or state != False:
         return "Please specify whether it is true or false."
 
