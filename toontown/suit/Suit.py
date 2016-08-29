@@ -183,6 +183,7 @@ le = (('speak', 'speak', 5),
 bw = (('finger-wag', 'fingerwag', 5),
  ('gavel', 'gavel', 8),
  ('magic1', 'magic1', 5),
+ ('cigar-smoke', 'cigar-smoke', 8),     
  ('throw-object', 'throw-object', 5),
  ('throw-paper', 'throw-paper', 5))
 if not base.config.GetBool('want-new-cogs', 0):
