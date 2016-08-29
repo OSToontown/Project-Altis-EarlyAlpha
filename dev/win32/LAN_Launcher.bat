@@ -1,6 +1,6 @@
 @echo off
 
-title Project Atlis
+title Project Altis
 
 cd ../../
 
