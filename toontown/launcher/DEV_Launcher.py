@@ -19,6 +19,21 @@ class DEV_Launcher(ShowBase):
         os.environ['TT_PLAYCOOKIE'] = 'DEFAULT'
         os.environ['TT_GAMESERVER'] = '127.0.0.1'
 
+        self.accept("tab", self.focus)
+        self.accept("escape", sys.exit)
+
+        self.current_focus = 0
+
+    def focus(self):
+        if self.current_focus == 0:
+            self.current_focus = 1
+            self.username_entry['focus'] = 1
+            self.ip_entry['focus'] = 0
+        else:
+            self.current_focus = 0
+            self.username_entry['focus'] = 0
+            self.ip_entry['focus'] = 1
+
     def login(self):
         os.environ['TT_PLAYCOOKIE'] = self.username_entry.get()
         os.environ['TT_GAMESERVER'] = self.ip_entry.get()
@@ -31,11 +46,11 @@ class DEV_Launcher(ShowBase):
         self.main_frame = DirectFrame(frameColor=(0, 0, 0, 0), frameSize=(-1, 1, -1, 1))
         self.username_text = OnscreenText(text="Username:", pos=(-0.6, 0, 0))
         self.username_entry = DirectEntry(text="", initialText="", scale=0.1, numLines=1, pos=(-0.3, 0, 0),
-                                          cursorKeys=0,
+                                          cursorKeys=1,
                                           obscured=0, width=10)
         self.ip_text = OnscreenText(text="Server IP:", pos=(-0.6, -0.2))
         self.ip_entry = DirectEntry(text="", initialText="", scale=0.1, numLines=1, pos=(-0.3, 0, -0.2),
-                                    cursorKeys=0,
+                                    cursorKeys=1,
                                     obscured=0, width=10)
         self.login_button = DirectButton(text="Login", scale=0.1, pos=(0, 0, -0.4), command=self.login)
 
