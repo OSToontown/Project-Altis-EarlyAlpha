@@ -8,7 +8,7 @@ from otp.avatar import PlayerBase
 from otp.distributed import OtpDoGlobals
 from otp.otpbase import OTPLocalizer
 
-from toontown.toonbase.ToontownGlobals import ToontownGlobals
+from toontown.toonbase import ToontownGlobals
 
 class DistributedPlayerAI(DistributedAvatarAI.DistributedAvatarAI, PlayerBase.PlayerBase):
 
