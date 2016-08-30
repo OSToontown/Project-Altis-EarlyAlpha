@@ -16,8 +16,8 @@ from toontown.quest import Quests
 
 class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedSellbotBossAI')
-    limitHitCount = 6
-    hitCountDamage = 35
+    limitHitCount = 4
+    hitCountDamage = 30
     numPies = 50
     BossName = "VP"
 
@@ -92,7 +92,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
             return
         toon = simbase.air.doId2do.get(avId)
         if toon:
-            toon.b_setNumPies(50)
+            toon.b_setNumPies(self.numPies)
             toon.__touchedCage = 1
             self.__goodJump(avId)
 
@@ -121,9 +121,9 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
     def __doAreaAttack(self):
         self.b_setAttackCode(ToontownGlobals.BossCogAreaAttack)
         if self.recoverRate:
-            newRecoverRate = min(200, self.recoverRate * 1.1)
+            newRecoverRate = min(200, self.recoverRate * 9.8)
         else:
-            newRecoverRate = 2
+            newRecoverRate = 1.7
         now = globalClock.getFrameTime()
         self.b_setBossDamage(self.getBossDamage(), newRecoverRate, now)
 
