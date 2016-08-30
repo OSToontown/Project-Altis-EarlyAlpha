@@ -56,7 +56,6 @@ MeritsPerLevel = ((100, #Flunky
   4660,
   5550,
   5550,
-  23300,
   0),
  (60, #Bottom Feeder
   80,
@@ -98,7 +97,6 @@ MeritsPerLevel = ((100, #Flunky
   2880,
   3430,
   1780,
-  14400,
   0),
  (40, #Short Change
   50,
@@ -140,7 +138,6 @@ MeritsPerLevel = ((100, #Flunky
   1780,
   2120,
   1100,
-  8900,
   0),
  (20, #Cold Caller
   30,
@@ -182,7 +179,6 @@ MeritsPerLevel = ((100, #Flunky
   1100,
   1310,
   890,
-  5550,
   0),
  (160, #Con Artist
   210,
@@ -224,7 +220,6 @@ MeritsPerLevel = ((100, #Flunky
   14400,
   23300,
   5550,
-  30000,
   0)))             
 leftLegUpper = 1
 leftLegLower = 2
