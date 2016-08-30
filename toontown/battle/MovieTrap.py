@@ -260,8 +260,7 @@ def __createThrownTrapMultiTrack(trap, propList, propName, propPos = None, propH
     def placeDustExplosion(dustNode = dustNode, thrownProp = thrownProp, battle = battle):
         dustNode.reparentTo(battle)
         dustNode.setPos(thrownProp.getPos(battle))
-        if dustNode.isEmpty() or thrownProp.isEmpty():
-            return
+
     if explode == 1:
         throwTrack.append(Func(thrownProp.wrtReparentTo, hidden))
         throwTrack.append(Func(placeDustExplosion))
@@ -293,8 +292,7 @@ def __createPlacedTrapMultiTrack(trap, prop, propName, propPos = None, propHpr =
     def placeDustExplosion(dustNode, trapProp, battle):
         dustNode.reparentTo(battle)
         dustNode.setPos(trapProp.getPos(battle))
-        if dustNode.isEmpty() or trapProp.isEmpty():
-            return
+
     trapTracks = Parallel()
     firstTime = 1
     targets = trap['target']
@@ -437,8 +435,6 @@ def createThrowingTrack(object, target, duration = 1.0, parent = render, gravity
     values['velocity'] = None
 
     def calcOriginAndVelocity(object = object, target = target, values = values, duration = duration, parent = parent, gravity = gravity):
-        if not object or object.isEmpty():
-            return
         object.wrtReparentTo(parent)
         values['origin'] = object.getPos(parent)
         origin = object.getPos(parent)
