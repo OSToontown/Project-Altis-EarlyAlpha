@@ -1458,6 +1458,15 @@ class DeliverGagQuest(Quest):
     def getHeadlineString(self):
         return TTLocalizer.QuestsDeliverGagQuestHeadline
 
+    def removeGags(self, av):
+        gag = self.getGagType()
+        inventory = av.inventory
+        takenGags = 0
+        for i in xrange(self.getNumGags()):
+            if inventory.useItem(gag[0], gag[1]):
+                takenGags += 1
+        av.b_setInventory(inventory.makeNetString())
+        return takenGags
 
 class DeliverItemQuest(Quest):
     def __init__(self, id, quest):
