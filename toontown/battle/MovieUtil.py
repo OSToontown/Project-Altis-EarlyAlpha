@@ -103,6 +103,8 @@ def showProp(prop, hand, pos = None, hpr = None, scale = None):
 def showProps(props, hands, pos = None, hpr = None, scale = None):
     index = 0
     for prop in props:
+        if not prop or prop.isEmpty():
+            continue
         prop.reparentTo(hands[index])
         if pos:
             prop.setPos(pos)
@@ -120,7 +122,7 @@ def hideProps(props):
 
 def removeProp(prop):
     from direct.actor import Actor
-    if prop.isEmpty() == 1 or prop == None:
+    if not prop or prop.isEmpty():
         return
     prop.detachNode()
     if isinstance(prop, Actor.Actor):
