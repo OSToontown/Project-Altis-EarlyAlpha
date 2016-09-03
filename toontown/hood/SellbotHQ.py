@@ -11,7 +11,7 @@ class SellbotHQ(CogHood):
 
     def load(self):
         CogHood.load(self)
-        self.skyFile = 'phase_9/models/cogHQ/old_sky'
+        self.skyFile = 'phase_3.5/models/props/Sellbot_sky'
         self.sky.setScale(2.0)
         self.sky.setZ(9.75)
         self.sky.setHpr(-500.0, -700.0, -400.0)
