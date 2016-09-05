@@ -19,8 +19,7 @@ from otp.avatar import Emote
 import sys
 FO_DICT = {'s': 'tt_m_ara_cbe_fieldOfficeMoverShaker',
  'l': 'tt_m_ara_cbe_fieldOfficeLegalEagle',
- 'm': 'tt_m_ara_cbe_fieldOfficeMoverShaker',
- 'g': 'tt_m_ara_cbe_fieldOfficeMoverShaker',           
+ 'm': 'tt_m_ara_cbe_fieldOfficeMoverShaker',         
  'c': 'tt_m_ara_cbe_fieldOfficeMoverShaker'}
 
 class DistributedBuilding(DistributedObject.DistributedObject):
@@ -61,7 +60,6 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         self.transitionTrack = None
         self.elevatorNodePath = None
         self.victorList = [0,
-         0,
          0,
          0,                  
          0]
@@ -330,8 +328,6 @@ class DistributedBuilding(DistributedObject.DistributedObject):
                 corpIcon = cogIcons.find('**/LegalIcon').copyTo(self.cab)
             elif dept == 'm':
                 corpIcon = cogIcons.find('**/MoneyIcon').copyTo(self.cab)
-            elif dept == 'g':
-                corpIcon = cogIcons.find('**/HackerIcon').copyTo(self.cab)
             corpIcon.setPos(0, 6.79, 6.8)
             corpIcon.setScale(3)
             from toontown.suit import Suit
@@ -396,7 +392,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         sideBldgNodes = self.getNodePaths()
         nodePath = hidden.find(self.getSbSearchString())
         newNP = self.setupSuitBuilding(nodePath)
-        if not self.leftDoor:
+        if not newNP:
+            self.setToToon()
             return
         closeDoors(self.leftDoor, self.rightDoor)
         newNP.stash()
@@ -442,11 +439,11 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         return
 
     def setupSuitBuilding(self, nodePath):
-        if nodePath.isEmpty():
-            return
         dnaStore = self.cr.playGame.dnaStore
         level = int(self.difficulty / 2) + 1
-        suitNP = dnaStore.findNode('suit_landmark_' + chr(self.track) + str(min(level, 5)))
+        suitNP = dnaStore.findNode('suit_landmark_' + chr(self.track) + str(level))
+        if self.track == 'g':
+             return None
         zoneId = dnaStore.getZoneFromBlockNumber(self.block)
         newParentNP = base.cr.playGame.hood.loader.zoneDict[zoneId]
         suitBuildingNP = suitNP.copyTo(newParentNP)

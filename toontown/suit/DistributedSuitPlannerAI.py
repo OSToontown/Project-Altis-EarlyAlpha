@@ -657,8 +657,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             'c': 0,
             'l': 0,
             'm': 0,
-            's': 0,
-            'g': 0
+            's': 0
         }
         for sp in self.air.suitPlanners.values():
             sp.countNumBuildingsPerTrack(numPerTrack)
@@ -666,13 +665,11 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             numPerTrack['l'] += sp.pendingBuildingTracks.count('l')
             numPerTrack['m'] += sp.pendingBuildingTracks.count('m')
             numPerTrack['s'] += sp.pendingBuildingTracks.count('s')
-            numPerTrack['g'] += sp.pendingBuildingTracks.count('g')
         numPerHeight = {
             0: 0,
             1: 0,
             2: 0,
-            3: 0,
-            4: 0
+            3: 0
         }
         for sp in self.air.suitPlanners.values():
             sp.countNumBuildingsPerHeight(numPerHeight)
@@ -680,7 +677,6 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             numPerHeight[1] += sp.pendingBuildingHeights.count(1)
             numPerHeight[2] += sp.pendingBuildingHeights.count(2)
             numPerHeight[3] += sp.pendingBuildingHeights.count(3)
-            numPerHeight[4] += sp.pendingBuildingHeights.count(4)
         while numToAssign > 0:
             smallestCount = None
             smallestTracks = []
@@ -700,7 +696,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             buildingTrackIndex = SuitDNA.suitDepts.index(buildingTrack)
             smallestCount = None
             smallestHeights = []
-            for height in xrange(5):
+            for height in xrange(4):
                 if totalWeightPerHeight[height]:
                     count = float(numPerHeight[height]) / float(self.BUILDING_HEIGHT_DISTRIBUTION[height])
                     if (smallestCount is None) or (count < smallestCount):
@@ -955,7 +951,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     def buildingListQuery(self):
         buildingDict = {}
         self.countNumBuildingsPerTrack(buildingDict)
-        buildingList = [0, 0, 0, 0, 0]
+        buildingList = [0, 0, 0, 0]
         for dept in SuitDNA.suitDepts:
             if dept in buildingDict:
                 buildingList[SuitDNA.suitDepts.index(dept)] = buildingDict[dept]
