@@ -1,8 +1,9 @@
 import math
 import random
 from pandac.PandaModules import VBase3, CollisionPlane, CollisionNode, CollisionSphere, CollisionTube, NodePath, Plane, Vec3, Vec2, Point3, BitMask32, CollisionHandlerEvent, TextureStage, VBase4, BoundingSphere
-from otp.nametag.NametagConstants import CFSpeech
-from otp.nametag.NametagGroup import NametagGroup
+from otp.nametag import NametagGroup
+from otp.nametag.NametagConstants import *
+from otp.nametag import NametagGlobals
 from direct.interval.IntervalGlobal import Sequence, Wait, Func, LerpHprInterval, Parallel, LerpPosInterval, Track, ActorInterval, ParallelEndTogether, LerpFunctionInterval, LerpScaleInterval, LerpPosHprInterval, SoundInterval
 from direct.task import Task
 from direct.fsm import FSM
@@ -65,6 +66,10 @@ class DistributedBossbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
     def announceGenerate(self):
         global OneBossCog
         DistributedBossCog.DistributedBossCog.announceGenerate(self)
+        self.setName(TTLocalizer.BossbotBossName)
+        nameInfo = TTLocalizer.BossCogNameWithDept % {'name': self.name,
+         'dept': SuitDNA.getDeptFullname(self.style.dept)}
+        self.setDisplayName(nameInfo)
         self.loadEnvironment()
         self.__makeResistanceToon()
         localAvatar.chatMgr.chatInputSpeedChat.addCEOMenu()
