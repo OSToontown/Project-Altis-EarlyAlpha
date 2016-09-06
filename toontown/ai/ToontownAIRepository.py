@@ -114,24 +114,27 @@ class ToontownAIRepository(ToontownInternalRepository):
     def handleConnected(self):
         ToontownInternalRepository.handleConnected(self)
         self.districtId = self.allocateChannel()
+        self.notify.info('Creating new district (%d)...' % self.districtId)
         self.distributedDistrict = ToontownDistrictAI(self)
         self.distributedDistrict.setName(self.districtName)
         self.distributedDistrict.generateWithRequiredAndId(self.districtId,
                                                            self.getGameDoId(), 2)
 
         # Claim ownership of that district...
+        self.notify.info('Claiming ownership of district (%d)...' % self.districtId)
         dg = PyDatagram()
         dg.addServerHeader(self.districtId, self.ourChannel, STATESERVER_OBJECT_SET_AI)
         dg.addChannel(self.ourChannel)
         self.send(dg)
-
+        self.notify.info('Creating global objects...')
         self.createGlobals()
+        self.notify.info('Creating the playgrounds...')
         self.createZones()
 
         self.statusSender.start()
-
+        self.notify.info('Making district available to enter...')
         self.distributedDistrict.b_setAvailable(1)
-        self.notify.info('District is now ready.')
+        self.notify.info('District is now ready. Have fun in Toontown!')
 
     def incrementPopulation(self):
         self.districtStats.b_setAvatarCount(self.districtStats.getAvatarCount() + 1)
@@ -166,7 +169,7 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.districtStats.settoontownDistrictId(self.districtId)
         self.districtStats.generateWithRequiredAndId(self.allocateChannel(),
                                                      self.getGameDoId(), 3)
-
+        self.notify.info('Created district stats AI (%d).' % self.districtStats.doId)
         self.timeManager = TimeManagerAI(self)
         self.timeManager.generateWithRequired(2)
 
