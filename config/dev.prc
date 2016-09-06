@@ -3,7 +3,6 @@ window-title Project Altis
 server-version 1.0.0
 build-version dev
 sync-video #f
-# want-dev breaks the game. Don't use it.
 want-dev #f
 preload-avatars #t
 texture-anisotropic-degree 16
@@ -13,9 +12,8 @@ default-directnotify-level info
 smooth-lag 0.4
 # Pretty sure you're gonna want membership...
 want-membership #t
-exec-chat #t
-want-doomsday #f
-want-toonfest #f
+
+
 
 # VFS for resources.
 vfs-mount resources/phase_3 /phase_3
@@ -42,40 +40,21 @@ dc-file config/ProjectAltis.dc
 
 # Game Features
 want-estates #t
-# They work fine.
-want-clarabelle-voice #t
-# Enables Clarabelle's voice from TTR.
 want-pets #f
 want-news-tab #f
 want-news-page #f
-# These work fine, but I dont know if they would be very useful
 want-accessories #t
-# Occasional AI Crash
 want-parties #t
-# Kinda unfinished.
 want-gardening #f
-# Not implemented.
 want-gifting #f
-# Not needed.
 want-cogdominiums #t
-# These also work!
 want-boarding-groups #t
 want-cheesy-expirations #t
 want-toontorial #f
 want-code-redemption #t
-# Works great!
 want-new-toonhall #t
 want-picnic-games #f
 
-want-map-hover #f
-want-tto-loading-screen #f
-want-tto-text #f
-want-tto-theme #f
-want-tto-catalog #f
-want-old-fireworks #f
-# TTO fireworks.
-want-tto-runsound #f
-# Run sound from TTO that makes the toons sound like they're running at 9001 MPH.
 
 # Playgrounds
 want-playgrounds #t
@@ -102,14 +81,11 @@ estate-day-night #t
 want-instant-parties #t
 show-total-population #f
 
-# Chat Features-- These should remain untouched. As this is an offline game, we do not need a whitelist.
 want-whitelist #f
 force-avatar-understandable #t
 force-player-understandable #t
 
-# Makeshift Holiday Manager
 force-holiday-decorations 6
 active-holidays 63, 64, 65, 66
 want-arg-manager #t
-want-mega-invasions #f
-mega-invasion-cog-type tm
+

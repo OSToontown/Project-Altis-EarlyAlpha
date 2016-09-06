@@ -4711,6 +4711,16 @@ def maxToon(hasConfirmed='UNCONFIRMED'):
     toon.b_setCogLevels([ToontownGlobals.MaxCogSuitLevel] * 4)
     toon.b_setCogTypes([SuitDNA.suitsPerDept-1] * 4)
 
+    # Full Cog Summons and Completed Cog Gallery
+    cogCount = []
+    from toontown.shtiker import CogPageGlobals
+    for deptIndex in xrange(4):
+        for cogIndex in xrange(8):
+            cogCount.append(CogPageGlobals.COG_QUOTAS[1][cogIndex])
+    toon.b_setCogCount(cogCount)
+    toon.b_setCogStatus([CogPageGlobals.COG_COMPLETE2] * 32)
+    toon.restockAllCogSummons()
+
     # High racing tickets
     toon.b_setTickets(99999)
 
