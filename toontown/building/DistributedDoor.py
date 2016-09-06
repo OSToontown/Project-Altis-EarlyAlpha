@@ -153,6 +153,20 @@ class DistributedDoor(DistributedObject.DistributedObject, DelayDeletable):
         else:
             return
 
+            
+    def hqTrigger(self):
+        if self.doorType in [DoorTypes.EXT_STANDARD, DoorTypes.EXT_COGHQ]:
+            building = self.getBuilding()
+            doorTrigger = building.find('**/' + self.getTriggerName())
+            if not doorTrigger.isEmpty():
+                TRIGGER_SHIFT_Y = 0.25
+                TRIGGER_SHIFT_Z = 1.00
+                if "_gag_shop_" in building.getName():
+                    doorTrigger.setY(doorTrigger.getY() + TRIGGER_SHIFT_Y)
+                else:
+                    doorTrigger.setY(doorTrigger.getY() - TRIGGER_SHIFT_Y)
+                doorTrigger.setZ(doorTrigger.getZ() + TRIGGER_SHIFT_Z)
+
     def setTriggerName_wip(self):
         building = self.getBuilding()
         doorTrigger = building.find('**/door_%d/**/door_trigger_%d' % (self.doorIndex, self.block))
@@ -210,6 +224,7 @@ class DistributedDoor(DistributedObject.DistributedObject, DelayDeletable):
             self.bHasFlat = not self.findDoorNode('door*flat', True).isEmpty()
         self.hideDoorParts()
         self.setTriggerName()
+        self.hqTrigger()
         self.accept(self.getEnterTriggerEvent(), self.doorTrigger)
         self.acceptOnce('clearOutToonInterior', self.doorTrigger)
         self.setupNametag()
