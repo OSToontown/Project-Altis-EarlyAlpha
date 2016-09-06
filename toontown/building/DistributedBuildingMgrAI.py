@@ -5,9 +5,9 @@ from otp.ai.AIBaseGlobal import *
 import DistributedBuildingAI
 import HQBuildingAI
 import GagshopBuildingAI
-#import PetshopBuildingAI
+import PetshopBuildingAI
 from toontown.building.KartShopBuildingAI import KartShopBuildingAI
-#from toontown.building import DistributedAnimBuildingAI
+from toontown.building import DistributedAnimBuildingAI
 from direct.directnotify import DirectNotifyGlobal
 from toontown.hood import ZoneUtil
 import time
@@ -58,6 +58,14 @@ class DistributedBuildingMgrAI:
         blocks = []
         for i in self.__buildings.values():
             if i.isEstablishedSuitBlock():
+                blocks.append(i.getBlock()[0])
+
+        return blocks
+        
+    def getEstablishedCogdoBlocks(self):
+        blocks = []
+        for i in self.__buildings.values():
+            if i.isEstablishedCogdoBlock():
                 blocks.append(i.getBlock()[0])
 
         return blocks
@@ -155,7 +163,8 @@ class DistributedBuildingMgrAI:
                 if ['state'] == 'suit':
                     building.setState('suit')
                 elif ['state'] == 'cogdo':
-                    building.setState('cogdo')
+                    if simbase.air.wantCogdominiums:
+                        building.setState('cogdo')
                 else:
                     building.setState('toon')
         else:
@@ -206,7 +215,6 @@ class DistributedBuildingMgrAI:
         return building
 
     def newPetshopBuilding(self, blockNumber):
-        return
         dnaStore = self.air.dnaStoreMap[self.canonicalBranchID]
         exteriorZoneId = dnaStore.getBlock(blockNumber).zone
         exteriorZoneId = ZoneUtil.getTrueZoneId(exteriorZoneId, self.branchID)
