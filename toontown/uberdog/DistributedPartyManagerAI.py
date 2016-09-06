@@ -120,7 +120,7 @@ class DistributedPartyManagerAI(DistributedObjectAI):
         avId = self.air.getAvatarIdFromSender()
         if isAvAboutToPlanParty:
             partyId = self.idPool.pop()
-            print 'pid %s' % partyId
+            print 'Party ID: %s' % partyId
             self.partyId2Host[partyId] = hostId
             self.partyId2PlanningZone[partyId] = zoneId
             self.host2PartyId[hostId] = partyId
@@ -287,14 +287,3 @@ class DistributedPartyManagerAI(DistributedObjectAI):
 
     def mwResponseUdToAllAi(self, todo0, todo1, todo2, todo3):
         pass
-
-#@magicWord()
-#def endParty():
-#    print 'magicworded'
-#    p = simbase.air.partyManager
-#    for i in p.id2Party:
-#        partyId = i
-#    p.closeParty(i)
-#    return 'bye, such code'
-#
-#    too jank to even use

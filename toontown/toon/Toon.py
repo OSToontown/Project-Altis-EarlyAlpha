@@ -211,30 +211,30 @@ def loadModels():
 
         for key in LegDict.keys():
             fileRoot = LegDict[key]
-            model = loader.loadModelNode('/phase_3' + fileRoot + '1000')
+            model = loader.loadModel('/phase_3' + fileRoot + '1000')
             Preloaded.append(model)
-            model = loader.loadModelNode('/phase_3' + fileRoot + '500')
+            model = loader.loadModel('/phase_3' + fileRoot + '500')
             Preloaded.append(model)
-            model = loader.loadModelNode('/phase_3' + fileRoot + '250')
+            model = loader.loadModel('/phase_3' + fileRoot + '250')
             Preloaded.append(model)
 
         for key in TorsoDict.keys():
             fileRoot = TorsoDict[key]
-            model = loader.loadModelNode('/phase_3' + fileRoot + '1000')
+            model = loader.loadModel('/phase_3' + fileRoot + '1000')
             Preloaded.append(model)
             if len(key) > 1:
-                model = loader.loadModelNode('/phase_3' + fileRoot + '500')
+                model = loader.loadModel('/phase_3' + fileRoot + '500')
                 Preloaded.append(model)
-                model = loader.loadModelNode('/phase_3' + fileRoot + '250')
+                model = loader.loadModel('/phase_3' + fileRoot + '250')
                 Preloaded.append(model)
 
         for key in HeadDict.keys():
             fileRoot = HeadDict[key]
-            model = loader.loadModelNode('/phase_3' + fileRoot + '1000')
+            model = loader.loadModel('/phase_3' + fileRoot + '1000')
             Preloaded.append(model)
-            model = loader.loadModelNode('/phase_3' + fileRoot + '500')
+            model = loader.loadModel('/phase_3' + fileRoot + '500')
             Preloaded.append(model)
-            model = loader.loadModelNode('/phase_3' + fileRoot + '250')
+            model = loader.loadModel('/phase_3' + fileRoot + '250')
             Preloaded.append(model)
 
 
@@ -1665,12 +1665,15 @@ class Toon(Avatar.Avatar, ToonHead):
         Emote.globalEmote.releaseAll(self, 'exitSwim')
 
     def startBobSwimTask(self):
-        swimBob = getattr(self, 'swimBob', None)
-        if swimBob:
-            swimBob.finish()
-        self.getGeomNode().setZ(4.0)
+        if getattr(self, 'swimBob', None):
+            self.swimBob.finish()
+            self.swimBob = None
         self.nametag3d.setZ(5.0)
-        self.swimBob = Sequence(self.getGeomNode().posInterval(1, (0, -3, 3), blendType='easeInOut'), self.getGeomNode().posInterval(1, (0, -3, 4), blendType='easeInOut'))
+        geomNode = self.getGeomNode()
+        geomNode.setZ(4.0)
+        self.swimBob = Sequence(
+            geomNode.posInterval(1, Point3(0, -3, 3), startPos=Point3(0, -3, 4), blendType='easeInOut'),
+            geomNode.posInterval(1, Point3(0, -3, 4), startPos=Point3(0, -3, 3), blendType='easeInOut'))
         self.swimBob.loop()
 
     def stopBobSwimTask(self):
@@ -3101,6 +3104,8 @@ class Toon(Avatar.Avatar, ToonHead):
         from toontown.battle import BattleProps
         pieName = ToontownBattleGlobals.pieNames[self.pieType]
         splatName = 'splat-%s' % pieName
+        if pieName == 'wedding-cake':
+            splatName = 'splat-birthday-cake'
         if pieName == 'lawbook':
             splatName = 'dust'
         splat = BattleProps.globalPropPool.getProp(splatName)
