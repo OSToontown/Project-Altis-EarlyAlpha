@@ -1,9 +1,6 @@
 import math
 import random
 from pandac.PandaModules import VBase3, CollisionPlane, CollisionNode, CollisionSphere, CollisionTube, NodePath, Plane, Vec3, Vec2, Point3, BitMask32, CollisionHandlerEvent, TextureStage, VBase4, BoundingSphere
-from otp.nametag import NametagGroup
-from otp.nametag.NametagConstants import *
-from otp.nametag import NametagGlobals
 from direct.interval.IntervalGlobal import Sequence, Wait, Func, LerpHprInterval, Parallel, LerpPosInterval, Track, ActorInterval, ParallelEndTogether, LerpFunctionInterval, LerpScaleInterval, LerpPosHprInterval, SoundInterval
 from direct.task import Task
 from direct.fsm import FSM
@@ -16,6 +13,7 @@ from toontown.toonbase import ToontownGlobals
 from toontown.suit import DistributedBossCog
 from toontown.toonbase import TTLocalizer
 from toontown.toonbase import ToontownGlobals
+from toontown.suit import Suit
 from toontown.suit import SuitDNA
 from toontown.toon import Toon
 from toontown.toon import ToonDNA
@@ -25,9 +23,10 @@ from toontown.toonbase import ToontownBattleGlobals
 from toontown.battle import RewardPanel
 from toontown.battle import MovieToonVictory
 from toontown.coghq import CogDisguiseGlobals
-from toontown.suit import Suit
-from toontown.suit import SuitDNA
 from toontown.effects import DustCloud
+from otp.nametag import NametagGroup
+from otp.nametag.NametagConstants import *
+from otp.nametag import NametagGlobals
 OneBossCog = None
 TTL = TTLocalizer
 
@@ -104,7 +103,6 @@ class DistributedBossbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.accept('closeEnter', self.closeEnter)
         self.accept('closeExit', self.closeExit)
         self.treads = self.find('**/treads')
-        self.bossLegs = self.find('**/bossCog-legs')
         demotedCeo = Suit.Suit()
         demotedCeo.dna = SuitDNA.SuitDNA()
         demotedCeo.dna.newSuit('f')
@@ -112,6 +110,8 @@ class DistributedBossbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         demotedCeo.reparentTo(self.geom)
         demotedCeo.loop('neutral')
         demotedCeo.stash()
+        demotedCeo.nametag3d.stash()
+        demotedCeo.nametag.destroy()
         self.demotedCeo = demotedCeo
         self.bossClub = loader.loadModel('phase_12/models/char/bossbotBoss-golfclub')
         overtimeOneClubSequence = Sequence(self.bossClub.colorScaleInterval(0.1, colorScale=VBase4(0, 1, 0, 1)), self.bossClub.colorScaleInterval(0.3, colorScale=VBase4(1, 1, 1, 1)))
@@ -1044,8 +1044,7 @@ class DistributedBossbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.speedRecoverRate = recoverRate
         self.speedRecoverStartTime = recoverStartTime
         speedFraction = max(1 - speedDamage / self.maxSpeedDamage, 0)
-        if not self.bossLegs.isEmpty():
-            self.bossLegs.setColorScale(1, speedFraction, speedFraction, 1)
+        self.treads.setColorScale(1, speedFraction, speedFraction, 1)
         taskName = 'RecoverSpeedDamage'
         taskMgr.remove(taskName)
         if self.speedRecoverRate:
@@ -1063,8 +1062,7 @@ class DistributedBossbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
     def __recoverSpeedDamage(self, task):
         speedDamage = self.getSpeedDamage()
         speedFraction = max(1 - speedDamage / self.maxSpeedDamage, 0)
-        if not self.bossLegs.isEmpty():
-            self.bossLegs.setColorScale(1, speedFraction, speedFraction, 1)
+        self.treads.setColorScale(1, speedFraction, speedFraction, 1)
         return task.cont
 
     def moveBossToPoint(self, fromPos, fromHpr, toPos, toHpr, reverse):
@@ -1099,10 +1097,7 @@ class DistributedBossbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.fromPos = fromPos
         self.dirVector = self.toPos - self.fromPos
         self.dirVector.normalize()
-        if not self.treads.isEmpty():
-            track = Sequence(Func(self.setPos, fromPos), Func(self.headsUp, toPos), Parallel(self.hprInterval(turnTime, toHpr, fromHpr), self.rollLeftTreads(turnTime, leftRate), self.rollRightTreads(turnTime, -leftRate)), Func(self.startMoveTask))
-        else:
-            track = Sequence(Func(self.setPos, fromPos), Func(self.headsUp, toPos), self.hprInterval(turnTime, toHpr, fromHpr), Func(self.startMoveTask))
+        track = Sequence(Func(self.setPos, fromPos), Func(self.headsUp, toPos), Parallel(self.hprInterval(turnTime, toHpr, fromHpr), self.rollLeftTreads(turnTime, leftRate), self.rollRightTreads(turnTime, -leftRate)), Func(self.startMoveTask))
         return (track, toHpr)
 
     def getCurTurnSpeed(self):
@@ -1132,11 +1127,10 @@ class DistributedBossbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         def rollTexMatrix(t, object = object):
             object.setTexOffset(TextureStage.getDefault(), t, 0)
 
-        if not self.treads.isEmpty():
-            self.treadsLeftPos += dt * self.getCurTreadSpeed()
-            self.treadsRightPos += dt * self.getCurTreadSpeed()
-            rollTexMatrix(self.treadsLeftPos, self.treadsLeft)
-            rollTexMatrix(self.treadsRightPos, self.treadsRight)
+        self.treadsLeftPos += dt * self.getCurTreadSpeed()
+        self.treadsRightPos += dt * self.getCurTreadSpeed()
+        rollTexMatrix(self.treadsLeftPos, self.treadsLeft)
+        rollTexMatrix(self.treadsRightPos, self.treadsRight)
         if distanceTravelledThisFrame >= distanceLeft:
             self.setPos(self.toPos)
             self.signalAtTable()
