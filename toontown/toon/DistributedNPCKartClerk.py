@@ -1,24 +1,23 @@
-from direct.gui.DirectGui import *
-from direct.task.Task import Task
-from panda3d.core import *
-
 from DistributedNPCToonBase import *
+from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 import NPCToons
-from toontown.racing.KartShopGlobals import *
-from toontown.racing.KartShopGui import *
+from direct.task.Task import Task
 from toontown.toonbase import TTLocalizer
+from toontown.racing.KartShopGui import *
+from toontown.racing.KartShopGlobals import *
 from otp.nametag.NametagConstants import *
 
-
 class DistributedNPCKartClerk(DistributedNPCToonBase):
+
     def __init__(self, cr):
         DistributedNPCToonBase.__init__(self, cr)
-
         self.isLocalToon = 0
         self.av = None
         self.button = None
         self.popupInfo = None
         self.kartShopGui = None
+        return
 
     def disable(self):
         self.ignoreAll()
@@ -33,8 +32,11 @@ class DistributedNPCKartClerk(DistributedNPCToonBase):
         self.av = None
         if self.isLocalToon:
             base.localAvatar.posCamera(0, 0)
-
         DistributedNPCToonBase.disable(self)
+        return
+
+    def generate(self):
+        DistributedNPCToonBase.generate(self)
 
     def getCollSphereRadius(self):
         return 2.25
@@ -46,6 +48,7 @@ class DistributedNPCKartClerk(DistributedNPCToonBase):
     def __handleUnexpectedExit(self):
         self.notify.warning('unexpected exit')
         self.av = None
+        return
 
     def resetKartShopClerk(self):
         self.ignoreAll()
@@ -59,7 +62,6 @@ class DistributedNPCKartClerk(DistributedNPCToonBase):
         self.detectAvatars()
         self.clearMat()
         if self.isLocalToon:
-            self.showNametag2d()
             self.freeAvatar()
         return Task.done
 
@@ -94,11 +96,12 @@ class DistributedNPCKartClerk(DistributedNPCToonBase):
                 self.accept(self.av.uniqueName('disable'), self.__handleUnexpectedExit)
             self.setupAvatars(self.av)
             if self.isLocalToon:
-                self.hideNametag2d()
                 camera.wrtReparentTo(render)
                 quat = Quat()
                 quat.setHpr((-150, -2, 0))
                 camera.posQuatInterval(1, Point3(-5, 9, base.localAvatar.getHeight() - 0.5), quat, other=self, blendType='easeOut').start()
+                #camera.lerpPosHpr(-5, 9, base.localAvatar.getHeight() - 0.5, -150, -2, 0, 1, other=self, blendType='easeOut', task=self.uniqueName('lerpCamera'))
+            if self.isLocalToon:
                 taskMgr.doMethodLater(1.0, self.popupKartShopGUI, self.uniqueName('popupKartShopGUI'))
         elif mode == NPCToons.SELL_MOVIE_COMPLETE:
             self.setChatAbsolute(TTLocalizer.STOREOWNER_GOODBYE, CFSpeech | CFTimeout)
@@ -106,6 +109,10 @@ class DistributedNPCKartClerk(DistributedNPCToonBase):
         elif mode == NPCToons.SELL_MOVIE_PETCANCELED:
             self.setChatAbsolute(TTLocalizer.STOREOWNER_GOODBYE, CFSpeech | CFTimeout)
             self.resetKartShopClerk()
+        elif mode == NPCToons.SELL_MOVIE_NO_MONEY:
+            self.notify.warning('SELL_MOVIE_NO_MONEY should not be called')
+            self.resetKartShopClerk()
+        return
 
     def __handleBuyKart(self, kartID):
         self.sendUpdate('buyKart', [kartID])
@@ -120,6 +127,7 @@ class DistributedNPCKartClerk(DistributedNPCToonBase):
             self.kartShopGui = None
         if not bTimedOut:
             self.sendUpdate('transactionDone')
+        return
 
     def popupKartShopGUI(self, task):
         self.setChatAbsolute('', CFSpeech)

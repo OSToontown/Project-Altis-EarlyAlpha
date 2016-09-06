@@ -45,8 +45,7 @@ class CogdoFlyingLocalPlayer(CogdoFlyingPlayer):
                       'FreeFly',
                       'Running',
                       'HitWhileFlying',
-                      'InWhirlwind',
-                      'WaitingForWin'],
+                      'InWhirlwind'],
          'InWhirlwind': ['Inactive',
                          'OutOfTime',
                          'Death',
@@ -164,7 +163,7 @@ class CogdoFlyingLocalPlayer(CogdoFlyingPlayer):
         self.deathInterval = Sequence(Func(self.resetVelocities), Parallel(Parallel(Func(self._deathSfx.play), LerpHprInterval(self.toon, 1.0, Vec3(720, 0, 0)), LerpFunctionInterval(self.toon.setScale, fromData=1.0, toData=0.1, duration=1.0), self.toon.posInterval(0.5, Vec3(0, 0, -25), other=self.toon)), Sequence(Wait(0.5), Func(base.transitions.irisOut))), Func(self.toon.stash), Wait(1.0), Func(self.toonSpawnFunc), name='%s.deathInterval' % self.__class__.__name__)
         self.outOfTimeInterval = Sequence(Func(messenger.send, CogdoFlyingLocalPlayer.PlayWaitingMusicEventName), Func(self._loseSfx.play), Func(base.transitions.irisOut), Wait(1.0), Func(self.resetVelocities), Func(self._guiMgr.setMessage, '', transition=None), Func(self.toon.stash), Func(self.toonSpawnFunc), name='%s.outOfTimeInterval' % self.__class__.__name__)
         self.spawnInterval = Sequence(Func(self.resetToonFunc), Func(self._cameraMgr.update, 0.0), Func(self._level.update), Func(self.toon.cnode.broadcastPosHprFull), Func(base.transitions.irisIn), Wait(0.5), Func(self.toon.setAnimState, 'TeleportIn'), Func(self.toon.unstash), Wait(1.5), Func(self.requestPostSpawnState), name='%s.spawnInterval' % self.__class__.__name__)
-        self.waitingForWinInterval = Sequence(Func(self._guiMgr.setMessage, TTLocalizer.WaitingForOtherToonsDots % '.'), Wait(1.5), Func(self._guiMgr.setMessage, TTLocalizer.WaitingForOtherToonsDots % '..'), Wait(1.5), Func(self._guiMgr.setMessage, TTLocalizer.WaitingForOtherToonsDots % '...'), Wait(1.5), name='%s.waitingForWinInterval' % self.__class__.__name__)
+        self.waitingForWinInterval = Sequence(Func(self._guiMgr.setMessage, TTLocalizer.CogdoFlyingGameWaiting % '.'), Wait(1.5), Func(self._guiMgr.setMessage, TTLocalizer.CogdoFlyingGameWaiting % '..'), Wait(1.5), Func(self._guiMgr.setMessage, TTLocalizer.CogdoFlyingGameWaiting % '...'), Wait(1.5), name='%s.waitingForWinInterval' % self.__class__.__name__)
         self.waitingForWinSeq = Sequence(Func(self.setWaitingForWinState), Wait(4.0), Func(self.removeAllMemos), Wait(2.0), Func(self.game.distGame.d_sendRequestAction, Globals.AI.GameActions.LandOnWinPlatform, 0), Func(self.playWaitingForWinInterval), name='%s.waitingForWinSeq' % self.__class__.__name__)
         self.winInterval = Sequence(Func(self._guiMgr.setMessage, ''), Wait(4.0), Func(self.game.distGame.d_sendRequestAction, Globals.AI.GameActions.WinStateFinished, 0), name='%s.winInterval' % self.__class__.__name__)
         self.goSadSequence = Sequence(Wait(2.5), Func(base.transitions.irisOut, 1.5), name='%s.goSadSequence' % self.__class__.__name__)
@@ -556,33 +555,29 @@ class CogdoFlyingLocalPlayer(CogdoFlyingPlayer):
                 power = math.fabs(distance / fanHeight - 1.0) * powerRange + min
                 power = clamp(power, min, max)
                 blowVec *= power
-            if fan.index in self.fanIndex2ToonVelocity:
-                fanVelocity = self.fanIndex2ToonVelocity[fan.index]
-                fanVelocity += blowVec
+            fanVelocity = self.fanIndex2ToonVelocity[fan.index]
+            fanVelocity += blowVec
 
         removeList = []
         for fan in self.fansStillHavingEffect:
             if fan not in self.activeFans:
                 blowVec = fan.getBlowDirection()
                 blowVec *= Globals.Gameplay.ToonDeceleration['fan'] * dt
-                if fan.index in self.fanIndex2ToonVelocity:
-                    fanVelocity = Vec3(self.fanIndex2ToonVelocity[fan.index])
-                    lastLen = fanVelocity.length()
-                    fanVelocity -= blowVec
-                    if fanVelocity.length() > lastLen:
-                        removeList.append(fan)
-                    else:
-                        self.fanIndex2ToonVelocity[fan.index] = fanVelocity
+                fanVelocity = Vec3(self.fanIndex2ToonVelocity[fan.index])
+                lastLen = fanVelocity.length()
+                fanVelocity -= blowVec
+                if fanVelocity.length() > lastLen:
+                    removeList.append(fan)
+                else:
+                    self.fanIndex2ToonVelocity[fan.index] = fanVelocity
 
         for fan in removeList:
             self.fansStillHavingEffect.remove(fan)
-            if fan.index in self.fanIndex2ToonVelocity:
-                del self.fanIndex2ToonVelocity[fan.index]
+            del self.fanIndex2ToonVelocity[fan.index]
 
         self.fanVelocity = Vec3(0.0, 0.0, 0.0)
         for fan in self.fansStillHavingEffect:
-            if fan.index in self.fanIndex2ToonVelocity:
-                self.fanVelocity += self.fanIndex2ToonVelocity[fan.index]
+            self.fanVelocity += self.fanIndex2ToonVelocity[fan.index]
 
         minVal = -Globals.Gameplay.ToonVelMax['fan']
         maxVal = Globals.Gameplay.ToonVelMax['fan']
@@ -710,7 +705,7 @@ class CogdoFlyingLocalPlayer(CogdoFlyingPlayer):
             self.notify.debug('Pressed Control and have fuel')
             self.request('FlyingUp')
         else:
-            self.ignore(base.JUMP)
+            self.ignore('control')
             self.ignore('lcontrol')
             self.acceptOnce('control', self.pressedControlWhileRunning)
             self.acceptOnce('lcontrol', self.pressedControlWhileRunning)
@@ -871,7 +866,7 @@ class CogdoFlyingLocalPlayer(CogdoFlyingPlayer):
             self._collideSfx.play()
         self.orthoWalk.start()
         self.setPropellerState(CogdoFlyingLocalPlayer.PropStates.Normal)
-        self.ignore(base.JUMP)
+        self.ignore('control')
         self.ignore('lcontrol')
         self.acceptOnce('control', self.pressedControlWhileRunning)
         self.acceptOnce('lcontrol', self.pressedControlWhileRunning)
@@ -886,7 +881,7 @@ class CogdoFlyingLocalPlayer(CogdoFlyingPlayer):
     def exitRunning(self):
         CogdoFlyingLocalPlayer.notify.debug("exit%s: '%s' -> '%s'" % (self.oldState, self.oldState, self.newState))
         self.orthoWalk.stop()
-        self.ignore(base.JUMP)
+        self.ignore('control')
         self.ignore('lcontrol')
 
     def enterOutOfTime(self):
@@ -1078,9 +1073,10 @@ class CogdoFlyingLocalPlayer(CogdoFlyingPlayer):
         elif gatherable.type == Globals.Level.GatherableTypes.Propeller:
             self.handleEnterPropeller(gatherable)
         elif gatherable.type == Globals.Level.GatherableTypes.LaffPowerup:
-            self.handleEnterLaffPowerup(gatherable)
+            self._getLaffSfx.play()
         elif gatherable.type == Globals.Level.GatherableTypes.InvulPowerup:
-            self.handleEnterInvulPowerup(gatherable)
+            self._getRedTapeSfx.play()
+            messenger.send(CogdoFlyingGuiManager.InvulnerableEventName)
 
     def handleEnterMemo(self, gatherable):
         self.score += 1
@@ -1101,10 +1097,3 @@ class CogdoFlyingLocalPlayer(CogdoFlyingPlayer):
             self._guiMgr.update()
             self._refuelSfx.play()
             self._refuelSpinSfx.play(volume=0.15)
-
-    def handleEnterLaffPowerup(self, gatherable):
-        self._getLaffSfx.play()
-
-    def handleEnterInvulPowerup(self, gatherable):
-        messenger.send(CogdoFlyingGuiManager.InvulnerableEventName)
-        self._getRedTapeSfx.play()

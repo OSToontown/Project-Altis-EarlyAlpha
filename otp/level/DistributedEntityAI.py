@@ -35,3 +35,11 @@ class DistributedEntityAI(DistributedObjectAI.DistributedObjectAI, Entity.Entity
 
     def getEntId(self):
         return self.entId
+
+    if __dev__:
+
+        def setParentEntId(self, parentEntId):
+            self.parentEntId = parentEntId
+            newZoneId = self.getZoneEntity().getZoneId()
+            if newZoneId != self.zoneId:
+                self.sendSetZone(newZoneId)

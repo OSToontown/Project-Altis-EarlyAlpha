@@ -1,3 +1,4 @@
+from direct.directnotify import DirectNotifyGlobal
 from direct.distributed.DistributedObjectAI import DistributedObjectAI
 from toontown.estate.DistributedHouseInteriorAI import DistributedHouseInteriorAI
 from toontown.estate.DistributedHouseDoorAI import DistributedHouseDoorAI
@@ -8,9 +9,8 @@ from otp.ai.MagicWordGlobal import *
 from toontown.catalog.CatalogFurnitureItem import *
 from toontown.catalog.CatalogItem import Customization, WindowPlacement, Location
 
-
 class DistributedHouseAI(DistributedObjectAI):
-    notify = directNotify.newCategory("DistributedHouseAI")
+    notify = DirectNotifyGlobal.directNotify.newCategory("DistributedHouseAI")
 
     def __init__(self, air):
         DistributedObjectAI.__init__(self, air)
@@ -21,9 +21,10 @@ class DistributedHouseAI(DistributedObjectAI):
         self.name = ''
         self.color = 0
         self.housePos = 0
-        self.gender = 0
-        self.isInteriorInitialized = 1
+        self.gender = 1
+        self.isInteriorInitialized = 1 # Only fresh DB houses are not inited.
 
+        # FIXME: Now I think I did this wrong...
         self.atticItems = CatalogItemList(store=Customization)
         self.interiorItems = CatalogItemList(store=Customization)
         self.interiorWallpaper = CatalogItemList(store=Customization)
@@ -34,7 +35,7 @@ class DistributedHouseAI(DistributedObjectAI):
 
     def announceGenerate(self):
         DistributedObjectAI.announceGenerate(self)
-        self.interiorZone = self.air.allocateZone()
+        self.interiorZone = self.air.allocateZone(owner=self.air.estateManager)
 
         self.door = DistributedHouseDoorAI(self.air, self.getDoId(), DoorTypes.EXT_STANDARD)
         self.door.setSwing(3)
@@ -55,7 +56,14 @@ class DistributedHouseAI(DistributedObjectAI):
         if self.avatarId:
             self.mailbox = DistributedMailboxAI(self.air, self)
             self.mailbox.generateWithRequired(self.zoneId)
+
+        if not self.isInteriorInitialized:
+            self.notify.info('Initializing interior...')
+            self.interior.initialize()
+            self.b_setInteriorInitialized(1)
+
         self.sendUpdate('setHouseReady', [])
+
 
     def delete(self):
         self.door.requestDelete()
@@ -265,21 +273,18 @@ class DistributedHouseAI(DistributedObjectAI):
 
     def addAtticItem(self, item):
         self.interior.furnitureManager.saveToHouse()
-        if item.getFlags() & FLTrunk:
-            self.atticItems.append(item)
-        elif item.replacesExisting() and item.hasExisting():
+        if item.replacesExisting() and item.hasExisting():
             if item.getFlags() & FLCloset:
-                items = ClosetToClothes.keys() if item.getFlags() & FLCloset else BankToMoney.keys()
-                
+                closets = ClosetToClothes.keys()
                 for itItem in self.interiorItems:
-                    if itItem.furnitureType in items:
+                    if itItem.furnitureType in closets:
                         posHpr = itItem.posHpr
                         self.interiorItems.remove(itItem)
                         item.posHpr = posHpr
                         self.interiorItems.append(item)
                         break
                 for itItem in self.atticItems:
-                    if itItem.furnitureType in items:
+                    if itItem.furnitureType in closets:
                         self.atticItems.remove(itItem)
                         self.atticItems.append(item)
                         break
@@ -300,9 +305,14 @@ class DistributedHouseAI(DistributedObjectAI):
         self.atticWallpaper.append(item)
         self.d_setAtticWallpaper(self.atticWallpaper.getBlob())
         self.interior.furnitureManager.loadFromHouse()
-    
-    def initializeInterior(self):
-        if (not self.isInteriorInitialized):
-            self.notify.info('Initializing interior...')
-            self.interior.initialize()
-            self.b_setInteriorInitialized(1)
+
+@magicWord(category=CATEGORY_OVERRIDE, types=[int])
+def houseType(type=0):
+    """Set target house type (must be spawned!). Default (if left blank) is 0 (normal house)."""
+    if not 0 <= type <= 5:
+        return "Invalid house type!"
+    if spellbook.getTarget().getHouseId() in simbase.air.doId2do:
+        house = simbase.air.doId2do[spellbook.getTarget().getHouseId()]
+        house.b_setHouseType(type)
+        return "House type set to %d." % type
+    return "House not loaded. Could not set type."

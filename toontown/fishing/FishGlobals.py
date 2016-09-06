@@ -19,9 +19,8 @@ OverTankLimit = 8
 FishItemNewEntry = 9
 FishItemNewRecord = 10
 BingoBoot = (BootItem, 99)
-ProbabilityDict = {94: FishItem,
-                   92: QuestItem,
- 95: JellybeanItem,
+ProbabilityDict = {93: FishItem,
+ 94: JellybeanItem,
  100: BootItem}
 SortedProbabilityCutoffs = ProbabilityDict.keys()
 SortedProbabilityCutoffs.sort()
@@ -33,7 +32,7 @@ Rod2JellybeanDict = {0: 10,
 HealAmount = 1
 JellybeanFishingHolidayScoreMultiplier = 2
 MAX_RARITY = 10
-GlobalRarityDialBase = 3.8
+GlobalRarityDialBase = 4.3
 FishingAngleMax = 50.0
 OVERALL_VALUE_SCALE = 15
 RARITY_VALUE_SCALE = 0.2
@@ -51,22 +50,12 @@ RodPriceDict = {0: 0,
  2: 800,
  3: 1200,
  4: 2000}
-TankPriceDict = {0: 0,
- 40: 400,
- 60: 800,
- 80: 1200,
- 100: 2000}
-NextTank = {20: 40,
- 40: 60,
- 60: 80,
- 80: 100}
 RodRarityFactor = {0: 1.0 / (GlobalRarityDialBase * 1),
  1: 1.0 / (GlobalRarityDialBase * 0.975),
  2: 1.0 / (GlobalRarityDialBase * 0.95),
  3: 1.0 / (GlobalRarityDialBase * 0.9),
  4: 1.0 / (GlobalRarityDialBase * 0.85)}
 MaxRodId = 4
-MaxTank = 100
 FishAudioFileDict = {-1: ('Clownfish.ogg',
       1,
       1.5,
@@ -142,10 +131,6 @@ FishAudioFileDict = {-1: ('Clownfish.ogg',
  34: ('DevilRay.ogg',
       0,
       0,
-      1.0),
- 36: ('Holy_Mackerel.ogg',
-      1,
-      0.9,
       1.0)}
 FishFileDict = {-1: (4,
       'clownFish-zero',
@@ -317,16 +302,7 @@ FishFileDict = {-1: (4,
       (0, 0, 0),
       0.4,
       -35,
-      20),
- 36: (4,
-      'pianoTuna-zero',
-      'pianoTuna-swim',
-      'pianoTuna-swim',
-      None,
-      (0.3, 0, 0.0),
-      0.6,
-      40,
-      30)}
+      20)}
 FISH_PER_BONUS = 10
 TrophyDict = {0: (TTLocalizer.FishTrophyNameDict[0],),
  1: (TTLocalizer.FishTrophyNameDict[1],),
@@ -372,15 +348,15 @@ __fishDict = {0: ((1,
      (5,
       11,
       4,
-      (TTG.LullabyLane, TTG.BedtimeBoulevard)),
+      (TTG.LullabyLane,)),
      (2,
       6,
       3,
-      (TTG.DaisyGardens, TTG.MyEstate, TTG.OutdoorZone)),
+      (TTG.DaisyGardens, TTG.MyEstate)),
      (5,
       11,
       2,
-      (TTG.DonaldsDreamland, TTG.MyEstate, TTG.OutdoorZone))),
+      (TTG.DonaldsDreamland, TTG.MyEstate))),
  4: ((2,
       8,
       1,
@@ -404,7 +380,7 @@ __fishDict = {0: ((1,
  8: ((1,
       5,
       1,
-      (TTG.FunnyFarm + 100, Anywhere)),
+      (Anywhere,)),
      (2,
       6,
       2,
@@ -416,15 +392,15 @@ __fishDict = {0: ((1,
      (1,
       5,
       7,
-      (TTG.MyEstate, TTG.OutdoorZone, Anywhere)),
+      (TTG.MyEstate, Anywhere)),
      (1,
       5,
       10,
-      (TTG.MyEstate, TTG.OutdoorZone, Anywhere))),
+      (TTG.MyEstate, Anywhere))),
  10: ((6,
        10,
        9,
-       (TTG.MyEstate, TTG.OutdoorZone, Anywhere)),),
+       (TTG.MyEstate, Anywhere)),),
  12: ((7,
        15,
        1,
@@ -432,15 +408,15 @@ __fishDict = {0: ((1,
       (18,
        20,
        6,
-       (TTG.DonaldsDock, TTG.MyEstate, TTG.OutdoorZone)),
+       (TTG.DonaldsDock, TTG.MyEstate)),
       (1,
        5,
        5,
-       (TTG.DonaldsDock, TTG.MyEstate, TTG.OutdoorZone)),
+       (TTG.DonaldsDock, TTG.MyEstate)),
       (3,
        7,
        4,
-       (TTG.DonaldsDock, TTG.MyEstate, TTG.OutdoorZone)),
+       (TTG.DonaldsDock, TTG.MyEstate)),
       (1,
        2,
        2,
@@ -448,10 +424,10 @@ __fishDict = {0: ((1,
  14: ((2,
        6,
        1,
-       (TTG.DaisyGardens, TTG.MyEstate, TTG.OutdoorZone, Anywhere)), (2,
+       (TTG.DaisyGardens, TTG.MyEstate, Anywhere)), (2,
        6,
        3,
-       (TTG.DaisyGardens, TTG.MyEstate, TTG.OutdoorZone))),
+       (TTG.DaisyGardens, TTG.MyEstate))),
  16: ((4,
        12,
        5,
@@ -483,7 +459,7 @@ __fishDict = {0: ((1,
       (6,
        10,
        8,
-       (TTG.LullabyLane, TTG.BedtimeBoulevard)),
+       (TTG.LullabyLane,)),
       (1,
        1,
        3,
@@ -491,7 +467,7 @@ __fishDict = {0: ((1,
       (2,
        6,
        6,
-       (TTG.LullabyLane, TTG.BedtimeBoulevard)),
+       (TTG.LullabyLane,)),
       (10,
        14,
        4,
@@ -499,19 +475,19 @@ __fishDict = {0: ((1,
  22: ((12,
        16,
        2,
-       (TTG.MyEstate, TTG.OutdoorZone, TTG.DaisyGardens, Anywhere)),
+       (TTG.MyEstate, TTG.DaisyGardens, Anywhere)),
       (14,
        18,
        3,
-       (TTG.MyEstate, TTG.OutdoorZone, TTG.DaisyGardens, Anywhere)),
+       (TTG.MyEstate, TTG.DaisyGardens, Anywhere)),
       (14,
        20,
        5,
-       (TTG.MyEstate, TTG.OutdoorZone, TTG.DaisyGardens)),
+       (TTG.MyEstate, TTG.DaisyGardens)),
       (14,
        20,
        7,
-       (TTG.MyEstate, TTG.OutdoorZone, TTG.DaisyGardens))),
+       (TTG.MyEstate, TTG.DaisyGardens))),
  24: ((9,
        11,
        3,
@@ -593,19 +569,19 @@ __fishDict = {0: ((1,
  32: ((1,
        5,
        2,
-       (TTG.ToontownCentral, TTG.MyEstate, TTG.OutdoorZone, Anywhere)),
+       (TTG.ToontownCentral, TTG.MyEstate, Anywhere)),
       (1,
        5,
        3,
-       (TTG.TheBrrrgh, TTG.MyEstate, TTG.OutdoorZone, Anywhere)),
+       (TTG.TheBrrrgh, TTG.MyEstate, Anywhere)),
       (1,
        5,
        4,
-       (TTG.DaisyGardens, TTG.MyEstate, TTG.OutdoorZone)),
+       (TTG.DaisyGardens, TTG.MyEstate)),
       (1,
        5,
        5,
-       (TTG.DonaldsDreamland, TTG.MyEstate, TTG.OutdoorZone)),
+       (TTG.DonaldsDreamland, TTG.MyEstate)),
       (1,
        5,
        10,
@@ -613,23 +589,7 @@ __fishDict = {0: ((1,
  34: ((1,
        20,
        10,
-       (TTG.DonaldsDreamland, Anywhere)),),
- 36: ((10,
-       16,
-       8,
-       (TTG.DonaldsDock,)),
-      (12,
-       18,
-       8,
-       (TTG.DonaldsDock,)),
-      (9,
-       12,
-       6,
-       (TTG.DonaldsDock, Anywhere)),
-      (16,
-       25,
-       8,
-       (TTG.DonaldsDock, Anywhere)))}
+       (TTG.DonaldsDreamland, Anywhere)),)}
 
 def getSpecies(genus):
     return __fishDict[genus]
@@ -644,9 +604,9 @@ ROD_WEIGHT_MAX_INDEX = 1
 ROD_CAST_COST_INDEX = 2
 __rodDict = {0: (0, 4, 1),
  1: (0, 8, 2),
- 2: (0, 16, 3),
- 3: (0, 24, 4),
- 4: (0, 32, 5)}
+ 2: (0, 12, 3),
+ 3: (0, 16, 4),
+ 4: (0, 20, 5)}
 
 def getNumRods():
     return len(__rodDict)
@@ -742,12 +702,15 @@ def getValue(genus, species, weight):
     value = OVERALL_VALUE_SCALE * (rarityValue + weightValue)
     finalValue = int(ceil(value))
     base = getBase()
-    newsManager = base.cr.newsManager if hasattr(base, 'cr') else simbase.air.newsManager
-
-    if newsManager.isHolidayRunning(ToontownGlobals.JELLYBEAN_FISHING_HOLIDAY) or newsManager.isHolidayRunning(ToontownGlobals.JELLYBEAN_FISHING_HOLIDAY_MONTH):
+    if hasattr(base, 'cr') and base.cr:
+        if hasattr(base.cr, 'newsManager') and base.cr.newsManager:
+            holidayIds = base.cr.newsManager.getHolidayIdList()
+            if ToontownGlobals.JELLYBEAN_FISHING_HOLIDAY in holidayIds or ToontownGlobals.JELLYBEAN_FISHING_HOLIDAY_MONTH in holidayIds:
+                finalValue *= JellybeanFishingHolidayScoreMultiplier
+    elif ToontownGlobals.JELLYBEAN_FISHING_HOLIDAY in simbase.air.holidayManager.currentHolidays or ToontownGlobals.JELLYBEAN_FISHING_HOLIDAY_MONTH in simbase.air.holidayManager.currentHolidays:
         finalValue *= JellybeanFishingHolidayScoreMultiplier
-
     return finalValue
+
 
 __totalNumFish = 0
 __emptyRodDict = {}
@@ -757,12 +720,12 @@ for rodIndex in __rodDict:
 __anywhereDict = copy.deepcopy(__emptyRodDict)
 __pondInfoDict = {}
 for genus, speciesList in __fishDict.items():
-    for species in xrange(len(speciesList)):
+    for species in range(len(speciesList)):
         __totalNumFish += 1
         speciesDesc = speciesList[species]
         rarity = speciesDesc[RARITY_INDEX]
         zoneList = speciesDesc[ZONE_LIST_INDEX]
-        for zoneIndex in xrange(len(zoneList)):
+        for zoneIndex in range(len(zoneList)):
             zone = zoneList[zoneIndex]
             effectiveRarity = getEffectiveRarity(rarity, zoneIndex)
             if zone == Anywhere:
@@ -777,7 +740,7 @@ for genus, speciesList in __fishDict.items():
                 if subZones:
                     pondZones.extend(subZones)
                 for pondZone in pondZones:
-                    if pondZone in __pondInfoDict:
+                    if __pondInfoDict.has_key(pondZone):
                         rodDict = __pondInfoDict[pondZone]
                     else:
                         rodDict = copy.deepcopy(__emptyRodDict)
@@ -813,7 +776,7 @@ def testRarity(rodId = 0, numIter = 100000):
      8: 0,
      9: 0,
      10: 0}
-    for i in xrange(numIter):
+    for i in range(numIter):
         v = __rollRarityDice(rodId)
         d[v] += 1
 
@@ -880,10 +843,10 @@ def generateFishingReport(numCasts = 10000, hitRate = 0.8):
     for pond in __pondInfoDict:
         totalPondMoney[pond] = 0
         totalPondBaitCost[pond] = 0
-        for rod in xrange(MaxRodId + 1):
+        for rod in range(MaxRodId + 1):
             totalRodMoney.setdefault(rod, 0)
             baitCost = getCastCost(rod)
-            for cast in xrange(numCasts):
+            for cast in range(numCasts):
                 totalPondBaitCost[pond] += baitCost
                 if random.random() > hitRate:
                     continue
@@ -907,7 +870,7 @@ def generateFishingReport(numCasts = 10000, hitRate = 0.8):
     numPonds = len(totalPondMoney)
     for pond, money in totalPondMoney.items():
         baitCost = 0
-        for rod in xrange(MaxRodId + 1):
+        for rod in range(MaxRodId + 1):
             baitCost += getCastCost(rod)
 
         totalCastCost = baitCost * numCasts

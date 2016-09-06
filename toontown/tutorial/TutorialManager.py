@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.distributed import DistributedObject
 from direct.directnotify import DirectNotifyGlobal
 from toontown.hood import ZoneUtil
@@ -13,7 +13,6 @@ class TutorialManager(DistributedObject.DistributedObject):
     def generate(self):
         DistributedObject.DistributedObject.generate(self)
         messenger.send('tmGenerate')
-        self.cr.tutorialManager = self
         self.accept('requestTutorial', self.d_requestTutorial)
         self.accept('requestSkipTutorial', self.d_requestSkipTutorial)
         self.accept('rejectTutorial', self.d_rejectTutorial)

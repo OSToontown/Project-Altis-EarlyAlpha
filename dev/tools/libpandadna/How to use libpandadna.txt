@@ -1,6 +1,0 @@
-How to use libpandadna:
-
-1. Copy and paste the dna file, that you want to compile to .pdna, in the compiler folder
-2. Click on File, then scroll over Open command prompt, and click on Open command prompt
-3. In the command prompt window, type in python compile.py test.dna (test.dna is the name of dna file)
-4. Wait a couple of minutes, and then it should create the .pdna for your dna file

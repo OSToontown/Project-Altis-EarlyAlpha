@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToontownBattleGlobals import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.distributed.PyDatagram import PyDatagram
@@ -12,7 +12,7 @@ class Experience:
         self.owner = owner
         if expStr == None:
             self.experience = []
-            for track in xrange(0, len(Tracks)):
+            for track in range(0, len(Tracks)):
                 self.experience.append(StartingLevel)
 
         else:
@@ -25,7 +25,7 @@ class Experience:
     def makeNetString(self):
         dataList = self.experience
         datagram = PyDatagram()
-        for track in xrange(0, len(Tracks)):
+        for track in range(0, len(Tracks)):
             datagram.addUint16(dataList[track])
 
         dgi = PyDatagramIterator(datagram)
@@ -35,7 +35,7 @@ class Experience:
         dataList = []
         dg = PyDatagram(netString)
         dgi = PyDatagramIterator(dg)
-        for track in xrange(0, len(Tracks)):
+        for track in range(0, len(Tracks)):
             dataList.append(dgi.getUint16())
 
         return dataList
@@ -44,35 +44,42 @@ class Experience:
         if type(track) == type(''):
             track = Tracks.index(track)
         self.notify.debug('adding %d exp to track %d' % (amount, track))
-        if self.experience[track] + amount <= MaxSkill:
+        if self.owner.getGameAccess() == OTPGlobals.AccessFull:
+            if self.experience[track] + amount <= MaxSkill:
+                self.experience[track] += amount
+            else:
+                self.experience[track] = MaxSkill
+        elif self.experience[track] + amount <= UnpaidMaxSkills[track]:
             self.experience[track] += amount
+        elif self.experience[track] > UnpaidMaxSkills[track]:
+            self.experience[track] += 0
         else:
-            self.experience[track] = MaxSkill
+            self.experience[track] = UnpaidMaxSkills[track]
 
     def maxOutExp(self):
-        for track in xrange(0, len(Tracks)):
+        for track in range(0, len(Tracks)):
             self.experience[track] = MaxSkill - UberSkill
 
     def maxOutExpMinusOne(self):
-        for track in xrange(0, len(Tracks)):
+        for track in range(0, len(Tracks)):
             self.experience[track] = MaxSkill - 1
 
     def makeExpHigh(self):
-        for track in xrange(0, len(Tracks)):
+        for track in range(0, len(Tracks)):
             self.experience[track] = Levels[track][len(Levels[track]) - 1] - 1
 
     def makeExpRegular(self):
         import random
-        for track in xrange(0, len(Tracks)):
+        for track in range(0, len(Tracks)):
             rank = random.choice((0, int(random.random() * 1500.0), int(random.random() * 2000.0)))
             self.experience[track] = Levels[track][len(Levels[track]) - 1] - rank
 
     def zeroOutExp(self):
-        for track in xrange(0, len(Tracks)):
+        for track in range(0, len(Tracks)):
             self.experience[track] = StartingLevel
 
     def setAllExp(self, num):
-        for track in xrange(0, len(Tracks)):
+        for track in range(0, len(Tracks)):
             self.experience[track] = num
 
     def getExp(self, track):

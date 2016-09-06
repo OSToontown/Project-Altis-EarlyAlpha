@@ -67,8 +67,8 @@ class Nametag2d(Nametag, MarginPopup):
         self.arrow.setScale(self.ARROW_SCALE)
         self.arrow.setColor(ARROW_COLORS.get(self.colorCode, self.nameFg))
 
-    def update(self, scale=True):
-        Nametag.update(self, scale)
+    def update(self):
+        Nametag.update(self)
         self.considerUpdateClickRegion()
 
     def marginVisibilityChanged(self):

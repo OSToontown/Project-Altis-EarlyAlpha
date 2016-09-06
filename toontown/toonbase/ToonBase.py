@@ -1,48 +1,33 @@
-import atexit
+from otp.otpbase import OTPBase
+from otp.otpbase import OTPLauncherGlobals
+from otp.otpbase import OTPGlobals
+from direct.showbase.PythonUtil import *
+import ToontownGlobals
 from direct.directnotify import DirectNotifyGlobal
-from direct.filter.CommonFilters import CommonFilters
+import ToontownLoader
 from direct.gui import DirectGuiGlobals
 from direct.gui.DirectGui import *
-from direct.showbase.PythonUtil import *
 from direct.showbase.Transitions import Transitions
-from direct.task import *
-import math
-import os
-from panda3d.core import *
-import random
-import shutil
-from sys import platform
-import sys
-import tempfile
-import time
-
-import ToontownGlobals
-import ToontownLoader
-from otp.otpbase import OTPBase
-from otp.otpbase import OTPGlobals
+from pandac.PandaModules import *
+from direct.interval.IntervalGlobal import Sequence, Func, Wait
 from otp.nametag.ChatBalloon import ChatBalloon
 from otp.nametag import NametagGlobals
 from otp.margins.MarginManager import MarginManager
+import sys
+import os
+import math
+import tempfile
+import shutil
+import atexit
+from toontown.toonbase import ToontownAccess
 from toontown.toonbase import TTLocalizer
 from toontown.toonbase import ToontownBattleGlobals
+from toontown.launcher import ToontownDownloadWatcher
 from toontown.toontowngui import TTDialog
+from sys import platform
 from DisplayOptions import DisplayOptions
-
-tempdir = tempfile.mkdtemp()
-vfs = VirtualFileSystem.getGlobalPtr()
-searchPath = DSearchPath()
-if __debug__:
-    searchPath.appendDirectory(Filename('resources/phase_3/etc'))
-searchPath.appendDirectory(Filename('/phase_3/etc'))
-
-for filename in ['toonmono.cur', 'icon.ico']:
-    p3filename = Filename(filename)
-    found = vfs.resolveFilename(p3filename, searchPath)
-    if not found:
-        continue
-    with open(os.path.join(tempdir, filename), 'wb') as f:
-        f.write(vfs.readFile(p3filename, False))
-loadPrcFileData('Window: icon', 'icon-filename %s' % Filename.fromOsSpecific(os.path.join(tempdir, 'icon.ico')))
+import otp.ai.DiagnosticMagicWords
+import time
 
 class ToonBase(OTPBase.OTPBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('ToonBase')
@@ -54,16 +39,16 @@ class ToonBase(OTPBase.OTPBase):
         base.enableSoundEffects(self.display.settings.getBool('game', 'sfx', True))
         self.disableShowbaseMouse()
         self.addCullBins()
-        self.debugRunningMultiplier /= OTPGlobals.ToonSpeedFactor
-        self.baseXpMultiplier = self.config.GetFloat('base-xp-multiplier', 1.0)
+        base.debugRunningMultiplier /= OTPGlobals.ToonSpeedFactor
         self.toonChatSounds = self.config.GetBool('toon-chat-sounds', 1)
-        self.placeBeforeObjects = self.config.GetBool('place-before-objects', 1)
+        self.placeBeforeObjects = config.GetBool('place-before-objects', 1)
         self.endlessQuietZone = False
         self.wantDynamicShadows = 0
         self.exitErrorCode = 0
         camera.setPosHpr(0, 0, 0, 0, 0, 0)
-        self.camLens.setMinFov(settings['fov']/(4./3.))
+        self.camLens.setMinFov(ToontownGlobals.DefaultCameraFov/(4./3.))
         self.camLens.setNearFar(ToontownGlobals.DefaultCameraNear, ToontownGlobals.DefaultCameraFar)
+        self.cam2d.node().setCameraMask(BitMask32.bit(1))
         self.musicManager.setVolume(0.65)
         self.setBackgroundColor(ToontownGlobals.DefaultBackgroundColor)
         tpm = TextPropertiesManager.getGlobalPtr()
@@ -75,7 +60,11 @@ class ToonBase(OTPBase.OTPBase):
         tpm.setProperties('candidate_inactive', candidateInactive)
         self.transitions.IrisModelName = 'phase_3/models/misc/iris'
         self.transitions.FadeModelName = 'phase_3/models/misc/fade'
+        self.snapshotSfx = base.loadSfx('phase_4/audio/sfx/Photo_shutter.ogg')
+        self.flashTrack = None
         self.exitFunc = self.userExit
+        if __builtins__.has_key('launcher') and launcher:
+            launcher.setPandaErrorCode(11)
         globalClock.setMaxDt(0.2)
         if self.config.GetBool('want-particles', 1) == 1:
             self.notify.debug('Enabling particles')
@@ -93,7 +82,6 @@ class ToonBase(OTPBase.OTPBase):
             self.accept(ToontownGlobals.MinimizeGameHotKeyRepeatOSX, self.minimizeGame)
 
         self.accept('f3', self.toggleGui)
-        self.accept('f4', self.oobe)
         self.accept('panda3d-render-error', self.panda3dRenderError)
         oldLoader = self.loader
         self.loader = ToontownLoader.ToontownLoader(self)
@@ -101,9 +89,11 @@ class ToonBase(OTPBase.OTPBase):
         oldLoader.destroy()
         self.accept('PandaPaused', self.disableAllAudio)
         self.accept('PandaRestarted', self.enableAllAudio)
+        self.friendMode = self.config.GetBool('switchboard-friends', 0)
         self.wantPets = self.config.GetBool('want-pets', 1)
         self.wantBingo = self.config.GetBool('want-fish-bingo', 1)
         self.wantKarts = self.config.GetBool('want-karts', 1)
+        self.wantNewSpecies = self.config.GetBool('want-new-species', 0)
         self.inactivityTimeout = self.config.GetFloat('inactivity-timeout', ToontownGlobals.KeyboardTimeout)
         if self.inactivityTimeout:
             self.notify.debug('Enabling Panda timeout: %s' % self.inactivityTimeout)
@@ -131,22 +121,30 @@ class ToonBase(OTPBase.OTPBase):
         if cogdoGameSafezoneId != -1:
             self.cogdoGameSafezoneId = cogdoGameSafezoneId
         ToontownBattleGlobals.SkipMovie = self.config.GetBool('skip-battle-movies', 0)
+        self.creditCardUpFront = self.config.GetInt('credit-card-up-front', -1)
+        if self.creditCardUpFront == -1:
+            del self.creditCardUpFront
+        else:
+            self.creditCardUpFront = self.creditCardUpFront != 0
         self.housingEnabled = self.config.GetBool('want-housing', 1)
         self.cannonsEnabled = self.config.GetBool('estate-cannons', 0)
         self.fireworksEnabled = self.config.GetBool('estate-fireworks', 0)
         self.dayNightEnabled = self.config.GetBool('estate-day-night', 0)
         self.cloudPlatformsEnabled = self.config.GetBool('estate-clouds', 0)
         self.greySpacing = self.config.GetBool('allow-greyspacing', 0)
+        self.goonsEnabled = self.config.GetBool('estate-goon', 0)
+        self.restrictTrialers = self.config.GetBool('restrict-trialers', 1)
+        self.roamingTrialers = self.config.GetBool('roaming-trialers', 1)
         self.slowQuietZone = self.config.GetBool('slow-quiet-zone', 0)
         self.slowQuietZoneDelay = self.config.GetFloat('slow-quiet-zone-delay', 5)
         self.killInterestResponse = self.config.GetBool('kill-interest-response', 0)
         tpMgr = TextPropertiesManager.getGlobalPtr()
         WLDisplay = TextProperties()
         WLDisplay.setSlant(0.3)
+        WLEnter = TextProperties()
+        WLEnter.setTextColor(1.0, 0.0, 0.0, 1)
         tpMgr.setProperties('WLDisplay', WLDisplay)
-        WLRed = tpMgr.getProperties('red')
-        WLRed.setTextColor(1.0, 0.0, 0.0, 1)
-        tpMgr.setProperties('WLRed', WLRed)
+        tpMgr.setProperties('WLEnter', WLEnter)
         del tpMgr
         self.lastScreenShotTime = globalClock.getRealTime()
         self.accept('InputState-forward', self.__walking)
@@ -157,35 +155,68 @@ class ToonBase(OTPBase.OTPBase):
         self.oldY = max(1, base.win.getYSize())
         self.aspectRatio = float(self.oldX) / self.oldY
         self.localAvatarStyle = None
-
-        self.filters = CommonFilters(self.win, self.cam)
-        self.wantCustomControls = settings.get('want-Custom-Controls', False)
-
-        self.MOVE_UP = 'arrow_up'   
-        self.MOVE_DOWN = 'arrow_down'
-        self.MOVE_LEFT = 'arrow_left'      
-        self.MOVE_RIGHT = 'arrow_right'
-        self.JUMP = 'control'
-        self.ACTION_BUTTON = 'delete'
-        keymap = settings.get('keymap', {})
-        if self.wantCustomControls:
-            self.MOVE_UP = keymap.get('MOVE_UP', self.MOVE_UP)
-            self.MOVE_DOWN = keymap.get('MOVE_DOWN', self.MOVE_DOWN)
-            self.MOVE_LEFT = keymap.get('MOVE_LEFT', self.MOVE_LEFT)
-            self.MOVE_RIGHT = keymap.get('MOVE_RIGHT', self.MOVE_RIGHT)
-            self.JUMP = keymap.get('JUMP', self.JUMP)
-            self.ACTION_BUTTON = keymap.get('ACTION_BUTTON', self.ACTION_BUTTON)
-            ToontownGlobals.OptionsPageHotkey = keymap.get('OPTIONS-PAGE', ToontownGlobals.OptionsPageHotkey)
-        
-        self.CHAT_HOTKEY = keymap.get('CHAT_HOTKEY', 'r')
+        return
 
     def openMainWindow(self, *args, **kw):
         result = OTPBase.OTPBase.openMainWindow(self, *args, **kw)
         self.setCursorAndIcon()
         return result
 
+    def windowEvent(self, win):
+        OTPBase.OTPBase.windowEvent(self, win)
+        if not config.GetInt('keep-aspect-ratio', 0):
+            return
+        x = max(1, win.getXSize())
+        y = max(1, win.getYSize())
+        maxX = base.pipe.getDisplayWidth()
+        maxY = base.pipe.getDisplayHeight()
+        cwp = win.getProperties()
+        originX = 0
+        originY = 0
+        if cwp.hasOrigin():
+            originX = cwp.getXOrigin()
+            originY = cwp.getYOrigin()
+            if originX > maxX:
+                originX = originX - maxX
+            if originY > maxY:
+                oringY = originY - maxY
+        maxX -= originX
+        maxY -= originY
+        if math.fabs(x - self.oldX) > math.fabs(y - self.oldY):
+            newY = x / self.aspectRatio
+            newX = x
+            if newY > maxY:
+                newY = maxY
+                newX = self.aspectRatio * maxY
+        else:
+            newX = self.aspectRatio * y
+            newY = y
+            if newX > maxX:
+                newX = maxX
+                newY = maxX / self.aspectRatio
+        wp = WindowProperties()
+        wp.setSize(newX, newY)
+        base.win.requestProperties(wp)
+        base.cam.node().getLens().setFilmSize(newX, newY)
+        self.oldX = newX
+        self.oldY = newY
+
     def setCursorAndIcon(self):
+        tempdir = tempfile.mkdtemp()
         atexit.register(shutil.rmtree, tempdir)
+        vfs = VirtualFileSystem.getGlobalPtr()
+
+        searchPath = DSearchPath()
+        searchPath.appendDirectory(Filename('/phase_3/etc'))
+
+        for filename in ['toonmono.cur', 'icon.ico']:
+            p3filename = Filename(filename)
+            found = vfs.resolveFilename(p3filename, searchPath)
+            if not found:
+                return # Can't do anything past this point.
+
+            with open(os.path.join(tempdir, filename), 'wb') as f:
+                f.write(vfs.readFile(p3filename, False))
 
         wp = WindowProperties()
         wp.setCursorFilename(Filename.fromOsSpecific(os.path.join(tempdir, 'toonmono.cur')))
@@ -196,7 +227,7 @@ class ToonBase(OTPBase.OTPBase):
         cbm = CullBinManager.getGlobalPtr()
         cbm.addBin('ground', CullBinManager.BTUnsorted, 18)
         cbm.addBin('shadow', CullBinManager.BTBackToFront, 19)
-        cbm.addBin('gui-popup', CullBinManager.BTUnsorted, 60)
+        cbm.addBin('gui-popup', CullBinManager.BTFixed, 60)
 
     def disableShowbaseMouse(self):
         self.useDrive()
@@ -217,7 +248,6 @@ class ToonBase(OTPBase.OTPBase):
         if not os.path.exists(TTLocalizer.ScreenshotPath):
             os.mkdir(TTLocalizer.ScreenshotPath)
             self.notify.info('Made new directory to save screenshots.')
-
         namePrefix = TTLocalizer.ScreenshotPath + launcher.logPrefix + 'screenshot'
         timedif = globalClock.getRealTime() - self.lastScreenShotTime
         if self.glitchCount > 10 and self.walking:
@@ -229,6 +259,9 @@ class ToonBase(OTPBase.OTPBase):
             self.screenshot(namePrefix=namePrefix)
             self.lastScreenShotTime = globalClock.getRealTime()
             return
+        if self.flashTrack and self.flashTrack.isPlaying():
+            self.flashTrack.finish()
+        self.transitions.noFade()
         coordOnScreen = self.config.GetBool('screenshot-coords', 0)
         self.localAvatar.stopThisFrame = 1
         ctext = self.localAvatar.getAvPosStr()
@@ -244,8 +277,16 @@ class ToonBase(OTPBase.OTPBase):
         self.graphicsEngine.renderFrame()
         self.screenshot(namePrefix=namePrefix, imageComment=ctext + ' ' + self.screenshotStr)
         self.lastScreenShotTime = globalClock.getRealTime()
-        self.snapshotSfx = base.loadSfx('phase_4/audio/sfx/Photo_shutter.ogg')
-        base.playSfx(self.snapshotSfx)
+        self.transitions.setFadeColor(1, 1, 1)
+        self.flashTrack = Sequence(
+            Func(base.playSfx, self.snapshotSfx),
+            Func(self.transitions.fadeOut, 0.15),
+            Wait(0.2),
+            Func(self.transitions.fadeIn, 0.8),
+            Wait(1.0),
+            Func(self.transitions.setFadeColor, 0, 0, 0)
+        )
+        self.flashTrack.start()
         if coordOnScreen:
             if strTextLabel is not None:
                 strTextLabel.destroy()
@@ -333,29 +374,41 @@ class ToonBase(OTPBase.OTPBase):
         for cell in cell_list:
             self.marginManager.setCellAvailable(cell, available)
 
-    def startShow(self, cr):
+    def cleanupDownloadWatcher(self):
+        self.downloadWatcher.cleanup()
+        self.downloadWatcher = None
+        return
+
+    def startShow(self, cr, launcherServer = None):
         self.cr = cr
+        if self.display.antialias:
+            render.setAntialias(AntialiasAttrib.MAuto)
         base.graphicsEngine.renderFrame()
-        # Get the base port.
-        serverPort = base.config.GetInt('server-port', 7199)
-
-        # Get the number of client-agents.
-        clientagents = base.config.GetInt('client-agents', 1) - 1
-
-        # Get a new port.
-        serverPort += (random.randint(0, clientagents) * 100)
-
+        self.downloadWatcher = ToontownDownloadWatcher.ToontownDownloadWatcher(TTLocalizer.LauncherPhaseNames)
+        if launcher.isDownloadComplete():
+            self.cleanupDownloadWatcher()
+        else:
+            self.acceptOnce('launcherAllPhasesComplete', self.cleanupDownloadWatcher)
+        gameServer = config.GetString('game-server', '')
+        if gameServer:
+            self.notify.info('Using game-server from Configrc: %s ' % gameServer)
+        elif launcherServer:
+            gameServer = launcherServer
+            self.notify.info('Using gameServer from launcher: %s ' % gameServer)
+        else:
+            gameServer = '25.2.142.65'
+        serverPort = config.GetInt('server-port', 7198)
         serverList = []
-        for name in launcher.getGameServer().split(';'):
+        for name in gameServer.split(';'):
             url = URLSpec(name, 1)
-            if base.config.GetBool('server-force-ssl', False):
+            if config.GetBool('server-force-ssl', False):
                 url.setScheme('s')
             if not url.hasPort():
                 url.setPort(serverPort)
             serverList.append(url)
 
         if len(serverList) == 1:
-            failover = base.config.GetString('server-failover', '')
+            failover = config.GetString('server-failover', '')
             serverURL = serverList[0]
             for arg in failover.split():
                 try:
@@ -369,37 +422,53 @@ class ToonBase(OTPBase.OTPBase):
                     serverList.append(url)
 
         cr.loginFSM.request('connect', [serverList])
+        self.ttAccess = ToontownAccess.ToontownAccess()
+        self.ttAccess.initModuleInfo()
 
-        # Start detecting speed hacks:
-        self.lastSpeedHackCheck = time.time()
-        self.lastTrueClockTime = TrueClock.getGlobalPtr().getLongTime()
-        taskMgr.add(self.__speedHackCheckTick, 'speedHackCheck-tick')
+        if config.GetBool('want-speedhack-fix', False):
+            # Start checking for speedhacks.
+            self.lastSpeedhackCheck = time.time()
+            taskMgr.doMethodLater(config.GetFloat('speedhack-interval', 10.0), self.__speedhackCheckTick, 'speedhack-tick')
 
-    def __speedHackCheckTick(self, task):
-        elapsed = time.time() - self.lastSpeedHackCheck
-        tcElapsed = TrueClock.getGlobalPtr().getLongTime() - self.lastTrueClockTime
-
-        if tcElapsed > (elapsed + 0.05):
-            # The TrueClock is running faster than it should. This means the
-            # player may have sped up the process. Disconnect them:
-            self.cr.stopReaderPollTask()
-            self.cr.lostConnection()
+    def __speedhackCheckTick(self, task):
+        # Check if the time elapsed is less than interval-1 (1 second extra just in case)
+        elapsed = time.time() - self.lastSpeedhackCheck
+        if elapsed < config.GetFloat('speedhack-interval', 10.0) - 1:
+            # They responded too fast. This indicates that the TaskManager is running faster
+            # than normal, and possibly means they sped the process up.
+            self.__killSpeedHacker()
             return task.done
+        # Clean! Lets wait until the next iteration...
+        self.lastSpeedhackCheck = time.time()
+        return task.again
 
-        self.lastSpeedHackCheck = time.time()
-        self.lastTrueClockTime = TrueClock.getGlobalPtr().getLongTime()
-
-        return task.cont
+    def __killSpeedHacker(self):
+        # go fuck yo' self and yo' cheat engine, fuck'r.
+        self.cr.bootedIndex = 128
+        self.cr.bootedText = 'SERVER CONNECTION FAILURE. CLIENT HAS EXCEEDED RATE-LIMIT.'
+        self.cr.stopReaderPollTask()
+        self.cr.lostConnection()
 
     def removeGlitchMessage(self):
         self.ignore('InputState-forward')
+        print 'ignoring InputState-forward'
 
     def exitShow(self, errorCode = None):
         self.notify.info('Exiting Toontown: errorCode = %s' % errorCode)
+        if errorCode:
+            launcher.setPandaErrorCode(errorCode)
+        else:
+            launcher.setPandaErrorCode(0)
         sys.exit()
 
     def setExitErrorCode(self, code):
         self.exitErrorCode = code
+        if os.name == 'nt':
+            exitCode2exitPage = {OTPLauncherGlobals.ExitEnableChat: 'chat',
+             OTPLauncherGlobals.ExitSetParentPassword: 'setparentpassword',
+             OTPLauncherGlobals.ExitPurchase: 'purchase'}
+            if code in exitCode2exitPage:
+                launcher.setRegistry('EXIT_PAGE', exitCode2exitPage[code])
 
     def getExitErrorCode(self):
         return self.exitErrorCode
@@ -410,6 +479,8 @@ class ToonBase(OTPBase.OTPBase):
         except:
             pass
 
+        if hasattr(self, 'ttAccess'):
+            self.ttAccess.delete()
         if self.cr.timeManager:
             self.cr.timeManager.setDisconnectReason(ToontownGlobals.DisconnectCloseWindow)
         base.cr._userLoggingOut = False
@@ -432,13 +503,18 @@ class ToonBase(OTPBase.OTPBase):
         self.exitShow()
 
     def panda3dRenderError(self):
+        launcher.setPandaErrorCode(14)
         if self.cr.timeManager:
             self.cr.timeManager.setDisconnectReason(ToontownGlobals.DisconnectGraphicsError)
         self.cr.sendDisconnect()
         sys.exit()
 
+    def getShardPopLimits(self):
+        return (config.GetInt('shard-low-pop', ToontownGlobals.LOW_POP), config.GetInt('shard-mid-pop', ToontownGlobals.MID_POP), config.GetInt('shard-high-pop', ToontownGlobals.HIGH_POP))
+
     def playMusic(self, music, looping = 0, interrupt = 1, volume = None, time = 0.0):
         OTPBase.OTPBase.playMusic(self, music, looping, interrupt, volume, time)
+
 
     # OS X Specific Actions
     def exitOSX(self):
@@ -467,21 +543,3 @@ class ToonBase(OTPBase.OTPBase):
         wp.setMinimized(True)
         base.win.requestProperties(wp)
 
-    def reloadControls(self):
-        keymap = settings.get('keymap', {})
-        self.CHAT_HOTKEY = keymap.get('CHAT_HOTKEY', 'r')
-        if self.wantCustomControls:
-            self.MOVE_UP = keymap.get('MOVE_UP', self.MOVE_UP)
-            self.MOVE_DOWN = keymap.get('MOVE_DOWN', self.MOVE_DOWN)
-            self.MOVE_LEFT = keymap.get('MOVE_LEFT', self.MOVE_LEFT)
-            self.MOVE_RIGHT = keymap.get('MOVE_RIGHT', self.MOVE_RIGHT)
-            self.JUMP = keymap.get('JUMP', self.JUMP)
-            self.ACTION_BUTTON = keymap.get('ACTION_BUTTON', self.ACTION_BUTTON)
-            ToontownGlobals.OptionsPageHotkey = keymap.get('OPTIONS-PAGE', ToontownGlobals.OptionsPageHotkey)
-        else:
-            self.MOVE_UP = 'arrow_up'
-            self.MOVE_DOWN = 'arrow_down'
-            self.MOVE_LEFT = 'arrow_left'      
-            self.MOVE_RIGHT = 'arrow_right'
-            self.JUMP = 'control'
-            self.ACTION_BUTTON = 'delete'

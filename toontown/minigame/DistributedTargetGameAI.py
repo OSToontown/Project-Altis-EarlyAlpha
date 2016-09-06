@@ -76,8 +76,8 @@ class DistributedTargetGameAI(DistributedMinigameAI):
         self.placeValue = highestValue * 0.5
         self.targetsPlaced = []
         placeList = []
-        for typeIndex in xrange(len(self.targetList)):
-            for targetIndex in xrange(self.targetList[typeIndex]):
+        for typeIndex in range(len(self.targetList)):
+            for targetIndex in range(self.targetList[typeIndex]):
                 goodPlacement = 0
                 while not goodPlacement:
                     placeX = random.random() * (fieldWidth * 0.6) - fieldWidth * 0.6 * 0.5
@@ -103,7 +103,7 @@ class DistributedTargetGameAI(DistributedMinigameAI):
     def setScore(self, scoreX, scoreY, other = None):
         avId = self.air.getAvatarIdFromSender()
         if avId not in self.avIdList:
-            self.air.writeServerEvent('suspicious', avId, 'RingGameAI.setScore: invalid avId')
+            self.air.writeServerEvent('suspicious', avId=avId, issue='RingGameAI.setScore: invalid avId')
             return
         topValue = 0
         hitTarget = None
@@ -221,7 +221,7 @@ class DistributedTargetGameAI(DistributedMinigameAI):
 
         self.scoreTrack.append(self.getScoreList())
         statMessage = 'MiniGame Stats : Target Game' + '\nScores' + '%s' % self.scoreTrack + '\nAvIds' + '%s' % self.scoreDict.keys() + '\nSafeZone' + '%s' % self.getSafezoneId()
-        self.air.writeServerEvent('MiniGame Stats', None, statMessage)
+        # jjkoletar: not interested in data atm self.air.writeServerEvent('MiniGame Stats', None, statMessage)
         self.sendUpdate('setGameDone', [])
         self.gameFSM.request('cleanup')
         DistributedMinigameAI.gameOver(self)

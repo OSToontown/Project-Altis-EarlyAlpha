@@ -1,29 +1,32 @@
-import copy
-from direct.actor import Actor
-from direct.distributed.ClockDelta import *
+from direct.directnotify import DirectNotifyGlobal
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
-from direct.interval.IntervalGlobal import *
-from panda3d.core import *
-import random
-
+from pandac.PandaModules import *
 from otp.avatar import Avatar
-from otp.otpbase import OTPGlobals
-from toontown.distributed import DelayDelete
-from toontown.effects import Bubbles
 from toontown.hood import ZoneUtil
-from toontown.safezone.OZPlayground import OZPlayground
+from toontown.launcher import DownloadForceAcknowledge
 from toontown.safezone.SafeZoneLoader import SafeZoneLoader
-from toontown.toon import Toon, ToonDNA
-
+from toontown.safezone.OZPlayground import OZPlayground
+from direct.actor import Actor
+from direct.interval.IntervalGlobal import *
+import random
+from toontown.distributed import DelayDelete
+from direct.distributed.ClockDelta import *
+from otp.otpbase import OTPGlobals
+import copy
+from toontown.effects import Bubbles
+import random
+if (__debug__):
+    import pdb
 
 class OZSafeZoneLoader(SafeZoneLoader):
+
     def __init__(self, hood, parentFSM, doneEvent):
         SafeZoneLoader.__init__(self, hood, parentFSM, doneEvent)
         self.musicFile = 'phase_6/audio/bgm/OZ_SZ.ogg'
         self.activityMusicFile = 'phase_6/audio/bgm/GS_KartShop.ogg'
-        self.dnaFile = 'phase_6/dna/outdoor_zone_sz.pdna'
-        self.safeZoneStorageDNAFile = 'phase_6/dna/storage_OZ_sz.pdna'
+        self.dnaFile = 'phase_6/dna/outdoor_zone_sz.xml'
+        self.safeZoneStorageDNAFile = 'phase_6/dna/storage_OZ_sz.xml'
         self.__toonTracks = {}
         del self.fsm
         self.fsm = ClassicFSM.ClassicFSM('SafeZoneLoader', [State.State('start', self.enterStart, self.exitStart, ['quietZone', 'playground', 'toonInterior']),
@@ -45,6 +48,10 @@ class OZSafeZoneLoader(SafeZoneLoader):
         waterfallPlacer = self.geom.find('**/waterfall*')
         binMgr = CullBinManager.getGlobalPtr()
         binMgr.addBin('water', CullBinManager.BTFixed, 29)
+        water = self.geom.find('**/water1*')
+        water.setTransparency(1)
+        water.setColorScale(1.0, 1.0, 1.0, 1.0)
+        water.setBin('water', 51, 1)
         pool = self.geom.find('**/pPlane5*')
         pool.setTransparency(1)
         pool.setColorScale(1.0, 1.0, 1.0, 1.0)
@@ -99,6 +106,7 @@ class OZSafeZoneLoader(SafeZoneLoader):
             mesh.setTexProjector(mesh.findTextureStage('default'), joint, self.waterfallActor)
         self.waterfallActor.setPos(waterfallPlacer.getPos())
         self.accept('clientLogout', self._handleLogout)
+        return
 
     def exit(self):
         self.clearToonTracks()
@@ -291,6 +299,7 @@ class OZSafeZoneLoader(SafeZoneLoader):
         self.geyserSoundNoToon.stop()
         self.geyserSoundNoToonInterval = None
         self.geyserSoundNoToon = None
+        return
 
     def enterPlayground(self, requestStatus):
         self.playgroundClass = OZPlayground
@@ -325,7 +334,7 @@ class OZSafeZoneLoader(SafeZoneLoader):
             return ZoneUtil.getHoodId(status['zoneId']) == self.hood.hoodId
 
     def enterGolfCourse(self, requestStatus):
-        if 'curseId' in requestStatus:
+        if requestStatus.has_key('curseId'):
             self.golfCourseId = requestStatus['courseId']
         else:
             self.golfCourseId = 0
@@ -369,5 +378,5 @@ class OZSafeZoneLoader(SafeZoneLoader):
             keyList.append(key)
 
         for key in keyList:
-            if key in self.__toonTracks:
+            if self.__toonTracks.has_key(key):
                 self.clearToonTrack(key)

@@ -1,28 +1,20 @@
+from pandac.PandaModules import *
+from toontown.toonbase.ToonBaseGlobal import *
 from direct.directnotify import DirectNotifyGlobal
-from direct.fsm import ClassicFSM, State
-from direct.fsm import State
-from direct.fsm import StateData
-from direct.showbase import DirectObject
-from direct.task import Task
-from panda3d.core import *
-import DistributedToonInterior
-from otp.distributed.TelemetryLimiter import RotationLimitToH, TLGatherAllAvs
 from toontown.hood import Place
 from toontown.hood import ZoneUtil
+from direct.showbase import DirectObject
+from direct.fsm import StateData
+from direct.fsm import ClassicFSM, State
+from direct.fsm import State
+from direct.task import Task
+from otp.distributed.TelemetryLimiter import RotationLimitToH, TLGatherAllAvs
+from toontown.toonbase import ToontownGlobals
+from toontown.toonbase import TTLocalizer
+from toontown.toon import NPCForceAcknowledge
+from toontown.toon import HealthForceAcknowledge
 from otp.nametag.NametagConstants import *
 from otp.nametag import NametagGlobals
-from toontown.toon import HealthForceAcknowledge
-from toontown.toon import NPCForceAcknowledge
-from toontown.toonbase import TTLocalizer
-from toontown.toonbase import ToontownGlobals
-from toontown.toonbase.ToonBaseGlobal import *
-
-##[x, y, h]
-InteriorTypes = {'toon_interior':[1.0, 13.0, 8.0],
-                 'toon_interior_2':[1.0, 13.0, 8.0],
-                 'toon_interior_L':[10.0, 7.5, -70.0],
-                 'toon_interior_T':[-1.0, 5.0, 14.0]
-}
 
 class ToonInterior(Place.Place):
     notify = DirectNotifyGlobal.directNotify.newCategory('ToonInterior')
@@ -31,21 +23,25 @@ class ToonInterior(Place.Place):
         Place.Place.__init__(self, loader, doneEvent)
         self.dnaFile = 'phase_7/models/modules/toon_interior'
         self.isInterior = 1
+        self.tfaDoneEvent = 'tfaDoneEvent'
         self.hfaDoneEvent = 'hfaDoneEvent'
         self.npcfaDoneEvent = 'npcfaDoneEvent'
         self.fsm = ClassicFSM.ClassicFSM('ToonInterior', [State.State('start', self.enterStart, self.exitStart, ['doorIn', 'teleportIn', 'tutorial']),
          State.State('walk', self.enterWalk, self.exitWalk, ['sit',
           'stickerBook',
           'doorOut',
+          'DFA',
+          'trialerFA',
           'teleportOut',
           'quest',
           'purchase',
           'phone',
           'stopped',
-          'pet',
-          'NPCFA']),
+          'pet']),
          State.State('sit', self.enterSit, self.exitSit, ['walk']),
          State.State('stickerBook', self.enterStickerBook, self.exitStickerBook, ['walk',
+          'DFA',
+          'trialerFA',
           'sit',
           'doorOut',
           'teleportOut',
@@ -53,14 +49,21 @@ class ToonInterior(Place.Place):
           'purchase',
           'phone',
           'stopped',
-          'pet',
-          'NPCFA']),
-         State.State('NPCFA', self.enterNPCFA, self.exitNPCFA, ['NPCFAReject', 'HFA', 'teleportOut', 'doorOut']),
+          'pet']),
+         State.State('trialerFA', self.enterTrialerFA, self.exitTrialerFA, ['trialerFAReject', 'DFA']),
+         State.State('trialerFAReject', self.enterTrialerFAReject, self.exitTrialerFAReject, ['walk']),
+         State.State('DFA', self.enterDFA, self.exitDFA, ['DFAReject',
+          'HFA',
+          'NPCFA',
+          'teleportOut',
+          'doorOut']),
+         State.State('DFAReject', self.enterDFAReject, self.exitDFAReject, ['walk']),
+         State.State('NPCFA', self.enterNPCFA, self.exitNPCFA, ['NPCFAReject', 'HFA', 'teleportOut']),
          State.State('NPCFAReject', self.enterNPCFAReject, self.exitNPCFAReject, ['walk']),
          State.State('HFA', self.enterHFA, self.exitHFA, ['HFAReject', 'teleportOut', 'tunnelOut']),
          State.State('HFAReject', self.enterHFAReject, self.exitHFAReject, ['walk']),
-         State.State('doorIn', self.enterDoorIn, self.exitDoorIn, ['walk', 'stopped']),
-         State.State('doorOut', self.enterDoorOut, self.exitDoorOut, ['walk', 'stopped']),
+         State.State('doorIn', self.enterDoorIn, self.exitDoorIn, ['walk']),
+         State.State('doorOut', self.enterDoorOut, self.exitDoorOut, ['walk']),
          State.State('teleportIn', self.enterTeleportIn, self.exitTeleportIn, ['walk']),
          State.State('teleportOut', self.enterTeleportOut, self.exitTeleportOut, ['teleportIn']),
          State.State('quest', self.enterQuest, self.exitQuest, ['walk', 'doorOut']),
@@ -118,7 +121,18 @@ class ToonInterior(Place.Place):
         pass
 
     def doRequestLeave(self, requestStatus):
-        self.fsm.request('NPCFA', [requestStatus])
+        self.fsm.request('trialerFA', [requestStatus])
+
+    def enterDFACallback(self, requestStatus, doneStatus):
+        self.dfa.exit()
+        del self.dfa
+        ds = doneStatus['mode']
+        if ds == 'complete':
+            self.fsm.request('NPCFA', [requestStatus])
+        elif ds == 'incomplete':
+            self.fsm.request('DFAReject')
+        else:
+            self.notify.error('Unknown done status for DownloadForceAcknowledge: ' + `doneStatus`)
 
     def enterNPCFA(self, requestStatus):
         self.acceptOnce(self.npcfaDoneEvent, self.enterNPCFACallback, [requestStatus])
@@ -175,16 +189,8 @@ class ToonInterior(Place.Place):
         pass
 
     def enterTeleportIn(self, requestStatus):
-        modelType = DistributedToonInterior.DistributedToonInterior(base.cr).getModelType(self.getZoneId())
-        if self.zoneId == ToontownGlobals.ToonHall:
-            base.localAvatar.setPosHpr(-63.5, 30.5, ToontownGlobals.FloorOffset, 90.0, 0.0, 0.0)
-        elif ZoneUtil.isHQ(self.zoneId):
-            base.localAvatar.setPosHpr(-5.5, -1.5, ToontownGlobals.FloorOffset, 0.0, 0.0, 0.0)
-        elif ZoneUtil.isPetshop(self.zoneId):
+        if ZoneUtil.isPetshop(self.zoneId):
             base.localAvatar.setPosHpr(0, 0, ToontownGlobals.FloorOffset, 45.0, 0.0, 0.0)
-        elif modelType in InteriorTypes:
-            area = InteriorTypes[modelType]
-            base.localAvatar.setPosHpr(area[0], area[1], ToontownGlobals.FloorOffset, area[2], 0.0, 0.0)
         else:
             base.localAvatar.setPosHpr(2.5, 11.5, ToontownGlobals.FloorOffset, 45.0, 0.0, 0.0)
         Place.Place.enterTeleportIn(self, requestStatus)

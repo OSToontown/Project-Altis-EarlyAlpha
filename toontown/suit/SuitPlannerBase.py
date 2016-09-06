@@ -1,12 +1,17 @@
-from panda3d.core import *
-from direct.directnotify.DirectNotifyGlobal import *
-from toontown.hood import ZoneUtil, HoodUtil
-from toontown.toonbase import ToontownGlobals, ToontownBattleGlobals
+from pandac.PandaModules import *
+import random
+import string
+from direct.directnotify import DirectNotifyGlobal
+from toontown.hood import ZoneUtil
+from toontown.toonbase import ToontownGlobals
+from toontown.toonbase import ToontownBattleGlobals
+from toontown.hood import HoodUtil
 from toontown.building import SuitBuildingGlobals
-from toontown.dna.DNAParser import *
+from toontown.dna import *
+from direct.stdpy.file import open
 
 class SuitPlannerBase:
-    notify = directNotify.newCategory('SuitPlannerBase')
+    notify = DirectNotifyGlobal.directNotify.newCategory('SuitPlannerBase')
     SuitHoodInfo = [[2100,
       5,
       15,
@@ -23,8 +28,7 @@ class SuitPlannerBase:
       (25,
        25,
        25,
-       25,
-       0),
+       25),
       (1, 2, 3),
       []],
      [2200,
@@ -43,8 +47,7 @@ class SuitPlannerBase:
       (10,
        70,
        10,
-       10,
-       0),
+       10),
       (1, 2, 3),
       []],
      [2300,
@@ -63,8 +66,7 @@ class SuitPlannerBase:
       (10,
        10,
        40,
-       40,
-       0),
+       40),
       (1, 2, 3),
       []],
      [1100,
@@ -82,7 +84,6 @@ class SuitPlannerBase:
        80),
       (90,
        10,
-       0,
        0,
        0),
       (2, 3, 4),
@@ -103,11 +104,11 @@ class SuitPlannerBase:
       (0,
        0,
        90,
-       10,
-       0),
+       10),
       (3,
        4,
-       5),
+       5,
+       6),
       []],
      [1300,
       1,
@@ -125,11 +126,11 @@ class SuitPlannerBase:
       (40,
        40,
        10,
-       10,
-       0),
+       10),
       (3,
        4,
-       5),
+       5,
+       6),
       []],
      [3100,
       1,
@@ -146,7 +147,6 @@ class SuitPlannerBase:
        80),
       (90,
        10,
-       0,
        0,
        0),
       (5, 6, 7),
@@ -167,8 +167,7 @@ class SuitPlannerBase:
       (10,
        20,
        30,
-       40,
-       0),
+       40),
       (5, 6, 7),
       []],
      [3300,
@@ -187,8 +186,7 @@ class SuitPlannerBase:
       (5,
        85,
        5,
-       5,
-       0),
+       5),
       (7, 8, 9),
       []],
      [4100,
@@ -207,8 +205,7 @@ class SuitPlannerBase:
       (0,
        0,
        50,
-       50,
-       0),
+       50),
       (2, 3, 4),
       []],
      [4200,
@@ -227,9 +224,9 @@ class SuitPlannerBase:
       (0,
        0,
        90,
-       10,
-       0),
-      (4,
+       10),
+      (3,
+       4,
        5,
        6),
       []],
@@ -249,9 +246,9 @@ class SuitPlannerBase:
       (50,
        50,
        0,
-       0,
        0),
-      (4,
+      (3,
+       4,
        5,
        6),
       []],
@@ -271,8 +268,7 @@ class SuitPlannerBase:
       (0,
        20,
        10,
-       70,
-       0),
+       70),
       (2, 3, 4),
       []],
      [5200,
@@ -291,8 +287,7 @@ class SuitPlannerBase:
       (10,
        70,
        0,
-       20,
-       0),
+       20),
       (3,
        4,
        5,
@@ -314,8 +309,7 @@ class SuitPlannerBase:
       (5,
        5,
        5,
-       85,
-       0),
+       85),
       (3,
        4,
        5,
@@ -335,11 +329,11 @@ class SuitPlannerBase:
        60,
        80),
       (25,
-       50,
-       10,
-       15,
-       0),
-      (7,
+       25,
+       25,
+       25),
+      (6,
+       7,
        8,
        9),
       []],
@@ -359,53 +353,11 @@ class SuitPlannerBase:
       (5,
        5,
        85,
-       5,
-       0),
-      (7,
+       5),
+      (6,
+       7,
        8,
        9),
-      []],
-      [9300,
-      1,
-      5,
-      0,
-      99,
-      100,
-      4,
-      (1,
-       5,
-       10,
-       40,
-       60,
-       80),
-      (25,
-       25,
-       25,
-       25,
-       0),
-      (8,
-       9,
-       10),
-      []],
-     [10000,
-      3,
-      15,
-      0,
-      5,
-      15,
-      3,
-      (1,
-       5,
-       10,
-       40,
-       60,
-       80),
-      (100,
-       0,
-       0,
-       0,
-       0),
-      (7, 8, 9, 10),
       []],
      [11000,
       3,
@@ -423,9 +375,8 @@ class SuitPlannerBase:
       (0,
        0,
        0,
-       100,
-       0),
-      (3, 4, 5, 6),
+       100),
+      (4, 5, 6),
       []],
      [11200,
       10,
@@ -443,8 +394,7 @@ class SuitPlannerBase:
       (0,
        0,
        0,
-       100,
-       0),
+       100),
       (4, 5, 6),
       []],
      [12000,
@@ -463,9 +413,8 @@ class SuitPlannerBase:
       (0,
        0,
        100,
-       0,
        0),
-      (6, 7, 8, 9),
+      (7, 8, 9),
       []],
      [13000,
       10,
@@ -483,35 +432,14 @@ class SuitPlannerBase:
       (0,
        100,
        0,
-       0,
        0),
-      (7, 8, 9),
-      []],
-     [14000,
-      10,
-      20,
-      0,
-      0,
-      0,
-      4,
-      (1,
-       5,
-       10,
-       40,
-       60,
-       80),
-      (0,
-       0,
-       0,
-       0,
-       100),
       (8, 9, 10),
       []]]
     SUIT_HOOD_INFO_ZONE = 0
     SUIT_HOOD_INFO_MIN = 1
     SUIT_HOOD_INFO_MAX = 2
     SUIT_HOOD_INFO_BMIN = 3
-    SUIT_HOOD_INFO_BMAX = 5
+    SUIT_HOOD_INFO_BMAX = 4
     SUIT_HOOD_INFO_BWEIGHT = 5
     SUIT_HOOD_INFO_SMAX = 6
     SUIT_HOOD_INFO_JCHANCE = 7
@@ -522,13 +450,10 @@ class SuitPlannerBase:
     TOTAL_BWEIGHT_PER_TRACK = [0,
      0,
      0,
-     0,                          
      0]
     TOTAL_BWEIGHT_PER_HEIGHT = [0,
      0,
      0,
-     0,
-     0,                           
      0,
      0]
     for currHoodInfo in SuitHoodInfo:
@@ -539,12 +464,10 @@ class SuitPlannerBase:
          0,
          0,
          0,
-         0,          
-         0,
          0]
         for level in levels:
             minFloors, maxFloors = SuitBuildingGlobals.SuitBuildingInfo[level - 1][0]
-            for i in xrange(minFloors - 1, maxFloors):
+            for i in range(minFloors - 1, maxFloors):
                 heights[i] += 1
 
         currHoodInfo[SUIT_HOOD_INFO_HEIGHTS] = heights
@@ -558,8 +481,6 @@ class SuitPlannerBase:
         TOTAL_BWEIGHT_PER_HEIGHT[2] += weight * heights[2]
         TOTAL_BWEIGHT_PER_HEIGHT[3] += weight * heights[3]
         TOTAL_BWEIGHT_PER_HEIGHT[4] += weight * heights[4]
-        TOTAL_BWEIGHT_PER_HEIGHT[5] += weight * heights[5]
-        TOTAL_BWEIGHT_PER_HEIGHT[6] += weight * heights[6]
 
     def __init__(self):
         self.suitWalkSpeed = ToontownGlobals.SuitWalkSpeed
@@ -569,23 +490,35 @@ class SuitPlannerBase:
 
     def delete(self):
         del self.dnaStore
+        if hasattr(self, 'dnaData'):
+            del self.dnaData
 
     def setupDNA(self):
         if self.dnaStore:
             return None
-        self.dnaStore = DNAStorage()
         dnaFileName = self.genDNAFileName()
-        loadDNAFileAI(self.dnaStore, dnaFileName)
+        if __debug__:
+            try:
+                self.dnaStore = simbase.air.loadDNA(dnaFileName)
+            except:
+                self.dnaStore = loader.loadDNA(dnaFileName)
+        else:
+            self.dnaStore = loader.loadDNA(dnaFileName)
+        self.dnaData = self.dnaStore.generateData()
         self.initDNAInfo()
+        return None
 
     def genDNAFileName(self):
-        zoneId = ZoneUtil.getCanonicalZoneId(self.getZoneId())
-        hoodId = ZoneUtil.getCanonicalHoodId(zoneId)
-        hood = ToontownGlobals.dnaMap[hoodId]
-        phase = ToontownGlobals.streetPhaseMap[hoodId]
-        if hoodId == zoneId:
-            zoneId = 'sz'
-        return 'phase_%s/dna/%s_%s.pdna' % (phase, hood, zoneId)
+        try:
+            return simbase.air.genDNAFileName(self.getZoneId())
+        except:
+            zoneId = ZoneUtil.getCanonicalZoneId(self.getZoneId())
+            hoodId = ZoneUtil.getCanonicalHoodId(zoneId)
+            hood = ToontownGlobals.dnaMap[hoodId]
+            phase = ToontownGlobals.streetPhaseMap[hoodId]
+            if hoodId == zoneId:
+                zoneId = 'sz'
+            return 'phase_%s/dna/%s_%s.xml' % (phase, hood, zoneId)
 
     def getZoneId(self):
         return self.zoneId
@@ -599,36 +532,27 @@ class SuitPlannerBase:
         return groupFullName.split(':', 1)[0]
 
     def initDNAInfo(self):
-        numGraphs = self.dnaStore.discoverContinuity()
-        if numGraphs != 1:
-            self.notify.info('zone %s has %s disconnected suit paths.' % (self.zoneId, numGraphs))
         self.battlePosDict = {}
         self.cellToGagBonusDict = {}
-
-        for i in xrange(self.dnaStore.getNumDNAVisGroupsAI()):
-            vg = self.dnaStore.getDNAVisGroupAI(i)
-            zoneId = int(self.extractGroupName(vg.getName()))
-
-            if vg.getNumBattleCells() == 1:
-                battleCell = vg.getBattleCell(0)
-                self.battlePosDict[zoneId] = vg.getBattleCell(0).getPos()
-            elif vg.getNumBattleCells() > 1:
+        vgs = DNAUtil.getVisGroups(self.dnaStore)
+        for vg in vgs:
+            zoneId = int(self.extractGroupName(vg.zone))
+            bcs = DNAUtil.getChildrenOfType(vg, DNABattleCell.DNABattleCell)
+            if len(bcs) == 1:
+                battleCell = bcs[0]
+                self.battlePosDict[zoneId] = bcs[0].getPos()
+            elif len(bcs) > 1:
                 self.notify.warning('multiple battle cells for zone: %d' % zoneId)
-                self.battlePosDict[zoneId] = vg.getBattleCell(0).getPos()
-
+                self.battlePosDict[zoneId] = bcs[0].getPos()
             if True:
-                for i in xrange(vg.getNumChildren()):
-                    childDnaGroup = vg.at(i)
-
-                    if isinstance(childDnaGroup, DNAInteractiveProp):
+                for childDnaGroup in vg.children:
+                    if isinstance(childDnaGroup, DNAInteractiveProp.DNAInteractiveProp):
                         self.notify.debug('got interactive prop %s' % childDnaGroup)
                         battleCellId = childDnaGroup.getCellId()
-
                         if battleCellId == -1:
                             self.notify.warning('interactive prop %s  at %s not associated with a a battle' % (childDnaGroup, zoneId))
-
                         elif battleCellId == 0:
-                            if zoneId in self.cellToGagBonusDict:
+                            if self.cellToGagBonusDict.has_key(zoneId):
                                 self.notify.error('FIXME battle cell at zone %s has two props %s %s linked to it' % (zoneId, self.cellToGagBonusDict[zoneId], childDnaGroup))
                             else:
                                 name = childDnaGroup.getName()
@@ -636,26 +560,22 @@ class SuitPlannerBase:
                                 if propType in ToontownBattleGlobals.PropTypeToTrackBonus:
                                     trackBonus = ToontownBattleGlobals.PropTypeToTrackBonus[propType]
                                     self.cellToGagBonusDict[zoneId] = trackBonus
-
-        self.dnaStore.resetDNAGroups()
-        self.dnaStore.resetDNAVisGroups()
-        self.dnaStore.resetDNAVisGroupsAI()
         self.streetPointList = []
         self.frontdoorPointList = []
         self.sidedoorPointList = []
         self.cogHQDoorPointList = []
-        numPoints = self.dnaStore.getNumSuitPoints()
-        for i in xrange(numPoints):
-            point = self.dnaStore.getSuitPointAtIndex(i)
-            if point.getPointType() == DNASuitPoint.FRONT_DOOR_POINT:
+        for point in self.dnaData.suitPoints:
+            if point.getPointType() == DNAStoreSuitPoint.FRONTDOORPOINT:
                 self.frontdoorPointList.append(point)
-            elif point.getPointType() == DNASuitPoint.SIDE_DOOR_POINT:
+            elif point.getPointType() == DNAStoreSuitPoint.SIDEDOORPOINT:
                 self.sidedoorPointList.append(point)
-            elif (point.getPointType() == DNASuitPoint.COGHQ_IN_POINT) or (point.getPointType() == DNASuitPoint.COGHQ_OUT_POINT):
+            elif point.getPointType() == DNAStoreSuitPoint.COGHQINPOINT or point.getPointType() == DNAStoreSuitPoint.COGHQOUTPOINT:
                 self.cogHQDoorPointList.append(point)
             else:
                 self.streetPointList.append(point)
             self.pointIndexes[point.getIndex()] = point
+
+        return None
 
     def performPathTest(self):
         if not self.notify.getDebug():
@@ -667,13 +587,15 @@ class SuitPlannerBase:
         endPoint = startAndEnd[1]
         path = self.dnaStore.getSuitPath(startPoint, endPoint)
         numPathPoints = path.getNumPoints()
-        for i in xrange(numPathPoints - 1):
+        for i in range(numPathPoints - 1):
             zone = self.dnaStore.getSuitEdgeZone(path.getPointIndex(i), path.getPointIndex(i + 1))
-            travelTime = self.dnaStore.getSuitEdgeTravelTime(path.getPointIndex(i), path.getPointIndex(i + 1), self.suitWalkSpeed)
+            travelTime = self.dnaStore.suitGraph.getSuitEdgeTravelTime(path.getPointIndex(i), path.getPointIndex(i + 1), self.suitWalkSpeed)
             self.notify.debug('edge from point ' + `i` + ' to point ' + `(i + 1)` + ' is in zone: ' + `zone` + ' and will take ' + `travelTime` + ' seconds to walk.')
 
+        return None
+
     def genPath(self, startPoint, endPoint, minPathLen, maxPathLen):
-        return self.dnaStore.getSuitPath(startPoint, endPoint, minPathLen, maxPathLen)
+        return self.dnaData.suitGraph.getSuitPath(startPoint, endPoint, minPathLen, maxPathLen)
 
     def getDnaStore(self):
         return self.dnaStore

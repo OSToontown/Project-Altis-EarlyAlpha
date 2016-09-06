@@ -4,11 +4,12 @@ from direct.directnotify import DirectNotifyGlobal
 from direct.showbase import PythonUtil
 from toontown.toonbase import ToontownBattleGlobals
 from toontown.toontowngui import TTDialog
+from toontown.toontowngui.TeaserPanel import TeaserPanel
 from toontown.toonbase import TTLocalizer
 import GardenGlobals
 import HouseGlobals
 from direct.task import Task
-from panda3d.core import *
+from pandac.PandaModules import *
 from otp.otpbase import OTPGlobals
 from toontown.estate import DistributedLawnDecor
 DIRT_AS_WATER_INDICATOR = True
@@ -28,11 +29,15 @@ class DistributedGagTree(DistributedPlantBase.DistributedPlantBase):
         self.needToLoad = 0
         self.backupFruits = []
         self.signHasBeenStuck2Ground = False
+        self._teaserPanel = None
         self.setName('DistributedGagTree')
-        self.fruiting = 0
+        return
 
     def delete(self):
         DistributedPlantBase.DistributedPlantBase.delete(self)
+        if self._teaserPanel:
+            self._teaserPanel.destroy()
+            self._teaserPanel = None
         del self.prop
         del self.prop2
         del self.dirtMound
@@ -79,7 +84,7 @@ class DistributedGagTree(DistributedPlantBase.DistributedPlantBase):
         self.model.reparentTo(self.rotateNode)
         if self.isFruiting() and not self.isWilted():
             self.fruits = []
-            for i in xrange(1, self.maxFruit + 1):
+            for i in range(1, self.maxFruit + 1):
                 pos = self.model.find('**/locator' + str(i))
                 if pos and not pos.isEmpty():
                     fruit = self.prop.copyTo(self.model)
@@ -94,7 +99,7 @@ class DistributedGagTree(DistributedPlantBase.DistributedPlantBase):
             self.sandMound = loader.loadModel('phase_5.5/models/estate/sand_mound')
             self.sandMound.reparentTo(self.model)
         self.adjustGrowth()
-        self.signModel = loader.loadModel('phase_5.5/models/estate/garden_sign.bam')
+        self.signModel = loader.loadModel('phase_5.5/models/estate/garden_sign')
         self.signModel.setPos(3.5, 0, 0.025)
         self.signModel.reparentTo(self.rotateNode)
         owner = self.getOwnerIndex()
@@ -125,8 +130,12 @@ class DistributedGagTree(DistributedPlantBase.DistributedPlantBase):
     def handlePicking(self):
         messenger.send('wakeup')
         if self.isFruiting() and self.canBeHarvested():
-            self.startInteraction()
-            self.doHarvesting()
+            if self.velvetRoped():
+                self._teaserPanel = TeaserPanel(pageName='pickGags')
+                localAvatar._gagTreeVelvetRoped = None
+            else:
+                self.startInteraction()
+                self.doHarvesting()
             return
         fullName = self.name
         text = TTLocalizer.ConfirmRemoveTree % {'tree': fullName}
@@ -173,11 +182,6 @@ class DistributedGagTree(DistributedPlantBase.DistributedPlantBase):
                 self.backupFruits.append(newFruit)
 
     def clearBackupFruits(self):
-        if self.fruits:
-            for fruit in self.fruits:
-                fruit.removeNode()  
-         
-        self.fruits = None         
         self.backupFruits = []
 
     def doHarvesting(self):
@@ -294,6 +298,7 @@ class DistributedGagTree(DistributedPlantBase.DistributedPlantBase):
         for fruit in self.backupFruits:
             fruitTrack.append(Sequence(Func(fruit.show), LerpPosInterval(fruit, 1.5, pos, startPos=Point3(fruit.getX(), fruit.getY(), fruit.getZ() + self.model.getZ())), Func(fruit.removeNode)))
 
+        self.fruits = None
         harvestTrack = Sequence(fruitTrack, Func(self.clearBackupFruits))
         return harvestTrack
 
@@ -337,7 +342,7 @@ class DistributedGagTree(DistributedPlantBase.DistributedPlantBase):
         picker.traverse(render)
         if queue.getNumEntries() > 0:
             queue.sortEntries()
-            for index in xrange(queue.getNumEntries()):
+            for index in range(queue.getNumEntries()):
                 entry = queue.getEntry(index)
                 if DistributedLawnDecor.recurseParent(entry.getIntoNode(), 'terrain_DNARoot'):
                     self.signModel.wrtReparentTo(render)
@@ -350,7 +355,29 @@ class DistributedGagTree(DistributedPlantBase.DistributedPlantBase):
         return Task.done
 
     def canBeHarvested(self):
-        return self.isFruiting()
+        if not base.cr.isPaid():
+            if self.velvetRoped():
+                if hasattr(localAvatar, '_gagTreeVelvetRoped'):
+                    return False
+        myTrack, myLevel = GardenGlobals.getTreeTrackAndLevel(self.typeIndex)
+        levelsInTrack = []
+        levelTreeDict = {}
+        allGagTrees = base.cr.doFindAll('DistributedGagTree')
+        for gagTree in allGagTrees:
+            if gagTree.getOwnerId() == localAvatar.doId:
+                curTrack, curLevel = GardenGlobals.getTreeTrackAndLevel(gagTree.typeIndex)
+                if curTrack == myTrack:
+                    levelsInTrack.append(curLevel)
+                    levelTreeDict[curLevel] = gagTree
+
+        for levelToTest in range(myLevel):
+            if levelToTest not in levelsInTrack:
+                return False
+            curTree = levelTreeDict[levelToTest]
+            if not curTree.isGTEFullGrown():
+                return False
+
+        return True
 
     def hasDependentTrees(self):
         myTrack, myLevel = GardenGlobals.getTreeTrackAndLevel(self.typeIndex)
@@ -379,8 +406,14 @@ class DistributedGagTree(DistributedPlantBase.DistributedPlantBase):
         self.finishInteraction()
         return
 
+    def velvetRoped(self):
+        return not base.cr.isPaid() and ToontownBattleGlobals.gagIsPaidOnly(self.gagTrack, self.gagLevel)
+
     def allowedToPick(self):
-        return True
+        retval = True
+        if self.velvetRoped():
+            retval = False
+        return retval
 
     def unlockPick(self):
         retval = True
@@ -393,15 +426,3 @@ class DistributedGagTree(DistributedPlantBase.DistributedPlantBase):
         if inventory.numItem(self.gagTrack, self.gagLevel) >= inventory.getMax(self.gagTrack, self.gagLevel):
             retval = False
         return retval
-
-    def setFruiting(self, fruiting):
-        self.fruiting = fruiting
-        if self.model:
-            self.model.removeNode()
-            self.loadModel()
-            self.adjustWaterIndicator()
-            self.stick2Ground()
-        
-    def isFruiting(self):
-        return self.fruiting
-        

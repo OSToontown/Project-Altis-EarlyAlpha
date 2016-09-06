@@ -1,15 +1,14 @@
-from direct.gui.DirectGui import *
-from direct.task.Task import Task
-from panda3d.core import *
-
+from pandac.PandaModules import *
 from DistributedNPCToonBase import *
+from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 import NPCToons
+from direct.task.Task import Task
 import TailorClothesGUI
-import ToonDNA
-from otp.nametag.NametagConstants import *
-from toontown.estate import ClosetGlobals
 from toontown.toonbase import TTLocalizer
-
+import ToonDNA
+from toontown.estate import ClosetGlobals
+from otp.nametag.NametagConstants import CFSpeech, CFTimeout
 
 class DistributedNPCTailor(DistributedNPCToonBase):
 
@@ -215,7 +214,7 @@ class DistributedNPCTailor(DistributedNPCToonBase):
             print 'setDNA: which = %d, top = %d, bot = %d' % (which, self.clothesGUI.topChoice, self.clothesGUI.bottomChoice)
             if self.roomAvailable == 0:
                 if self.isLocalToon:
-                    if self.av.isClosetFull(1) or which & ClosetGlobals.SHIRT and which & ClosetGlobals.SHORTS:
+                    if self.av.isClosetFull() or which & ClosetGlobals.SHIRT and which & ClosetGlobals.SHORTS:
                         self.__enterConfirmLoss(2, which)
                         self.clothesGUI.hideButtons()
                         self.button.hide()

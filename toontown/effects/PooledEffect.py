@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.showbase import Pool
 from direct.showbase.DirectObject import DirectObject
 import re

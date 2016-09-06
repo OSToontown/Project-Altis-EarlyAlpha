@@ -25,10 +25,10 @@ class MazeSuit(DirectObject):
      180,
      90,
      270]
-    DEFAULT_SPEED = 2.5
+    DEFAULT_SPEED = 4.0
     SUIT_Z = 0.1
 
-    def __init__(self, serialNum, maze, randomNumGen, cellWalkPeriod, difficulty, suitDnaName = 'ms', startTile = None, ticFreq = MazeGameGlobals.SUIT_TIC_FREQ, walkSameDirectionProb = MazeGameGlobals.WALK_SAME_DIRECTION_PROB, walkTurnAroundProb = MazeGameGlobals.WALK_TURN_AROUND_PROB, uniqueRandomNumGen = True, walkAnimName = None):
+    def __init__(self, serialNum, maze, randomNumGen, cellWalkPeriod, difficulty, suitDnaName = 'f', startTile = None, ticFreq = MazeGameGlobals.SUIT_TIC_FREQ, walkSameDirectionProb = MazeGameGlobals.WALK_SAME_DIRECTION_PROB, walkTurnAroundProb = MazeGameGlobals.WALK_TURN_AROUND_PROB, uniqueRandomNumGen = True, walkAnimName = None):
         self.serialNum = serialNum
         self.maze = maze
         if uniqueRandomNumGen:
@@ -43,8 +43,6 @@ class MazeSuit(DirectObject):
         d = SuitDNA.SuitDNA()
         d.newSuit(suitDnaName)
         self.suit.setDNA(d)
-        self.suit.nametag3d.stash()
-        self.suit.nametag.destroy()
         if startTile is None:
             defaultStartPos = MazeGameGlobals.SUIT_START_POSITIONS[self.serialNum]
             self.startTile = (defaultStartPos[0] * self.maze.width, defaultStartPos[1] * self.maze.height)

@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.showbase.DirectObject import DirectObject
 from direct.showbase import PythonUtil
@@ -11,7 +11,7 @@ from toontown.battle.BattleProps import *
 from toontown.battle import MovieUtil
 from toontown.battle import BattleParticles, BattleProps
 from direct.particles import ParticleEffect
-import math, random
+import math
 COLOR_RED = VBase4(1, 0, 0, 0.3)
 
 class TwoDEnemy(DirectObject):
@@ -84,8 +84,6 @@ class TwoDEnemy(DirectObject):
         self.suit.pose('walk', 0)
         self.suitName = 'Enemy-%s' % self.index
         self.suit.setName(self.suitName)
-        self.suit.nametag3d.stash()
-        self.suit.nametag.destroy()
         suitPosAttribs = suitAttribs[1]
         initX, initY, initZ = suitPosAttribs[0]
         initPos = Point3(initX, initY, initZ)

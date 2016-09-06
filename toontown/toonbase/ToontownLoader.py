@@ -1,8 +1,9 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.directnotify.DirectNotifyGlobal import *
 from direct.showbase import Loader
 from toontown.toontowngui import ToontownLoadingScreen
-from toontown.dna.DNAParser import *
+from toontown.dna import DNAParser
+from direct.stdpy.file import open
 
 class ToontownLoader(Loader.Loader):
     TickPeriod = 0.2
@@ -12,37 +13,40 @@ class ToontownLoader(Loader.Loader):
         self.inBulkBlock = None
         self.blockName = None
         self.loadingScreen = ToontownLoadingScreen.ToontownLoadingScreen()
+        return
 
     def destroy(self):
         self.loadingScreen.destroy()
         del self.loadingScreen
         Loader.Loader.destroy(self)
 
-    def loadDNAFile(self, dnastore, filename):
-        return loadDNAFile(dnastore, filename)
+    def loadDNA(self, filename):
+        filename = '/' + filename
 
-    def beginBulkLoad(self, name, label, range, gui, tipCategory, zoneId):
+        with open(filename, 'r') as f:
+            tree = DNAParser.parse(f)
+
+        return tree
+
+    def beginBulkLoad(self, name, label, range, gui, tipCategory):
         self._loadStartT = globalClock.getRealTime()
         Loader.Loader.notify.info("starting bulk load of block '%s'" % name)
         if self.inBulkBlock:
             Loader.Loader.notify.warning("Tried to start a block ('%s'), but am already in a block ('%s')" % (name, self.blockName))
             return None
-        
         self.inBulkBlock = 1
         self._lastTickT = globalClock.getRealTime()
         self.blockName = name
-        self.loadingScreen.begin(range, label, gui, tipCategory, zoneId)
+        self.loadingScreen.begin(range, label, gui, tipCategory)
         return None
 
     def endBulkLoad(self, name):
         if not self.inBulkBlock:
             Loader.Loader.notify.warning("Tried to end a block ('%s'), but not in one" % name)
             return None
-        
         if name != self.blockName:
             Loader.Loader.notify.warning("Tried to end a block ('%s'), other then the current one ('%s')" % (name, self.blockName))
             return None
-        
         self.inBulkBlock = None
         expectedCount, loadedCount = self.loadingScreen.end()
         now = globalClock.getRealTime()
@@ -50,7 +54,6 @@ class ToontownLoader(Loader.Loader):
          expectedCount,
          loadedCount,
          now - self._loadStartT))
-        
         return
 
     def abortBulkLoad(self):
@@ -58,17 +61,14 @@ class ToontownLoader(Loader.Loader):
             Loader.Loader.notify.info("Aborting block ('%s')" % self.blockName)
             self.inBulkBlock = None
             self.loadingScreen.abort()
-        
         return
 
     def tick(self):
         if self.inBulkBlock:
             now = globalClock.getRealTime()
-            
             if now - self._lastTickT > self.TickPeriod:
                 self._lastTickT += self.TickPeriod
                 self.loadingScreen.tick()
-                
                 try:
                     base.cr.considerHeartbeat()
                 except:
@@ -76,13 +76,6 @@ class ToontownLoader(Loader.Loader):
 
     def loadModel(self, *args, **kw):
         ret = Loader.Loader.loadModel(self, *args, **kw)
-        
-        if ret:
-            gsg = base.win.getGsg()
-            
-            if gsg:
-                ret.prepareScene(gsg)
-        
         self.tick()
         return ret
 
@@ -94,28 +87,9 @@ class ToontownLoader(Loader.Loader):
     def loadTexture(self, texturePath, alphaPath = None, okMissing = False):
         ret = Loader.Loader.loadTexture(self, texturePath, alphaPath, okMissing=okMissing)
         self.tick()
-        
         if alphaPath:
             self.tick()
-        
         return ret
-
-    def pdnaModel(self, *args, **kw):
-        ret = Loader.Loader.loadModel(self, *args, **kw)
-        
-        if ret:
-            gsg = base.win.getGsg()
-            
-            if gsg:
-                ret.prepareScene(gsg)
-        
-        return ret
-
-    def pdnaFont(self, *args, **kw):
-        return Loader.Loader.loadFont(self, *args, **kw)
-
-    def pdnaTexture(self, texturePath, alphaPath = None, okMissing = False):
-        return Loader.Loader.loadTexture(self, texturePath, alphaPath, okMissing=okMissing)
 
     def loadSfx(self, soundPath):
         ret = Loader.Loader.loadSfx(self, soundPath)

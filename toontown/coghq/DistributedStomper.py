@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from StomperGlobals import *
 from direct.distributed import ClockDelta
@@ -112,11 +112,11 @@ class DistributedStomper(DistributedCrusherEntity.DistributedCrusherEntity):
             if self.removeHeadFloor:
                 floorHeadNp.stash()
             else:
-                for i in xrange(floorHead.getNumSolids()):
+                for i in range(floorHead.getNumSolids()):
                     floorHead.modifySolid(i).setEffectiveNormal(Vec3(0.0, -1.0, 0.0))
 
             floorShaft = model.find('**/shaft_collisions/**/collDownFloor').node()
-            for i in xrange(floorShaft.getNumSolids()):
+            for i in range(floorShaft.getNumSolids()):
                 floorShaft.modifySolid(i).setEffectiveNormal(Vec3(0.0, -1.0, 0.0))
 
             self.accept(self.crushMsg, self.checkSquashedToon)
@@ -345,3 +345,11 @@ class DistributedStomper(DistributedCrusherEntity.DistributedCrusherEntity):
             if tPos[2] < zRange and tPos[2] > -zRange and tPos[0] < xRange and tPos[0] > -xRange and tPos[1] < yRange / 10.0 and tPos[1] > -yRange:
                 self.level.b_setOuch(self.damage, 'Squish')
                 base.localAvatar.setZ(self.getZ(render) + 0.025)
+
+    if __dev__:
+
+        def attribChanged(self, *args):
+            self.stopStomper()
+            self.unloadModel()
+            self.loadModel()
+            self.startStomper(0)

@@ -6,6 +6,7 @@ from direct.showbase import PythonUtil
 from direct.fsm.FSM import FSM
 from toontown.parties import PartyGlobals
 from toontown.parties import PartyUtils
+from toontown.toonbase.ToontownGlobals import VALENTINES_DAY
 
 class InviteVisual(DirectFrame):
     notify = directNotify.newCategory('InviteVisual')
@@ -54,7 +55,7 @@ class InviteVisual(DirectFrame):
 
     def updateInvitation(self, hostsName, partyInfo):
         self.partyInfo = partyInfo
-        hostsName = TTLocalizer.GetPossesive(hostsName)
+        hostsName = TTLocalizer.GetPossesive(hostsName, 'party')
         self.whosePartyLabel['text'] = TTLocalizer.PartyPlannerInvitationWhoseSentence % hostsName
         if self.partyInfo.isPrivate:
             publicPrivateText = TTLocalizer.PartyPlannerPrivate.lower()
@@ -94,7 +95,7 @@ class InviteVisual(DirectFrame):
         desiredNumberOfCharactersInLine = 42
         if len(stringLeft) < desiredNumberOfCharactersInLine:
             return stringDone + '\n' + stringLeft
-        for i in xrange(desiredNumberOfCharactersInLine - 6, len(stringLeft)):
+        for i in range(desiredNumberOfCharactersInLine - 6, len(stringLeft)):
             if stringLeft[i] == ' ':
                 return self.insertCarriageReturn(stringLeft[i:], stringDone + '\n' + stringLeft[:i])
 

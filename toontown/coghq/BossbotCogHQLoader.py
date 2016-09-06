@@ -6,7 +6,6 @@ from direct.gui import DirectGui
 from toontown.toonbase import TTLocalizer
 from toontown.toon import Toon
 from direct.fsm import State
-from direct.actor.Actor import Actor
 from toontown.coghq import BossbotHQExterior
 from toontown.coghq import BossbotHQBossBattle
 from toontown.coghq import BossbotOfficeExterior
@@ -26,9 +25,7 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
             state.addTransition('countryClubInterior')
 
         self.musicFile = random.choice(['phase_12/audio/bgm/Bossbot_Entry_v1.ogg', 'phase_12/audio/bgm/Bossbot_Entry_v2.ogg', 'phase_12/audio/bgm/Bossbot_Entry_v3.ogg'])
-        self.skyFile = 'phase_12/models/bossbotHQ/bossbothq_sky'
         self.cogHQExteriorModelPath = 'phase_12/models/bossbotHQ/CogGolfHub'
-        self.factoryExteriorModelPath = 'phase_11/models/lawbotHQ/LB_DA_Lobby'
         self.cogHQLobbyModelPath = 'phase_12/models/bossbotHQ/CogGolfCourtyard'
         self.geom = None
         return
@@ -57,7 +54,7 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
             origin = top.find('**/tunnel_origin')
             origin.setH(-33.33)
         elif zoneId == ToontownGlobals.BossbotLobby:
-            if base.config.GetBool('want-qa-regression', 0):
+            if config.GetBool('want-qa-regression', 0):
                 self.notify.info('QA-REGRESSION: COGHQ: Visit BossbotLobby')
             self.notify.debug('cogHQLobbyModelPath = %s' % self.cogHQLobbyModelPath)
             self.geom = loader.loadModel(self.cogHQLobbyModelPath)

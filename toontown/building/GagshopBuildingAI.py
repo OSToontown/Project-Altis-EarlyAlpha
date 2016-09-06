@@ -1,11 +1,14 @@
+from pandac.PandaModules import *
+from direct.directnotify import DirectNotifyGlobal
 import DistributedDoorAI
 import DistributedGagshopInteriorAI
+import FADoorCodes
 import DoorTypes
-from panda3d.core import *
 from toontown.toon import NPCToons
-
+from toontown.quest import Quests
 
 class GagshopBuildingAI:
+
     def __init__(self, air, exteriorZone, interiorZone, blockNumber):
         self.air = air
         self.exteriorZone = exteriorZone
@@ -15,6 +18,7 @@ class GagshopBuildingAI:
     def cleanup(self):
         for npc in self.npcs:
             npc.requestDelete()
+
         del self.npcs
         self.door.requestDelete()
         del self.door
@@ -24,16 +28,11 @@ class GagshopBuildingAI:
         del self.interior
 
     def setup(self, blockNumber):
-        self.interior = DistributedGagshopInteriorAI.DistributedGagshopInteriorAI(
-            blockNumber, self.air, self.interiorZone)
-        self.interior.generateWithRequired(self.interiorZone)
-
+        self.interior = DistributedGagshopInteriorAI.DistributedGagshopInteriorAI(blockNumber, self.air, self.interiorZone)
         self.npcs = NPCToons.createNpcsInZone(self.air, self.interiorZone)
-
-        door = DistributedDoorAI.DistributedDoorAI(
-            self.air, blockNumber, DoorTypes.EXT_STANDARD)
-        insideDoor = DistributedDoorAI.DistributedDoorAI(
-            self.air, blockNumber, DoorTypes.INT_STANDARD)
+        self.interior.generateWithRequired(self.interiorZone)
+        door = DistributedDoorAI.DistributedDoorAI(self.air, blockNumber, DoorTypes.EXT_STANDARD)
+        insideDoor = DistributedDoorAI.DistributedDoorAI(self.air, blockNumber, DoorTypes.INT_STANDARD)
         door.setOtherDoor(insideDoor)
         insideDoor.setOtherDoor(door)
         door.zoneId = self.exteriorZone

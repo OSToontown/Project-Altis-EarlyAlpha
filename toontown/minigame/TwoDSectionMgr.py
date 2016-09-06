@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.showbase.DirectObject import DirectObject
 from toontown.minigame import ToonBlitzGlobals
@@ -99,7 +99,7 @@ class TwoDSectionMgr(DirectObject):
 
     def setupSections(self, sectionsSelected):
         self.incrementX = -24
-        for index in xrange(0, len(sectionsSelected)):
+        for index in range(0, len(sectionsSelected)):
             sectionNP = NodePath('Section' + str(index))
             sectionNP.reparentTo(self.game.assetMgr.world)
             sectionNP.setX(self.incrementX)

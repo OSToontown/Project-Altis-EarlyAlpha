@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
@@ -402,7 +402,7 @@ class DistributedFactorySuit(DistributedSuitBase.DistributedSuitBase, DelayDelet
             actorNode = self.find('**/__Actor_modelRoot')
             actorCollection = actorNode.findAllMatches('*')
             parts = ()
-            for thingIndex in xrange(0, actorCollection.getNumPaths()):
+            for thingIndex in range(0, actorCollection.getNumPaths()):
                 thing = actorCollection[thingIndex]
                 if thing.getName() not in ('joint_attachMeter', 'joint_nameTag', 'def_nameTag'):
                     thing.setColorScale(1.0, 0.0, 0.0, 1.0)

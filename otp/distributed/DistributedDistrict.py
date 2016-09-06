@@ -10,6 +10,7 @@ class DistributedDistrict(DistributedObject):
         self.name = 'NotGiven'
         self.available = 0
         self.avatarCount = 0
+        self.newAvatarCount = 0
 
     def announceGenerate(self):
         DistributedObject.announceGenerate(self)
@@ -19,10 +20,11 @@ class DistributedDistrict(DistributedObject):
     def delete(self):
         if base.cr.distributedDistrict is self:
             base.cr.distributedDistrict = None
-        if self.doId in self.cr.activeDistrictMap:
+        if self.cr.activeDistrictMap.has_key(self.doId):
             del self.cr.activeDistrictMap[self.doId]
         DistributedObject.delete(self)
         messenger.send('shardInfoUpdated')
+        return
 
     def setAvailable(self, available):
         self.available = available

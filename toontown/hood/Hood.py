@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from toontown.toonbase.ToontownGlobals import *
 from toontown.distributed.ToontownMsgTypes import *
@@ -75,26 +75,28 @@ class Hood(StateData.StateData):
         return
 
     def load(self):
-        files = []
-
         if self.storageDNAFile:
-            files.append(self.storageDNAFile)
+            loader.loadDNA(self.storageDNAFile).store(self.dnaStore)
+        newsManager = base.cr.newsManager
+        if newsManager:
+            holidayIds = base.cr.newsManager.getDecorationHolidayId()
+            for holiday in holidayIds:
+                for storageFile in self.holidayStorageDNADict.get(holiday, []):
+                    loader.loadDNA(storageFile).store(self.dnaStore)
 
-        for key, value in self.holidayStorageDNADict.iteritems():
-            if base.cr.newsManager.isHolidayRunning(key):
-                for storageFile in value:
-                    files.append(storageFile)
-        if not base.cr.newsManager.isHolidayRunning(ToontownGlobals.HALLOWEEN) or not self.spookySkyFile:
+            if ToontownGlobals.HALLOWEEN_COSTUMES not in holidayIds and ToontownGlobals.SPOOKY_COSTUMES not in holidayIds or not self.spookySkyFile:
+                self.sky = loader.loadModel(self.skyFile)
+                self.sky.setTag('sky', 'Regular')
+                self.sky.setScale(1.0)
+                self.sky.setFogOff()
+            else:
+                self.sky = loader.loadModel(self.spookySkyFile)
+                self.sky.setTag('sky', 'Halloween')
+        if not newsManager:
             self.sky = loader.loadModel(self.skyFile)
             self.sky.setTag('sky', 'Regular')
             self.sky.setScale(1.0)
             self.sky.setFogOff()
-        else:
-            self.sky = loader.loadModel(self.spookySkyFile)
-            self.sky.setTag('sky', 'Halloween')
-
-        dnaBulk = DNABulkLoader(self.dnaStore, tuple(files))
-        dnaBulk.loadDNAFiles()
 
     def unload(self):
         if hasattr(self, 'loader'):
@@ -104,11 +106,10 @@ class Hood(StateData.StateData):
             del self.loader
         del self.fsm
         del self.parentFSM
-        self.dnaStore.resetHood()
+        self.dnaStore.reset(scope='hood')
         del self.dnaStore
-        if hasattr(self, 'sky'):
-            self.sky.removeNode()
-            del self.sky
+        self.sky.removeNode()
+        del self.sky
         self.ignoreAll()
         ModelPool.garbageCollect()
         TexturePool.garbageCollect()
@@ -158,7 +159,7 @@ class Hood(StateData.StateData):
         loaderName = requestStatus['loader']
         if loaderName == 'safeZoneLoader':
             if not loader.inBulkBlock:
-                loader.beginBulkLoad('hood', TTLocalizer.HeadingToPlayground, safeZoneCountMap[self.id], 1, TTLocalizer.TIP_GENERAL, self.id)
+                loader.beginBulkLoad('hood', TTLocalizer.HeadingToPlayground, safeZoneCountMap[self.id], 1, TTLocalizer.TIP_GENERAL)
             self.loadLoader(requestStatus)
             loader.endBulkLoad('hood')
         elif loaderName == 'townLoader':
@@ -167,7 +168,7 @@ class Hood(StateData.StateData):
                 toPhrase = StreetNames[ZoneUtil.getCanonicalBranchZone(zoneId)][0]
                 streetName = StreetNames[ZoneUtil.getCanonicalBranchZone(zoneId)][-1]
                 loader.beginBulkLoad('hood', TTLocalizer.HeadingToStreet % {'to': toPhrase,
-                 'street': streetName}, townCountMap[self.id], 1, TTLocalizer.TIP_STREET, zoneId)
+                 'street': streetName}, townCountMap[self.id], 1, TTLocalizer.TIP_STREET)
             self.loadLoader(requestStatus)
             loader.endBulkLoad('hood')
         elif loaderName == 'minigame':

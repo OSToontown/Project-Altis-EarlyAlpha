@@ -1,5 +1,6 @@
 import EntityCreatorBase
 import LogicGate
+import EditMgrAI
 import LevelMgrAI
 import ZoneEntityAI
 from direct.showbase.PythonUtil import Functor
@@ -28,6 +29,7 @@ class EntityCreatorAI(EntityCreatorBase.EntityCreatorBase):
          'ambientSound': nothing,
          'collisionSolid': nothing,
          'cutScene': nothing,
+         'editMgr': Functor(cLE, EditMgrAI.EditMgrAI),
          'entityGroup': nothing,
          'entrancePoint': nothing,
          'levelMgr': Functor(cLE, LevelMgrAI.LevelMgrAI),

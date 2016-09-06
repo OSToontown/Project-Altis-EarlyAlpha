@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from toontown.battle.BattleBase import *
 from toontown.coghq import DistributedLevelBattle
@@ -33,7 +33,7 @@ class DistributedBattleFactory(DistributedLevelBattle.DistributedLevelBattle):
             NametagGlobals.setMasterArrowsOn(0)
             if self.bossBattle:
                 messenger.send('localToonConfrontedForeman')
-        self.movie.playReward(ts, self.uniqueName('building-reward'), self.__handleFactoryRewardDone, noSkip=True)
+        self.movie.playReward(ts, self.uniqueName('building-reward'), self.__handleFactoryRewardDone)
 
     def __handleFactoryRewardDone(self):
         self.notify.info('Factory reward done')

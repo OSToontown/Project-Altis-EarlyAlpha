@@ -1,6 +1,6 @@
 from direct.directnotify import DirectNotifyGlobal
 from direct.gui.DirectGui import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.task import Task
 import random
 from toontown.fishing import BingoCardCell
@@ -155,6 +155,11 @@ class BingoCardGui(DirectFrame):
                 self.cellGuiList[index].generateMarkedLogo()
             elif self.game.getGameState() & 1 << index:
                 self.cellGuiList[index].disable()
+
+    def disableCard(self):
+        self.stopCellBlinking()
+        for index in xrange(self.game.getCardSize()):
+            self.cellGuiList[index].disable()
 
     def enableCard(self, callback = None):
         self.notify.info('enable Bingo card')
@@ -346,7 +351,7 @@ class BingoCardGui(DirectFrame):
 
     def makeJackpotLights(self, parent):
         self.jpLights = []
-        for nLight in xrange(self.NumLights):
+        for nLight in range(self.NumLights):
             lightName = self.getLightName(nLight, self.Off)
             light = DirectFrame(parent=parent, relief=None, image=self.model.find(lightName), image_hpr=(0, 90, 0))
             self.jpLights.append(light)
@@ -360,7 +365,7 @@ class BingoCardGui(DirectFrame):
 
     def lightSwitch(self, bOn, lightIndex = -1):
         if lightIndex == -1:
-            for nLight in xrange(self.NumLights):
+            for nLight in range(self.NumLights):
                 self.lightSwitch(bOn, nLight)
 
         else:
@@ -386,7 +391,7 @@ class BingoCardGui(DirectFrame):
             nTimeIndex = not nTimeIndex
             delay = 0.5
         elif flashMode == 0:
-            for nLight in xrange(self.NumLights):
+            for nLight in range(self.NumLights):
                 if nLight % 2 == nTimeIndex:
                     self.lightSwitch(self.On, nLight)
                 else:
@@ -432,6 +437,6 @@ class BingoCardGui(DirectFrame):
 
     def castingStarted(self):
         if taskMgr.hasTaskNamed(self.taskNameFlashFish):
-            if not base.localAvatar.fishBingoMarkTutorialDone:
+            if not base.localAvatar.bFishBingoMarkTutorialDone:
                 self.showTutorial(BG.TutorialMark)
                 base.localAvatar.b_setFishBingoMarkTutorialDone(True)

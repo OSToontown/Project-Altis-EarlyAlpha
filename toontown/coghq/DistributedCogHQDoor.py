@@ -8,6 +8,7 @@ from toontown.hood import ZoneUtil
 from toontown.building import FADoorCodes
 from toontown.building import DoorTypes
 from toontown.toonbase import TTLocalizer
+from toontown.toontowngui import TeaserPanel
 
 class DistributedCogHQDoor(DistributedDoor.DistributedDoor):
 
@@ -80,8 +81,14 @@ class DistributedCogHQDoor(DistributedDoor.DistributedDoor):
             self.doorX = 1.0
 
     def enterDoor(self):
-        messenger.send('DistributedDoor_doorTrigger')
-        self.sendUpdate('requestEnter')
+        if self.allowedToEnter(self.zoneId):
+            messenger.send('DistributedDoor_doorTrigger')
+            self.sendUpdate('requestEnter')
+        else:
+            place = base.cr.playGame.getPlace()
+            if place:
+                place.fsm.request('stopped')
+            self.dialog = TeaserPanel.TeaserPanel(pageName='cogHQ', doneFunc=self.handleOkTeaser)
 
     def doorTrigger(self, args = None):
         if localAvatar.hasActiveBoardingGroup():

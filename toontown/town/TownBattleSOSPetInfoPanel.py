@@ -1,6 +1,7 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.fsm import StateData
 from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 from toontown.toonbase import TTLocalizer
 from toontown.pets import Pet, PetTricks, PetDetailPanel
 from toontown.speedchat import TTSCPetTrickMenu
@@ -85,7 +86,7 @@ class TownBattleSOSPetInfoPanel(StateData.StateData):
 
     def enter(self, petProxyId):
         self.petProxyId = petProxyId
-        if petProxyId not in base.cr.doId2do:
+        if not base.cr.doId2do.has_key(petProxyId):
             self.notify.warning('petProxyId %s not in doId2do!' % petProxyId)
             return
         self.petProxy = base.cr.doId2do[petProxyId]
@@ -108,7 +109,7 @@ class TownBattleSOSPetInfoPanel(StateData.StateData):
         return
 
     def __handleTrickMenuEvent(self, textId):
-        if textId in PetTricks.ScId2trickId:
+        if PetTricks.ScId2trickId.has_key(textId):
             trickId = PetTricks.ScId2trickId[textId]
             doneStatus = {'mode': 'OK',
              'trickId': trickId}
@@ -146,7 +147,6 @@ class TownBattleSOSPetInfoPanel(StateData.StateData):
             self.petModel.reparentTo(self.petView)
             self.petModel.enterNeutralHappy()
             self.petModel.startBlink()
-            self.petModel.setScale(0.75)
             self.nameLabel = DirectLabel(parent=self.frame, pos=(0, 0, 5.2), relief=None, text=avatar.getName(), text_font=avatar.getFont(), text_fg=Vec4(0, 0, 0, 1), text_pos=(0, 0), text_scale=0.4, text_wordwrap=7.5, text_shadow=(1, 1, 1, 1))
             self.stateLabel = DirectLabel(parent=self.frame, pos=(0.7, 0, 3.5), relief=None, text='', text_font=avatar.getFont(), text_fg=Vec4(0, 0, 0, 1), text_scale=0.4, text_wordwrap=7.5, text_shadow=(1, 1, 1, 1))
         self.__refreshPetInfo(avatar)

@@ -1,26 +1,18 @@
-from direct.directnotify.DirectNotifyGlobal import *
+from direct.directnotify import DirectNotifyGlobal
 from direct.distributed.DistributedObjectAI import DistributedObjectAI
 
-
 class DistributedTutorialInteriorAI(DistributedObjectAI):
-    notify = directNotify.newCategory('DistributedTutorialInteriorAI')
+    notify = DirectNotifyGlobal.directNotify.newCategory("DistributedTutorialInteriorAI")
 
-    def __init__(self, air, block, zoneId, tutorialNpcId):
+    def __init__(self, air, zoneId, npcId):
         DistributedObjectAI.__init__(self, air)
-
         self.zoneId = zoneId
-        self.block = block
-        self.tutorialNpcId = tutorialNpcId
-
-    def setZoneIdAndBlock(self, zoneId, block):
-        self.zoneId = zoneId
-        self.block = block
+        self.block = 0
+        self.npcId = npcId
 
     def getZoneIdAndBlock(self):
-        return [self.zoneId, self.block]
-
-    def setTutorialNpcId(self, npcId):
-        self.tutorialNpcId = npcId
+        return (self.zoneId, self.block)
 
     def getTutorialNpcId(self):
-        return self.tutorialNpcId
+        return self.npcId
+

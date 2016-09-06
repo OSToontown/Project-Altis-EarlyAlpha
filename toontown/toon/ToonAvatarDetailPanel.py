@@ -1,6 +1,7 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToontownGlobals import *
 from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 from direct.showbase import DirectObject
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
@@ -10,16 +11,17 @@ from toontown.friends import FriendInviter
 import ToonTeleportPanel
 from toontown.toonbase import TTLocalizer
 from toontown.hood import ZoneUtil
-from toontown.toonbase.ToontownBattleGlobals import Tracks, Levels, getAvPropDamage
-import Toon
+from toontown.toonbase.ToontownBattleGlobals import Tracks, Levels
 globalAvatarDetail = None
 
-def showAvatarDetail(avId, avName):
+def showAvatarDetail(avId, avName, playerId = None):
     global globalAvatarDetail
     if globalAvatarDetail != None:
         globalAvatarDetail.cleanup()
         globalAvatarDetail = None
-    globalAvatarDetail = ToonAvatarDetailPanel(avId, avName)
+    playerId = base.cr.playerFriendsManager.findPlayerIdFromAvId(avId)
+    globalAvatarDetail = ToonAvatarDetailPanel(avId, avName, playerId)
+    return
 
 
 def hideAvatarDetail():
@@ -41,12 +43,17 @@ def unloadAvatarDetail():
 class ToonAvatarDetailPanel(DirectFrame):
     notify = DirectNotifyGlobal.directNotify.newCategory('ToonAvatarDetailPanel')
 
-    def __init__(self, avId, avName, parent = base.a2dTopRight, **kw):
+    def __init__(self, avId, avName, playerId = None, parent = base.a2dTopRight, **kw):
+        print 'ToonAvatarDetailPanel %s' % playerId
         buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
         gui = loader.loadModel('phase_3.5/models/gui/avatar_panel_gui')
         detailPanel = gui.find('**/avatarInfoPanel')
+        self.playerId = playerId
         textScale = 0.095
         textWrap = 16.4
+        self.playerInfo = None
+        if self.playerId:
+            self.playerInfo = base.cr.playerFriendsManager.playerId2Info.get(playerId)
         optiondefs = (('pos', (-0.79, 0.0, -0.47), None),
          ('scale', 0.5, None),
          ('relief', None, None),
@@ -77,6 +84,7 @@ class ToonAvatarDetailPanel(DirectFrame):
         self.fsm.request('begin')
         buttons.removeNode()
         gui.removeNode()
+        return
 
     def cleanup(self):
         if self.fsm:
@@ -156,31 +164,39 @@ class ToonAvatarDetailPanel(DirectFrame):
         online = 1
         if base.cr.isFriend(self.avId):
             online = base.cr.isFriendOnline(self.avId)
-        identifier = int(str(self.avId)[1:])
-
         if online:
             shardName = base.cr.getShardName(av.defaultShard)
             hoodName = base.cr.hoodMgr.getFullnameFromId(av.lastHood)
-            text = TTLocalizer.AvatarDetailPanelOnline % {'district': shardName, 'location': hoodName, 'identifier': identifier}
+            if ZoneUtil.isWelcomeValley(av.lastHood):
+                shardName = '%s (%s)' % (TTLocalizer.WelcomeValley[-1], shardName)
+            if self.playerInfo:
+                guiButton = loader.loadModel('phase_3/models/gui/quit_button')
+                self.gotoAvatarButton = DirectButton(parent=self, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=1.1, text=TTLocalizer.AvatarShowPlayer, text_scale=0.07, text_pos=(0.0, -0.02), textMayChange=0, pos=(0.44, 0, 0.41), command=self.__showAvatar)
+                text = TTLocalizer.AvatarDetailPanelOnlinePlayer % {'district': shardName,
+                 'location': hoodName,
+                 'player': self.playerInfo.playerName}
+            else:
+                text = TTLocalizer.AvatarDetailPanelOnline % {'district': shardName,
+                 'location': hoodName}
         else:
-            text = TTLocalizer.AvatarDetailPanelOffline % {'identifier': identifier}
+            text = TTLocalizer.AvatarDetailPanelOffline % {'last_seen': TTLocalizer.getLastSeenString(self.avatar.getLastSeen())}
         self.dataText['text'] = text
-        self.__addToonModel()
         self.__updateTrackInfo()
         self.__updateTrophyInfo()
         self.__updateLaffInfo()
+        return
 
-    def __addToonModel(self):
-        toon = Toon.Toon()
-        toon.setDNA(self.avatar.style)
-        toon.reparentTo(self)
-        toon.setPos(0.45, 0, 0.3)
-        toon.setH(180)
-        toon.setScale(0.11)
-        toon.loop('neutral')
-        toon.setDepthWrite(True)
-        toon.setDepthTest(True)
-    
+    def __showAvatar(self):
+        messenger.send('wakeup')
+        hasManager = hasattr(base.cr, 'playerFriendsManager')
+        handle = base.cr.identifyFriend(self.avId)
+        if not handle and hasManager:
+            handle = base.cr.playerFriendsManager.getAvHandleFromId(self.avId)
+        if handle != None:
+            self.notify.info("Clicked on name in friend's list. doId = %s" % handle.doId)
+            messenger.send('clickedNametagPlayer', [handle, self.playerId, 1])
+        return
+
     def __updateLaffInfo(self):
         avatar = self.avatar
         messenger.send('updateLaffMeter', [avatar, avatar.hp, avatar.maxHp])
@@ -191,44 +207,27 @@ class ToonAvatarDetailPanel(DirectFrame):
         yOffset = 0.1
         ySpacing = -0.115
         inventory = self.avatar.inventory
-        self.inventoryFrame = DirectFrame(parent=self, relief=None)
         inventoryModels = loader.loadModel('phase_3.5/models/gui/inventory_gui')
-        rolloverFrame = DirectFrame(parent=self.inventoryFrame, relief=None, geom=DGG.getDefaultDialogGeom(), geom_color=(0, 0.5, 1, 1), geom_scale=(0.5, 0.3, 0.2), text_scale=0.05, text_pos=(0, 0.0125), text='', text_fg=(1, 1, 1, 1))
-        rolloverFrame.setBin('gui-popup', 0)
-        rolloverFrame.hide()
         buttonModel = inventoryModels.find('**/InventoryButtonUp')
-        for track in xrange(0, len(Tracks)):
-            DirectLabel(parent=self.inventoryFrame, relief=None, text=TextEncoder.upper(TTLocalizer.BattleGlobalTracks[track]), text_scale=TTLocalizer.TADPtrackLabel, text_align=TextNode.ALeft, pos=(-0.9, 0, TTLocalizer.TADtrackLabelPosZ + track * ySpacing))
+        for track in range(0, len(Tracks)):
+            DirectLabel(parent=self, relief=None, text=TextEncoder.upper(TTLocalizer.BattleGlobalTracks[track]), text_scale=TTLocalizer.TADPtrackLabel, text_align=TextNode.ALeft, pos=(-0.9, 0, TTLocalizer.TADtrackLabelPosZ + track * ySpacing))
             if self.avatar.hasTrackAccess(track):
                 curExp, nextExp = inventory.getCurAndNextExpValues(track)
-                for item in xrange(0, len(Levels[track])):
+                for item in range(0, len(Levels[track])):
                     level = Levels[track][item]
                     if curExp >= level:
                         numItems = inventory.numItem(track, item)
-                        organic = self.avatar.checkGagBonus(track, item)
                         if numItems == 0:
                             image_color = Vec4(0.5, 0.5, 0.5, 1)
                             geom_color = Vec4(0.2, 0.2, 0.2, 0.5)
-                        elif organic:
-                            image_color = Vec4(0, 0.8, 0.4, 1)
-                            geom_color = None
                         else:
                             image_color = Vec4(0, 0.6, 1, 1)
                             geom_color = None
-                        pos = (xOffset + item * xSpacing, 0, yOffset + track * ySpacing)
-                        label = DirectLabel(parent=self.inventoryFrame, image=buttonModel, image_scale=(0.92, 1, 1), image_color=image_color, geom=inventory.invModels[track][item], geom_color=geom_color, geom_scale=0.6, relief=None, pos=pos, state=DGG.NORMAL)
-                        label.bind(DGG.ENTER, self.showInfo, extraArgs=[rolloverFrame, track, int(getAvPropDamage(track, item, curExp, organic)), numItems, (pos[0] + 0.37, pos[1], pos[2])])
-                        label.bind(DGG.EXIT, self.hideInfo, extraArgs=[rolloverFrame])
+                        DirectLabel(parent=self, image=buttonModel, image_scale=(0.92, 1, 1), image_color=image_color, geom=inventory.invModels[track][item], geom_color=geom_color, geom_scale=0.6, relief=None, pos=(xOffset + item * xSpacing, 0, yOffset + track * ySpacing))
                     else:
                         break
-    
-    def showInfo(self, frame, track, damage, numItems, pos, extra):
-        frame.setPos(*pos)
-        frame.show()
-        frame['text'] = TTLocalizer.GagPopup % (self.avatar.inventory.getToonupDmgStr(track, 0), damage, numItems)
 
-    def hideInfo(self, frame, extra):
-        frame.hide()
+        return
 
     def __updateTrophyInfo(self):
         if self.createdAvatar:

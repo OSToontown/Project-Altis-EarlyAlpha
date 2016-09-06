@@ -35,9 +35,10 @@ class RegenTreasurePlannerAI(TreasurePlannerAI.TreasurePlannerAI):
         return Task.done
 
     def placeRandomTreasure(self):
+        self.notify.debug('Placing a Treasure...')
         spawnPointIndex = self.nthEmptyIndex(random.randrange(self.countEmptySpawnPoints()))
         self.placeTreasure(spawnPointIndex)
 
     def preSpawnTreasures(self):
-        for i in xrange(self.maxTreasures):
+        for i in range(self.maxTreasures):
             self.placeRandomTreasure()

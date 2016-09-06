@@ -3,7 +3,6 @@ from TagTreasurePlannerAI import *
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
 from direct.task import Task
-from toontown.safezone import TreasureGlobals
 import random
 import TagGameGlobals
 
@@ -20,7 +19,6 @@ class DistributedTagGameAI(DistributedMinigameAI):
             self.addChildGameFSM(self.gameFSM)
             self.treasureScores = {}
             self.itAvId = None
-            self.healAmount = 3
             self.tagBack = 1
 
         return
@@ -62,15 +60,11 @@ class DistributedTagGameAI(DistributedMinigameAI):
         self.notify.debug('enterPlay')
         self.b_setIt(random.choice(self.avIdList))
         taskMgr.doMethodLater(self.DURATION, self.timerExpired, self.taskName('gameTimer'))
-
-        safezoneId = self.getSafezoneId()
-
-        if safezoneId in TreasureGlobals.SafeZoneTreasureSpawns:
-            treasureType, self.healAmount, spawnPoints, spawnRate, maxTreasures = TreasureGlobals.SafeZoneTreasureSpawns[safezoneId]
-        else:
-            treasureType, self.healAmount = TreasureGlobals.TreasureTT, 3
-
-        self.tagTreasurePlanner = TagTreasurePlannerAI(self.zoneId, self, self.treasureGrabCallback, treasureType, TagGameGlobals.getTreasurePoints(safezoneId))
+        self.tagTreasurePlanner = TagTreasurePlannerAI(self.zoneId, self, self.treasureGrabCallback)
+        self.tagTreasurePlanner.placeRandomTreasure()
+        self.tagTreasurePlanner.placeRandomTreasure()
+        self.tagTreasurePlanner.placeRandomTreasure()
+        self.tagTreasurePlanner.placeRandomTreasure()
         self.tagTreasurePlanner.start()
 
     def timerExpired(self, task):
@@ -95,9 +89,9 @@ class DistributedTagGameAI(DistributedMinigameAI):
 
     def treasureGrabCallback(self, avId):
         if avId not in self.avIdList:
-            self.air.writeServerEvent('suspicious', avId, 'TagGameAI.treasureGrabCallback non-player avId')
+            self.air.writeServerEvent('suspicious', avId=avId, issue='TagGameAI.treasureGrabCallback non-player avId')
             return
-        self.treasureScores[avId] += self.healAmount
+        self.treasureScores[avId] += 2
         self.notify.debug('treasureGrabCallback: ' + str(avId) + ' grabbed a treasure, new score: ' + str(self.treasureScores[avId]))
         self.scoreDict[avId] = self.treasureScores[avId]
         treasureScoreParams = []
@@ -112,10 +106,10 @@ class DistributedTagGameAI(DistributedMinigameAI):
 
     def tag(self, taggedAvId):
         taggedAvatar = simbase.air.doId2do.get(taggedAvId)
-        if taggedAvatar == None:
-            self.air.writeServerEvent('suspicious', taggedAvId, 'TagGameAI.tag invalid taggedAvId')
-            return
         itAvId = self.air.getAvatarIdFromSender()
+        if taggedAvatar == None:
+            self.air.writeServerEvent('suspicious', avId=itAvId, issue='TagGameAI.tag invalid taggedAvId, taggedAvId was %s' % taggedAvId)
+            return
         if self.tagBack:
             self.notify.debug('tag: ' + str(itAvId) + ' tagged: ' + str(taggedAvId))
             if self.itAvId == itAvId:

@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.distributed.ClockDelta import *
 from direct.task.Task import Task
 from direct.interval.IntervalGlobal import *
@@ -17,6 +17,7 @@ from toontown.toonbase.ToontownTimer import ToontownTimer
 from toontown.toonbase import ToontownGlobals
 from direct.showbase import PythonUtil
 from otp.otpbase import OTPGlobals
+from otp.margins import WhisperPopup
 
 class DistributedPicnicTable(DistributedNode.DistributedNode):
 
@@ -25,7 +26,7 @@ class DistributedPicnicTable(DistributedNode.DistributedNode):
         NodePath.__init__(self, 'DistributedPicnicTable')
         DistributedNode.DistributedNode.__init__(self, cr)
         self.reparentTo(render)
-        self.picnicTable = loader.loadModel('phase_6/models/golf/game_table.bam')
+        self.picnicTable = loader.loadModel('phase_6/models/golf/game_table')
         self.picnicTable.reparentTo(self)
         self.picnicTableSphereNodes = []
         self.numSeats = 6
@@ -67,7 +68,7 @@ class DistributedPicnicTable(DistributedNode.DistributedNode):
          State.State('sitting', self.enterSitting, self.exitSitting, ['off']),
          State.State('observing', self.enterObserving, self.exitObserving, ['off'])], 'off', 'off')
         self.fsm.enterInitialState()
-        for i in xrange(self.numSeats):
+        for i in range(self.numSeats):
             self.seats.append(self.picnicTable.find('**/*seat%d' % (i + 1)))
             self.jumpOffsets.append(self.picnicTable.find('**/*jumpOut%d' % (i + 1)))
 
@@ -82,7 +83,7 @@ class DistributedPicnicTable(DistributedNode.DistributedNode):
 
     def announceGenerate(self):
         DistributedNode.DistributedNode.announceGenerate(self)
-        for i in xrange(self.numSeats):
+        for i in range(self.numSeats):
             self.picnicTableSphereNodes.append(self.seats[i].attachNewNode(CollisionNode('picnicTable_sphere_%d_%d' % (self.getDoId(), i))))
             self.picnicTableSphereNodes[i].node().addSolid(CollisionSphere(0, 0, 0, 2))
 
@@ -184,7 +185,7 @@ class DistributedPicnicTable(DistributedNode.DistributedNode):
             self.isPlaying = True
         for x in tableStateList:
             if x != 0:
-                if x not in self.tableState and x in self.cr.doId2do and x not in self.haveAnimated:
+                if x not in self.tableState and self.cr.doId2do.has_key(x) and x not in self.haveAnimated:
                     seatIndex = tableStateList.index(x)
                     toon = self.cr.doId2do[x]
                     toon.stopSmooth()
@@ -241,7 +242,7 @@ class DistributedPicnicTable(DistributedNode.DistributedNode):
                 whisper = WhisperPopup(TTLocalizer.RegularCheckersYouWon, OTPGlobals.getInterfaceFont(), WhisperPopup.WTNormal)
             elif winString == 'Find Four':
                 whisper = WhisperPopup('You won a game of Find Four!', OTPGlobals.getInterfaceFont(), WhisperPopup.WTNormal)
-        elif avId in self.cr.doId2do:
+        elif self.cr.doId2do.has_key(avId):
             stateString = self.fsm.getCurrentState().getName()
             if stateString == 'sitting' or stateString == 'observing':
                 base.cr.playGame.getPlace().setState('walk')
@@ -252,7 +253,7 @@ class DistributedPicnicTable(DistributedNode.DistributedNode):
                 whisper = WhisperPopup(av.getName() + TTLocalizer.RegularCheckersGameOf + TTLocalizer.RegularCheckers, OTPGlobals.getInterfaceFont(), WhisperPopup.WTNormal)
             elif winString == 'Find Four':
                 whisper = WhisperPopup(av.getName() + ' has won a game of' + ' Find Four!', OTPGlobals.getInterfaceFont(), WhisperPopup.WTNormal)
-        if avId in self.cr.doId2do:
+        if self.cr.doId2do.has_key(avId):
             toon = self.cr.doId2do[avId]
             self.winTrack = Sequence(autoFinish=1)
             if self.outTrack.isPlaying():
@@ -411,7 +412,7 @@ class DistributedPicnicTable(DistributedNode.DistributedNode):
             else:
                 self.inGame = True
                 self.seatPos = index
-        if avId in self.cr.doId2do:
+        if self.cr.doId2do.has_key(avId):
             toon = self.cr.doId2do[avId]
             toon.stopSmooth()
             toon.wrtReparentTo(self.tableCloth)
@@ -436,7 +437,7 @@ class DistributedPicnicTable(DistributedNode.DistributedNode):
             return
         if avId in self.haveAnimated:
             self.haveAnimated.remove(avId)
-        if avId in self.cr.doId2do:
+        if self.cr.doId2do.has_key(avId):
             if avId == base.localAvatar.getDoId():
                 if self.gameZone:
                     base.cr.removeInterest(self.gameZone)
@@ -483,18 +484,18 @@ class DistributedPicnicTable(DistributedNode.DistributedNode):
         self.cameraBoardTrack.start()
 
     def __enableCollisions(self):
-        for i in xrange(self.numSeats):
+        for i in range(self.numSeats):
             self.accept('enterpicnicTable_sphere_%d_%d' % (self.getDoId(), i), self.handleEnterPicnicTableSphere, [i])
             self.picnicTableSphereNodes[i].setCollideMask(ToontownGlobals.WallBitmask)
 
         self.tableclothSphereNode.setCollideMask(ToontownGlobals.WallBitmask)
 
     def __disableCollisions(self):
-        for i in xrange(self.numSeats):
+        for i in range(self.numSeats):
             self.ignore('enterpicnicTable_sphere_%d_%d' % (self.getDoId(), i))
             self.ignore('enterPicnicTableOK_%d_%d' % (self.getDoId(), i))
 
-        for i in xrange(self.numSeats):
+        for i in range(self.numSeats):
             self.picnicTableSphereNodes[i].setCollideMask(BitMask32(0))
 
         self.tableclothSphereNode.setCollideMask(BitMask32(0))
@@ -644,7 +645,7 @@ class DistributedPicnicTable(DistributedNode.DistributedNode):
             keyList.append(key)
 
         for key in keyList:
-            if key in self.__toonTracks:
+            if self.__toonTracks.has_key(key):
                 self.clearToonTrack(key)
 
     def doNothing(self):

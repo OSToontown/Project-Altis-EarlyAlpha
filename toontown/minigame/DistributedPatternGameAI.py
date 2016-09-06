@@ -96,7 +96,7 @@ class DistributedPatternGameAI(DistributedMinigameAI):
         self.round += 1
         targetLen = PatternGameGlobals.INITIAL_ROUND_LENGTH + PatternGameGlobals.ROUND_LENGTH_INCREMENT * (self.round - 1)
         count = targetLen - len(self.pattern)
-        for i in xrange(0, count):
+        for i in range(0, count):
             self.pattern.append(random.randint(0, 3))
 
         self.gameFSM.request('waitForResults')
@@ -118,13 +118,13 @@ class DistributedPatternGameAI(DistributedMinigameAI):
             return
         avId = self.air.getAvatarIdFromSender()
         if avId not in self.avIdList:
-            self.air.writeServerEvent('suspicious', avId, 'PatternGameAI.reportButtonPress avId not on list')
+            self.air.writeServerEvent('suspicious', avId=avId, issue='PatternGameAI.reportButtonPress avId not on list')
             return
         if index < 0 or index > 3:
-            self.air.writeServerEvent('warning', index, 'PatternGameAI.reportButtonPress got bad index')
+            self.air.writeServerEvent('warning', avId=avId, issue='PatternGameAI.reportButtonPress got bad index, was %s' % index)
             return
         if wrong not in [0, 1]:
-            self.air.writeServerEvent('warning', wrong, "PatternGameAI.reportButtonPress got bad 'wrong'")
+            self.air.writeServerEvent('warning', avId=avId, issue="PatternGameAI.reportButtonPress got bad 'wrong', was %s" % wrong)
             return
         self.sendUpdate('remoteButtonPressed', [avId, index, wrong])
 
@@ -159,13 +159,13 @@ class DistributedPatternGameAI(DistributedMinigameAI):
 
     def __gotAllPatterns(self):
         patterns = [[]] * 4
-        for i in xrange(0, len(self.results)):
+        for i in range(0, len(self.results)):
             patterns[i] = self.results[i]
             if patterns[i] is None:
                 patterns[i] = []
 
         self.sendUpdate('setPlayerPatterns', patterns + [self.fastestAvId])
-        for i in xrange(0, self.numPlayers):
+        for i in range(0, self.numPlayers):
             avId = self.avIdList[i]
             if not self.results[i] == self.pattern:
                 self.perfectResults[avId] = 0

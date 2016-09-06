@@ -1,41 +1,42 @@
-from direct.directnotify.DirectNotifyGlobal import directNotify
 from direct.distributed.DistributedObjectGlobal import DistributedObjectGlobal
-import hmac
-from panda3d.core import *
-
+from direct.directnotify.DirectNotifyGlobal import directNotify
 from otp.distributed.PotentialAvatar import PotentialAvatar
-from otp.otpbase import OTPGlobals
-from otp.nametag.NametagConstants import WTSystem
-from otp.margins.WhisperPopup import WhisperPopup
+from otp.otpbase import OTPLocalizer, OTPGlobals
+from otp.margins.WhisperPopup import *
+from pandac.PandaModules import *
+import hashlib
+import hmac
 
+FIXED_KEY = "wedidntbuildttrinaday,thinkaboutwhatyouredoing"
 
 class ClientServicesManager(DistributedObjectGlobal):
     notify = directNotify.newCategory('ClientServicesManager')
+
+    systemMessageSfx = None
+    avIdsReportedThisSession = []
 
     # --- LOGIN LOGIC ---
     def performLogin(self, doneEvent):
         self.doneEvent = doneEvent
 
-        self.systemMessageSfx = None
+        cookie = self.cr.playToken or 'dev'
 
-        token = self.cr.playToken or 'dev'
+        # Sign the login cookie
+        key = config.GetString('csmud-secret', 'streetlamps') + config.GetString('server-version', 'no_version_set') + FIXED_KEY
+        sig = hmac.new(key, cookie, hashlib.sha256).digest()
 
-        key = 'c603c5833021ce79f734943f6e662250fd4ecf7432bf85905f71707dc4a9370c6ae15a8716302ead43810e5fba3cf0876bbbfce658e2767b88d916f5d89fd31'
-        digest_maker = hmac.new(key)
-        digest_maker.update(token)
-        clientKey = digest_maker.hexdigest()
+        self.notify.debug('Sending login cookie: ' + cookie)
+        self.sendUpdate('login', [cookie, sig])
 
-        self.sendUpdate('login', [token, clientKey])
-
-    def acceptLogin(self, timestamp):
-        messenger.send(self.doneEvent, [{'mode': 'success', 'timestamp': timestamp}])
+    def acceptLogin(self):
+        messenger.send(self.doneEvent, [{'mode': 'success'}])
 
 
     # --- AVATARS LIST ---
     def requestAvatars(self):
         self.sendUpdate('requestAvatars')
 
-    def setAvatars(self, chatSettings, avatars):
+    def setAvatars(self, avatars):
         avList = []
         for avNum, avName, avDNA, avPosition, nameState in avatars:
             nameOpen = int(nameState == 1)
@@ -48,7 +49,6 @@ class ClientServicesManager(DistributedObjectGlobal):
                 names[3] = avName
             avList.append(PotentialAvatar(avNum, names, avDNA, avPosition, nameOpen))
 
-        self.cr.handleChatSettings(chatSettings)
         self.cr.handleAvatarsList(avList)
 
     # --- AVATAR CREATION/DELETION ---
@@ -89,11 +89,36 @@ class ClientServicesManager(DistributedObjectGlobal):
     def sendChooseAvatar(self, avId):
         self.sendUpdate('chooseAvatar', [avId])
 
-    def systemMessage(self, message):
-        whisper = WhisperPopup(message, OTPGlobals.getInterfaceFont(), WTSystem)
+    # No response: instead, an OwnerView is sent or deleted.
+
+    def systemMessage(self, code, params):
+        # First, format message:
+        msg = OTPLocalizer.CRSystemMessages.get(code)
+        if not msg:
+            self.notify.warning('Got invalid system-message code: %d' % code)
+            return
+
+        try:
+            message = msg % tuple(params)
+        except TypeError:
+            self.notify.warning(
+                'Got invalid parameters for system-message %d: %r' % (code, params))
+            return
+
+        whisper = WhisperPopup(message, OTPGlobals.getInterfaceFont(), WhisperPopup.WTSystem)
         whisper.manage(base.marginManager)
-
-        if self.systemMessageSfx is None:
+        if not self.systemMessageSfx:
             self.systemMessageSfx = base.loadSfx('phase_3/audio/sfx/clock03.ogg')
+        if self.systemMessageSfx:
+            base.playSfx(self.systemMessageSfx)
 
-        base.playSfx(self.systemMessageSfx)
+    def hasReportedPlayer(self, avId):
+        return avId in self.avIdsReportedThisSession
+
+    def d_reportPlayer(self, avId, category):
+        # Drop-in replacement for Disney's "CentralLogger" reporting object.
+        if self.hasReportedPlayer(avId):
+            # We've already reported this avId.
+            return
+        self.avIdsReportedThisSession.append(avId)
+        self.sendUpdate('reportPlayer', [avId, category])

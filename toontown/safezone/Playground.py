@@ -1,5 +1,5 @@
 from direct.interval.IntervalGlobal import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from direct.directnotify import DirectNotifyGlobal
 from toontown.hood import Place
@@ -10,6 +10,7 @@ from direct.fsm import State
 from direct.task import Task
 from toontown.toon import DeathForceAcknowledge
 from toontown.toon import HealthForceAcknowledge
+from toontown.tutorial import TutorialForceAcknowledge
 from toontown.toon import NPCForceAcknowledge
 from toontown.trolley import Trolley
 from toontown.toontowngui import TTDialog
@@ -20,13 +21,13 @@ from direct.gui import DirectLabel
 from otp.distributed.TelemetryLimiter import RotationLimitToH, TLGatherAllAvs
 from toontown.quest import Quests
 from toontown.battle import BattleParticles
-from toontown.dna.DNAParser import DNABulkLoader
 
 class Playground(Place.Place):
     notify = DirectNotifyGlobal.directNotify.newCategory('Playground')
 
     def __init__(self, loader, parentFSM, doneEvent):
         Place.Place.__init__(self, loader, doneEvent)
+        self.tfaDoneEvent = 'tfaDoneEvent'
         self.fsm = ClassicFSM.ClassicFSM('Playground', [
             State.State('start',
                         self.enterStart,
@@ -41,7 +42,9 @@ class Playground(Place.Place):
                             'drive',
                             'sit',
                             'stickerBook',
-                            'NPCFA',
+                            'TFA',
+                            'DFA',
+                            'trialerFA',
                             'trolley',
                             'final',
                             'doorOut',
@@ -49,11 +52,14 @@ class Playground(Place.Place):
                             'quest',
                             'purchase',
                             'stopped',
-                            'fishing']),
+                            'fishing',
+                            'died']),
             State.State('stickerBook',
                         self.enterStickerBook,
                         self.exitStickerBook, [
                             'walk',
+                            'DFA',
+                            'TFA',
                             'trolley',
                             'final',
                             'doorOut',
@@ -61,13 +67,19 @@ class Playground(Place.Place):
                             'purchase',
                             'stopped',
                             'fishing',
-                            'NPCFA']),
+                            'trialerFA']),
             State.State('sit',
                         self.enterSit,
-                        self.exitSit, ['walk']),
+                        self.exitSit, [
+                            'walk',
+                            'DFA',
+                            'trialerFA']),
             State.State('drive',
                         self.enterDrive,
-                        self.exitDrive, ['walk']),
+                        self.exitDrive, [
+                            'walk',
+                            'DFA',
+                            'trialerFA']),
             State.State('trolley',
                         self.enterTrolley,
                         self.exitTrolley, [
@@ -75,13 +87,39 @@ class Playground(Place.Place):
             State.State('doorIn',
                         self.enterDoorIn,
                         self.exitDoorIn, [
-                            'walk',
-                            'stopped']),
+                            'walk']),
             State.State('doorOut',
                         self.enterDoorOut,
                         self.exitDoorOut, [
-                            'walk',
-                            'stopped']),
+                            'walk']),
+            State.State('TFA',
+                        self.enterTFA,
+                        self.exitTFA, [
+                            'TFAReject',
+                            'DFA']),
+            State.State('TFAReject',
+                        self.enterTFAReject,
+                        self.exitTFAReject, [
+                            'walk']),
+            State.State('trialerFA',
+                        self.enterTrialerFA,
+                        self.exitTrialerFA, [
+                            'trialerFAReject',
+                            'DFA']),
+            State.State('trialerFAReject',
+                        self.enterTrialerFAReject,
+                        self.exitTrialerFAReject, [
+                            'walk']),
+            State.State('DFA',
+                        self.enterDFA,
+                        self.exitDFA, [
+                            'DFAReject',
+                            'NPCFA',
+                            'HFA']),
+            State.State('DFAReject',
+                        self.enterDFAReject,
+                        self.exitDFAReject, [
+                            'walk']),
             State.State('NPCFA',
                         self.enterNPCFA,
                         self.exitNPCFA, [
@@ -122,7 +160,8 @@ class Playground(Place.Place):
             State.State('died',
                         self.enterDied,
                         self.exitDied, [
-                            'final']),
+                            'final',
+                            'walk']),
             State.State('tunnelIn',
                         self.enterTunnelIn,
                         self.exitTunnelIn, [
@@ -168,7 +207,6 @@ class Playground(Place.Place):
         self.accept('DistributedDoor_doorTrigger', self.handleDoorTrigger)
         base.playMusic(self.loader.music, looping=1, volume=0.8)
         self.loader.geom.reparentTo(render)
-
         for i in self.loader.nodeList:
             self.loader.enterAnimatedProps(i)
 
@@ -181,31 +219,50 @@ class Playground(Place.Place):
             self.loader.hood.eventLights += geom.findAllMatches('**/prop_snow_tree*')
             self.loader.hood.eventLights += geom.findAllMatches('**/prop_tree*')
             self.loader.hood.eventLights += geom.findAllMatches('**/*christmas*')
-
             for light in self.loader.hood.eventLights:
                 light.setColorScaleOff(0)
 
-        if base.cr.newsManager.isHolidayRunning(ToontownGlobals.HALLOWEEN) and self.loader.hood.spookySkyFile:
-            lightsOff = Sequence(LerpColorScaleInterval(base.cr.playGame.hood.loader.geom, 0.1, Vec4(0.55, 0.55, 0.65, 1)), Func(self.loader.hood.startSpookySky), Func(__lightDecorationOn__))
-            lightsOff.start()
-        elif base.cr.newsManager.isHolidayRunning(ToontownGlobals.CHRISTMAS) and self.loader.hood.snowySkyFile:
-            lightsOff = Sequence(LerpColorScaleInterval(base.cr.playGame.hood.loader.geom, 0.1, Vec4(0.7, 0.7, 0.8, 1)), Func(self.loader.hood.startSnowySky), Func(__lightDecorationOn__))
-            lightsOff.start()
-            self.snowEvent = BattleParticles.loadParticleFile('snowdisk.ptf')
-            self.snowEvent.setPos(0, 30, 10)
-            self.snowEventRender = base.cr.playGame.hood.loader.geom.attachNewNode('snowRender')
-            self.snowEventRender.setDepthWrite(2)
-            self.snowEventRender.setBin('fixed', 1)
-            self.snowEventFade = None
-            self.snowEvent.start(camera, self.snowEventRender)
+        newsManager = base.cr.newsManager
+        if newsManager:
+            holidayIds = base.cr.newsManager.getDecorationHolidayId()
+            #Halloween Event
+            if (ToontownGlobals.HALLOWEEN_COSTUMES in holidayIds or ToontownGlobals.SPOOKY_COSTUMES in holidayIds) and self.loader.hood.spookySkyFile:
+                lightsOff = Sequence(LerpColorScaleInterval(base.cr.playGame.hood.loader.geom, 0.1, Vec4(0.55, 0.55, 0.65, 1)), Func(self.loader.hood.startSpookySky), Func(__lightDecorationOn__))
+                lightsOff.start()
+            else:
+                self.loader.hood.startSky()
+                lightsOn = LerpColorScaleInterval(base.cr.playGame.hood.loader.geom, 0.1, Vec4(1, 1, 1, 1))
+                lightsOn.start()
+            #Christmas Event
+            if (ToontownGlobals.WINTER_DECORATIONS in holidayIds or ToontownGlobals.WACKY_WINTER_DECORATIONS in holidayIds) and self.loader.hood.snowySkyFile:
+                lightsOff = Sequence(LerpColorScaleInterval(base.cr.playGame.hood.loader.geom, 0.1, Vec4(0.7, 0.7, 0.8, 1)), Func(self.loader.hood.startSnowySky), Func(__lightDecorationOn__))
+                lightsOff.start()
+                self.snowEvent = BattleParticles.loadParticleFile('snowdisk.ptf')
+                self.snowEvent.setPos(0, 30, 10)
+                #2 and 3 are only for the blizzard event and should be removed
+                self.snowEvent2 = BattleParticles.loadParticleFile('snowdisk.ptf')
+                self.snowEvent2.setPos(0, 10, 10)
+                self.snowEvent3 = BattleParticles.loadParticleFile('snowdisk.ptf')
+                self.snowEvent3.setPos(0, 20, 5)
+                self.snowEventRender = base.cr.playGame.hood.loader.geom.attachNewNode('snowRender')
+                self.snowEventRender.setDepthWrite(2)
+                self.snowEventRender.setBin('fixed', 1)
+                self.snowEventFade = None
+                self.snowEvent.start(camera, self.snowEventRender)
+                #2 and 3 are only for the blizzard event and should be removed
+                self.snowEvent2.start(camera, self.snowEventRender)
+                self.snowEvent3.start(camera, self.snowEventRender)
+            else:
+                self.loader.hood.startSky()
+                lightsOn = LerpColorScaleInterval(base.cr.playGame.hood.loader.geom, 0.1, Vec4(1, 1, 1, 1))
+                lightsOn.start()
         else:
             self.loader.hood.startSky()
             lightsOn = LerpColorScaleInterval(base.cr.playGame.hood.loader.geom, 0.1, Vec4(1, 1, 1, 1))
             lightsOn.start()
-
         NametagGlobals.setMasterArrowsOn(1)
         self.zoneId = requestStatus['zoneId']
-        self.tunnelOriginList = base.cr.hoodMgr.addLinkTunnelHooks(self, self.loader.nodeList)
+        self.tunnelOriginList = base.cr.hoodMgr.addLinkTunnelHooks(self, self.loader.nodeList, self.zoneId)
         how = requestStatus['how']
         if how == 'teleportIn':
             how = 'deathAck'
@@ -226,6 +283,7 @@ class Playground(Place.Place):
             for light in self.loader.hood.eventLights:
                 light.reparentTo(hidden)
 
+        newsManager = base.cr.newsManager
         NametagGlobals.setMasterArrowsOn(0)
         for i in self.loader.nodeList:
             self.loader.exitAnimatedProps(i)
@@ -254,13 +312,13 @@ class Playground(Place.Place):
 
     def showTreasurePoints(self, points):
         self.hideDebugPointText()
-        for i in xrange(len(points)):
+        for i in range(len(points)):
             p = points[i]
             self.showDebugPointText(str(i), p)
 
     def showDropPoints(self, points):
         self.hideDebugPointText()
-        for i in xrange(len(points)):
+        for i in range(len(points)):
             p = points[i]
             self.showDebugPointText(str(i), p)
 
@@ -270,10 +328,31 @@ class Playground(Place.Place):
     def hidePaths(self):
         self.hideDebugPointText()
 
+    def showPathPoints(self, paths, waypoints = None):
+        self.hideDebugPointText()
+        lines = LineSegs()
+        lines.setColor(1, 0, 0, 1)
+        from toontown.classicchars import CCharPaths
+        for name, pointDef in paths.items():
+            self.showDebugPointText(name, pointDef[0])
+            for connectTo in pointDef[1]:
+                toDef = paths[connectTo]
+                fromP = pointDef[0]
+                toP = toDef[0]
+                lines.moveTo(fromP[0], fromP[1], fromP[2] + 2.0)
+                wpList = CCharPaths.getWayPoints(name, connectTo, paths, waypoints)
+                for wp in wpList:
+                    lines.drawTo(wp[0], wp[1], wp[2] + 2.0)
+                    self.showDebugPointText('*', wp)
+
+                lines.drawTo(toP[0], toP[1], toP[2] + 2.0)
+
+        self.debugText.attachNewNode(lines.create())
+
     def hideDebugPointText(self):
         if hasattr(self, 'debugText'):
             children = self.debugText.getChildren()
-            for i in xrange(children.getNumPaths()):
+            for i in range(children.getNumPaths()):
                 children[i].removeNode()
 
     def showDebugPointText(self, text, point):
@@ -338,8 +417,27 @@ class Playground(Place.Place):
         messenger.send(self.doneEvent)
         return
 
-    def doRequestLeave(self, requestStatus):
-        self.fsm.request('NPCFA', [requestStatus])
+    def enterTFACallback(self, requestStatus, doneStatus):
+        self.tfa.exit()
+        del self.tfa
+        doneStatusMode = doneStatus['mode']
+        if doneStatusMode == 'complete':
+            self.requestLeave(requestStatus)
+        elif doneStatusMode == 'incomplete':
+            self.fsm.request('TFAReject')
+        else:
+            self.notify.error('Unknown mode: %s' % doneStatusMode)
+
+    def enterDFACallback(self, requestStatus, doneStatus):
+        self.dfa.exit()
+        del self.dfa
+        ds = doneStatus['mode']
+        if ds == 'complete':
+            self.fsm.request('NPCFA', [requestStatus])
+        elif ds == 'incomplete':
+            self.fsm.request('DFAReject')
+        else:
+            self.notify.error('Unknown done status for DownloadForceAcknowledge: ' + `doneStatus`)
 
     def enterHFA(self, requestStatus):
         self.acceptOnce(self.hfaDoneEvent, self.enterHFACallback, [requestStatus])
@@ -549,8 +647,7 @@ class Playground(Place.Place):
         Place.Place.exitTeleportOut(self)
 
     def createPlayground(self, dnaFile):
-        dnaBulk = DNABulkLoader(self.loader.dnaStore, (self.safeZoneStorageDNAFile,))
-        dnaBulk.loadDNAFiles()
+        loader.loadDNAFile(self.loader.dnaStore, self.safeZoneStorageDNAFile)
         node = loader.loadDNAFile(self.loader.dnaStore, dnaFile)
         if node.getNumParents() == 1:
             self.geom = NodePath(node.getParent(0))
@@ -558,7 +655,7 @@ class Playground(Place.Place):
         else:
             self.geom = hidden.attachNewNode(node)
         self.makeDictionaries(self.loader.dnaStore)
-        self.tunnelOriginList = base.cr.hoodMgr.addLinkTunnelHooks(self, self.nodeList)
+        self.tunnelOriginList = base.cr.hoodMgr.addLinkTunnelHooks(self, self.nodeList, self.zoneId)
         self.geom.flattenMedium()
         gsg = base.win.getGsg()
         if gsg:
@@ -566,7 +663,7 @@ class Playground(Place.Place):
 
     def makeDictionaries(self, dnaStore):
         self.nodeList = []
-        for i in xrange(dnaStore.getNumDNAVisGroups()):
+        for i in range(dnaStore.getNumDNAVisGroups()):
             groupFullName = dnaStore.getDNAVisGroupName(i)
             groupName = base.cr.hoodMgr.extractGroupName(groupFullName)
             groupNode = self.geom.find('**/' + groupFullName)
@@ -582,5 +679,19 @@ class Playground(Place.Place):
 
     def removeLandmarkBlockNodes(self):
         npc = self.geom.findAllMatches('**/suit_building_origin')
-        for i in xrange(npc.getNumPaths()):
+        for i in range(npc.getNumPaths()):
             npc.getPath(i).removeNode()
+
+    def enterTFA(self, requestStatus):
+        self.acceptOnce(self.tfaDoneEvent, self.enterTFACallback, [requestStatus])
+        self.tfa = TutorialForceAcknowledge.TutorialForceAcknowledge(self.tfaDoneEvent)
+        self.tfa.enter()
+
+    def exitTFA(self):
+        self.ignore(self.tfaDoneEvent)
+
+    def enterTFAReject(self):
+        self.fsm.request('walk')
+
+    def exitTFAReject(self):
+        pass

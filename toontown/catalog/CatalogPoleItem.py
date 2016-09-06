@@ -16,7 +16,7 @@ class CatalogPoleItem(CatalogItem.CatalogItem):
         return 1
 
     def reachedPurchaseLimit(self, avatar):
-        return avatar.getMaxFishingRod() >= self.rodId or self in avatar.onOrder or self in avatar.mailboxContents
+        return avatar.getFishingRod() >= self.rodId or self in avatar.onOrder or self in avatar.mailboxContents
 
     def saveHistory(self):
         return 1
@@ -31,18 +31,17 @@ class CatalogPoleItem(CatalogItem.CatalogItem):
         if self.rodId < 0 or self.rodId > FishGlobals.MaxRodId:
             self.notify.warning('Invalid fishing pole: %s for avatar %s' % (self.rodId, avatar.doId))
             return ToontownGlobals.P_InvalidIndex
-        if self.rodId < avatar.getMaxFishingRod():
+        if self.rodId < avatar.getFishingRod():
             self.notify.warning('Avatar already has pole: %s for avatar %s' % (self.rodId, avatar.doId))
             return ToontownGlobals.P_ItemUnneeded
         avatar.b_setFishingRod(self.rodId)
-        avatar.b_setMaxFishingRod(self.rodId)
         return ToontownGlobals.P_ItemAvailable
 
     def isGift(self):
         return 0
 
     def getDeliveryTime(self):
-        return 24 * 60
+        return 1
 
     def getPicture(self, avatar):
         rodPath = FishGlobals.RodFileDict.get(self.rodId)
@@ -84,6 +83,7 @@ class CatalogPoleItem(CatalogItem.CatalogItem):
     def decodeDatagram(self, di, versionNumber, store):
         CatalogItem.CatalogItem.decodeDatagram(self, di, versionNumber, store)
         self.rodId = di.getUint8()
+        price = FishGlobals.RodPriceDict[self.rodId]
 
     def encodeDatagram(self, dg, store):
         CatalogItem.CatalogItem.encodeDatagram(self, dg, store)
@@ -91,7 +91,7 @@ class CatalogPoleItem(CatalogItem.CatalogItem):
 
 
 def nextAvailablePole(avatar, duplicateItems):
-    rodId = avatar.getMaxFishingRod() + 1
+    rodId = avatar.getFishingRod() + 1
     if rodId > FishGlobals.MaxRodId:
         return None
     item = CatalogPoleItem(rodId)
@@ -106,7 +106,7 @@ def nextAvailablePole(avatar, duplicateItems):
 
 def getAllPoles():
     list = []
-    for rodId in xrange(0, FishGlobals.MaxRodId + 1):
+    for rodId in range(0, FishGlobals.MaxRodId + 1):
         list.append(CatalogPoleItem(rodId))
 
     return list

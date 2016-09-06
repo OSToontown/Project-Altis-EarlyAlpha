@@ -1,7 +1,7 @@
 from direct.distributed import DistributedObjectAI
 from direct.directnotify import DirectNotifyGlobal
 from toontown.toonbase import ToontownGlobals
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.fsm.FSM import FSM
 from toontown.ai.ToonBarrier import *
 from toontown.golf import GolfGlobals
@@ -38,7 +38,7 @@ class GolfHoleBase:
         terrainData = self.terrainModel.find('**/softSurface')
         grassData = terrainData.findAllMatches('**/grass*')
         self.terrainData = []
-        for index in xrange(grassData.getNumPaths()):
+        for index in range(grassData.getNumPaths()):
             someTerrainData = grassData[index]
             terrainDataOde = OdeTriMeshData(someTerrainData)
             self.meshDataList.append(terrainDataOde)
@@ -51,7 +51,7 @@ class GolfHoleBase:
 
         slickData = terrainData.findAllMatches('**/slick*')
         self.terrainData = []
-        for index in xrange(slickData.getNumPaths()):
+        for index in range(slickData.getNumPaths()):
             someTerrainData = slickData[index]
             terrainDataOde = OdeTriMeshData(someTerrainData)
             self.meshDataList.append(terrainDataOde)
@@ -209,7 +209,7 @@ class GolfHoleBase:
         lift = 0
         startTime = GolfGlobals.BALL_CONTACT_FRAME / 24
         startFrame = int(startTime * self.FPS)
-        for frame in xrange(int(startFrame)):
+        for frame in range(int(startFrame)):
             self.simulate()
             self.setTimeIntoCycle(self.swingTime + float(frameCount) * self.DTAStep)
             frameCount += 1

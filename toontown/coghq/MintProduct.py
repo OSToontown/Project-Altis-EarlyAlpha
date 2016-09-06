@@ -31,3 +31,10 @@ class MintProduct(BasicEntities.NodePathEntity):
         self.model.flattenStrong()
         if self.model:
             self.model.reparentTo(self)
+        return
+
+    if __dev__:
+
+        def setMintId(self, mintId):
+            self.mintId = mintId
+            self.loadModel()

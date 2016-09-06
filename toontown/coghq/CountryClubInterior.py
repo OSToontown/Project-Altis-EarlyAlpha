@@ -3,7 +3,7 @@ from toontown.battle import BattlePlace
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
 from direct.showbase import BulletinBoardWatcher
-from panda3d.core import *
+from pandac.PandaModules import *
 from otp.distributed.TelemetryLimiter import RotationLimitToH, TLGatherAllAvs
 from toontown.toon import Toon
 from toontown.toonbase import ToontownGlobals
@@ -33,6 +33,7 @@ class CountryClubInterior(BattlePlace.BattlePlace):
           'died',
           'teleportOut',
           'squished',
+          'DFA',
           'fallDown',
           'stopped',
           'elevator']),
@@ -41,6 +42,7 @@ class CountryClubInterior(BattlePlace.BattlePlace):
          State.State('push', self.enterPush, self.exitPush, ['walk', 'died', 'teleportOut']),
          State.State('stickerBook', self.enterStickerBook, self.exitStickerBook, ['walk',
           'battle',
+          'DFA',
           'WaitForBattle',
           'died',
           'teleportOut']),
@@ -59,6 +61,8 @@ class CountryClubInterior(BattlePlace.BattlePlace):
           'FLA',
           'quietZone',
           'WaitForBattle']),
+         State.State('DFA', self.enterDFA, self.exitDFA, ['DFAReject', 'teleportOut']),
+         State.State('DFAReject', self.enterDFAReject, self.exitDFAReject, ['walkteleportOut']),
          State.State('died', self.enterDied, self.exitDied, ['teleportOut']),
          State.State('FLA', self.enterFLA, self.exitFLA, ['quietZone']),
          State.State('quietZone', self.enterQuietZone, self.exitQuietZone, ['teleportIn']),
@@ -91,7 +95,7 @@ class CountryClubInterior(BattlePlace.BattlePlace):
             base.playMusic(self.music, looping=1, volume=0.8)
             base.transitions.irisIn()
             CountryClub = bboard.get(DistributedCountryClub.DistributedCountryClub.ReadyPost)
-            self.loader.hood.spawnTitleText(CountryClub.countryClubId)
+            self.loader.hood.spawnTitleText(CountryClub.countryClubId, CountryClub.floorNum)
 
         self.CountryClubReadyWatcher = BulletinBoardWatcher.BulletinBoardWatcher('CountryClubReady', DistributedCountryClub.DistributedCountryClub.ReadyPost, commence)
         self.CountryClubDefeated = 0
@@ -255,9 +259,11 @@ class CountryClubInterior(BattlePlace.BattlePlace):
     def detectedElevatorCollision(self, distElevator):
         self.fsm.request('elevator', [distElevator])
 
-    def enterElevator(self, distElevator):
+    def enterElevator(self, distElevator, skipDFABoard = 0):
         self.accept(self.elevatorDoneEvent, self.handleElevatorDone)
         self.elevator = Elevator.Elevator(self.fsm.getStateNamed('elevator'), self.elevatorDoneEvent, distElevator)
+        if skipDFABoard:
+            self.elevator.skipDFABoard = 1
         self.elevator.setReverseBoardingCamera(True)
         distElevator.elevatorFSM = self.elevator
         self.elevator.load()

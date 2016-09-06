@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.fsm import StateData
 import Suit
 import SuitDNA
@@ -109,7 +109,7 @@ class RoguesGallery(StateData.StateData):
     def __makeDept(self, dept):
         self.suitRow = []
         self.rowWidth = 0.0
-        for type in xrange(self.numSuitTypes):
+        for type in range(self.numSuitTypes):
             self.__makeSuit(dept, type)
 
         xScale = self.xRowSpace / self.rowWidth

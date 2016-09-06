@@ -30,6 +30,14 @@ TCMscButton = 0.06
 TCMwhisperFrame = 0.06
 TCMwhisperButton = 0.05
 TCMwhisperScButton = 0.05
+TCMunpaidChatWarningWordwrap = 18
+TCMunpaidChatWarning = 0.055
+TCMunpaidChatWarningPos = (0.0, 0.3)
+TCMpayButton = 0.06
+TCMpayButtonPos = (0.0, 0.0, -0.13)
+TCMopenChatWarning = 0.06
+TCMactivateChatGui = 0.05
+TCMsecretChatActivated = 0.06
 TCMdirectButtonTextPos = (0.0, 0.0, -0.28)
 LCHQLfdText = 0.1
 SCHQLfdTypeText = 0.075
@@ -56,8 +64,8 @@ FPnewEntry = 0.08
 FPnewRecord = 0.08
 GPgenus = 0.045
 FLPnewFriend = 0.045
-FLPtruefriends = 0.045
-FLPtruefriendsPos = (0.152, 0.0, 0.14)
+FLPsecrets = 0.045
+FLPsecretsPos = (0.152, 0.0, 0.14)
 FLPtitle = 0.04
 FIbStop = 0.05
 FIdirectFrame = 0.06
@@ -75,11 +83,12 @@ EHpopupInfo = 0.08
 HtitleText = 0.16
 ACplayThisToon = 0.12
 ACmakeAToon = 0.12
+ACsubscribersOnly = 0.115
 ACdeleteWithPasswordFrame = 0.06
 ACstatusText = 1.0
 ACtitle = 0.15
 ACquitButton = 0.1
-AClanguageButton = 0.075
+AClogoutButton = 0.1
 ACquitButtonPos = (0, -0.035)
 MASPscoreText = 0.1
 MASPnameText = 0.055
@@ -101,6 +110,13 @@ PstatusLabel = 0.08
 PBstatusLabel = 0.08
 DPGpointsFrame = 0.7
 DPGflipsFrame = 0.7
+DTGvoteButton = 0.07
+DTGuseLabel = 0.1
+DTGvotesPeriodLabel = 0.1
+DTGvotesToGoLabel = 0.1
+DTGupLabel = 0.125
+DTGdownLabel = 0.125
+DTGremainingVotesFrame = 0.7
 CStoonFrame = 0.0575
 NSmaxNameWidth = 8.0
 NSdirectScrolleList = 0.1
@@ -202,6 +218,7 @@ EPtitleLabel = 0.12
 EPhostTab = 0.07
 EPinvitedTab = 0.07
 EPcalendarTab = 0.07
+EPnewsTab = 0.07
 EPhostingCancelButton = 0.04
 EPhostingDateLabel = 0.05
 EPpartyGoButton = 0.045
@@ -219,6 +236,7 @@ DSDintroText = 0.06
 DSDintroTextWordwrap = 25
 DSDwindowedButtonPos = (0.0961, 0, -0.221)
 DSDfullscreenButtonPos = (0.097, 0, -0.311)
+DSDembeddedButtonPos = (0.097, 0, -0.411)
 DSDcancel = 0.06
 DSDcancelPos = (0, -0.02)
 DPtab = 0.1
@@ -228,7 +246,6 @@ TPstartFrame = 0.12
 TPendFrame = 0.12
 SBpageTab = 0.75
 OPoptionsTab = 0.07
-OPbonusOptionsTab = 0.07
 OPCodesInstructionPanelTextPos = (0, -0.01)
 OPCodesInstructionPanelTextWordWrap = 6
 OPCodesResultPanelTextPos = (0, 0.35)
@@ -256,7 +273,7 @@ GPtrophyTabPos = (0.92, 0, -0.3)
 APBdialog = 0.06
 APBdirectLabelPosY = 0
 TAPwhisperButton = 0.06
-TAPtruefriendsButton = 0.045
+TAPsecretsButton = 0.045
 TAPgroupFrame = 0.05
 TAPgroupButton = 0.055
 TADPbCancel = 0.05
@@ -273,7 +290,7 @@ INrunButton = 0.05
 INdetailNameLabel = 1.0
 INfireButton = 0.05
 NPCFimgLabel = 1.0
-PIPtrueFriendsButton = 0.045
+PIPsecretsButton = 0.045
 PIPwisperButton = 0.06
 PIPdetailButton = 0.05
 TLStip = 0.18
@@ -287,46 +304,8 @@ TPhaveFun = 0.1
 TPjoinUs = 0.1
 TBSOSPSPenter = 0.1
 TexitButton = 0.8
-FSenterSecretTextPos = (0, 0, -0.25)
-FSgotSecretPos = (0, 0, 0.47)
-FSgetSecretButton = 0.06
-FSnextText = 1.0
-FSgetSecret = (1.55, 1, 1)
-FSok1 = (1.55, 1, 1)
-FSok2 = (0.6, 1, 1)
-FScancel = (0.6, 1, 1)
 #Some languages need to change the word order
 SellbotFactoryPosPart1 = (0, -0.25)
 SellbotFactoryScalePart1 = 0.075
 SellbotFactoryPosPart2 = (0, -0.34)
 SellbotFactoryScalePart2 = 0.12
-BattleHoverCog = 0
-BattleHoverGag = 1
-BattleHoverSos = 2
-
-BattleHoverAttributes = {
- BattleHoverCog: {
-  'geom_scale': (0.4, 0, 0.18),
-  'text_pos': (0, 0.29),
-  'geom_color': (0.5, 0.5, 0.5, 1),
-  'pos': (0.6, 0, 0.05),
-  'text_fg': (1, 1, 1, 1),
-  'suit': True
- },
- BattleHoverGag: {
-  'geom_scale': (0.5, 0, 0.2),
-  'text_pos': (0, 0.0125),
-  'geom_color': (0.6, 1.0, 0.4, 1),
-  'pos': (0.4, 0, 0),
-  'text_fg': (0, 0, 0, 1),
-  'suit': False
- },
- BattleHoverSos: {
-  'geom_scale': (0.5, 0, 0.3),
-  'text_pos': (0, 0.08),
-  'geom_color': (0.6, 1.0, 0.4, 1),
-  'pos': (0.4, 0, 0.1),
-  'text_fg': (0, 0, 0, 1),
-  'suit': False
- }
-}

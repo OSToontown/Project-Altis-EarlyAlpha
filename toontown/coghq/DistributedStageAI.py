@@ -1,12 +1,11 @@
-from direct.directnotify import DirectNotifyGlobal
 from direct.distributed import DistributedObjectAI
 from otp.level import DistributedLevelAI
-from panda3d.core import *
-from toontown.building import DistributedElevatorFloorAI
-from toontown.coghq import BattleExperienceAggregatorAI
-from toontown.coghq import StageLayout, DistributedStageRoomAI
+from direct.directnotify import DirectNotifyGlobal
 from toontown.toonbase import ToontownGlobals
-
+from toontown.coghq import StageLayout, DistributedStageRoomAI
+from toontown.coghq import BattleExperienceAggregatorAI
+from toontown.building import DistributedElevatorFloorAI
+from pandac.PandaModules import *
 
 class DistributedStageAI(DistributedObjectAI.DistributedObjectAI):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedStageAI')
@@ -29,32 +28,41 @@ class DistributedStageAI(DistributedObjectAI.DistributedObjectAI):
         self.rooms = []
         if self.battleExpAggreg is None:
             self.battleExpAggreg = BattleExperienceAggregatorAI.BattleExperienceAggregatorAI()
-        for i in xrange(self.layout.getNumRooms()):
+        for i in range(self.layout.getNumRooms()):
             room = DistributedStageRoomAI.DistributedStageRoomAI(self.air, self.stageId, self.doId, self.zoneId, self.layout.getRoomId(i), i * 2, self.avIds, self.battleExpAggreg)
             room.generateWithRequired(self.zoneId)
             self.rooms.append(room)
+
         roomDoIds = []
         for room in self.rooms:
             roomDoIds.append(room.doId)
-        self.sendUpdate('setRoomDoIds', [
-            roomDoIds])
+
+        self.sendUpdate('setRoomDoIds', [roomDoIds])
         self.placeElevatorsOnMarkers()
-        description = '%s|%s|%s' % (self.stageId, self.floorNum, self.avIds)
+        if __dev__:
+            simbase.stage = self
         for avId in self.avIds:
-            self.air.writeServerEvent('stageEntered', avId, description)
+            self.air.writeServerEvent('stageEntered', avId=avId, stageId=self.stageId, floorNum=self.floorNum, avIds=self.avIds)
+
+        return
 
     def requestDelete(self):
         self.notify.info('requestDelete: %s' % self.doId)
         if hasattr(self, 'rooms'):
             for room in self.rooms:
                 room.requestDelete()
+
         if hasattr(self, 'elevatorList'):
             for elevator in self.elevatorList:
                 elevator.requestDelete()
+
         DistributedObjectAI.DistributedObjectAI.requestDelete(self)
 
     def delete(self):
         self.notify.info('delete: %s' % self.doId)
+        if __dev__:
+            if hasattr(simbase, 'stage') and simbase.stage is self:
+                del simbase.stage
         self.air.deallocateZone(self.zoneId)
         if hasattr(self, 'elevatorList'):
             del self.elevatorList
@@ -104,6 +112,7 @@ class DistributedStageAI(DistributedObjectAI.DistributedObjectAI):
         Stage.generateWithRequired(StageZone)
         for avId in self.avIds:
             self.sendUpdateToAvatarId(avId, 'setStageZone', [StageZone])
+
         self.requestDelete()
 
     def elevatorAlert(self, avId):

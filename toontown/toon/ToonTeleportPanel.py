@@ -1,5 +1,6 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 from toontown.toonbase import ToontownGlobals
 from direct.showbase import DirectObject
 from direct.fsm import ClassicFSM, State
@@ -62,9 +63,6 @@ class ToonTeleportPanel(DirectFrame):
             State.State('ignored',
                 self.enterIgnored,
                 self.exitIgnored),
-            State.State('noTeleport',
-                self.enterNoTeleport,
-                self.exitNoTeleport),
             State.State('notOnline',
                 self.enterNotOnline,
                 self.exitNotOnline),
@@ -77,12 +75,18 @@ class ToonTeleportPanel(DirectFrame):
             State.State('unknownHood',
                 self.enterUnknownHood,
                 self.exitUnknownHood),
+            State.State('unavailableHood',
+                self.enterUnavailableHood,
+                self.exitUnavailableHood),
             State.State('otherShard',
                 self.enterOtherShard,
                 self.exitOtherShard),
             State.State('teleport',
                 self.enterTeleport,
-                self.exitTeleport)],
+                self.exitTeleport),
+            State.State('fullShard',
+                self.enterFullShard,
+                self.exitFullShard)],
             'off', 'off')
         from toontown.friends import FriendInviter
         FriendInviter.hideFriendInviter()
@@ -117,15 +121,26 @@ class ToonTeleportPanel(DirectFrame):
 
     def enterBegin(self):
         myId = base.localAvatar.doId
+        hasManager = hasattr(base.cr, 'playerFriendsManager')
         if self.avId == myId:
             self.fsm.request('self')
-        elif self.avId in base.cr.doId2do:
+        elif base.cr.doId2do.has_key(self.avId):
             self.fsm.request('checkAvailability')
         elif base.cr.isFriend(self.avId):
             if base.cr.isFriendOnline(self.avId):
                 self.fsm.request('checkAvailability')
             else:
                 self.fsm.request('notOnline')
+        elif hasManager and base.cr.playerFriendsManager.getAvHandleFromId(self.avId):
+            id = base.cr.playerFriendsManager.findPlayerIdFromAvId(self.avId)
+            info = base.cr.playerFriendsManager.getFriendInfo(id)
+            if info:
+                if info.onlineYesNo:
+                    self.fsm.request('checkAvailability')
+                else:
+                    self.fsm.request('notOnline')
+            else:
+                self.fsm.request('wentAway')
         else:
             self.fsm.request('wentAway')
 
@@ -134,7 +149,7 @@ class ToonTeleportPanel(DirectFrame):
 
     def enterCheckAvailability(self):
         myId = base.localAvatar.getDoId()
-        base.cr.ttFriendsManager.d_teleportQuery(self.avId)
+        base.localAvatar.d_teleportQuery(myId, sendToId=self.avId)
         self['text'] = TTLocalizer.TeleportPanelCheckAvailability % self.avName
         self.accept('teleportResponse', self.__teleportResponse)
         self.bCancel.show()
@@ -151,17 +166,10 @@ class ToonTeleportPanel(DirectFrame):
         self.bOk.hide()
 
     def enterIgnored(self):
-        self['text'] = TTLocalizer.TeleportPanelIgnored % self.avName
+        self['text'] = TTLocalizer.TeleportPanelNotAvailable % self.avName
         self.bOk.show()
 
     def exitIgnored(self):
-        self.bOk.hide()
-    
-    def enterNoTeleport(self):
-        self['text'] = TTLocalizer.TeleportPanelNoTeleport % self.avName
-        self.bOk.show()
-
-    def exitNoTeleport(self):
         self.bOk.hide()
 
     def enterNotOnline(self):
@@ -185,6 +193,13 @@ class ToonTeleportPanel(DirectFrame):
     def exitUnknownHood(self):
         self.bOk.hide()
 
+    def enterUnavailableHood(self, hoodId):
+        self['text'] = TTLocalizer.TeleportPanelUnavailableHood % base.cr.hoodMgr.getFullnameFromId(hoodId)
+        self.bOk.show()
+
+    def exitUnavailableHood(self):
+        self.bOk.hide()
+
     def enterSelf(self):
         self['text'] = TTLocalizer.TeleportPanelDenySelf
         self.bOk.show()
@@ -202,54 +217,56 @@ class ToonTeleportPanel(DirectFrame):
         for shard in base.cr.listActiveShards():
             if shard[0] == shardId:
                 pop = shard[2]
-
-        self.bYes.show()
-        self.bNo.show()
-
+        if pop and pop >= localAvatar.shardPage.highPop:
+            self.fsm.request('fullShard')
+            return
         if pop and pop > localAvatar.shardPage.midPop:
             self.notify.warning('Entering full shard: issuing performance warning')
             self['text'] = TTLocalizer.TeleportPanelBusyShard % {'avName': self.avName}
-            self.bYes.hide()
-            self.bNo.hide()
-
-            self.bOk.show()
         else:
             self['text'] = TTLocalizer.TeleportPanelOtherShard % {'avName': self.avName,
              'shardName': shardName,
              'myShardName': myShardName}
-
+        self.bYes.show()
+        self.bNo.show()
         self.shardId = shardId
         self.hoodId = hoodId
         self.zoneId = zoneId
+        return
 
     def exitOtherShard(self):
         self.bYes.hide()
         self.bNo.hide()
+        
+    def enterFullShard(self):
+        self['text'] = TTLocalizer.TeleportPanelFullShard
+        self.bOk.show()
+        
+    def exitFullShard(self):
+        self.bOk.hide()
 
     def enterTeleport(self, shardId, hoodId, zoneId):
-        shardName = base.cr.getShardName(shardId)
-        if shardName is None:
-            shardName = 'unknown'
+        teleportNotify.debug('enterTeleport%s' % ((shardId, hoodId, zoneId),))
         hoodsVisited = base.localAvatar.hoodsVisited
         canonicalHoodId = ZoneUtil.getCanonicalZoneId(hoodId)
         if hoodId == ToontownGlobals.MyEstate:
-            teleportNotify.debug('enterTeleport: estate')
             if shardId == base.localAvatar.defaultShard:
                 shardId = None
+            
             place = base.cr.playGame.getPlace()
             place.requestTeleport(hoodId, zoneId, shardId, self.avId)
             unloadTeleportPanel()
         elif canonicalHoodId not in hoodsVisited + ToontownGlobals.HoodsAlwaysVisited:
-            teleportNotify.debug('enterTeleport: unknownHood')
             self.fsm.request('unknownHood', [hoodId])
-        else:
-            if shardId == base.localAvatar.defaultShard:
-                shardId = None
-            teleportNotify.debug('enterTeleport: requesting teleport')
-            place = base.cr.playGame.getPlace()
-            place.requestTeleport(hoodId, zoneId, shardId, self.avId)
-            unloadTeleportPanel()
-        return
+        elif canonicalHoodId not in base.cr.hoodMgr.getAvailableZones():
+            print 'hoodId %d not ready' % hoodId
+            self.fsm.request('unavailableHood', [hoodId])
+        elif shardId == base.localAvatar.defaultShard:
+            shardId = None
+        
+        place = base.cr.playGame.getPlace()
+        place.requestTeleport(hoodId, zoneId, shardId, self.avId)
+        unloadTeleportPanel()
 
     def exitTeleport(self):
         pass
@@ -280,8 +297,6 @@ class ToonTeleportPanel(DirectFrame):
         elif available == 2:
             teleportNotify.debug('__teleportResponse: ignored')
             self.fsm.request('ignored')
-        elif available == 3:
-            self.fsm.request('noTeleport')
         elif shardId != base.localAvatar.defaultShard:
             teleportNotify.debug('__teleportResponse: otherShard')
             self.fsm.request('otherShard', [shardId, hoodId, zoneId])

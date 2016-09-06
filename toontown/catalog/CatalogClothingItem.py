@@ -5,7 +5,7 @@ from toontown.toon import ToonDNA
 import random
 from direct.showbase import PythonUtil
 from direct.gui.DirectGui import *
-from panda3d.core import *
+from pandac.PandaModules import *
 CTArticle = 0
 CTString = 1
 CTBasePrice = 2
@@ -17,7 +17,8 @@ ABoysShorts = 3
 AGirlsShorts = 4
 AGirlsSkirt = 5
 AShorts = 6
-ClothingTypes = {101: (ABoysShirt, 'bss1', 40),
+ClothingTypes = {
+ 101: (ABoysShirt, 'bss1', 40),
  102: (ABoysShirt, 'bss2', 40),
  103: (ABoysShirt, 'bss3', 40),
  105: (ABoysShirt, 'bss4', 40),
@@ -290,15 +291,23 @@ ClothingTypes = {101: (ABoysShirt, 'bss1', 40),
  1817: (AGirlsSkirt, 'sa_gs19', 5000),
  1818: (AGirlsSkirt, 'sa_gs20', 5000),
  1819: (AGirlsSkirt, 'sa_gs21', 5000),
- 1820: (AShirt, 'sa_ss55', 5000),
- 1821: (AShirt, 'flannel', 300)}
+ 1820: (AShirt, 'sa_ss55', 5000)}
+LoyaltyClothingItems = (1600,
+ 1601,
+ 1602,
+ 1603,
+ 1604,
+ 1605,
+ 1606,
+ 1607,
+ 1608)
 
 class CatalogClothingItem(CatalogItem.CatalogItem):
 
-    def makeNewItem(self, clothingType, colorIndex, isSpecial = False):
+    def makeNewItem(self, clothingType, colorIndex, loyaltyDays = 0):
         self.clothingType = clothingType
         self.colorIndex = colorIndex
-        self.isSpecial = isSpecial
+        self.loyaltyDays = loyaltyDays
         CatalogItem.CatalogItem.makeNewItem(self)
 
     def storedInCloset(self):
@@ -338,6 +347,8 @@ class CatalogClothingItem(CatalogItem.CatalogItem):
             return 1
         if avatar.mailboxContents.count(self) != 0:
             return 1
+        if self in avatar.awardMailboxContents or self in avatar.onAwardOrder:
+            return 1
         str = ClothingTypes[self.clothingType][CTString]
         dna = avatar.getStyle()
         if self.isShirt():
@@ -345,7 +356,7 @@ class CatalogClothingItem(CatalogItem.CatalogItem):
             if dna.topTex == defn[0] and dna.topTexColor == defn[2][self.colorIndex][0] and dna.sleeveTex == defn[1] and dna.sleeveTexColor == defn[2][self.colorIndex][1]:
                 return 1
             l = avatar.clothesTopsList
-            for i in xrange(0, len(l), 4):
+            for i in range(0, len(l), 4):
                 if l[i] == defn[0] and l[i + 1] == defn[2][self.colorIndex][0] and l[i + 2] == defn[1] and l[i + 3] == defn[2][self.colorIndex][1]:
                     return 1
 
@@ -354,7 +365,7 @@ class CatalogClothingItem(CatalogItem.CatalogItem):
             if dna.botTex == defn[0] and dna.botTexColor == defn[1][self.colorIndex]:
                 return 1
             l = avatar.clothesBottomsList
-            for i in xrange(0, len(l), 2):
+            for i in range(0, len(l), 2):
                 if l[i] == defn[0] and l[i + 1] == defn[1][self.colorIndex]:
                     return 1
 
@@ -372,7 +383,7 @@ class CatalogClothingItem(CatalogItem.CatalogItem):
             return TTLocalizer.ClothingArticleNames[article]
 
     def recordPurchase(self, avatar, optional):
-        if avatar.isClosetFull(1):
+        if avatar.isClosetFull():
             return ToontownGlobals.P_NoRoomForItem
         str = ClothingTypes[self.clothingType][CTString]
         dna = avatar.getStyle()
@@ -417,7 +428,7 @@ class CatalogClothingItem(CatalogItem.CatalogItem):
         return ToontownGlobals.P_ItemAvailable
 
     def getDeliveryTime(self):
-        return 60
+        return 1
 
     def getPicture(self, avatar):
         from toontown.toon import Toon
@@ -554,7 +565,10 @@ class CatalogClothingItem(CatalogItem.CatalogItem):
         CatalogItem.CatalogItem.decodeDatagram(self, di, versionNumber, store)
         self.clothingType = di.getUint16()
         self.colorIndex = di.getUint8()
-        self.isSpecial = di.getBool()
+        if versionNumber >= 6:
+            self.loyaltyDays = di.getUint16()
+        else:
+            self.loyaltyDays = 0
         str = ClothingTypes[self.clothingType][CTString]
         if self.isShirt():
             color = ToonDNA.ShirtStyles[str][2][self.colorIndex]
@@ -565,17 +579,25 @@ class CatalogClothingItem(CatalogItem.CatalogItem):
         CatalogItem.CatalogItem.encodeDatagram(self, dg, store)
         dg.addUint16(self.clothingType)
         dg.addUint8(self.colorIndex)
-        dg.addBool(self.isSpecial)
+        dg.addUint16(self.loyaltyDays)
 
     def isGift(self):
-        return not self.getEmblemPrices()
+        if self.getEmblemPrices():
+            return 0
+        if self.loyaltyRequirement() > 0:
+            return 0
+        elif self.clothingType in LoyaltyClothingItems:
+            return 0
+        else:
+            return 1
+
 
 def getAllClothes(*clothingTypes):
     list = []
     for clothingType in clothingTypes:
         base = CatalogClothingItem(clothingType, 0)
         list.append(base)
-        for n in xrange(1, len(base.getColorChoices())):
+        for n in range(1, len(base.getColorChoices())):
             list.append(CatalogClothingItem(clothingType, n))
 
     return list

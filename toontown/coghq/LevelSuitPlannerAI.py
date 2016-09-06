@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.showbase import DirectObject
 from toontown.suit import SuitDNA
 from direct.directnotify import DirectNotifyGlobal
@@ -14,7 +14,7 @@ class LevelSuitPlannerAI(DirectObject.DirectObject):
         self.level = level
         self.cogCtor = cogCtor
         self.cogSpecs = cogSpecs
-        if simbase.config.GetBool('level-reserve-suits', 0):
+        if config.GetBool('level-reserve-suits', 0):
             self.reserveCogSpecs = reserveCogSpecs
         else:
             self.reserveCogSpecs = []
@@ -37,13 +37,16 @@ class LevelSuitPlannerAI(DirectObject.DirectObject):
 
     def __genJoinChances(self, num):
         joinChances = []
-        for currChance in xrange(num):
+        for currChance in range(num):
             joinChances.append(random.randint(1, 100))
 
         joinChances.sort(cmp)
         return joinChances
 
     def __genSuitInfos(self, level, track):
+        if __dev__:
+            pass
+
         def getSuitDict(spec, cogId, level = level, track = track):
             suitDict = {}
             suitDict['track'] = track
@@ -55,14 +58,14 @@ class LevelSuitPlannerAI(DirectObject.DirectObject):
 
         self.suitInfos = {}
         self.suitInfos['activeSuits'] = []
-        for i in xrange(len(self.cogSpecs)):
+        for i in range(len(self.cogSpecs)):
             spec = self.cogSpecs[i]
             self.suitInfos['activeSuits'].append(getSuitDict(spec, i))
 
         numReserve = len(self.reserveCogSpecs)
         joinChances = self.__genJoinChances(numReserve)
         self.suitInfos['reserveSuits'] = []
-        for i in xrange(len(self.reserveCogSpecs)):
+        for i in range(len(self.reserveCogSpecs)):
             spec = self.reserveCogSpecs[i]
             suitDict = getSuitDict(spec, i)
             suitDict['joinChance'] = joinChances[i]
@@ -149,6 +152,8 @@ class LevelSuitPlannerAI(DirectObject.DirectObject):
         numSpotsAvailable = 4 - len(battle.suits)
         if len(cellReserves) > 0 and numSpotsAvailable > 0:
             self.joinedReserves = []
+            if __dev__:
+                pass
             if len(battle.suits) == 0:
                 hpPercent = 100
             else:

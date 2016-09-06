@@ -18,8 +18,6 @@ import CatalogNametagItem
 import CatalogToonStatueItem
 import CatalogAnimatedFurnitureItem
 import CatalogAccessoryItem
-import CatalogHouseItem
-import CatalogTankItem
 INVALID_ITEM = 0
 FURNITURE_ITEM = 1
 CHAT_ITEM = 2
@@ -40,8 +38,6 @@ NAMETAG_ITEM = 16
 TOON_STATUE_ITEM = 17
 ANIMATED_FURNITURE_ITEM = 18
 ACCESSORY_ITEM = 19
-HOUSE_ITEM = 20
-TANK_ITEM = 21
 NonPermanentItemTypes = (RENTAL_ITEM,)
 CatalogItemTypes = {CatalogInvalidItem.CatalogInvalidItem: INVALID_ITEM,
  CatalogFurnitureItem.CatalogFurnitureItem: FURNITURE_ITEM,
@@ -62,9 +58,7 @@ CatalogItemTypes = {CatalogInvalidItem.CatalogInvalidItem: INVALID_ITEM,
  CatalogNametagItem.CatalogNametagItem: NAMETAG_ITEM,
  CatalogToonStatueItem.CatalogToonStatueItem: TOON_STATUE_ITEM,
  CatalogAnimatedFurnitureItem.CatalogAnimatedFurnitureItem: ANIMATED_FURNITURE_ITEM,
- CatalogAccessoryItem.CatalogAccessoryItem: ACCESSORY_ITEM,
- CatalogHouseItem.CatalogHouseItem: HOUSE_ITEM,
- CatalogTankItem.CatalogTankItem: TANK_ITEM}
+ CatalogAccessoryItem.CatalogAccessoryItem: ACCESSORY_ITEM}
 CatalogItemType2multipleAllowed = {INVALID_ITEM: False,
  FURNITURE_ITEM: True,
  CHAT_ITEM: False,
@@ -84,9 +78,8 @@ CatalogItemType2multipleAllowed = {INVALID_ITEM: False,
  NAMETAG_ITEM: False,
  TOON_STATUE_ITEM: False,
  ANIMATED_FURNITURE_ITEM: True,
- ACCESSORY_ITEM: False,
- HOUSE_ITEM: False,
- TANK_ITEM: False}
+ ACCESSORY_ITEM: False}
+SingleCodeRedemption = (BEAN_ITEM,)
 CatalogItemTypeMask = 31
 CatalogItemSaleFlag = 128
 CatalogItemGiftTag = 64

@@ -1,127 +1,127 @@
+from direct.directnotify import DirectNotifyGlobal
 from direct.distributed.DistributedObjectAI import DistributedObjectAI
 from toontown.toonbase import ToontownGlobals
-from toontown.estate import MailboxGlobals
-
+from toontown.catalog import CatalogItem
+import MailboxGlobals
 
 class DistributedMailboxAI(DistributedObjectAI):
-    notify = directNotify.newCategory('DistributedMailboxAI')
-
+    notify = DirectNotifyGlobal.directNotify.newCategory("DistributedMailboxAI")
+    
     def __init__(self, air, house):
         DistributedObjectAI.__init__(self, air)
-
-        self.busy = False
-        self.user = None
         self.house = house
-        self.houseId = self.house.doId
-        self.housePos = self.house.housePos
-        self.name = self.house.name
-
-    def generate(self):
-        DistributedObjectAI.generate(self)
-
-        self.updateIndicatorFlag()
+        self.housePos = house.housePos
+        self.name = house.name
+        self.avId = None
 
     def getHouseId(self):
-        return self.houseId
+        return self.house.getDoId()
 
     def getHousePos(self):
         return self.housePos
-
+        
     def getName(self):
         return self.name
 
+    def setFullIndicator(self, fullIndicator):
+        pass
+
+    def b_setFullIndicator(self, fullIndicator):
+        self.setFullIndicator(fullIndicator)
+        self.d_setFullIndicator(fullIndicator)
+        
+    def d_setFullIndicator(self, fullIndicator):
+        self.sendUpdate('setFullIndicator', [fullIndicator])
+        
     def avatarEnter(self):
-        if self.busy:
-            return
         avId = self.air.getAvatarIdFromSender()
         if avId != self.house.avatarId:
-            self.setMovie(MailboxGlobals.MAILBOX_MOVIE_NOT_OWNER, avId)
-            self.resetMovie()
+            self.d_setMovie(MailboxGlobals.MAILBOX_MOVIE_NOT_OWNER, avId)
+            taskMgr.doMethodLater(2, self.__resetMovie, 'resetMovie-%d' % self.getDoId(), extraArgs=[])
             return
-
+        if self.avId:
+            # We're using the mailbox twice! Burn!
+            self.air.writeServerEvent('suspicious', avId=avId, issue='Tried to use a mailbox twice at one time!')
+            return
         av = self.air.doId2do.get(avId)
         if not av:
+            self.air.writeServerEvent('suspicious', avId=avId, issue='Tried to use mailbox from another shard!')
             return
-
-        if len(av.mailboxContents):
-            self.setMovie(MailboxGlobals.MAILBOX_MOVIE_READY, avId)
-            self.user = avId
-            self.busy = True
-        elif len(av.onOrder):
-            self.setMovie(MailboxGlobals.MAILBOX_MOVIE_WAITING, avId)
+        inMailbox = len(av.mailboxContents)
+        onOrder = len(av.onOrder)
+        if inMailbox:
+            self.d_setMovie(MailboxGlobals.MAILBOX_MOVIE_READY, avId)
+            self.avId = avId
+        elif onOrder:
+            self.d_setMovie(MailboxGlobals.MAILBOX_MOVIE_WAITING, avId)
         else:
-            self.setMovie(MailboxGlobals.MAILBOX_MOVIE_EMPTY, avId)
-
-        self.resetMovie()
+            self.d_setMovie(MailboxGlobals.MAILBOX_MOVIE_EMPTY, avId)
+        taskMgr.doMethodLater(2, self.__resetMovie, 'resetMovie-%d' % self.getDoId(), extraArgs=[])
 
     def avatarExit(self):
         avId = self.air.getAvatarIdFromSender()
-        if avId != self.user:
+        if avId != self.avId:
+            self.air.writeServerEvent('suspicious', avId=avId, issue='Exited mailbox without using it first!')
             return
-        self.user = None
-        self.busy = False
-        self.updateIndicatorFlag()
-        self.setMovie(MailboxGlobals.MAILBOX_MOVIE_EXIT, avId)
+        self.d_setMovie(MailboxGlobals.MAILBOX_MOVIE_EXIT, avId)
         self.sendUpdateToAvatarId(avId, 'freeAvatar', [])
-        self.resetMovie()
+        self.avId = None
+        taskMgr.doMethodLater(2, self.__resetMovie, 'resetMovie-%d' % self.getDoId(), extraArgs=[])
 
-    def setMovie(self, movie, avId):
-        self.sendUpdate('setMovie', [movie, avId])
+    def freeAvatar(self):
+        pass
 
-    def resetMovie(self):
-        taskMgr.doMethodLater(2, self.setMovie, 'resetMovie-%d' % self.doId, extraArgs=[MailboxGlobals.MAILBOX_MOVIE_CLEAR, 0])
-
-    def updateIndicatorFlag(self):
-        av = self.air.doId2do.get(self.house.avatarId)
-        if av:
-            self.sendUpdate('setFullIndicator', [len(av.mailboxContents)])
-        else:
-            self.sendUpdate('setFullIndicator', [0])
+    def setMovie(self, todo0, todo1):
+        pass
+        
+    def d_setMovie(self, mode, avId):
+        self.sendUpdate('setMovie', [mode, avId])
+        
+    def __resetMovie(self):
+        self.d_setMovie(MailboxGlobals.MAILBOX_MOVIE_CLEAR, 0)
 
     def acceptItemMessage(self, context, item, index, optional):
         avId = self.air.getAvatarIdFromSender()
-        if avId != self.user:
+        if avId != self.avId:
             return
-
         av = self.air.doId2do.get(avId)
         if not av:
             return
-
         if index >= len(av.mailboxContents):
             self.sendUpdateToAvatarId(avId, 'acceptItemResponse', [context, ToontownGlobals.P_InvalidIndex])
             return
-
         item = av.mailboxContents[index]
-        returnCode = item.recordPurchase(av, optional)
+        del av.mailboxContents[index]
+        av.b_setMailboxContents(av.mailboxContents)
+        self.sendUpdateToAvatarId(avId, 'acceptItemResponse', [context, item.recordPurchase(av, optional)])
         
-        if returnCode == ToontownGlobals.P_ItemAvailable:
-            del av.mailboxContents[index]
-            av.b_setMailboxContents(av.mailboxContents)
 
-        self.sendUpdateToAvatarId(avId, 'acceptItemResponse', [context, returnCode])
+    def acceptItemResponse(self, todo0, todo1):
+        pass
 
     def discardItemMessage(self, context, item, index, optional):
         avId = self.air.getAvatarIdFromSender()
-        if avId != self.user:
+        if avId != self.avId:
             return
-
         av = self.air.doId2do.get(avId)
         if not av:
             return
-
         if index >= len(av.mailboxContents):
             self.sendUpdateToAvatarId(avId, 'discardItemResponse', [context, ToontownGlobals.P_InvalidIndex])
             return
-
         del av.mailboxContents[index]
         av.b_setMailboxContents(av.mailboxContents)
         self.sendUpdateToAvatarId(avId, 'discardItemResponse', [context, ToontownGlobals.P_ItemAvailable])
 
+    def discardItemResponse(self, todo0, todo1):
+        pass
+
     def acceptInviteMessage(self, todo0, todo1):
-        pass # TODO
+        pass
 
     def rejectInviteMessage(self, todo0, todo1):
-        pass # TODO
+        pass
 
     def markInviteReadButNotReplied(self, todo0):
-        pass # TODO
+        pass
+

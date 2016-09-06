@@ -1,7 +1,8 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.distributed import ParentMgr
 from direct.directnotify.DirectNotifyGlobal import directNotify
 from direct.task import Task
+from direct.showbase import LeakDetectors
 from otp.otpbase import OTPGlobals
 import random
 
@@ -67,6 +68,9 @@ class AIZoneDataObj:
             self._nonCollidableParent.removeNode()
             del self._nonCollidableParent
         if hasattr(self, '_render'):
+            if hasattr(self, '_renderLeakDetector'):
+                self._renderLeakDetector.destroy()
+                del self._renderLeakDetector
             self._render.removeNode()
             del self._render
         if hasattr(self, '_parentMgr'):
@@ -81,12 +85,16 @@ class AIZoneDataObj:
     def getRender(self):
         if not hasattr(self, '_render'):
             self._render = NodePath('render-%s-%s' % (self._parentId, self._zoneId))
+            if config.GetBool('leak-scene-graph', 0):
+                self._renderLeakDetector = LeakDetectors.SceneGraphLeakDetector(self._render)
         return self._render
 
     def getNonCollidableParent(self):
         if not hasattr(self, '_nonCollidableParent'):
             render = self.getRender()
             self._nonCollidableParent = render.attachNewNode('nonCollidables')
+        if __dev__:
+            pass
         return self._nonCollidableParent
 
     def getParentMgr(self):
@@ -109,7 +117,7 @@ class AIZoneDataObj:
         return self._collTravs[name]
 
     def removeCollTrav(self, name):
-        if name in self._collTravs:
+        if self._collTravs.has_key(name):
             del self._collTravs[name]
 
     def _getCTravTaskName(self, name = None):

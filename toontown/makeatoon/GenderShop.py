@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.fsm import StateData
 from direct.gui.DirectGui import *
 from toontown.toonbase import TTLocalizer
@@ -45,8 +45,6 @@ class GenderShop(StateData.StateData):
          TTLocalizer.GenderShopBoyButtonText,
          ''), text_font=ToontownGlobals.getInterfaceFont(), text_scale=0.08, text_pos=(0, 0.19), text_fg=(1, 1, 1, 1), text_shadow=(0, 0, 0, 1))
         self.boyButton.hide()
-        self.boyButton.setPos(-0.45, 0, 0.19)
-        self.boyButton.reparentTo(base.a2dBottomCenter)
         self.girlButton = DirectButton(relief=None, image=(guiGirlUp,
          guiGirlDown,
          guiGirlUp,
@@ -55,8 +53,6 @@ class GenderShop(StateData.StateData):
          TTLocalizer.GenderShopGirlButtonText,
          ''), text_font=ToontownGlobals.getInterfaceFont(), text_scale=0.08, text_pos=(0, 0.19), text_fg=(1, 1, 1, 1), text_shadow=(0, 0, 0, 1))
         self.girlButton.hide()
-        self.girlButton.setPos(0.45, 0, 0.19)
-        self.girlButton.reparentTo(base.a2dBottomCenter)
         gui.removeNode()
         del gui
         self.toon = None

@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.gui.DirectGui import *
 from toontown.toonbase import TTLocalizer
 from toontown.toonbase import ToontownGlobals
@@ -51,6 +51,7 @@ class ShuffleButton:
         self.incBtnShowLerp = LerpColorInterval(self.incBtn, self.lerpDuration, Vec4(1, 1, 1, 1), Vec4(1, 1, 1, 0))
         self.decBtnShowLerp = LerpColorInterval(self.decBtn, self.lerpDuration, Vec4(1, 1, 1, 1), Vec4(1, 1, 1, 0))
         self.__updateArrows()
+        return
 
     def unload(self):
         if self.showLerp:
@@ -67,6 +68,7 @@ class ShuffleButton:
         del self.shuffleBtn
         del self.incBtn
         del self.decBtn
+        return
 
     def showButtons(self):
         self.shuffleFrame.show()

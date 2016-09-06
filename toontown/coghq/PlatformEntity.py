@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from otp.level import BasicEntities
 import MovingPlatform
@@ -41,3 +41,9 @@ class PlatformEntity(BasicEntities.NodePathEntity):
         if hasattr(self, 'platform'):
             self.platform.destroy()
             del self.platform
+
+    if __dev__:
+
+        def attribChanged(self, *args):
+            self.stop()
+            self.start()

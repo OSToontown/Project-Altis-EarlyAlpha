@@ -1,5 +1,5 @@
 from direct.gui.DirectGui import *
-from panda3d.core import *
+from pandac.PandaModules import *
 import QuestPoster
 from toontown.toonbase import ToontownTimer
 from toontown.toonbase import ToontownGlobals
@@ -21,9 +21,10 @@ class QuestChoiceGui(DirectFrame):
         self.timer.setScale(0.3)
         base.setCellsAvailable(base.leftCells, 0)
         base.setCellsAvailable([base.bottomCells[0], base.bottomCells[1]], 0)
+        return
 
     def setQuests(self, quests, fromNpcId, timeout):
-        for i in xrange(0, len(quests), 3):
+        for i in range(0, len(quests), 3):
             questId, rewardId, toNpcId = quests[i:i + 3]
             qp = QuestPoster.QuestPoster()
             qp.reparentTo(self)
@@ -53,7 +54,7 @@ class QuestChoiceGui(DirectFrame):
 
     def chooseQuest(self, questId):
         if questId != 0:
-            if base.config.GetBool('want-qa-regression', 0):
+            if config.GetBool('want-qa-regression', 0):
                 self.notify.info('QA-REGRESSION: CREATEATASK: Create A Task.')
         base.setCellsAvailable(base.leftCells, 1)
         base.setCellsAvailable([base.bottomCells[0], base.bottomCells[1]], 1)

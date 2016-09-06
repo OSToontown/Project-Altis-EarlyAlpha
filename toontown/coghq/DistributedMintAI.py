@@ -21,7 +21,7 @@ class DistributedMintAI(DistributedObjectAI.DistributedObjectAI):
         self.layout = MintLayout.MintLayout(self.mintId, self.floorNum)
         self.rooms = []
         self.battleExpAggreg = BattleExperienceAggregatorAI.BattleExperienceAggregatorAI()
-        for i in xrange(self.layout.getNumRooms()):
+        for i in range(self.layout.getNumRooms()):
             room = DistributedMintRoomAI.DistributedMintRoomAI(self.air, self.mintId, self.doId, self.zoneId, self.layout.getRoomId(i), i * 2, self.avIds, self.battleExpAggreg)
             room.generateWithRequired(self.zoneId)
             self.rooms.append(room)
@@ -31,9 +31,10 @@ class DistributedMintAI(DistributedObjectAI.DistributedObjectAI):
             roomDoIds.append(room.doId)
 
         self.sendUpdate('setRoomDoIds', [roomDoIds])
-        description = '%s|%s|%s' % (self.mintId, self.floorNum, self.avIds)
+        if __dev__:
+            simbase.mint = self
         for avId in self.avIds:
-            self.air.writeServerEvent('mintEntered', avId, description)
+            self.air.writeServerEvent('mintEntered', avId=avId, mintId=self.mintId, floorNum=self.floorNum, avIds=self.avIds)
 
     def requestDelete(self):
         self.notify.info('requestDelete: %s' % self.doId)
@@ -44,6 +45,9 @@ class DistributedMintAI(DistributedObjectAI.DistributedObjectAI):
 
     def delete(self):
         self.notify.info('delete: %s' % self.doId)
+        if __dev__:
+            if hasattr(simbase, 'mint') and simbase.mint is self:
+                del simbase.mint
         del self.rooms
         del self.layout
         del self.battleExpAggreg

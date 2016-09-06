@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 import CatalogItem
 from toontown.toonbase import ToontownGlobals
 from otp.otpbase import OTPLocalizer
@@ -15,7 +15,9 @@ class CatalogChatItem(CatalogItem.CatalogItem):
         return 1
 
     def reachedPurchaseLimit(self, avatar):
-        return self in avatar.onOrder or self in avatar.mailboxContents or self in avatar.onGiftOrder or avatar.customMessages.count(self.customIndex) != 0
+        if self in avatar.onOrder or self in avatar.mailboxContents or self in avatar.onGiftOrder or self in avatar.awardMailboxContents or self in avatar.onAwardOrder:
+            return 1
+        return avatar.customMessages.count(self.customIndex) != 0
 
     def getTypeName(self):
         return TTLocalizer.ChatTypeName
@@ -25,9 +27,6 @@ class CatalogChatItem(CatalogItem.CatalogItem):
 
     def getDisplayName(self):
         return OTPLocalizer.CustomSCStrings[self.customIndex]
-
-    def getDeliveryTime(self):
-        return 0
 
     def recordPurchase(self, avatar, optional):
         if avatar.customMessages.count(self.customIndex) != 0:

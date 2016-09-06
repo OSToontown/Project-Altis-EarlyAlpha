@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.showbase import DirectObject
 from direct.showbase.PythonUtil import randFloat, lerp
@@ -14,8 +14,17 @@ class PetGoalMgr(DirectObject.DirectObject):
         self._hasTrickGoal = False
         self.primaryGoal = None
         self.primaryStartT = 0
+        if __dev__:
+            self.pscSetup = PStatCollector('App:Show code:petThink:UpdatePriorities:Setup')
+            self.pscFindPrimary = PStatCollector('App:Show code:petThink:UpdatePriorities:FindPrimary')
+            self.pscSetPrimary = PStatCollector('App:Show code:petThink:UpdatePriorities:SetPrimary')
+        return
 
     def destroy(self):
+        if __dev__:
+            del self.pscSetup
+            del self.pscFindPrimary
+            del self.pscSetPrimary
         goals = self.goals.keys()
         for goal in goals:
             self.removeGoal(goal)
@@ -44,6 +53,8 @@ class PetGoalMgr(DirectObject.DirectObject):
     def updatePriorities(self):
         if len(self.goals) == 0:
             return
+        if __dev__:
+            self.pscSetup.start()
         if self.primaryGoal is None:
             highestPriority = -99999.0
             candidates = []
@@ -54,6 +65,10 @@ class PetGoalMgr(DirectObject.DirectObject):
             priFactor = PetConstants.PrimaryGoalScale
             elapsed = min(decayDur, globalClock.getFrameTime() - self.primaryStartT)
             highestPriority *= lerp(priFactor, 1.0, elapsed / decayDur)
+        if __dev__:
+            self.pscSetup.stop()
+        if __dev__:
+            self.pscFindPrimary.start()
         for goal in self.goals:
             thisPri = goal.getPriority()
             if thisPri >= highestPriority:
@@ -63,10 +78,16 @@ class PetGoalMgr(DirectObject.DirectObject):
                 else:
                     candidates.append(goal)
 
+        if __dev__:
+            self.pscFindPrimary.stop()
+        if __dev__:
+            self.pscSetPrimary.start()
         newPrimary = random.choice(candidates)
         if self.primaryGoal != newPrimary:
             self.pet.notify.debug('new goal: %s, priority=%s' % (newPrimary.__class__.__name__, highestPriority))
             self._setPrimaryGoal(newPrimary)
+        if __dev__:
+            self.pscSetPrimary.stop()
         return
 
     def _setPrimaryGoal(self, goal):

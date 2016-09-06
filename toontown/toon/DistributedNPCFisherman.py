@@ -1,15 +1,14 @@
-from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 from direct.interval.LerpInterval import LerpPosHprInterval
-from direct.task.Task import Task
-from panda3d.core import *
-import time
-
-from DistributedNPCToonBase import *
-import NPCToons
-from toontown.fishing import FishSellGUI
-from toontown.toonbase import TTLocalizer
 from otp.nametag.NametagConstants import *
-
+from DistributedNPCToonBase import *
+from direct.gui.DirectGui import *
+from pandac.PandaModules import *
+import NPCToons
+from toontown.toonbase import TTLocalizer
+from toontown.fishing import FishSellGUI
+from direct.task.Task import Task
+import time
 
 class DistributedNPCFisherman(DistributedNPCToonBase):
 
@@ -49,6 +48,7 @@ class DistributedNPCFisherman(DistributedNPCToonBase):
     def initToonState(self):
         self.setAnimState('neutral', 1.05, None, None)
         npcOrigin = self.cr.playGame.hood.loader.geom.find('**/npc_fisherman_origin_%s;+s' % self.posIndex)
+        print 'fisherman origin: ', npcOrigin
         if not npcOrigin.isEmpty():
             self.reparentTo(npcOrigin)
             self.clearMat()

@@ -1,6 +1,7 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToontownGlobals import *
 from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 from toontown.toonbase import TTLocalizer
 
 class MinigamePowerMeter(DirectFrame):
@@ -12,8 +13,8 @@ class MinigamePowerMeter(DirectFrame):
         if label == None:
             label = TTLocalizer.MinigamePowerMeterLabel
         self.powerText = DirectLabel(self, relief=None, text=label, text_scale=TTLocalizer.MPMpowerText, pos=(0.01, 0.0, 0.29))
-        self.tooSlow = DirectLabel(parent=self, relief=None, text=TTLocalizer.MinigamePowerMeterTooSlow, scale=TTLocalizer.MPMtooSlow, pos=(-.15, 0, 0.05), color=(0.1, 0.3, 0.6, 1.0))
-        self.tooFast = DirectLabel(parent=self, relief=None, text=TTLocalizer.MinigamePowerMeterTooFast, scale=TTLocalizer.MPMtooFast, pos=(0.15, 0, 0.05), color=(0.1, 0.3, 0.6, 1.0))
+        self.tooSlow = DirectLabel(parent=self, relief=None, text=TTLocalizer.MinigamePowerMeterTooSlow, scale=TTLocalizer.MPMtooSlow, pos=(-.15, 0, 0.05), color=(0.1, 0.3, 0.6))
+        self.tooFast = DirectLabel(parent=self, relief=None, text=TTLocalizer.MinigamePowerMeterTooFast, scale=TTLocalizer.MPMtooFast, pos=(0.15, 0, 0.05), color=(0.1, 0.3, 0.6))
         self.tooSlow.hide()
         self.tooFast.hide()
         self.largeGauge = []

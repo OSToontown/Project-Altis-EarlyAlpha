@@ -1,6 +1,7 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 import ShtikerPage
 from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 from toontown.quest import Quests
 from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import ToontownBattleGlobals
@@ -40,7 +41,10 @@ class TrackFrame(DirectFrame):
             self.ignore('nametagAmbientLightChanged')
 
     def play(self, trackId):
-        anim = Track2Anim[trackId]
+        if not base.launcher or base.launcher and base.launcher.getPhaseComplete(5):
+            anim = Track2Anim[trackId]
+        else:
+            anim = 'neutral'
         if self.toon:
             numFrames = self.toon.getNumFrames(anim) - 1
             fromFrame = 0
@@ -51,8 +55,12 @@ class TrackFrame(DirectFrame):
     def setTrained(self, trackId):
         if self.toon == None:
             self.makeToon()
-        anim = Track2Anim[trackId]
-        frame = (self.toon.getNumFrames(anim) - 1) / MAX_FRAMES * self.index
+        if not base.launcher or base.launcher and base.launcher.getPhaseComplete(5):
+            anim = Track2Anim[trackId]
+            frame = (self.toon.getNumFrames(anim) - 1) / MAX_FRAMES * self.index
+        else:
+            anim = 'neutral'
+            frame = 0
         self.toon.pose(anim, frame)
         self.toon.show()
         self.question.hide()
@@ -88,18 +96,18 @@ class TrackPage(ShtikerPage.ShtikerPage):
         rowY = 0.38
         rowSpace = -0.32
         rowPos = []
-        for i in xrange(3):
+        for i in range(3):
             rowPos.append(rowY)
             rowY += rowSpace
 
         colX = -0.7
         colSpace = 0.276
         colPos = []
-        for i in xrange(6):
+        for i in range(6):
             colPos.append(colX)
             colX += colSpace
 
-        for index in xrange(1, MAX_FRAMES + 1):
+        for index in range(1, MAX_FRAMES + 1):
             frame = self.trackFrames[index - 1]
             col = (index - 1) % 6
             row = (index - 1) / 6
@@ -110,7 +118,7 @@ class TrackPage(ShtikerPage.ShtikerPage):
         self.title = DirectLabel(parent=self, relief=None, text=TTLocalizer.TrackPageTitle, text_scale=0.1, pos=(0, 0, 0.65))
         self.subtitle = DirectLabel(parent=self, relief=None, text=TTLocalizer.TrackPageSubtitle, text_scale=0.05, text_fg=(0.5, 0.1, 0.1, 1), pos=(0, 0, 0.56))
         self.trackText = DirectLabel(parent=self, relief=None, text='', text_scale=0.05, text_fg=(0.5, 0.1, 0.1, 1), pos=(0, 0, -0.5))
-        for index in xrange(1, MAX_FRAMES + 1):
+        for index in range(1, MAX_FRAMES + 1):
             frame = TrackFrame(index)
             frame.reparentTo(self)
             self.trackFrames.append(frame)
@@ -140,7 +148,7 @@ class TrackPage(ShtikerPage.ShtikerPage):
         ShtikerPage.ShtikerPage.unload(self)
 
     def clearPage(self):
-        for index in xrange(1, MAX_FRAMES - 1):
+        for index in range(1, MAX_FRAMES - 1):
             self.trackFrames[index].setUntrained(-1)
 
         self.startFrame.frame['text'] = ''
@@ -154,7 +162,7 @@ class TrackPage(ShtikerPage.ShtikerPage):
             trackName = ToontownBattleGlobals.Tracks[trackId].capitalize()
             self.trackText['text'] = TTLocalizer.TrackPageTraining % (trackName, trackName)
             trackProgressArray = base.localAvatar.getTrackProgressAsArray()
-            for index in xrange(1, MAX_FRAMES - 2):
+            for index in range(1, MAX_FRAMES - 2):
                 if trackProgressArray[index - 1]:
                     self.trackFrames[index].setTrained(trackId)
                 else:

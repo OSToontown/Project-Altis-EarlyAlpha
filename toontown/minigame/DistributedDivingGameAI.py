@@ -11,7 +11,7 @@ import types
 
 class DistributedDivingGameAI(DistributedMinigameAI):
     fishProportions = []
-    for i in xrange(6):
+    for i in range(6):
         fishProportions.append([])
 
     n = 100
@@ -271,7 +271,7 @@ class DistributedDivingGameAI(DistributedMinigameAI):
         self.REWARDMOD = self.difficultyPatternsAI[self.getSafezoneId()][2]
         DistributedMinigameAI.setGameReady(self)
         self.spawnings = []
-        for i in xrange(DivingGameGlobals.NUM_SPAWNERS):
+        for i in range(DivingGameGlobals.NUM_SPAWNERS):
             self.spawnings.append(Sequence(Func(self.spawnFish, i), Wait(self.SPAWNTIME + random.random()), Func(self.spawnFish, i), Wait(self.SPAWNTIME - 0.5 + random.random())))
             self.spawnings[i].loop()
 
@@ -303,11 +303,11 @@ class DistributedDivingGameAI(DistributedMinigameAI):
             return
         avId = self.air.getAvatarIdFromSender()
         if avId not in self.avIdList:
-            self.air.writeServerEvent('suspicious', avId, 'DivingGameAI.treasureRecovered: invalid avId')
+            self.air.writeServerEvent('suspicious', avId=avId, issue='DivingGameAI.treasureRecovered: invalid avId')
             return
 
         if avId not in self.treasureHolders:
-            self.air.writeServerEvent('suspicious', avId, 'DivingGameAI.treasureRecovered: tried to recover without holding treasure')
+            self.air.writeServerEvent('suspicious', avId=avId, issue='DivingGameAI.treasureRecovered: tried to recover without holding treasure')
             return
 
         self.treasureHolders[self.treasureHolders.index(avId)] = 0
@@ -347,7 +347,7 @@ class DistributedDivingGameAI(DistributedMinigameAI):
              self.scoreTracking[avId][4],
              self.scoreDict[avId])
 
-        self.air.writeServerEvent('MiniGame Stats', None, trackingString)
+        #jjkoletar: why. do we care atm? self.air.writeServerEvent('MiniGame Stats', None, trackingString)
         return
 
     def enterInactive(self):
@@ -361,7 +361,7 @@ class DistributedDivingGameAI(DistributedMinigameAI):
 
     def enterSwimming(self):
         self.notify.debug('enterSwimming')
-        duration = 80.0
+        duration = 65.0
         taskMgr.doMethodLater(duration, self.timerExpired, self.taskName('gameTimer'))
 
     def timerExpired(self, task):
@@ -374,12 +374,12 @@ class DistributedDivingGameAI(DistributedMinigameAI):
         return Task.done
 
     def exitSwimming(self):
-        for i in xrange(DivingGameGlobals.NUM_SPAWNERS):
+        for i in range(DivingGameGlobals.NUM_SPAWNERS):
             self.spawnings[i].pause()
 
     def enterCleanup(self):
         self.notify.debug('enterCleanup')
-        for i in xrange(DivingGameGlobals.NUM_SPAWNERS):
+        for i in range(DivingGameGlobals.NUM_SPAWNERS):
             self.spawnings[i].finish()
 
         del self.spawnings
@@ -394,13 +394,13 @@ class DistributedDivingGameAI(DistributedMinigameAI):
         timestamp = globalClockDelta.getFrameNetworkTime()
         avId = self.air.getAvatarIdFromSender()
         if avId not in self.avIdList:
-            self.air.writeServerEvent('suspicious', avId, 'DivingGameAI.pickupTreasure: invalid avId')
+            self.air.writeServerEvent('suspicious', avId=avId, issue='DivingGameAI.pickupTreasure: invalid avId')
             return
         if avId in self.treasureHolders:
-            self.air.writeServerEvent('suspicious', avId, 'DivingGameAI.pickupTreasure: already holding treasure')
+            self.air.writeServerEvent('suspicious', avId=avId, issue='DivingGameAI.pickupTreasure: already holding treasure')
             return
         if not (0 <= chestId < len(self.treasureHolders)):
-            self.air.writeServerEvent('suspicious', avId, 'DivingGameAI.pickupTreasure: invalid chest requested (#%d)' % chestId)
+            self.air.writeServerEvent('suspicious', avId=avId, issue='DivingGameAI.pickupTreasure: invalid chest requested (#%d)' % chestId)
             return
         if self.treasureHolders[chestId]:
             # This chest is already held by someone else. Because this can happen
@@ -415,7 +415,7 @@ class DistributedDivingGameAI(DistributedMinigameAI):
         timestamp = globalClockDelta.getFrameNetworkTime()
         props = self.proportion[spawnerId]
         num = random.random()
-        for i in xrange(len(props)):
+        for i in range(len(props)):
             prop = props[i]
             low = prop[0]
             high = prop[1]
@@ -427,38 +427,37 @@ class DistributedDivingGameAI(DistributedMinigameAI):
                  offset])
                 return
 
-    def handleCrabCollision(self, avId, status):
+    def handleCrabCollision(self, status):
+        avId = self.air.getAvatarIdFromSender()
         if avId not in self.avIdList:
-            self.air.writeServerEvent('suspicious', avId, 'DivingGameAI.handleCrabCollision: invalid avId')
+            self.air.writeServerEvent('suspicious', avId=avId, issue='DivingGameAI.handleCrabCollision: invalid avId')
             return
         timestamp = globalClockDelta.getFrameNetworkTime()
-        self.sendUpdate('setTreasureDropped', [avId, timestamp])
         self.scoreTracking[avId][1] += 1
         if status == 'normal' or status == 'treasure':
             timestamp = globalClockDelta.getFrameNetworkTime()
             self.sendUpdate('performCrabCollision', [avId, timestamp])
-            if status == 'treasure':
-                if avId in self.treasureHolders:
-                    self.treasureHolders[self.treasureHolders.index(avId)] = 0
-                    self.scoreTracking[avId][3] += 1
-                else:
-                    self.air.writeServerEvent('suspicious', avId, 'DivingGameAI.handleCrabCollision: reported "treasure drop" without holding treasure')
 
-    def handleFishCollision(self, avId, spawnId, spawnerId, status):
+        self.dropTreasure()
+
+    def handleFishCollision(self, spawnId, spawnerId, status):
+        avId = self.air.getAvatarIdFromSender()
         if avId not in self.avIdList:
-            self.air.writeServerEvent('suspicious', avId, 'DivingGameAI.handleFishCollision: invalid avId')
+            self.air.writeServerEvent('suspicious', avId=avId, issue='DivingGameAI.handleFishCollision: invalid avId')
             return
         timestamp = globalClockDelta.getFrameNetworkTime()
-        self.sendUpdate('setTreasureDropped', [avId, timestamp])
-        timestamp = globalClockDelta.getFrameNetworkTime()
         self.scoreTracking[avId][0] += 1
-        if status == 'treasure':
-            if avId in self.treasureHolders:
-                self.treasureHolders[self.treasureHolders.index(avId)] = 0
-                self.scoreTracking[avId][3] += 1
-            else:
-                self.air.writeServerEvent('suspicious', avId, 'DivingGameAI.handleFishCollision: reported "treasure drop" without holding treasure')
         self.sendUpdate('performFishCollision', [avId,
          spawnId,
          spawnerId,
          timestamp])
+
+        self.dropTreasure()
+
+    def dropTreasure(self):
+        avId = self.air.getAvatarIdFromSender()
+        timestamp = globalClockDelta.getFrameNetworkTime()
+        if avId in self.treasureHolders:
+            self.treasureHolders[self.treasureHolders.index(avId)] = 0
+            self.scoreTracking[avId][3] += 1
+            self.sendUpdate('setTreasureDropped', [avId, timestamp])

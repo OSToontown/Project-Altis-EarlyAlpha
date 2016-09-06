@@ -1,5 +1,4 @@
-import random
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.task.Task import Task
 from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
@@ -10,7 +9,6 @@ ChangeDirectionDebounce = 1.0
 ChangeDirectionTime = 1.0
 
 class DistributedMMPiano(DistributedObject.DistributedObject):
-    whitePartNodeName = 'midkey_floor_1'
 
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
@@ -18,36 +16,24 @@ class DistributedMMPiano(DistributedObject.DistributedObject):
         self.rpm = 0.0
         self.degreesPerSecond = self.rpm / 60.0 * 360.0
         self.offset = 0.0
+        self.oldOffset = 0.0
+        self.lerpStart = 0.0
+        self.lerpFinish = 1.0
         self.speedUpSound = None
         self.changeDirectionSound = None
         self.lastChangeDirection = 0.0
+        return
 
     def generate(self):
-        DistributedObject.DistributedObject.generate(self)
-        taskMgr.doMethodLater(4, self.setupGeom, self.uniqueName('setup-geom'))
-
-    def setupGeom(self, task):
-        geom = self.cr.playGame.getPlace().loader.geom
-        self.piano = geom.find('**/center_icon')
-        if self.piano.isEmpty():
-            loader.notify.error('Piano not found')
-            return
-
-        geom.find('**/center_icon').setPos(0,-20.1,0)
-        geom.find('**/midkey_floor').setPos(0,20.1,0)
-        geom.find('**/pond_floor').setPos(0,20.1,0)
-        geom.find('**/pond_floor').setScale(1.01,1.01,1)
-        geom.find('**/MMsz_water').setPos(0,20.0,0)
-        geom.find('**/midkey_floor').setScale(1.01,1.01,1)
-        geom.find('**/midkey_floor_1').setScale(1.01,1.01,1)
+        self.piano = base.cr.playGame.hood.loader.piano
         base.cr.parentMgr.registerParent(ToontownGlobals.SPMinniesPiano, self.piano)
-        self.accept('enter' + self.whitePartNodeName, self.__handleOnFloor)
-        self.accept('exit' + self.whitePartNodeName, self.__handleOffFloor)
-        self.accept('entermid_fishpond', self.__handleChangeDirectionButton)
+        self.accept('enterlarge_round_keyboard_collisions', self.__handleOnFloor)
+        self.accept('exitlarge_round_keyboard_collisions', self.__handleOffFloor)
+        self.accept('entero7', self.__handleChangeDirectionButton)
         self.speedUpSound = base.loadSfx('phase_6/audio/sfx/SZ_MM_gliss.ogg')
         self.changeDirectionSound = base.loadSfx('phase_6/audio/sfx/SZ_MM_cymbal.ogg')
         self.__setupSpin()
-        return task.done
+        DistributedObject.DistributedObject.generate(self)
 
     def __setupSpin(self):
         taskMgr.add(self.__updateSpin, self.taskName('pianoSpinTask'))
@@ -56,32 +42,51 @@ class DistributedMMPiano(DistributedObject.DistributedObject):
         taskMgr.remove(self.taskName('pianoSpinTask'))
 
     def __updateSpin(self, task):
-        if self.degreesPerSecond == 0:
-            return Task.cont
-
-        elapsed = globalClock.getRealTime() - self.spinStartTime
-        offset = self.offset
-        heading = ((self.degreesPerSecond * elapsed) + offset) % 360
-        self.piano.setH(heading)
+        now = globalClock.getFrameTime()
+        if now > self.lerpFinish:
+            offset = self.offset
+        elif now > self.lerpStart:
+            t = (now - self.lerpStart) / (self.lerpFinish - self.lerpStart)
+            offset = self.oldOffset + t * (self.offset - self.oldOffset)
+        else:
+            offset = self.oldOffset
+        heading = self.degreesPerSecond * (now - self.spinStartTime) + offset
+        self.piano.setHprScale(heading % 360.0, 0.0, 0.0, 1.0, 1.0, 1.0)
         return Task.cont
 
     def disable(self):
-        if hasattr(self, 'piano'):
-            del self.piano
-            base.cr.parentMgr.unregisterParent(ToontownGlobals.SPMinniesPiano)
-        self.ignoreAll()
+        del self.piano
+        base.cr.parentMgr.unregisterParent(ToontownGlobals.SPMinniesPiano)
+        self.ignore('enterlarge_round_keyboard_collisions')
+        self.ignore('exitlarge_round_keyboard_collisions')
+        self.ignore('entero7')
+        self.ignore('entericon_center_collisions')
         self.speedUpSound = None
         self.changeDirectionSound = None
         self.__stopSpin()
         DistributedObject.DistributedObject.disable(self)
+        return
 
     def setSpeed(self, rpm, offset, timestamp):
         timestamp = globalClockDelta.networkToLocalTime(timestamp)
         degreesPerSecond = rpm / 60.0 * 360.0
+        now = globalClock.getFrameTime()
+        oldHeading = self.degreesPerSecond * (now - self.spinStartTime) + self.offset
+        oldHeading = oldHeading % 360.0
+        oldOffset = oldHeading - degreesPerSecond * (now - timestamp)
         self.rpm = rpm
         self.degreesPerSecond = degreesPerSecond
         self.offset = offset
         self.spinStartTime = timestamp
+        while oldOffset - offset < -180.0:
+            oldOffset += 360.0
+
+        while oldOffset - offset > 180.0:
+            oldOffset -= 360.0
+
+        self.oldOffset = oldOffset
+        self.lerpStart = now
+        self.lerpFinish = timestamp + ChangeDirectionTime
 
     def playSpeedUp(self, avId):
         if avId != base.localAvatar.doId:
@@ -98,7 +103,6 @@ class DistributedMMPiano(DistributedObject.DistributedObject):
 
     def __handleOffFloor(self, collEntry):
         self.cr.playGame.getPlace().activityFsm.request('off')
-        self.sendUpdate('requestSlowDown', [])
 
     def __handleSpeedUpButton(self, collEntry):
         self.sendUpdate('requestSpeedUp', [])
@@ -107,12 +111,7 @@ class DistributedMMPiano(DistributedObject.DistributedObject):
     def __handleChangeDirectionButton(self, collEntry):
         now = globalClock.getFrameTime()
         if now - self.lastChangeDirection < ChangeDirectionDebounce:
-            loader.notify.debug('Rejecting change direction.')
             return
-        shouldChange = random.randint(1,10)
-        if int(shouldChange) == 10:
-            self.lastChangeDirection = now
-            self.sendUpdate('requestChangeDirection', [])
-            base.playSfx(self.changeDirectionSound)
-        else:
-            loader.notify.debug('Rejecting change direction.')
+        self.lastChangeDirection = now
+        self.sendUpdate('requestChangeDirection', [])
+        base.playSfx(self.changeDirectionSound)

@@ -1,6 +1,9 @@
-from panda3d.core import *
+from pandac.PandaModules import *
+from direct.task.Task import Task
 from direct.directnotify import DirectNotifyGlobal
-from direct.fsm import ClassicFSM, StateData, State
+from direct.fsm import StateData
+from direct.fsm import ClassicFSM, State
+from direct.fsm import State
 
 class Walk(StateData.StateData):
     notify = DirectNotifyGlobal.directNotify.newCategory('Walk')
@@ -12,6 +15,7 @@ class Walk(StateData.StateData):
          State.State('swimming', self.enterSwimming, self.exitSwimming, ['walking', 'slowWalking']),
          State.State('slowWalking', self.enterSlowWalking, self.exitSlowWalking, ['walking', 'swimming'])], 'off', 'off')
         self.fsm.enterInitialState()
+        self.IsSwimSoundAudible = 0
         self.swimSoundPlaying = 0
 
     def load(self):
@@ -35,13 +39,12 @@ class Walk(StateData.StateData):
 
     def exit(self):
         self.fsm.request('off')
-        self.ignore(base.JUMP)
+        self.ignore('control')
         base.localAvatar.disableAvatarControls()
-        if not base.localAvatar.preventCameraDisable:
-            base.localAvatar.stopUpdateSmartCamera()
-            base.localAvatar.detachCamera()
+        base.localAvatar.stopUpdateSmartCamera()
         base.localAvatar.stopPosHprBroadcast()
         base.localAvatar.stopBlink()
+        base.localAvatar.detachCamera()
         base.localAvatar.stopGlitchKiller()
         base.localAvatar.collisionsOff()
         base.localAvatar.controlManager.placeOnFloor()
@@ -62,31 +65,36 @@ class Walk(StateData.StateData):
     def exitWalking(self):
         base.localAvatar.stopTrackAnimToSpeed()
 
+    def setSwimSoundAudible(self, IsSwimSoundAudible):
+        self.IsSwimSoundAudible = IsSwimSoundAudible
+        if IsSwimSoundAudible == 0 and self.swimSoundPlaying:
+            self.swimSound.stop()
+            self.swimSoundPlaying = 0
+
     def enterSwimming(self, swimSound):
         base.localAvatar.setWalkSpeedNormal()
         self.swimSound = swimSound
         self.swimSoundPlaying = 0
         base.localAvatar.b_setAnimState('swim', base.localAvatar.animMultiplier)
-        taskMgr.add(self.__swimSoundTest, 'localToonSwimming')
+        base.localAvatar.startSleepSwimTest()
+        taskMgr.add(self.__swim, 'localToonSwimming')
 
     def exitSwimming(self):
         taskMgr.remove('localToonSwimming')
         self.swimSound.stop()
         del self.swimSound
         self.swimSoundPlaying = 0
+        base.localAvatar.stopSleepSwimTest()
 
-    def __swimSoundTest(self, task):
-        speed, rotSpeed, slideSpeed = base.localAvatar.controlManager.getSpeeds()
-
-        if (speed or rotSpeed):
-            if not self.swimSoundPlaying:
-                self.swimSoundPlaying = 1
-                base.playSfx(self.swimSound, looping=1)
-        elif self.swimSoundPlaying:
+    def __swim(self, task):
+        speed = base.mouseInterfaceNode.getSpeed()
+        if speed == 0 and self.swimSoundPlaying:
             self.swimSoundPlaying = 0
             self.swimSound.stop()
-
-        return task.cont
+        elif speed > 0 and self.swimSoundPlaying == 0 and self.IsSwimSoundAudible:
+            self.swimSoundPlaying = 1
+            base.playSfx(self.swimSound, looping=1)
+        return Task.cont
 
     def enterSlowWalking(self):
         self.accept(base.localAvatar.uniqueName('positiveHP'), self.__handlePositiveHP)

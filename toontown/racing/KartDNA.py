@@ -1,10 +1,12 @@
 from direct.directnotify import DirectNotifyGlobal
 from direct.showbase import PythonUtil
 from toontown.toonbase import TTLocalizer
-from panda3d.core import *
+from pandac.PandaModules import *
 from KartShopGlobals import *
-import types, copy
-
+import types
+if (__debug__):
+    import pdb
+import copy
 KartDNA = PythonUtil.Enum('bodyType, bodyColor, accColor,                             ebType, spType, fwwType,                             bwwType, rimsType, decalType')
 InvalidEntry = -1
 KartInfo = PythonUtil.Enum('name, model, cost, viewDist, decalId, LODmodel1, LODmodel2')
@@ -592,7 +594,7 @@ def getAccessDictByType(accessoryOwnedList):
         for accOwnedId in accessoryOwnedList:
             accType = getAccessoryType(accOwnedId)
             if accType != InvalidEntry:
-                if accType not in accessDict:
+                if not accessDict.has_key(accType):
                     accessDict[accType] = []
                 accessDict[accType].append(accOwnedId)
 
@@ -602,7 +604,7 @@ def getAccessDictByType(accessoryOwnedList):
 
 
 def getKartCost(kartID):
-    if kartID in KartDict:
+    if KartDict.has_key(kartID):
         return KartDict[kartID][KartInfo.cost]
     else:
         return 'key error'

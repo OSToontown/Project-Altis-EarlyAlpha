@@ -5,9 +5,9 @@ from BattleSounds import *
 import MovieCamera
 from direct.directnotify import DirectNotifyGlobal
 import types
-notify = DirectNotifyGlobal.directNotify.newCategory('MovieToonVictory')
 from otp.nametag.NametagConstants import *
 from otp.nametag import NametagGlobals
+notify = DirectNotifyGlobal.directNotify.newCategory('MovieToonVictory')
 
 def __findToonReward(rewards, toon):
     for r in rewards:
@@ -50,13 +50,13 @@ class ToonVictorySkipper(DirectObject):
         self._ivals = ivals
 
     def _setupSkipListen(self, index):
-        if not self._noSkip:
+        if (not self._noSkip) and config.GetBool('want-skip-button', 0):
             func = Functor(self._skipToon, index)
             self.accept('escape', func)
             self.accept(RewardPanel.SkipBattleMovieEvent, func)
 
     def _teardownSkipListen(self, index):
-        if not self._noSkip:
+        if (not self._noSkip) and config.GetBool('want-skip-button', 0):
             self.ignore('escape')
             self.ignore(RewardPanel.SkipBattleMovieEvent)
 
@@ -103,7 +103,7 @@ def doToonVictory(localToonActive, toons, rewardToonIds, rewardDicts, deathList,
     skipper = ToonVictorySkipper(len(toonList), noSkip)
     lastListenIndex = 0
     track.append(skipper.getSetupFunc(lastListenIndex))
-    for tIndex in xrange(len(toonList)):
+    for tIndex in range(len(toonList)):
         t = toonList[tIndex]
         rdict = __findToonReward(rewardDicts, t)
         if rdict != None:

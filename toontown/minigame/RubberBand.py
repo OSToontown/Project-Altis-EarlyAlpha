@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from direct.interval.IntervalGlobal import *
 from direct.distributed.ClockDelta import *
@@ -30,7 +30,7 @@ class RubberBand:
         targetNode = CollisionNode('thing')
         targetNode.addSolid(target)
         targetNodePath = self.baseNode.attachNewNode(targetNode)
-        self.slingModel = loader.loadModel('phase_4/models/minigames/slingshot_game_sling.bam')
+        self.slingModel = loader.loadModel('phase_4/models/minigames/slingshot_game_sling')
         self.slingModel.reparentTo(self.baseNode)
         self.slingModel.setScale(1.0)
         self.slingModel.setZ(-1.0)
@@ -128,12 +128,12 @@ class RubberBand:
         bandVertexData = GeomVertexData('holds my vertices', gFormat, Geom.UHDynamic)
         bandVertexWriter = GeomVertexWriter(bandVertexData, 'vertex')
         bandColorWriter = GeomVertexWriter(bandVertexData, 'color')
-        for index in xrange(len(shapeVertexs)):
+        for index in range(len(shapeVertexs)):
             bandVertexWriter.addData3f(shapeVertexs[index][0], shapeVertexs[index][1], shapeVertexs[index][2])
             bandColorWriter.addData4f(color['Red'] * colorMultList[index], color['Green'] * colorMultList[index], color['Blue'] * colorMultList[index], color['Alpha'] * colorMultList[index])
 
         bandTris = GeomTristrips(Geom.UHStatic)
-        for index in xrange(len(shapeVertexs)):
+        for index in range(len(shapeVertexs)):
             bandTris.addVertex(index)
 
         bandTris.closePrimitive()

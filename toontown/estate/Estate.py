@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from toontown.toonbase.ToonBaseGlobal import *
 from toontown.toonbase.ToontownGlobals import *
@@ -12,9 +12,9 @@ from toontown.toonbase import TTLocalizer
 import random
 from direct.showbase import PythonUtil
 from toontown.hood import Place
+from toontown.hood import SkyUtil
 from toontown.pets import PetTutorial
 from otp.distributed.TelemetryLimiter import RotationLimitToH, TLGatherAllAvs, TLNull
-from toontown.safezone import SZUtil
 import HouseGlobals
 
 class Estate(Place.Place):
@@ -41,11 +41,11 @@ class Estate(Place.Place):
           'fishing',
           'mailbox',
           'stopped',
-          'teleportOut',
+          'DFA',
+          'trialerFA',
           'doorOut',
           'push',
-          'pet',
-          'activity']),
+          'pet']),
          State.State('stopped', self.enterStopped, self.exitStopped, ['walk', 'teleportOut']),
          State.State('sit', self.enterSit, self.exitSit, ['walk']),
          State.State('push', self.enterPush, self.exitPush, ['walk']),
@@ -58,18 +58,22 @@ class Estate(Place.Place):
           'doorOut',
           'push',
           'pet',
-          'teleportOut',
-          'activity']),
+          'DFA',
+          'trialerFA']),
          State.State('teleportIn', self.enterTeleportIn, self.exitTeleportIn, ['walk', 'petTutorial']),
          State.State('teleportOut', self.enterTeleportOut, self.exitTeleportOut, ['teleportIn', 'walk', 'final']),
-         State.State('doorIn', self.enterDoorIn, self.exitDoorIn, ['walk', 'stopped']),
-         State.State('doorOut', self.enterDoorOut, self.exitDoorOut, ['final', 'walk', 'stopped']),
+         State.State('doorIn', self.enterDoorIn, self.exitDoorIn, ['walk']),
+         State.State('doorOut', self.enterDoorOut, self.exitDoorOut, ['final', 'walk']),
          State.State('final', self.enterFinal, self.exitFinal, ['teleportIn']),
          State.State('quest', self.enterQuest, self.exitQuest, ['walk']),
          State.State('fishing', self.enterFishing, self.exitFishing, ['walk', 'stopped']),
          State.State('mailbox', self.enterMailbox, self.exitMailbox, ['walk', 'stopped']),
          State.State('stopped', self.enterStopped, self.exitStopped, ['walk']),
-         State.State('pet', self.enterPet, self.exitPet, ['walk', 'teleportOut'])], 'init', 'final')
+         State.State('pet', self.enterPet, self.exitPet, ['walk', 'trialerFA']),
+         State.State('trialerFA', self.enterTrialerFA, self.exitTrialerFA, ['trialerFAReject', 'DFA']),
+         State.State('trialerFAReject', self.enterTrialerFAReject, self.exitTrialerFAReject, ['walk']),
+         State.State('DFA', self.enterDFA, self.exitDFA, ['DFAReject', 'teleportOut']),
+         State.State('DFAReject', self.enterDFAReject, self.exitDFAReject, ['walk'])], 'init', 'final')
         self.fsm.enterInitialState()
         self.doneEvent = doneEvent
         self.parentFSMState = parentFSMState
@@ -100,14 +104,21 @@ class Estate(Place.Place):
     def enter(self, requestStatus):
         hoodId = requestStatus['hoodId']
         zoneId = requestStatus['zoneId']
+        newsManager = base.cr.newsManager
         if config.GetBool('want-estate-telemetry-limiter', 1):
             limiter = TLGatherAllAvs('Estate', RotationLimitToH)
         else:
             limiter = TLNull()
         self._telemLimiter = limiter
-        if base.cr.newsManager.isHolidayRunning(ToontownGlobals.HALLOWEEN) and self.loader.hood.spookySkyFile:
-            lightsOff = Sequence(LerpColorScaleInterval(base.cr.playGame.hood.loader.geom, 0.1, Vec4(0.55, 0.55, 0.65, 1)), Func(self.loader.hood.startSpookySky))
-            lightsOff.start()
+        if newsManager:
+            holidayIds = base.cr.newsManager.getDecorationHolidayId()
+            if (ToontownGlobals.HALLOWEEN_COSTUMES in holidayIds or ToontownGlobals.SPOOKY_COSTUMES in holidayIds) and self.loader.hood.spookySkyFile:
+                lightsOff = Sequence(LerpColorScaleInterval(base.cr.playGame.hood.loader.geom, 0.1, Vec4(0.55, 0.55, 0.65, 1)), Func(self.loader.hood.startSpookySky))
+                lightsOff.start()
+            else:
+                self.loader.hood.startSky()
+                lightsOn = LerpColorScaleInterval(base.cr.playGame.hood.loader.geom, 0.1, Vec4(1, 1, 1, 1))
+                lightsOn.start()
         else:
             self.loader.hood.startSky()
             lightsOn = LerpColorScaleInterval(base.cr.playGame.hood.loader.geom, 0.1, Vec4(1, 1, 1, 1))
@@ -118,7 +129,11 @@ class Estate(Place.Place):
             self.loader.enterAnimatedProps(i)
 
         self.loader.geom.reparentTo(render)
-        if base.cr.newsManager.isHolidayRunning(ToontownGlobals.APRIL_TOONS_WEEK):
+        # The client April Toons Manager is currently broken, so we have to do this hacky thing instead. :(
+        #if hasattr(base.cr, 'aprilToonsMgr'):
+            #if self.isEventActive(AprilToonsGlobals.EventEstateGravity):
+                #base.localAvatar.startAprilToonsControls()
+        if config.GetBool('want-april-toons'):
             base.localAvatar.startAprilToonsControls()
         self.accept('doorDoneEvent', self.handleDoorDoneEvent)
         self.accept('DistributedDoor_doorTrigger', self.handleDoorTrigger)
@@ -126,8 +141,7 @@ class Estate(Place.Place):
 
     def exit(self):
         base.localAvatar.stopChat()
-        if base.cr.newsManager.isHolidayRunning(ToontownGlobals.APRIL_TOONS_WEEK):
-            base.localAvatar.stopAprilToonsControls()
+        base.localAvatar.stopAprilToonsControls()
         self._telemLimiter.destroy()
         del self._telemLimiter
         if hasattr(self, 'fsm'):
@@ -162,6 +176,9 @@ class Estate(Place.Place):
         if hasattr(self, 'fsm'):
             self.fsm.request('walk')
 
+    def doRequestLeave(self, requestStatus):
+        self.fsm.request('trialerFA', [requestStatus])
+
     def enterInit(self):
         pass
 
@@ -193,6 +210,7 @@ class Estate(Place.Place):
     def enterMailbox(self):
         Place.Place.enterPurchase(self)
         base.localAvatar.startSleepWatch(self.__handleFallingAsleepMailbox)
+        self.enablePeriodTimer()
 
     def __handleFallingAsleepMailbox(self, arg):
         if hasattr(self, 'fsm'):
@@ -203,6 +221,7 @@ class Estate(Place.Place):
     def exitMailbox(self):
         Place.Place.exitPurchase(self)
         base.localAvatar.stopSleepWatch()
+        self.disablePeriodTimer()
 
     def enterTeleportIn(self, requestStatus):
         self._etiToken = self.addSetZoneCompleteCallback(Functor(self._teleportToHouse, requestStatus))
@@ -225,7 +244,7 @@ class Estate(Place.Place):
         self.notify.info('remove estate-check-toon-underwater to TaskMgr in enterTeleportIn()')
         taskMgr.remove('estate-check-toon-underwater')
         if base.wantPets:
-            if base.localAvatar.hasPet() and not base.localAvatar.petTutorialDone:
+            if base.localAvatar.hasPet() and not base.localAvatar.bPetTutorialDone:
                 self.nextState = 'petTutorial'
 
     def teleportInDone(self):
@@ -305,6 +324,7 @@ class Estate(Place.Place):
         self.__setUnderwaterFog()
         base.playSfx(self.loader.underwaterSound, looping=1, volume=0.8)
         self.cameraSubmerged = 1
+        self.walkStateData.setSwimSoundAudible(1)
 
     def __emergeCamera(self):
         if self.cameraSubmerged == 0:
@@ -313,6 +333,7 @@ class Estate(Place.Place):
         self.loader.hood.sky.setFogOff()
         self.__setFaintFog()
         self.cameraSubmerged = 0
+        self.walkStateData.setSwimSoundAudible(0)
 
     def forceUnderWater(self):
         self.toonSubmerged = 0
@@ -324,7 +345,7 @@ class Estate(Place.Place):
         self.notify.debug('continuing in __submergeToon')
         if hasattr(self, 'loader') and self.loader:
             base.playSfx(self.loader.submergeSound)
-        if base.config.GetBool('disable-flying-glitch') == 0:
+        if config.GetBool('disable-flying-glitch') == 0:
             self.fsm.request('walk')
         self.walkStateData.fsm.request('swimming', [self.loader.swimSound])
         pos = base.localAvatar.getPos(render)
@@ -338,15 +359,19 @@ class Estate(Place.Place):
         if hasattr(self, 'walkStateData'):
             self.walkStateData.fsm.request('walking')
         self.toonSubmerged = 0
-        if base.cr.newsManager.isHolidayRunning(ToontownGlobals.APRIL_TOONS_WEEK):
+        # The client April Toons Manager is currently broken, so we have to do this hacky thing instead. :(
+        #if hasattr(base.cr, 'aprilToonsMgr'):
+            #if self.isEventActive(AprilToonsGlobals.EventEstateGravity):
+                #base.localAvatar.startAprilToonsControls()
+        if config.GetBool('want-april-toons'):
             base.localAvatar.startAprilToonsControls()
 
     def __setUnderwaterFog(self):
         if base.wantFog:
+            self.fog.setColor(Vec4(0.0, 0.0, 0.6, 1.0))
             self.fog.setLinearRange(0.1, 100.0)
             render.setFog(self.fog)
             self.loader.hood.sky.setFog(self.fog)
-            SZUtil.startUnderwaterFog()
 
     def __setWhiteFog(self):
         if base.wantFog:
@@ -354,11 +379,9 @@ class Estate(Place.Place):
             self.fog.setLinearRange(0.0, 400.0)
             render.setFog(self.fog)
             self.loader.hood.sky.setFog(self.fog)
-            SZUtil.stopUnderwaterFog()
 
     def __setFaintFog(self):
         if base.wantFog:
             self.fog.setColor(Vec4(0.8, 0.8, 0.8, 1.0))
             self.fog.setLinearRange(0.0, 700.0)
             render.setFog(self.fog)
-            SZUtil.stopUnderwaterFog()

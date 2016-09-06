@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
 from ElevatorConstants import *
@@ -197,7 +197,7 @@ class DistributedElevatorFSM(DistributedObject.DistributedObject, FSM):
             del self.toonRequests[index]
         if avId == 0:
             pass
-        elif avId not in self.cr.doId2do:
+        elif not self.cr.doId2do.has_key(avId):
             func = PythonUtil.Functor(self.gotToon, index, avId)
             self.toonRequests[index] = self.cr.relatedObjectMgr.requestObjects([avId], allCallback=func)
         elif not self.isSetup:
@@ -223,29 +223,29 @@ class DistributedElevatorFSM(DistributedObject.DistributedObject, FSM):
             track.start()
             self.boardedAvIds[avId] = index
 
-    def emptySlot0(self, avId, timestamp):
-        self.emptySlot(0, avId, timestamp)
+    def emptySlot0(self, avId, bailFlag, timestamp):
+        self.emptySlot(0, avId, bailFlag, timestamp)
 
-    def emptySlot1(self, avId, timestamp):
-        self.emptySlot(1, avId, timestamp)
+    def emptySlot1(self, avId, bailFlag, timestamp):
+        self.emptySlot(1, avId, bailFlag, timestamp)
 
-    def emptySlot2(self, avId, timestamp):
-        self.emptySlot(2, avId, timestamp)
+    def emptySlot2(self, avId, bailFlag, timestamp):
+        self.emptySlot(2, avId, bailFlag, timestamp)
 
-    def emptySlot3(self, avId, timestamp):
-        self.emptySlot(3, avId, timestamp)
+    def emptySlot3(self, avId, bailFlag, timestamp):
+        self.emptySlot(3, avId, bailFlag, timestamp)
 
-    def emptySlot4(self, avId, timestamp):
-        self.emptySlot(4, avId, timestamp)
+    def emptySlot4(self, avId, bailFlag, timestamp):
+        self.emptySlot(4, avId, bailFlag, timestamp)
 
-    def emptySlot5(self, avId, timestamp):
-        self.emptySlot(5, avId, timestamp)
+    def emptySlot5(self, avId, bailFlag, timestamp):
+        self.emptySlot(5, avId, bailFlag, timestamp)
 
-    def emptySlot6(self, avId, timestamp):
-        self.emptySlot(6, avId, timestamp)
+    def emptySlot6(self, avId, bailFlag, timestamp):
+        self.emptySlot(6, avId, bailFlag, timestamp)
 
-    def emptySlot7(self, avId, timestamp):
-        self.emptySlot(7, avId, timestamp)
+    def emptySlot7(self, avId, bailFlag, timestamp):
+        self.emptySlot(7, avId, bailFlag, timestamp)
 
     def notifyToonOffElevator(self, toon):
         if self.cr:
@@ -260,7 +260,7 @@ class DistributedElevatorFSM(DistributedObject.DistributedObject, FSM):
                 toon.startSmooth()
             return
 
-    def emptySlot(self, index, avId, timestamp):
+    def emptySlot(self, index, avId, bailFlag, timestamp):
         print 'Emptying slot: %d for %d' % (index, avId)
         if avId == 0:
             pass
@@ -271,8 +271,8 @@ class DistributedElevatorFSM(DistributedObject.DistributedObject, FSM):
                     newSlots.append(slot)
 
             self.deferredSlots = newSlots
-        elif avId in self.cr.doId2do:
-            if hasattr(self, 'clockNode'):
+        elif self.cr.doId2do.has_key(avId):
+            if bailFlag == 1 and hasattr(self, 'clockNode'):
                 if timestamp < self.countdownTime and timestamp >= 0:
                     self.countdown(self.countdownTime - timestamp)
                 else:
@@ -303,7 +303,10 @@ class DistributedElevatorFSM(DistributedObject.DistributedObject, FSM):
 
     def handleEnterSphere(self, collEntry):
         self.notify.debug('Entering Elevator Sphere....')
-        if base.localAvatar.hp > 0:
+        print 'FSMhandleEnterSphere elevator%s avatar%s' % (self.elevatorTripId, localAvatar.lastElevatorLeft)
+        if self.elevatorTripId and localAvatar.lastElevatorLeft == self.elevatorTripId:
+            self.rejectBoard(base.localAvatar.doId, REJECT_SHUFFLE)
+        elif base.localAvatar.hp > 0:
             self.cr.playGame.getPlace().detectedElevatorCollision(self)
             toon = base.localAvatar
             self.sendUpdate('requestBoard', [])
@@ -311,7 +314,11 @@ class DistributedElevatorFSM(DistributedObject.DistributedObject, FSM):
     def rejectBoard(self, avId, reason = 0):
         print 'rejectBoard %s' % reason
         if hasattr(base.localAvatar, 'elevatorNotifier'):
-            if reason == REJECT_PROMOTION:
+            if reason == REJECT_SHUFFLE:
+                base.localAvatar.elevatorNotifier.showMe(TTLocalizer.ElevatorHoppedOff)
+            elif reason == REJECT_MINLAFF:
+                base.localAvatar.elevatorNotifier.showMe(TTLocalizer.ElevatorMinLaff % self.minLaff)
+            elif reason == REJECT_PROMOTION:
                 base.localAvatar.elevatorNotifier.showMe(TTLocalizer.BossElevatorRejectMessage)
             elif reason == REJECT_BLOCKED_ROOM:
                 base.localAvatar.elevatorNotifier.showMe(TTLocalizer.ElevatorBlockedRoom)
@@ -455,6 +462,24 @@ class DistributedElevatorFSM(DistributedObject.DistributedObject, FSM):
     def getScaledPoint(self, index):
         point = self.elevatorPoints[index]
         return point
+
+    def setElevatorTripId(self, id):
+        self.elevatorTripId = id
+
+    def getElevatorTripId(self):
+        return self.elevatorTripId
+
+    def setAntiShuffle(self, antiShuffle):
+        self.antiShuffle = antiShuffle
+
+    def getAntiShuffle(self):
+        return self.antiShuffle
+
+    def setMinLaff(self, minLaff):
+        self.minLaff = minLaff
+
+    def getMinLaff(self):
+        return self.minLaff
 
     def getDestName(self):
         return None

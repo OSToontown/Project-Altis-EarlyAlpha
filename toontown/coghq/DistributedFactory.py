@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToontownGlobals import *
 from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
@@ -13,8 +13,8 @@ from otp.level import LevelConstants
 from toontown.toonbase import TTLocalizer
 from toontown.coghq import FactoryCameraViews
 from direct.controls.ControlManager import CollisionHandlerRayStart
-from otp.nametag.NametagConstants import *
-from otp.ai.MagicWordGlobal import *
+if __dev__:
+    from otp.level import EditorGlobals
 
 class DistributedFactory(DistributedLevel.DistributedLevel, FactoryBase.FactoryBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedFactory')
@@ -28,6 +28,7 @@ class DistributedFactory(DistributedLevel.DistributedLevel, FactoryBase.FactoryB
         self.joiningReserves = []
         self.suitsInitialized = 0
         self.goonClipPlanes = {}
+        base.localAvatar.physControls.setCollisionRayHeight(10.0)
 
     def createEntityCreator(self):
         return FactoryEntityCreator.FactoryEntityCreator(level=self)
@@ -37,16 +38,19 @@ class DistributedFactory(DistributedLevel.DistributedLevel, FactoryBase.FactoryB
         DistributedLevel.DistributedLevel.generate(self)
         self.factoryViews = FactoryCameraViews.FactoryCameraViews(self)
         base.localAvatar.chatMgr.chatInputSpeedChat.addFactoryMenu()
+        if __dev__:
+            bboard.post(EditorGlobals.EditTargetPostName, self)
         self.accept('SOSPanelEnter', self.handleSOSPanel)
-        base.factory = self
 
     def delete(self):
         DistributedLevel.DistributedLevel.delete(self)
         base.localAvatar.chatMgr.chatInputSpeedChat.removeFactoryMenu()
         self.factoryViews.delete()
         del self.factoryViews
-        del base.factory
         self.ignore('SOSPanelEnter')
+        if __dev__:
+            bboard.removeIfEqual(EditorGlobals.EditTargetPostName, self)
+        base.localAvatar.physControls.setCollisionRayHeight(CollisionHandlerRayStart)
 
     def setFactoryId(self, id):
         FactoryBase.FactoryBase.setFactoryId(self, id)
@@ -69,9 +73,16 @@ class DistributedFactory(DistributedLevel.DistributedLevel, FactoryBase.FactoryB
         DistributedLevel.DistributedLevel.levelAnnounceGenerate(self)
         specModule = FactorySpecs.getFactorySpecModule(self.factoryId)
         factorySpec = LevelSpec.LevelSpec(specModule)
+        if __dev__:
+            typeReg = self.getEntityTypeReg()
+            factorySpec.setEntityTypeReg(typeReg)
         DistributedLevel.DistributedLevel.initializeLevel(self, factorySpec)
 
     def privGotSpec(self, levelSpec):
+        if __dev__:
+            if not levelSpec.hasEntityTypeReg():
+                typeReg = self.getEntityTypeReg()
+                levelSpec.setEntityTypeReg(typeReg)
         firstSetZoneDoneEvent = self.cr.getNextSetZoneDoneEvent()
 
         def handleFirstSetZoneDone():
@@ -80,7 +91,7 @@ class DistributedFactory(DistributedLevel.DistributedLevel, FactoryBase.FactoryB
 
         self.acceptOnce(firstSetZoneDoneEvent, handleFirstSetZoneDone)
         modelCount = len(levelSpec.getAllEntIds())
-        loader.beginBulkLoad('factory', TTLocalizer.HeadingToFactoryTitle % TTLocalizer.FactoryNames[self.factoryId], modelCount, 1, TTLocalizer.TIP_COGHQ, self.factoryId)
+        loader.beginBulkLoad('factory', TTLocalizer.HeadingToFactoryTitle % TTLocalizer.FactoryNames[self.factoryId], modelCount, 1, TTLocalizer.TIP_COGHQ)
         DistributedLevel.DistributedLevel.privGotSpec(self, levelSpec)
         loader.endBulkLoad('factory')
 
@@ -160,13 +171,3 @@ class DistributedFactory(DistributedLevel.DistributedLevel, FactoryBase.FactoryB
 
     def getBossBattleTaunt(self):
         return TTLocalizer.FactoryBossBattleTaunt
-
-@magicWord(category=CATEGORY_PROGRAMMER, types=[int])
-def factoryWarp(zoneNum):
-    """
-    Warp to a specific factory zone.
-    """
-    if not hasattr(base, 'factory'):
-        return 'You must be in a factory!'
-    base.factory.warpToZone(zoneNum)
-    return 'Warped to zone: %d' % zoneNum

@@ -1,12 +1,10 @@
 from direct.gui.DirectGui import *
-from panda3d.core import *
-
+from pandac.PandaModules import *
 import ToonHead
 from toontown.distributed import DelayDelete
+from toontown.toonbase import ToontownGlobals
 from otp.nametag.Nametag import Nametag
 from otp.nametag.NametagFloat2d import NametagFloat2d
-from toontown.toonbase import ToontownGlobals
-
 
 class ToonHeadFrame(DirectFrame):
 
@@ -33,6 +31,7 @@ class ToonHeadFrame(DirectFrame):
         self.tag2.setPosHprScale(-0.27, 10.0, 0.16, 0, 0, 0, 0.05, 0.05, 0.05)
         self.extraData = DirectLabel(parent=self, relief=None, pos=(0.0, 0.0, 0.06), scale=1.0, text='', text0_fg=(0.3, 0.2, 1, 1), text_scale=(0.14, 0.06), text_pos=(0, -0.01))
         self.extraData.hide()
+        return
 
     def destroy(self):
         DirectFrame.destroy(self)

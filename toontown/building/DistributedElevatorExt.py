@@ -1,19 +1,19 @@
-from direct.directnotify import DirectNotifyGlobal
+from pandac.PandaModules import *
 from direct.distributed.ClockDelta import *
-from direct.fsm import ClassicFSM
-from direct.fsm import State
 from direct.interval.IntervalGlobal import *
-from panda3d.core import *
-
-import DistributedElevator
 from ElevatorConstants import *
 from ElevatorUtils import *
+import DistributedElevator
+from toontown.toonbase import ToontownGlobals
+from direct.directnotify import DirectNotifyGlobal
+from direct.fsm import ClassicFSM
+from direct.fsm import State
 from toontown.hood import ZoneUtil
+from toontown.toonbase import TTLocalizer
+from toontown.toontowngui import TeaserPanel
 from otp.nametag.NametagGroup import NametagGroup
 from otp.nametag.Nametag import Nametag
 from otp.nametag.NametagConstants import *
-from toontown.toonbase import TTLocalizer
-from toontown.toonbase import ToontownGlobals
 
 class DistributedElevatorExt(DistributedElevator.DistributedElevator):
 
@@ -45,13 +45,14 @@ class DistributedElevatorExt(DistributedElevator.DistributedElevator):
             self.nametag.setColorCode(NametagGroup.CCSuitBuilding)
             self.nametag.setActive(0)
             self.nametag.setAvatar(self.getElevatorModel())
-            name = self.cr.playGame.dnaStore.getTitleFromBlockNumber(self.bldg.block)
+            name = self.cr.playGame.dnaData.getBlock(self.bldg.block).title
             if not name:
                 name = TTLocalizer.CogsInc
             else:
                 name += TTLocalizer.CogsIncExt
             self.nametag.setName(name)
             self.nametag.manage(base.marginManager)
+        return
 
     def clearNametag(self):
         if self.nametag != None:
@@ -68,7 +69,7 @@ class DistributedElevatorExt(DistributedElevator.DistributedElevator):
         self.bldgRequest = None
         self.bldg = buildingList[0]
         if not self.bldg:
-            self.notify.warning('setBldgDoId: elevator %d cannot find bldg %d!' % (self.doId, self.bldgDoId))
+            self.notify.error('setBldgDoId: elevator %d cannot find bldg %d!' % (self.doId, self.bldgDoId))
             return
         if self.getBldgDoorOrigin():
             self.bossLevel = self.bldg.getBossLevel()
@@ -78,27 +79,32 @@ class DistributedElevatorExt(DistributedElevator.DistributedElevator):
         return
 
     def setFloor(self, floorNumber):
-        self.currentFloor = 0
-        if hasattr(self, 'bldg'):
-            if self.currentFloor >= 0:
-                if self.bldg.floorIndicator[self.currentFloor]:
-                    self.bldg.floorIndicator[self.currentFloor].setColor(LIGHT_OFF_COLOR)
-            if floorNumber >= 0:
-                if self.bldg.floorIndicator[floorNumber]:
-                    self.bldg.floorIndicator[floorNumber].setColor(LIGHT_ON_COLOR)
-            self.currentFloor = floorNumber
+        if self.currentFloor >= 0:
+            if self.bldg.floorIndicator[self.currentFloor]:
+                self.bldg.floorIndicator[self.currentFloor].setColor(LIGHT_OFF_COLOR)
+        if floorNumber >= 0:
+            if self.bldg.floorIndicator[floorNumber]:
+                self.bldg.floorIndicator[floorNumber].setColor(LIGHT_ON_COLOR)
+        self.currentFloor = floorNumber
 
     def handleEnterSphere(self, collEntry):
         self.notify.debug('Entering Elevator Sphere....')
         if hasattr(localAvatar, 'boardingParty') and localAvatar.boardingParty and localAvatar.boardingParty.getGroupLeader(localAvatar.doId) and localAvatar.boardingParty.getGroupLeader(localAvatar.doId) != localAvatar.doId:
             base.localAvatar.elevatorNotifier.showMe(TTLocalizer.ElevatorGroupMember)
-        else:
+        elif self.allowedToEnter(self.zoneId):
             self.cr.playGame.getPlace().detectedElevatorCollision(self)
+        else:
+            place = base.cr.playGame.getPlace()
+            if place:
+                place.fsm.request('stopped')
+            self.dialog = TeaserPanel.TeaserPanel(pageName='cogHQ', doneFunc=self.handleOkTeaser)
 
     def handleEnterElevator(self):
         if hasattr(localAvatar, 'boardingParty') and localAvatar.boardingParty and localAvatar.boardingParty.getGroupLeader(localAvatar.doId):
             if localAvatar.boardingParty.getGroupLeader(localAvatar.doId) == localAvatar.doId:
                 localAvatar.boardingParty.handleEnterElevator(self)
+        elif self.elevatorTripId and localAvatar.lastElevatorLeft == self.elevatorTripId:
+            self.rejectBoard(base.localAvatar.doId, REJECT_SHUFFLE)
         elif base.localAvatar.hp > 0:
             toon = base.localAvatar
             self.sendUpdate('requestBoard', [])
@@ -132,4 +138,7 @@ class DistributedElevatorExt(DistributedElevator.DistributedElevator):
         return self.bldg.interiorZoneId
 
     def getElevatorModel(self):
+        np = self.bldg.getSuitElevatorNodePath()
+        if np.isEmpty():
+            self.notify.error("np not ok")
         return self.bldg.getSuitElevatorNodePath()

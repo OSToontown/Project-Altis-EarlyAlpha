@@ -4,7 +4,7 @@ from direct.showbase.RandomNumGen import RandomNumGen
 from direct.interval.FunctionInterval import Wait
 from direct.interval.IntervalGlobal import Func
 from direct.interval.MetaInterval import Sequence, Parallel
-from toontown.toonbase import TTLocalizer, ToontownGlobals
+from toontown.toonbase import TTLocalizer
 import CogdoFlyingGameGlobals as Globals
 from CogdoFlyingLocalPlayer import CogdoFlyingLocalPlayer
 from CogdoGameAudioManager import CogdoGameAudioManager
@@ -28,7 +28,6 @@ class CogdoFlyingGame(DirectObject):
         self.index2LegalEagle = {}
         self.legalEagles = []
         self.isGameComplete = False
-        self.localPlayer = None
         self._hints = {'targettedByEagle': False,
          'invulnerable': False}
 
@@ -123,7 +122,6 @@ class CogdoFlyingGame(DirectObject):
         self._movie.end()
         self._movie.unload()
         del self._movie
-        base.camLens.setMinFov(ToontownGlobals.CogdoFov/(4./3.))
         self.localPlayer.ready()
         self.level.update(0.0)
 
@@ -162,7 +160,13 @@ class CogdoFlyingGame(DirectObject):
         self.acceptOnce(CogdoFlyingLocalPlayer.RanOutOfTimeEventName, self.handleLocalPlayerRanOutOfTime)
         self.__startUpdateTask()
         self.isGameComplete = False
+        if __debug__ and config.GetBool('schellgames-dev', True):
+            self.acceptOnce('end', self.guiMgr.forceTimerDone)
 
+            def toggleFog():
+                self.levelFog.setVisible(not self.levelFog.isVisible())
+
+            self.accept('home', toggleFog)
         for eagle in self.legalEagles:
             eagle.gameStart(self.distGame.getStartTime())
 
@@ -171,7 +175,7 @@ class CogdoFlyingGame(DirectObject):
 
         self.guiMgr.onstage()
         if not Globals.Dev.InfiniteTimeLimit:
-            self.guiMgr.startTimer(Globals.Gameplay.SecondsUntilGameOver, self._handleTimerExpired)
+            self.guiMgr.startTimer(Globals.Gameplay.SecondsUntilGameOver, self._handleTimerExpired, keepHidden=True)
 
     def exit(self):
         self.ignore(CogdoFlyingObstacle.EnterEventName)
@@ -188,6 +192,9 @@ class CogdoFlyingGame(DirectObject):
         self.ignore(CogdoFlyingLegalEagle.RequestAddTargetAgainEventName)
         self.ignore(CogdoFlyingLegalEagle.RequestRemoveTargetEventName)
         self.ignore(CogdoFlyingLocalPlayer.PlayWaitingMusicEventName)
+        if __debug__ and config.GetBool('schellgames-dev', True):
+            self.ignore('end')
+            self.ignore('home')
         self.level.update(0.0)
         for eagle in self.legalEagles:
             eagle.gameEnd()
@@ -292,22 +299,20 @@ class CogdoFlyingGame(DirectObject):
                 if gatherable.type in [Globals.Level.GatherableTypes.InvulPowerup]:
                     if player.toon.isLocal():
                         self.audioMgr.playMusic('invul')
-                taskMgr.doMethodLater(30, lambda task: self.debuffPowerup(toonId, gatherable.type, elapsedTime), 'gatherable-timeout')
         else:
             self.notify.warning('Trying to pickup gatherable nonetype:%s' % pickupNum)
         return
 
     def debuffPowerup(self, toonId, pickupType, elapsedTime):
         self.notify.debugCall()
-        if toonId in self.toonId2Player:
-            player = self.toonId2Player[toonId]
-            if player.isBuffActive(pickupType):
-                if pickupType in [Globals.Level.GatherableTypes.InvulPowerup]:
-                    if self.guiMgr.isTimeRunningOut():
-                        self.audioMgr.playMusic('timeRunningOut')
-                    else:
-                        self.audioMgr.playMusic('normal')
-                    player.handleDebuffPowerup(pickupType, elapsedTime)
+        player = self.toonId2Player[toonId]
+        if player.isBuffActive(pickupType):
+            if pickupType in [Globals.Level.GatherableTypes.InvulPowerup]:
+                if self.guiMgr.isTimeRunningOut():
+                    self.audioMgr.playMusic('timeRunningOut')
+                else:
+                    self.audioMgr.playMusic('normal')
+                player.handleDebuffPowerup(pickupType, elapsedTime)
 
     def handleLocalToonEnterLegalEagle(self, eagle, collEntry):
         if not self.localPlayer.isEnemyHitting() and not self.localPlayer.isInvulnerable():

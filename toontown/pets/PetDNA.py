@@ -84,8 +84,7 @@ PetRarities = {'body': {ToontownGlobals.ToontownCentral: {'threeStripe': 50,
                                              'tigerStripe': 20,
                                              'turtle': 25,
                                              'giraffe': 20,
-                                             'leopard': 10}
-        }}
+                                             'leopard': 10}}}
 BodyTextures = {'dots': 'phase_4/maps/BeanbodyDots6.jpg',
  'threeStripe': 'phase_4/maps/Beanbody3stripes6.jpg',
  'tigerStripe': 'phase_4/maps/BeanbodyZebraStripes6.jpg',
@@ -241,7 +240,7 @@ def getBodyRarity(bodyIndex):
     for zoneId in PetRarities['body']:
         for body in PetRarities['body'][zoneId]:
             totalWeight += PetRarities['body'][zoneId][body]
-            if body in weight:
+            if weight.has_key(body):
                 weight[body] += PetRarities['body'][zoneId][body]
             else:
                 weight[body] = PetRarities['body'][zoneId][body]

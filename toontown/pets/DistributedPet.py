@@ -1,4 +1,5 @@
-from panda3d.core import *
+from pandac.PandaModules import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from direct.showbase.PythonUtil import *
 from direct.directnotify import DirectNotifyGlobal
@@ -14,6 +15,8 @@ from toontown.toonbase import TTLocalizer
 from toontown.distributed import DelayDelete
 from toontown.distributed.DelayDeletable import DelayDeletable
 import random
+if __dev__:
+    import pdb
 BeanColors = (VBase4(1.0, 0.2, 0.2, 1.0),
  VBase4(0.2, 1.0, 0.2, 1.0),
  VBase4(0.2, 0.2, 1.0, 1.0),
@@ -39,7 +42,6 @@ class DistributedPet(DistributedSmoothNode.DistributedSmoothNode, Pet.Pet, PetBa
         self.__generateDistMoodFuncs()
         self.trickAptitudes = []
         self.avDelayDelete = None
-        self.setBlend(frameBlend = True)
         return
 
     def generate(self):
@@ -51,7 +53,6 @@ class DistributedPet(DistributedSmoothNode.DistributedSmoothNode, Pet.Pet, PetBa
         self.movieTrack = None
         self.traitList = [0] * PetTraits.PetTraits.NumTraits
         self.requiredMoodComponents = {}
-        self.setBlend(frameBlend = True)
         return
 
     def b_setLocation(self, parentId, zoneId):
@@ -269,7 +270,6 @@ class DistributedPet(DistributedSmoothNode.DistributedSmoothNode, Pet.Pet, PetBa
         DistributedSmoothNode.DistributedSmoothNode.disable(self)
 
     def delete(self):
-        self.setBlend(frameBlend = True)
         DistributedPet.notify.debug('delete(), fake=%s' % self.bFake)
         if self.trickIval is not None:
             self.trickIval.finish()

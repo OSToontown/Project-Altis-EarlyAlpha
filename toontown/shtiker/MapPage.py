@@ -3,8 +3,10 @@ from toontown.toonbase import ToontownGlobals
 from direct.showbase import PythonUtil
 from toontown.hood import ZoneUtil
 from direct.gui.DirectGui import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase import TTLocalizer
+from toontown.toontowngui import TTDialog
+from toontown.election import SafezoneInvasionGlobals
 
 class MapPage(ShtikerPage.ShtikerPage):
 
@@ -75,6 +77,7 @@ class MapPage(ShtikerPage.ShtikerPage):
             text=TTLocalizer.MapPageBackToPlayground,
             text_scale=TTLocalizer.MPsafeZoneButton,
             text_pos=(0, -0.02),
+            textMayChange=0,
             command=self.backToSafeZone)
         self.goHomeButton = DirectButton(
             parent=self.map,
@@ -85,6 +88,7 @@ class MapPage(ShtikerPage.ShtikerPage):
             text=TTLocalizer.MapPageGoHome,
             text_scale=TTLocalizer.MPgoHomeButton,
             text_pos=(0, -0.02),
+            textMayChange=0,
             command=self.goHome)
         self.goHomeButton.hide()
         guiButton.removeNode()
@@ -175,7 +179,7 @@ class MapPage(ShtikerPage.ShtikerPage):
                 avatar = base.cr.identifyAvatar(base.cr.playGame.hood.loader.estateOwnerId)
                 if avatar:
                     avName = avatar.getName()
-                    self.hoodLabel['text'] = TTLocalizer.MapPageYouAreAtSomeonesHome % TTLocalizer.GetPossesive(avName)
+                    self.hoodLabel['text'] = TTLocalizer.MapPageYouAreAtSomeonesHome % TTLocalizer.GetPossesive(avName, 'book')
                     self.hoodLabel.show()
         elif zone:
             hoodName = ToontownGlobals.hoodNameMap.get(ZoneUtil.getCanonicalHoodId(zone), ('',))[-1]
@@ -187,12 +191,14 @@ class MapPage(ShtikerPage.ShtikerPage):
                 self.hoodLabel.hide()
         else:
             self.hoodLabel.hide()
-        hoodsVisited = base.localAvatar.hoodsVisited
+        safeZonesVisited = base.localAvatar.hoodsVisited
+        hoodsAvailable = base.cr.hoodMgr.getAvailableZones()
+        hoodVisibleList = PythonUtil.intersection(safeZonesVisited, hoodsAvailable)
         hoodTeleportList = base.localAvatar.getTeleportAccess()
         for hood in self.allZones:
             label = self.labels[self.allZones.index(hood)]
             clouds = self.clouds[self.allZones.index(hood)]
-            if not self.book.safeMode and hood in hoodsVisited:
+            if not self.book.safeMode and hood in hoodVisibleList:
                 label['text_fg'] = (0, 0, 0, 1)
                 label.show()
                 for cloud in clouds:
@@ -218,15 +224,35 @@ class MapPage(ShtikerPage.ShtikerPage):
         messenger.send(self.doneEvent)
 
     def goHome(self):
-        if base.config.GetBool('want-qa-regression', 0):
+        if config.GetBool('want-doomsday', False):
+            self.confirm = TTDialog.TTGlobalDialog(doneEvent='confirmDone', message=SafezoneInvasionGlobals.LeaveToontownCentralAlert, style=TTDialog.Acknowledge)
+            self.confirm.show()
+            self.accept('confirmDone', self.handleConfirm)
+            return
+
+        if config.GetBool('want-qa-regression', 0):
             self.notify.info('QA-REGRESSION: VISITESTATE: Visit estate')
         self.doneStatus = {'mode': 'gohome',
          'hood': base.localAvatar.lastHood}
         messenger.send(self.doneEvent)
 
     def __buttonCallback(self, hood):
-        if hood in base.localAvatar.getTeleportAccess():
+        if config.GetBool('want-doomsday', False):
+            self.confirm = TTDialog.TTGlobalDialog(doneEvent='confirmDone', message=SafezoneInvasionGlobals.LeaveToontownCentralAlert, style=TTDialog.Acknowledge)
+            self.confirm.show()
+            self.accept('confirmDone', self.handleConfirm)
+            return
+
+        if hood in base.localAvatar.getTeleportAccess() and hood in base.cr.hoodMgr.getAvailableZones():
             base.localAvatar.sendUpdate('checkTeleportAccess', [hood])
             self.doneStatus = {'mode': 'teleport',
              'hood': hood}
             messenger.send(self.doneEvent)
+
+    def handleConfirm(self):
+        status = self.confirm.doneStatus
+        self.ignore('confirmDone')
+        self.confirm.cleanup()
+        del self.confirm
+        if status == 'ok':
+            pass

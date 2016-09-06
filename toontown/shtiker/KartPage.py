@@ -1,6 +1,6 @@
 from direct.directnotify import DirectNotifyGlobal
 from direct.gui.DirectGui import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.showbase import PythonUtil
 from direct.task import Task
 from toontown.fishing.FishPhoto import DirectRegion
@@ -10,6 +10,8 @@ from toontown.racing import RaceGlobals
 from toontown.shtiker.ShtikerPage import ShtikerPage
 from toontown.toonbase import ToontownGlobals, TTLocalizer
 from FishPage import FishingTrophy
+if (__debug__):
+    import pdb
 PageMode = PythonUtil.Enum('Customize, Records, Trophy')
 
 class KartPage(ShtikerPage):
@@ -205,7 +207,7 @@ class RacingRecordsUI(DirectFrame):
     def show(self):
         bestTimes = self.avatar.getKartingPersonalBestAll()
         if bestTimes != self.lastTimes:
-            for i in xrange(0, len(bestTimes)):
+            for i in range(0, len(bestTimes)):
                 time = bestTimes[i]
                 if time != 0.0:
                     whole, part = divmod(time, 1)
@@ -247,8 +249,8 @@ class RacingTrophiesUI(DirectFrame):
         yStart = 0.475
         xOffset = 0.17
         yOffset = 0.23
-        for j in xrange(RaceGlobals.NumCups):
-            for i in xrange(RaceGlobals.TrophiesPerCup):
+        for j in range(RaceGlobals.NumCups):
+            for i in range(RaceGlobals.TrophiesPerCup):
                 trophyPanel = DirectLabel(parent=self, relief=None, pos=(xStart + i * xOffset, 0.0, yStart - j * yOffset), state=DGG.NORMAL, image=DGG.getDefaultDialogGeom(), image_scale=(0.75, 1, 1), image_color=(0.8, 0.8, 0.8, 1), text=TTLocalizer.SuitPageMystery[0], text_scale=0.45, text_fg=(0, 0, 0, 1), text_pos=(0, 0, -0.25), text_font=ToontownGlobals.getInterfaceFont(), text_wordwrap=5.5)
                 trophyPanel.scale = 0.2
                 trophyPanel.setScale(trophyPanel.scale)
@@ -257,7 +259,7 @@ class RacingTrophiesUI(DirectFrame):
         xStart = -0.25
         yStart = -0.38
         xOffset = 0.25
-        for i in xrange(RaceGlobals.NumCups):
+        for i in range(RaceGlobals.NumCups):
             cupPanel = DirectLabel(parent=self, relief=None, pos=(xStart + i * xOffset, 0.0, yStart), state=DGG.NORMAL, image=DGG.getDefaultDialogGeom(), image_scale=(0.75, 1, 1), image_color=(0.8, 0.8, 0.8, 1), text=TTLocalizer.SuitPageMystery[0], text_scale=0.45, text_fg=(0, 0, 0, 1), text_pos=(0, 0, -0.25), text_font=ToontownGlobals.getInterfaceFont(), text_wordwrap=5.5)
             cupPanel.scale = 0.3
             cupPanel.setScale(cupPanel.scale)
@@ -284,7 +286,7 @@ class RacingTrophiesUI(DirectFrame):
         DirectFrame.show(self)
 
     def updateTrophies(self):
-        for t in xrange(len(self.trophyPanels)):
+        for t in range(len(self.trophyPanels)):
             if self.trophies[t]:
                 trophyPanel = self.trophyPanels[t]
                 trophyPanel['text'] = ''

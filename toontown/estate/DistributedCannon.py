@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from toontown.toonbase import ToontownGlobals
 from direct.distributed.ClockDelta import *
@@ -16,15 +16,11 @@ from toontown.effects import DustCloud
 from toontown.minigame import CannonGameGlobals
 import CannonGlobals
 from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 from toontown.toonbase import TTLocalizer
 from direct.distributed import DistributedObject
 from toontown.effects import Wake
 from direct.controls.ControlManager import CollisionHandlerRayStart
-from direct.distributed import DistributedObject
-
-from otp.nametag.NametagFloat3d import NametagFloat3d
-from otp.nametag.Nametag import Nametag
-
 LAND_TIME = 2
 WORLD_SCALE = 2.0
 GROUND_SCALE = 1.4 * WORLD_SCALE
@@ -62,11 +58,11 @@ class DistributedCannon(DistributedObject.DistributedObject):
     HIT_GROUND = 0
     HIT_TOWER = 1
     HIT_WATER = 2
-    FIRE_KEY = base.JUMP
-    UP_KEY = base.MOVE_UP
-    DOWN_KEY = base.MOVE_DOWN
-    LEFT_KEY = base.MOVE_LEFT
-    RIGHT_KEY = base.MOVE_RIGHT
+    FIRE_KEY = 'control'
+    UP_KEY = 'arrow_up'
+    DOWN_KEY = 'arrow_down'
+    LEFT_KEY = 'arrow_left'
+    RIGHT_KEY = 'arrow_right'
     BUMPER_KEY = 'delete'
     BUMPER_KEY2 = 'insert'
     INTRO_TASK_NAME = 'CannonGameIntro'
@@ -267,7 +263,7 @@ class DistributedCannon(DistributedObject.DistributedObject):
                 self.curPinballScore = 0
                 self.curPinballMultiplier = 1
                 self.incrementPinballInfo(0, 0)
-            if self.avId in self.cr.doId2do:
+            if self.cr.doId2do.has_key(self.avId):
                 self.av = self.cr.doId2do[self.avId]
                 self.acceptOnce(self.av.uniqueName('disable'), self.__avatarGone)
                 self.av.stopSmooth()
@@ -471,7 +467,7 @@ class DistributedCannon(DistributedObject.DistributedObject):
         tag.setBillboardOffset(0)
         tag.setAvatar(self.toonHead)
         toon.nametag.addNametag(tag)
-        tagPath = self.toonHead.attachNewNode(tag)
+        tagPath = self.toonHead.attachNewNode(tag.upcastToPandaNode())
         tagPath.setPos(0, 0, 1)
         self.toonHead.tag = tag
         self.__loadToonInCannon()
@@ -865,6 +861,7 @@ class DistributedCannon(DistributedObject.DistributedObject):
 
     def removeAvFromCannon(self):
         place = base.cr.playGame.getPlace()
+        print 'removeAvFromCannon'
         self.notify.debug('self.inWater = %s' % self.inWater)
         if place:
             if not hasattr(place, 'fsm'):
@@ -1239,7 +1236,7 @@ class DistributedCannon(DistributedObject.DistributedObject):
     def __calcHitTreasures(self, trajectory):
         estate = self.cr.doId2do.get(self.estateId)
         self.hitTreasures = []
-        '''if estate:
+        if estate:
             doIds = estate.flyingTreasureId
             for id in doIds:
                 t = self.cr.doId2do.get(id)
@@ -1251,7 +1248,7 @@ class DistributedCannon(DistributedObject.DistributedObject):
                     if t_impact > 0:
                         self.hitTreasures.append([t_impact, t])
 
-        del estate'''
+        del estate
         return None
 
     def __shootTask(self, task):
@@ -1510,7 +1507,7 @@ class DistributedCannon(DistributedObject.DistributedObject):
          (0, 1, 5, 4),
          (0, 4, 7, 3),
          (1, 2, 6, 5)]
-        for i in xrange(len(vertices)):
+        for i in range(len(vertices)):
             vertex = vertices[i]
             vertexWriter.addData3f(vertex[0], vertex[1], vertex[2])
             colorWriter.addData4f(*colors[i])
@@ -1579,4 +1576,4 @@ class DistributedCannon(DistributedObject.DistributedObject):
 
     def turnOnBumperCollision(self, whatever = 0):
         if self.bumperCol:
-            self.bumperCol.setCollideMask(ToontownGlobals.WallBitmask)
+            self.bumperCol.setCollideMask(ToontownGlobals.WallBitmask)# decompiled 0 files: 0 okay, 1 failed, 0 verify failed

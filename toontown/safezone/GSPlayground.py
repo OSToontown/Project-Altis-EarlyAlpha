@@ -1,6 +1,7 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase import ToontownGlobals
 import Playground
+from toontown.launcher import DownloadForceAcknowledge
 from toontown.building import Elevator
 from toontown.toontowngui import TTDialog
 from toontown.toonbase import TTLocalizer
@@ -42,6 +43,18 @@ class GSPlayground(Playground.Playground):
         Playground.Playground.exit(self)
         self.rotateBlimp.finish()
 
+    def doRequestLeave(self, requestStatus):
+        self.fsm.request('trialerFA', [requestStatus])
+
+    def enterDFA(self, requestStatus):
+        doneEvent = 'dfaDoneEvent'
+        self.accept(doneEvent, self.enterDFACallback, [requestStatus])
+        self.dfa = DownloadForceAcknowledge.DownloadForceAcknowledge(doneEvent)
+        if requestStatus['hoodId'] == ToontownGlobals.MyEstate:
+            self.dfa.enter(base.cr.hoodMgr.getPhaseFromHood(ToontownGlobals.MyEstate))
+        else:
+            self.dfa.enter(5)
+
     def enterTeleportIn(self, requestStatus):
         reason = requestStatus.get('reason')
         if reason == RaceGlobals.Exit_Barrier:
@@ -64,6 +77,8 @@ class GSPlayground(Playground.Playground):
         return
 
     def enterStartingBlock(self, distStartingBlock):
+        import pdb
+        pdb.set_trace()
         self.accept(self.startingBlockDoneEvent, self.handleStartingBlockDone)
         self.startingBlock = Elevator.Elevator(self.fsm.getStateNamed('startingBlock'), self.startingBlockDoneEvent, distStartingBlock)
         distStartingBlock.elevatorFSM = self.startingBlock
@@ -77,6 +92,8 @@ class GSPlayground(Playground.Playground):
         del self.startingBlock
 
     def detectedStartingBlockCollision(self, distStartingBlock):
+        import pdb
+        pdb.set_trace()
         self.fsm.request('startingBlock', [distStartingBlock])
 
     def handleStartingBlockDone(self, doneStatus):
@@ -87,7 +104,13 @@ class GSPlayground(Playground.Playground):
         elif where == 'exit':
             self.fsm.request('walk')
         elif where == 'racetrack':
+            print 'Entering Racetrack'
             self.doneStatus = doneStatus
             messenger.send(self.doneEvent)
         else:
             self.notify.error('Unknown mode: ' + where + ' in handleStartingBlockDone')
+
+    def showPaths(self):
+        from toontown.classicchars import CCharPaths
+        from toontown.toonbase import TTLocalizer
+        self.showPathPoints(CCharPaths.getPaths(TTLocalizer.Goofy, 1))

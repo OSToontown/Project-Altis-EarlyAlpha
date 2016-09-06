@@ -1,5 +1,5 @@
 from direct.gui.DirectGui import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.gui.DirectScrolledList import *
 from toontown.toonbase import ToontownGlobals
 import FireworkItemPanel
@@ -81,7 +81,7 @@ class FireworksGui(DirectFrame):
 
     def __handleColor(self, index):
         color = Fireworks.colors[index]
-        for i in xrange(len(self.colorButtons)):
+        for i in range(len(self.colorButtons)):
             self.colorButtons[i][1]['geom_color'] = self.bgColor
             self.colorButtons[i][1].setScale(1)
 

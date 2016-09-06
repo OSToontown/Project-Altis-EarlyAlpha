@@ -45,7 +45,7 @@ class CogdoMazeGameIntro(CogdoGameMovie):
         suit.setStyle(dna)
         suit.isDisguised = 1
         suit.generateSuit()
-        suit.setScale(1.05, 1.05, 2.05)
+        suit.setScale(1, 1, 2)
         suit.setPos(0, 0, -4.4)
         suit.reparentTo(self.toonHead)
         for part in suit.getHeadParts():
@@ -75,7 +75,6 @@ class CogdoMazeGameIntro(CogdoGameMovie):
         self.cogHead.loop('neutral')
         self.cogHead.setPosHprScale(-0.73, 0, -1.46, 180, 0, 0, 0.14, 0.14, 0.14)
         self.cogHead.reparentTo(hidden)
-        self.cogHead.nametag3d.hide()
         self.clipPlane = self.toonHead.attachNewNode(PlaneNode('clip'))
         self.clipPlane.node().setPlane(Plane(0, 0, 1, 0))
         self.clipPlane.setPos(0, 0, 2.45)
@@ -87,8 +86,6 @@ class CogdoMazeGameIntro(CogdoGameMovie):
         d = SuitDNA.SuitDNA()
         d.newSuit(suitData['dnaName'])
         bossSuit.setDNA(d)
-        bossSuit.nametag3d.stash()
-        bossSuit.nametag.destroy()
         bossSuit.setScale(suitData['scale'])
         bossSuit.loop('neutral')
         bossSuit.reparentTo(render)

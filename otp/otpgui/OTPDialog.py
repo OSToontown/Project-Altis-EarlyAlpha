@@ -12,8 +12,8 @@ TwoChoiceCustom = 5
 
 class OTPDialog(DirectDialog):
 
-    def __init__(self, parent=None, style=NoButtons, **kw):
-        if parent is None:
+    def __init__(self, parent = None, style = NoButtons, **kw):
+        if parent == None:
             parent = aspect2d
         self.style = style
         buttons = None
@@ -69,13 +69,11 @@ class OTPDialog(DirectDialog):
          ('button_relief', None, None),
          ('button_text_pos', (0, -0.1), None),
          ('fadeScreen', 0.5, None),
-         ('image_color', OTPGlobals.GlobalDialogColor, None),
-         ('image', DGG.getDefaultDialogGeom(), None),
-         ('relief', None, None))
+         ('image_color', OTPGlobals.GlobalDialogColor, None))
         self.defineoptions(kw, optiondefs)
         DirectDialog.__init__(self, parent)
         self.initialiseoptions(OTPDialog)
-        if buttons is not None:
+        if buttons != None:
             buttons.removeNode()
         return
 
@@ -83,12 +81,10 @@ class OTPDialog(DirectDialog):
 class GlobalDialog(OTPDialog):
     notify = DirectNotifyGlobal.directNotify.newCategory('GlobalDialog')
 
-    def __init__(self, message='', doneEvent=None, style=NoButtons, okButtonText=OTPLocalizer.DialogOK,
-                 cancelButtonText=OTPLocalizer.DialogCancel, **kw):
-
+    def __init__(self, message = '', doneEvent = None, style = NoButtons, okButtonText = OTPLocalizer.DialogOK, cancelButtonText = OTPLocalizer.DialogCancel, **kw):
         if not hasattr(self, 'path'):
             self.path = 'phase_3/models/gui/dialog_box_buttons_gui'
-        if doneEvent is None and style != NoButtons:
+        if doneEvent == None and style != NoButtons:
             self.notify.error('Boxes with buttons must specify a doneEvent.')
         self.__doneEvent = doneEvent
         if style == NoButtons:
@@ -99,12 +95,10 @@ class GlobalDialog(OTPDialog):
             buttonText = [cancelButtonText]
         else:
             buttonText = [okButtonText, cancelButtonText]
-        optiondefs = (
-            ('dialogName', 'globalDialog', DGG.INITOPT),
-            ('buttonTextList', buttonText, DGG.INITOPT),
-            ('text', message, None),
-            ('command', self.handleButton, None)
-        )
+        optiondefs = (('dialogName', 'globalDialog', DGG.INITOPT),
+         ('buttonTextList', buttonText, DGG.INITOPT),
+         ('text', message, None),
+         ('command', self.handleButton, None))
         self.defineoptions(kw, optiondefs)
         OTPDialog.__init__(self, style=style)
         self.initialiseoptions(GlobalDialog)

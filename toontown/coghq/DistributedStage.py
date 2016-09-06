@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.distributed.ClockDelta import *
 from direct.distributed import DistributedObject
 from direct.directnotify import DirectNotifyGlobal
@@ -76,9 +76,8 @@ class DistributedStage(DistributedObject.DistributedObject):
 
     def gotAllRooms(self):
         self.notify.debug('stage %s: got all rooms' % self.doId)
-        if self.roomWatcher:
-            self.roomWatcher.destroy()
-            self.roomWatcher = None
+        self.roomWatcher.destroy()
+        self.roomWatcher = None
         self.geom = render.attachNewNode('stage%s' % self.doId)
         for doId in self.roomDoIds:
             self.rooms.append(base.cr.doId2do[doId])
@@ -301,6 +300,6 @@ class DistributedStage(DistributedObject.DistributedObject):
             self.titleText.setText('')
 
     def elevatorAlert(self, avId):
-        if base.localAvatar.doId != avId and avId in base.cr.doId2do:
+        if base.localAvatar.doId != avId:
             name = base.cr.doId2do[avId].getName()
-            self.showInfoText(TTLocalizer.StageToonEnterElevator % name)
+            self.showInfoText(TTLocalizer.stageToonEnterElevator % name)

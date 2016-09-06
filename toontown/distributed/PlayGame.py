@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.fsm import StateData
@@ -12,8 +12,8 @@ from toontown.hood import DDHood
 from toontown.hood import MMHood
 from toontown.hood import BRHood
 from toontown.hood import DGHood
-from toontown.hood import FFHood
 from toontown.hood import DLHood
+from toontown.hood import TFHood
 from toontown.hood import GSHood
 from toontown.hood import OZHood
 from toontown.hood import GZHood
@@ -26,7 +26,7 @@ from toontown.hood import EstateHood
 from toontown.hood import PartyHood
 from toontown.toonbase import TTLocalizer
 from toontown.parties.PartyGlobals import GoToPartyStatus
-from toontown.dna.DNAParser import *
+from toontown.dna.DNAStorage import DNAStorage
 
 class PlayGame(StateData.StateData):
     notify = DirectNotifyGlobal.directNotify.newCategory('PlayGame')
@@ -36,7 +36,7 @@ class PlayGame(StateData.StateData):
      ToontownGlobals.MinniesMelodyland: MMHood.MMHood,
      ToontownGlobals.DaisyGardens: DGHood.DGHood,
      ToontownGlobals.DonaldsDreamland: DLHood.DLHood,
-     ToontownGlobals.FunnyFarm: FFHood.FFHood,
+     ToontownGlobals.FunnyFarm: TFHood.TFHood,
      ToontownGlobals.GoofySpeedway: GSHood.GSHood,
      ToontownGlobals.OutdoorZone: OZHood.OZHood,
      ToontownGlobals.Tutorial: TutorialHood.TutorialHood,
@@ -53,7 +53,7 @@ class PlayGame(StateData.StateData):
      ToontownGlobals.MinniesMelodyland: 'MMHood',
      ToontownGlobals.DaisyGardens: 'DGHood',
      ToontownGlobals.DonaldsDreamland: 'DLHood',
-     ToontownGlobals.FunnyFarm: 'FFHood',
+     ToontownGlobals.FunnyFarm: 'TFHood',                
      ToontownGlobals.GoofySpeedway: 'GSHood',
      ToontownGlobals.OutdoorZone: 'OZHood',
      ToontownGlobals.Tutorial: 'TutorialHood',
@@ -75,6 +75,7 @@ class PlayGame(StateData.StateData):
           'MMHood',
           'DGHood',
           'DLHood',
+          'TFHood',
           'GSHood',
           'OZHood',
           'GZHood',
@@ -91,6 +92,7 @@ class PlayGame(StateData.StateData):
          State.State('MMHood', self.enterMMHood, self.exitMMHood, ['quietZone']),
          State.State('DGHood', self.enterDGHood, self.exitDGHood, ['quietZone']),
          State.State('DLHood', self.enterDLHood, self.exitDLHood, ['quietZone']),
+         State.State('TFHood', self.enterTFHood, self.exitTFHood, ['quietZone']),                                                      
          State.State('GSHood', self.enterGSHood, self.exitGSHood, ['quietZone']),
          State.State('OZHood', self.enterOZHood, self.exitOZHood, ['quietZone']),
          State.State('GZHood', self.enterGZHood, self.exitGZHood, ['quietZone']),
@@ -108,6 +110,7 @@ class PlayGame(StateData.StateData):
         self.hood = None
         self.quietZoneDoneEvent = uniqueName('quietZoneDone')
         self.quietZoneStateData = None
+        self.dnaData = None
         return
 
     def enter(self, hoodId, zoneId, avId):
@@ -145,22 +148,27 @@ class PlayGame(StateData.StateData):
 
     def loadDnaStoreTutorial(self):
         self.dnaStore = DNAStorage()
-        files = ('phase_3.5/dna/storage_tutorial.pdna', 'phase_3.5/dna/storage_interior.pdna')
-        dnaBulk = DNABulkLoader(self.dnaStore, files)
-        dnaBulk.loadDNAFiles()
+
+        tree = loader.loadDNA('phase_3.5/dna/storage_tutorial.xml').store(self.dnaStore)
+
+        tree = loader.loadDNA('phase_3.5/dna/storage_interior.xml').store(self.dnaStore)
 
     def loadDnaStore(self):
         if not hasattr(self, 'dnaStore'):
             self.dnaStore = DNAStorage()
-            files = ('phase_4/dna/storage.pdna', 'phase_3.5/dna/storage_interior.pdna')
-            dnaBulk = DNABulkLoader(self.dnaStore, files)
-            dnaBulk.loadDNAFiles()
-            self.dnaStore.storeFont('humanist', ToontownGlobals.getInterfaceFont())
-            self.dnaStore.storeFont('mickey', ToontownGlobals.getSignFont())
-            self.dnaStore.storeFont('suit', ToontownGlobals.getSuitFont())
+
+            loader.loadDNA('phase_4/dna/storage.xml').store(self.dnaStore)
+
+            self.dnaStore.storeFont(ToontownGlobals.getInterfaceFont(), 'humanist')
+            self.dnaStore.storeFont(ToontownGlobals.getSignFont(), 'mickey')
+            self.dnaStore.storeFont(ToontownGlobals.getSuitFont(), 'suit')
+
+            loader.loadDNA('phase_3.5/dna/storage_interior.xml').store(self.dnaStore)
 
     def unloadDnaStore(self):
         if hasattr(self, 'dnaStore'):
+            #self.dnaStore.resetNodes()
+            #self.dnaStore.resetTextures()
             del self.dnaStore
             ModelPool.garbageCollect()
             TexturePool.garbageCollect()
@@ -172,7 +180,7 @@ class PlayGame(StateData.StateData):
             self.hood.exit()
             self.hood.unload()
             self.hood = None
-        base.cr.cache.flush()
+        return
 
     def enterStart(self):
         pass
@@ -195,14 +203,20 @@ class PlayGame(StateData.StateData):
         if how in ['tunnelIn',
          'teleportIn',
          'doorIn',
-         'elevatorIn']:
+         'elevatorIn',
+         'walk']:
             self.fsm.request('quietZone', [doneStatus])
         else:
             self.notify.error('Exited hood with unexpected mode %s' % how)
         return
 
     def _destroyHood(self):
-        self.unload()
+        self.ignore(self.hoodDoneEvent)
+        self.hood.exit()
+        self.hood.unload()
+        self.hood = None
+        base.cr.cache.flush()
+        return
 
     def enterQuietZone(self, requestStatus):
         self.acceptOnce(self.quietZoneDoneEvent, self.handleQuietZoneDone)
@@ -231,10 +245,11 @@ class PlayGame(StateData.StateData):
         toHoodPhrase = ToontownGlobals.hoodNameMap[canonicalHoodId][0]
         hoodName = ToontownGlobals.hoodNameMap[canonicalHoodId][-1]
         zoneId = requestStatus['zoneId']
+        requestStatus['loader'] = 'cogHQLoader' if ZoneUtil.isCogHQZone(hoodId) else requestStatus['loader']
         loaderName = requestStatus['loader']
         avId = requestStatus.get('avId', -1)
         ownerId = requestStatus.get('ownerId', avId)
-        if base.config.GetBool('want-qa-regression', 0):
+        if config.GetBool('want-qa-regression', 0):
             self.notify.info('QA-REGRESSION: NEIGHBORHOODS: Visit %s' % hoodName)
         count = ToontownGlobals.hoodCountMap[canonicalHoodId]
         if loaderName == 'safeZoneLoader':
@@ -244,34 +259,33 @@ class PlayGame(StateData.StateData):
         if not loader.inBulkBlock:
             if hoodId == ToontownGlobals.MyEstate:
                 if avId == -1:
-                    loader.beginBulkLoad('hood', TTLocalizer.HeadingToYourEstate, count, 1, TTLocalizer.TIP_ESTATE, zoneId)
+                    loader.beginBulkLoad('hood', TTLocalizer.HeadingToYourEstate, count, 1, TTLocalizer.TIP_ESTATE)
                 else:
                     owner = base.cr.identifyAvatar(ownerId)
                     if owner == None:
                         friend = base.cr.identifyAvatar(avId)
                         if friend != None:
                             avName = friend.getName()
-                            loader.beginBulkLoad('hood', TTLocalizer.HeadingToFriend % avName, count, 1, TTLocalizer.TIP_ESTATE, zoneId)
+                            loader.beginBulkLoad('hood', TTLocalizer.HeadingToFriend % avName, count, 1, TTLocalizer.TIP_ESTATE)
                         else:
                             self.notify.warning("we can't perform this teleport")
                             return
                     else:
                         avName = owner.getName()
-                        loader.beginBulkLoad('hood', TTLocalizer.HeadingToEstate % avName, count, 1, TTLocalizer.TIP_ESTATE, zoneId)
+                        loader.beginBulkLoad('hood', TTLocalizer.HeadingToEstate % avName, count, 1, TTLocalizer.TIP_ESTATE)
             elif ZoneUtil.isCogHQZone(zoneId):
                 loader.beginBulkLoad('hood', TTLocalizer.HeadingToHood % {'to': toHoodPhrase,
-                 'hood': hoodName}, count, 1, TTLocalizer.TIP_COGHQ, zoneId)
+                 'hood': hoodName}, count, 1, TTLocalizer.TIP_COGHQ)
             elif ZoneUtil.isGoofySpeedwayZone(zoneId):
                 loader.beginBulkLoad('hood', TTLocalizer.HeadingToHood % {'to': toHoodPhrase,
-                 'hood': hoodName}, count, 1, TTLocalizer.TIP_KARTING, zoneId)
+                 'hood': hoodName}, count, 1, TTLocalizer.TIP_KARTING)
             else:
                 loader.beginBulkLoad('hood', TTLocalizer.HeadingToHood % {'to': toHoodPhrase,
-                 'hood': hoodName}, count, 1, TTLocalizer.TIP_GENERAL, zoneId)
+                 'hood': hoodName}, count, 1, TTLocalizer.TIP_GENERAL)
         if hoodId == ToontownGlobals.Tutorial:
             self.loadDnaStoreTutorial()
         else:
-            if not hasattr(self, 'dnaStore'):
-                self.loadDnaStore()
+            self.loadDnaStore()
         hoodClass = self.getHoodClassByNumber(canonicalHoodId)
         self.hood = hoodClass(self.fsm, self.hoodDoneEvent, self.dnaStore, hoodId)
         self.hood.load()
@@ -338,6 +352,13 @@ class PlayGame(StateData.StateData):
     def exitDLHood(self):
         self._destroyHood()
 
+    def enterTFHood(self, requestStatus):
+        self.accept(self.hoodDoneEvent, self.handleHoodDone)
+        self.hood.enter(requestStatus)
+
+    def exitTFHood(self):
+        self._destroyHood()
+
     def enterGSHood(self, requestStatus):
         self.accept(self.hoodDoneEvent, self.handleHoodDone)
         self.hood.enter(requestStatus)
@@ -396,6 +417,9 @@ class PlayGame(StateData.StateData):
         base.localAvatar.chatMgr.obscure(1, 1)
         base.localAvatar.obscureFriendsListButton(1)
         requestStatus['how'] = 'tutorial'
+        if config.GetString('language', 'english') == 'japanese':
+            musicVolume = config.GetFloat('tutorial-music-volume', 0.5)
+            requestStatus['musicVolume'] = musicVolume
         self.hood.enter(requestStatus)
 
     def exitTutorialHood(self):
@@ -519,7 +543,7 @@ class PlayGame(StateData.StateData):
     def getCatalogCodes(self, category):
         numCodes = self.dnaStore.getNumCatalogCodes(category)
         codes = []
-        for i in xrange(numCodes):
+        for i in range(numCodes):
             codes.append(self.dnaStore.getCatalogCode(category, i))
 
         return codes
@@ -557,4 +581,8 @@ class PlayGame(StateData.StateData):
         return self.place
 
     def getPlaceId(self):
-        return self.hood.hoodId if self.hood else None
+        if self.hood:
+            return self.hood.hoodId
+        else:
+            return None
+        return None

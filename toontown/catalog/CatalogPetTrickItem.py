@@ -17,7 +17,8 @@ class CatalogPetTrickItem(CatalogItem.CatalogItem):
         return 1
 
     def reachedPurchaseLimit(self, avatar):
-        if self in avatar.onOrder or self in avatar.mailboxContents or self in avatar.onGiftOrder or not hasattr(avatar, 'petTrickPhrases'):
+        return 1 # until we have pets
+        if self in avatar.onOrder or self in avatar.mailboxContents or self in avatar.onGiftOrder or self in avatar.awardMailboxContents or self in avatar.onAwardOrder:
             return 1
         return self.trickId in avatar.petTrickPhrases
 
@@ -44,13 +45,13 @@ class CatalogPetTrickItem(CatalogItem.CatalogItem):
     def getPicture(self, avatar):
         from toontown.pets import PetDNA, Pet
         pet = Pet.Pet(forGui=1)
-        dna = avatar.getPetDNA()
-        if dna == None:
-            dna = PetDNA.getRandomPetDNA()
+        #dna = avatar.petDNA
+        i#f dna == None:
+        dna = PetDNA.getRandomPetDNA() # another temphack
         pet.setDNA(dna)
         pet.setH(180)
-        pet.setScale(1.25)
         model, ival = self.makeFrameModel(pet, 0)
+        pet.setScale(2.0)
         pet.setP(-40)
         track = PetTricks.getTrickIval(pet, self.trickId)
         name = 'petTrick-item-%s' % self.sequenceNumber

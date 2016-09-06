@@ -1,7 +1,9 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 from direct.showbase import DirectObject
 import ToonHead
+from toontown.friends import FriendHandle
 import LaffMeter
 from otp.avatar import Avatar
 from direct.distributed import DistributedObject
@@ -17,7 +19,7 @@ from otp.otpbase import OTPGlobals
 class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('ToonAvatarPanel')
 
-    def __init__(self, avatar):
+    def __init__(self, avatar, playerId = None):
         from toontown.friends import FriendsListPanel
 
         if base.cr.doId2do.get(avatar.getDoId()):
@@ -25,6 +27,18 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
         AvatarPanelBase.AvatarPanelBase.__init__(self, avatar, FriendsListPanel=FriendsListPanel)
 
         self.notify.debug('Opening toon panel, avId=%d' % self.avId)
+        self.playerId = playerId
+
+        if not self.playerId:
+            av = base.cr.doId2do.get(self.avId)
+            if av:
+                self.playerId = avatar.DISLid
+            else:
+                self.playerId = 0
+
+        self.playerInfo = None
+        if self.playerId:
+            self.playerInfo = base.cr.playerFriendsManager.playerId2Info.get(playerId)
 
         self.laffMeter = None
         wantsLaffMeter = hasattr(avatar, 'hp')
@@ -42,7 +56,6 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
                                  relief=None,
                                  pos=(-0.22, 0, -0.47),
                                  parent=base.a2dTopRight)
-
         self.disabledImageColor = Vec4(1, 1, 1, 0.4)
         self.text0Color = Vec4(1, 1, 1, 1)
         self.text1Color = Vec4(0.5, 1, 0.5, 1)
@@ -68,17 +81,19 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
 
         self.healthText.hide()
 
+
         self.nameLabel = DirectLabel(
             parent=self.frame,
             pos=(0.0125, 0, 0.4),
             relief=None,
             text=self.avName,
-            text_font=avatar.getFont(),
+            text_font=ToontownGlobals.getInterfaceFont(),
             text_fg=Vec4(0, 0, 0, 1),
             text_pos=(0, 0),
             text_scale=0.042,
             text_wordwrap=7.5,
             text_shadow=(1, 1, 1, 1))
+
 
         self.closeButton = DirectButton(
             parent=self.frame,
@@ -90,6 +105,7 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
             relief=None,
             pos=(0.157644, 0, -0.379167),
             command=self.__handleClose)
+
 
         self.friendButton = DirectButton(
             parent=self.frame,
@@ -112,6 +128,15 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
             text_align=TextNode.ALeft,
             command=self.__handleFriend)
 
+
+
+        if base.cr.playerFriendsManager.askTransientFriend(self.avId) and not base.cr.doId2do.has_key(self.avId):
+            self.friendButton['state'] = DGG.DISABLED
+
+
+        if base.cr.avatarFriendsManager.checkIgnored(self.avId):
+            self.friendButton['state'] = DGG.DISABLED
+
         self.goToButton = DirectButton(
             parent=self.frame,
             image=(
@@ -132,6 +157,11 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
             text_pos=(0.06, -0.015),
             text_align=TextNode.ALeft,
             command=self.__handleGoto)
+
+
+
+        if base.cr.avatarFriendsManager.checkIgnored(self.avId):
+            self.goToButton['state'] = DGG.DISABLED
 
         self.whisperButton = DirectButton(
             parent=self.frame,
@@ -154,7 +184,12 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
             text_align=TextNode.ALeft,
             command=self.__handleWhisper)
 
-        self.trueFriendsButton = DirectButton(
+
+
+        if base.cr.avatarFriendsManager.checkIgnored(self.avId):
+            self.whisperButton['state'] = DGG.DISABLED
+
+        self.secretsButton = DirectButton(
             parent=self.frame,
             image=(
                 gui.find('**/Amuse_Btn_UP'),
@@ -165,15 +200,26 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
             image_scale=0.9,
             relief=None,
             pos=(-0.103, 0, -0.13),
-            text=TTLocalizer.AvatarPanelTrueFriends,
+            text=TTLocalizer.AvatarPanelSecrets,
             text0_fg=self.text0Color,
             text1_fg=self.text1Color,
             text2_fg=self.text2Color,
             text3_fg=self.text3Color,
-            text_scale=TTLocalizer.TAPtruefriendsButton,
+            text_scale=TTLocalizer.TAPsecretsButton,
             text_pos=(0.055, -0.01),
             text_align=TextNode.ALeft,
-            command=self.__handleTrueFriends)
+            command=self.__handleSecrets)
+
+
+
+        if base.cr.avatarFriendsManager.checkIgnored(self.avId):
+            self.secretsButton['state'] = DGG.DISABLED
+
+
+        from toontown.coghq import CogHQBossBattle
+        if isinstance(base.cr.playGame.getPlace(), CogHQBossBattle.CogHQBossBattle) and \
+                base.localAvatar.getGameAccess() != OTPGlobals.AccessFull:
+            self.secretsButton['state'] = DGG.DISABLED
 
         ignoreStr, ignoreCmd, ignoreScale = self.getIgnoreButtonInfo()
 
@@ -197,35 +243,30 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
             text_pos=(0.06, -0.015),
             text_align=TextNode.ALeft,
             command=ignoreCmd)
-        self.reportButton = DirectButton(
-            parent=self.frame,
-            image=(
-                gui.find('**/report_BtnUP'),
-                gui.find('**/report_BtnDN'),
-                gui.find('**/report_BtnRLVR'),
-                gui.find('**/report_BtnUP')),
-            image3_color=self.disabledImageColor,
-            image_scale=0.65,
-            relief=None,
-            pos=(-0.103, 0, -0.29738),
-            text=TTLocalizer.AvatarPanelReport,
-            text0_fg=self.text0Color,
-            text1_fg=self.text1Color,
-            text2_fg=self.text2Color,
-            text3_fg=self.text3Color,
-            text_scale=0.06,
-            text_pos=(0.06, -0.015),
-            text_align=TextNode.ALeft,
-            command=self.handleReport)
 
-        if avatar.isAdmin():
-            self.ignoreButton['state'] = DGG.DISABLED
-            self.reportButton['state'] = DGG.DISABLED
-        elif base.localAvatar.isIgnored(self.avId):
-            self.friendButton['state'] = DGG.DISABLED
-            self.goToButton['state'] = DGG.DISABLED
-            self.whisperButton['state'] = DGG.DISABLED
-            self.trueFriendsButton['state'] = DGG.DISABLED
+
+        if base.cr.productName not in ['JP', 'DE', 'BR', 'FR']:
+            self.reportButton = DirectButton(
+                parent=self.frame,
+                image=(
+                    gui.find('**/report_BtnUP'),
+                    gui.find('**/report_BtnDN'),
+                    gui.find('**/report_BtnRLVR'),
+                    gui.find('**/report_BtnUP')),
+                image3_color=self.disabledImageColor,
+                image_scale=0.65,
+                relief=None,
+                pos=(-0.103, 0, -0.29738),
+                text=TTLocalizer.AvatarPanelReport,
+                text0_fg=self.text0Color,
+                text1_fg=self.text1Color,
+                text2_fg=self.text2Color,
+                text3_fg=self.text3Color,
+                text_scale=0.06,
+                text_pos=(0.06, -0.015),
+                text_align=TextNode.ALeft,
+                command=self.handleReport)
+
 
         if not base.localAvatar.isTeleportAllowed():
             self.goToButton['state'] = DGG.DISABLED
@@ -275,14 +316,20 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
         self.accept('updateGroupStatus', self.__checkGroupStatus)
 
         self.frame.show()
+        base.hideFriendMargins() 
         messenger.send('avPanelDone')
 
     def disableAll(self):
         self.detailButton['state'] = DGG.DISABLED
-        self.reportButton['state'] = DGG.DISABLED
+        if base.cr.productName not in ['ES',
+         'JP',
+         'DE',
+         'BR',
+         'FR']:
+            self.reportButton['state'] = DGG.DISABLED
         self.ignoreButton['state'] = DGG.DISABLED
         self.goToButton['state'] = DGG.DISABLED
-        self.trueFriendsButton['state'] = DGG.DISABLED
+        self.secretsButton['state'] = DGG.DISABLED
         self.whisperButton['state'] = DGG.DISABLED
         self.petButton['state'] = DGG.DISABLED
         self.friendButton['state'] = DGG.DISABLED
@@ -352,11 +399,12 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
             messenger.send('clickedNametag', [avatar])
 
     def __handleWhisper(self):
-        base.localAvatar.chatMgr.whisperTo(self.avName, self.avId)
+        base.localAvatar.chatMgr.whisperTo(self.avName, self.avId, None)
+        return
 
-    def __handleTrueFriends(self):
+    def __handleSecrets(self):
         base.localAvatar.chatMgr.noWhisper()
-        ToontownFriendSecret.showFriendSecret()
+        ToontownFriendSecret.showFriendSecret(ToontownFriendSecret.AvatarSecret)
 
     def __handleFriend(self):
         base.localAvatar.chatMgr.noWhisper()
@@ -364,7 +412,7 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
 
     def __handleDetails(self):
         base.localAvatar.chatMgr.noWhisper()
-        messenger.send('avatarDetails', [self.avId, self.avName])
+        messenger.send('avatarDetails', [self.avId, self.avName, self.playerId])
 
     def __handleDisableAvatar(self):
         if not base.cr.isFriend(self.avId):
@@ -407,15 +455,23 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
 
     def __handleClose(self):
         self.cleanup()
+        base.showFriendMargins()
         AvatarPanelBase.currentAvatarPanel = None
         if self.friendsListShown:
             self.FriendsListPanel.showFriendsList()
+        else:
+            base.showFriendMargins()
         return
 
     def getAvId(self):
         if hasattr(self, 'avatar'):
             if self.avatar:
                 return self.avatar.doId
+        return None
+
+    def getPlayerId(self):
+        if hasattr(self, 'playerId'):
+            return self.playerId
         return None
 
     def isHidden(self):
@@ -437,6 +493,7 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
         if not base.cr.playGame.getPlace().getState() == 'elevator':
             self.confirmKickOutDialog = TTDialog.TTDialog(style=TTDialog.YesNo, text=TTLocalizer.BoardingKickOutConfirm % self.avName, command=self.__confirmKickOutCallback)
             self.confirmKickOutDialog.show()
+            localAvatar.disableAvatarControls()
 
     def __confirmKickOutCallback(self, value):
         if self.confirmKickOutDialog:
@@ -446,6 +503,7 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
             if self.groupButton:
                 self.groupButton['state'] = DGG.DISABLED
             localAvatar.boardingParty.requestKick(self.avId)
+        localAvatar.enableAvatarControls()
         return
 
     def __checkGroupStatus(self):
@@ -466,24 +524,11 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
                             self.groupButton['image_color'] = Vec4(1, 1, 1, 0.4)
                             self.groupButton['state'] = DGG.NORMAL
                     else:
-                        g1 = localAvatar.boardingParty.countInGroup(self.avId)
-                        g2 = localAvatar.boardingParty.countInGroup(localAvatar.doId)
-                        if (g1 + g2) > localAvatar.boardingParty.maxSize:
-                            self.groupButton['text'] = ('', TTLocalizer.AvatarPanelGroupMember, TTLocalizer.AvatarPanelGroupMember)
-                            self.groupButton['command'] = None
-                            self.groupButton['image'] = self.inviteImageDisabled
-                            self.groupButton['image_color'] = Vec4(1, 1, 1, 0.4)
-                        else:
-                            if g1 > 0 and g2 > 0:
-                                self.groupButton['text'] = ('', TTLocalizer.AvatarPanelGroupInvite, "%s %d"%(TTLocalizer.AvatarPanelGroupMerge, (g1+g2)))
-                                self.groupFrame['text']=TTLocalizer.BoardingPartyTitleMerge;
-                            else:
-                                self.groupButton['text'] = ('', TTLocalizer.AvatarPanelGroupInvite, TTLocalizer.AvatarPanelGroupInvite)
-                                self.groupFrame['text']=TTLocalizer.BoardingPartyTitle;
-                            self.groupButton['command'] = self.handleInvite
-                            self.groupButton['image'] = self.inviteImageList
+                        self.groupButton['text'] = ('', TTLocalizer.AvatarPanelGroupInvite, TTLocalizer.AvatarPanelGroupInvite)
+                        self.groupButton['command'] = self.handleInvite
+                        self.groupButton['image'] = self.inviteImageList
                         self.groupButton['state'] = DGG.NORMAL
-                    if base.config.GetBool('want-boarding-groups', 1):
+                    if config.GetBool('want-boarding-groups', 1):
                         base.setCellsAvailable([base.rightCells[0]], 0)
                         self.groupFrame.show()
         return
@@ -503,15 +548,6 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
         return
 
     def __makePetGui(self, avatar):
-        if self.avatar.isAdmin():
-            helpGui = loader.loadModel('phase_3.5/models/gui/tt_m_gui_brd_help')
-            image = (helpGui.find('**/tt_t_gui_brd_helpUp'), helpGui.find('**/tt_t_gui_brd_helpDown'), helpGui.find('**/tt_t_gui_brd_helpHover'), helpGui.find('**/tt_t_gui_brd_helpDown'))
-            text = ('', TTLocalizer.AvatarPanelCast, TTLocalizer.AvatarPanelCast, '')
-            self.petButton = DirectButton(parent=self.frame, image=image, relief=None, pos=(0.02, -0.2, -0.385), text=text, text_fg=self.text2Color, scale=0.8,
-                             text_shadow=(0, 0, 0, 1), text_scale=0.07, text_pos=(0, -0.125), text_align=TextNode.ACenter, command=self.__handleCastDialog)
-            helpGui.removeNode()
-            return
-
         petGui = loader.loadModel('phase_3.5/models/gui/PetControlPannel')
         self.petButton = DirectButton(parent=self.frame, image=(petGui.find('**/PetControlToonButtonUp1'), petGui.find('**/PetControlToonButtonDown1'), petGui.find('**/PetControlToonButtonRollover1')), geom=petGui.find('**/PetBattleIcon'), geom3_color=self.disabledImageColor, relief=None, pos=(0.22, -0.2, -0.475), text=('',
          TTLocalizer.AvatarPanelPet,
@@ -522,18 +558,7 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
             self.petButton['state'] = DGG.DISABLED
             self.petButton.hide()
         petGui.removeNode()
-
-    def __handleCastDialog(self):
-        self.cleanupDialog()
-        base.cr.playGame.getPlace().setState('stopped')
-        self.dialog = TTDialog.TTDialog(style=TTDialog.Acknowledge, text=TTLocalizer.AvatarPanelCastInfo % self.avatar.getName(), text_wordwrap=20, command=self.__cleanupDialogAndWalk)
-        self.dialog.show()
-    
-    def __cleanupDialogAndWalk(self, extra=None):
-        if self.dialog:
-            self.dialog.destroy()
-            self.dialog = None
-        base.cr.playGame.getPlace().fsm.request('walk')
+        return
 
     def __makeBoardingGui(self):
         self.confirmKickOutDialog = None
@@ -561,3 +586,4 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
         groupInviteGui.removeNode()
         groupAvatarBgGui.removeNode()
         helpGui.removeNode()
+        return

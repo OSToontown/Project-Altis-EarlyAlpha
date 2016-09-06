@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.gui.DirectGui import *
 from direct.task import Task
 from SCConstants import *
@@ -8,9 +8,10 @@ from direct.showbase.PythonUtil import makeTuple
 import types
 
 class SCMenu(SCObject, NodePath):
+    config = getConfigShowbase()
     SpeedChatRolloverTolerance = config.GetFloat('speedchat-rollover-tolerance', 0.08)
-    WantFade = config.GetBool('want-speedchat-fade', 1)
-    FadeDuration = config.GetFloat('speedchat-fade-duration', 0.4)
+    WantFade = config.GetBool('want-speedchat-fade', 0)
+    FadeDuration = config.GetFloat('speedchat-fade-duration', 0.2)
     SerialNum = 0
     BackgroundModelName = None
     GuiModelName = None
@@ -93,7 +94,7 @@ class SCMenu(SCObject, NodePath):
         self.appendFromStructure(structure)
 
     def appendFromStructure(self, structure):
-        from SpeedChatTypes import SCMenuHolder, SCStaticTextTerminal
+        from SpeedChatTypes import SCMenuHolder, SCStaticTextTerminal, SCGMTextTerminal
         from otp.otpbase import OTPLocalizer
 
         def addChildren(menu, childList):
@@ -122,6 +123,9 @@ class SCMenu(SCObject, NodePath):
                     holder = SCMenuHolder(holderTitle, menu=subMenu)
                     menu.append(holder)
                     addChildren(subMenu, subMenuChildren)
+                elif type(child) == type('') and child[:2] == 'gm':
+                    terminal = SCGMTextTerminal(child)
+                    menu.append(terminal)
                 else:
                     raise 'error parsing speedchat structure. invalid child: %s' % child
 
@@ -162,7 +166,7 @@ class SCMenu(SCObject, NodePath):
             else:
                 self.stopFade()
                 self.fadeIval = LerpFunctionInterval(self.fadeFunc, fromData=0.0, toData=1.0, duration=SCMenu.FadeDuration)
-                self.fadeIval.start()
+                self.fadeIval.play()
                 if parentMenu is not None:
                     parentMenu.childHasFaded = 1
         return
@@ -422,7 +426,7 @@ class SCMenu(SCObject, NodePath):
 
         if self.holder is not None:
             self.holder.updateViewability()
-        for i in xrange(len(self.__members)):
+        for i in range(len(self.__members)):
             self.__members[i].posInParentMenu = i
 
         self.invalidate()

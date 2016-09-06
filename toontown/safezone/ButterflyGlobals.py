@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 import random
 OFF = 0
 FLYING = 1
@@ -6,7 +6,7 @@ LANDED = 2
 states = {OFF: 'off',
  FLYING: 'Flying',
  LANDED: 'Landed'}
-NUM_BUTTERFLIES = (6, 36, 5)
+NUM_BUTTERFLIES = (6, 36, 5) # gg spawning too many butterflies causes Astron to kick some people.
 NUM_BUTTERFLY_AREAS = (4, 1, 4)
 BUTTERFLY_SPEED = 2.0
 BUTTERFLY_HEIGHT = (2.2, 3.2, 2.2)
@@ -197,7 +197,7 @@ def generateIndexes(doId, playground):
 
 
 def clearIndexes(doId):
-    if doId in allocatedIndexes:
+    if allocatedIndexes.has_key(doId):
         del allocatedIndexes[doId]
 
 
@@ -212,7 +212,7 @@ def getFirstRoute(playground, area, doId):
 
 
 def __getCurrentPos(playground, area, doId):
-    if doId in allocatedIndexes:
+    if allocatedIndexes.has_key(doId):
         unusedI = allocatedIndexes[doId][0][area]
         usedI = allocatedIndexes[doId][1][area]
     else:
@@ -227,7 +227,7 @@ def __getCurrentPos(playground, area, doId):
 
 
 def getNextPos(currentPos, playground, area, doId):
-    if doId in allocatedIndexes:
+    if allocatedIndexes.has_key(doId):
         unusedI = allocatedIndexes[doId][0][area]
         usedI = allocatedIndexes[doId][1][area]
     else:
@@ -250,7 +250,7 @@ def getNextPos(currentPos, playground, area, doId):
 
 
 def recycleIndex(index, playground, area, doId):
-    if doId in allocatedIndexes:
+    if allocatedIndexes.has_key(doId):
         unusedI = allocatedIndexes[doId][0][area]
         usedI = allocatedIndexes[doId][1][area]
     else:

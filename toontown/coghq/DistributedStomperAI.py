@@ -4,7 +4,6 @@ from direct.directnotify import DirectNotifyGlobal
 import DistributedCrusherEntityAI
 import StomperGlobals
 from direct.distributed import ClockDelta
-from toontown.coghq import CrusherCellAI
 
 class DistributedStomperAI(DistributedCrusherEntityAI.DistributedCrusherEntityAI):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedStomperAI')

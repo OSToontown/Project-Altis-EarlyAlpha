@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
 from ElevatorConstants import *
@@ -73,7 +73,7 @@ class DistributedBossElevator(DistributedElevatorExt.DistributedElevatorExt):
     def setBossOfficeZoneForce(self, zoneId):
         place = self.cr.playGame.getPlace()
         if place:
-            place.fsm.request('elevator', [self])
+            place.fsm.request('elevator', [self, 1])
             hoodId = self.cr.playGame.hood.hoodId
             doneStatus = {'loader': 'cogHQLoader',
              'where': 'cogHQBossBattle',

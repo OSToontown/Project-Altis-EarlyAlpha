@@ -1,0 +1,25 @@
+I decided that you guys should have a guide for how to setup the server :3
+
+1. Double click on the Panda3D Installer to install the correct version of Panda3D. If you already have Panda3D-1.9.0 in your C:\ directory, please delete that folder and
+then install with the installer provided.
+
+2. That is literally all you have to do, now you can double click on start_astron_server.bat to start the server, start_uberdog_server.bat after that to start the uberdog
+server, and then start_ai_server.bat to start the district. Now you can open JOIN SERVER.bat to join your server.
+
+BONUS: If you want multiple districts, double click on the start_ai_server.bat multiple times and when promompted with BASE_CHANNEL, change 401000000 to 402000000 for 
+district 2 or 403000000 for district 3 and so on. Basically, when making a new district, you change the third digit of the base channel.
+
+MAGIC WORDS: All of the magic words are provided in the ALL MAGIC WORDS.py file. You open this with Idle or Notepad++. You can also possibly open it with Notepad. Have fun!
+
+PORT FORWARDING: If you want people from other networks to join your server, you must port forward the port 7198. Then your friends go into JOIN SERVER.bat and change
+localhost to your IP address. I recommend using http://www.ipchicken.com to get your IP address. If you are connecting to someone else you can just change localhost
+in your JOIN SERVER.bat to their IP address. You could also just give them your bat file with your ip in it to join your server if you want to do that.
+
+While the database creates your account, you may get server is unavailable. You just wait for it to crash and then click OK.
+
+TIP: The databases are located in your astron folder. Your uberdog may crash sometimes, so restart it if this happens.
+
+TIP 2: All accounts made are by default 507 access level, which is the max access level. This can be changed in toontown\uberdog\ClientServicesMangerUD.py if you know how to
+do such a thing.
+
+TIP 3: settings.json is where you can turn on anti-aliasing, by changing the digit 0 to 1.

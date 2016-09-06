@@ -1,10 +1,13 @@
-from panda3d.core import *
 from direct.distributed import DistributedObject
 from direct.directnotify import DirectNotifyGlobal
-from toontown.racing import KartShopGlobals
+from otp.otpbase import OTPTimer
 from toontown.toonbase import TTLocalizer
+from toontown.racing import KartShopGlobals
 from toontown.toonbase.ToonBaseGlobal import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToontownGlobals import *
+import random
+import cPickle
 
 class DistributedLeaderBoard(DistributedObject.DistributedObject):
     notify = DirectNotifyGlobal.directNotify.newCategory('DisributedLeaderBoard')
@@ -18,6 +21,7 @@ class DistributedLeaderBoard(DistributedObject.DistributedObject):
         self.updateCount = 0
         self.board = None
         self.surface = None
+        return
 
     def generateInit(self):
         DistributedObject.DistributedObject.generateInit(self)
@@ -30,17 +34,26 @@ class DistributedLeaderBoard(DistributedObject.DistributedObject):
     def announceGenerate(self):
         DistributedObject.DistributedObject.announceGenerate(self)
         self.board.reparentTo(render)
+        self.accept('decorator-holiday-%d-ending' % ToontownGlobals.CRASHED_LEADERBOARD, self.showLists)
+        self.accept('decorator-holiday-%d-starting' % ToontownGlobals.CRASHED_LEADERBOARD, self.hideLists)
+        newsManager = base.cr.newsManager
+        if newsManager:
+            if ToontownGlobals.CRASHED_LEADERBOARD in newsManager.holidayIdList:
+                self.hideLists()
+
+    def showLists(self):
+        self.board.show()
+
+    def hideLists(self):
+        self.board.hide()
 
     def setPosHpr(self, x, y, z, h, p, r):
         self.surface.setPosHpr(x, y, z, h, p, r)
 
-    def setDisplay(self, track, type, results):
-        if not track in TTLocalizer.KartRace_TrackNames or len(TTLocalizer.RecordPeriodStrings) <= type:
-            return
-
-        trackName = TTLocalizer.KartRace_TrackNames[track]
-        recordTitle = TTLocalizer.RecordPeriodStrings[type]
-        self.display(trackName, recordTitle, results)
+    def setDisplay(self, pData):
+        self.notify.debug('setDisplay: changing leaderboard text on local side')
+        trackName, recordTitle, scores = cPickle.loads(pData)
+        self.display(trackName, recordTitle, scores)
 
     def buildListParts(self):
         self.surface = self.board.attachNewNode('surface')
@@ -59,7 +72,7 @@ class DistributedLeaderBoard(DistributedObject.DistributedObject):
         z = zListTop
         self.nameTextNodes = []
         self.timeTextNodes = []
-        for i in xrange(10):
+        for i in range(10):
             row, nameText, timeText, placeText = self.buildLeaderRow()
             self.nameTextNodes.append(nameText)
             placeText.setText(str(len(self.nameTextNodes)) + '.')
@@ -79,13 +92,17 @@ class DistributedLeaderBoard(DistributedObject.DistributedObject):
         self.titleTextNode.setText(pPeriodTitle)
         self.trackNameNode.setText(pTrackTitle)
         self.updateCount += 1
-        for i in xrange(10):
-            if i >= len(pLeaderList):
+        for i in range(10):
+            if i > len(pLeaderList):
                 self.nameTextNodes[i].setText('-')
                 self.timeTextNodes[i].setText('-')
             else:
-                self.nameTextNodes[i].setText(pLeaderList[i][0][:22])
-                self.timeTextNodes[i].setText(TTLocalizer.convertSecondsToDate(pLeaderList[i][1]))
+                name = pLeaderList[i][1]
+                time = pLeaderList[i][0]
+                secs, hundredths = divmod(time, 1)
+                min, sec = divmod(secs, 60)
+                self.nameTextNodes[i].setText(name[:22])
+                self.timeTextNodes[i].setText('%02d:%02d:%02d' % (min, sec, hundredths * 100))
 
     def buildTitleRow(self):
         row = hidden.attachNewNode('TitleRow')

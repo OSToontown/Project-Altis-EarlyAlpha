@@ -2,7 +2,7 @@ from direct.distributed import DistributedObjectAI
 from direct.directnotify import DirectNotifyGlobal
 from toontown.toonbase import ToontownGlobals
 from toontown.golf import DistributedGolfHoleAI
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.fsm.FSM import FSM
 from toontown.ai.ToonBarrier import *
 from toontown.golf import GolfGlobals
@@ -108,8 +108,7 @@ class DistributedGolfCourseAI(DistributedObjectAI.DistributedObjectAI, FSM):
             self.currentHole.requestDelete()
             self.currentHole = None
         self.ignoreAll()
-        from toontown.golf import GolfManagerAI
-        GolfManagerAI.GolfManagerAI().removeCourse(self)
+        self.air.deallocateZone(self.zoneId)
         if self.__barrier:
             self.__barrier.cleanup()
             self.__barrier = None
@@ -350,7 +349,7 @@ class DistributedGolfCourseAI(DistributedObjectAI.DistributedObjectAI, FSM):
         for avId in self.avIdList:
             av = simbase.air.doId2do.get(avId)
             if av:
-                if avId in self.avStateDict and not self.avStateDict[avId] == EXITED:
+                if self.avStateDict.has_key(avId) and not self.avStateDict[avId] == EXITED:
                     retval.append(avId)
 
         return retval
@@ -565,7 +564,7 @@ class DistributedGolfCourseAI(DistributedObjectAI.DistributedObjectAI, FSM):
         return
 
     def incrementEndingHistory(self, avId, historyIndex):
-        if avId in self.endingHistory and historyIndex in GolfGlobals.TrophyRequirements:
+        if self.endingHistory.has_key(avId) and GolfGlobals.TrophyRequirements.has_key(historyIndex):
             maximumAmount = GolfGlobals.TrophyRequirements[historyIndex][-1]
             if self.endingHistory[avId][historyIndex] < maximumAmount:
                 self.endingHistory[avId][historyIndex] += 1
@@ -584,7 +583,7 @@ class DistributedGolfCourseAI(DistributedObjectAI.DistributedObjectAI, FSM):
         if simbase.air.config.GetBool('golf-course-randomized', 1):
             retval = self.calcHolesToUseRandomized(self.courseId)
             self.notify.debug('randomized courses!')
-            for x in xrange(len(retval)):
+            for x in range(len(retval)):
                 self.notify.debug('Hole is: %s' % retval[x])
 
         else:
@@ -874,7 +873,7 @@ class DistributedGolfCourseAI(DistributedObjectAI.DistributedObjectAI, FSM):
 
     def getTotalScore(self, avId):
         retval = 0
-        if avId in self.scores:
+        if self.scores.has_key(avId):
             for holeScore in self.scores[avId]:
                 retval += holeScore
 
@@ -970,15 +969,12 @@ class DistributedGolfCourseAI(DistributedObjectAI.DistributedObjectAI, FSM):
         stillPlaying = self.getStillPlayingAvIds()
         for avId in stillPlaying:
             scoreList = self.scores[avId]
-            ns = 0
             for holeIndex in xrange(len(scoreList)):
                 strokes = scoreList[holeIndex]
                 if strokes == 1:
-                    ns +=1
                     holeId = self.holeIds[holeIndex]
                     self.air.writeServerEvent('golf_ace', avId, '%d|%d|%s' % (self.courseId, holeId, stillPlaying))
 
-            
     def recordCourseUnderPar(self):
         coursePar = self.calcCoursePar()
         stillPlaying = self.getStillPlayingAvIds()
@@ -987,7 +983,7 @@ class DistributedGolfCourseAI(DistributedObjectAI.DistributedObjectAI, FSM):
             netScore = totalScore - coursePar
             if netScore < 0:
                 self.air.writeServerEvent('golf_underPar', avId, '%d|%d|%s' % (self.courseId, netScore, stillPlaying))
-            
+
     def addAimTime(self, avId, aimTime):
         if avId in self.aimTimes:
             self.aimTimes[avId] += aimTime

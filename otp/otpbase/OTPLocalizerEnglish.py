@@ -4,7 +4,6 @@ lTheBrrrgh = 'The Brrrgh'
 lDaisyGardens = 'Daisy Gardens'
 lDonaldsDock = "Donald's Dock"
 lDonaldsDreamland = "Donald's Dreamland"
-lFunnyFarm = 'Funny Farms'
 lMinniesMelodyland = "Minnie's Melodyland"
 lToontownCentral = 'Toontown Central'
 lGoofySpeedway = 'Goofy Speedway'
@@ -30,9 +29,13 @@ WhisperComingToVisit = '%s is coming to visit you.'
 WhisperFailedVisit = '%s tried to visit you.'
 WhisperTargetLeftVisit = '%s has gone somewhere else. Try again!'
 WhisperGiveupVisit = "%s couldn't find you because you're moving around!"
+WhisperIgnored = '%s is ignoring you!'
 TeleportGreeting = 'Hi, %s.'
 WhisperFriendComingOnline = '%s is coming online!'
 WhisperFriendLoggedOut = '%s has logged out.'
+WhisperPlayerOnline = '%s logged into %s'
+WhisperPlayerOffline = '%s is offline.'
+WhisperUnavailable = 'That player is no longer available for whispers.'
 DialogSpecial = 'ooo'
 DialogExclamation = '!'
 DialogQuestion = '?'
@@ -42,19 +45,40 @@ ChatInputNormalWhisper = 'Whisper'
 ChatInputWhisperLabel = 'To %s'
 SCEmoteNoAccessMsg = 'You do not have access\nto this emotion yet.'
 SCEmoteNoAccessOK = lOK
+ParentLogin = 'Parent Login'
+ParentPassword = 'Parent Account Password'
 ChatGarblerDefault = ['blah']
 ChatManagerChat = 'Chat'
 ChatManagerWhisperTo = 'Whisper to:'
 ChatManagerWhisperToName = 'Whisper To:\n%s'
 ChatManagerCancel = lCancel
 ChatManagerWhisperOffline = '%s is offline.'
-# True Friends
-NoTrueFriendsTitle = 'Open Chat With True Friends'
-NoTrueFriends = 'Open Chat with True Friends allows real-life friends to chat openly with each other by means of a True Friend Code that must be shared outside of the game.\n\nTo activate these features or to learn more, exit Toontown and then click on Membership and select Manage Account. Log in to edit your "Community Settings."'
-# Speedchat Plus
-NoSpeedchatPlusTitle = 'Chat Button'
-NoSpeedchatPlus = 'You can use the blue Chat button to communicate with other Toons by using Speechat Plus or Open Chat with True Friends.\n\nSpeedchat Plus is a form of type chat that allows users to communicate by using the SpeedChat Plus dictionary.\n\nOpen Chat with True Friends allows real-life friends to chat openly with each other by means of a True Friend Code that must be shared outside of the game.\n\nTo activate these features or to learn more, exit Toontown and then click on Membership and select Manage Account.  Log in to edit your "Community Settings."'
-NoTrueFriendsOK = lOK
+OpenChatWarning = 'To become True Friends with somebody, click on them, and select "True Friends" from the detail panel.\n\nSpeedChat Plus can also be enabled, which allow users to chat by typing words found in the SpeedChat Plus dictionary.\n\nTo activate these features or to learn more, exit Toontown and then click on Membership and select Manage Account.  Log in to edit your "Community Settings."\n\nIf you are under 18, you need a Parent Account to manage these settings.'
+OpenChatWarningOK = lOK
+UnpaidChatWarning = 'Once you have subscribed, you can use this button to chat with your friends using the keyboard.  Until then, you should chat with other Toons using SpeedChat.'
+UnpaidChatWarningPay = 'Subscribe'
+UnpaidChatWarningContinue = 'Continue Free Trial'
+PaidNoParentPasswordWarning = 'Use this button to chat with your friends by using the keyboard, enable it through your Account Manager on the Toontown Web site. Until then, you can chat by using SpeedChat.'
+UnpaidNoParentPasswordWarning = 'This is for SpeedChat Plus, which allows users to chat by typing words found in the SpeedChat Plus dictionary. To activate this feature, exit Toontown and click on Membership. Select Manage Account and log in to edit your "Community Settings." If you are under 18, you need a Parent Account to manage these settings.'
+PaidNoParentPasswordWarningSet = 'Update Chat Settings'
+PaidNoParentPasswordWarningContinue = 'Continue Playing Game'
+PaidParentPasswordUKWarning = 'Once you have Enabled Chat, you can enable this button to chat with your friends using the keyboard. Until then, you should chat with other Toons using SpeedChat.'
+PaidParentPasswordUKWarningSet = 'Enable Chat Now!'
+PaidParentPasswordUKWarningContinue = 'Continue Playing Game'
+NoSecretChatWarningTitle = 'Parental Controls'
+NoSecretChatWarning = 'To chat with a friend, the True Friends feature must first be enabled.  Kids, have your parent visit the Toontown Web site to learn about True Friends.'
+RestrictedSecretChatWarning = 'To get or enter a True Friend Code, log in with the Parent Account. You can disable this prompt by changing your True Friends options.'
+NoSecretChatWarningOK = lOK
+NoSecretChatWarningCancel = lCancel
+NoSecretChatWarningWrongPassword = "That's not the correct Parent Account.  Please log in with the Parent Account that is linked to this account."
+NoSecretChatAtAllTitle = 'Open Chat With True Friends'
+NoSecretChatAtAll = 'Open Chat with True Friends allows real-life friends to chat openly with each other by means of a True Friend Code that must be shared outside of the game.\n\nTo activate these features or to learn more, exit Toontown and then click on Membership and select Manage Account. Log in to edit your "Community Settings." If you are under 18, you need a Parent Account to manage these settings.'
+NoSecretChatAtAllAndNoWhitelistTitle = 'Chat button'
+NoSecretChatAtAllAndNoWhitelist = 'You can use the blue Chat button to communicate with other Toons by using Speechat Plus or Open Chat with True Friends.\n\nSpeedchat Plus is a form of type chat that allows users to communicate by using the SpeedChat Plus dictionary.\n\nOpen Chat with True Friends allows real-life friends to chat openly with each other by means of a True Friend Code that must be shared outside of the game.\n\nTo activate these features or to learn more, exit Toontown and then click on Membership and select Manage Account.  Log in to edit your "Community Settings." If you are under 18, you need a Parent Account to manage these settings.'
+NoSecretChatAtAllOK = lOK
+ChangeSecretFriendsOptions = 'Change True Friends Options'
+ChangeSecretFriendsOptionsWarning = '\nPlease enter the Parent Account Password to change your True Friends options.'
+ActivateChatTitle = 'True Friends Options'
 WhisperToFormat = 'To %s %s'
 WhisperToFormatName = 'To %s'
 WhisperFromFormatName = '%s whispers'
@@ -90,62 +114,148 @@ TextPropertiesManager.getGlobalPtr().setProperties('black', black)
 grey = TextProperties()
 grey.setTextColor(0.5, 0.5, 0.5, 1)
 TextPropertiesManager.getGlobalPtr().setProperties('grey', grey)
-
-# New colors:
-# Orange
-amber = TextProperties()
-amber.setTextColor(1, 0.75, 0, 1)
-TextPropertiesManager.getGlobalPtr().setProperties('amber', amber)
-
-# Pink
-amaranth = TextProperties()
-amaranth.setTextColor(0.9, 0.17, 0.31, 1)
-TextPropertiesManager.getGlobalPtr().setProperties('amaranth', amaranth)
-
-# Green
-androidGreen = TextProperties()
-androidGreen.setTextColor(0.64, 0.78, 0.22, 1)
-TextPropertiesManager.getGlobalPtr().setProperties('androidGreen', androidGreen)
-
-# Turquoise-green
-caribbeanGreen = TextProperties()
-caribbeanGreen.setTextColor(0, 0.8, 0.6, 1)
-TextPropertiesManager.getGlobalPtr().setProperties('caribbeanGreen', caribbeanGreen)
-
-# Blue
-azure = TextProperties()
-azure.setTextColor(0, 0.5, 1, 1)
-TextPropertiesManager.getGlobalPtr().setProperties('azure', azure)
-
-# Cobalt-blue
-cobalt = TextProperties()
-cobalt.setTextColor(0, 0.28, 0.67, 1)
-TextPropertiesManager.getGlobalPtr().setProperties('cobalt', cobalt)
-
+ActivateChat = "True Friends allows one member to chat with another member only by means of a True Friend Code that must be communicated outside of the game. True Friends is not moderated or supervised.\n\nPlease choose one of Toontown's True Friends options:\n\n      \x01shadow\x01No True Friends\x02 - Ability to make True Friends is disabled.\n      This offers the highest level of control.\n\n      \x01shadow\x01Restricted True Friends\x02 - Requires the Parent Account Password to make\n      each new True Friend.\n\n      \x01shadow\x01Unrestricted True Friends\x02 - Once enabled with the Parent Account Password,\n      it is not required to supply the Parent Account Password to make each new\n      True Friend. \x01red\x01This option is not recommended for children under 13.\x02\n\n\n\n\n\n\nBy enabling the True Friends feature, you acknowledge that there are some risks inherent in the True Friends feature and that you have been informed of, and agree to accept, any such risks."
+ActivateChatYes = 'Update'
+ActivateChatNo = lCancel
+ActivateChatMoreInfo = 'More Info'
+ActivateChatPrivacyPolicy = 'Privacy Policy'
+ActivateChatPrivacyPolicy_Button1A = 'Version 1'
+ActivateChatPrivacyPolicy_Button1K = 'Version 1'
+ActivateChatPrivacyPolicy_Button2A = 'Version 2'
+ActivateChatPrivacyPolicy_Button2K = 'Version 2'
+PrivacyPolicyText_1A = [' ']
+PrivacyPolicyText_1K = [' ']
+PrivacyPolicyText_2A = [' ']
+PrivacyPolicyText_2K = [' ']
+PrivacyPolicyText_Intro = [' ']
+PrivacyPolicyClose = lClose
+SecretFriendsInfoPanelOk = lOK
+SecretFriendsInfoPanelClose = lClose
+SecretFriendsInfoPanelText = ['\nThe Open Chat with True Friends Feature\n\nThe Open Chat with True Friends feature enables a member to chat directly with another member within Toontown Rewritten (the "Service") once the members establish a True Friends connection.  When your child attempts to use the Open Chat with True Friends feature, we will require that you indicate your consent to your child\'s use of this feature by entering your Parent Account Password.  Here is a detailed description of the process of creating an Open Chat with True Friends connection between members whom we will call "Sally" and "Mike."\n1. Sally\'s parent and Mike\'s parent each enable the Open Chat with True Friends feature by entering their respective Parent Account Passwords either (a) in the Account Options areas within the Service, or (b) when prompted within the game by a Parental Controls pop-up.\n2. Sally requests a True Friend Code (described below) from within the Service.\n',
+ "\n3. Sally's True Friend Code is communicated to Mike outside of the Service. (Sally's True Friend Code may be communicated to Mike either directly by Sally, or indirectly through Sally's disclosure of the True Friend Code to another person.)\n4. Mike submits Sally's True Friend Code to the Service within 48 hours of the time that Sally requested the True Friend Code from the Service.\n5. The Service then notifies Mike that Sally has become Mike's True Friend.  The Service similarly notifies Sally that Mike has become Sally's True Friend.\n6. Sally and Mike can now open chat directly with each other until either one chooses to terminate the other as a True Friend, or until the Open Chat with True Friends feature is disabled for either Sally or Mike by their respective parent.  The True Friends connection can thus be disabled anytime by either: (a) a member removing the True Friend from his or her friends list (as described in the Service); or, (b) the parent of that member disabling the Open Chat with ",
+ "\nTrue Friends feature by going to the Account Options area within the Service and following the steps set forth there.\n\nA True Friend Code is a computer-generated random code assigned to a particular member. The True Friend Code must be used to activate a True Friend connection within 48 hours of the time that the member requests the True Friend Code; otherwise, the True Friend Code expires and cannot be used.  Moreover, a single True Friend Code can only be used to establish one True Friend connection.  To make additional True Friend connections, a member must request an additional True Friend Code for each additional True Friend.\n\nTrue Friendships do not transfer.  For example, if Sally becomes a True Friend of Mike, and Mike becomes a True Friend of Jessica, Sally does not automatically become Jessica's True Friend.  In order for Sally and Jessica to\n",
+ '\nbecome True Friends, one of them must request a new True Friend Code from the Service and communicate it to the other.\n\nTrue Friends communicate with one another in a free-form interactive open chat.  The content of this chat is directly entered by the participating member and is processed through the Service, which is monitored by the Toontown Rewritten team.  While we advise members not to exchange personal information such as first and last names, e-mail addresses, postal addresses, or phone numbers while using Open Chat with True Friends, we cannot guarantee that such exchanges of personal information will not happen. Although the True Friends chat is automatically filtered for most bad words, Open Chat with True Friends may be moderated, and we reserve the right to moderate any part of the Service that we,\n',
+ "\nin our sole and absolute discretion, deems necessary. However, because Open Chat with True Friends will not always be moderated, if the Parent Account allows a child to use his or her account with the Open Chat with True Friends feature enabled, we strongly encourage parents to supervise their child or children while they play in the Service. By enabling the Open Chat with True Friends feature, the Parent Account acknowledges that there are some risks inherent in the Open Chat with True Friends feature and that the Parent Account has been informed of, and agrees to accept, any such risks, whether foreseeable or otherwise. \n\nWDIG does not use the content of True Friends chat for any purpose other than communicating that content to the member's true friend, and does not disclose that content to any third party except: (1) if required by law, for example, to comply with a court order or subpoena; (2) to enforce the Terms of Use\n",
+ "\napplicable to the Service (which may be accessed on the home page of the Service); or, (3) to protect the safety and security of Members of the Service and the Service itself. In accordance with the Children's Online Privacy Protection Act, we are prohibited from conditioning, and do not condition, a child's participation in any activity (including Open Chat with True Friends) on the child's disclosing more personal information than is reasonably necessary to participate in such activity.\n\nIn addition, as noted above, we recognize the right of a parent to refuse to permit us to continue to allow a child to use the True Friends feature. By enabling the Open Chat with True Friends feature, you acknowledge that there are some risks inherent in the ability of members to open chat with one another through the Open Chat with True Friends feature, and that you have been informed of, and agree to accept, any such risks, whether foreseeable or otherwise.\n"]
+LeaveToPay = 'Click Purchase to exit the game and buy a Membership at toontown.com'
+LeaveToPayYes = 'Purchase'
+LeaveToPayNo = lCancel
+LeaveToSetParentPassword = 'In order to set parent account password, the game will exit to the Toontown website.'
+LeaveToSetParentPasswordYes = 'Set Password'
+LeaveToSetParentPasswordNo = lCancel
+LeaveToEnableChatUK = 'In order to enable chat, the game will exit to the Toontown website.'
+LeaveToEnableChatUKYes = 'Enable Chat'
+LeaveToEnableChatUKNo = lCancel
+ChatMoreInfoOK = lOK
+SecretChatDeactivated = 'The "True Friends" feature has been disabled.'
+RestrictedSecretChatActivated = 'The "Restricted True Friends" feature has been enabled!'
+SecretChatActivated = 'The "Unrestricted True Friends" feature has been enabled!'
+SecretChatActivatedOK = lOK
+SecretChatActivatedChange = 'Change Options'
+ProblemActivatingChat = 'Oops!  We were unable to activate the "True Friends" chat feature.\n\n%s\n\nPlease try again later.'
+ProblemActivatingChatOK = lOK
+MultiPageTextFrameNext = lNext
+MultiPageTextFramePrev = 'Previous'
+MultiPageTextFramePage = 'Page %s/%s'
+GuiScreenToontownUnavailable = 'The server appears to be temporarily unavailable, still trying...'
+GuiScreenCancel = lCancel
+CreateAccountScreenUserName = 'Account Name'
+CreateAccountScreenPassword = 'Password'
+CreateAccountScreenConfirmPassword = 'Confirm Password'
+CreateAccountScreenCancel = lCancel
+CreateAccountScreenSubmit = 'Submit'
+CreateAccountScreenConnectionErrorSuffix = '.\n\nPlease try again later.'
+CreateAccountScreenNoAccountName = 'Please enter an account name.'
+CreateAccountScreenAccountNameTooShort = 'Your account name must be at least %s characters long. Please try again.'
+CreateAccountScreenPasswordTooShort = 'Your password must be at least %s characters long. Please try again.'
+CreateAccountScreenPasswordMismatch = 'The passwords you typed did not match. Please try again.'
+CreateAccountScreenUserNameTaken = 'That user name is already taken. Please try again.'
+CreateAccountScreenInvalidUserName = 'Invalid user name.\nPlease try again.'
+CreateAccountScreenUserNameNotFound = 'User name not found.\nPlease try again or create a new account.'
 CRConnecting = 'Connecting...'
 CRNoConnectTryAgain = 'Could not connect to %s:%s. Try again?'
 CRNoConnectProxyNoPort = 'Could not connect to %s:%s.\n\nYou are communicating to the internet via a proxy, but your proxy does not permit connections on port %s.\n\nYou must open up this port, or disable your proxy, in order to play.  If your proxy has been provided by your ISP, you must contact your ISP to request them to open up this port.'
+CRLoggingIn = 'Authenticating...'
+CRMissingGameRootObject = 'Missing some root game objects.  (May be a failed network connection).\n\nTry again?'
 CRNoDistrictsTryAgain = 'No Districts are available. Try again?'
 CRRejectRemoveAvatar = 'The avatar was not able to be deleted, try again another time.'
 CRLostConnection = 'Your internet connection to the servers has been unexpectedly broken.'
-CRBootedReasons = {100: 'You have been disconnected because someone else just logged in using your account on another computer.',
- 101: 'Please relaunch the game from the official launcher.',
- 102: 'You are not authorized to use administrator privileges.',
- 103: 'You were banned by a moderator.\n\nBehave next time!',
- 105: 'Project Altis is now temporarily closed for maintenance. Everyone who was playing has been disconnected from the game.\n\nFor more information, please visit the Project Altis website.',
- 124: 'Your installed files are out of date!  Use the official launcher to download the newest version, or contact Project Altis Support if the problem persists.',
- 153: 'The district you were playing on has been reset.  Everyone who was playing on that district has been disconnected.  However, you should be able to connect again and go right back into the game.',
- 166: 'You were disconnected to prevent a district reset.'}
-CRBootedReasonUnknownCode = 'An unexpected problem has occurred (error code %s).  Your connection has been lost, but you should be able to connect again and go right back into the game.'
+CRBootedReasons = {1: 'Yikes - An unexpected problem occured.  Your connection has been lost, but you should be able to connect again and go right back into Toontown.',
+ 100: 'You have been disconnected because someone else just logged in using your account on another computer.',
+ 120: 'You have been disconnected because of a problem with your authorization to use keyboard chat.',
+ 122: 'There was an issue getting you into Toontown.  If the problem persists, please contact Toontown Rewritten Support.',
+ 124: 'Your installed files are out of date!  Use the official launcher to download the newest version, or contact Toontown Rewritten Support if the problem persists.',
+ 125: 'Your installed files appear to be invalid.  Use the official launcher to download the newest version, or contact Toontown Rewritten Support if the problem persists.',
+ 126: 'You aren\'t authorized to use administrator privileges. The request has been noted.',
+ 127: 'There appears to be a problem with your Toon.  Don\'t worry - we\'ll get it straightened out. Please contact Toontown Rewritten Support and referece Error Code 127.',
+ 128: 'There appears to have been a hiccup in your connection to Toontown. Don\'t worry -- we\'re working on straightening it out. You should be able to connect again and go right back into Toontown.',
+ 151: 'You were kicked out by one of the developers working on the servers.',
+ 152: "You have been banned from the game for a reported violation of our Terms of Use connected to '%(name)s'. For more details, please check the Toontown Rewritten website.",
+ 153: 'The district you were playing on has been reset.  Everyone who was playing on that district has also been disconnected, however, you should be able to connect again and go right back into Toontown.',
+ 154: 'Toontown Rewritten is going down for an update!  Stay Tooned on our website for details, or try logging in again later.',
+ 155: 'You\'ve been warned for %(dc_reason)s. Try to behave next time!',
+ 200: 'Logins are currently disabled. Please try again later.',
+ 288: 'Sorry, you have used up all of your available minutes this month.',
+ 349: 'Sorry, you have used up all of your available minutes this month.',
+ 350: 'Sorry, your play time is up for today! You\'re welcome to hop on the queue or schedule a new session at any time. Thanks for testing with us, and come back soon!',}
+CRBootedReasonUnknownCode = 'Yikes - An unexpected problem occured. (Error code %s)  Your connection has been lost, but you should be able to connect again and go right back into Toontown.'
+CRSystemMessages = {
+    # General, generic messages:
+    0: '%s',
+    1: 'ADMIN: %s',
+    2: 'Toon HQ: %s',
+    3: 'Loony Labs: %s',
+    4: 'Toon Council: %s',
+    5: 'SYSTEM: %s',
+
+    # Maintenance notifications:
+    50: 'Toontown Rewritten will be closing for an update soon. Start wrapping things up!',
+    51: 'Toontown Rewritten will be closing for an update in %s minutes.',
+    52: 'Toontown Rewritten will be closing for an update in %s seconds.',
+    53: 'Toontown Rewritten will be closing for an update in just a moment. Hang tight!',
+
+    55: 'Toontown Rewritten will be closing for maintenance soon. Start wrapping things up!',
+    56: 'Toontown Rewritten will be closing for maintenance in %s minutes.',
+    57: 'Toontown Rewritten will be closing for maintenance in %s seconds.',
+    58: 'Toontown Rewritten will be closing for maintanance in just a moment.',
+
+
+    60: 'The district that you\'re playing in will be closed off for maintenance soon. Try to move if you can.',
+    61: 'The district that you\'re on will be closed for maintenance in %s minutes.',
+    62: 'The district that you\'re on will be closed for maintenance in %s seconds.',
+
+    # Announcements.
+    100: 'Toon Council: Congrats, Your Toon name has been approved! You\'ll need to log out to receive your name certificate.',
+    101: 'Toon Council: Sorry, the name you submitted was rejected. You can log out and submit a new name on the main screen.',
+    102: '%s just became the first Toon in Toon History to reach 137 Laff Points!'
+}
 CRTryConnectAgain = '\n\nTry to connect again?'
 CRToontownUnavailable = 'The server appears to be temporarily unavailable, still trying...'
 CRToontownUnavailableCancel = lCancel
 CRNameCongratulations = 'CONGRATULATIONS!!'
 CRNameAccepted = 'Your name has been\napproved by the Toon Council.\n\nFrom this day forth\nyou will be named\n"%s"'
-CRMaintenanceCountdownMessage = 'Attention Toons! Project Altis will be going down for maintenance in %d minutes.'
-CRMaintenanceMessage = 'Attention Toons! Project Altis is now going down for maintenance.'
+CRServerConstantsProxyNoPort = 'Unable to contact %s.\n\nYou are communicating to the internet via a proxy, but your proxy does not permit connections on port %s.\n\nYou must open up this port, or disable your proxy, in order to play.  If your proxy has been provided by your ISP, you must contact your ISP to request them to open up this port.'
+CRServerConstantsProxyNoCONNECT = 'Unable to contact %s.\n\nYou are communicating to the internet via a proxy, but your proxy does not support the CONNECT method.\n\nYou must enable this capability, or disable your proxy, in order to play.  If your proxy has been provided by your ISP, you must contact your ISP to request them to enable this capability.'
+CRServerConstantsTryAgain = 'Unable to contact %s.\n\nThe account server might be temporarily down, or there might be some problem with your internet connection.\n\nTry again?'
+CRServerDateTryAgain = 'Could not get server date from %s. Try again?'
 AfkForceAcknowledgeMessage = 'Your toon got sleepy and went to bed.'
-CREnteringToontown = 'Entering Project Altis'
+PeriodTimerWarning = 'Your available time is almost over!'
+PeriodForceAcknowledgeMessage = 'Sorry, you have used up all of your available time. Please exit to purchase more.'
+CREnteringToontown = 'Toontown Rewritten'
+DownloadWatcherUpdate = 'Downloading %s'
+DownloadWatcherInitializing = 'Download Initializing...'
+LoginScreenUserName = 'Account Name'
+LoginScreenPassword = 'Password'
+LoginScreenLogin = 'Login'
+LoginScreenCreateAccount = 'Create Account'
+LoginScreenQuit = lQuit
+LoginScreenLoginPrompt = 'Please enter a user name and password.'
+LoginScreenBadPassword = 'Bad password.\nPlease try again.'
+LoginScreenInvalidUserName = 'Invalid user name.\nPlease try again.'
+LoginScreenUserNameNotFound = 'User name not found.\nPlease try again or create a new account.'
+LoginScreenPeriodTimeExpired = 'Sorry, you have used up all of your available time.'
+LoginScreenNoNewAccounts = 'Sorry, we are not accepting new accounts at this time.'
+LoginScreenTryAgain = 'Try Again'
 DialogSpecial = 'ooo'
 DialogExclamation = '!'
 DialogQuestion = '?'
@@ -154,12 +264,15 @@ DialogLength2 = 12
 DialogLength3 = 20
 GlobalSpeedChatName = 'SpeedChat'
 SCMenuPromotion = 'PROMOTIONAL'
-SCMenuEmotions = 'EMOTIONS'
+SCMenuElection = 'ELECTION'
+SCMenuEmotions = 'ANIMATIONS'
 SCMenuCustom = 'MY PHRASES'
 SCMenuResistance = 'UNITE!'
 SCMenuPets = 'PETS'
 SCMenuPetTricks = 'TRICKS'
 SCMenuCog = 'COG SPEAK'
+SCMenuTesting = 'TESTING'
+SCMenuBugs = 'BUGS'
 SCMenuHello = 'HELLO'
 SCMenuBye = 'GOODBYE'
 SCMenuConvo = 'CHIT CHAT'
@@ -211,6 +324,7 @@ SCMenuBattleStrategy = 'STRATEGY'
 SCMenuBoardingGroup = 'BOARDING'
 SCMenuParties = 'PARTIES'
 SCMenuAprilToons = "APRIL TOONS'"
+SCMenuSingingGroup = 'SINGING'
 SCMenuCarol = 'CAROLING'
 SCMenuSillyHoliday = 'SILLY METER'
 SCMenuVictoryParties = 'VICTORY PARTIES'
@@ -221,18 +335,98 @@ SCMenuWinter = 'WINTER'
 SCMenuSellbotInvasion = 'SELLBOT INVASION'
 SCMenuFieldOffice = 'FIELD OFFICES'
 SCMenuIdesOfMarch = 'GREEN'
-ScMenuBugs = 'Bugs'
-SCMenuQuotes = 'FAMOUS QUOTES'
-SCMenuDisney = 'DISNEY'
-SCMenuMarvel = 'MARVEL'
-SCMenuStarWars = 'STAR WARS'
-SCMenuYuGiOh = 'YU-GI-OH'
-SCMenuSonicTheHedgehog = 'SONIC THE HEDGEHOG'
-SCMenuMusic = 'MUSIC'
+SCMenuRogerDog = 'roger dog'
+FriendSecretNeedsPasswordWarningTitle = 'Parental Controls'
+FriendSecretNeedsParentLoginWarning = 'To get or enter a True Friend Code, log in with the Parent Account.  You can disable this prompt by changing your True Friend options.'
+FriendSecretNeedsPasswordWarning = 'To get or enter a True Friend Code, you must enter the Parent Account Password.  You can disable this prompt by changing your True Friends options.'
+FriendSecretNeedsPasswordWarningOK = lOK
+FriendSecretNeedsPasswordWarningCancel = lCancel
+FriendSecretNeedsPasswordWarningWrongUsername = "That's not the correct username.  Please enter the username of the parental account.  This is not the same username used to play the game."
+FriendSecretNeedsPasswordWarningWrongPassword = "That's not the correct password.  Please enter the password of the parental account.  This is not the same password used to play the game."
+FriendSecretIntro = "If you are playing Toontown Rewritten with someone you know in the real world, you can become True Friends.  You can chat using the keyboard with your True Friends.  Other Toons won't understand what you're saying.\n\nYou do this by getting a True Friend Code.  Tell the True Friend Code to your friend, but not to anyone else.  When your friend types in your True Friend Code on his or her screen, you'll be True Friends in Toontown!"
+FriendSecretGetSecret = 'Get a True Friend Code'
+FriendSecretEnterSecret = 'If you have a True Friend Code from someone you know, type it here.'
+FriendSecretOK = lOK
+FriendSecretEnter = 'Enter True Friend Code'
+FriendSecretCancel = lCancel
+FriendSecretGettingSecret = 'Getting True Friend Code. . .'
+FriendSecretGotSecret = "Here is your new True Friend Code.  Be sure to write it down!\n\nYou may give this True Friend Code to one person only.  Once someone types in your True Friend Code, it will not work for anyone else.  If you want to give a True Friend Code to more than one person, get another True Friend Code.\n\nThe True Friend Code will only work for the next two days.  Your friend will have to type it in before it goes away, or it won't work.\n\nYour True Friend Code is:"
+FriendSecretTooMany = "Sorry, you can't have any more True Friend Codes today.  You've already had more than your fair share!\n\nTry again tomorrow."
+FriendSecretTryingSecret = 'Trying True Friend Code. . .'
+FriendSecretEnteredSecretSuccess = 'You are now True Friends with %s!'
+FriendSecretTimeOut = 'Sorry, secrets are not working right now.'
+FriendSecretEnteredSecretUnknown = "That's not anyone's True Friend Code.  Are you sure you spelled it correctly?\n\nIf you did type it correctly, it may have expired.  Ask your friend to get a new True Friend Code for you (or get a new one yourself and give it to your friend)."
+FriendSecretEnteredSecretFull = "You can't be friends with %s because one of you has too many friends on your friends list."
+FriendSecretEnteredSecretFullNoName = "You can't be friends because one of you has too many friends on your friends list."
+FriendSecretEnteredSecretSelf = 'You just typed in your own True Friend Code!  Now no one else can use that True Friend Code.'
+FriendSecretEnteredSecretWrongProduct = "You have entered the wrong type of True Friend Code.\nThis game uses codes that begin with '%s'."
+FriendSecretNowFriends = 'You are now True Friends with %s!'
+FriendSecretNowFriendsNoName = 'You are now True Friends!'
+FriendSecretDetermineSecret = 'What type of True Friend would you like to make?'
+FriendSecretDetermineSecretAvatar = 'Avatar'
+FriendSecretDetermineSecretAvatarRollover = 'A friend only in this game'
+FriendSecretDetermineSecretAccount = 'Account'
+FriendSecretDetermineSecretAccountRollover = 'A friend across the Toontown Rewritten network'
+GuildMemberTitle = 'Member Options'
+GuildMemberPromote = 'Make Officer'
+GuildMemberPromoteInvite = 'Make Veteran'
+GuildMemberDemoteInvite = 'Demote to Veteran'
+GuildMemberGM = 'Make Guildmaster'
+GuildMemberGMConfirm = 'Confirm'
+GuildMemberDemote = 'Demote to Member'
+GuildMemberKick = 'Remove Member'
+GuildMemberCancel = lCancel
+GuildMemberOnline = 'has come online.'
+GuildMemberOffline = 'has gone offline.'
+GuildPrefix = '(G):'
+GuildNewMember = 'New Guild Member'
+GuildMemberUnknown = 'Unknown'
+GuildMemberGMMessage = 'Warning! Would you like to give up leadership of your guild and make %s your guild master?\n\nYou will become an officer'
+GuildInviteeOK = lOK
+GuildInviteeNo = lNo
+GuildInviteeInvitation = '%s is inviting you to join %s.'
+GuildRedeemErrorInvalidToken = 'Sorry, that code is invalid. Please try again.'
+GuildRedeemErrorGuildFull = 'Sorry, this guild has too many members already.'
 FriendInviteeTooManyFriends = '%s would like to be your friend, but you already have too many friends on your list!'
 FriendInviteeInvitation = '%s would like to be your friend.'
+FriendInviteeInvitationPlayer = "%s's player would like to be your friend."
+FriendNotifictation = '%s is now your friend.'
 FriendInviteeOK = lOK
 FriendInviteeNo = lNo
+GuildInviterWentAway = '%s is no longer present.'
+GuildInviterAlready = '%s is already in a guild.'
+GuildInviterBusy = '%s is busy right now.'
+GuildInviterNotYet = 'Invite %s to join your guild?'
+GuildInviterCheckAvailability = 'Inviting %s to join your guild.'
+GuildInviterOK = lOK
+GuildInviterNo = lNo
+GuildInviterCancel = lCancel
+GuildInviterYes = lYes
+GuildInviterTooFull = 'Guild has reached maximum size.'
+GuildInviterNo = lNo
+GuildInviterClickToon = 'Click on the pirate you would like to invite.'
+GuildInviterTooMany = 'This is a bug'
+GuildInviterNotAvailable = '%s is busy right now; try again later.'
+GuildInviterGuildSaidNo = '%s has declined your guild invitation.'
+GuildInviterAlreadyInvited = '%s has already been invited.'
+GuildInviterEndGuildship = 'Remove %s from the guild?'
+GuildInviterFriendsNoMore = '%s has left the guild.'
+GuildInviterSelf = 'You are already in the guild!'
+GuildInviterIgnored = '%s is ignoring you.'
+GuildInviterAsking = 'Asking %s to join the guild.'
+GuildInviterGuildSaidYes = '%s has joined the guild!'
+GuildInviterFriendKickedOut = '%s has kicked out %s from the Guild.'
+GuildInviterFriendKickedOutP = '%s have kicked out %s from the Guild.'
+GuildInviterFriendInvited = '%s has invited %s to the Guild.'
+GuildInviterFriendInvitedP = '%s have invited %s to the Guild.'
+GuildInviterFriendPromoted = '%s has promoted %s to the rank of %s.'
+GuildInviterFriendPromotedP = '%s have promoted %s to the rank of %s.'
+GuildInviterFriendDemoted = '%s has demoted %s to the rank of %s.'
+GuildInviterFriendDemotedP = '%s have demoted %s to the rank of %s.'
+GuildInviterFriendPromotedGM = '%s has named %s as the new %s'
+GuildInviterFriendPromotedGMP = '%s have named %s as the new %s'
+GuildInviterFriendDemotedGM = '%s has been named by %s as the new GuildMaster who became the rank of %s'
+GuildInviterFriendDemotedGMP = '%s have been named by %s as the new GuildMaster who beaome the rank of %s'
 FriendOnline = 'has come online.'
 FriendOffline = 'has gone offline.'
 FriendInviterOK = lOK
@@ -244,9 +438,13 @@ FriendInviterNo = lNo
 FriendInviterClickToon = 'Click on the toon you would like to make friends with.'
 FriendInviterTooMany = 'You have too many friends on your list to add another one now. You will have to remove some friends if you want to make friends with %s.'
 FriendInviterToonTooMany = 'You have too many toon friends on your list to add another one now. You will have to remove some toon friends if you want to make friends with %s.'
+FriendInviterPlayerTooMany = 'You have too many player friends on your list to add another one now. You will have to remove some player friends if you want to make friends with %s.'
 FriendInviterNotYet = 'Would you like to make friends with %s?'
 FriendInviterCheckAvailability = 'Seeing if %s is available.'
 FriendInviterNotAvailable = '%s is busy right now; try again later.'
+FriendInviterCantSee = 'This only works if you can see %s.'
+FriendInviterNotOnline = 'This only works if %s is online'
+FriendInviterNotOpen = '%s does not have open chat, use secrets to make friends'
 FriendInviterWentAway = '%s went away.'
 FriendInviterAlready = '%s is already your friend.'
 FriendInviterAlreadyInvited = '%s has already been invited.'
@@ -259,11 +457,15 @@ FriendInviterSelf = "You are already 'friends' with yourself!"
 FriendInviterIgnored = '%s is ignoring you.'
 FriendInviterAsking = 'Asking %s to be your friend.'
 FriendInviterFriendSaidYes = 'You are now friends with %s!'
+FriendInviterPlayerFriendSaidYes = "You are now friends with %s's player, %s!"
 FriendInviterFriendSaidNo = '%s said no, thank you.'
 FriendInviterFriendSaidNoNewFriends = "%s isn't looking for new friends right now."
 FriendInviterOtherTooMany = '%s has too many friends already!'
 FriendInviterMaybe = '%s was unable to answer.'
 FriendInviterDown = 'Cannot make friends now.'
+TalkGuild = 'G'
+TalkParty = 'P'
+TalkPVP = 'PVP'
 AntiSpamInChat = '***Spamming***'
 IgnoreConfirmOK = lOK
 IgnoreConfirmCancel = lCancel
@@ -299,15 +501,7 @@ EmoteList = ['Wave',
  'Cry',
  'Delighted',
  'Furious',
- 'Laugh',
- 'Taunt',
- 'Rage',
- 'Greened',
- 'Melt',
- 'Cheer',
- 'Duck',
- 'Levitate',
- 'Teleport']
+ 'Laugh']
 EmoteWhispers = ['%s waves.',
  '%s is happy.',
  '%s is sad.',
@@ -332,15 +526,7 @@ EmoteWhispers = ['%s waves.',
  '%s is crying.',
  '%s is delighted.',
  '%s is furious.',
- '%s is laughing.',
- '%s is taunting.',
- '%s is raging.',
- '%s is greened.',
- '%s is melting.',
- '%s is cheering.',
- '%s is ducking.',
- '%s is leviating.',
- '%s is teleporting.']
+ '%s is laughing.']
 EmoteFuncDict = {'Wave': 0,
  'Happy': 1,
  'Sad': 2,
@@ -366,148 +552,105 @@ EmoteFuncDict = {'Wave': 0,
  'Delighted': 22,
  'Furious': 23,
  'Laugh': 24,
- 'Taunt': 25,
- 'Rage': 26,
- 'Greened': 27,
- 'Melt': 28,
- 'Cheer': 29,
- 'Duck': 30,
- 'Levitate': 31,
- 'Teleport': 32}
+ 'Sing Note G1': 25,
+ 'Sing Note A': 26,
+ 'Sing Note B': 27,
+ 'Sing Note C': 28,
+ 'Sing Note D': 29,
+ 'Sing Note E': 30,
+ 'Sing Note F': 31,
+ 'Sing Note G2': 32}
 SuitBrushOffs = {'f': ["I'm late for a meeting."],
  'p': ['Push off.'],
  'ym': ['Yes Man says NO.'],
- 'tf': ['Which face are you talking to?'],               
  None: ["It's my day off.",
         "I believe you're in the wrong office.",
         'Have your people call my people.',
         "You're in no position to meet with me.",
-        'Talk to my assistant.',
-        "I'll pretend I don't see you Toon.",
-        "There's a restraining order coming your way."]}
-SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
-       "I'm going to make you a sore loser.",
+        'Talk to my assistant.']}
+SuitFaceoffTaunts = {'b': ['Would you like to make a donation?',
+       "This may make you a sore loser.",
        "I'm going to leave you high and dry.",
-       'I\'m "A Positive" I\'m going to win.',
+       'I\'m "Positive" this will go well.',
        '"O" don\'t be so "Negative".',
-       "I'm surprised you found me, I'm very mobile.",
+       "I'm surprised you found me - I'm very mobile.",
        "I'm going to need to do a quick count on you.",
        "You're soon going to need a cookie and some juice.",
        "When I'm through you'll need to lie down.",
        'This will only hurt for a second.',
-       "I'm going to make you dizzy.",
-       "Good timing, I'm a pint low.",
-       "You'll B the opposite of A happy toon when I'm finished with you."],
+       "This might make you dizzy.",
+       "Good timing, I'm a pint low."],
  'm': ["You don't know who you're mingling with.",
        'Ever mingle with the likes of me?',
        'Good, it takes two to mingle.',
        "Let's mingle.",
-       'You;re mingling with pure evil here.', 
        'This looks like a good place to mingle.',
        "Well, isn't this cozy?",
-       'Let me introduce myself.',
-       "You're mingling with defeat.",
+       "Let me introduce myself.",
        "I'm going to mingle in your business.",
-       "Are you sure you're ready to mingle?"
-       "Enough with the games, let's mingle.",
-       'I think you and I will get along well.'],
-'sw': ["I'll buy your house for what it's worth: One Penny.",
-       "All Toons like you destroy our precious cog buildings!"],            
+       "Are you sure you're ready to mingle?",
+       "Enough with the chit chat, let's mingle.",
+       "I think you and I will get along well."],
  'ms': ['Get ready for a shake down.',
         'You had better move out of the way.',
         'Move it or lose it.',
-        "I believe it's my move.",
         "I believe it's your move.",
         'This should shake you up.',
-        'Move it now!', 
         'Prepare to be moved.',
-        'Move outta my way toon!', 
-        "Glad I found you! You're my ticket to move up the corporate ladder.", 
         "I'm ready to make my move.",
-        "Watch it, Toon - you're on shaky ground.",
+        "Watch it, toon - you're on shaky ground.",
         'This will be a moving moment.',
-        'I feel moved to defeat you.',
+        'I feel moved to speak with you.',
         'Are you shaking yet?',
         "Careful, you don't want to shake up the wrong people."],
  'hh': ["I'm way ahead of you.",
-        "You're headed for trouble.",
+        "You're headed for trouble if you keep that up.",
         "You'll wish this was all in your head.",
-        "Oh good, I've been hunting for a Toon like you.",
+        "Oh good, I've been hunting for a toon like you.",
         "I'll have your head for this.",
-        'Heads up!',
-        'I have some job openings that fit your head well.',
+        'Heads up: there are some job openings that suit you.',
         "Looks like you've got a head for trouble.",
-        'Headed my way? Let me check your references.',
+        'Headed my way? Let me check your resume.',
         'A perfect trophy for my desk.',
-        "You're going to have such a headache.",
+        'You are going to have such a headache after the paperwork.',
         "Don't lose your head over me."],
  'tbc': ["I'm swissly surprised you came to someone my level.",
          'You can call me Jack.',
          'Are you sure?  I can be such a Muenster at times.',
          'Finally. I was afraid you were stringing me along.',
          "Let's cut the cheesy lines and get down to business.",
-         "Don't you think I've aged well?",
+         "Oh, good to see you. Don't you think I've aged well?",
          "I'm going to make mozzarella outta ya.",
-         "I've been told I'm very strong.",
-         'Careful, I know your expiration date.',
-         "Watch out, I'm a whiz at this game.",
-         'Ending you will be a brieeze.',
+         "Strange to see you try. I've been told I'm very strong.",
+         'Watch it, toon. I can assign your expiration date.',
+         "Stepping up the ladder, eh? I'm a whiz at this game.",
+         'Finishing this will be a brieeze.',
          "I hope I'm not too sharp for you.",
-         'A Toon, you say? Teleme more.',
-         'Grate timing, I was just about to send my Flunkies.'],
-'hho': ["Let's make this quick. I am late for the board meeting.",
-        "I won't stand for this nonsense. I'll sit.",
-        "Can't take the heat? Stay out of the board meeting.",
-        "I like to sit in my boss's chair when he isn't looking.",
-        "I will always stand by my boss's side.",
-        "My boss sits on a big throne as he the boss of all Cogs.", 
-        "Move it Toon! You're a sitting duck.",
-        "My boss calls me a 'Chair Warmer' sometimes because I sit on my days off.",
-        "Sit down and let me lecture you on why your town belongs to us.",
-        "You've just reached the top of the totem pole."],
- 'cr': ['RAID!',
-        'Ahoy matey! Prepare to be raided.',
-        "I do what I want 'cause a pirate is free, I am a pirate!",
-        "Why shiver me timbers! I didn't see ye.",
-        "I'll feed ye to the 'Loan Sharks.'",
-        'Piracy is the way o life. Ahoy.',
-        'Prepare for yer doom scallywag.',
-        "Arrgh! Ye don't fit in me corporation.",
-        'Time for ye walk the plank.', 
-        "I will send ye to Davy Jones' Locker.",
-        'Why are we pirates better than every one else? We just Arrr.',
-        'Looks like yer primed for a take-over.',
-        'Arrgh! That is not a proper corporate attire.',
-        "Yer looking rather vulnerable.",
-        'Time to sign over ye assets.',
-        "I'm on a toon removal crusade.",
-        'Avast! Yer defenseless against me ideas.',
-        "Relax, ye will find this is for the best."],
-'ca': ['There are pros and cons to me fighting you. The pro is I win, the con is I lose.',
-        'Conning toons out of their happiness is the best thing for me.'],  
+         'A toon, you say? Teleme more.',
+         "Grate timing, I was just about to send my Flunkies."],
+ 'cr': ["You don't fit in my corporation.",
+        "I'll have to speak to the Downsizers about you.",
+        "Looks like you're primed for a take-over.",
+        'That is not proper corporate attire.',
+        "Your approach is looking rather vulnerable.",
+        'Are you here to sign over your assets?',
+        "At this rate I'll need to liquidate toons from the picture.",
+        'You are defenseless against my ideas.',
+        "Relax, you'll find this is for the best."],
  'mh': ['Are you ready for my take?',
         'Lights, camera, action!',
-        "Let's start rolling.",
-        'My teeth are brighter than your future.',
-        'There you are! Today the role of defeated Toon will be played by - YOU!',
+        "Let's get this show rolling.",
+        "There you are! Today, you'll be playing the role of the defeated Toon.",
         'This scene will go on the cutting room floor.',
         'I already know my motivation for this scene.',
         'Are you ready for your final scene?',
+        "I'm afraid I need to cut you from the credits.",
         "I'm ready to roll your end credits.",
         'I told you not to call me.',
-        'I rate you one star.',
-        "I'm afraid I'm going to have to cut you from the credits.",
         "Let's get on with the show.",
-        "There's no business like Hollywood!",
-        "I hope you don't forget your lines."],
- 'txm' :['Prepare for a Nuclear meltdown.',
-         'My attacks are toxic to Toons!',
-         "Some say my personality is quite 'explosive",
-         "My leadership skils are rather 'toxic'.",
-         'Hey, would you like some candy?',
-         'Careful. I am poisonous to Toons.',
-         'Radiation is my middle name!',
-         'Steer Nuclear!'],
+        "There's no business like it!",
+        "This will be the best act yet.",
+        "I hope you haven't forgotten your lines."],
  'nc': ['Looks like your number is up.',
         'I hope you prefer extra crunchy.',
         "Now you're really in a crunch.",
@@ -518,9 +661,6 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         'This will not be smooth.',
         'Go ahead, try and take a number.',
         'I could do with a nice crunch about now.'],
- 'cn': ["I say, a good ol' rowdy play is in order!",
-       "You seem to be in a spot of bother, don't yer know!",
-        'Would ye like a glass of defeat?'],
  'ls': ["It's time to collect on your loan.",
         "You've been on borrowed time.",
         'Your loan is now due.',
@@ -536,13 +676,12 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         'I can bag this.',
         'Paper or plastic?',
         'Do you have your baggage claim?',
-        "Remember, money won't make you happy.",
-        'Careful, I have some serious baggage.',
+        "I can guarantee money won't buy your happiness.",
+        "I hope you're prepared -- there's no such thing as easy money.",
         "You're about to have money trouble.",
         'Money will make your world go around.',
         "I'm too rich for your blood.",
         'You can never have too much money!'],
- 'mg': ["In case you didn't know, my boss designed me after a Magpie."],
  'rb': ["You've been robbed.",
         "I'll rob you of this victory.",
         "I'm a royal pain!",
@@ -553,14 +692,6 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         "I'm going to take everything you have.",
         'You could call this neighborhood robbery.',
         'You should know not to talk to strangers.'],
- 'bfh': ['How much will you pay me to spare you?',
-         "You're just fishing for some trouble.",
-         'You will find me swimming in cash!',
-         'All Toons are expendable.',
-         'I am bigger than any fish you will ever catch.',
-         "Something's rather fishy in here. No, its just me!",
-         "I've started over twenty business. Guess how much money I'm making?",
-         'Believe it or not, I am not as big as the money I make.'],
  'bs': ['Never turn your back on me.',
         "You won't be coming back.",
         'Take that back or else!',
@@ -571,8 +702,7 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         'Whoa, back up there toon.',
         'Let me get your back.',
         "You're going to have a stabbing headache soon.",
-        'I have perfect puncture.',
-        "Don't worry toon, you can always trust me."],
+        'I have perfect puncture.'],
  'bw': ["Don't brush me aside.",
         'You make my hair curl.',
         'I can make this permanent if you want.',
@@ -592,20 +722,11 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         'This is so much fun it should be illegal.',
         "Legally, you're too small to fight me.",
         'There is no limit to my talons.',
-        "I call this a citizen's arrest.",
-        "I've got the court under my wing."],
- 'br': ["This doesn't seem very legal to me.",
-        "According to my books, all Toons are guilty until proven innocent.",
-        'I will have you locked away Toon!',
-        'I find you in contempt of the court!', 
-        'I capture toons and cage them for the Vice President.',
-        "There are many laws in Toontown and you have broken one of them.",
-        'I find you guilty for illegally buying those gags.'],
+        "I call this a citizen's arrest."],
  'sd': ["You'll never know when I'll stop.",
         'Let me take you for a spin.',
         'The doctor will see you now.',
         "I'm going to put you into a spin.",
-        "Looks like you are diagnosed with happiness. Let me take care that.",
         'You look like you need a doctor.',
         'The doctor is in, the Toon is out.',
         "You won't like my spin on this.",
@@ -614,30 +735,28 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         'I have my own special spin on the subject.'],
  'f': ["I'm gonna tell the boss about you!",
        "I may be just a Flunky - But I'm real spunky.",
-       "I'm using you to step up the corporate ladder.",
+       "I'm going to need to use you to step up the corporate ladder.",
+       "My boss isn't happy with this fun of yours.",
        "You're not going to like the way I work.",
-       'The boss is counting on me to stop you.',
+       'The boss is counting on me to get you.',
        "You're going to look good on my resume.",
        "You'll have to go through me first.",
        "Let's see how you rate my job performance.",
-       'I excel at Toon disposal.',
-       "You're never going to meet my boss.",
-       "I'm sending you back to the Playground."],
- 'p': ["I'm gonna rub you out!",
-       'Careful, Toon. You can be easily erased.',
+       "You're never going to meet my boss."],
+ 'p': ["Careful toon, you can be easily erased.",
        "Hey, you can't push me around.",
        "I'm No.2!",
-       "I'm going to scratch you out.",
-       "I'll have to make my point more clear.",
-       'Let me get right to the point.',
-       "Let's hurry, I bore easily.",
-       'I hate it when things get dull.',
-       'So you want to push your luck?',
-       'Did you pencil me in?',
-       'Careful, I may leave a mark.'],
+       "I'm going to scratch you out if you keep this up.",
+       "Approaching me? I'll have to make my point more clear.",
+       "Let's get right to the point.'"
+       "Get on with it already, I bore easily.",
+       "Dull? That's what I do best.",
+       "So you're trying to push your luck?",
+       'Let me pencil you in.',
+       'Watch it, I may leave a mark.'],
  'ym': ["I'm positive you're not going to like this.",
         "I don't know the meaning of no.",
-        'Want to meet? I say yes, anytime.',
+        'Want to meet?  I say yes, anytime.',
         'You need some positive enforcement.',
         "I'm going to make a positive impression.",
         "I haven't been wrong yet.",
@@ -652,7 +771,6 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         "I want the job done right, so I'll do it myself.",
         'You need someone to manage your assets.',
         'Oh good, a project.',
-        'I could probably manage things better than my boss.', 
         "Well, you've managed to find me.",
         'I think you need some managing.',
         "I'll take care of you in no time.",
@@ -660,13 +778,12 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         'Are you sure you want to do this?',
         "We're going to do this my way.",
         "I'm going to be breathing down your neck.",
-        'I can be very intimidating.',
-        "I've been searching for my growth spurt."],
- 'ds': ["You're going down!",
-        'Your options are shrinking.',
+        'I can be very intimidating.'],
+ 'ds': ["You're going down, in a literal sense.",
+        "Your options are shrinking.",
         'Expect diminishing returns.',
         "You've just become expendable.",
-        "Don't ask me to lay off.",
+        "Lay off? Don't tell me to lay off.",
         'I might have to make a few cutbacks.',
         'Things are looking down for you.',
         'Why do you look so down?'],
@@ -678,27 +795,17 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         "Hold the phone -- I'm here.",
         'Have you been waiting for my call?',
         "I was hoping you'd answer my call.",
-        "I'm going to cause a ringing sensation.",
         'I always make my calls direct.',
         'Boy, did you get your wires crossed.',
         'This call is going to cost you.',
         "You've got big trouble on the line."],
-'mdm': ["Whether you're left or right, I'll always be in the middle.",
-        "Out of the way Toon! You're in the middle of my way.",
-        "The right is too large, the left is too small, but the middle is just right.",
-        'Winning is my middle name.',
-        "I may be in the middle, but you're at the end of the line.",
-        "You're going to wish you haven't meddled with this middleman",
-        "Can't you see I'm in the middle of something?",
-        "You'll regret the beginning, middle, and end.",],                   
  'tm': ['I plan on making this inconvenient for you.',
         'Can I interest you in an insurance plan?',
         'You should have missed my call.',
-        "You won't be able to get rid of me now.",
-        'This a bad time? Good.',
-        "Doesn't me always calling your house annoy you? Good.",
         "Caller ID can't stop me.",
-        'I was planning on running into you.',
+        "You won't be able to get rid of me now.",
+        'Is this a bad time?  Good.',
+        "I've been planning on running into you.",
         'I will be reversing the charges for this call.',
         'I have some costly items for you today.',
         'Too bad for you - I make house calls.',
@@ -707,17 +814,12 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
  'nd': ['In my opinion, your name is mud.',
         "I hope you don't mind if I drop your name.",
         "Haven't we met before?",
-        'I even know your real name.',
-        "I even know the boss's name",
-        'Even the boss knows my name.',
-        'Name me one good thing you Toons have done.', 
         "Let's hurry, I'm having lunch with 'Mr. Hollywood.'",
         "Have I mentioned I know 'The Mingler?'",
         "You'll never forget me.",
-        'I know the name of every Toon and Cog in Toontown.', 
         'I know all the right people to bring you down.',
-        "I think I'll just drop in.",
-        "I'm in the mood to drop some Toons.",
+        "How convenient of you to drop in.",
+        "Even the boss knows my name.",
         "You name it, I've dropped it."],
  'gh': ['Put it there, Toon.',
         "Let's shake on it.",
@@ -726,14 +828,12 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         "Let's seal the deal.",
         "Let's get right to the business at hand.",
         "Off handedly I'd say, you're in trouble.",
-        'How handy of you to run into me.',
         "You'll find I'm a handful.",
-        'I can be quite handy.',
-        "I'm a very hands-on kinda guy.",
+        'How handy of you to run into me.',
+        "I'm a very hands-on kind of cog.",
         'Would you like some hand-me-downs?',
         'Let me show you some of my handiwork.',
-        'I think the handwriting is on the wall.',
-        "I'll gladly handle your gags for you."],
+        'I think the handwriting is on the wall.'],
  'sc': ['I will make short work of you.',
         "You're about to have money trouble.",
         "You're about to be overcharged.",
@@ -741,25 +841,20 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         "I'll be done with you in short order.",
         "You'll soon experience a shortfall.",
         "Let's make this a short stop.",
-        'I am going to make you short-circuit.', 
-        'Your time with me will be short-lived.',
-        'I blame you toons for all of my short-comings.', 
         "I think you've come up short.",
         'I have a short temper for Toons.',
         "I'll be with you shortly.",
-        "You're about to be shorted.",
-        "Well, aren't you a little short on your changes?"],
+        "You're about to be shorted."],
  'pp': ['This is going to sting a little.',
         "I'm going to give you a pinch for luck.",
         "You don't want to press your luck with me.",
         "I'm going to put a crimp in your smile.",
         'Perfect, I have an opening for you.',
         'Let me add my two cents.',
-        'Prepare to be pinched!',
         "I've been asked to pinch-hit.",
         "I'll prove you're not dreaming.",
         'Heads you lose, tails I win.',
-        'A penny for your gags.'],
+        'A Penny for your gags.'],
  'tw': ['Things are about to get very tight.',
         "That's Mr. Tightwad to you.",
         "I'm going to cut off your funding.",
@@ -768,7 +863,6 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         "You'll find I'm very tightfisted.",
         "You're in a tight spot.",
         'Prepare to walk a tight rope.',
-        'I hate spending my money on things.', 
         'I hope you can afford this.',
         "I'm going to make this a tight squeeze.",
         "I'm going to make a big dent in your budget."],
@@ -776,7 +870,6 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         'You can count on me to make you pay.',
         'Bean there, done that.',
         'I can hurt you where it counts.',
-        "I've bean told I look a lot like 'Downsizer'.", 
         'I make every bean count.',
         'Your expense report is overdue.',
         'Time for an audit.',
@@ -804,8 +897,7 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
         'Which face would you like to defeat you?',
         "I'm 'two' much for you.",
         "You don't know who you're facing.",
-        'Are you ready to face your doom?',
-        "My eyes are on you."],
+        'Are you ready to face your doom?'],
  'dt': ["I'm gonna give you double the trouble.",
         'See if you can stop my double cross.',
         'I serve a mean double-\x04DECKER.',
@@ -833,157 +925,141 @@ SpeedChatStaticTextCommon = {1: lYes,
  3: lOK,
  4: 'SPEEDCHAT PLUS'}
 SpeedChatStaticTextToontown = {100: 'Hi!',
- 101: 'Hello!',
- 102: 'Hi there!',
- 103: 'Hey!',
- 104: 'Howdy!',
+ 101: 'Heya!',
+ 102: 'Hello!',
+ 103: 'Howdy!',
+ 104: 'Hi there!',
  105: 'Hi everybody!',
  106: 'Welcome to Toontown!',
- 107: "What's up?",
- 108: 'How are you doing?',
- 109: 'Hello?',
+ 107: 'Hello?',
+ 108: 'Are you still here?',
  200: 'Bye!',
  201: 'Later!',
  202: 'See ya!',
- 203: 'Have a nice day!',
- 204: 'Have fun!',
- 205: 'Good luck!',
+ 203: 'Have fun!',
+ 204: 'Good luck!',
+ 205: 'Have a nice day!',
  206: "I'll be right back.",
- 207: 'I need to go.',
- 208: "I'll be back later!",
- 209: 'I only have a few minutes.',
- 300: ':-)',
- 301: 'Yay!',
+ 207: "I'll be back later!",
+ 208: 'I need to go soon.',
+ 209: 'I need to go.',
+ 300: 'Yay!',
+ 301: 'Owooo!',
  302: 'Hooray!',
- 303: 'Cool!',
+ 303: 'Yippee!',
  304: 'Woo hoo!',
- 305: 'Yeah!',
- 306: 'Ha ha!',
- 307: 'Hee hee!',
- 308: 'Wow!',
- 309: 'Great!',
- 310: 'Whee!',
- 311: 'Oh boy!',
- 312: 'Whoopee!',
- 313: 'Yippee!',
- 314: 'Yee hah!',
- 315: 'Toontastic!',
- 400: ':-(',
+ 305: 'Yee hah!',
+ 306: 'Wow!',
+ 307: 'Cool!',
+ 308: 'Sweet!',
+ 309: 'Oh boy!',
+ 310: 'Heh.',
+ 311: 'Haha!',
+ 312: 'Hee hee.',
+ 313: 'BWAH HA HA!',
+ 400: 'Uh oh!',
  401: 'Oh no!',
- 402: 'Uh oh!',
- 403: 'Rats!',
- 404: 'Drat!',
+ 402: 'Yikes!',
+ 403: 'Drat!',
+ 404: 'Rats!',
  405: 'Ouch!',
  406: 'Oof!',
  407: 'No!!!',
- 408: 'Yikes!',
- 409: 'Huh?',
- 410: 'I need more Laff points.',
  500: 'Thanks!',
- 501: 'No problem.',
- 502: "You're welcome!",
- 503: 'Any time!',
- 504: 'No thank you.',
- 505: 'Good teamwork!',
- 506: 'That was fun!',
- 507: 'Please be my friend!',
+ 501: 'No thank you.',
+ 502: 'Any time!',
+ 503: 'No problem.',
+ 504: "You're welcome!",
+ 505: 'That was fun!',
+ 506: 'Good teamwork!',
+ 507: 'You guys are great!',
  508: "Let's work together!",
- 509: 'You guys are great!',
- 510: 'Are you new here?',
- 511: 'Did you win?',
- 512: 'I think this is too risky for you.',
- 513: 'Would you like some help?',
- 514: 'Can you help me?',
- 515: 'Have you been here before?',
- 600: 'You look nice.',
+ 509: 'Would you like some help?',
+ 510: 'Want to be friends?',
+ 511: 'Can you help me?',
+ 600: 'You rock!',
  601: 'You are awesome!',
- 602: 'You rock!',
- 603: 'You are a genius!',
+ 602: 'You are a genius!',
+ 603: 'You are a great friend!',
  700: 'I like your name.',
- 701: 'I like your look.',
+ 701: 'I like your style.',
  702: 'I like your shirt.',
  703: 'I like your skirt.',
  704: 'I like your shorts.',
- 705: 'I like this game!',
+ 705: 'I like your hat.',
+ 706: 'I like your shoes.',
+ 707: 'I like your accessories.',
  800: 'Sorry!',
- 801: 'Oops!',
- 802: "Sorry, I'm busy fighting Cogs!",
- 803: "Sorry, I'm busy getting Jellybeans!",
- 804: "Sorry, I'm busy completing a ToonTask!",
- 805: 'Sorry, I had to leave unexpectedly.',
- 806: 'Sorry, I was delayed.',
- 807: "Sorry, I can't.",
- 808: "I couldn't wait any longer.",
- 809: "I can't understand you.",
- 810: 'Use the %s.' % GlobalSpeedChatName,
- 811: "Sorry, I'm busy fishing!",
- 812: "Sorry, I'm in a building!",
- 813: "Sorry, I'm helping a friend!",
- 814: "Sorry, I'm busy kart racing!",
+ 801: "Sorry, I can't.",
+ 802: 'Sorry, I was delayed.',
+ 803: 'Sorry, I had to leave unexpectedly.',
+ 804: "Sorry, I hit the wrong button.",
+ 805: 'Sorry, my Friends List is full.',
+ 806: "Sorry, I can't understand you.",
+ 807: "Sorry, what did you say?",
+ 808: 'I can only use %s.' % GlobalSpeedChatName,
+ 809: "Sorry, I'm busy right now. Maybe later?",
+ 810: "Sorry, I can't talk right now!",
+ 811: "Sorry, I'm in a building!",
+ 812: "Sorry, I'm in a Cog battle!",
+ 813: "Sorry, I'm busy fishing!",
+ 814: "Sorry, I'm busy golfing!",
  815: "Sorry, I'm busy gardening!",
- 816: "I can't get on the elevator now.",
- 817: "Sorry, I'm busy golfing!",
- 818: 'Sorry, my Friends List is full.',
+ 816: "Sorry, I'm busy kart racing!",
+ 817: "Sorry, I'm busy helping a friend!",
+ 818: "Sorry, I'm busy riding the Trolley!",
+ 819: "Sorry, I'm busy completing a ToonTask!",
  900: 'Hey!',
- 901: 'Please go away!',
+ 901: 'You stink!',
  902: 'Stop that!',
- 903: "That wasn't nice!",
+ 903: 'Please go away!',
  904: "Don't be mean!",
- 905: 'You stink!',
- 906: 'Send a bug report.',
- 907: "I'm stuck.",
+ 905: "That wasn't nice!",
  1000: "Let's go!",
- 1001: 'Can you teleport to me?',
- 1002: 'Shall we go?',
- 1003: 'Where should we go?',
+ 1001: 'This way.',
+ 1002: 'Meet here.',
+ 1003: 'Follow me.',
  1004: 'Which way?',
- 1005: 'This way.',
- 1006: 'Follow me.',
- 1007: 'Wait for me!',
- 1008: "Let's wait for my friend.",
- 1009: "Let's find other Toons.",
- 1010: 'Wait here.',
- 1011: 'Wait a minute.',
- 1012: 'Meet here.',
- 1013: 'Can you come to my house?',
- 1014: "Don't wait for me.",
- 1015: 'Wait!',
- 1016: 'Come check out my garden.',
- 1017: "Let's catch the next one.",
- 1100: "Let's go on the trolley!",
- 1101: "Let's go back to the playground!",
- 1102: "Let's go fight the %s!" % Cogs,
- 1103: "Let's go take over a %s building!" % Cog,
- 1104: "Let's go in the elevator!",
+ 1005: 'Shall we go?',
+ 1006: 'Where should we go?',
+ 1007: 'Can you teleport to me?',
+ 1008: "Let's find other Toons.",
+ 1100: "Let's go fishing!",
+ 1101: "Let's go play golf!",
+ 1102: "Let's go kart racing!",
+ 1103: "Let's go on the trolley!",
+ 1104: "Let's go back to the playground!",
  1105: "Let's go to %s!" % lToontownCentral,
  1106: "Let's go to %s!" % lDonaldsDock,
  1107: "Let's go to %s!" % lMinniesMelodyland,
  1108: "Let's go to %s!" % lDaisyGardens,
  1109: "Let's go to %s!" % lTheBrrrgh,
  1110: "Let's go to %s!" % lDonaldsDreamland,
- 1111: "Let's go to %s!" % lGoofySpeedway,
- 1112: "Let's go to %s!" % lFunnyFarm,
- 1113: "Let's go to my house!",
- 1114: "Let's go to your house!",
- 1115: "Let's go to Sellbot HQ!",
+ 1111: "Let's go to Acorn Acres!",
+ 1112: "Let's go fight the %s!" % Cogs,
+ 1113: "Let's go in the elevator!",
+ 1114: "Let's go take over a %s building!" % Cog,
+ 1115: "Let's go take over a Field Office!",
  1116: "Let's go fight the VP!",
- 1117: "Let's go in the Factory!",
- 1118: "Let's go fishing!",
- 1119: "Let's go fishing at my house!",
- 1120: "Let's go to Cashbot HQ!",
- 1121: "Let's go fight the CFO!",
- 1122: "Let's go in the Mint!",
- 1123: "Let's go to Lawbot HQ!",
- 1124: "Let's go fight the Chief Justice!",
- 1125: "Let's go in the District Attorney's Office!",
- 1126: "Let's go to %s!" % lOutdoorZone,
- 1127: "Let's go to %s!" % lGolfZone,
- 1128: "Let's go to Bossbot HQ!",
- 1129: "Let's go to Cog Nation!",                              
- 1130: "Let's go fight the CEO!",
- 1131: "Let's go fight the Chairman!",                               
- 1132: "Let's go in the Cog Golf Courses!",
- 1133: "Let's go take over a Field Office!",
+ 1117: "Let's go fight the CFO!",
+ 1118: "Let's go fight the CJ!",
+ 1119: "Let's go fight the CEO!",
+ 1120: "Let's go in the Sellbot Factory!",
+ 1121: "Let's go in the Cashbot Mint!",
+ 1122: "Let's go in the Lawbot DA's Office!",
+ 1123: "Let's go in the Bossbot Golf Courses!",
+ 1124: "Let's go to my house!",
+ 1125: "Let's go to your house!",
+ 1126: 'Can you come to my house?',
+ 1127: 'Come check out my garden.',
+ 1128: "Let's go fishing at my house!",
+ 1130: 'Wait!',
+ 1131: 'Wait here.',
+ 1132: 'Wait for me!',
+ 1133: 'Wait a minute.',
+ 1134: "Don't wait for me.",
+ 1135: "Let's catch the next one.",
+ 1136: "Let's wait for my friend.",
  1200: 'What ToonTask are you working on?',
  1201: "Let's work on that.",
  1202: "This isn't what I'm looking for.",
@@ -997,48 +1073,45 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  1210: 'I need more Cogbucks.',
  1211: 'I need more Jury Notices.',
  1212: 'I need more Stock Options.',
- 1213: 'I need to complete my Pie Chart.',                              
- 1214: 'I need more Cashbot Suit Parts.',
- 1215: 'I need more Lawbot Suit Parts.',
- 1216: 'I need more Bossbot Suit Parts.',
- 1217: 'I need more Boardbot Suit Parts.',                               
+ 1213: 'I need more Cashbot Suit Parts.',
+ 1214: 'I need more Lawbot Suit Parts.',
+ 1215: 'I need more Bossbot Suit Parts.',
  1299: 'I need to get a ToonTask.',
  1300: 'I think you should choose Toon-up.',
  1301: 'I think you should choose Sound.',
  1302: 'I think you should choose Drop.',
  1303: 'I think you should choose Trap.',
  1304: 'I think you should choose Lure.',
- 1400: 'Hurry!',
- 1401: 'Nice shot!',
- 1402: 'Nice gag!',
- 1403: 'Missed me!',
- 1404: 'You did it!',
- 1405: 'We did it!',
- 1406: 'Bring it on!',
- 1407: 'Piece of cake!',
- 1408: 'That was easy!',
- 1409: 'Run!',
- 1410: 'Help!',
- 1411: 'Phew!',
- 1412: 'We are in trouble.',
- 1413: 'I need more gags.',
- 1414: 'I need a Toon-Up.',
- 1415: 'You should pass.',
- 1416: 'We can do this!',
- 1500: "Let's use toon-up!",
- 1501: "Let's use trap!",
- 1502: "Let's use lure!",
- 1503: "Let's use sound!",
- 1504: "Let's use throw!",
- 1505: "Let's use squirt!",
- 1506: "Let's use drop!",
- 1520: 'Rock and roll!',
- 1521: "That's gotta hurt.",
- 1522: 'Catch!',
- 1523: 'Special delivery!',
- 1524: 'Are you still here?',
- 1525: "I'm SO scared!",
- 1526: "That's going to leave a mark!",
+ 1400: 'We can do this!',
+ 1401: 'You did it!',
+ 1402: 'We did it!',
+ 1403: 'Run!',
+ 1404: 'Help!',
+ 1405: 'Hurry!',
+ 1406: 'We are in trouble.',
+ 1500: 'Got gags?',
+ 1501: 'I need more gags.',
+ 1502: 'I have enough gags.',
+ 1503: 'You need more gags.',
+ 1504: "Let's use toon-up!",
+ 1505: "Let's use trap!",
+ 1506: "Let's use lure!",
+ 1507: "Let's use sound!",
+ 1508: "Let's use throw!",
+ 1509: "Let's use squirt!",
+ 1510: "Let's use drop!",
+ 1415: 'I need a Toon-Up.',
+ 1416: 'You should pass.',
+ 1520: 'Catch!',
+ 1521: 'Missed me!',
+ 1522: 'Bring it on!',
+ 1523: "I'm SO scared!",
+ 1524: 'Rock and roll!',
+ 1525: 'That was easy!',
+ 1526: 'Piece of cake!',
+ 1527: 'Special delivery!',
+ 1528: "That's gotta hurt.",
+ 1529: "That's going to leave a mark!",
  1550: "I'm going to use trap.",
  1551: "I'm going to use lure.",
  1552: "I'm going to use drop.",
@@ -1049,13 +1122,12 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  1557: 'Go for the strongest Cog first.',
  1558: 'Save your powerful gags.',
  1559: "Don't use sound on lured Cogs.",
- 1600: 'I have enough gags.',
- 1601: 'I need more jellybeans.',
- 1602: 'Me too.',
- 1603: 'Hurry up!',
- 1604: 'One more?',
- 1605: 'Play again?',
- 1606: "Let's play again.",
+ 1600: 'One more?',
+ 1601: 'Play again?',
+ 1602: "Let's play again.",
+ 1603: "I like this game!",
+ 1604: "I'm not very good at this game.",
+ 1605: 'I need more jellybeans.',
  1700: "Let's split up.",
  1701: "Let's stay together.",
  1702: "Let's battle the Cogs.",
@@ -1367,86 +1439,109 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  5320: 'These fireworks are beautiful!',
  5321: 'Nice decorations.',
  5322: 'I wish I could eat this cake!',
+ 5400: "Welcome to Toontown Rewritten!",
+ 5401: "I'm glad Toontown is back.",
+ 5401: "Found any bugs yet?",
+ 5402: "How many times have you crashed?",
+ 5403: "Have you voted for the next update yet?",
+ 5404: "Do you have a Toonbook?",
+ 5405: "Smile! I'm livestreaming!",
+ 5406: "I'm stuck.",
+ 5407: "I think I found a bug.",
+ 5408: "I found a bug over here.",
+ 5409: "Be careful! That's buggy.",
+ 5410: "Sorry, my game crashed.",
+ 5411: "Send in a bug report.",
+ 5412: "I hope they fix that soon!",
+ 5500: ":)",
+ 5501: ":(",
+ 5502: ":D",
+ 5503: ":C",
+ 5504: ":O",
+ 5505: ":P",
+ 5506: ">:)",
+ 5507: ">:C",
+ 5600: "What's up?",
+ 5601: "How are you?",
+ 5602: "Having fun?",
+ 5603: "What do you want to do?",
+ 5604: "Have you been here before?",
+ 5700: "Toontastic!",
+ 5701: "Great!",
+ 5702: "Good.",
+ 5703: "Fine.",
+ 5800: "So-so.",
+ 5801: "Meh.",
+ 5802: "Not so good.",
+ 5803: "Terrible.",
+ 5900: "Huh?",
+ 5901: "And you?",
+ 5902: "You too!",
+ 5903: "Right back at you!",
+ 5904: "I'm not sure.",
+ 5905: "Me too.",
+ 6000: "You should use Toon-Up next turn.",
+ 6001: "You should use Toon-Up on the left toon.",
+ 6002: "You should use Toon-Up on the middle-left toon.",
+ 6003: "You should use Toon-Up on the middle toon.",
+ 6004: "You should use Toon-Up on the middle-right toon.",
+ 6005: "You should use Toon-Up on the right toon.",
+ 6010: "You should use Trap next turn.",
+ 6011: "You should use Trap on the left cog.",
+ 6012: "You should use Trap on the middle-left cog.",
+ 6013: "You should use Trap on the middle cog.",
+ 6014: "You should use Trap on the middle-right cog.",
+ 6015: "You should use Trap on the right cog.",
+ 6020: "You should use Lure next turn.",
+ 6021: "You should use Lure on the left cog.",
+ 6022: "You should use Lure on the middle-left cog.",
+ 6023: "You should use Lure on the middle cog.",
+ 6024: "You should use Lure on the middle-right cog.",
+ 6025: "You should use Lure on the right cog.",
+ 6026: "You should use Lure on all of the cogs.",
+ 6030: "You should use Sound.",
+ 6031: "You should use Sound next turn.",
+ 6032: "You should use Sound to unlure the cogs.",
+ 6033: "You should use Sound after the cogs are unlured.",
+ 6040: "You should use Throw next turn.",
+ 6041: "You should use Throw on the left cog.",
+ 6042: "You should use Throw on the middle-left cog.",
+ 6043: "You should use Throw on the middle cog.",
+ 6044: "You should use Throw on the middle-right cog.",
+ 6045: "You should use Throw on the right cog.",
+ 6050: "You should use Squirt next turn.",
+ 6051: "You should use Squirt on the left cog.",
+ 6052: "You should use Squirt on the middle-left cog.",
+ 6053: "You should use Squirt on the middle cog.",
+ 6054: "You should use Squirt on the middle-right cog.",
+ 6055: "You should use Squirt on the right cog.",
+ 6060: "You should use Drop next turn.",
+ 6061: "You should use Drop on the left cog.",
+ 6062: "You should use Drop on the middle-left cog.",
+ 6063: "You should use Drop on the middle cog.",
+ 6064: "You should use Drop on the middle-right cog.",
+ 6065: "You should use Drop on the right cog.",
  10000: 'The choice is yours!',
  10001: 'Who are you voting for?',
  10002: "I'm pickin' Chicken!",
- 10003: 'Trick or Treat!',
+ 10003: 'Vote now! Vote Cow!',
  10004: 'Go bananas! Vote Monkey!',
  10005: 'Be a honey! Vote Bear!',
  10006: 'Think big! Vote Pig!',
  10007: "Vote Goat - and that's all she wrote!",
- 10008: "You have a metal arm? That is AWESOME, dude!",
- 10009: "You have the right to remain silent!",
- 10010: "I once had strings, but now I'm free... There are no strings on me!", 
- 10011: "Puny god!",
- 10012: "Kneel before me. I said, KNEEL!",
- 10013: "Don't shoot! Seriously, I don't even like working here. They are so weird.",
- 10014: "You know what keeps going through my head? Where's my sandwich?",
- 10015: "I broke the crayon.",
- 10016: "The early bird gets the worm, but it's the second mouse that gets the cheese.", 
- 10017: "HYDRA, S.H.I.E.L.D., two sides of a coin that's no longer currency.",
- 10018: "Hail HYDRA!",
- 10019: "Cut off one head, two more shall take its place.",
- 10020: "The cold never bothered me anyway!",
- 10021: "Do you want to build a snowman?",
- 10022: "Love is an open door!",
- 10023: "We finish each other's sandwiches!",
- 10024: "It's called a hustle, sweetheart.",
- 10025: "What do you call a three-humped camel? Pregnant!",
- 10026: "Life isn't some cartoon musical where you sing a little song and all your insipid dreams come true.",
- 10027: "Hakuna Matata, it means no worries for the rest of your days!",
- 10028: "On a scale of one to ten, how would you rate your pain?",
- 10029: "I am programmed to assess everyone's health care needs.",
- 10030: "Those that suffer a loss require support from friends and loved ones.",
- 10031: "He'll come back... and I'll be waiting.",
- 10032: "The jungle is no longer safe for you.",
- 10033: "I will have you all in my teeth!",
- 10034: "It's a small underworld, after all!",
- 10035: "No! I didn't have anything to do with this!",
- 10036: "Bibbidi-Bobbidi-Boo!",
- 10037: "Be our guest!",
- 10038: "You. You're afraid. That you will never be as strong as Darth Vader.",
- 10039: "I find your lack of faith disturbing.",
- 10040: "Our long-awaited meeting has come at last.",
- 10041: "Chewie... we're home.",
- 10042: "I like that Wookiee.", 
- 10043: "I've got a bad feeling about this.",
- 10044: "There has been an awakening. Have you felt it?",
- 10045: "You underestimate my power!",
- 10046: "Your anger and lust for power have already done that.",
- 10047: "Nooooooooooooooooooo!",
- 10048: "Wipe them out, all of them.",
- 10049: "May the force be with you.",
- 10050: 'Game on!',
- 10051: "In case you've forgotten, predicting the future is my hobby.",
- 10052: "Believe in the Heart of the Cards.", 
- 10053: "That's right, which is why I don't feel bad about doing this.",
- 10054: "Think we were somehow connected to each other, You were an Egyptian pharoah, and I was your guardian.",
- 10055: "No way. You can't draw yourself.",
- 10056: "You try to expel one kid, and the entire world turns against you.", 
- 10057: "If you don't win, you'll be on the next bus outta here.",
- 10058: "With this deck, I'm not just copying the King of Games. I truly am the King of Games!",
- 10059: "You've really gone off the deep end.",
- 10060: "Kids, don't use formula one race cars to chase hedgehogs.",
- 10061: "I don't get involved in fights that I can't win.",
- 10062: "I assure you Sonic, I am no imposter. I posses far too much power to be anything but the real fake.",
- 10063: "Well, I never learned anything about manners, and I have been eating my whole life.",
- 10064: "The S-Team huh? The S must stand for slow-motion. Ha ha!",
- 10065: "You're late, slow-poke!",
- 10066: "We really do look alike. It's uncanny.",
- 10067: "I always wanted to shadowbox!",
- 10068: "You traitor!",
- 10069: "As you wish!",
- 10070: "It's the eye of the tiger, the thrill of the fight!",
- 10071: "You've been Thunderstruck!",
- 10072: "Another one bites the dust!",
- 10073: "I love rock and roll!",
- 10074: "We're cool for the summer!",
- 10075: "We're never gonna stop going round & round!",
- 10076: "Stamp on the ground, Jump, Jump, Jump, Jump!",
- 10077: "We could be immortals!",
- 10078: "Don't look down!",
- 10079: "It's just an illusion!",
+ 10100: "Who are you voting for?",
+ 10101: "I'm flipping for Flippy!",
+ 10102: "Clobber the competition! Flip for Flippy!",
+ 10103: "Don't be wacky - Vote for Slappy!",
+ 10104: "Jump for joy? Why not Jellybeans?",
+ 10105: "I'm loving the election decorations!",
+ 11000: "hi im roger dog",
+ 11001: "no im roger dog",
+ 11002: "i might be roger dog",
+ 11003: "im the real roger dog",
+ 11004: "this is my friend roger dog",
+ 11005: "have you seen my friend roger dog",
+ 11006: "you can call me roger dog for short",
  20000: SuitBrushOffs[None][0],
  20001: SuitBrushOffs[None][1],
  20002: SuitBrushOffs[None][2],
@@ -1517,17 +1612,16 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  20067: SuitFaceoffTaunts['cc'][9],
  20068: SuitFaceoffTaunts['cc'][10],
  20069: SuitFaceoffTaunts['cc'][11],
- 20070: SuitFaceoffTaunts['cc'][12],
- 20071: SuitFaceoffTaunts['nd'][1],
- 20072: SuitFaceoffTaunts['nd'][2],
- 20073: SuitFaceoffTaunts['nd'][3],
- 20074: SuitFaceoffTaunts['nd'][4],
- 20075: SuitFaceoffTaunts['nd'][5],
- 20076: SuitFaceoffTaunts['nd'][6],
- 20077: SuitFaceoffTaunts['nd'][7],
- 20078: SuitFaceoffTaunts['nd'][8],
- 20079: SuitFaceoffTaunts['nd'][9],
- 20080: SuitFaceoffTaunts['nd'][12],
+ 20071: SuitFaceoffTaunts['nd'][0],
+ 20072: SuitFaceoffTaunts['nd'][1],
+ 20073: SuitFaceoffTaunts['nd'][2],
+ 20074: SuitFaceoffTaunts['nd'][3],
+ 20075: SuitFaceoffTaunts['nd'][4],
+ 20076: SuitFaceoffTaunts['nd'][5],
+ 20077: SuitFaceoffTaunts['nd'][6],
+ 20078: SuitFaceoffTaunts['nd'][7],
+ 20079: SuitFaceoffTaunts['nd'][8],
+ 20080: SuitFaceoffTaunts['nd'][9],
  20081: SuitFaceoffTaunts['ac'][0],
  20082: SuitFaceoffTaunts['ac'][1],
  20083: SuitFaceoffTaunts['ac'][2],
@@ -1583,16 +1677,15 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  20133: SuitFaceoffTaunts['bs'][8],
  20134: SuitFaceoffTaunts['bs'][9],
  20135: SuitFaceoffTaunts['bs'][10],
- 20136: SuitFaceoffTaunts['cr'][8],
- 20137: SuitFaceoffTaunts['cr'][9],
- 20138: SuitFaceoffTaunts['cr'][10],
- 20139: SuitFaceoffTaunts['cr'][11],
- 20140: SuitFaceoffTaunts['cr'][12],
- 20141: SuitFaceoffTaunts['cr'][13],
- 20142: SuitFaceoffTaunts['cr'][14],
- 20143: SuitFaceoffTaunts['cr'][15],
- 20144: SuitFaceoffTaunts['cr'][16],
- 20145: SuitFaceoffTaunts['cr'][17],
+ 20136: SuitFaceoffTaunts['cr'][0],
+ 20137: SuitFaceoffTaunts['cr'][1],
+ 20138: SuitFaceoffTaunts['cr'][2],
+ 20139: SuitFaceoffTaunts['cr'][3],
+ 20140: SuitFaceoffTaunts['cr'][4],
+ 20141: SuitFaceoffTaunts['cr'][5],
+ 20142: SuitFaceoffTaunts['cr'][6],
+ 20143: SuitFaceoffTaunts['cr'][7],
+ 20144: SuitFaceoffTaunts['cr'][8],
  20146: SuitFaceoffTaunts['tbc'][0],
  20147: SuitFaceoffTaunts['tbc'][1],
  20148: SuitFaceoffTaunts['tbc'][2],
@@ -1657,7 +1750,6 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  20207: SuitFaceoffTaunts['f'][7],
  20208: SuitFaceoffTaunts['f'][8],
  20209: SuitFaceoffTaunts['f'][9],
- 20210: SuitFaceoffTaunts['f'][10],
  20211: SuitFaceoffTaunts['mm'][0],
  20212: SuitFaceoffTaunts['mm'][1],
  20213: SuitFaceoffTaunts['mm'][2],
@@ -1693,27 +1785,27 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  20243: SuitFaceoffTaunts['mb'][7],
  20244: SuitFaceoffTaunts['mb'][8],
  20245: SuitFaceoffTaunts['mb'][9],
- 20246: SuitFaceoffTaunts['m'][3],
- 20247: SuitFaceoffTaunts['m'][4],
- 20248: SuitFaceoffTaunts['m'][5],
- 20249: SuitFaceoffTaunts['m'][6],
- 20250: SuitFaceoffTaunts['m'][7],
- 20251: SuitFaceoffTaunts['m'][8],
- 20252: SuitFaceoffTaunts['m'][9],
- 20253: SuitFaceoffTaunts['m'][10],
- 20254: SuitFaceoffTaunts['m'][11],
- 20255: SuitFaceoffTaunts['mh'][3],
- 20256: SuitFaceoffTaunts['mh'][4],
- 20257: SuitFaceoffTaunts['mh'][5],
- 20258: SuitFaceoffTaunts['mh'][6],
- 20259: SuitFaceoffTaunts['mh'][7],
- 20260: SuitFaceoffTaunts['mh'][8],
- 20261: SuitFaceoffTaunts['mh'][9],
- 20262: SuitFaceoffTaunts['mh'][10],
- 20263: SuitFaceoffTaunts['mh'][11],
- 20264: SuitFaceoffTaunts['mh'][12],
- 20265: SuitFaceoffTaunts['mh'][13],
- 20266: SuitFaceoffTaunts['mh'][14],
+ 20246: SuitFaceoffTaunts['m'][0],
+ 20247: SuitFaceoffTaunts['m'][1],
+ 20248: SuitFaceoffTaunts['m'][2],
+ 20249: SuitFaceoffTaunts['m'][3],
+ 20250: SuitFaceoffTaunts['m'][4],
+ 20251: SuitFaceoffTaunts['m'][5],
+ 20252: SuitFaceoffTaunts['m'][6],
+ 20253: SuitFaceoffTaunts['m'][7],
+ 20254: SuitFaceoffTaunts['m'][8],
+ 20255: SuitFaceoffTaunts['mh'][0],
+ 20256: SuitFaceoffTaunts['mh'][1],
+ 20257: SuitFaceoffTaunts['mh'][2],
+ 20258: SuitFaceoffTaunts['mh'][3],
+ 20259: SuitFaceoffTaunts['mh'][4],
+ 20260: SuitFaceoffTaunts['mh'][5],
+ 20261: SuitFaceoffTaunts['mh'][6],
+ 20262: SuitFaceoffTaunts['mh'][7],
+ 20263: SuitFaceoffTaunts['mh'][8],
+ 20264: SuitFaceoffTaunts['mh'][9],
+ 20265: SuitFaceoffTaunts['mh'][10],
+ 20266: SuitFaceoffTaunts['mh'][11],
  20267: SuitFaceoffTaunts['dt'][0],
  20268: SuitFaceoffTaunts['dt'][1],
  20269: SuitFaceoffTaunts['dt'][2],
@@ -1734,18 +1826,17 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  20284: SuitFaceoffTaunts['p'][7],
  20285: SuitFaceoffTaunts['p'][8],
  20286: SuitFaceoffTaunts['p'][9],
- 20287: SuitFaceoffTaunts['p'][10],
- 20288: SuitFaceoffTaunts['tm'][1],
- 20289: SuitFaceoffTaunts['tm'][2],
- 20290: SuitFaceoffTaunts['tm'][3],
- 20291: SuitFaceoffTaunts['tm'][4],
- 20292: SuitFaceoffTaunts['tm'][5],
- 20293: SuitFaceoffTaunts['tm'][6],
- 20294: SuitFaceoffTaunts['tm'][7],
- 20295: SuitFaceoffTaunts['tm'][8],
- 20296: SuitFaceoffTaunts['tm'][9],
- 20297: SuitFaceoffTaunts['tm'][10],
- 20298: SuitFaceoffTaunts['tm'][11],
+ 20288: SuitFaceoffTaunts['tm'][0],
+ 20289: SuitFaceoffTaunts['tm'][1],
+ 20290: SuitFaceoffTaunts['tm'][2],
+ 20291: SuitFaceoffTaunts['tm'][3],
+ 20292: SuitFaceoffTaunts['tm'][4],
+ 20293: SuitFaceoffTaunts['tm'][5],
+ 20294: SuitFaceoffTaunts['tm'][6],
+ 20295: SuitFaceoffTaunts['tm'][7],
+ 20296: SuitFaceoffTaunts['tm'][8],
+ 20297: SuitFaceoffTaunts['tm'][9],
+ 20298: SuitFaceoffTaunts['tm'][10],
  20299: SuitFaceoffTaunts['bw'][0],
  20300: SuitFaceoffTaunts['bw'][1],
  20301: SuitFaceoffTaunts['bw'][2],
@@ -1788,58 +1879,16 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  20338: SuitFaceoffTaunts['sc'][8],
  20339: SuitFaceoffTaunts['sc'][9],
  20340: SuitFaceoffTaunts['sc'][10],
- 20341: SuitFaceoffTaunts['sd'][1],
- 20342: SuitFaceoffTaunts['sd'][2],
- 20343: SuitFaceoffTaunts['sd'][3],
- 20344: SuitFaceoffTaunts['sd'][4],
- 20345: SuitFaceoffTaunts['sd'][5],
- 20346: SuitFaceoffTaunts['sd'][6],
- 20347: SuitFaceoffTaunts['sd'][7],
- 20348: SuitFaceoffTaunts['sd'][8],
- 20349: SuitFaceoffTaunts['sd'][9],
- 20350: SuitFaceoffTaunts['sd'][10],
- 20351: SuitFaceoffTaunts['sd'][1],
- 20352: SuitFaceoffTaunts['ca'][0],
- 20353: SuitFaceoffTaunts['ca'][1],
- 20354: SuitFaceoffTaunts['cn'][0],
- 20355: SuitFaceoffTaunts['cn'][1],
- 20356: SuitFaceoffTaunts['cn'][2],
- 20357: SuitFaceoffTaunts['sw'][0],
- 20358: SuitFaceoffTaunts['sw'][1],
- 20359: SuitFaceoffTaunts['mdm'][0],
- 20360: SuitFaceoffTaunts['mdm'][1],
- 20361: SuitFaceoffTaunts['mdm'][2],
- 20362: SuitFaceoffTaunts['mdm'][3],
- 20363: SuitFaceoffTaunts['mdm'][4],
- 20364: SuitFaceoffTaunts['mdm'][5],
- 20365: SuitFaceoffTaunts['mdm'][6],
- 20366: SuitFaceoffTaunts['mdm'][7],
- 20367: SuitFaceoffTaunts['txm'][0],
- 20368: SuitFaceoffTaunts['txm'][1],
- 20369: SuitFaceoffTaunts['txm'][2],
- 20370: SuitFaceoffTaunts['txm'][3],
- 20371: SuitFaceoffTaunts['txm'][4],
- 20372: SuitFaceoffTaunts['txm'][5],
- 20373: SuitFaceoffTaunts['txm'][6],
- 20374: SuitFaceoffTaunts['txm'][7],
- 20375: SuitFaceoffTaunts['mg'][0],
- 20376: SuitFaceoffTaunts['bfh'][0],
- 20377: SuitFaceoffTaunts['bfh'][1],
- 20378: SuitFaceoffTaunts['bfh'][2],
- 20379: SuitFaceoffTaunts['bfh'][3],
- 20380: SuitFaceoffTaunts['bfh'][4],
- 20381: SuitFaceoffTaunts['bfh'][5],
- 20382: SuitFaceoffTaunts['bfh'][6],
- 20383: SuitFaceoffTaunts['bfh'][7],
- 20384: SuitFaceoffTaunts['hho'][0],
- 20385: SuitFaceoffTaunts['hho'][1],
- 20386: SuitFaceoffTaunts['hho'][3],
- 20387: SuitFaceoffTaunts['hho'][4],
- 20388: SuitFaceoffTaunts['hho'][5],
- 20389: SuitFaceoffTaunts['hho'][6],
- 20390: SuitFaceoffTaunts['hho'][7],
- 20391: SuitFaceoffTaunts['hho'][8],
- 20392: SuitFaceoffTaunts['hho'][9],                           
+ 20341: SuitFaceoffTaunts['sd'][0],
+ 20342: SuitFaceoffTaunts['sd'][1],
+ 20343: SuitFaceoffTaunts['sd'][2],
+ 20344: SuitFaceoffTaunts['sd'][3],
+ 20345: SuitFaceoffTaunts['sd'][4],
+ 20346: SuitFaceoffTaunts['sd'][5],
+ 20347: SuitFaceoffTaunts['sd'][6],
+ 20348: SuitFaceoffTaunts['sd'][7],
+ 20349: SuitFaceoffTaunts['sd'][8],
+ 20350: SuitFaceoffTaunts['sd'][9],
  21000: 'Here boy!',
  21001: 'Here girl!',
  21002: 'Stay.',
@@ -1856,6 +1905,20 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  21206: 'Speak!',
  30100: "Happy April Toons' Week!",
  30101: "Welcome to my April Toons' Week party!",
+ 30102: 'The Silly Meter is back in Toon Hall!',
+ 30110: 'Mickey is in Daisy Gardens.',
+ 30111: 'Daisy is in Toontown Central.',
+ 30112: 'Minnie is in The Brrrgh.',
+ 30113: 'Pluto is in Melodyland.',
+ 30114: 'Donald is sleepwalking at the Speedway.',
+ 30115: 'Goofy is in Dreamland.',
+ 30120: 'Mickey is acting like Daisy!',
+ 30121: 'Daisy is acting like Mickey!',
+ 30122: 'Minnie is acting like Pluto!',
+ 30123: 'Pluto is acting like Minnie!',
+ 30124: 'Pluto is talking!',
+ 30125: 'Goofy is acting like Donald!',
+ 30126: 'Donald is dreaming he is Goofy!',
  30130: 'Watch how far I can jump.',
  30131: 'Wow, you jumped really far!',
  30132: 'Hey, Doodles can talk!',
@@ -1905,21 +1968,21 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  30194: 'Dance for jellybeans!',
  30200: 'Deck the halls... ',
  30201: 'Load some pies...',
- 30202: 'Joyful toons...',
+ 30202: 'The trees are...',
  30203: 'Snowman heads...',
  30204: "Toontown's merry...",
  30205: 'Lure good cheer...',
- 30220: 'Deck the halls with seltzer spray!\nHappy Winter Holiday!',
- 30221: 'Load some pies into your sleigh!\nHappy Winter Holiday!',
- 30222: 'Joyful toons bring Cogs dismay!\nHappy Winter Holiday!',
- 30223: 'Snowman heads are hot today!\nHappy Winter Holiday!',
- 30224: "Toontown's merry, come what may!\nHappy Winter Holiday!",
- 30225: 'Lure good cheer the Toontown way!\nHappy Winter Holiday!',
- 30250: 'Boo!',
- 30251: 'Happy Halloween!',
+ 30220: 'Deck the halls with seltzer spray! Happy Winter Holiday!',
+ 30221: 'Load some pies into your sleigh! Happy Winter Holiday!',
+ 30222: 'The trees are brighter than light of day! Happy Winter Holiday!',
+ 30223: 'Snowman heads are hot today! Happy Winter Holiday!',
+ 30224: "Toontown's merry, come what may! Happy Winter Holiday!",
+ 30225: 'Lure good cheer the Toontown way! Happy Winter Holiday!',
+ 30250: 'Happy Halloween!',
+ 30251: 'Boo!',
  30252: 'Spooky!',
  30275: 'Happy holidays!',
- 30276: "Season's greetings!",
+ 30276: "Merry Christmas!",
  30277: 'Have a Wonderful Winter!',
  30301: 'Have you seen the Silly Meter?',
  30302: 'The Silly Meter is in Toon Hall.',
@@ -1987,7 +2050,341 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  30450: "It's easy to be green!",
  30451: 'Visit Green Bean Jeans and you can be green too!',
  30452: "It's on Oak Street in Daisy Gardens."}
+SpeedChatStaticTextPirates = {50001: 'Aye',
+ 50002: 'Nay',
+ 50003: 'Yes',
+ 50004: 'No',
+ 50005: 'Ok',
+ 50100: 'Gangway!',
+ 50101: 'Blimey!',
+ 50102: 'Well blow me down!',
+ 50103: 'Walk the plank!',
+ 50104: 'Dead men tell no tales....',
+ 50105: 'Shiver me timbers!',
+ 50106: "Salty as a Kraken's kiss.",
+ 50107: 'Treasure be the measure of our pleasure!',
+ 50108: "I don't fear death - I attune it.",
+ 50700: 'Ahoy!',
+ 50701: 'Ahoy, mate!',
+ 50702: 'Yo-Ho-Ho',
+ 50703: 'Avast!',
+ 50704: 'Hey Bucko.',
+ 50800: 'Until next time.',
+ 50801: 'May fair winds find ye.',
+ 50802: 'Godspeed.',
+ 50900: 'How are ye, mate?',
+ 50901: '',
+ 51000: "It's like the sky is raining gold doubloons!",
+ 51001: 'May a stiff wind be at our backs, the sun on our faces and our cannons fire true!',
+ 51100: 'I be sailing some rough waters today.',
+ 51200: 'Me apologies, mate.',
+ 51201: 'Sorry.',
+ 51202: 'Sorry, I was busy before.',
+ 51203: 'Sorry, I already have plans.',
+ 51204: "Sorry, I don't need to do that.",
+ 51300: 'Attack the weakest one!',
+ 51301: 'Attack the strongest one!',
+ 51302: 'Attack me target!',
+ 51303: 'I be needing help!',
+ 51304: "I can't do any damage!",
+ 51305: 'I think we be in trouble.',
+ 51306: 'Surround the most powerful one.',
+ 51307: 'We should retreat.',
+ 51308: 'Run for it!',
+ 51400: 'Fire a Broadside!',
+ 51401: 'Port Side! (left)',
+ 51402: 'Starboard Side! (right)',
+ 51403: 'Incoming!',
+ 51404: 'Come about!',
+ 51405: 'Broadside! Take Cover!',
+ 51406: 'To the Cannons!',
+ 51407: 'Open fire!',
+ 51408: 'Hold yer fire!',
+ 51409: 'Aim for the masts!',
+ 51410: 'Aim for the hull!',
+ 51411: 'Prepare to board!',
+ 51412: "She's coming about.",
+ 51413: 'Ramming speed!',
+ 51414: "We've got her on the run.",
+ 51415: 'We be taking on water!',
+ 51416: "We can't take anymore!",
+ 51417: "I don't have a shot!",
+ 51418: "Let's find port for repair.",
+ 51419: 'Man overboard!',
+ 51420: 'Enemy spotted.',
+ 51421: 'Handsomely now, mates!',
+ 50400: "Let's set sail.",
+ 50401: "Let's get out of here.",
+ 51500: "Let's sail to Port Royal.",
+ 51501: "Let's sail to Tortuga.",
+ 51502: "Let's sail to Padres Del Fuego.",
+ 51503: "Let's sail to Devil's Anvil.",
+ 51504: "Let's sail to Kingshead.",
+ 51505: "Let's sail to Isla Perdida.",
+ 51506: "Let's sail to Cuba.",
+ 51507: "Let's sail to Tormenta.",
+ 51508: "Let's sail to Outcast Isle.",
+ 51509: "Let's sail to Driftwood.",
+ 51510: "Let's sail to Cutthroat.",
+ 51511: "Let's sail to Rumrunner's Isle.",
+ 51512: "Let's sail to Isla Cangrejos.",
+ 51600: "Let's head into town.",
+ 51601: "Let's go to the docks.",
+ 51602: "Let's head to the tavern.",
+ 51800: "Let's go to Fort Charles.",
+ 51801: "Let's go to the Governor's Mansion.",
+ 52500: 'Where be I, mate?',
+ 51700: 'Yer already there.',
+ 51701: "I don't know.",
+ 51702: 'Yer on the wrong island.',
+ 51703: "That's in town.",
+ 51704: 'Look just outside of town.',
+ 51705: 'Ye will have to search through the jungle.',
+ 51706: 'Deeper inland.',
+ 51707: 'Oh, that be by the coast.',
+ 50200: 'Bilge rat!',
+ 50201: 'Scurvy dog!',
+ 50202: 'See ye in Davy Jones locker!',
+ 50203: 'Scoundrel!',
+ 50204: 'Landlubber!',
+ 50205: 'Addle-minded fool!',
+ 50206: 'You need a sharp sword and sharper wits.',
+ 50207: 'Ye be one doubloon short of a full hull mate!',
+ 50208: "Watch yer tongue or I'll pickle it with sea salt!",
+ 50209: 'Touch me loot and you get the boot!',
+ 50210: 'The horizon be as empty as yer head.',
+ 50211: "You're a canvas shy of a full sail, aren't ye mate?",
+ 50300: 'Fine shooting mate!',
+ 50301: 'A well placed blow!',
+ 50302: 'Nice shot!',
+ 50303: 'Well met!',
+ 50304: 'We showed them!',
+ 50305: 'Yer not so bad yerself!',
+ 50306: 'A fine plunder haul!',
+ 52400: 'May luck be my lady.',
+ 52401: 'I think these cards be marked!',
+ 52402: 'Blimey cheater!',
+ 51900: "That's a terrible flop!",
+ 51901: 'Trying to buy the hand, are ye?',
+ 51902: 'Ye be bluffing.',
+ 51903: "I don't think ye had it.",
+ 51904: 'Saved by the river.',
+ 52600: 'Hit me.',
+ 52601: 'Can I get another dealer?',
+ 53101: 'I caught a fish!',
+ 53102: 'I saw a Legendary Fish!',
+ 53103: 'What did you catch?',
+ 53104: 'This will make a whale of a tale!',
+ 53105: 'That was a beauty!',
+ 53106: 'Arr, the sea is treacherous today.',
+ 53107: 'What a bountiful haul of fish!',
+ 53110: 'Do you have the Legendary Lure?',
+ 53111: 'Have you ever caught a Legendary Fish?',
+ 53112: 'Can you sail on a fishing boat?',
+ 53113: 'Where is the Fishing Master?',
+ 53114: 'Have you completed your fish collection?',
+ 53120: 'Fire at my target!',
+ 53121: 'Fire at the ship closest to the shore!',
+ 53122: "There's a ship getting away!",
+ 53123: 'Fire at the big ships!',
+ 53124: 'Fire at the small ships!',
+ 53125: 'More are coming!',
+ 53126: "We're not going to last much longer!",
+ 53127: 'Shoot the barrels!',
+ 53128: "We've got new ammo!",
+ 53129: 'Sturdy defense, mates!',
+ 53141: 'Look at the potion I made!',
+ 53142: 'Have you completed your potion collection?',
+ 53143: 'Where is the Gypsy?',
+ 53144: 'What potion is that?',
+ 53145: 'This potion was easy enough.',
+ 53146: "This potion was hard brewin', I tell ye!",
+ 53160: 'We need someone to bilge pump!',
+ 53161: 'We need someone to scrub!',
+ 53162: 'We need someone to saw!',
+ 53163: 'We need someone to brace!',
+ 53164: 'We need someone to hammer!',
+ 53165: 'We need someone to patch!',
+ 53166: "I'll do it!",
+ 53167: "Keep it up, this ship won't repair itself!",
+ 53168: 'Great job repairing the ship!',
+ 52100: 'Want to group up?',
+ 52101: 'Join me crew?',
+ 52200: 'Fight some skeletons?',
+ 52201: 'Fight some crabs?',
+ 52300: "How 'bout a game of Mayhem?",
+ 52301: 'Join me Mayhem game.',
+ 52302: 'Want to start a Mayhem game?',
+ 52303: 'Want to start a team battle game?',
+ 52304: 'Join me team battle game.',
+ 52350: 'Join my Cannon Defense.',
+ 52351: 'Want to start a Cannon Defense?',
+ 52352: 'Can you lend me a hand with Repair?',
+ 52353: 'We need to Repair the ship now!',
+ 52354: 'Care to catch some fish?',
+ 52355: 'Want to go fishing with me?',
+ 52356: "Join me crew for some fishin'?",
+ 52357: 'Time to brew some potions!',
+ 52358: 'You should try your hand at brewing potions.',
+ 52000: '',
+ 52000: '',
+ 52700: '',
+ 53000: '',
+ 52800: '',
+ 52900: '',
+ 50500: '',
+ 50600: '',
+ 60100: 'Hi!',
+ 60101: 'Hello!',
+ 60102: 'Hey!',
+ 60103: 'Yo!',
+ 60104: 'Hi everybody!',
+ 60105: 'How are you doing?',
+ 60106: "What's Up?",
+ 60200: 'Bye!',
+ 60201: 'Later!',
+ 60202: 'See ya!',
+ 60203: "I'll be right back.",
+ 60204: 'I need to go.',
+ 60300: ':-)',
+ 60301: 'Cool!',
+ 60302: 'Yeah!',
+ 60303: 'Ha ha!',
+ 60304: 'Sweet!',
+ 60305: 'Yeah!',
+ 60306: 'That rocks!',
+ 60307: 'Funky!',
+ 60308: 'Awesome!',
+ 60309: 'Wow!',
+ 60400: ':-(',
+ 60401: 'Doh!',
+ 60402: 'Aw man!',
+ 60403: 'Ouch!',
+ 60404: 'Bummer!',
+ 60500: 'Where are you?',
+ 60501: "Let's go to the Gateway Store.",
+ 60502: "Let's go to the Disco Hall.",
+ 60503: "Let's go to Toontown.",
+ 60504: "Let's go to Pirates of the Carribean.",
+ 60505: 'Flip coin',
+ 60506: 'Dance',
+ 60507: 'Chant 1',
+ 60508: 'Chant 2',
+ 60509: 'Dance a jig',
+ 60510: 'Sleep',
+ 60511: 'Flex',
+ 60512: 'Play Lute',
+ 60513: 'Play Flute',
+ 60514: 'Frustrated',
+ 60515: 'Searching',
+ 60516: 'Yawn',
+ 60517: 'Kneel',
+ 60518: 'Sweep',
+ 60519: 'Primp',
+ 60520: 'Yawn',
+ 60521: 'Dance',
+ 60522: 'No',
+ 60523: 'Yes',
+ 60524: 'Laugh',
+ 60525: 'Clap',
+ 60526: 'Smile',
+ 60527: 'Anger',
+ 60528: 'Fear',
+ 60529: 'Sad',
+ 60530: 'Celebrate',
+ 60668: 'Celebrate',
+ 60669: 'Sleep',
+ 60602: 'Angry',
+ 60614: 'Clap',
+ 60622: 'Scared',
+ 60640: 'Laugh',
+ 60652: 'Sad',
+ 60657: 'Smile',
+ 60664: 'Wave',
+ 60665: 'Wink',
+ 60666: 'Yawn',
+ 60669: 'Sleep',
+ 60670: 'Dance',
+ 60676: 'Flirt',
+ 60677: 'Zombie dance',
+ 60678: 'Noisemaker',
+ 60671: "Hello, I'm a Pirate, and I'm here to steal your heart.",
+ 60672: "I just found the treasure I've been searching for.",
+ 60673: "If you were a booger, I'd pick you first.",
+ 60674: 'Come to Tortuga often?',
+ 60675: 'Do you have a map?  I just keep getting lost in your eyes.',
+ 65000: 'Yes',
+ 65001: 'No',
+ 60909: 'Check Hand'}
 SpeedChatStaticText = SpeedChatStaticTextCommon
+Emotes_Root = 'EMOTES'
+Emotes_Dances = 'Dances'
+Emotes_General = 'General'
+Emotes_Music = 'Music'
+Emotes_Expressions = 'Emotions'
+Emote_ShipDenied = 'Cannot emote while sailing.'
+Emote_MoveDenied = 'Cannot emote while moving.'
+Emote_CombatDenied = 'Cannot emote while in combat.'
+Emote_CannonDenied = 'Cannot emote while using a cannon.'
+Emote_SwimDenied = 'Cannot emote while swimming.'
+Emote_ParlorGameDenied = 'Cannot emote while playing a parlor game.'
+Emotes = (60505,
+ 60506,
+ 60509,
+ 60510,
+ 60511,
+ 60516,
+ 60519,
+ 60520,
+ 60521,
+ 60522,
+ 60523,
+ 60524,
+ 60525,
+ 60526,
+ 60527,
+ 60528,
+ 60529,
+ 60530,
+ 60602,
+ 60607,
+ 60611,
+ 60614,
+ 60615,
+ 60622,
+ 60627,
+ 60629,
+ 60632,
+ 60636,
+ 60638,
+ 60640,
+ 60644,
+ 60652,
+ 60654,
+ 60657,
+ 60658,
+ 60663,
+ 60664,
+ 60665,
+ 60666,
+ 60668,
+ 60669,
+ 60612,
+ 60661,
+ 60645,
+ 60629,
+ 60641,
+ 60654,
+ 60630,
+ 60670,
+ 60633,
+ 60676,
+ 60677,
+ 65000,
+ 65001,
+ 60517,
+ 60678,
+ 60909)
 SCFactoryMeetMenuIndexes = (1903,
  1904,
  1906,
@@ -2436,33 +2833,75 @@ SCMenuCustomCogIndices = {'bf': (20005, 20014),
  'ym': (20025, 20035),
  'ms': (20036, 20046),
  'bc': (20047, 20057),
- 'cc': (20058, 20070),
+ 'cc': (20058, 20069),
  'nd': (20071, 20080),
  'ac': (20081, 20092),
  'tf': (20093, 20103),
  'hh': (20104, 20114),
  'le': (20115, 20124),
  'bs': (20125, 20135),
- 'cr': (20136, 20145),
+ 'cr': (20136, 20144),
  'tbc': (20146, 20156),
  'ds': (20157, 20164),
  'gh': (20165, 20177),
  'pp': (20178, 20187),
  'b': (20188, 20199),
- 'f': (20200, 20210),
+ 'f': (20200, 20209),
  'mm': (20211, 20224),
  'tw': (20225, 20235),
  'mb': (20236, 20245),
  'm': (20246, 20254),
  'mh': (20255, 20266),
  'dt': (20267, 20276),
- 'p': (20277, 20287),
+ 'p': (20277, 20286),
  'tm': (20288, 20298),
  'bw': (20299, 20308),
  'ls': (20309, 20319),
  'rb': (20320, 20329),
  'sc': (20330, 20331),
  'sd': (20341, 20350)}
+PSCMenuExpressions = 'EXPRESSIONS'
+PSCMenuGreetings = 'GREETINGS'
+PSCMenuGoodbyes = 'GOODBYES'
+PSCMenuFriendly = 'FRIENDLY'
+PSCMenuHappy = 'HAPPY'
+PSCMenuSad = 'SAD'
+PSCMenuSorry = 'SORRY'
+PSCMenuCombat = 'COMBAT'
+PSCMenuSeaCombat = 'SEA COMBAT'
+PSCMenuPlaces = 'PLACES'
+PSCMenuLetsSail = "LET'S SAIL..."
+PSCMenuLetsHeadTo = "LET'S HEAD TO..."
+PSCMenuHeadToPortRoyal = 'PORT ROYAL'
+PSCMenuWhereIs = 'WHERE IS ..?'
+PSCMenuWhereIsPortRoyal = 'PORT ROYAL'
+PSCMenuWhereIsTortuga = 'TORTUGA'
+PSCMenuWhereIsPadresDelFuego = 'PADRES DEL FUEGO'
+PSCMenuWhereIsLasPulgas = 'LAS PULGAS'
+PSCMenuWhereIsLosPadres = 'LOS PADRES'
+PSCMenuDirections = 'DIRECTIONS'
+PSCMenuInsults = 'INSULTS'
+PSCMenuCompliments = 'COMPLIMENTS'
+PSCMenuCardGames = 'CARD GAMES'
+PSCMenuPoker = 'POKER'
+PSCMenuBlackjack = 'BLACKJACK'
+PSCMenuMinigames = 'MINIGAMES'
+PSCMenuFishing = 'FISHING'
+PSCMenuCannonDefense = 'CANNON DEFENSE'
+PSCMenuPotions = 'POTION BREWING'
+PSCMenuRepair = 'REPAIR'
+PSCMenuInvitations = 'INVITATIONS'
+PSCMenuVersusPlayer = 'VERSUS'
+PSCMenuHunting = 'HUNTING'
+PSCMenuQuests = 'QUESTS'
+PSCMenuGM = 'GM'
+PSCMenuShips = 'SHIPS'
+PSCMenuAdventures = 'ADVENTURE'
+GWSCMenuHello = 'GREETINGS'
+GWSCMenuBye = 'GOODBYES'
+GWSCMenuHappy = 'HAPPY'
+GWSCMenuSad = 'SAD'
+GWSCMenuPlaces = 'PLACES'
 RandomButton = 'Randomize'
 TypeANameButton = 'Type Name'
 PickANameButton = 'Pick-A-Name'
@@ -2470,6 +2909,9 @@ NameShopSubmitButton = 'Submit'
 RejectNameText = 'That name is not allowed. Please try again.'
 WaitingForNameSubmission = 'Submitting your name...'
 NameShopNameMaster = 'NameMasterEnglish.txt'
+NameShopPay = 'Subscribe'
+NameShopPlay = 'Free Trial'
+NameShopOnlyPaid = 'Only paid users\nmay name their Toons.\nUntil you subscribe\nyour name will be\n'
 NameShopContinueSubmission = 'Continue Submission'
 NameShopChooseAnother = 'Choose Another Name'
 NameShopToonCouncil = 'The Toon Council\nwill review your\nname.  ' + 'Review may\ntake a few days.\nWhile you wait\nyour name will be\n '
@@ -2483,6 +2925,17 @@ PeriodOnlyAfterLetter = 'You can use a period in your name, but only after a let
 ApostropheOnlyAfterLetter = 'You can use an apostrophe in your name, but only after a letter.'
 NoNumbersInTheMiddle = 'Numeric digits may not appear in the middle of a word.'
 ThreeWordsOrLess = 'Your name must be three words or fewer.'
+CopyrightedNames = ('mickey',
+ 'mickey mouse',
+ 'mickeymouse',
+ 'minnie',
+ 'minnie mouse',
+ 'minniemouse',
+ 'donald',
+ 'donald duck',
+ 'donaldduck',
+ 'pluto',
+ 'goofy')
 NCTooShort = 'That name is too short.'
 NCNoDigits = 'Your name cannot contain numbers.'
 NCNeedLetters = 'Each word in your name must contain some letters.'
@@ -2504,15 +2957,17 @@ AvatarDetailPanelCancel = lCancel
 AvatarDetailPanelClose = lClose
 AvatarDetailPanelLookup = 'Looking up details for %s.'
 AvatarDetailPanelFailedLookup = 'Unable to get details for %s.'
+AvatarDetailPanelPlayer = 'Player: %(player)s\nWorld: %(world)s\nLocation: %(location)s'
 AvatarDetailPanelOnline = 'District: %(district)s\nLocation: %(location)s'
 AvatarDetailPanelOffline = 'District: offline\nLocation: offline'
 AvatarPanelFriends = 'Friends'
 AvatarPanelWhisper = 'Whisper'
-AvatarPanelTrueFriends = 'True Friends'
+AvatarPanelSecrets = 'True Friends'
 AvatarPanelGoTo = 'Go To'
 AvatarPanelIgnore = 'Ignore'
 AvatarPanelStopIgnore = 'Stop Ignoring'
 AvatarPanelEndIgnore = 'End Ignore'
+AvatarPanelTrade = 'Trade'
 AvatarPanelCogLevel = 'Level: %s'
 AvatarPanelCogDetailClose = lClose
 TeleportPanelOK = lOK
@@ -2536,6 +2991,8 @@ KartRacingMenuSections = [-1,
  'TAUNTS']
 AprilToonsMenuSections = [-1,
  'GREETINGS',
+ 'PLAYGROUNDS',
+ 'CHARACTERS',
  'ESTATES']
 SillyHolidayMenuSections = [-1, 'WORLD', 'BATTLE']
 CarolMenuSections = [-1]
@@ -2552,10 +3009,14 @@ SellbotNerfMenuSections = [-1, 'GROUPING', 'SELLBOT TOWERS/VP']
 JellybeanJamMenuSections = ['GET JELLYBEANS', 'SPEND JELLYBEANS']
 WinterMenuSections = ['CAROLING', -1]
 HalloweenMenuSections = [-1]
+SingingMenuSections = [-1]
 WhiteListMenu = [-1, 'WHITELIST']
 SellbotInvasionMenuSections = [-1]
 SellbotFieldOfficeMenuSections = [-1, 'STRATEGY']
 IdesOfMarchMenuSections = [-1]
+TTAccountCallCustomerService = 'Please call Customer Service at %s.'
+TTAccountCustomerServiceHelp = '\nIf you need help, please call Customer Service at %s.'
+TTAccountIntractibleError = 'An error occurred.'
 
 def timeElapsedString(timeDelta):
     timeDelta = abs(timeDelta)
@@ -2573,5 +3034,3 @@ def timeElapsedString(timeDelta):
         return '1 minute ago'
     else:
         return '%s minutes ago' % (timeDelta.seconds / 60)
-
-AsciiNotSupported = 'Sorry, but Project Altis does not support non-ASCII characters.'

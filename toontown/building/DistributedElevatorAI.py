@@ -11,14 +11,23 @@ from direct.directnotify import DirectNotifyGlobal
 class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedElevatorAI')
 
-    def __init__(self, air, bldg, numSeats = 4):
+    def __init__(self, air, bldg, numSeats = 4, antiShuffle = 0, minLaff = 0):
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
         self.type = ELEVATOR_NORMAL
         self.countdownTime = ElevatorData[self.type]['countdown']
         self.bldg = bldg
         self.bldgDoId = bldg.getDoId()
         self.seats = []
-        for seat in xrange(numSeats):
+        self.setAntiShuffle(antiShuffle)
+        self.setMinLaff(minLaff)
+        if self.antiShuffle:
+            if not hasattr(simbase.air, 'elevatorTripId'):
+                simbase.air.elevatorTripId = 1
+            self.elevatorTripId = simbase.air.elevatorTripId
+            simbase.air.elevatorTripId += 1
+        else:
+            self.elevatorTripId = 0
+        for seat in range(numSeats):
             self.seats.append(None)
 
         self.accepting = 0
@@ -26,7 +35,7 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
          State.State('opening', self.enterOpening, self.exitOpening, ['waitEmpty', 'waitCountdown']),
          State.State('waitEmpty', self.enterWaitEmpty, self.exitWaitEmpty, ['waitCountdown']),
          State.State('waitCountdown', self.enterWaitCountdown, self.exitWaitCountdown, ['waitEmpty', 'allAboard']),
-         State.State('allAboard', self.enterAllAboard, self.exitAllAboard, ['closing', 'waitEmpty', 'waitCountdown']),
+         State.State('allAboard', self.enterAllAboard, self.exitAllAboard, ['closing', 'waitEmpty']),
          State.State('closing', self.enterClosing, self.exitClosing, ['closed', 'waitEmpty']),
          State.State('closed', self.enterClosed, self.exitClosed, ['opening'])], 'off', 'off')
         self.fsm.enterInitialState()
@@ -51,27 +60,33 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
         return self.bldgDoId
 
     def findAvailableSeat(self):
-        for i in xrange(len(self.seats)):
+        for i in range(len(self.seats)):
             if self.seats[i] == None:
                 return i
 
+        return
+
     def findAvatar(self, avId):
-        for i in xrange(len(self.seats)):
+        for i in range(len(self.seats)):
             if self.seats[i] == avId:
                 return i
+
+        return None
 
     def countFullSeats(self):
         avCounter = 0
         for i in self.seats:
             if i:
                 avCounter += 1
+
         return avCounter
 
     def countOpenSeats(self):
         openSeats = 0
-        for i in xrange(len(self.seats)):
-            if self.seats[i] is None:
+        for i in range(len(self.seats)):
+            if self.seats[i] == None:
                 openSeats += 1
+
         return openSeats
 
     def rejectingBoardersHandler(self, avId, reason = 0, wantBoardingShow = 0):
@@ -98,10 +113,6 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
         if wantBoardingShow:
             self.timeOfGroupBoarding = globalClock.getRealTime()
         self.sendUpdate('fillSlot' + str(seatIndex), [avId, wantBoardingShow])
-        if self.fsm.getCurrentState().getName() == 'waitEmpty':
-            self.fsm.request('waitCountdown')
-        elif self.fsm.getCurrentState().getName() == 'waitCountdown' and self.findAvailableSeat() is None:
-            self.fsm.request('allAboard')
         return
 
     def rejectingExitersHandler(self, avId):
@@ -115,6 +126,7 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
 
     def clearEmptyNow(self, seatIndex):
         self.sendUpdate('emptySlot' + str(seatIndex), [0,
+         0,
          globalClockDelta.getRealNetworkTime(),
          0])
 
@@ -135,9 +147,11 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
         return self.fsm.getCurrentState().getName()
 
     def avIsOKToBoard(self, av):
-        return self.accepting
+        return av.hp > self.minLaff and self.accepting
 
     def checkBoard(self, av):
+        if av.hp < self.minLaff:
+            return REJECT_MINLAFF
         return 0
 
     def requestBoard(self, *args):
@@ -200,7 +214,7 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
         self.timeOfBoarding = None
         self.timeOfGroupBoarding = None
         if hasattr(self, 'doId'):
-            for seatIndex in xrange(len(self.seats)):
+            for seatIndex in range(len(self.seats)):
                 taskMgr.remove(self.uniqueName('clearEmpty-' + str(seatIndex)))
 
         return
@@ -217,6 +231,8 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
         for seat in self.seats:
             seat = None
 
+        return
+
     def exitOpening(self):
         self.accepting = 0
         taskMgr.remove(self.uniqueName('opening-timer'))
@@ -226,8 +242,10 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
         self.accepting = 1
 
     def exitWaitCountdown(self):
+        print 'exit wait countdown'
         self.accepting = 0
         taskMgr.remove(self.uniqueName('countdown-timer'))
+        self.newTrip()
 
     def enterAllAboard(self):
         self.accepting = 0
@@ -256,3 +274,29 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
 
     def exitWaitEmpty(self):
         self.accepting = 0
+
+    def setElevatorTripId(self, id):
+        self.elevatorTripId = id
+
+    def getElevatorTripId(self):
+        return self.elevatorTripId
+
+    def newTrip(self):
+        if self.antiShuffle:
+            self.elevatorTripId = simbase.air.elevatorTripId
+            if simbase.air.elevatorTripId > 2100000000:
+                simbase.air.elevatorTripId = 1
+            simbase.air.elevatorTripId += 1
+            self.sendUpdate('setElevatorTripId', [self.elevatorTripId])
+
+    def setAntiShuffle(self, antiShuffle):
+        self.antiShuffle = antiShuffle
+
+    def getAntiShuffle(self):
+        return self.antiShuffle
+
+    def setMinLaff(self, minLaff):
+        self.minLaff = minLaff
+
+    def getMinLaff(self):
+        return self.minLaff

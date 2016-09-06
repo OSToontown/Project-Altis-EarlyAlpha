@@ -1,17 +1,21 @@
-from panda3d.core import *
-from direct.actor import Actor
-from direct.directnotify import DirectNotifyGlobal
-from direct.fsm import FSM
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
-from direct.task.Task import Task
+from direct.actor import Actor
 from otp.avatar import Avatar
 from otp.nametag.NametagGroup import NametagGroup
-from otp.nametag.NametagConstants import *
-from toontown.battle import BattleParticles, BattleProps
-from toontown.toonbase import TTLocalizer, ToontownGlobals
-import Suit, SuitDNA, SuitHealthBar
-import types, random
-
+from direct.directnotify import DirectNotifyGlobal
+from toontown.toonbase import ToontownGlobals
+from direct.fsm import FSM
+from direct.fsm import State
+from toontown.toonbase import TTLocalizer
+from toontown.battle import BattleParticles
+import Suit
+from direct.task.Task import Task
+import SuitDNA
+from toontown.battle import BattleProps
+from direct.showbase.PythonUtil import Functor
+import string
+import types
 GenericModel = 'phase_9/models/char/bossCog'
 ModelDict = {'s': 'phase_9/models/char/sellbotBoss',
  'm': 'phase_10/models/char/cashbotBoss',
@@ -21,11 +25,13 @@ AnimList = ('Ff_speech', 'ltTurn2Wave', 'wave', 'Ff_lookRt', 'turn2Fb', 'Ff_neut
 
 class BossCog(Avatar.Avatar):
     notify = DirectNotifyGlobal.directNotify.newCategory('BossCog')
+    healthColors = Suit.Suit.healthColors
+    healthGlowColors = Suit.Suit.healthGlowColors
 
     def __init__(self):
         Avatar.Avatar.__init__(self)
         self.setFont(ToontownGlobals.getSuitFont())
-        self.nametag.setSpeechFont(ToontownGlobals.getSuitFont())
+        self.setSpeechFont(ToontownGlobals.getSuitFont())
         self.setPlayerType(NametagGroup.CCSuit)
         self.setPickable(0)
         self.doorA = None
@@ -43,15 +49,15 @@ class BossCog(Avatar.Avatar):
         self.queuedAnimIvals = []
         self.treadsLeftPos = 0
         self.treadsRightPos = 0
-        self.healthBar = SuitHealthBar.SuitHealthBar()
+        self.healthBar = None
+        self.healthCondition = 0
         self.animDoneEvent = 'BossCogAnimDone'
         self.animIvalName = 'BossCogAnimIval'
-        self.setBlend(frameBlend = True)
-        self.warningSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_GOON_tractor_beam_alarmed.ogg')
+        return
 
     def delete(self):
         Avatar.Avatar.delete(self)
-        self.healthBar.delete()
+        self.removeHealthBar()
         self.setDizzy(0)
         self.stopAnimate()
         if self.doorA:
@@ -59,12 +65,12 @@ class BossCog(Avatar.Avatar):
             self.doorB.request('Off')
             self.doorA = None
             self.doorB = None
+        return
 
     def setDNAString(self, dnaString):
         self.dna = SuitDNA.SuitDNA()
         self.dna.makeFromNetString(dnaString)
         self.setDNA(self.dna)
-        self.setBlend(frameBlend = True)
 
     def setDNA(self, dna):
         if self.style:
@@ -78,14 +84,12 @@ class BossCog(Avatar.Avatar):
 
     def generateBossCog(self):
         self.throwSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_frisbee_gears.ogg')
-        self.swingSfx = loader.loadSfx ('phase_9/audio/sfx/CHQ_VP_boss_cog_wwipe.ogg')
+        self.swingSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_swipe.ogg')
         self.spinSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_spin.ogg')
         self.rainGearsSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_raining_gears.ogg')
-        self.swishSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_swish.ogg')
-        self.boomSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_boom.ogg')
+        self.swishSfx = loader.loadSfx('phase_5/audio/sfx/General_throw_miss.ogg')
+        self.boomSfx = loader.loadSfx('phase_3.5/audio/sfx/ENC_cogfall_apart.ogg')
         self.deathSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_big_death.ogg')
-        self.treadsSfx = loader.loadSfx('CHQ_VP_tractor_treads.ogg')
-        self.headshakeSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_headshake.ogg')
         self.upSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_raise_up.ogg')
         self.downSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_collapse.ogg')
         self.reelSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_reeling_backwards.ogg')
@@ -103,25 +107,12 @@ class BossCog(Avatar.Avatar):
          self.statement]
         dna = self.style
         filePrefix = ModelDict[dna.dept]
-        if filePrefix == 'phase_12/models/char/bossbotBoss':
-            self.loadModel(filePrefix + '-legs-zero', 'legs')
-            self.loadModel(GenericModel + '-legs-zero', 'legs')
-            self.doorA = self.__setupDoor('**/joint_doorFront', 'doorA', self.doorACallback, VBase3(0, 0, 0), VBase3(0, 0, -80), CollisionPolygon(Point3(5, -4, 0.32), Point3(0, -4, 0), Point3(0, 4, 0), Point3(5, 4, 0.32)))
-            self.doorB = self.__setupDoor('**/joint_doorRear', 'doorB', self.doorBCallback, VBase3(0, 0, 0), VBase3(0, 0, 80), CollisionPolygon(Point3(-5, 4, 0.84), Point3(0, 4, 0), Point3(0, -4, 0), Point3(-5, -4, 0.84)))
-            self.doorA.request('Closed')
-            self.doorB.request('Closed')
-        else:
-            self.loadModel(GenericModel + '-legs-zero', 'legs')
+        self.loadModel(GenericModel + '-legs-zero', 'legs')
         self.loadModel(filePrefix + '-torso-zero', 'torso')
         self.loadModel(filePrefix + '-head-zero', 'head')
         self.twoFaced = dna.dept == 's'
         self.attach('head', 'torso', 'joint34')
-        if filePrefix == 'phase_12/models/char/bossbotBoss':
-            self.attach('torso', 'legs', 'joint_legs')
-            pelvis = self.getPart('torso')
-            #pelvis.setZ(9.75)
-        else:
-             self.attach('torso', 'legs', 'joint_pelvis')
+        self.attach('torso', 'legs', 'joint_pelvis')
         self.rotateNode = self.attachNewNode('rotate')
         geomNode = self.getGeomNode()
         geomNode.reparentTo(self.rotateNode)
@@ -149,31 +140,92 @@ class BossCog(Avatar.Avatar):
         self.axle = self.find('**/joint_axle')
         self.doorA = self.__setupDoor('**/joint_doorFront', 'doorA', self.doorACallback, VBase3(0, 0, 0), VBase3(0, 0, -80), CollisionPolygon(Point3(5, -4, 0.32), Point3(0, -4, 0), Point3(0, 4, 0), Point3(5, 4, 0.32)))
         self.doorB = self.__setupDoor('**/joint_doorRear', 'doorB', self.doorBCallback, VBase3(0, 0, 0), VBase3(0, 0, 80), CollisionPolygon(Point3(-5, 4, 0.84), Point3(0, 4, 0), Point3(0, -4, 0), Point3(-5, -4, 0.84)))
-        treadsModel = loader.loadModel('%s-treads' % filePrefix)
+        treadsModel = loader.loadModel('%s-treads' % GenericModel)
         treadsModel.reparentTo(self.axle)
         self.treadsLeft = treadsModel.find('**/right_tread')
         self.treadsRight = treadsModel.find('**/left_tread')
         self.doorA.request('Closed')
         self.doorB.request('Closed')
-        self.setBlend(frameBlend = True)
-       
+
     def initializeBodyCollisions(self, collIdStr):
         Avatar.Avatar.initializeBodyCollisions(self, collIdStr)
         if not self.ghostMode:
             self.collNode.setCollideMask(self.collNode.getIntoCollideMask() | ToontownGlobals.PieBitmask)
 
     def generateHealthBar(self):
-        self.healthBar.generate()
-        self.healthBar.geom.reparentTo(self.find('**/joint_lifeMeter'))
-        self.healthBar.geom.setScale(6.0)
-        self.healthBar.geom.setHpr(0, -20, 0)
-        self.healthBar.geom.show()
+        self.removeHealthBar()
+        chestNull = self.find('**/joint_lifeMeter')
+        if chestNull.isEmpty():
+            return
+        model = loader.loadModel('phase_3.5/models/gui/matching_game_gui')
+        button = model.find('**/minnieCircle')
+        button.setScale(6.0)
+        button.setP(-20)
+        button.setColor(self.healthColors[0])
+        button.reparentTo(chestNull)
+        self.healthBar = button
+        glow = BattleProps.globalPropPool.getProp('glow')
+        glow.reparentTo(self.healthBar)
+        glow.setScale(0.28)
+        glow.setPos(-0.005, 0.01, 0.015)
+        glow.setColor(self.healthGlowColors[0])
+        button.flattenLight()
+        self.healthBarGlow = glow
+        self.healthCondition = 0
 
     def updateHealthBar(self):
-        if not self.healthBar:
+        if self.healthBar == None:
             return
-        
-        self.healthBar.update(1.0 - float(self.bossDamage) / float(self.bossMaxDamage))
+        health = 1.0 - float(self.bossDamage) / float(self.bossMaxDamage)
+        if health > 0.95:
+            condition = 0
+        elif health > 0.7:
+            condition = 1
+        elif health > 0.3:
+            condition = 2
+        elif health > 0.05:
+            condition = 3
+        elif health > 0.0:
+            condition = 4
+        else:
+            condition = 5
+        if self.healthCondition != condition:
+            if condition == 4:
+                blinkTask = Task.loop(Task(self.__blinkRed), Task.pause(0.75), Task(self.__blinkGray), Task.pause(0.1))
+                taskMgr.add(blinkTask, self.uniqueName('blink-task'))
+            elif condition == 5:
+                if self.healthCondition == 4:
+                    taskMgr.remove(self.uniqueName('blink-task'))
+                blinkTask = Task.loop(Task(self.__blinkRed), Task.pause(0.25), Task(self.__blinkGray), Task.pause(0.1))
+                taskMgr.add(blinkTask, self.uniqueName('blink-task'))
+            else:
+                self.healthBar.setColor(self.healthColors[condition], 1)
+                self.healthBarGlow.setColor(self.healthGlowColors[condition], 1)
+            self.healthCondition = condition
+        return
+
+    def __blinkRed(self, task):
+        self.healthBar.setColor(self.healthColors[3], 1)
+        self.healthBarGlow.setColor(self.healthGlowColors[3], 1)
+        if self.healthCondition == 5:
+            self.healthBar.setScale(1.17)
+        return Task.done
+
+    def __blinkGray(self, task):
+        self.healthBar.setColor(self.healthColors[4], 1)
+        self.healthBarGlow.setColor(self.healthGlowColors[4], 1)
+        if self.healthCondition == 5:
+            self.healthBar.setScale(1.0)
+        return Task.done
+
+    def removeHealthBar(self):
+        if self.healthBar:
+            self.healthBar.removeNode()
+            self.healthBar = None
+        if self.healthCondition == 4 or self.healthCondition == 5:
+            taskMgr.remove(self.uniqueName('blink-task'))
+        self.healthCondition = 0
+        return
 
     def reverseHead(self):
         self.neck.setHpr(self.neckReversedHpr)
@@ -212,12 +264,10 @@ class BossCog(Avatar.Avatar):
     def rollLeftTreads(self, duration, rate):
         start = self.treadsLeftPos
         self.treadsLeftPos += duration * rate
-        self.Sfx1 = ('phase_9/audio/sfx/CHQ_VP_tractor_treads.ogg')
         return self.__rollTreadsInterval(self.treadsLeft, start=start, duration=duration, rate=rate)
 
     def rollRightTreads(self, duration, rate):
         start = self.treadsRightPos
-        self.Sfx2 = ('phase_9/audio/sfx/CHQ_VP_tractor_treads.ogg')
         self.treadsRightPos += duration * rate
         return self.__rollTreadsInterval(self.treadsRight, start=start, duration=duration, rate=rate)
 

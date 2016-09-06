@@ -1,15 +1,17 @@
 from direct.directnotify import DirectNotifyGlobal
 from direct.fsm import ClassicFSM, State
 from direct.task.Task import Task
-from panda3d.core import *
+from pandac.PandaModules import *
 from otp.avatar import DistributedAvatar
 from toontown.toonbase.ToonBaseGlobal import *
 from toontown.toonbase.ToontownGlobals import *
 from toontown.distributed.ToontownMsgTypes import *
 from toontown.minigame import Purchase
-from toontown.parties import PartyLoader, PartyGlobals
-from toontown.hood import Hood, ZoneUtil
-from toontown.safezone import SZUtil
+from toontown.parties import PartyLoader
+from toontown.parties import PartyGlobals
+from toontown.hood import SkyUtil
+from toontown.hood import Hood
+from toontown.hood import ZoneUtil
 
 class PartyHood(Hood.Hood):
     notify = DirectNotifyGlobal.directNotify.newCategory('PartyHood')
@@ -24,10 +26,12 @@ class PartyHood(Hood.Hood):
         self.id = PartyHood
         self.safeZoneLoaderClass = PartyLoader.PartyLoader
         self.partyActivityDoneEvent = 'partyActivityDone'
-        self.storageDNAFile = 'phase_13/dna/storage_party_sz.pdna'
-        self.holidayStorageDNADict = {CHRISTMAS: ['phase_5.5/dna/winter_storage_estate.pdna']}
+        self.storageDNAFile = 'phase_13/dna/storage_party_sz.xml'
+        self.holidayStorageDNADict = {WINTER_DECORATIONS: ['phase_5.5/dna/winter_storage_estate.xml'],
+         WACKY_WINTER_DECORATIONS: ['phase_5.5/dna/winter_storage_estate.xml']}
         self.skyFile = 'phase_3.5/models/props/TT_sky'
         self.popupInfo = None
+        return
 
     def load(self):
         Hood.Hood.load(self)
@@ -58,7 +62,7 @@ class PartyHood(Hood.Hood):
             msg = TTLocalizer.PartyOverWarningNoName
             if hasattr(base, 'distributedParty') and base.distributedParty:
                 name = base.distributedParty.hostName
-                msg = TTLocalizer.PartyOverWarningWithName % TTLocalizer.GetPossesive(name)
+                msg = TTLocalizer.PartyOverWarningWithName % TTLocalizer.GetPossesive(name, 'party')
             self.__popupKickoutMessage(msg)
             base.localAvatar.setTeleportAvailable(0)
         if retCode == 1:
@@ -104,10 +108,10 @@ class PartyHood(Hood.Hood):
         pass
 
     def skyTrack(self, task):
-        return SZUtil.cloudSkyTrack(task)
+        return SkyUtil.cloudSkyTrack(task)
 
     def startSky(self):
-        SZUtil.startCloudSky(self)
+        SkyUtil.startCloudSky(self)
         if base.cloudPlatformsEnabled:
             self.loader.startCloudPlatforms()
 

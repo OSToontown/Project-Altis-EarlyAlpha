@@ -1,7 +1,8 @@
 from direct.gui.DirectGui import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToontownGlobals import *
 from toontown.toonbase.ToonBaseGlobal import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from direct.distributed.ClockDelta import *
 from toontown.toonbase import ToontownGlobals
@@ -13,7 +14,6 @@ from direct.task.Task import Task
 import ClosetGlobals
 import DistributedFurnitureItem
 from toontown.toonbase import TTLocalizer
-from toontown.catalog import CatalogFurnitureItem
 
 class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
     notify = directNotify.newCategory('DistributedCloset')
@@ -154,8 +154,10 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
             self._openDoors()
             if self.customerId == base.localAvatar.doId:
                 camera.wrtReparentTo(self)
-                camera.posQuatInterval(1, (-7.58, -6.02, 6.9), (286.3, 336.8, 0), other=self, blendType='easeOut').start()
                 camera.setPosHpr(self, -7.58, -6.02, 6.9, 286.3, 336.8, 0)
+                quat = Quat()
+                quat.setHpr((286.3, 336.7, 0))
+                LerpPosQuatInterval(camera, 1, (-7.58, -6.02, 6.9), quat, blendType='easeOut', other=self).start()
             if self.av:
                 if self.avMoveTrack:
                     self.avMoveTrack.finish()
@@ -211,7 +213,9 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
                     self.botList = botList
                     self.oldTopList = self.topList[0:]
                     self.oldBotList = self.botList[0:]
+                    print '-----------Starting closet interaction-----------'
                     self.printInfo()
+                    print '-------------------------------------------------'
                     if not self.isOwner:
                         self.__popupNotOwnerPanel()
                     else:
@@ -321,6 +325,14 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
         else:
             self.notify.warning("cant delete this item(type = %s), since we don't have a replacement" % t_or_b)
 
+    def resetItemLists(self):
+        self.topList = self.oldTopList[0:]
+        self.botList = self.oldBotList[0:]
+        self.closetGUI.tops = self.topList
+        self.closetGUI.bottoms = self.botList
+        self.topDeleted = 0
+        self.bottomDeleted = 0
+
     def __proceedToCheckout(self):
         if self.topDeleted or self.bottomDeleted:
             self.__popupAreYouSurePanel()
@@ -353,6 +365,7 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
                         self.av.swapToonTorso(self.av.style.torso, genClothes=0)
                         self.av.loop('neutral', 0)
                     self.av.generateToonClothes()
+        return
 
     def printInfo(self):
         print 'avid: %s, gender: %s' % (self.av.doId, self.av.style.gender)
@@ -375,7 +388,9 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
         elif mode == ClosetGlobals.CLOSET_MOVIE_COMPLETE:
             if self.isLocalToon:
                 self._revertGender()
+                print '-----------ending trunk interaction-----------'
                 self.printInfo()
+                print '-------------------------------------------------'
                 self.resetCloset()
                 self.freeAvatar()
                 return
@@ -417,6 +432,7 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
         DirectButton(self.popupInfo, image=okButtonImage, relief=None, text=TTLocalizer.ClosetPopupOK, text_scale=0.05, text_pos=(0.0, -0.1), textMayChange=0, pos=(0.0, 0.0, -0.16), command=self.__handleTimeoutMessageOK)
         buttons.removeNode()
         self.popupInfo.reparentTo(aspect2d)
+        return
 
     def __handleTimeoutMessageOK(self):
         self.popupInfo.reparentTo(hidden)

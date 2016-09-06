@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
 from toontown.building import ElevatorConstants
@@ -53,7 +53,7 @@ class DistributedClubElevator(DistributedElevatorFSM.DistributedElevatorFSM):
         self.wantState = 0
         self.latch = None
         self.lastState = self.state
-        self.kartModelPath = 'phase_12/models/bossbotHQ/Coggolf_cart3.bam'
+        self.kartModelPath = 'phase_12/models/bossbotHQ/Coggolf_cart3'
         self.leftDoor = None
         self.rightDoor = None
         self.__toonTracks = {}
@@ -306,8 +306,9 @@ class DistributedClubElevator(DistributedElevatorFSM.DistributedElevatorFSM):
         return self.elevatorModel
 
     def kickEveryoneOut(self):
+        bailFlag = 0
         for avId, slot in self.boardedAvIds.items():
-            self.emptySlot(slot, avId, globalClockDelta.getRealNetworkTime())
+            self.emptySlot(slot, avId, bailFlag, globalClockDelta.getRealNetworkTime())
             if avId == base.localAvatar.doId:
                 pass
 
@@ -379,7 +380,7 @@ class DistributedClubElevator(DistributedElevatorFSM.DistributedElevatorFSM):
             del self.toonRequests[index]
         if avId == 0:
             pass
-        elif avId not in self.cr.doId2do:
+        elif not self.cr.doId2do.has_key(avId):
             func = PythonUtil.Functor(self.gotToon, index, avId)
             self.toonRequests[index] = self.cr.relatedObjectMgr.requestObjects([avId], allCallback=func)
         elif not self.isSetup:
@@ -449,7 +450,7 @@ class DistributedClubElevator(DistributedElevatorFSM.DistributedElevatorFSM):
         jumpTrack = Sequence(Parallel(toonJumpTrack, Sequence(Wait(1), toonSitTrack)), Func(av.wrtReparentTo, self.golfKart))
         return jumpTrack
 
-    def emptySlot(self, index, avId, timestamp, timeSent=0):
+    def emptySlot(self, index, avId, bailFlag, timestamp):
         if avId == 0:
             pass
         elif not self.isSetup:
@@ -459,8 +460,8 @@ class DistributedClubElevator(DistributedElevatorFSM.DistributedElevatorFSM):
                     newSlots.append(slot)
 
             self.deferredSlots = newSlots
-        elif avId in self.cr.doId2do:
-            if hasattr(self, 'clockNode'):
+        elif self.cr.doId2do.has_key(avId):
+            if bailFlag == 1 and hasattr(self, 'clockNode'):
                 if timestamp < self.countdownTime and timestamp >= 0:
                     self.countdown(self.countdownTime - timestamp)
                 else:
@@ -526,5 +527,5 @@ class DistributedClubElevator(DistributedElevatorFSM.DistributedElevatorFSM):
             keyList.append(key)
 
         for key in keyList:
-            if key in self.__toonTracks:
+            if self.__toonTracks.has_key(key):
                 self.clearToonTrack(key)

@@ -21,8 +21,8 @@ class DistributedGolfSpot(DistributedObject.DistributedObject, FSM.FSM):
     toonGolfOffsetPos = Point3(-2, 0, -GolfGlobals.GOLF_BALL_RADIUS)
     toonGolfOffsetHpr = Point3(-90, 0, 0)
     rotateSpeed = 20
-    golfPowerSpeed = base.config.GetDouble('golf-power-speed', 3)
-    golfPowerExponent = base.config.GetDouble('golf-power-exponent', 0.75)
+    golfPowerSpeed = config.GetDouble('golf-power-speed', 3)
+    golfPowerExponent = config.GetDouble('golf-power-exponent', 0.75)
 
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
@@ -293,7 +293,7 @@ class DistributedGolfSpot(DistributedObject.DistributedObject, FSM.FSM):
          gui.find('**/CloseBtn_Rllvr'),
          gui.find('**/CloseBtn_UP')), relief=None, scale=2, text=TTLocalizer.BossbotGolfSpotLeave, text_scale=0.04, text_pos=(0, -0.07), text_fg=VBase4(1, 1, 1, 1), pos=(1.05, 0, -0.82), command=self.__exitGolfSpot)
         self.accept('escape', self.__exitGolfSpot)
-        self.accept(base.JUMP, self.__controlPressed)
+        self.accept('control', self.__controlPressed)
         self.accept('control-up', self.__controlReleased)
         self.accept('InputState-forward', self.__upArrow)
         self.accept('InputState-reverse', self.__downArrow)
@@ -313,7 +313,7 @@ class DistributedGolfSpot(DistributedObject.DistributedObject, FSM.FSM):
             self.closeButton = None
         self.__cleanupGolfSpotAdvice()
         self.ignore('escape')
-        self.ignore(base.JUMP)
+        self.ignore('control')
         self.ignore('control-up')
         self.ignore('InputState-forward')
         self.ignore('InputState-reverse')
@@ -674,17 +674,17 @@ class DistributedGolfSpot(DistributedObject.DistributedObject, FSM.FSM):
         print entry
 
     def flyBallFinishedFlying(self, sequence):
-        if sequence in self.flyBallTracks:
+        if self.flyBallTracks.has_key(sequence):
             del self.flyBallTracks[sequence]
 
     def __finishFlyBallTrack(self, sequence):
-        if sequence in self.flyBallTracks:
+        if self.flyBallTracks.has_key(sequence):
             flyBallTrack = self.flyBallTracks[sequence]
             del self.flyBallTracks[sequence]
             flyBallTrack.finish()
 
     def flyBallFinishedSplatting(self, sequence):
-        if sequence in self.splatTracks:
+        if self.splatTracks.has_key(sequence):
             del self.splatTracks[sequence]
 
     def __flyBallHit(self, entry):
@@ -694,7 +694,7 @@ class DistributedGolfSpot(DistributedObject.DistributedObject, FSM.FSM):
             return
         sequence = int(entry.getFromNodePath().getNetTag('pieSequence'))
         self.__finishFlyBallTrack(sequence)
-        if sequence in self.splatTracks:
+        if self.splatTracks.has_key(sequence):
             splatTrack = self.splatTracks[sequence]
             del self.splatTracks[sequence]
             splatTrack.finish()
@@ -715,7 +715,7 @@ class DistributedGolfSpot(DistributedObject.DistributedObject, FSM.FSM):
          throwerId))
         if flyBallCode == ToontownGlobals.PieCodeBossCog and self.avId == localAvatar.doId and self.lastHitSequenceNum != self.__flyBallSequenceNum:
             self.lastHitSequenceNum = self.__flyBallSequenceNum
-            self.boss.d_ballHitBoss(10)
+            self.boss.d_ballHitBoss(1)
         elif flyBallCode == ToontownGlobals.PieCodeToon and self.avId == localAvatar.doId and self.lastHitSequenceNum != self.__flyBallSequenceNum:
             self.lastHitSequenceNum = self.__flyBallSequenceNum
             avatarDoId = entry.getIntoNodePath().getNetTag('avatarDoId')

@@ -1,8 +1,9 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from PurchaseManagerConstants import *
 from direct.distributed.ClockDelta import *
 from direct.distributed import DistributedObject
 from direct.directnotify import DirectNotifyGlobal
+from toontown.minigame import TravelGameGlobals
 
 class PurchaseManager(DistributedObject.DistributedObject):
     notify = DirectNotifyGlobal.directNotify.newCategory('PurchaseManager')
@@ -15,9 +16,9 @@ class PurchaseManager(DistributedObject.DistributedObject):
         DistributedObject.DistributedObject.disable(self)
         self.ignoreAll()
 
-    def setAvIds(self, *avIds):
-        self.notify.debug('setAvIds: %s' % (avIds,))
-        self.avIds = avIds
+    def setPlayerIds(self, *playerIds):
+        self.notify.debug('setPlayerIds: %s' % (playerIds,))
+        self.playerIds = playerIds
 
     def setNewbieIds(self, newbieIds):
         self.notify.debug('setNewbieIds: %s' % (newbieIds,))
@@ -56,12 +57,16 @@ class PurchaseManager(DistributedObject.DistributedObject):
             self.accept('boughtGag', self.__handleBoughtGag)
             base.cr.playGame.hood.fsm.request('purchase', [self.mpArray,
              self.moneyArray,
-             self.avIds,
+             self.playerIds,
              self.playerStates,
-             remain])
+             remain,
+             self.metagameRound,
+             self.votesArray])
 
     def calcHasLocalToon(self):
-        retval = base.localAvatar.doId not in self.newbieIds and base.localAvatar.doId in self.avIds
+        retval = base.localAvatar.doId not in self.newbieIds and base.localAvatar.doId in self.playerIds
+        if self.metagameRound > -1 and self.metagameRound < TravelGameGlobals.FinalMetagameRoundIndex:
+            retval = base.localAvatar.doId in self.playerIds
         self.notify.debug('calcHasLocalToon returning %s' % retval)
         return retval
 
@@ -93,3 +98,11 @@ class PurchaseManager(DistributedObject.DistributedObject):
             self.ignore('boughtGag')
             self.d_setInventory(base.localAvatar.inventory.makeNetString(), base.localAvatar.getMoney(), 1)
             messenger.send('purchaseOver', [self.playAgain])
+
+    def setMetagameRound(self, round):
+        self.notify.debug('setMetagameRound: %s' % (round,))
+        self.metagameRound = round
+
+    def setVotesArray(self, votesArray):
+        self.notify.debug('setVotesArray: %s' % votesArray)
+        self.votesArray = votesArray

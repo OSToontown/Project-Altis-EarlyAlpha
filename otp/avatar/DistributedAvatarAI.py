@@ -1,6 +1,8 @@
-from otp.ai.AIBaseGlobal import *
 from otp.otpbase import OTPGlobals
+from direct.fsm import ClassicFSM
+from direct.fsm import State
 from direct.distributed import DistributedNodeAI
+from direct.task import Task
 
 class DistributedAvatarAI(DistributedNodeAI.DistributedNodeAI):
 
@@ -48,6 +50,32 @@ class DistributedAvatarAI(DistributedNodeAI.DistributedNodeAI):
     def getHp(self):
         return self.hp
 
+    def b_setLocationName(self, locationName):
+        self.d_setLocationName(locationName)
+        self.setLocationName(locationName)
+
+    def d_setLocationName(self, locationName):
+        pass
+
+    def setLocationName(self, locationName):
+        self.locationName = locationName
+
+    def getLocationName(self):
+        return self.locationName
+
+    def b_setActivity(self, activity):
+        self.d_setActivity(activity)
+        self.setActivity(activity)
+
+    def d_setActivity(self, activity):
+        pass
+
+    def setActivity(self, activity):
+        self.activity = activity
+
+    def getActivity(self):
+        return self.activity
+
     def toonUp(self, num):
         if self.hp >= self.maxHp:
             return
@@ -58,11 +86,8 @@ class DistributedAvatarAI(DistributedNodeAI.DistributedNodeAI):
         return OTPGlobals.AvatarDefaultRadius
 
     def checkAvOnShard(self, avId):
-        self.sendUpdateToAvatarId(self.air.getAvatarIdFromSender(), 'confirmAvOnShard', [avId, avId in self.air.doId2do])
-
-    def setParentStr(self, parentToken):
-        if parentToken:
-            senderId = self.air.getAvatarIdFromSender()
-            self.air.writeServerEvent('Admin chat warning', senderId, 'using setParentStr to send "%s"' % parentToken)
-            self.notify.warning('Admin chat warning: %s using setParentStr to send "%s"' % (senderId, parentToken))
-        DistributedNodeAI.DistributedNodeAI.setParentStr(self, parentToken)
+        senderId = self.air.getAvatarIdFromSender()
+        onShard = False
+        if simbase.air.doId2do.get(avId):
+            onShard = True
+        self.sendUpdateToAvatarId(senderId, 'confirmAvOnShard', [avId, onShard])

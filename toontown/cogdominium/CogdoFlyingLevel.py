@@ -7,7 +7,7 @@ import CogdoUtil
 import CogdoFlyingGameGlobals as Globals
 from CogdoFlyingLevelQuadrant import CogdoFlyingLevelQuadrant
 from CogdoFlyingObjects import CogdoFlyingGatherableFactory, CogdoFlyingPlatform, CogdoFlyingLevelFog
-from CogdoFlyingObstacles import CogdoFlyingObstacleFactory
+from CogdoFlyingObstacles import CogdoFlyingObtacleFactory
 from CogdoGameExit import CogdoGameExit
 from otp.otpbase import OTPGlobals
 
@@ -51,7 +51,7 @@ class CogdoFlyingLevel(DirectObject):
         self.forwardLimit = self.quadLengthUnits * 20
         self._frameModel.flattenStrong()
         self.gatherableFactory = CogdoFlyingGatherableFactory()
-        self.obstacleFactory = CogdoFlyingObstacleFactory()
+        self.obstacleFactory = CogdoFlyingObtacleFactory()
         return
 
     def getExit(self):
@@ -159,7 +159,7 @@ class CogdoFlyingLevel(DirectObject):
         if quadNum >= 0:
             if quadNum > 0:
                 self.quadrants[max(quadNum - self.quadVisibiltyBehind, 0)].onstage()
-            for i in xrange(quadNum, min(quadNum + self.quadVisibiltyAhead + 1, self._numQuads)):
+            for i in range(quadNum, min(quadNum + self.quadVisibiltyAhead + 1, self._numQuads)):
                 self.quadrants[i].onstage()
                 self.visibleQuadIndices.append(i)
                 if i == 0:

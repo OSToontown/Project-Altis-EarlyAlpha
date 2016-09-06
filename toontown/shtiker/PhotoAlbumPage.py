@@ -1,8 +1,9 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 import ShtikerPage
 import ShtikerBook
 from direct.gui.DirectGui import *
 from direct.directnotify import DirectNotifyGlobal
+from pandac.PandaModules import *
 from toontown.toonbase import TTLocalizer
 import os
 import string
@@ -21,6 +22,7 @@ class PhotoAlbumPage(ShtikerPage.ShtikerPage):
         self.photos = {}
         self.selectedFileName = None
         self.selectedFilePath = None
+        #TODO: Localizer support for screenshot storing and names
         self.installPath = os.getcwd()
         self.photoPath = TTLocalizer.ScreenshotPath
         self.photoIndex = 0
@@ -69,7 +71,7 @@ class PhotoAlbumPage(ShtikerPage.ShtikerPage):
         self.dCancel = DirectButton(parent=self.deletePanel, image=(buttons.find('**/CloseBtn_UP'), buttons.find('**/CloseBtn_DN'), buttons.find('**/CloseBtn_Rllvr')), relief=None, text=TTLocalizer.PhotoPageCancel, text_scale=0.05, text_pos=(0.0, -0.1), pos=(0.1, 0.0, -0.1), command=self.deleteCancel)
         self.deletePanel.hide()
         self.errorPanel = DirectFrame(parent=self, relief=None, pos=(0.45, 0, -0.45), image=DGG.getDefaultDialogGeom(), image_color=ToontownGlobals.GlobalDialogColor, image_scale=(1.0, 1.0, 0.6), text='', text_wordwrap=16, text_scale=0.06, text_pos=(0.0, 0.13), sortOrder=NO_FADE_SORT_INDEX)
-        self.bClose = DirectButton(parent=self.errorPanel, image=(buttons.find('**/CloseBtn_UP'), buttons.find('**/CloseBtn_DN'), buttons.find('**/CloseBtn_Rllvr')), relief=None, text=TTLocalizer.PhotoPageClose, text_scale=0.05, text_pos=(0.0, -0.1), pos=(0.0, 0.0, -0.1), command=self.errorConfirm)
+        self.bClose = DirectButton(parent=self.errorPanel, image=(buttons.find('**/CloseBtn_UP'), buttons.find('**/CloseBtn_DN'), buttons.find('**/CloseBtn_Rllvr')), relief=None, text=TTLocalizer.PhotoPageClose, text_scale=0.05, text_pos=(0.0, -0.1), pos=(0.0, 0.0, -0.1), command=self.errorConfirm)       
         self.errorPanel.hide()
         self.scroll = loader.loadModel('phase_3/models/gui/toon_council').find('**/scroll')
         self.scroll.reparentTo(self)
@@ -119,7 +121,7 @@ class PhotoAlbumPage(ShtikerPage.ShtikerPage):
             oldName = self.selectedFileName
             numUnders = oldName.count(separator)
             if numUnders == 0:
-                newName = oldName[0:18] + separator + str + separator + oldName[17:]
+                newName = oldName[0:15] + separator + str + separator + oldName[14:]
             elif numUnders == 2:
                 sp = oldName.split(separator)
                 newName = sp[0] + separator + str + separator + sp[2]
@@ -161,7 +163,7 @@ class PhotoAlbumPage(ShtikerPage.ShtikerPage):
         self.notify.debug(self.selectedFileName)
 
     def deleteConfirm(self):
-        if os.path.isfile(self.photoPath + self.selectedFileName):
+        if os.path.isfile(self.photoPath + self.selectedFileName):        
             os.remove(self.photoPath + self.selectedFileName)
             self.selectedFileName = None
             self.deleteCleanup()
@@ -230,18 +232,18 @@ class PhotoAlbumPage(ShtikerPage.ShtikerPage):
         files = os.listdir(self.photoPath)
         photos = []
         for fileName in files:
-            if fileName[0:17] == 'altis-screenshot' and fileName[-4:] == '.jpg':
-                photos.append(fileName)
+            if fileName[0:14] == 'ttr-screenshot' and fileName[-4:] == '.jpg':
+                photos.append(fileName)          
 
         return photos
 
     def openPhotoDirectory(self):
         if platform == "darwin":
-            OSXPhotoDir = self.installPath + '/user/screenshots'
+            OSXPhotoDir = self.installPath + '/screenshots'
             os.system('open "%s"' % OSXPhotoDir)
             self.notify.debug(OSXPhotoDir)
         elif platform == "win32":
-            PhotoDir = self.installPath + '/user/screenshots/'
+            PhotoDir = self.installPath + '\\screenshots\\'
             os.startfile(PhotoDir)
             self.notify.debug(PhotoDir)
 
@@ -249,7 +251,7 @@ class PhotoAlbumPage(ShtikerPage.ShtikerPage):
         self.updateScrollList()
 
     def updateScrollList(self):
-        newPhotos = self.getPhotos()
+        newPhotos = self.getPhotos()        
         for photo in self.photos.keys():
             if photo not in newPhotos:
                 photoButton = self.photos[photo]
@@ -258,7 +260,7 @@ class PhotoAlbumPage(ShtikerPage.ShtikerPage):
                 del self.photos[photo]
 
         for photo in newPhotos:
-            if not photo in self.photos:
+            if not self.photos.has_key(photo):
                 photoButton = self.makePhotoButton(photo)
                 self.scrollList.addItem(photoButton)
                 self.photos[photo] = photoButton
@@ -298,17 +300,10 @@ class PhotoAlbumPage(ShtikerPage.ShtikerPage):
         ShtikerPage.ShtikerPage.exit(self)
 
     def updateArrows(self):
-        self.photoIndex = 0
-        self.chosePhoto(self.getPhotos()[self.photoIndex])
+        pass
 
     def prevPhoto(self):
-        try:
-            self.chosePhoto(self.getPhotos()[self.photoIndex])
-            self.photoIndex -= 1
-        except:self.photoIndex = 0
+        pass
 
     def nextPhoto(self):
-        try:
-            self.chosePhoto(self.getPhotos()[self.photoIndex])
-            self.photoIndex += 1
-        except:self.photoIndex = 0
+        pass

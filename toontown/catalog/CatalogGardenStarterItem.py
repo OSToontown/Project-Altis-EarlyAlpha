@@ -15,7 +15,7 @@ class CatalogGardenStarterItem(CatalogItem.CatalogItem):
     def getPurchaseLimit(self):
         return 0
 
-    def reachedPurchaseLimit(self, avatar):            
+    def reachedPurchaseLimit(self, avatar):
         if self in avatar.onOrder or self in avatar.mailboxContents or self in avatar.onGiftOrder or self in avatar.awardMailboxContents or self in avatar.onAwardOrder or hasattr(avatar, 'gardenStarted') and avatar.getGardenStarted():
             return 1
         return 0
@@ -30,14 +30,15 @@ class CatalogGardenStarterItem(CatalogItem.CatalogItem):
         return TTLocalizer.GardenStarterTypeName
 
     def recordPurchase(self, avatar, optional):
+        print 'rental-- record purchase'
         if avatar:
-            self.notify.debug('rental -- has avatar')
-            estate = simbase.air.estateManager._lookupEstate(avatar)
+            print 'starter garden-- has avater'
+            estate = simbase.air.estateManager.toon2estate.get(avatar)
             if estate:
-                self.notify.debug('rental -- has estate')
-                estate.placeStarterGarden(avatar.doId)
+                print 'starter garden-- has estate'
+                estate.placeStarterGarden(avatar)
             else:
-                self.notify.warning('rental -- something not there')
+                print 'starter garden-- something not there'
         return ToontownGlobals.P_ItemAvailable
 
     def getPicture(self, avatar):

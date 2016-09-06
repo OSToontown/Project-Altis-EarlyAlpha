@@ -31,3 +31,9 @@ class AmbientSound(BasicEntities.NodePathEntity):
             del self.soundIval
         if hasattr(self, 'sound'):
             del self.sound
+
+    if __dev__:
+
+        def attribChanged(self, *args):
+            self.destroySound()
+            self.initSound()

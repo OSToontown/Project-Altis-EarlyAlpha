@@ -1,4 +1,6 @@
-from DistributedToonInteriorAI import *
+from direct.directnotify import DirectNotifyGlobal
+from toontown.building.DistributedToonInteriorAI import DistributedToonInteriorAI
 
 class DistributedToonHallInteriorAI(DistributedToonInteriorAI):
-    pass
+    notify = DirectNotifyGlobal.directNotify.newCategory("DistributedToonHallInteriorAI")
+

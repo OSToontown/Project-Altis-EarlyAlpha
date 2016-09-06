@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 ELEVATOR_NORMAL = 0
 ELEVATOR_VP = 1
 ELEVATOR_MINT = 2
@@ -8,13 +8,25 @@ ELEVATOR_OFFICE = 5
 ELEVATOR_STAGE = 6
 ELEVATOR_BB = 7
 ELEVATOR_COUNTRY_CLUB = 8
-ELEVATOR_FIELD = 9
 REJECT_NOREASON = 0
-REJECT_NOSEAT = 1
-REJECT_PROMOTION = 2
-REJECT_BLOCKED_ROOM = 3
-REJECT_BOARDINGPARTY = 4
+REJECT_SHUFFLE = 1
+REJECT_MINLAFF = 2
+REJECT_NOSEAT = 3
+REJECT_PROMOTION = 4
+REJECT_BLOCKED_ROOM = 5
+REJECT_NOT_YET_AVAILABLE = 6
+REJECT_BOARDINGPARTY = 7
+REJECT_NOTPAID = 8
 MAX_GROUP_BOARDING_TIME = 6.0
+if __dev__:
+    try:
+        config = simbase.config
+    except:
+        config = base.config
+
+    elevatorCountdown = config.GetFloat('elevator-countdown', -1)
+    if elevatorCountdown != -1:
+        bboard.post('elevatorCountdown', elevatorCountdown)
 ElevatorData = {ELEVATOR_NORMAL: {'openTime': 2.0,
                    'closeTime': 2.0,
                    'width': 3.5,
@@ -68,14 +80,7 @@ ElevatorData = {ELEVATOR_NORMAL: {'openTime': 2.0,
                          'width': 5.875,
                          'countdown': bboard.get('elevatorCountdown', 15.0),
                          'sfxVolume': 1.0,
-                         'collRadius': 4},
- ELEVATOR_FIELD: {'openTime': 2.0,
-                   'closeTime': 2.0,
-                   'width': 3.5,
-                   'countdown': bboard.get('elevatorCountdown', 15.0),
-                   'sfxVolume': 1.0,
-                   'collRadius': 5.6}}
-
+                         'collRadius': 4}}
 TOON_BOARD_ELEVATOR_TIME = 1.0
 TOON_EXIT_ELEVATOR_TIME = 1.0
 TOON_VICTORY_EXIT_TIME = 1.0

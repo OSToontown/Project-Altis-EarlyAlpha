@@ -1,13 +1,14 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToontownGlobals import *
 from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 from toontown.toon import LaffMeter
 
 class MinigameAvatarScorePanel(DirectFrame):
 
     def __init__(self, avId, avName):
         self.avId = avId
-        if self.avId in base.cr.doId2do:
+        if base.cr.doId2do.has_key(self.avId):
             self.avatar = base.cr.doId2do[self.avId]
         else:
             self.avatar = None

@@ -9,8 +9,8 @@ from direct.task import Task
 
 class DistributedFactoryElevatorExtAI(DistributedElevatorExtAI.DistributedElevatorExtAI):
 
-    def __init__(self, air, bldg, factoryId, entranceId):
-        DistributedElevatorExtAI.DistributedElevatorExtAI.__init__(self, air, bldg)
+    def __init__(self, air, bldg, factoryId, entranceId, antiShuffle = 0, minLaff = 0):
+        DistributedElevatorExtAI.DistributedElevatorExtAI.__init__(self, air, bldg, antiShuffle=antiShuffle, minLaff=minLaff)
         self.factoryId = factoryId
         self.entranceId = entranceId
 
@@ -26,7 +26,7 @@ class DistributedFactoryElevatorExtAI(DistributedElevatorExtAI.DistributedElevat
                     players.append(i)
 
             factoryZone = self.bldg.createFactory(self.factoryId, self.entranceId, players)
-            for seatIndex in xrange(len(self.seats)):
+            for seatIndex in range(len(self.seats)):
                 avId = self.seats[seatIndex]
                 if avId:
                     self.sendUpdateToAvatarId(avId, 'setFactoryInteriorZone', [factoryZone])

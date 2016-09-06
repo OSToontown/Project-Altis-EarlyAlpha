@@ -1,11 +1,16 @@
-from panda3d.core import *
-from direct.directnotify import DirectNotifyGlobal
-from toontown.toonbase import TTLocalizer, ToontownGlobals
+from pandac.PandaModules import *
 import random
+import string
+import copy
+from toontown.toonbase import ToontownGlobals
+from toontown.toonbase import TTLocalizer
+import os
+from direct.showbase import AppRunnerGlobal
+from direct.directnotify import DirectNotifyGlobal
 
 class NameGenerator:
     text = TextNode('text')
-    if process == 'client':
+    if game.name != 'uberDog': # Hacky... this is for the sandbox server which throws IOErrors when reading fonts.
         text.setFont(ToontownGlobals.getInterfaceFont())
     notify = DirectNotifyGlobal.directNotify.newCategory('NameGenerator')
     boyTitles = []
@@ -33,22 +38,19 @@ class NameGenerator:
         self.lastSuffixes = []
         self.nameDictionary = {}
         searchPath = DSearchPath()
-        if __debug__:
-            searchPath.appendDirectory(Filename('../resources/phase_3/etc'))
-        searchPath.appendDirectory(Filename('resources/phase_3/etc'))
         searchPath.appendDirectory(Filename('/phase_3/etc'))
         filename = Filename(TTLocalizer.NameShopNameMaster)
         found = vfs.resolveFilename(filename, searchPath)
         if not found:
             self.notify.error("NameGenerator: Error opening name list text file '%s.'" % TTLocalizer.NameShopNameMaster)
         input = StreamReader(vfs.openReadFile(filename, 1), 1)
-        currentLine = input.readline().strip()
+        currentLine = input.readline()
         while currentLine:
             if currentLine.lstrip()[0:1] != '#':
                 a1 = currentLine.find('*')
                 a2 = currentLine.find('*', a1 + 1)
-                self.nameDictionary[int(currentLine[0:a1])] = (int(currentLine[a1 + 1:a2]), currentLine[a2 + 1:len(currentLine)])
-            currentLine = input.readline().strip()
+                self.nameDictionary[int(currentLine[0:a1])] = (int(currentLine[a1 + 1:a2]), currentLine[a2 + 1:].rstrip())
+            currentLine = input.readline()
 
         masterList = [self.boyTitles,
          self.girlTitles,

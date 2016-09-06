@@ -93,7 +93,10 @@ class CatalogMouldingItem(CatalogSurfaceItem):
 
     def decodeDatagram(self, di, versionNumber, store):
         CatalogAtticItem.CatalogAtticItem.decodeDatagram(self, di, versionNumber, store)
-        self.patternIndex = di.getUint16()
+        if versionNumber < 3:
+            self.patternIndex = di.getUint8()
+        else:
+            self.patternIndex = di.getUint16()
         self.colorIndex = di.getUint8()
         wtype = MouldingTypes[self.patternIndex]
 
@@ -116,7 +119,7 @@ def getAllMouldings(*indexList):
     for index in indexList:
         colors = MouldingTypes[index][MTColor]
         if colors:
-            for n in xrange(len(colors)):
+            for n in range(len(colors)):
                 list.append(CatalogMouldingItem(index, n))
 
         else:
@@ -140,7 +143,7 @@ def getMouldingRange(fromIndex, toIndex, *otherRanges):
             if patternIndex >= fromIndex and patternIndex <= toIndex:
                 colors = MouldingTypes[patternIndex][MTColor]
                 if colors:
-                    for n in xrange(len(colors)):
+                    for n in range(len(colors)):
                         list.append(CatalogMouldingItem(patternIndex, n))
 
                 else:

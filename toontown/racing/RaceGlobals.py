@@ -205,7 +205,7 @@ def getTunnelSignName(genreId, padId):
 RacePadId2RaceInfo = {0: (0, Practice, 3),
  1: (1, Practice, 3),
  2: (0, ToonBattle, 3),
- 3: (1, Circuit, 3)}
+ 3: (1, ToonBattle, 3)}
 
 def getGenreFromString(string):
     if string == 'town':
@@ -236,9 +236,6 @@ def getNextRaceInfo(prevTrackId, genreString, padId):
     genre = getGenreFromString(genreString)
     cPadId = getCanonicalPadId(padId)
     raceInfo = RacePadId2RaceInfo.get(cPadId)
-    raceType = raceInfo[1]
-    if raceType == Circuit and not simbase.air.newsManager.isGrandPrixRunning():
-        raceType = ToonBattle
     trackList = getTrackListByType(genre, raceInfo[0])
     if trackList.count(prevTrackId) == 0:
         trackId = trackList[1]
@@ -247,7 +244,7 @@ def getNextRaceInfo(prevTrackId, genreString, padId):
         index += 1
         index %= len(trackList)
         trackId = trackList[index]
-    return (trackId, raceType, raceInfo[2])
+    return (trackId, raceInfo[1], raceInfo[2])
 
 
 TrackPath = 'phase_6/models/karting/'
@@ -542,6 +539,7 @@ def getCircuitLoop(startingTrack):
     circuitLoop = [startingTrack]
     for loop in CircuitLoops:
         if startingTrack in loop:
+            print loop
             numTracks = len(loop)
             tempLoop = loop * 2
             startingIndex = tempLoop.index(startingTrack)
@@ -555,8 +553,3 @@ Exit_UserReq = 0
 Exit_Barrier = 1
 Exit_Slow = 2
 Exit_BarrierNoRefund = 3
-
-MaxTimeDifference = {
-  0: 86400,
-  1: 604800
-}

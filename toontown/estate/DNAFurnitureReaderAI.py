@@ -1,3 +1,4 @@
+from direct.directnotify import DirectNotifyGlobal
 from toontown.catalog.CatalogItemList import CatalogItemList
 from toontown.catalog.CatalogFurnitureItem import CatalogFurnitureItem
 from toontown.catalog import CatalogItem
@@ -9,9 +10,9 @@ DNA2Furniture = {
 
     'chairA': 100,
     'chair': 110,
-    'regular_bed': (200, 210),
+    'regular_bed': 200,
     'FireplaceSq': 400,
-    'closetBoy': (500, 510),
+    'closetBoy': 500,
     'lamp_short': 600,
     'lamp_tall': 610,
     'couch_1person': 700,
@@ -28,20 +29,18 @@ DNA2Furniture = {
     'bookcase_low': 1130,
     'ending_table': 1200,
     'jellybeanBank': 1300,
-    'trunkBoy': (4000, 4010)
-}
 
+}
 
 class DNAFurnitureReaderAI:
     # This object processes the house_interior*.dna files and produces a
     # CatalogItemList representing the furniture in the DNA file. The resulting
     # list is passed to the FurnitureManager in order to initialize a blank
     # house to the default furniture arrangement.
-    notify = directNotify.newCategory("DNAFurnitureReaderAI")
+    notify = DirectNotifyGlobal.directNotify.newCategory("DNAFurnitureReaderAI")
 
-    def __init__(self, dnaData, gender, phonePos):
+    def __init__(self, dnaData, phonePos):
         self.dnaData = dnaData
-        self.gender = gender
         self.phonePos = phonePos
         self.itemList = None
 
@@ -50,8 +49,7 @@ class DNAFurnitureReaderAI:
                                                CatalogItem.Location))
 
         # Find the interior node:
-        for i in xrange(self.dnaData.getNumChildren()):
-            child = self.dnaData.at(i)
+        for child in self.dnaData.children:
             if child.getName() == 'interior':
                 interior = child
                 break
@@ -60,8 +58,7 @@ class DNAFurnitureReaderAI:
 
         self.itemList.append(CatalogFurnitureItem(1399, posHpr=self.phonePos))
         # Every child in the interior node is a prop, thus:
-        for i in xrange(interior.getNumChildren()):
-            child = interior.at(i)
+        for child in interior.children:
             code = child.getCode()
 
             if code not in DNA2Furniture:
@@ -71,8 +68,6 @@ class DNAFurnitureReaderAI:
             itemId = DNA2Furniture[code]
             if itemId is None:
                 continue
-            if hasattr(itemId, '__getitem__'):
-                itemId = itemId[self.gender]
 
             x, y, z = child.getPos()
             h, p, r = child.getHpr()

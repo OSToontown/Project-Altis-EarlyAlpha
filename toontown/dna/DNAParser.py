@@ -1,43 +1,51 @@
-from direct.stdpy import threading
-from libpandadna import DNALoader, DNADoor, DNAStorage, DNAGroup, DNAVisGroup, DNASuitPoint, DNAInteractiveProp
+import xml.sax
 
-class DNABulkLoader(object):
-    
-    def __init__(self, storage, files):
-        super(DNABulkLoader, self).__init__()
-        
-        self.dnaStorage = storage
-        self.dnaFiles = files
+class DNAError(Exception): pass
+class DNAParseError(DNAError): pass
 
-    def loadDNAFiles(self):
-        for file in self.dnaFiles:
-            print 'Reading DNA file...', file
-            loadDNABulk(self.dnaStorage, file)
-        
-        del self.dnaStorage
-        del self.dnaFiles
+elementRegistry = {}
+def registerElement(element):
+    elementRegistry[element.TAG] = element
 
-def loadDNABulk(dnaStorage, file):
-    dnaLoader = DNALoader()
-    dnaLoader.loadDNAFile(dnaStorage, '/%s' % file)
+class DNASaxHandler(xml.sax.ContentHandler):
+    def __init__(self):
+        xml.sax.ContentHandler.__init__(self)
 
-def loadDNAFile(dnaStorage, file):
-    print 'Reading DNA file...', file
-    dnaLoader = DNALoader()
-    node = dnaLoader.loadDNAFile(dnaStorage, '/%s' % file)
-    
-    if node.node().getNumChildren() > 0:
-        return node.node()
+        self.stack = []
+        self.root = None
 
-def loadDNAFileAI(dnaStorage, file):
-    dnaLoader = DNALoader()
-    return dnaLoader.loadDNAFileAI(dnaStorage, '/%s' % file)
+    def startElement(self, tag, attrs):
+        if self.stack:
+            parent = self.stack[-1]
+            parentTag = parent.TAG
+        else:
+            parent = None
+            parentTag = None
 
-def setupDoor(a, b, c, d, e, f):
-    try:
-        e = int(str(e).split('_')[0])
-    except:
-        print 'setupDoor: error parsing', e
-        e = 9999
+        element = elementRegistry.get(tag)
+        if not element:
+            raise DNAParseError('Unknown element type: ' + tag)
 
-    DNADoor.setupDoor(a, b, c, d, e, f)
+        if parentTag not in element.PARENTS:
+            raise DNAParseError('Cannot put %s below %s element' % (tag, parentTag))
+
+        element = element(**attrs)
+        self.stack.append(element)
+        element.reparentTo(parent)
+
+        if not self.root:
+            self.root = element
+
+    def endElement(self, tag):
+        self.stack.pop(-1)
+
+    def characters(self, chars):
+        if not self.stack:
+            return
+
+        self.stack[-1].handleText(chars)
+
+def parse(stream):
+    handler = DNASaxHandler()
+    xml.sax.parse(stream, handler)
+    return handler.root

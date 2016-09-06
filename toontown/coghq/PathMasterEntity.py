@@ -62,34 +62,50 @@ class PathMasterEntity(PathEntity.PathEntity):
     def setPathTarget0(self, targetId):
         self.pathTarget0 = targetId
         self.pathTargetList[0] = targetId
+        if __dev__:
+            messenger.send(self.getChangeEvent())
 
     def setPathTarget1(self, targetId):
         self.pathTarget1 = targetId
         self.pathTargetList[1] = targetId
+        if __dev__:
+            messenger.send(self.getChangeEvent())
 
     def setPathTarget2(self, targetId):
         self.pathTarget2 = targetId
         self.pathTargetList[2] = targetId
+        if __dev__:
+            messenger.send(self.getChangeEvent())
 
     def setPathTarget3(self, targetId):
         self.pathTarget3 = targetId
         self.pathTargetList[3] = targetId
+        if __dev__:
+            messenger.send(self.getChangeEvent())
 
     def setPathTarget4(self, targetId):
         self.pathTarget4 = targetId
         self.pathTargetList[4] = targetId
+        if __dev__:
+            messenger.send(self.getChangeEvent())
 
     def setPathTarget5(self, targetId):
         self.pathTarget5 = targetId
         self.pathTargetList[5] = targetId
+        if __dev__:
+            messenger.send(self.getChangeEvent())
 
     def setPathTarget6(self, targetId):
         self.pathTarget6 = targetId
         self.pathTargetList[6] = targetId
+        if __dev__:
+            messenger.send(self.getChangeEvent())
 
     def setPathTarget7(self, targetId):
         self.pathTarget7 = targetId
         self.pathTargetList[7] = targetId
+        if __dev__:
+            messenger.send(self.getChangeEvent())
 
     def getReducedPath(self):
         returnPath = []
@@ -105,6 +121,8 @@ class PathMasterEntity(PathEntity.PathEntity):
         pathTableId = GoonPathData.taskZoneId2pathId[self.level.getTaskZoneId()]
         if self.pathIndex in GoonPathData.Paths[pathTableId]:
             self.path = GoonPathData.Paths[pathTableId][self.pathIndex]
+            if __dev__:
+                messenger.send(self.getChangeEvent())
         else:
             PathEntity.notify.warning('invalid pathIndex: %s' % pathIndex)
             self.path = None
@@ -117,7 +135,7 @@ class PathMasterEntity(PathEntity.PathEntity):
             track.append(WaitInterval(1.0))
             return track
         path = self.path + [self.path[0]]
-        for pointIndex in xrange(len(path) - 1):
+        for pointIndex in range(len(path) - 1):
             startPoint = Point3(path[pointIndex]) * self.pathScale
             endPoint = Point3(path[pointIndex + 1]) * self.pathScale
             v = startPoint - endPoint
@@ -137,7 +155,7 @@ class PathMasterEntity(PathEntity.PathEntity):
             track.append(WaitInterval(1.0))
             return track
         path = self.path + [self.path[0]]
-        for pointIndex in xrange(len(path) - 1):
+        for pointIndex in range(len(path) - 1):
             startPoint = Point3(path[pointIndex]) * self.pathScale
             endPoint = Point3(path[pointIndex + 1]) * self.pathScale
             v = startPoint - endPoint
@@ -150,3 +168,12 @@ class PathMasterEntity(PathEntity.PathEntity):
             track.append(LerpPosInterval(node, duration=duration, pos=endPoint, startPos=startPoint))
 
         return track
+
+    if __dev__:
+
+        def getChangeEvent(self):
+            return self.getUniqueName('pathChanged')
+
+        def setPathScale(self, pathScale):
+            self.pathScale = pathScale
+            self.setPathIndex(self.pathIndex)

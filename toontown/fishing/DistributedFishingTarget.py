@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
 from direct.directnotify import DirectNotifyGlobal
@@ -7,7 +7,6 @@ from direct.fsm import ClassicFSM
 from direct.fsm import State
 from direct.directutil import Mopath
 from toontown.toonbase import ToontownGlobals
-from toontown.hood import FishAnimatedProp
 from direct.actor import Actor
 import FishingTargetGlobals
 import random
@@ -38,8 +37,6 @@ class DistributedFishingTarget(DistributedNode.DistributedNode):
         self.bubbles = Bubbles.Bubbles(self, render)
         self.bubbles.renderParent.setDepthWrite(0)
         self.bubbles.start()
-        self.fish = FishAnimatedProp.FishAnimatedProp(self)
-        self.fish.enter()
         DistributedNode.DistributedNode.generate(self)
 
     def disable(self):
@@ -48,9 +45,6 @@ class DistributedFishingTarget(DistributedNode.DistributedNode):
             self.track = None
         self.bubbles.destroy()
         del self.bubbles
-        self.fish.exit()
-        self.fish.delete()
-        del self.fish
         if self.pond:
             self.pond.removeTarget(self)
         self.pond = None

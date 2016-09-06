@@ -1,9 +1,9 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from direct.distributed.ClockDelta import *
 from direct.directnotify import DirectNotifyGlobal
-from direct.gui import OnscreenText
 from otp.avatar import DistributedAvatar
+from otp.nametag import NametagGlobals
 from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import ToontownBattleGlobals
 from toontown.battle import BattleExperience
@@ -22,8 +22,6 @@ from toontown.friends import FriendsListManager
 from direct.controls.ControlManager import CollisionHandlerRayStart
 from direct.showbase import PythonUtil
 import random
-from otp.nametag import NametagGlobals
-from otp.nametag.NametagConstants import *
 
 class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedBossCog')
@@ -122,7 +120,6 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
 
     def disable(self):
         DistributedAvatar.DistributedAvatar.disable(self)
-        self.removeHeadMeters()
         self.battleAId = None
         self.battleBId = None
         self.battleA = None
@@ -182,20 +179,20 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
         self.activeIntervals = {}
 
     def clearInterval(self, name, finish = 1):
-        if name in self.activeIntervals:
+        if self.activeIntervals.has_key(name):
             ival = self.activeIntervals[name]
             if finish:
                 ival.finish()
             else:
                 ival.pause()
-            if name in self.activeIntervals:
+            if self.activeIntervals.has_key(name):
                 DelayDelete.cleanupDelayDeletes(ival)
                 del self.activeIntervals[name]
         else:
             self.notify.debug('interval: %s already cleared' % name)
 
     def finishInterval(self, name):
-        if name in self.activeIntervals:
+        if self.activeIntervals.has_key(name):
             interval = self.activeIntervals[name]
             interval.finish()
 
@@ -303,7 +300,7 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
 
     def setArenaSide(self, arenaSide):
         self.arenaSide = arenaSide
-    
+
     def setState(self, state):
         self.request(state)
 
@@ -341,10 +338,6 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
         return Sequence()
 
     def controlToons(self):
-        for panel in self.cr.openAvatarPanels:
-            if panel:
-                panel.cleanupDialog()
-
         for toonId in self.involvedToons:
             toon = self.cr.doId2do.get(toonId)
             if toon:
@@ -402,7 +395,6 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
             place = self.cr.playGame.getPlace()
             if place and hasattr(place, 'fsm'):
                 place.setState('finalBattle')
-        self.createHeadMeters()
 
     def releaseToons(self, finalBattle = 0):
         for toonId in self.involvedToons:
@@ -421,20 +413,6 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
                             self.toFinalBattleMode()
                         else:
                             self.toWalkMode()
-
-    def createHeadMeters(self):
-        for toonId in self.involvedToons:
-            toon = self.cr.doId2do.get(toonId)
-
-            if toon:
-                toon.createHeadMeter()
-
-    def removeHeadMeters(self):
-        for toonId in self.involvedToons:
-            toon = self.cr.doId2do.get(toonId)
-
-            if toon:
-                toon.removeHeadMeter()
 
     def stickToonsToFloor(self):
         self.unstickToons()
@@ -483,7 +461,7 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
         self.cqueue.sortEntries()
         numEntries = self.cqueue.getNumEntries()
         if numEntries != 0:
-            for i in xrange(self.cqueue.getNumEntries() - 1, -1, -1):
+            for i in range(self.cqueue.getNumEntries() - 1, -1, -1):
                 entry = self.cqueue.getEntry(i)
                 solid = entry.getFrom()
                 if solid == self.ray1:
@@ -644,7 +622,7 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
     def toonsToBattlePosition(self, toonIds, battleNode):
         points = BattleBase.BattleBase.toonPoints[len(toonIds) - 1]
         self.notify.debug('toonsToBattlePosition: points = %s' % points[0][0])
-        for i in xrange(len(toonIds)):
+        for i in range(len(toonIds)):
             toon = base.cr.doId2do.get(toonIds[i])
             if toon:
                 toon.reparentTo(render)
@@ -850,7 +828,7 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
         self.notify.debug('backupToonsToBattlePosition:')
         ival = Parallel()
         points = BattleBase.BattleBase.toonPoints[len(toonIds) - 1]
-        for i in xrange(len(toonIds)):
+        for i in range(len(toonIds)):
             toon = base.cr.doId2do.get(toonIds[i])
             if toon:
                 pos, h = points[i]
@@ -933,12 +911,8 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
         self.elevatorMusic = base.loadMusic('phase_7/audio/bgm/tt_elevator.ogg')
         self.stingMusic = base.loadMusic('phase_7/audio/bgm/encntr_suit_winning_indoor.ogg')
         self.battleOneMusic = base.loadMusic('phase_3.5/audio/bgm/encntr_general_bg.ogg')
-        self.battleTwoMusic = base.loadMusic('phase_9/audio/bgm/encntr_head_suit_theme.ogg')
-        self.battleThreeMusic = base.loadMusic('phase_9/audio/bgm/encntr_head_suit_theme.ogg')
-        self.CFOMusic = base.loadMusic('phase_9/audio/bgm/encntr_cfo_theme.ogg')
+        self.battleThreeMusic = base.loadMusic('phase_7/audio/bgm/encntr_suit_winning_indoor.ogg')
         self.epilogueMusic = base.loadMusic('phase_9/audio/bgm/encntr_hall_of_fame.ogg')
-        self.epilogueTwoMusic = base.loadMusic('phase_9/audio/bgm/CogHQ_finale.ogg')
-
 
     def unloadEnvironment(self):
         pass
@@ -1006,7 +980,7 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
         NametagGlobals.setMasterArrowsOn(0)
         intervalName = 'IntroductionMovie'
         delayDeletes = []
-        seq = Parallel(self.showTitleText(), Sequence(self.makeIntroductionMovie(delayDeletes), Func(self.__beginBattleOne)), name=intervalName)
+        seq = Sequence(self.makeIntroductionMovie(delayDeletes), Func(self.__beginBattleOne), name=intervalName)
         seq.delayDeletes = delayDeletes
         seq.start()
         self.storeInterval(seq, intervalName)
@@ -1060,7 +1034,10 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
             return
         if not self.allowClickedNameTag:
             return
-        FriendsListManager.FriendsListManager._FriendsListManager__handleClickedNametag(FriendsListManager.FriendsListManager, avatar)
+        if self.cr:
+            place = self.cr.playGame.getPlace()
+            if place and hasattr(place, 'fsm'):
+                FriendsListManager.FriendsListManager._FriendsListManager__handleClickedNametag(place, avatar)
 
     def __handleFriendAvatar(self, avId, avName, avDisableName):
         self.notify.debug('__handleFriendAvatar')
@@ -1071,9 +1048,9 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
         if self.cr:
             place = self.cr.playGame.getPlace()
             if place and hasattr(place, 'fsm'):
-                FriendsListManager.FriendsListManager._FriendsListManager__handleFriendAvatar(FriendsListManager.FriendsListManager, place, avId, avName, avDisableName)
+                FriendsListManager.FriendsListManager._FriendsListManager__handleFriendAvatar(place, avId, avName, avDisableName)
 
-    def __handleAvatarDetails(self, avId, avName):
+    def __handleAvatarDetails(self, avId, avName, playerId = None):
         self.notify.debug('__handleAvatarDetails')
         if not (self.state == 'BattleThree' or self.state == 'BattleFour'):
             return
@@ -1082,7 +1059,7 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
         if self.cr:
             place = self.cr.playGame.getPlace()
             if place and hasattr(place, 'fsm'):
-                FriendsListManager.FriendsListManager._FriendsListManager__handleAvatarDetails(FriendsListManager.FriendsListManager, place, avId, avName)
+                FriendsListManager.FriendsListManager._FriendsListManager__handleAvatarDetails(place, avId, avName, playerId)
 
     def enterBattleFour(self):
         self.cleanupIntervals()
@@ -1111,7 +1088,7 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
         pass
 
     def setToonsToNeutral(self, toonIds):
-        for i in xrange(len(toonIds)):
+        for i in range(len(toonIds)):
             toon = base.cr.doId2do.get(toonIds[i])
             if toon:
                 if toon.isDisguised:
@@ -1149,10 +1126,3 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
 
         seq.append(suitsOff)
         return seq
-
-    def showTitleText(self):
-        if self.style.dept not in TTLocalizer.BossLocations:
-            return Sequence()
-
-        titleText = OnscreenText.OnscreenText(TTLocalizer.BossLocations[self.style.dept], fg=(1, 1, 1, 1), shadow=(0, 0, 0, 1), font=ToontownGlobals.getSuitFont(), pos=(0, -0.5), scale=0.16, wordwrap=16)
-        return Sequence(Wait(5.0), titleText.colorScaleInterval(0.5, (1, 1, 1, 0)), Func(titleText.removeNode))

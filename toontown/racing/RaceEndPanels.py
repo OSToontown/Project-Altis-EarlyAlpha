@@ -1,5 +1,5 @@
 from direct.gui.DirectGui import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.interval.IntervalGlobal import *
 from toontown.toonbase import ToontownGlobals
@@ -31,7 +31,7 @@ class RaceResultsPanel(DirectFrame):
         self.pointsLabel = DirectLabel(parent=self, relief=None, pos=(0.7, 0, 0.3), text=TTLocalizer.KartRace_CircuitPoints, text_fg=(0.0, 0.0, 0.0, 1.0), text_scale=TTLocalizer.REPsmallLabel)
         self.pointsLabel.hide()
         self.rowFrame = []
-        for x in xrange(self.numRacers):
+        for x in range(self.numRacers):
             frame = DirectFrame(parent=self, relief=None, pos=self.getRowPos(x))
             self.rowFrame.append(frame)
             pLabel = DirectLabel(parent=frame, relief=None, pos=(0.0, 0.0, -0.01), text=`(x + 1)` + ' -', text_fg=(0.5, 0.5, 0.5, 1.0), text_scale=TTLocalizer.REPlargeLabel, text_align=TextNode.ARight, text_font=DGG.getDefaultFont())
@@ -98,7 +98,7 @@ class RaceResultsPanel(DirectFrame):
         bonusSeq = Sequence()
         if qualify and bonus:
             qText = TTLocalizer.KartRace_Qualified
-            for i in xrange(1, 7):
+            for i in range(1, 7):
                 bonusSeq.append(Func(flipText, 0, recStr=qText))
                 bonusSeq.append(Wait(0.5))
                 bonusSeq.append(Func(flipText, 1))
@@ -110,12 +110,12 @@ class RaceResultsPanel(DirectFrame):
 
         elif qualify:
             qText = TTLocalizer.KartRace_Qualified
-            for i in xrange(0, 12):
+            for i in range(0, 12):
                 bonusSeq.append(Func(flipText, i % 2, recStr=qText))
                 bonusSeq.append(Wait(0.5))
 
         elif bonus:
-            for i in xrange(0, 12):
+            for i in range(0, 12):
                 bonusSeq.append(Func(flipText, i % 2))
                 bonusSeq.append(Wait(0.5))
 
@@ -129,10 +129,10 @@ class RaceResultsPanel(DirectFrame):
         displayPar = Parallel(bonusSeq, ticketSeq)
         displayPar.start()
         self.entryListSeqs.append(displayPar)
-        if circuitPoints:
+        if not circuitPoints == []:
             self.pointsLabel.show()
-            newPoints = circuitPoints[1]
-            currentPoints = circuitPoints[0]
+            newPoints = circuitPoints[:].pop()
+            currentPoints = sum(circuitPoints[:-1])
             self.entryList[place - 1][5]['text'] = '%s' % currentPoints
             self.entryList[place - 1][6]['text'] = ' + %s' % newPoints
 
@@ -178,7 +178,7 @@ class RaceResultsPanel(DirectFrame):
                 shiftRacersSeq.append(Parallel(Func(fixPlaceValue), LerpPosInterval(self.rowFrame[oldPlace], 1, newPos)))
 
         self.circuitFinishSeq = Sequence(calcPointsSeq, shiftRacersSeq)
-        if len(self.race.circuitLoop) > 1:
+        if not len(self.race.circuitLoop) == 0:
             self.notify.debug('Not the last race in a circuit, pressing next race in 30 secs')
             self.circuitFinishSeq.append(Wait(30))
             self.circuitFinishSeq.append(Func(self.raceEndPanel.closeButtonPressed))
@@ -293,7 +293,7 @@ class RaceWinningsPanel(DirectFrame):
         else:
             self.circuitTotalLabel.stash()
             self.raceTotalLabel.unstash()
-        if (not base.cr.newsManager.isHolidayRunning(ToontownGlobals.KARTING_TICKETS_HOLIDAY)) or self.race.raceType != RaceGlobals.Practice:
+        if ToontownGlobals.KARTING_TICKETS_HOLIDAY not in base.cr.newsManager.getHolidayIdList() or self.race.raceType != RaceGlobals.Practice:
             self.doubleTicketsLabel.stash()
         if ticBonus:
             ticketSeq.append(Sequence(Func(self.ticketFrame.hide), Func(self.bonusFrame.show), Func(self.trophyFrame.hide), Func(self.bonusComponents[0].configure, text=wrapStr(TTLocalizer.KartRace_RecordString % (TTLocalizer.KartRecordStrings[bonusType], TTLocalizer.KartRace_TrackNames[track], str(ticBonus)))), Wait(3)))
@@ -331,7 +331,7 @@ class RaceEndPanel(DirectFrame):
         self.race = race
         self.results = RaceResultsPanel(numRacers, race, self, parent=self, pos=(0, 0, 0.525))
         self.winnings = RaceWinningsPanel(race, parent=self, pos=(0, 0, -0.525))
-        if len(self.race.circuitLoop) <= 1:
+        if len(self.race.circuitLoop) == 0:
             exitText = TTLocalizer.KartRace_Exit
         else:
             exitText = TTLocalizer.KartRace_NextRace
@@ -374,8 +374,10 @@ class RaceEndPanel(DirectFrame):
         self.results.updateWinnings(place, winnings)
 
     def updateWinningsFromCircuit(self, place, entryFee, winnings, bonus, trophies = ()):
+        print 'updateWinningsFromCircuit'
         self.seq.finish()
-        self.results.updateWinnings(place, winnings + entryFee + bonus)
+        totalTickets = winnings + entryFee + bonus
+        self.results.updateWinnings(place, totalTickets)
         self.startWinningsPanel(entryFee, winnings, 0, bonus, trophies, True)
 
     def startWinningsPanel(self, entryFee, winnings, track, bonus = None, trophies = (), endOfCircuitRace = False):

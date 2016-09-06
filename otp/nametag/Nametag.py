@@ -3,7 +3,6 @@ import NametagGlobals
 from otp.margins.ClickablePopup import ClickablePopup
 from otp.otpbase import OTPGlobals
 from pandac.PandaModules import *
-from direct.interval.IntervalGlobal import *
 
 class Nametag(ClickablePopup):
     CName = 1
@@ -66,7 +65,7 @@ class Nametag(ClickablePopup):
         pass # Does nothing by default.
 
     def clickStateChanged(self):
-        self.update(False)
+        self.update()
 
     def getButton(self):
         cs = self.getClickState()
@@ -77,7 +76,7 @@ class Nametag(ClickablePopup):
         else:
             return self.buttons.get(0)
 
-    def update(self, scale=True):
+    def update(self):
         if self.colorCode in NAMETAG_COLORS:
             cc = self.colorCode
         else:
@@ -87,19 +86,11 @@ class Nametag(ClickablePopup):
 
         self.innerNP.node().removeAllChildren()
         if self.contents & self.CThought and self.chatFlags & CFThought:
-            balloon = self.showBalloon(self.getThoughtBalloon(), self.chatString)
+            self.showThought()
         elif self.contents & self.CSpeech and self.chatFlags&CFSpeech:
-            balloon = self.showBalloon(self.getSpeechBalloon(), self.chatString)
+            self.showSpeech()
         elif self.contents & self.CName and self.displayName:
             self.showName()
-            return
-        else:
-            return
-
-        if scale and self.IS_3D:
-            balloon.setScale(0)
-            scaleLerp = Sequence(Wait(0.10), LerpScaleInterval(balloon, 0.2, VBase3(1, 1, 1), VBase3(0, 0, 0), blendType='easeInOut'))
-            scaleLerp.start()
 
     def showBalloon(self, balloon, text):
         if not self.speechFont:
@@ -119,7 +110,12 @@ class Nametag(ClickablePopup):
                                           reversed=reversed)
         balloon.reparentTo(self.innerNP)
         self.frame = frame
-        return balloon
+
+    def showThought(self):
+        self.showBalloon(self.getThoughtBalloon(), self.chatString)
+
+    def showSpeech(self):
+        self.showBalloon(self.getSpeechBalloon(), self.chatString)
 
     def showName(self):
         if not self.font:
@@ -133,7 +129,7 @@ class Nametag(ClickablePopup):
         t.node().setAlign(TextNode.ACenter)
         t.node().setWordwrap(self.wordWrap)
         t.node().setText(self.displayName)
-        t.node().setTextColor(self.nameFg)
+        t.setColor(self.nameFg)
         t.setTransparency(self.nameFg[3] < 1.0)
 
         width, height = t.node().getWidth(), t.node().getHeight()

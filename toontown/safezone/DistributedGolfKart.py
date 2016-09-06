@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.distributed.ClockDelta import *
 from direct.task.Task import Task
 from direct.interval.IntervalGlobal import *
@@ -12,6 +12,7 @@ from direct.fsm import State
 from toontown.distributed import DelayDelete
 from direct.task.Task import Task
 from direct.showbase import PythonUtil
+from toontown.toontowngui import TeaserPanel
 from toontown.toon import ToonDNA
 from toontown.hood import ZoneUtil
 
@@ -30,7 +31,7 @@ class DistributedGolfKart(DistributedObject.DistributedObject):
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
         self.localToonOnBoard = 0
-        self.trolleyCountdownTime = base.config.GetFloat('trolley-countdown-time', TROLLEY_COUNTDOWN_TIME)
+        self.trolleyCountdownTime = config.GetFloat('trolley-countdown-time', TROLLEY_COUNTDOWN_TIME)
         self.fsm = ClassicFSM.ClassicFSM('DistributedTrolley', [State.State('off', self.enterOff, self.exitOff, ['entering',
           'waitEmpty',
           'waitCountdown',
@@ -47,7 +48,7 @@ class DistributedGolfKart(DistributedObject.DistributedObject):
          0,
          0,
          0]
-        self.kartModelPath = 'phase_6/models/golf/golf_cart3.bam'
+        self.kartModelPath = 'phase_6/models/golf/golf_cart3'
 
     def generate(self):
         DistributedObject.DistributedObject.generate(self)
@@ -121,9 +122,27 @@ class DistributedGolfKart(DistributedObject.DistributedObject):
         self.notify.debug('Entering Trolley Sphere....')
         self.loader.place.detectedTrolleyCollision()
 
+    def allowedToEnter(self):
+        if hasattr(base, 'ttAccess') and base.ttAccess and base.ttAccess.canAccess():
+            return True
+        return False
+
     def handleEnterGolfKartSphere(self, collEntry):
         self.notify.debug('Entering Golf Kart Sphere.... %s' % self.getDoId())
-        self.loader.place.detectedGolfKartCollision(self)
+        if self.allowedToEnter():
+            self.loader.place.detectedGolfKartCollision(self)
+        else:
+            place = base.cr.playGame.getPlace()
+            if place:
+                place.fsm.request('stopped')
+            self.dialog = TeaserPanel.TeaserPanel(pageName='golf', doneFunc=self.handleOkTeaser)
+
+    def handleOkTeaser(self):
+        self.dialog.destroy()
+        del self.dialog
+        place = base.cr.playGame.getPlace()
+        if place:
+            place.fsm.request('walk')
 
     def handleEnterTrolley(self):
         toon = base.localAvatar
@@ -155,7 +174,7 @@ class DistributedGolfKart(DistributedObject.DistributedObject):
                 self.localToonOnBoard = 1
             if avId == base.localAvatar.getDoId():
                 self.loader.place.trolley.fsm.request('boarded')
-            if avId in self.cr.doId2do:
+            if self.cr.doId2do.has_key(avId):
                 toon = self.cr.doId2do[avId]
                 toon.stopSmooth()
                 toon.wrtReparentTo(self.golfKart)
@@ -193,7 +212,7 @@ class DistributedGolfKart(DistributedObject.DistributedObject):
             pass
         else:
             self.avIds[index] = 0
-            if avId in self.cr.doId2do:
+            if self.cr.doId2do.has_key(avId):
                 toon = self.cr.doId2do[avId]
                 toon.stopSmooth()
                 sitStartDuration = toon.getDuration('sit-start')
@@ -322,7 +341,7 @@ class DistributedGolfKart(DistributedObject.DistributedObject):
             keyList.append(key)
 
         for key in keyList:
-            if key in self.__toonTracks:
+            if self.__toonTracks.has_key(key):
                 self.clearToonTrack(key)
 
     def setGolfCourse(self, golfCourse):

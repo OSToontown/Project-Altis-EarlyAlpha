@@ -1,11 +1,14 @@
+from pandac.PandaModules import *
+from direct.directnotify import DirectNotifyGlobal
 import DistributedDoorAI
 import DistributedHQInteriorAI
+import FADoorCodes
 import DoorTypes
-from panda3d.core import *
 from toontown.toon import NPCToons
-
+from toontown.quest import Quests
 
 class HQBuildingAI:
+
     def __init__(self, air, exteriorZone, interiorZone, blockNumber):
         self.air = air
         self.exteriorZone = exteriorZone
@@ -15,6 +18,7 @@ class HQBuildingAI:
     def cleanup(self):
         for npc in self.npcs:
             npc.requestDelete()
+
         del self.npcs
         self.door0.requestDelete()
         del self.door0
@@ -28,20 +32,13 @@ class HQBuildingAI:
         del self.interior
 
     def setup(self, blockNumber):
-        self.interior = DistributedHQInteriorAI.DistributedHQInteriorAI(
-            blockNumber, self.air, self.interiorZone)
-        self.interior.generateWithRequired(self.interiorZone)
-
+        self.interior = DistributedHQInteriorAI.DistributedHQInteriorAI(blockNumber, self.air, self.interiorZone)
         self.npcs = NPCToons.createNpcsInZone(self.air, self.interiorZone)
-
-        door0 = DistributedDoorAI.DistributedDoorAI(
-            self.air, blockNumber, DoorTypes.EXT_HQ, doorIndex=0)
-        door1 = DistributedDoorAI.DistributedDoorAI(
-            self.air, blockNumber, DoorTypes.EXT_HQ, doorIndex=1)
-        insideDoor0 = DistributedDoorAI.DistributedDoorAI(
-            self.air, blockNumber, DoorTypes.INT_HQ, doorIndex=0)
-        insideDoor1 = DistributedDoorAI.DistributedDoorAI(
-            self.air, blockNumber, DoorTypes.INT_HQ, doorIndex=1)
+        self.interior.generateWithRequired(self.interiorZone)
+        door0 = DistributedDoorAI.DistributedDoorAI(self.air, blockNumber, DoorTypes.EXT_HQ, doorIndex=0)
+        door1 = DistributedDoorAI.DistributedDoorAI(self.air, blockNumber, DoorTypes.EXT_HQ, doorIndex=1)
+        insideDoor0 = DistributedDoorAI.DistributedDoorAI(self.air, blockNumber, DoorTypes.INT_HQ, doorIndex=0)
+        insideDoor1 = DistributedDoorAI.DistributedDoorAI(self.air, blockNumber, DoorTypes.INT_HQ, doorIndex=1)
         door0.setOtherDoor(insideDoor0)
         insideDoor0.setOtherDoor(door0)
         door1.setOtherDoor(insideDoor1)

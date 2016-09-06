@@ -1,5 +1,5 @@
 import random
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import Sequence, Func, Parallel, Wait, LerpHprInterval, LerpScaleInterval, LerpFunctionInterval
 from otp.otpbase import OTPGlobals
 from toontown.toonbase import ToontownGlobals
@@ -242,8 +242,7 @@ class CogdoFlyingPowerup(CogdoFlyingGatherable):
             self._model.setAlphaScale(0.5)
             if Globals.Level.AddSparkleToPowerups:
                 self.f = self.find('**/particleEffect_sparkles')
-                if not self.f.isEmpty():
-                    self.f.hide()
+                self.f.hide()
 
     def pickUp(self, toon, elapsedSeconds = 0.0):
         if self.wasPickedUpByToon(toon) == True:
@@ -340,7 +339,6 @@ class CogdoFlyingLevelFog:
     def __init__(self, level, color = Globals.Level.FogColor):
         self._level = level
         self.color = color
-        self.defaultFar = None
         fogDistance = self._level.quadLengthUnits * max(1, self._level.quadVisibiltyAhead * 0.2)
         self.fog = Fog('RenderFog')
         self.fog.setColor(self.color)
@@ -348,16 +346,11 @@ class CogdoFlyingLevelFog:
         self._visible = False
         self._clearColor = Vec4(base.win.getClearColor())
         self._clearColor.setW(1.0)
-        self.defaultFar = base.camLens.getFar()
-        base.camLens.setFar(Globals.Camera.GameCameraFar)
-        base.setBackgroundColor(self.color)
 
     def destroy(self):
         self.setVisible(False)
         if hasattr(self, 'fog'):
             del self.fog
-        if self.defaultFar is not None:
-            base.camLens.setFar(self.defaultFar)
 
     def isVisible(self):
         return self._visible

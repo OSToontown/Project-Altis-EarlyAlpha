@@ -2,7 +2,7 @@ from direct.directtools.DirectSelection import *
 from direct.directtools.DirectUtil import ROUND_TO
 from direct.directtools.DirectGeometry import LineNodePath
 from direct.gui.DirectGui import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.showbase.DirectObject import DirectObject
 from toontown.toonbase import ToontownGlobals
 from direct.directnotify import DirectNotifyGlobal
@@ -490,6 +490,7 @@ class ObjectManager(NodePath, DirectObject):
         messenger.send('wakeup')
         if self.selectedObject:
             self.deselectObject()
+
         if selectedObject:
             self.selectedObject = selectedObject
             self.deselectEvent = self.selectedObject.dfitem.uniqueName('disable')
@@ -504,8 +505,21 @@ class ObjectManager(NodePath, DirectObject):
             self.lnp.create()
             self.buttonFrame.show()
             self.enableButtonFrameTask()
-            self.sendToAtticButton.show()
             self.atticRoof.hide()
+
+            # In case we dont want to move the Closet, Phone, Bank or Trunk to the attic
+            if config.GetBool('want-permanent-interactables', False):
+                if selectedObject.dfitem.item.getFlags() & CatalogFurnitureItem.FLCloset or \
+                    selectedObject.dfitem.item.getFlags() & CatalogFurnitureItem.FLPhone or \
+                    selectedObject.dfitem.item.getFlags() & CatalogFurnitureItem.FLBank or \
+                    selectedObject.dfitem.item.getFlags() &CatalogFurnitureItem.FLTrunk:
+                    self.sendToAtticButton.hide()
+                    self.atticRoof.show()
+                else:
+                    self.sendToAtticButton.show()
+                return
+
+            self.sendToAtticButton.show()
 
     def deselectObject(self):
         self.moveObjectStop()
@@ -567,7 +581,7 @@ class ObjectManager(NodePath, DirectObject):
             self.movingObject = 1
 
     def setLnpColor(self, r, g, b):
-        for i in xrange(5):
+        for i in range(5):
             self.lnp.lineSegs.setVertexColor(i, r, g, b)
 
     def markNewPosition(self, isValid):
@@ -937,7 +951,7 @@ class ObjectManager(NodePath, DirectObject):
         self.bindHelpText(self.inRoomButton, 'Room')
         self.inTrashButton = DirectButton(parent=self.itemBackgroundFrame, relief=None, text=TTLocalizer.HDInTrashLabel, text_pos=(-0.1, -0.25), image=[tagUp, tagDown, tagRollover], pos=(2.85, 0, -1.8), scale=0.8, command=self.showInTrashPicker)
         self.bindHelpText(self.inTrashButton, 'Trash')
-        for i in xrange(4):
+        for i in range(4):
             self.inAtticButton.component('text%d' % i).setR(-90)
             self.inRoomButton.component('text%d' % i).setR(-90)
             self.inTrashButton.component('text%d' % i).setR(-90)
@@ -1000,17 +1014,17 @@ class ObjectManager(NodePath, DirectObject):
 
     def createAtticPicker(self):
         self.atticItemPanels = []
-        for itemIndex in xrange(len(self.furnitureManager.atticItems)):
+        for itemIndex in range(len(self.furnitureManager.atticItems)):
             panel = FurnitureItemPanel(self.furnitureManager.atticItems[itemIndex], itemIndex, command=self.bringItemFromAttic, deleteMode=self.deleteMode, helpCategory='FurnitureItemPanelAttic')
             self.atticItemPanels.append(panel)
 
         self.atticWallpaperPanels = []
-        for itemIndex in xrange(len(self.furnitureManager.atticWallpaper)):
+        for itemIndex in range(len(self.furnitureManager.atticWallpaper)):
             panel = FurnitureItemPanel(self.furnitureManager.atticWallpaper[itemIndex], itemIndex, command=self.bringWallpaperFromAttic, deleteMode=self.deleteMode, helpCategory='FurnitureItemPanelAttic')
             self.atticWallpaperPanels.append(panel)
 
         self.atticWindowPanels = []
-        for itemIndex in xrange(len(self.furnitureManager.atticWindows)):
+        for itemIndex in range(len(self.furnitureManager.atticWindows)):
             panel = FurnitureItemPanel(self.furnitureManager.atticWindows[itemIndex], itemIndex, command=self.bringWindowFromAttic, deleteMode=self.deleteMode, helpCategory='FurnitureItemPanelAttic')
             self.atticWindowPanels.append(panel)
 
@@ -1069,7 +1083,7 @@ class ObjectManager(NodePath, DirectObject):
 
     def createInTrashPicker(self):
         self.inTrashPanels = []
-        for itemIndex in xrange(len(self.furnitureManager.deletedItems)):
+        for itemIndex in range(len(self.furnitureManager.deletedItems)):
             panel = FurnitureItemPanel(self.furnitureManager.deletedItems[itemIndex], itemIndex, command=self.requestReturnToAtticFromTrash, helpCategory='FurnitureItemPanelTrash')
             self.inTrashPanels.append(panel)
 
@@ -1151,7 +1165,7 @@ class ObjectManager(NodePath, DirectObject):
         return
 
     def sendItemToAttic(self):
-        if base.config.GetBool('want-qa-regression', 0):
+        if config.GetBool('want-qa-regression', 0):
             self.notify.info('QA-REGRESSION: ESTATE:  Send Item to Attic')
         messenger.send('wakeup')
         if self.selectedObject:
@@ -1173,7 +1187,7 @@ class ObjectManager(NodePath, DirectObject):
         self.atticItemPanels.append(panel)
         self.regenerateAtticPicker()
         if self.inRoomPicker:
-            for i in xrange(len(self.inRoomPanels)):
+            for i in range(len(self.inRoomPanels)):
                 if self.inRoomPanels[i].itemId == objectId:
                     del self.inRoomPanels[i]
                     self.regenerateInRoomPicker()
@@ -1253,7 +1267,7 @@ class ObjectManager(NodePath, DirectObject):
         return
 
     def bringItemFromAttic(self, item, itemIndex):
-        if base.config.GetBool('want-qa-regression', 0):
+        if config.GetBool('want-qa-regression', 0):
             self.notify.info('QA-REGRESSION: ESTATE: Place Item in Room')
         messenger.send('wakeup')
         self.__enableItemButtons(0)
@@ -1297,7 +1311,7 @@ class ObjectManager(NodePath, DirectObject):
         objectId = mo.get_key()
         self.atticItemPanels[itemIndex].destroy()
         del self.atticItemPanels[itemIndex]
-        for i in xrange(itemIndex, len(self.atticItemPanels)):
+        for i in range(itemIndex, len(self.atticItemPanels)):
             self.atticItemPanels[i].itemId -= 1
 
         self.regenerateAtticPicker()
@@ -1317,7 +1331,7 @@ class ObjectManager(NodePath, DirectObject):
             return
         self.atticItemPanels[itemIndex].destroy()
         del self.atticItemPanels[itemIndex]
-        for i in xrange(itemIndex, len(self.atticItemPanels)):
+        for i in range(itemIndex, len(self.atticItemPanels)):
             self.atticItemPanels[i].itemId -= 1
 
         self.regenerateAtticPicker()
@@ -1328,19 +1342,11 @@ class ObjectManager(NodePath, DirectObject):
         if self.deleteMode:
             self.requestDelete(item, itemIndex, self.deleteWallpaperFromAttic)
             return
-        room = self.getRoom()
+        if base.localAvatar.getY() < 2.3:
+            room = 0
+        else:
+            room = 1
         self.furnitureManager.moveWallpaperFromAttic(itemIndex, room, self.__bringWallpaperFromAtticCallback)
-
-    def getRoom(self):
-        x, y, z = base.localAvatar.getPos()
-
-        if (x <= -13.5 and y <= -7.6 and y >= 0.0) or (z >= 4.5 and z <= 10):
-            return 0
-        elif base.localAvatar.getZ() > 5.0:
-            return 1
-        elif base.localAvatar.getY() < 2.3:
-            return 2
-        return 3
 
     def __bringWallpaperFromAtticCallback(self, retcode, itemIndex, room):
         self.__enableItemButtons(1)
@@ -1364,7 +1370,7 @@ class ObjectManager(NodePath, DirectObject):
             return
         self.atticWallpaperPanels[itemIndex].destroy()
         del self.atticWallpaperPanels[itemIndex]
-        for i in xrange(itemIndex, len(self.atticWallpaperPanels)):
+        for i in range(itemIndex, len(self.atticWallpaperPanels)):
             self.atticWallpaperPanels[i].itemId -= 1
 
         self.regenerateAtticPicker()
@@ -1375,10 +1381,10 @@ class ObjectManager(NodePath, DirectObject):
         if self.deleteMode:
             self.requestDelete(item, itemIndex, self.deleteWindowFromAttic)
             return
-        room = self.getRoom()
-        if room == 0:
-            room = 1
-        slot = room * 2
+        if base.localAvatar.getY() < 2.3:
+            slot = 2
+        else:
+            slot = 4
         self.furnitureManager.moveWindowFromAttic(itemIndex, slot, self.__bringWindowFromAtticCallback)
 
     def __bringWindowFromAtticCallback(self, retcode, itemIndex, slot):
@@ -1394,7 +1400,7 @@ class ObjectManager(NodePath, DirectObject):
         else:
             self.atticWindowPanels[itemIndex].destroy()
             del self.atticWindowPanels[itemIndex]
-            for i in xrange(itemIndex, len(self.atticWindowPanels)):
+            for i in range(itemIndex, len(self.atticWindowPanels)):
                 self.atticWindowPanels[i].itemId -= 1
 
         self.regenerateAtticPicker()
@@ -1410,7 +1416,7 @@ class ObjectManager(NodePath, DirectObject):
             return
         self.atticWindowPanels[itemIndex].destroy()
         del self.atticWindowPanels[itemIndex]
-        for i in xrange(itemIndex, len(self.atticWindowPanels)):
+        for i in range(itemIndex, len(self.atticWindowPanels)):
             self.atticWindowPanels[i].itemId -= 1
 
         self.regenerateAtticPicker()
@@ -1479,7 +1485,7 @@ class ObjectManager(NodePath, DirectObject):
         return
 
     def __handleVerifyDeleteOK(self):
-        if base.config.GetBool('want-qa-regression', 0):
+        if config.GetBool('want-qa-regression', 0):
             self.notify.info('QA-REGRESSION: ESTATE:  Send Item to Trash')
         deleteFunction = self.verifyItems[0]
         deleteFunctionArgs = self.verifyItems[1:]
@@ -1563,7 +1569,7 @@ class ObjectManager(NodePath, DirectObject):
     def requestReturnToAttic(self, item, objectId):
         self.__cleanupVerifyDelete()
         itemIndex = None
-        for i in xrange(len(self.inRoomPanels)):
+        for i in range(len(self.inRoomPanels)):
             if self.inRoomPanels[i].itemId == objectId:
                 itemIndex = i
                 self.__enableItemButtons(0)
@@ -1590,7 +1596,7 @@ class ObjectManager(NodePath, DirectObject):
         self.verifyItems = (item, itemIndex)
 
     def __handleVerifyReturnFromTrashOK(self):
-        if base.config.GetBool('want-qa-regression', 0):
+        if config.GetBool('want-qa-regression', 0):
             self.notify.info('QA-REGRESSION: ESTATE:  Send Item to Attic')
         item, itemIndex = self.verifyItems
         self.__cleanupVerifyDelete()
@@ -1610,7 +1616,7 @@ class ObjectManager(NodePath, DirectObject):
         self.__enableItemButtons(1)
         self.inTrashPanels[itemIndex].destroy()
         del self.inTrashPanels[itemIndex]
-        for i in xrange(itemIndex, len(self.inTrashPanels)):
+        for i in range(itemIndex, len(self.inTrashPanels)):
             self.inTrashPanels[i].itemId -= 1
 
         self.regenerateInTrashPicker()

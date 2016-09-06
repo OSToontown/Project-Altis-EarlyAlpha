@@ -14,10 +14,10 @@ class DistributedFoodBelt(DistributedObject.DistributedObject, FSM.FSM, FoodBelt
     ToonupBeltSpeed = 1.0
     BeltActorPlayRate = 5.35
     ToonupBeltActorPlayRate = BeltActorPlayRate * ToonupBeltSpeed / BeltSpeed
-    ToonupModels = ['phase_6/models/golf/picnic_apple.bam',
-     'phase_6/models/golf/picnic_cupcake.bam',
-     'phase_6/models/golf/picnic_sandwich.bam',
-     'phase_6/models/golf/picnic_chocolate_cake.bam']
+    ToonupModels = ['phase_6/models/golf/picnic_apple',
+     'phase_6/models/golf/picnic_cupcake',
+     'phase_6/models/golf/picnic_sandwich',
+     'phase_6/models/golf/picnic_chocolate_cake']
     ToonupScales = [5,
      5,
      5,
@@ -166,7 +166,7 @@ class DistributedFoodBelt(DistributedObject.DistributedObject, FSM.FSM, FoodBelt
             joint = self.beltActor.find('**/uvj_WakeWhiteTide1')
             mesh.setTexProjector(mesh.findTextureStage('default'), joint, self.beltActor)
             self.beltActor.setPos(self.startLocator.getPos())
-        self.beltSound = base.loadSfx('phase_9/audio/sfx/CHQ_FACT_conveyor_belt.ogg')
+        self.beltSound = base.loadSfx('phase_12/audio/sfx/CHQ_FACT_conveyor_belt.ogg')
         self.beltSound.setLoop(1)
         self.beltSoundInterval = SoundInterval(self.beltSound, node=self.beltModel, listenerNode=base.localAvatar, seamlessLoop=True, volume=0.25, cutOff=100)
 

@@ -1,13 +1,10 @@
-from direct.directnotify import DirectNotifyGlobal
-import random
-import types
-
-import SuitBuildingGlobals
 from otp.ai.AIBaseGlobal import *
-from toontown.suit import DistributedSuitAI
+import random
 from toontown.suit import SuitDNA
-from toontown.suit.SuitInvasionGlobals import IFSkelecog, IFWaiter, IFV2
-
+from direct.directnotify import DirectNotifyGlobal
+from toontown.suit import DistributedSuitAI
+import SuitBuildingGlobals
+import types
 
 class SuitPlannerInteriorAI:
     notify = DirectNotifyGlobal.directNotify.newCategory('SuitPlannerInteriorAI')
@@ -18,7 +15,7 @@ class SuitPlannerInteriorAI:
         self.zoneId = zone
         self.numFloors = numFloors
         self.respectInvasions = 1
-        dbg_defaultSuitName = simbase.config.GetString('suit-type', 'random')
+        dbg_defaultSuitName = config.GetString('suit-type', 'random')
         if dbg_defaultSuitName == 'random':
             self.dbg_defaultSuitType = None
         else:
@@ -31,7 +28,7 @@ class SuitPlannerInteriorAI:
 
     def __genJoinChances(self, num):
         joinChances = []
-        for currChance in xrange(num):
+        for currChance in range(num):
             joinChances.append(random.randint(1, 100))
 
         joinChances.sort(cmp)
@@ -40,7 +37,7 @@ class SuitPlannerInteriorAI:
     def _genSuitInfos(self, numFloors, bldgLevel, bldgTrack):
         self.suitInfos = []
         self.notify.debug('\n\ngenerating suitsInfos with numFloors (' + str(numFloors) + ') bldgLevel (' + str(bldgLevel) + '+1) and bldgTrack (' + str(bldgTrack) + ')')
-        for currFloor in xrange(numFloors):
+        for currFloor in range(numFloors):
             infoDict = {}
             lvls = self.__genLevelList(bldgLevel, currFloor, numFloors)
             activeDicts = []
@@ -62,7 +59,7 @@ class SuitPlannerInteriorAI:
                 revives = bldgInfo[SuitBuildingGlobals.SUIT_BLDG_INFO_REVIVES][0]
             else:
                 revives = 0
-            for currActive in xrange(numActive - 1, -1, -1):
+            for currActive in range(numActive - 1, -1, -1):
                 level = lvls[currActive]
                 type = self.__genNormalSuitType(level)
                 activeDict = {}
@@ -76,7 +73,7 @@ class SuitPlannerInteriorAI:
             reserveDicts = []
             numReserve = len(lvls) - numActive
             joinChances = self.__genJoinChances(numReserve)
-            for currReserve in xrange(numReserve):
+            for currReserve in range(numReserve):
                 level = lvls[currReserve + numActive]
                 type = self.__genNormalSuitType(level)
                 reserveDict = {}
@@ -129,31 +126,28 @@ class SuitPlannerInteriorAI:
         return lvlList
 
     def __setupSuitInfo(self, suit, bldgTrack, suitLevel, suitType):
-        suitDeptIndex, suitTypeIndex, flags = simbase.air.suitInvasionManager.getInvadingCog()
-        if self.respectInvasions:
-            if suitDeptIndex is not None:
-                bldgTrack = SuitDNA.suitDepts[suitDeptIndex]
-            if suitTypeIndex is not None:
-                suitName = SuitDNA.getSuitName(suitDeptIndex, suitTypeIndex)
-                suitType = SuitDNA.getSuitType(suitName)
-                suitLevel = min(max(suitLevel, suitType), suitType + 4)
+        suitName, specialSuit = simbase.air.suitInvasionManager.getInvadingCog()
+        if suitName and self.respectInvasions:
+            suitType = SuitDNA.getSuitType(suitName)
+            bldgTrack = SuitDNA.getSuitDept(suitName)
+            suitLevel = min(max(suitLevel, suitType), suitType + 4)
+        if not self.respectInvasions:
+            specialSuit = 0
         dna = SuitDNA.SuitDNA()
         dna.newSuitRandom(suitType, bldgTrack)
         suit.dna = dna
+        self.notify.debug('Creating suit type ' + suit.dna.name + ' of level ' + str(suitLevel) + ' from type ' + str(suitType) + ' and track ' + str(bldgTrack))
         suit.setLevel(suitLevel)
-        return flags
+        return specialSuit
 
     def __genSuitObject(self, suitZone, suitType, bldgTrack, suitLevel, revives = 0):
         newSuit = DistributedSuitAI.DistributedSuitAI(simbase.air, None)
-        flags = self.__setupSuitInfo(newSuit, bldgTrack, suitLevel, suitType)
-        if flags & IFSkelecog:
+        skel = self.__setupSuitInfo(newSuit, bldgTrack, suitLevel, suitType)
+        if skel == 1:
             newSuit.setSkelecog(1)
-        newSuit.setSkeleRevives(revives)
+        elif skel == 2:
+            newSuit.setSkeleRevives(1)
         newSuit.generateWithRequired(suitZone)
-        if flags & IFWaiter:
-            newSuit.b_setWaiter(1)
-        if flags & IFV2:
-            newSuit.b_setSkeleRevives(1)
         newSuit.node().setName('suit-%s' % newSuit.doId)
         return newSuit
 
@@ -162,11 +156,11 @@ class SuitPlannerInteriorAI:
         for currInfo in suitInfos:
             whichSuitInfo = suitInfos.index(currInfo) + 1
             self.notify.debug(' Floor ' + str(whichSuitInfo) + ' has ' + str(len(currInfo[0])) + ' active suits.')
-            for currActive in xrange(len(currInfo[0])):
+            for currActive in range(len(currInfo[0])):
                 self.notify.debug('  Active suit ' + str(currActive + 1) + ' is of type ' + str(currInfo[0][currActive][0]) + ' and of track ' + str(currInfo[0][currActive][1]) + ' and of level ' + str(currInfo[0][currActive][2]))
 
             self.notify.debug(' Floor ' + str(whichSuitInfo) + ' has ' + str(len(currInfo[1])) + ' reserve suits.')
-            for currReserve in xrange(len(currInfo[1])):
+            for currReserve in range(len(currInfo[1])):
                 self.notify.debug('  Reserve suit ' + str(currReserve + 1) + ' is of type ' + str(currInfo[1][currReserve][0]) + ' and of track ' + str(currInfo[1][currReserve][1]) + ' and of lvel ' + str(currInfo[1][currReserve][2]) + ' and has ' + str(currInfo[1][currReserve][3]) + '% join restriction.')
 
     def genFloorSuits(self, floor):
@@ -188,7 +182,7 @@ class SuitPlannerInteriorAI:
 
     def genSuits(self):
         suitHandles = []
-        for floor in xrange(len(self.suitInfos)):
+        for floor in range(len(self.suitInfos)):
             floorSuitHandles = self.genFloorSuits(floor)
             suitHandles.append(floorSuitHandles)
 

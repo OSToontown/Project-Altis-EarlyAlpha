@@ -38,14 +38,22 @@ class CogdoInterior(Place.Place):
           'died',
           'teleportOut',
           'Elevator',
-          'crane']),
+          'crane',
+          'DFA',
+          'trialerFA']),
          State.State('sit', self.enterSit, self.exitSit, ['walk']),
          State.State('stickerBook', self.enterStickerBook, self.exitStickerBook, ['walk',
           'stopped',
           'sit',
           'died',
+          'DFA',
+          'trialerFA',
           'teleportOut',
           'Elevator']),
+         State.State('trialerFA', self.enterTrialerFA, self.exitTrialerFA, ['trialerFAReject', 'DFA']),
+         State.State('trialerFAReject', self.enterTrialerFAReject, self.exitTrialerFAReject, ['walk']),
+         State.State('DFA', self.enterDFA, self.exitDFA, ['DFAReject', 'teleportOut']),
+         State.State('DFAReject', self.enterDFAReject, self.exitDFAReject, ['walk']),
          State.State('teleportIn', self.enterTeleportIn, self.exitTeleportIn, ['walk']),
          State.State('teleportOut', self.enterTeleportOut, self.exitTeleportOut, ['teleportIn']),
          State.State('stopped', self.enterStopped, self.exitStopped, ['walk', 'elevatorOut', 'battle']),
@@ -68,7 +76,7 @@ class CogdoInterior(Place.Place):
         self.parentFSM.getStateNamed('cogdoInterior').addChild(self.fsm)
         self.townBattle = TownBattle.TownBattle('town-battle-done')
         self.townBattle.load()
-        for i in xrange(1, 3):
+        for i in range(1, 3):
             Suit.loadSuits(i)
 
     def unload(self):
@@ -82,7 +90,7 @@ class CogdoInterior(Place.Place):
         self.townBattle.unload()
         self.townBattle.cleanup()
         del self.townBattle
-        for i in xrange(1, 3):
+        for i in range(1, 3):
             Suit.unloadSuits(i)
 
     def setState(self, state, battleEvent = None):
@@ -97,9 +105,15 @@ class CogdoInterior(Place.Place):
     def enterZone(self, zoneId):
         pass
 
+    def isPeriodTimerEffective(self):
+        return 0
+
     def handleDSIDoneEvent(self, requestStatus):
         self.doneStatus = requestStatus
         messenger.send(self.doneEvent)
+
+    def doRequestLeave(self, requestStatus):
+        self.fsm.request('trialerFA', [requestStatus])
 
     def enterEntrance(self):
         pass

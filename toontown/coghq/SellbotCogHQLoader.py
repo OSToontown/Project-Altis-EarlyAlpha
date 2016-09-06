@@ -6,13 +6,11 @@ from direct.gui import DirectGui
 from toontown.toonbase import TTLocalizer
 from toontown.toon import Toon
 from direct.fsm import State
-from direct.actor.Actor import Actor
-import MegaCorpInterior
 import FactoryExterior
 import FactoryInterior
 import SellbotHQExterior
 import SellbotHQBossBattle
-from pandac.PandaModules import DecalEffect, NodePath
+from pandac.PandaModules import DecalEffect
 aspectSF = 0.7227
 
 class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
@@ -26,7 +24,6 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
             state.addTransition('factoryExterior')
 
         self.fsm.addState(State.State('factoryInterior', self.enterFactoryInterior, self.exitFactoryInterior, ['quietZone', 'factoryExterior']))
-        self.fsm.addState(State.State('megaCorpInterior', self.enterMegaCorpInterior, self.exitMegaCorpInterior, ['quietZone', 'factoryExterior']))
         for stateName in ['quietZone']:
             state = self.fsm.getStateNamed(stateName)
             state.addTransition('factoryInterior')
@@ -36,6 +33,7 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
         self.cogHQLobbyModelPath = 'phase_9/models/cogHQ/SellbotHQLobby'
         self.factoryExteriorModelPath = 'phase_9/models/cogHQ/SellbotFactoryExterior'
         self.geom = None
+        return
 
     def load(self, zoneId):
         CogHQLoader.CogHQLoader.load(self, zoneId)
@@ -46,16 +44,13 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
             self.geom.removeNode()
             self.geom = None
         CogHQLoader.CogHQLoader.unloadPlaceGeom(self)
+        return
 
     def loadPlaceGeom(self, zoneId):
         self.notify.info('loadPlaceGeom: %s' % zoneId)
         zoneId = zoneId - zoneId % 100
         if zoneId == ToontownGlobals.SellbotHQ:
             self.geom = loader.loadModel(self.cogHQExteriorModelPath)
-            factoryPOV = loader.loadModel('phase_9/models/cogHQ/SellbotFactoryPov')
-            factoryPOV.reparentTo(self.geom)
-            factoryPOV.setPosHpr(400.62, -139.52, 15.22, 272.73, 0, 0)
-            factoryPOV.setScale(0.5)
             dgLinkTunnel = self.geom.find('**/Tunnel1')
             dgLinkTunnel.setName('linktunnel_dg_5316_DNARoot')
             factoryLinkTunnel = self.geom.find('**/Tunnel2')
@@ -80,27 +75,17 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
             door1 = doors.find('**/door_1')
             door2 = doors.find('**/door_2')
             door3 = doors.find('**/door_3')
-            for door in [door0, door1, door2, door3]:
+            index = 0
+            for door in [door0,
+             door1,
+             door2,
+             door3]:
                 doorFrame = door.find('**/doorDoubleFlat/+GeomNode')
                 door.find('**/doorFrameHoleLeft').wrtReparentTo(doorFrame)
                 door.find('**/doorFrameHoleRight').wrtReparentTo(doorFrame)
-                doorTrigger = door.find('**/door_trigger*')
-                doorTrigger.setY(doorTrigger.getY() - 1.5)  # Fixes the misplaced door trigger.
                 doorFrame.node().setEffect(DecalEffect.make())
-            self.botcam1 = Actor("phase_9/models/char/BotCam-zero.bam",{"botcamneutral":"phase_9/models/char/BotCam-neutral.bam"})
-            self.bossroom = Actor("phase_9/models/cogHQ/BossRoomHQ.bam")
-            self.botcam1.reparentTo(self.geom)
-            self.botcam1.setPos(-0.01,-39.3,24)
-            self.botcam1.loop('botcamneutral')
-            self.bossroom.reparentTo(self.geom)
-            self.bossroom.setPos(42,25,298)
-            self.bossroom.setScale(0.1)
-            self.outskirtsPOV = Actor("phase_9/models/cogHQ/SellbotLegFactoryOld.bam")
-            self.outskirtsPOV.reparentTo(self.geom)
-            self.outskirtsPOV.setPos(-525,-150,17)
-            self.outskirtsPOV.setScale(0.2)
+                index += 1
 
-		
         elif zoneId == ToontownGlobals.SellbotFactoryExt:
             self.geom = loader.loadModel(self.factoryExteriorModelPath)
             factoryLinkTunnel = self.geom.find('**/tunnel_group2')
@@ -117,10 +102,6 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
             hqTypeText.setDepthWrite(0)
             hqText = DirectGui.OnscreenText(text=TTLocalizer.Headquarters, font=ToontownGlobals.getSuitFont(), pos=(0, -0.34), scale=0.1, mayChange=False, parent=hqSign)
             hqText.setDepthWrite(0)
-            courtyardPOV = loader.loadModel("phase_9/models/cogHQ/SellbotHQExterior")
-            courtyardPOV.reparentTo(self.geom)
-            courtyardPOV.setPos(-200,-635,0)
-            courtyardPOV.setH(-275)
             frontDoor = self.geom.find('**/doorway1')
             fdSign = cogSign.copyTo(frontDoor)
             fdSign.setPosHprScale(62.74, -87.99, 17.26, 2.72, 0.0, 0.0, elevatorSignSF, elevatorSignSF, elevatorSignSF * aspectSF)
@@ -138,7 +119,7 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
             sdText = DirectGui.OnscreenText(text=TTLocalizer.SellbotSideEntrance, font=ToontownGlobals.getSuitFont(), pos=(0, -0.34), scale=0.1, mayChange=False, parent=sdSign)
             sdText.setDepthWrite(0)
         elif zoneId == ToontownGlobals.SellbotLobby:
-            if base.config.GetBool('want-qa-regression', 0):
+            if config.GetBool('want-qa-regression', 0):
                 self.notify.info('QA-REGRESSION: COGHQ: Visit SellbotLobby')
             self.geom = loader.loadModel(self.cogHQLobbyModelPath)
             front = self.geom.find('**/frontWall')
@@ -152,7 +133,6 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
             doorFrame.node().setEffect(DecalEffect.make())
             door.find('**/leftDoor').wrtReparentTo(parent)
             door.find('**/rightDoor').wrtReparentTo(parent)
-            self.geom.flattenStrong()
         else:
             self.notify.warning('loadPlaceGeom: unclassified zone %s' % zoneId)
         CogHQLoader.CogHQLoader.loadPlaceGeom(self, zoneId)
@@ -171,14 +151,7 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
         self.hood.hideTitleText()
         self.exitPlace()
         self.placeClass = None
-
-    def enterMegaCorpInterior(self, requestStatus):
-        self.placeClass = MegaCorpInterior.MegaCorpInterior
-        self.enterPlace(requestStatus)
-
-    def exitMegaCorpInterior(self):
-        self.exitPlace()
-        self.placeClass = None
+        return
 
     def enterFactoryInterior(self, requestStatus):
         self.placeClass = FactoryInterior.FactoryInterior
@@ -187,6 +160,7 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
     def exitFactoryInterior(self):
         self.exitPlace()
         self.placeClass = None
+        return
 
     def getExteriorPlaceClass(self):
         return SellbotHQExterior.SellbotHQExterior

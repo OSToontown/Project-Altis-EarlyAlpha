@@ -9,3 +9,4 @@ class DistCogdoCraneMoneyBagAI(DistributedObjectAI):
 
     def requestInitial(self):
         pass
+

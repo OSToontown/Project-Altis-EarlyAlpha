@@ -1,25 +1,30 @@
-from direct.distributed.PyDatagram import PyDatagram
-from direct.distributed.MsgTypes import CLIENTAGENT_EJECT
-
-from otp.ai.AIBaseGlobal import *
-from otp.ai.MagicWordGlobal import *
+from direct.showbase import GarbageReport
 from otp.avatar import DistributedAvatarAI
 from otp.avatar import PlayerBase
-from otp.distributed import OtpDoGlobals
-from otp.otpbase import OTPLocalizer
+from otp.distributed.ClsendTracker import ClsendTracker
+from otp.otpbase import OTPGlobals
+from otp.ai.MagicWordGlobal import *
 
-from toontown.toonbase import ToontownGlobals
-
-class DistributedPlayerAI(DistributedAvatarAI.DistributedAvatarAI, PlayerBase.PlayerBase):
+class DistributedPlayerAI(DistributedAvatarAI.DistributedAvatarAI, PlayerBase.PlayerBase, ClsendTracker):
 
     def __init__(self, air):
         DistributedAvatarAI.DistributedAvatarAI.__init__(self, air)
+        PlayerBase.PlayerBase.__init__(self)
+        ClsendTracker.__init__(self)
         self.friendsList = []
+        self.DISLname = ''
         self.DISLid = 0
         self.adminAccess = 0
 
+    if __dev__:
+
+        def generate(self):
+            self._sentExitServerEvent = False
+            DistributedAvatarAI.DistributedAvatarAI.generate(self)
+
     def announceGenerate(self):
         DistributedAvatarAI.DistributedAvatarAI.announceGenerate(self)
+        ClsendTracker.announceGenerate(self)
         self._doPlayerEnter()
 
     def _announceArrival(self):
@@ -30,9 +35,16 @@ class DistributedPlayerAI(DistributedAvatarAI.DistributedAvatarAI, PlayerBase.Pl
 
     def _sendExitServerEvent(self):
         self.air.writeServerEvent('avatarExit', self.doId, '')
+        if __dev__:
+            self._sentExitServerEvent = True
 
     def delete(self):
+        if __dev__:
+            del self._sentExitServerEvent
         self._doPlayerExit()
+        ClsendTracker.destroy(self)
+        if __dev__:
+            GarbageReport.checkForGarbageLeaks()
         DistributedAvatarAI.DistributedAvatarAI.delete(self)
 
     def isPlayerControlled(self):
@@ -43,7 +55,7 @@ class DistributedPlayerAI(DistributedAvatarAI.DistributedAvatarAI, PlayerBase.Pl
         if self.isPlayerControlled():
             if not self.air._isValidPlayerLocation(parentId, zoneId):
                 self.notify.info('booting player %s for doing setLocation to (%s, %s)' % (self.doId, parentId, zoneId))
-                self.air.writeServerEvent('suspicious', self.doId, 'invalid setLocation: (%s, %s)' % (parentId, zoneId))
+                self.air.writeServerEvent('suspicious', avId=self.doId, issue='invalid setLocation: (%s, %s)' % (parentId, zoneId))
                 self.requestDelete()
 
     def _doPlayerEnter(self):
@@ -60,12 +72,28 @@ class DistributedPlayerAI(DistributedAvatarAI.DistributedAvatarAI, PlayerBase.Pl
     def decrementPopulation(self):
         simbase.air.decrementPopulation()
 
+    def b_setChat(self, chatString, chatFlags):
+        self.setChat(chatString, chatFlags)
+        self.d_setChat(chatString, chatFlags)
+
+    def d_setChat(self, chatString, chatFlags):
+        self.sendUpdate('setChat', [chatString, chatFlags])
+
+    def setChat(self, chatString, chatFlags):
+        pass
+
     def d_setMaxHp(self, maxHp):
         DistributedAvatarAI.DistributedAvatarAI.d_setMaxHp(self, maxHp)
-        self.air.writeServerEvent('setMaxHp', self.doId, '%s' % maxHp)
+        self.air.writeServerEvent('setMaxHp', avId=self.doId, hp='%s' % maxHp)
 
     def d_setSystemMessage(self, aboutId, chatString):
         self.sendUpdate('setSystemMessage', [aboutId, chatString])
+
+    def d_setCommonChatFlags(self, flags):
+        self.sendUpdate('setCommonChatFlags', [flags])
+
+    def setCommonChatFlags(self, flags):
+        pass
 
     def d_friendsNotify(self, avId, status):
         self.sendUpdate('friendsNotify', [avId, status])
@@ -73,11 +101,14 @@ class DistributedPlayerAI(DistributedAvatarAI.DistributedAvatarAI, PlayerBase.Pl
     def friendsNotify(self, avId, status):
         pass
 
+    def setAccountName(self, accountName):
+        self.accountName = accountName
+
+    def getAccountName(self):
+        return self.accountName
+
     def setDISLid(self, id):
         self.DISLid = id
-
-    def getDISLid(self):
-        return self.DISLid
 
     def d_setFriendsList(self, friendsList):
         self.sendUpdate('setFriendsList', [friendsList])
@@ -92,190 +123,30 @@ class DistributedPlayerAI(DistributedAvatarAI.DistributedAvatarAI, PlayerBase.Pl
     def setAdminAccess(self, access):
         self.adminAccess = access
 
-    def d_setAdminAccess(self, access):
-        self.sendUpdate('setAdminAccess', [access])
-
-    def b_setAdminAccess(self, access):
-        self.setAdminAccess(access)
-        self.d_setAdminAccess(access)
-
     def getAdminAccess(self):
         return self.adminAccess
 
-    def isAdmin(self):
-        return self.adminAccess >= MINIMUM_MAGICWORD_ACCESS
+    def extendFriendsList(self, friendId, friendCode):
+        for i in range(len(self.friendsList)):
+            friendPair = self.friendsList[i]
+            if friendPair[0] == friendId:
+                self.friendsList[i] = (friendId, friendCode)
+                return
 
-    def extendFriendsList(self, friendId):
-        if friendId in self.friendsList:
-            return
+        self.friendsList.append((friendId, friendCode))
 
-        self.friendsList.append(friendId)
+@magicWord(category=CATEGORY_MODERATION)
+def accId():
+    """Get the accountId from the target player."""
+    accountId = spellbook.getTarget().DISLid
+    return "%s has the accountId of %d" % (spellbook.getTarget().getName(), accountId)
 
-@magicWord(category=CATEGORY_SYSTEM_ADMINISTRATOR, types=[str])
+@magicWord(category=CATEGORY_SYSADMIN, types=[str])
 def system(message):
     """
-    Broadcast a <message> to the game server.
+    Broadcasts a message to the server.
     """
-    message = 'ADMIN: ' + message
-    dclass = simbase.air.dclassesByName['ClientServicesManager']
-    dg = dclass.aiFormatUpdate('systemMessage',
-                               OtpDoGlobals.OTP_DO_ID_CLIENT_SERVICES_MANAGER,
-                               10, 1000000, [message])
-    simbase.air.send(dg)
-
-@magicWord(category=CATEGORY_SYSTEM_ADMINISTRATOR, types=[int])
-def maintenance(minutes):
-    """
-    Initiate the maintenance message sequence. It will last for the specified
-    amount of <minutes>.
-    """
-    def disconnect(task):
-        dg = PyDatagram()
-        dg.addServerHeader(10, simbase.air.ourChannel, CLIENTAGENT_EJECT)
-        dg.addUint16(154)
-        dg.addString('Project Altis is now closed for maintenance.')
-        simbase.air.send(dg)
-        return Task.done
-
-    def countdown(minutes):
-        if minutes > 0:
-            system(OTPLocalizer.CRMaintenanceCountdownMessage % minutes)
-        else:
-            system(OTPLocalizer.CRMaintenanceMessage)
-            taskMgr.doMethodLater(10, disconnect, 'maintenance-disconnection')
-        if minutes <= 5:
-            next = 60
-            minutes -= 1
-        elif minutes % 5:
-            next = 60 * (minutes%5)
-            minutes -= minutes % 5
-        else:
-            next = 300
-            minutes -= 5
-        if minutes >= 0:
-            taskMgr.doMethodLater(next, countdown, 'maintenance-task',
-                                  extraArgs=[minutes])
-
-    if ToontownGlobals.enable_maintenance == True:
-        countdown(minutes)
-    else:
-        return "The maintenance command is disabled! Enable it before trying to execute the maintenance command!"
-
-@magicWord(category=CATEGORY_SYSTEM_ADMINISTRATOR, types=[str])
-def enableMaintenance(state):
-    if state.lower() == "true":
-        ToontownGlobals.enable_maintenance = True
-        return "The maintenance command has been enabled!"
-    elif state.lower() == "false":
-        ToontownGlobals.enable_maintenance = False
-        return "The maintenance command has been disabled!"
-    elif state != True or state != False:
-        return "Please specify whether it is true or false."
-
-
-@magicWord(category=CATEGORY_SYSTEM_ADMINISTRATOR, types=[str, str, int])
-def accessLevel(accessLevel, storage='PERSISTENT', showGM=1):
-    """
-    Modify the target's access level.
-    """
-    accessName2Id = {
-        'user': CATEGORY_USER.defaultAccess,
-        'u': CATEGORY_USER.defaultAccess,
-        'communitymanager': CATEGORY_COMMUNITY_MANAGER.defaultAccess,
-        'community': CATEGORY_COMMUNITY_MANAGER.defaultAccess,
-        'c': CATEGORY_COMMUNITY_MANAGER.defaultAccess,
-        'moderator': CATEGORY_MODERATOR.defaultAccess,
-        'mod': CATEGORY_MODERATOR.defaultAccess,
-        'm': CATEGORY_MODERATOR.defaultAccess,
-        'creative': CATEGORY_CREATIVE.defaultAccess,
-        'creativity': CATEGORY_CREATIVE.defaultAccess,
-        'c': CATEGORY_CREATIVE.defaultAccess,
-        'programmer': CATEGORY_PROGRAMMER.defaultAccess,
-        'coder': CATEGORY_PROGRAMMER.defaultAccess,
-        'p': CATEGORY_PROGRAMMER.defaultAccess,
-        'administrator': CATEGORY_ADMINISTRATOR.defaultAccess,
-        'admin': CATEGORY_ADMINISTRATOR.defaultAccess,
-        'a': CATEGORY_ADMINISTRATOR.defaultAccess,
-        'systemadministrator': CATEGORY_SYSTEM_ADMINISTRATOR.defaultAccess,
-        'systemadmin': CATEGORY_SYSTEM_ADMINISTRATOR.defaultAccess,
-        'sysadministrator': CATEGORY_SYSTEM_ADMINISTRATOR.defaultAccess,
-        'sysadmin': CATEGORY_SYSTEM_ADMINISTRATOR.defaultAccess,
-        'system': CATEGORY_SYSTEM_ADMINISTRATOR.defaultAccess,
-        'sys': CATEGORY_SYSTEM_ADMINISTRATOR.defaultAccess,
-        's': CATEGORY_SYSTEM_ADMINISTRATOR.defaultAccess
-    }
-    try:
-        accessLevel = int(accessLevel)
-    except:
-        if accessLevel not in accessName2Id:
-            return 'Invalid access level!'
-        accessLevel = accessName2Id[accessLevel]
-    if accessLevel not in accessName2Id.values():
-        return 'Invalid access level!'
-    target = spellbook.getTarget()
-    invoker = spellbook.getInvoker()
-    if invoker == target:
-        return "You can't set your own access level!"
-    if not accessLevel < invoker.getAdminAccess():
-        return "The target's access level must be lower than yours!"
-    if target.getAdminAccess() == accessLevel:
-        return "%s's access level is already %d!" % (target.getName(), accessLevel)
-    target.b_setAdminAccess(accessLevel)
-    if showGM:
-       target.b_setGM(0)
-       if accessLevel == 200:
-           target.b_setGM(3)
-       elif accessLevel == 300:
-           target.b_setGM(3)
-       elif accessLevel == 400:
-           target.b_setGM(2)
-       elif accessLevel == 500:
-           target.b_setGM(2)
-       elif accessLevel == 600:
-           target.b_setGM(2)
-       elif accessLevel == 700:
-           target.b_setGM(2)
-    temporary = storage.upper() in ('SESSION', 'TEMP', 'TEMPORARY')
-    if not temporary:
-        target.air.dbInterface.updateObject(
-            target.air.dbId,
-            target.getDISLid(),
-            target.air.dclassesByName['AccountAI'],
-            {'ADMIN_ACCESS': accessLevel})
-    if not temporary:
-        target.d_setSystemMessage(0, '%s set your access level to %d!' % (invoker.getName(), accessLevel))
-        return "%s's access level has been set to %d." % (target.getName(), accessLevel)
-    else:
-        target.d_setSystemMessage(0, '%s set your access level to %d temporarily!' % (invoker.getName(), accessLevel))
-        return "%s's access level has been set to %d temporarily." % (target.getName(), accessLevel)
-
-@magicWord(category=CATEGORY_COMMUNITY_MANAGER)
-def disableGM():
-    """
-    Temporarily disable GM features.
-    """
-    target = spellbook.getTarget()
-
-    if hasattr(target, 'oldAccess'):
-        return 'GM features are already disabled!\nTo enable, use ~enableGM.'
-
-    if not target.isAdmin():
-        return 'Target is not an admin!'
-
-    target.oldAccess = target.adminAccess
-    target.d_setAdminAccess(100)
-    return 'GM features are disabled!'
-
-@magicWord(category=CATEGORY_COMMUNITY_MANAGER)
-def enableGM():
-    """
-    Enable GM features.
-    """
-    target = spellbook.getTarget()
-
-    if not hasattr(target, 'oldAccess'):
-        return 'GM features are not disabled!'
-
-    target.d_setAdminAccess(target.oldAccess)
-    del target.oldAccess
-    return 'GM features are enabled!'
+    for doId, do in simbase.air.doId2do.items():
+        if isinstance(do, DistributedPlayerAI):
+            if str(doId)[0] != str(simbase.air.districtId)[0]:
+                do.d_setSystemMessage(0, message)

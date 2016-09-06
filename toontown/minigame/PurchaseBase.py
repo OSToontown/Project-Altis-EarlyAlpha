@@ -3,11 +3,12 @@ from toontown.toonbase import ToontownGlobals
 from direct.fsm import StateData
 from toontown.shtiker.PurchaseManagerConstants import *
 from direct.gui.DirectGui import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.task import Task
 from direct.fsm import State
 from direct.fsm import ClassicFSM, State
 from toontown.toonbase import TTLocalizer
+from toontown.toontowngui.TeaserPanel import TeaserPanel
 
 class PurchaseBase(StateData.StateData):
     activateMode = 'purchase'
@@ -32,9 +33,13 @@ class PurchaseBase(StateData.StateData):
         if self.toon.getMoney() == 1:
             self.statusLabel['text'] = TTLocalizer.GagShopYouHaveOne
         self.isBroke = 0
+        self._teaserPanel = None
         return
 
     def unload(self):
+        if self._teaserPanel:
+            self._teaserPanel.destroy()
+            self._teaserPanel = None
         self.jarImage.removeNode()
         del self.jarImage
         self.frame.destroy()
@@ -47,15 +52,22 @@ class PurchaseBase(StateData.StateData):
         return
 
     def __handleSelection(self, track, level):
+        if gagIsPaidOnly(track, level):
+            if not base.cr.isPaid():
+                self._teaserPanel = TeaserPanel('restockGags', self._teaserDone)
+                return
         self.handlePurchase(track, level)
+
+    def _teaserDone(self):
+        self._teaserPanel.destroy()
+        self._teaserPanel = None
+        return
 
     def handlePurchase(self, track, level):
         if self.toon.getMoney() <= 0:
             return
         ret = self.toon.inventory.addItem(track, level)
-        if ret == -3:
-            text = TTLocalizer.GagShopNotEnoughJellybeans
-        elif ret == -2:
+        if ret == -2:
             text = TTLocalizer.GagShopTooManyProps
         elif ret == -1:
             text = TTLocalizer.GagShopTooManyOfThatGag % TTLocalizer.BattleGlobalAvPropStringsPlural[track][level]
@@ -100,7 +112,7 @@ class PurchaseBase(StateData.StateData):
         return Task.done
 
     def handleDone(self, playAgain):
-        messenger.send(self.doneEvent, [playAgain])
+        messenger.send(self.doneEvent)
 
     def enter(self):
         self.fsm.request('purchase')

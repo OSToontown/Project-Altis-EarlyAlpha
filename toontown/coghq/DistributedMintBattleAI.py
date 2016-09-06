@@ -24,7 +24,10 @@ class DistributedMintBattleAI(DistributedLevelBattleAI.DistributedLevelBattleAI)
         return self.level.mintId
 
     def handleToonsWon(self, toons):
-        extraMerits = [0, 0, 0, 0]
+        extraMerits = [0,
+         0,
+         0,
+         0]
         amount = ToontownGlobals.MintCogBuckRewards[self.level.mintId]
         index = ToontownGlobals.cogHQZoneId2deptIndex(self.level.mintId)
         extraMerits[index] = amount
@@ -32,7 +35,7 @@ class DistributedMintBattleAI(DistributedLevelBattleAI.DistributedLevelBattleAI)
             recovered, notRecovered = self.air.questManager.recoverItems(toon, self.suitsKilled, self.getTaskZoneId())
             self.toonItems[toon.doId][0].extend(recovered)
             self.toonItems[toon.doId][1].extend(notRecovered)
-            meritArray = self.air.promotionMgr.recoverMerits(toon, self.suitsKilled, self.getTaskZoneId(), getMintCreditMultiplier(self.getTaskZoneId()) * 2.0, extraMerits=extraMerits, addInvasion=False)
+            meritArray = self.air.promotionMgr.recoverMerits(toon, self.suitsKilled, self.getTaskZoneId(), getMintCreditMultiplier(self.getTaskZoneId()), extraMerits=extraMerits)
             if toon.doId in self.helpfulToons:
                 self.toonMerits[toon.doId] = addListsByValue(self.toonMerits[toon.doId], meritArray)
             else:

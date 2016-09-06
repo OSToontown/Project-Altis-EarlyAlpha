@@ -28,6 +28,8 @@ class DistCogdoCraneGame(CogdoCraneGameBase, DistCogdoLevelGame):
         DistCogdoLevelGame.announceGenerate(self)
         self.timer = ToontownTimer.ToontownTimer()
         self.timer.stash()
+        if __dev__:
+            self._durationChangedEvent = self.uniqueName('durationChanged')
 
     def disable(self):
         self.timer.destroy()
@@ -37,11 +39,11 @@ class DistCogdoCraneGame(CogdoCraneGameBase, DistCogdoLevelGame):
 
     def enterLoaded(self):
         DistCogdoLevelGame.enterLoaded(self)
-        self.lightning = loader.loadModel('phase_10/models/cogHQ/CBLightning.bam')
-        self.magnet = loader.loadModel('phase_10/models/cogHQ/CBMagnet.bam')
-        self.craneArm = loader.loadModel('phase_10/models/cogHQ/CBCraneArm.bam')
-        self.controls = loader.loadModel('phase_10/models/cogHQ/CBCraneControls.bam')
-        self.stick = loader.loadModel('phase_10/models/cogHQ/CBCraneStick.bam')
+        self.lightning = loader.loadModel('phase_10/models/cogHQ/CBLightning')
+        self.magnet = loader.loadModel('phase_10/models/cogHQ/CBMagnet')
+        self.craneArm = loader.loadModel('phase_10/models/cogHQ/CBCraneArm')
+        self.controls = loader.loadModel('phase_10/models/cogHQ/CBCraneControls')
+        self.stick = loader.loadModel('phase_10/models/cogHQ/CBCraneStick')
         self.cableTex = self.craneArm.findTexture('MagnetControl')
         self.moneyBag = loader.loadModel('phase_10/models/cashbotHQ/MoneyBag')
         self.geomRoot = PM.NodePath('geom')
@@ -100,7 +102,7 @@ class DistCogdoCraneGame(CogdoCraneGameBase, DistCogdoLevelGame):
                 self.notify.warning('Not a collision node: %s' % repr(cnp))
                 break
             newCollideMask = newCollideMask | cn.getIntoCollideMask()
-            for i in xrange(cn.getNumSolids()):
+            for i in range(cn.getNumSolids()):
                 solid = cn.getSolid(i)
                 if isinstance(solid, PM.CollisionPolygon):
                     plane = PM.Plane(solid.getPlane())
@@ -149,6 +151,8 @@ class DistCogdoCraneGame(CogdoCraneGameBase, DistCogdoLevelGame):
         self._physicsTask = taskMgr.add(self._doPhysics, self.uniqueName('physics'), priority=25)
         self.evWalls.stash()
         self._startTimer()
+        if __dev__:
+            self.accept(self._durationChangedEvent, self._startTimer)
 
     def _startTimer(self):
         timeLeft = GameConsts.Settings.GameDuration.get() - self.getCurrentGameTime()
@@ -163,6 +167,8 @@ class DistCogdoCraneGame(CogdoCraneGameBase, DistCogdoLevelGame):
         return Task.cont
 
     def exitGame(self):
+        if __dev__:
+            self.ignore(self._durationChangedEvent)
         DistCogdoLevelGame.exitGame(self)
         self._physicsTask.remove()
 
@@ -175,3 +181,31 @@ class DistCogdoCraneGame(CogdoCraneGameBase, DistCogdoLevelGame):
 
     def timerExpired(self):
         pass
+
+    if __dev__:
+
+        def _handleGameDurationChanged(self, gameDuration):
+            messenger.send(self._durationChangedEvent)
+
+        def _handleGravityChanged(self, gravity):
+            self.physicsMgr.removeLinearForce(self._gravityForce)
+            self._gravityForceNode.removeForce(self._gravityForce)
+            self._gravityForce = PM.LinearVectorForce(0, 0, gravity)
+            self.physicsMgr.addLinearForce(self._gravityForce)
+            self._gravityForceNode.addForce(self._gravityForce)
+
+        def _handleEmptyFrictionCoefChanged(self, coef):
+            for crane in self.cranes.itervalues():
+                crane._handleEmptyFrictionCoefChanged(coef)
+
+        def _handleRopeLinkMassChanged(self, mass):
+            for crane in self.cranes.itervalues():
+                crane._handleRopeLinkMassChanged(mass)
+
+        def _handleMagnetMassChanged(self, mass):
+            for crane in self.cranes.itervalues():
+                crane._handleMagnetMassChanged(mass)
+
+        def _handleMoneyBagGrabHeightChanged(self, height):
+            for moneyBag in self.moneyBags.itervalues():
+                moneyBag._handleMoneyBagGrabHeightChanged(height)

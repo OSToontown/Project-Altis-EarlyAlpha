@@ -1,20 +1,18 @@
-from direct.directnotify import DirectNotifyGlobal
-from direct.fsm import ClassicFSM
-from direct.fsm import State
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
-from panda3d.core import *
-import random
-
-from otp.avatar import Emote
-from toontown.battle import DistributedBattle
-from toontown.battle import SuitBattleGlobals
 from toontown.battle.BattleBase import *
+from toontown.battle import DistributedBattle
+from direct.directnotify import DirectNotifyGlobal
+from toontown.toon import TTEmote
+from otp.avatar import Emote
+from toontown.battle import SuitBattleGlobals
+import random
+from toontown.suit import SuitDNA
+from direct.fsm import State
+from direct.fsm import ClassicFSM
+from toontown.toonbase import ToontownGlobals
 from otp.nametag.NametagConstants import *
 from otp.nametag import NametagGlobals
-from toontown.suit import SuitDNA
-from toontown.toon import TTEmote
-from toontown.toonbase import ToontownGlobals
-
 
 class DistributedLevelBattle(DistributedBattle.DistributedBattle):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedLevelBattle')
@@ -89,15 +87,6 @@ class DistributedLevelBattle(DistributedBattle.DistributedBattle):
 
     def onWaitingForJoin(self):
         self.lockLevelViz()
-    
-    def announceCrateReward(self):
-        track = Sequence()
-
-        for i, message in enumerate(TTLocalizer.CrateRewardMessages):
-            track.append(Func(base.localAvatar.setSystemMessage, 0, message))
-            track.append(Wait(1.5))
-
-        track.start()
 
     def __faceOff(self, ts, name, callback):
         if len(self.suits) == 0:
@@ -177,11 +166,11 @@ class DistributedLevelBattle(DistributedBattle.DistributedBattle):
             TauntCamHeight = random.choice((MidTauntCamHeight, 1, 11))
             camTrack = Sequence()
             camTrack.append(Func(camera.reparentTo, suitLeader))
-            camTrack.append(Func(base.camLens.setMinFov, self.camFOFov/(4./3.)))
+            camTrack.append(Func(base.camLens.setFov, self.camFOFov))
             camTrack.append(Func(camera.setPos, TauntCamX, TauntCamY, TauntCamHeight))
             camTrack.append(Func(camera.lookAt, suitLeader, suitOffsetPnt))
             camTrack.append(Wait(delay))
-            camTrack.append(Func(base.camLens.setMinFov, self.camFov/(4./3.)))
+            camTrack.append(Func(base.camLens.setFov, self.camFov))
             camTrack.append(Func(camera.wrtReparentTo, self))
             camTrack.append(Func(camera.setPos, self.camFOPos))
             camTrack.append(Func(camera.lookAt, suit))

@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToontownGlobals import *
 from direct.showbase import DirectObject
 from direct.directnotify import DirectNotifyGlobal
@@ -54,9 +54,22 @@ class FriendInvitee(ToonHeadDialog.ToonHeadDialog):
         if self.context != None:
             base.cr.friendManager.up_inviteeFriendResponse(2, self.context)
             self.context = None
+        if base.friendMode == 1:
+            base.cr.friendManager.executeGameSpecificFunction()
+        return
 
     def __handleButton(self, value):
-        base.cr.friendManager.up_inviteeFriendResponse(value == DGG.DIALOG_OK, self.context)
+        print 'handleButton'
+        if value == DGG.DIALOG_OK:
+            if base.friendMode == 0:
+                base.cr.friendManager.up_inviteeFriendResponse(1, self.context)
+            elif base.friendMode == 1:
+                print 'sending Request Invite'
+                base.cr.avatarFriendsManager.sendRequestInvite(self.avId)
+        elif base.friendMode == 0:
+            base.cr.friendManager.up_inviteeFriendResponse(0, self.context)
+        elif base.friendMode == 1:
+            base.cr.avatarFriendsManager.sendRequestRemove(self.avId)
         self.context = None
         self.cleanup()
         return

@@ -1,5 +1,5 @@
 from toontown.toonbase.ToonBaseGlobal import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from direct.distributed.ClockDelta import *
 from direct.distributed import DistributedObject
@@ -12,7 +12,6 @@ from toontown.hood import ZoneUtil
 from toontown.suit import Suit
 from toontown.building import FADoorCodes
 from toontown.building import DoorTypes
-from toontown.estate.DistributedHouse import DistributedHouse
 
 class DistributedHouseDoor(DistributedDoor.DistributedDoor):
 
@@ -31,18 +30,12 @@ class DistributedHouseDoor(DistributedDoor.DistributedDoor):
         return 'door_trigger_' + str(self.houseId)
 
     def hideDoorParts(self):
-        try:
-            self.findDoorNode('doorFrameHoleRight').hide()
-            self.findDoorNode('doorFrameHoleLeft').hide()
-        except:
-            pass
+        pass
 
     def announceGenerate(self):
         DistributedObject.DistributedObject.announceGenerate(self)
         if self.doorType == DoorTypes.EXT_STANDARD:
             house = base.cr.doId2do.get(self.houseId)
-            if not isinstance(house, DistributedHouse):
-                self.notify.error('tried to use {0} as house'.format(house.__class__.__name__))
             if house and house.house_loaded:
                 self.__gotRelatedHouse()
             else:
@@ -58,17 +51,13 @@ class DistributedHouseDoor(DistributedDoor.DistributedDoor):
         self.doPostAnnounceGenerate()
         self.bHasFlat = not self.findDoorNode('door*flat', True).isEmpty()
         self.hideDoorParts()
-
-        building = self.getBuilding()
-        doorTrigger = building.find('**/door_trigger*')
-        doorTrigger.setName(self.getTriggerName())
-
+        self.setTriggerName()
         self.accept(self.getEnterTriggerEvent(), self.doorTrigger)
         self.acceptOnce('clearOutToonInterior', self.doorTrigger)
         self.zoneDoneLoading = 0
 
     def getBuilding(self, allowEmpty = False):
-        if 'building' not in self.__dict__:
+        if not self.__dict__.has_key('building'):
             if self.doorType == DoorTypes.INT_STANDARD:
                 door = render.find('**/leftDoor;+s')
                 self.building = door.getParent()

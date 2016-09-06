@@ -56,7 +56,7 @@ class DistributedMoleFieldAI(DistributedEntityAI.DistributedEntityAI, MoleFieldB
 
     def whackedMole(self, moleIndex, popupNum):
         validMoleWhack = False
-        if moleIndex in self.whackedMoles:
+        if self.whackedMoles.has_key(moleIndex):
             if self.whackedMoles[moleIndex] < popupNum:
                 validMoleWhack = True
         else:
@@ -107,8 +107,8 @@ class DistributedMoleFieldAI(DistributedEntityAI.DistributedEntityAI, MoleFieldB
             return
         senderId = self.air.getAvatarIdFromSender()
         av = simbase.air.doId2do.get(senderId)
-        avIds = room.presentAvIds
-        if av and senderId in avIds:
+        playerIds = room.presentAvIds
+        if av and senderId in playerIds:
             av.takeDamage(self.DamageOnFailure, quietly=0)
             room.sendUpdate('forceOuch', [self.DamageOnFailure])
 

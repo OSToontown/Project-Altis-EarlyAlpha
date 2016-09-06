@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.interval.IntervalGlobal import *
 from direct.fsm.ClassicFSM import *
@@ -27,10 +27,6 @@ Component2IconDict = {'boredom': 'Bored',
  'surprise': 'Surprised',
  'affection': 'Love'}
 
-from otp.nametag import *
-from otp.nametag.NametagConstants import *
-from otp.nametag.NametagGroup import *
-
 class Pet(Avatar.Avatar):
     notify = DirectNotifyGlobal.directNotify.newCategory('Pet')
     SerialNum = 0
@@ -46,7 +42,7 @@ class Pet(Avatar.Avatar):
         Pet.SerialNum += 1
         self.lockedDown = 0
         self.setPickable(1)
-        self.setPlayerType(NametagGroup.CCSpeedChat)
+        self.setPlayerType(NametagGroup.CCNonPlayer)
         self.animFSM = ClassicFSM('petAnimFSM', [State('off', self.enterOff, self.exitOff),
          State('neutral', self.enterNeutral, self.exitNeutral),
          State('neutralHappy', self.enterNeutralHappy, self.exitNeutralHappy),
@@ -114,9 +110,9 @@ class Pet(Avatar.Avatar):
         else:
             self.style = dna
             self.generatePet()
+            self.generateMoods()
             self.initializeDropShadow()
             self.initializeNametag3d()
-            self.generateMoods()
             self.dropShadow.setScale(0.75)
 
     def generatePet(self):
@@ -278,24 +274,16 @@ class Pet(Avatar.Avatar):
         return color
 
     def generateMoods(self):
-        nodePath = NodePath(self.nametag.getNameIcon())
-
-        if not nodePath:
-            return
-
         moodIcons = loader.loadModel('phase_4/models/char/petEmotes')
-        self.moodIcons = nodePath.attachNewNode('moodIcons')
-        self.moodIcons.setScale(6.0)
-        self.moodIcons.setZ(3.5)
-
+        self.moodIcons = self.attachNewNode('moodIcons')
+        self.moodIcons.setScale(2.0)
+        self.moodIcons.setZ(3.65)
         moods = moodIcons.findAllMatches('**/+GeomNode')
-        for moodNum in xrange(0, moods.getNumPaths()):
+        for moodNum in range(0, moods.getNumPaths()):
             mood = moods.getPath(moodNum)
             mood.reparentTo(self.moodIcons)
             mood.setBillboardPointEye()
             mood.hide()
-
-        moodIcons.removeNode()
 
     def clearMood(self):
         if self.moodModel:
@@ -304,8 +292,13 @@ class Pet(Avatar.Avatar):
         return
 
     def showMood(self, mood):
-        if base.cr.newsManager.isHolidayRunning(ToontownGlobals.APRIL_TOONS_WEEK) and mood != 'confusion':
-            self.speakMood(mood)
+        if hasattr(base.cr, 'newsManager') and base.cr.newsManager:
+            holidayIds = base.cr.newsManager.getHolidayIdList()
+            if (ToontownGlobals.APRIL_FOOLS_COSTUMES in holidayIds or ToontownGlobals.SILLYMETER_EXT_HOLIDAY in holidayIds) and not mood == 'confusion':
+                self.speakMood(mood)
+                return
+            else:
+                self.clearChat()
         else:
             self.clearChat()
         mood = Component2IconDict[mood]
@@ -326,7 +319,12 @@ class Pet(Avatar.Avatar):
         return
 
     def speakMood(self, mood):
-        self.setChatAbsolute(random.choice(TTLocalizer.SpokenMoods[mood]), CFSpeech)
+        if self.moodModel:
+            self.moodModel.hide()
+        if config.GetBool('want-speech-bubble', 1):
+            self.nametag.setChat(random.choice(TTLocalizer.SpokenMoods[mood]), CFSpeech)
+        else:
+            self.nametag.setChat(random.choice(TTLocalizer.SpokenMoods[mood]), CFThought)
 
     def getGenderString(self):
         if self.style:
@@ -650,7 +648,7 @@ def gridPets():
     offsetX = 0
     offsetY = 0
     startPos = base.localAvatar.getPos()
-    for body in xrange(0, len(BodyTypes)):
+    for body in range(0, len(BodyTypes)):
         colors = getColors(body)
         for color in colors:
             p = Pet()

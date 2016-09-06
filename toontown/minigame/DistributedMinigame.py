@@ -1,6 +1,7 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 from direct.distributed.ClockDelta import *
 from toontown.toonbase import ToontownGlobals
 from direct.distributed import DistributedObject
@@ -25,7 +26,7 @@ class DistributedMinigame(DistributedObject.DistributedObject):
 
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
-        self.waitingStartLabel = DirectLabel(text=TTLocalizer.MinigameWaitingForOtherToons, text_fg=VBase4(1, 1, 1, 1), relief=None, pos=(-0.6, 0, -0.75), scale=0.075)
+        self.waitingStartLabel = DirectLabel(text=TTLocalizer.MinigameWaitingForOtherPlayers, text_fg=VBase4(1, 1, 1, 1), relief=None, pos=(-0.6, 0, -0.75), scale=0.075)
         self.waitingStartLabel.hide()
         self.avIdList = []
         self.remoteAvIdList = []
@@ -41,7 +42,6 @@ class DistributedMinigame(DistributedObject.DistributedObject):
         hoodMinigameState.addChild(self.frameworkFSM)
         self.rulesDoneEvent = 'rulesDone'
         self.acceptOnce('minigameAbort', self.d_requestExit)
-        self.acceptOnce('minigameSkip', self.requestSkip)
         base.curMinigame = self
         self.modelCount = 500
         self.cleanupActions = []
@@ -51,6 +51,8 @@ class DistributedMinigame(DistributedObject.DistributedObject):
         self.trolleyZoneOverride = None
         self.hasLocalToon = 0
         self.frameworkFSM.enterInitialState()
+        self.startingVotes = {}
+        self.metagameRound = -1
         self._telemLimiter = None
         return
 
@@ -101,8 +103,7 @@ class DistributedMinigame(DistributedObject.DistributedObject):
         self.sendUpdate('setAvatarJoined', [])
         self.normalExit = 1
         count = self.modelCount
-        zoneId = 0 #TODO: Make a system for picking minigame backgrounds
-        loader.beginBulkLoad('minigame', TTLocalizer.HeadingToMinigameTitle % self.getTitle(), count, 1, TTLocalizer.TIP_MINIGAME, zoneId)
+        loader.beginBulkLoad('minigame', TTLocalizer.HeadingToMinigameTitle % self.getTitle(), count, 1, TTLocalizer.TIP_MINIGAME)
         self.load()
         loader.endBulkLoad('minigame')
         globalClock.syncFrameTime()
@@ -152,7 +153,7 @@ class DistributedMinigame(DistributedObject.DistributedObject):
         Toon.loadMinigameAnims()
 
     def onstage(self):
-        base.localAvatar.laffMeter.hide()
+        self.notify.debug('BASE: onstage')
 
         def calcMaxDuration(self = self):
             return (self.getMaxDuration() + MinigameGlobals.rulesDuration) * 1.1
@@ -213,7 +214,6 @@ class DistributedMinigame(DistributedObject.DistributedObject):
         for avId in self.avIdList:
             if avId != self.localAvId:
                 self.remoteAvIdList.append(avId)
-        self.setSkipCount(0)
 
     def setTrolleyZone(self, trolleyZone):
         if not self.hasLocalToon:
@@ -237,7 +237,7 @@ class DistributedMinigame(DistributedObject.DistributedObject):
         self.notify.debug('difficulty: %s' % self.getDifficulty())
         self.__serverFinished = 0
         for avId in self.remoteAvIdList:
-            if avId not in self.cr.doId2do:
+            if not self.cr.doId2do.has_key(avId):
                 self.notify.warning('BASE: toon %s already left or has not yet arrived; waiting for server to abort the game' % avId)
                 return 1
 
@@ -290,7 +290,7 @@ class DistributedMinigame(DistributedObject.DistributedObject):
         self.frameworkFSM.request('frameworkWaitServerFinish')
 
     def getAvatar(self, avId):
-        if avId in self.cr.doId2do:
+        if self.cr.doId2do.has_key(avId):
             return self.cr.doId2do[avId]
         else:
             self.notify.warning('BASE: getAvatar: No avatar in doId2do with id: ' + str(avId))
@@ -329,7 +329,7 @@ class DistributedMinigame(DistributedObject.DistributedObject):
     def enterFrameworkRules(self):
         self.notify.debug('BASE: enterFrameworkRules')
         self.accept(self.rulesDoneEvent, self.handleRulesDone)
-        self.rulesPanel = MinigameRulesPanel.MinigameRulesPanel('MinigameRulesPanel', self.getTitle(), self.getInstructions(), self.rulesDoneEvent, playerCount=len(self.avIdList))
+        self.rulesPanel = MinigameRulesPanel.MinigameRulesPanel('MinigameRulesPanel', self.getTitle(), self.getInstructions(), self.rulesDoneEvent)
         self.rulesPanel.load()
         self.rulesPanel.enter()
 
@@ -344,13 +344,10 @@ class DistributedMinigame(DistributedObject.DistributedObject):
         self.sendUpdate('setAvatarReady', [])
         self.frameworkFSM.request('frameworkWaitServerStart')
 
-    def setAvatarReady(self):
-        messenger.send('disableMinigameSkip')
-
     def enterFrameworkWaitServerStart(self):
         self.notify.debug('BASE: enterFrameworkWaitServerStart')
         if self.numPlayers > 1:
-            msg = TTLocalizer.MinigameWaitingForOtherToons
+            msg = TTLocalizer.MinigameWaitingForOtherPlayers
         else:
             msg = TTLocalizer.MinigamePleaseWait
         self.waitingStartLabel['text'] = msg
@@ -432,8 +429,25 @@ class DistributedMinigame(DistributedObject.DistributedObject):
     def unsetEmotes(self):
         Emote.globalEmote.releaseAll(base.localAvatar)
 
-    def requestSkip(self):
-        self.sendUpdate('requestSkip')
+    def setStartingVotes(self, startingVotesArray):
+        if not len(startingVotesArray) == len(self.avIdList):
+            self.notify.error('length does not match, startingVotes=%s, avIdList=%s' % (startingVotesArray, self.avIdList))
+            return
+        for index in range(len(self.avIdList)):
+            avId = self.avIdList[index]
+            self.startingVotes[avId] = startingVotesArray[index]
 
-    def setSkipCount(self, count):
-        messenger.send('gameSkipCountChange', [count, len(self.avIdList)])
+        self.notify.debug('starting votes = %s' % self.startingVotes)
+
+    def setMetagameRound(self, metagameRound):
+        self.metagameRound = metagameRound
+        
+@magicWord(category=CATEGORY_OVERRIDE)
+def abortMinigame():
+    """Abort any minigame you are currently in"""
+    messenger.send('minigameAbort')
+
+@magicWord(category=CATEGORY_OVERRIDE)
+def winMinigame():
+    """Win the current minigame you are in."""
+    messenger.send('minigameVictory')

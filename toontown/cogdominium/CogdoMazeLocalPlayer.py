@@ -44,7 +44,7 @@ class CogdoMazeLocalPlayer(CogdoMazePlayer):
          'squashed': False,
          'boss': False,
          'minion': False}
-        self.accept(base.JUMP, self.controlKeyPressed)
+        self.accept('control', self.controlKeyPressed)
 
     def destroy(self):
         self.toon.showName()
@@ -132,7 +132,7 @@ class CogdoMazeLocalPlayer(CogdoMazePlayer):
     def enterDone(self):
         CogdoMazePlayer.enterDone(self)
         self._guiMgr.hideQuestArrow()
-        self.ignore(base.JUMP)
+        self.ignore('control')
         self._guiMgr.setMessage('')
         if self.exited == False:
             self.lostMemos()
@@ -247,7 +247,7 @@ class CogdoMazeLocalPlayer(CogdoMazePlayer):
         self.exited = True
         message = ''
         if door.getPlayerCount() < len(self.game.players):
-            message = TTLocalizer.WaitingForOtherToons
+            message = TTLocalizer.CogdoMazeGameWaitingForToons
         if toonId == self.toon.doId:
             self._guiMgr.setMessage(message)
             self._winSfx.play()

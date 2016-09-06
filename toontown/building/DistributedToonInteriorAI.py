@@ -1,34 +1,36 @@
-import cPickle
-
-from direct.distributed import DistributedObjectAI
-from direct.distributed.ClockDelta import *
-from direct.fsm import ClassicFSM, State
-from otp.ai.AIBaseGlobal import *
-from toontown.toon import NPCToons
 from toontown.toonbase.ToontownGlobals import *
-
+from otp.ai.AIBaseGlobal import *
+from direct.distributed.ClockDelta import *
+import cPickle
+from direct.directnotify import DirectNotifyGlobal
+from direct.fsm import ClassicFSM, State
+from direct.distributed import DistributedObjectAI
+from direct.fsm import State
+from toontown.toon import NPCToons
 
 class DistributedToonInteriorAI(DistributedObjectAI.DistributedObjectAI):
+
     def __init__(self, block, air, zoneId, building):
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
         self.block = block
         self.zoneId = zoneId
         self.building = building
         self.npcs = NPCToons.createNpcsInZone(air, zoneId)
-        self.fsm = ClassicFSM.ClassicFSM(
-            'DistributedToonInteriorAI',
-            [
-                State.State('toon', self.enterToon, self.exitToon,
-                            ['beingTakenOver']),
-                State.State('beingTakenOver', self.enterBeingTakenOver, self.exitBeingTakenOver, []),
-                State.State('off', self.enterOff, self.exitOff, [])
-            ], 'toon', 'off')
+        self.fsm = ClassicFSM.ClassicFSM('DistributedToonInteriorAI', [State.State('toon', self.enterToon, self.exitToon, ['beingTakenOver']), State.State('beingTakenOver', self.enterBeingTakenOver, self.exitBeingTakenOver, []), State.State('off', self.enterOff, self.exitOff, [])], 'toon', 'off')
         self.fsm.enterInitialState()
+
+        if config.GetBool('want-toonhall-cats', False):
+            if self.zoneId == 2513:
+                from toontown.ai.DistributedBlackCatMgrAI import DistributedBlackCatMgrAI
+                self.blackCatMgr = DistributedBlackCatMgrAI(air)
+                self.blackCatMgr.generateWithRequired(self.zoneId)
 
     def delete(self):
         self.ignoreAll()
         for npc in self.npcs:
-            npc.requestDelete()
+            if npc:
+                npc.requestDelete()
+
         del self.npcs
         del self.fsm
         del self.building
@@ -36,13 +38,15 @@ class DistributedToonInteriorAI(DistributedObjectAI.DistributedObjectAI):
         DistributedObjectAI.DistributedObjectAI.delete(self)
 
     def getZoneIdAndBlock(self):
-        return [self.zoneId, self.block]
+        r = [self.zoneId, self.block]
+        return r
 
     def getToonData(self):
         return cPickle.dumps(self.building.savedBy, 1)
 
     def getState(self):
-        return [self.fsm.getCurrentState().getName(), globalClockDelta.getRealNetworkTime()]
+        r = [self.fsm.getCurrentState().getName(), globalClockDelta.getRealNetworkTime()]
+        return r
 
     def setState(self, state):
         self.sendUpdate('setState', [state, globalClockDelta.getRealNetworkTime()])

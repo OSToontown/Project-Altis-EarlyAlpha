@@ -1,14 +1,13 @@
 from toontown.toonbase.ToonBaseGlobal import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToontownGlobals import *
 import random
 from direct.distributed import DistributedObject
 from direct.directnotify import DirectNotifyGlobal
 from direct.actor import Actor
 import ToonInteriorColors
-from toontown.dna.DNAParser import *
+from toontown.dna.DNADoor import DNADoor
 from toontown.hood import ZoneUtil
-from toontown.toon.DistributedNPCToonBase import DistributedNPCToonBase
 
 class DistributedPetshopInterior(DistributedObject.DistributedObject):
 
@@ -32,7 +31,7 @@ class DistributedPetshopInterior(DistributedObject.DistributedObject):
     def replaceRandomInModel(self, model):
         baseTag = 'random_'
         npc = model.findAllMatches('**/' + baseTag + '???_*')
-        for i in xrange(npc.getNumPaths()):
+        for i in range(npc.getNumPaths()):
             np = npc.getPath(i)
             name = np.getName()
             b = len(baseTag)
@@ -90,7 +89,7 @@ class DistributedPetshopInterior(DistributedObject.DistributedObject):
         doorOrigin.setScale(0.8, 0.8, 0.8)
         doorOrigin.setPos(doorOrigin, 0, -0.25, 0)
         doorColor = self.randomGenerator.choice(self.colors['TI_door'])
-        setupDoor(doorNP, self.interior, doorOrigin, self.dnaStore, str(self.block), doorColor)
+        DNADoor.setupDoor(doorNP, self.interior, doorOrigin, self.dnaStore, str(self.block), doorColor)
         doorFrame = doorNP.find('door_*_flat')
         doorFrame.wrtReparentTo(self.interior)
         doorFrame.setColor(doorColor)
@@ -98,8 +97,6 @@ class DistributedPetshopInterior(DistributedObject.DistributedObject):
         del self.dnaStore
         del self.randomGenerator
         self.interior.flattenMedium()
-        for npcToon in self.cr.doFindAllInstances(DistributedNPCToonBase):
-            npcToon.initToonState()
 
     def disable(self):
         self.fish.stop()

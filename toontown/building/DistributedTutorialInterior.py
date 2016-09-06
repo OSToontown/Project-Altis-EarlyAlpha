@@ -1,31 +1,32 @@
 from toontown.toonbase.ToonBaseGlobal import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from direct.distributed.ClockDelta import *
 from toontown.toonbase import ToontownGlobals
-from toontown.dna.DNAParser import *
 import ToonInterior
 from direct.directnotify import DirectNotifyGlobal
 from direct.distributed import DistributedObject
 import random
 import ToonInteriorColors
 from toontown.hood import ZoneUtil
+from toontown.char import Char
 from toontown.suit import SuitDNA
 from toontown.suit import Suit
 from toontown.quest import QuestParser
-from toontown.toon import DistributedNPCSpecialQuestGiver
-from toontown.toonbase import TTLocalizer
-from otp.nametag.NametagConstants import CFSpeech
-
+from toontown.dna.DNAStorage import DNAStorage
+from toontown.dna.DNADoor import DNADoor
 
 class DistributedTutorialInterior(DistributedObject.DistributedObject):
+
+    def __init__(self, cr):
+        DistributedObject.DistributedObject.__init__(self, cr)
+
+    def generate(self):
+        DistributedObject.DistributedObject.generate(self)
+
     def announceGenerate(self):
         DistributedObject.DistributedObject.announceGenerate(self)
-
-        if not base.cr.doFindAllInstances(DistributedNPCSpecialQuestGiver.DistributedNPCSpecialQuestGiver):
-            self.acceptOnce('doneTutorialSetup', self.setup)
-        else:
-            self.setup()
+        self.setup()
 
     def disable(self):
         self.interior.removeNode()
@@ -34,13 +35,17 @@ class DistributedTutorialInterior(DistributedObject.DistributedObject):
         del self.street
         self.sky.removeNode()
         del self.sky
+        self.mickeyMovie.cleanup()
+        del self.mickeyMovie
         self.suitWalkTrack.finish()
         del self.suitWalkTrack
         self.suit.delete()
         del self.suit
-        self.ignore('enterTutorialInterior')
-
+        self.ignore('enterTutotialInterior')
         DistributedObject.DistributedObject.disable(self)
+
+    def delete(self):
+        DistributedObject.DistributedObject.delete(self)
 
     def randomDNAItem(self, category, findFunc):
         codeCount = self.dnaStore.getNumCatalogCodes(category)
@@ -51,7 +56,7 @@ class DistributedTutorialInterior(DistributedObject.DistributedObject):
     def replaceRandomInModel(self, model):
         baseTag = 'random_'
         npc = model.findAllMatches('**/' + baseTag + '???_*')
-        for i in xrange(npc.getNumPaths()):
+        for i in range(npc.getNumPaths()):
             np = npc.getPath(i)
             name = np.getName()
             b = len(baseTag)
@@ -83,7 +88,7 @@ class DistributedTutorialInterior(DistributedObject.DistributedObject):
         self.interior = loader.loadModel('phase_3.5/models/modules/toon_interior_tutorial')
         self.interior.reparentTo(render)
         dnaStore = DNAStorage()
-        node = loader.loadDNAFile(self.cr.playGame.hood.dnaStore, 'phase_3.5/dna/tutorial_street.pdna')
+        node = loader.loadDNA('phase_3.5/dna/tutorial_street.xml').generate(self.dnaStore)
         self.street = render.attachNewNode(node)
         self.street.flattenMedium()
         self.street.setPosHpr(-17, 42, -0.5, 180, 0, 0)
@@ -112,7 +117,7 @@ class DistributedTutorialInterior(DistributedObject.DistributedObject):
         door_origin.setScale(0.8, 0.8, 0.8)
         door_origin.setPos(door_origin, 0, -0.025, 0)
         color = self.randomGenerator.choice(self.colors['TI_door'])
-        setupDoor(doorNP, self.interior, door_origin, self.dnaStore, str(self.block), color)
+        DNADoor.setupDoor(doorNP, self.interior, door_origin, self.dnaStore, str(self.block), color)
         doorFrame = doorNP.find('door_*_flat')
         doorFrame.wrtReparentTo(self.interior)
         doorFrame.setColor(color)
@@ -120,13 +125,12 @@ class DistributedTutorialInterior(DistributedObject.DistributedObject):
         del self.dnaStore
         del self.randomGenerator
         self.interior.flattenMedium()
-        npcOrigin = self.interior.find('**/npc_origin_' + `(self.cr.doId2do[self.npcId].posIndex)`)
+        npcOrigin = self.interior.find('**/npc_origin_' + `(self.npc.posIndex)`)
         if not npcOrigin.isEmpty():
-            self.cr.doId2do[self.npcId].reparentTo(npcOrigin)
-            self.cr.doId2do[self.npcId].clearMat()
+            self.npc.reparentTo(npcOrigin)
+            self.npc.clearMat()
         self.createSuit()
-        base.localAvatar.setPosHpr(-2, 12, 0, -10, 0, 0)
-        self.cr.doId2do[self.npcId].setChatAbsolute(TTLocalizer.QuestScript101_0, CFSpeech)
+        self.mickeyMovie = QuestParser.NPCMoviePlayer('tutorial_mickey', base.localAvatar, self.npc)
         place = base.cr.playGame.getPlace()
         if place and hasattr(place, 'fsm') and place.fsm.getCurrentState().getName():
             self.notify.info('Tutorial movie: Place ready.')
@@ -139,14 +143,13 @@ class DistributedTutorialInterior(DistributedObject.DistributedObject):
 
     def playMovie(self):
         self.notify.info('Tutorial movie: Play.')
+        self.mickeyMovie.play()
 
     def createSuit(self):
         self.suit = Suit.Suit()
         suitDNA = SuitDNA.SuitDNA()
         suitDNA.newSuit('f')
         self.suit.setDNA(suitDNA)
-        self.suit.nametag3d.stash()
-        self.suit.nametag.destroy()
         self.suit.loop('neutral')
         self.suit.setPosHpr(-20, 8, 0, 0, 0, 0)
         self.suit.reparentTo(self.interior)
@@ -159,6 +162,4 @@ class DistributedTutorialInterior(DistributedObject.DistributedObject):
 
     def setTutorialNpcId(self, npcId):
         self.npcId = npcId
-
-    def getTutorialNpc(self):
-        return self.cr.doId2do[self.npcId]
+        self.npc = self.cr.doId2do[npcId]

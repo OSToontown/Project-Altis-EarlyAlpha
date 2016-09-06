@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from DistributedMinigame import *
 from direct.interval.IntervalGlobal import *
@@ -80,7 +80,7 @@ class DistributedCatchGame(DistributedMinigame):
              'coconut': 0.7,
              'watermelon': 0.6,
              'pineapple': 0.45}
-            if objType.name in modelScales:
+            if modelScales.has_key(objType.name):
                 model.setScale(modelScales[objType.name])
             if objType == Name2DropObjectType['pear']:
                 model.setZ(-.6)
@@ -116,8 +116,6 @@ class DistributedCatchGame(DistributedMinigame):
                 d = SuitDNA.SuitDNA()
                 d.newSuit(type)
                 suit.setDNA(d)
-                suit.nametag3d.stash()
-                suit.nametag.destroy()
                 suit.pose('walk', 0)
                 self.suits.append(suit)
 
@@ -286,7 +284,7 @@ class DistributedCatchGame(DistributedMinigame):
          Toon.Toon(),
          Toon.Toon(),
          Toon.Toon()]
-        for i in xrange(len(self.posts)):
+        for i in range(len(self.posts)):
             toon = self.posts[i]
             toon.setDNA(base.localAvatar.getStyle())
             toon.reparentTo(render)
@@ -310,10 +308,10 @@ class DistributedCatchGame(DistributedMinigame):
         self.dropMarkers = []
         print 'dropRows: %s' % self.DropRows
         print 'dropCols: %s' % self.DropColumns
-        for row in xrange(self.DropRows):
+        for row in range(self.DropRows):
             self.dropMarkers.append([])
             rowList = self.dropMarkers[row]
-            for column in xrange(self.DropColumns):
+            for column in range(self.DropColumns):
                 toon = Toon.Toon()
                 toon.setDNA(base.localAvatar.getStyle())
                 toon.reparentTo(render)
@@ -547,7 +545,7 @@ class DistributedCatchGame(DistributedMinigame):
         objName = self.droppedObjNames[objNum]
         objType = Name2DropObjectType[objName]
         if objType.good:
-            if objNum not in self.droppedObjCaught:
+            if not self.droppedObjCaught.has_key(objNum):
                 if isLocal:
                     base.playSfx(self.sndGoodCatch)
                 fruit = self.getObjModel(objName)
@@ -577,7 +575,7 @@ class DistributedCatchGame(DistributedMinigame):
             self.fruitsCaught += 1
 
     def finishDropInterval(self, objNum):
-        if objNum in self.dropIntervals:
+        if self.dropIntervals.has_key(objNum):
             self.dropIntervals[objNum].finish()
 
     def scheduleDrops(self):
@@ -634,6 +632,10 @@ class DistributedCatchGame(DistributedMinigame):
         self.notify.debug('num fruits: %s' % self.numFruits)
         self.notify.debug('num catches: %s' % self.fruitsCaught)
         self.timer.hide()
+
+        #For the Alpha Blueprint ARG
+        if config.GetBool('want-blueprint4-ARG', False):
+            MinigameGlobals.generateDebugARGPhrase()
 
         if self.fruitsCaught >= self.numFruits:
             self.notify.debug('perfect game!')
@@ -782,7 +784,7 @@ class DistributedCatchGame(DistributedMinigame):
             suit.lookAt(stopPos)
 
         def cleanup(self = self, data = data, lerpNP = lerpNP):
-            if 'suit' in data:
+            if data.has_key('suit'):
                 suit = data['suit']
                 suit.reparentTo(hidden)
                 self.suits.append(suit)

@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from DistributedNPCToon import *
 
 class DistributedNPCFlippyInToonHall(DistributedNPCToon):
@@ -14,8 +14,14 @@ class DistributedNPCFlippyInToonHall(DistributedNPCToon):
         self.setScale(1.25)
 
     def handleCollisionSphereEnter(self, collEntry):
-        base.cr.playGame.getPlace().fsm.request('quest', [self])
-        self.sendUpdate('avatarEnter', [])
-        self.nametag3d.setDepthTest(0)
-        self.nametag3d.setBin('fixed', 0)
-        self.lookAt(base.localAvatar)
+        if self.allowedToTalk():
+            base.cr.playGame.getPlace().fsm.request('quest', [self])
+            self.sendUpdate('avatarEnter', [])
+            self.nametag3d.setDepthTest(0)
+            self.nametag3d.setBin('fixed', 0)
+            self.lookAt(base.localAvatar)
+        else:
+            place = base.cr.playGame.getPlace()
+            if place:
+                place.fsm.request('stopped')
+            self.dialog = TeaserPanel.TeaserPanel(pageName='quests', doneFunc=self.handleOkTeaser)

@@ -307,14 +307,14 @@ class DistributedIceGameAI(DistributedMinigameAI.DistributedMinigameAI):
         if not self.gameFSM or not self.gameFSM.getCurrentState() or self.gameFSM.getCurrentState().getName() != 'waitEndingPositions':
             return
         avId = self.air.getAvatarIdFromSender()
-        if avId not in self.scoreDict:
+        if not self.scoreDict.has_key(avId):
             self.notify.warning('PROBLEM: avatar %s called claimTreasure(%s) but he is not in the scoreDict: %s. avIdList is: %s' % (avId,
              treasureNum,
              self.scoreDict,
              self.avIdList))
             return
         if treasureNum < 0 or treasureNum >= self.numTreasures:
-            self.air.writeServerEvent('warning', treasureNum, 'MazeGameAI.claimTreasure treasureNum out of range')
+            self.air.writeServerEvent('warning', avId=avId, issue='MazeGameAI.claimTreasure treasureNum out of range, was %s' % treasureNum)
             return
         if self.takenTreasuresTable[treasureNum]:
             return
@@ -328,14 +328,14 @@ class DistributedIceGameAI(DistributedMinigameAI.DistributedMinigameAI):
         if not self.gameFSM or not self.gameFSM.getCurrentState() or self.gameFSM.getCurrentState().getName() != 'waitEndingPositions':
             return
         avId = self.air.getAvatarIdFromSender()
-        if avId not in self.scoreDict:
+        if not self.scoreDict.has_key(avId):
             self.notify.warning('PROBLEM: avatar %s called claimPenalty(%s) but he is not in the scoreDict: %s. avIdList is: %s' % (avId,
              penaltyNum,
              self.scoreDict,
              self.avIdList))
             return
         if penaltyNum < 0 or penaltyNum >= self.numPenalties:
-            self.air.writeServerEvent('warning', penaltyNum, 'IceGameAI.claimPenalty penaltyNum out of range')
+            self.air.writeServerEvent('warning', avId=avId, issue='IceGameAI.claimPenalty penaltyNum out of range, was %s' % penaltyNum)
             return
         if self.takenPenaltiesTable[penaltyNum]:
             return

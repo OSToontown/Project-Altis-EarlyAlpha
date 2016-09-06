@@ -90,7 +90,7 @@ class DistributedFishingPond(DistributedObject.DistributedObject):
         return self.pondBingoMgr
 
     def hasPondBingoManager(self):
-        return self.pondBingoMgr is not None
+        return (self.pondBingoMgr and [1] or [0])[0]
 
     def handleBingoCatch(self, catch):
         if self.pondBingoMgr:
@@ -106,7 +106,7 @@ class DistributedFishingPond(DistributedObject.DistributedObject):
 
     def setLocalToonSpot(self, spot = None):
         self.localToonSpot = spot
-        if spot is not None and spot.getDoId() not in self.visitedSpots:
+        if spot is not None and not self.visitedSpots.has_key(spot.getDoId()):
             self.visitedSpots[spot.getDoId()] = spot
         return
 

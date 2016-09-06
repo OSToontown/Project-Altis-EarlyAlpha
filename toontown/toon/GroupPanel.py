@@ -2,10 +2,11 @@ from direct.directnotify import DirectNotifyGlobal
 from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import TTLocalizer
 from direct.gui.DirectGui import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.showbase import DirectObject
 from toontown.toon import ToonAvatarPanel
 from toontown.toontowngui import TTDialog
+from otp.nametag import NametagGlobals
 
 class GroupPanel(DirectObject.DirectObject):
     notify = DirectNotifyGlobal.directNotify.newCategory('GroupPanel')
@@ -68,7 +69,7 @@ class GroupPanel(DirectObject.DirectObject):
             frameZPos = 0.0278943
             quitButtonZPos = -0.30366
         guiButtons = loader.loadModel('phase_9/models/gui/tt_m_gui_brd_status')
-        self.frame = DirectFrame(parent=base.a2dLeftCenter, relief=None, image=bgImage, image_scale=(0.5, 1, 0.5), image_pos=(0, 0, bgImageZPos), textMayChange=1, pos=(0.32, 0, 0))
+        self.frame = DirectFrame(relief=None, parent=base.a2dLeftCenter, image=bgImage, image_scale=(0.5, 1, 0.5), image_pos=(0, 0, bgImageZPos), textMayChange=1, pos=(0.32, 0, frameZPos))
         self.frameBounds = self.frame.getBounds()
         leaveButtonGui = loader.loadModel('phase_3.5/models/gui/tt_m_gui_brd_leaveBtn')
         leaveImageList = (leaveButtonGui.find('**/tt_t_gui_brd_leaveUp'),
@@ -90,8 +91,9 @@ class GroupPanel(DirectObject.DirectObject):
         arrowGui = loader.loadModel('phase_9/models/gui/tt_m_gui_brd_arrow')
         hideImageList = (arrowGui.find('**/tt_t_gui_brd_arrow_up'), arrowGui.find('**/tt_t_gui_brd_arrow_down'), arrowGui.find('**/tt_t_gui_brd_arrow_hover'))
         showImageList = (arrowGui.find('**/tt_t_gui_brd_arrow_up'), arrowGui.find('**/tt_t_gui_brd_arrow_down'), arrowGui.find('**/tt_t_gui_brd_arrow_hover'))
-        self.hideButton = DirectButton(parent=base.a2dLeftCenter, relief=None, text_pos=(0, 0.15), text_scale=0.06, text_align=TextNode.ALeft, text_fg=Vec4(0, 0, 0, 1), text_shadow=Vec4(1, 1, 1, 1), image=hideImageList, image_scale=(-0.35, 1, 0.5), pos=(0.04, 0, 0.03), scale=1.05, command=self.hide)
-        self.showButton = DirectButton(parent=base.a2dLeftCenter, relief=None, text=('', TTLocalizer.BoardingGroupShow, TTLocalizer.BoardingGroupShow), text_pos=(0.03, 0), text_scale=0.06, text_align=TextNode.ALeft, text_fg=Vec4(1, 1, 1, 1), text_shadow=Vec4(0, 0, 0, 1), image=showImageList, image_scale=(0.35, 1, 0.5), pos=(0.04, 0, 0.03), scale=1.05, command=self.show)
+
+        self.hideButton = DirectButton(relief=None, parent=base.a2dLeftCenter, text_pos=(0, 0.15), text_scale=0.06, text_align=TextNode.ALeft, text_fg=Vec4(0, 0, 0, 1), text_shadow=Vec4(1, 1, 1, 1), image=hideImageList, image_scale=(-0.35, 1, 0.5), pos=(0.025, 0, 0.03), scale=1.05, command=self.hide)
+        self.showButton = DirectButton(relief=None, parent=base.a2dLeftCenter, text=('', TTLocalizer.BoardingGroupShow, TTLocalizer.BoardingGroupShow), text_pos=(0.03, 0), text_scale=0.06, text_align=TextNode.ALeft, text_fg=Vec4(1, 1, 1, 1), text_shadow=Vec4(0, 0, 0, 1), image=showImageList, image_scale=(0.35, 1, 0.5), pos=(0.025, 0, 0.03), scale=1.05, command=self.show)
         self.showButton.hide()
         self.frame.show()
         self.__makeAvatarNameScrolledList()
@@ -114,7 +116,7 @@ class GroupPanel(DirectObject.DirectObject):
 
     def __defineConstants(self):
         self.forcedHidden = False
-        self.textFgcolor = Vec4(0.0, 0.6, 0.2, 1.0)
+        self.textFgcolor = Vec4(0.0, 0.6, 0.2, 1.0) # Ripped strait from hacky-boss-battles
         self.textBgRolloverColor = Vec4(1, 1, 0, 1)
         self.textBgDownColor = Vec4(0.5, 0.9, 1, 1)
         self.textBgDisabledColor = Vec4(0.4, 0.8, 0.4, 1)

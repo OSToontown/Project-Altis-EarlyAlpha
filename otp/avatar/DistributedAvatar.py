@@ -1,16 +1,20 @@
-from direct.actor.DistributedActor import DistributedActor
+import time
+import string
+from pandac.PandaModules import *
+from otp.nametag.Nametag import Nametag
 from direct.distributed import DistributedNode
+from direct.actor.DistributedActor import DistributedActor
+from direct.task import Task
 from direct.interval.IntervalGlobal import *
 from direct.showbase import PythonUtil
-from direct.task import Task
-from panda3d.core import *
-
-from Avatar import Avatar
-from otp.ai.MagicWordGlobal import *
 from otp.otpbase import OTPGlobals
-from toontown.battle.BattleProps import globalPropPool
-from otp.nametag.Nametag import Nametag
-
+from otp.otpbase import OTPLocalizer
+from otp.speedchat import SCDecoders
+from otp.chat import ChatGarbler
+from otp.chat import ChatManager
+import random
+from Avatar import Avatar
+import AvatarDNA
 
 class DistributedAvatar(DistributedActor, Avatar):
     HpTextGenerator = TextNode('HpTextGenerator')
@@ -129,13 +133,12 @@ class DistributedAvatar(DistributedActor, Avatar):
         return
 
     def hpChange(self, quietly = 0):
-        if (not hasattr(self, 'doId')) or self.hp == None:
-            return
-        
-        if self.maxHp != None:
-            messenger.send(self.uniqueName('hpChange'), [self.hp, self.maxHp, quietly])
-        if self.hp > 0:
-            messenger.send(self.uniqueName('positiveHP'))
+        if hasattr(self, 'doId'):
+            if self.hp != None and self.maxHp != None:
+                messenger.send(self.uniqueName('hpChange'), [self.hp, self.maxHp, quietly])
+            if self.hp != None and self.hp > 0:
+                messenger.send(self.uniqueName('positiveHP'))
+        return
 
     def died(self):
         pass
@@ -254,93 +257,3 @@ class DistributedAvatar(DistributedActor, Avatar):
 
     def getDialogueArray(self):
         return None
-
-@magicWord(category=CATEGORY_COMMUNITY_MANAGER)
-def warp():
-    """
-    warp the target to the invoker's current position, and rotation.
-    """
-    invoker = spellbook.getInvoker()
-    target = spellbook.getTarget()
-    if invoker.doId == target.doId:
-        return "You can't warp yourself!"
-    target.setPosHpr(invoker.getPos(), invoker.getHpr())
-
-@magicWord(category=CATEGORY_COMMUNITY_MANAGER, types=[str])
-def loop(anim):
-    """
-    animate the target using animation [anim] on the entire actor.
-    """
-    target = spellbook.getTarget()
-    target.loop(anim)
-
-@magicWord(category=CATEGORY_COMMUNITY_MANAGER, types=[str, int, str])
-def pose(anim, frame, part=None):
-    """
-    freeze the target on frame [frame] of animation [anim] on the entire actor,
-    or optional [part] of the actor.
-    """
-    target = spellbook.getTarget()
-    target.pose(anim, frame, partName=part)
-
-@magicWord(category=CATEGORY_COMMUNITY_MANAGER, types=[str, int, int, str])
-def pingpong(anim, start=None, end=None, part=None):
-    """
-    animate the target by bouncing back and forth between the start and end, or
-    the optional frames <start>, and [end] of animation [anim] on the entire
-    actor, or optional <part> of the actor.
-    """
-    target = spellbook.getTarget()
-    target.pingpong(anim, partName=part, fromFrame=start, toFrame=end)
-
-@magicWord(category=CATEGORY_COMMUNITY_MANAGER, types=[str])
-def rightHand(prop=None):
-    """
-    parents the optional <prop> to the target's right hand node.
-    """
-    target = spellbook.getTarget()
-    rightHand = target.find('**/rightHand')
-    if prop is None:
-        for child in rightHand.getChildren():
-            child.removeNode()
-    else:
-        for child in rightHand.getChildren():
-            child.removeNode()
-        requestedProp = globalPropPool.getProp(prop)
-        requestedProp.reparentTo(rightHand)
-
-@magicWord(category=CATEGORY_COMMUNITY_MANAGER, types=[str])
-def leftHand(prop=None):
-    """
-    parents the optional <prop> to the target's left hand node.
-    """
-    target = spellbook.getTarget()
-    leftHand = target.find('**/leftHand')
-    if prop is None:
-        for child in leftHand.getChildren():
-            child.removeNode()
-    else:
-        for child in leftHand.getChildren():
-            child.removeNode()
-        requestedProp = globalPropPool.getProp(prop)
-        requestedProp.reparentTo(leftHand)
-
-@magicWord(category=CATEGORY_PROGRAMMER, types=[])
-def getPos():
-    """
-    Return your target's position.
-    """
-    return spellbook.getTarget().getPos()
-
-@magicWord(category=CATEGORY_PROGRAMMER, types=[int])
-def setFov(fov=OTPGlobals.DefaultCameraFov):
-    """
-    Set your field of view in-game.
-    """
-    if fov == 0:
-        return 'Cannot set FOV to 0!'
-    base.camLens.setMinFov(fov/(4./3.))
-    if fov == OTPGlobals.DefaultCameraFov:
-        return 'Set FOV to the default.'
-    else:
-        return 'Set FOV to %s.' % fov

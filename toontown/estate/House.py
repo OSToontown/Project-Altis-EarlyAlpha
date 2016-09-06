@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from direct.directnotify import DirectNotifyGlobal
 from toontown.hood import Place
@@ -20,11 +20,13 @@ class House(Place.Place):
         self.ownersAvId = avId
         self.dnaFile = 'phase_7/models/modules/toon_interior'
         self.isInterior = 1
+        self.tfaDoneEvent = 'tfaDoneEvent'
         self.oldStyle = None
         self.fsm = ClassicFSM.ClassicFSM('House', [State.State('start', self.enterStart, self.exitStart, ['doorIn', 'teleportIn', 'tutorial']),
          State.State('walk', self.enterWalk, self.exitWalk, ['sit',
           'stickerBook',
           'doorOut',
+          'DFA',
           'teleportOut',
           'quest',
           'purchase',
@@ -34,6 +36,7 @@ class House(Place.Place):
           'stopped']),
          State.State('sit', self.enterSit, self.exitSit, ['walk']),
          State.State('stickerBook', self.enterStickerBook, self.exitStickerBook, ['walk',
+          'DFA',
           'sit',
           'doorOut',
           'teleportOut',
@@ -43,8 +46,10 @@ class House(Place.Place):
           'banking',
           'phone',
           'stopped']),
-         State.State('doorIn', self.enterDoorIn, self.exitDoorIn, ['walk', 'stopped']),
-         State.State('doorOut', self.enterDoorOut, self.exitDoorOut, ['walk', 'stopped']),
+         State.State('DFA', self.enterDFA, self.exitDFA, ['DFAReject', 'teleportOut', 'doorOut']),
+         State.State('DFAReject', self.enterDFAReject, self.exitDFAReject, ['walk']),
+         State.State('doorIn', self.enterDoorIn, self.exitDoorIn, ['walk']),
+         State.State('doorOut', self.enterDoorOut, self.exitDoorOut, ['walk']),
          State.State('teleportIn', self.enterTeleportIn, self.exitTeleportIn, ['walk']),
          State.State('teleportOut', self.enterTeleportOut, self.exitTeleportOut, ['teleportIn']),
          State.State('quest', self.enterQuest, self.exitQuest, ['walk', 'doorOut']),
@@ -153,6 +158,7 @@ class House(Place.Place):
         base.localAvatar.laffMeter.start()
         base.localAvatar.obscureMoveFurnitureButton(1)
         base.localAvatar.startSleepWatch(self.__handleFallingAsleepCloset)
+        self.enablePeriodTimer()
 
     def __handleFallingAsleepCloset(self, arg):
         if hasattr(self, 'fsm'):
@@ -164,8 +170,9 @@ class House(Place.Place):
         base.localAvatar.setTeleportAvailable(0)
         self.ignore('teleportQuery')
         base.localAvatar.laffMeter.stop()
-        base.localAvatar.obscureMoveFurnitureButton(0)
+        base.localAvatar.obscureMoveFurnitureButton(-1)
         base.localAvatar.stopSleepWatch()
+        self.disablePeriodTimer()
 
     def enterBanking(self):
         Place.Place.enterBanking(self)

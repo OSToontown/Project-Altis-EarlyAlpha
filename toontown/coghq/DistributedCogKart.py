@@ -22,7 +22,7 @@ class DistributedCogKart(DistributedElevatorExt.DistributedElevatorExt):
     def __init__(self, cr):
         DistributedElevatorExt.DistributedElevatorExt.__init__(self, cr)
         self.type = ElevatorConstants.ELEVATOR_COUNTRY_CLUB
-        self.kartModelPath = 'phase_12/models/bossbotHQ/Coggolf_cart3.bam'
+        self.kartModelPath = 'phase_12/models/bossbotHQ/Coggolf_cart3'
         self.leftDoor = None
         self.rightDoor = None
         self.fillSlotTrack = None
@@ -152,7 +152,7 @@ class DistributedCogKart(DistributedElevatorExt.DistributedElevatorExt):
     def setCountryClubInteriorZoneForce(self, zoneId):
         place = self.cr.playGame.getPlace()
         if place:
-            place.fsm.request('elevator', [self])
+            place.fsm.request('elevator', [self, 1])
             hoodId = self.cr.playGame.hood.hoodId
             countryClubId = self.countryClubId
             if bboard.has('countryClubIdOverride'):
@@ -187,7 +187,7 @@ class DistributedCogKart(DistributedElevatorExt.DistributedElevatorExt):
             del self.toonRequests[index]
         if avId == 0:
             pass
-        elif avId not in self.cr.doId2do:
+        elif not self.cr.doId2do.has_key(avId):
             func = PythonUtil.Functor(self.gotToon, index, avId)
             self.toonRequests[index] = self.cr.relatedObjectMgr.requestObjects([avId], allCallback=func)
         elif not self.isSetup:
@@ -297,7 +297,7 @@ class DistributedCogKart(DistributedElevatorExt.DistributedElevatorExt):
                     newSlots.append(slot)
 
             self.deferredSlots = newSlots
-        elif avId in self.cr.doId2do:
+        elif self.cr.doId2do.has_key(avId):
             if bailFlag == 1 and hasattr(self, 'clockNode'):
                 if timestamp < self.countdownTime and timestamp >= 0:
                     self.countdown(self.countdownTime - timestamp)
@@ -353,8 +353,14 @@ class DistributedCogKart(DistributedElevatorExt.DistributedElevatorExt):
     def rejectBoard(self, avId, reason = 0):
         print 'rejectBoard %s' % reason
         if hasattr(base.localAvatar, 'elevatorNotifier'):
-            if reason == ElevatorConstants.REJECT_PROMOTION:
+            if reason == ElevatorConstants.REJECT_SHUFFLE:
+                base.localAvatar.elevatorNotifier.showMe(TTLocalizer.ElevatorHoppedOff)
+            elif reason == ElevatorConstants.REJECT_MINLAFF:
+                base.localAvatar.elevatorNotifier.showMe(TTLocalizer.KartMinLaff % self.minLaff)
+            elif reason == ElevatorConstants.REJECT_PROMOTION:
                 base.localAvatar.elevatorNotifier.showMe(TTLocalizer.BossElevatorRejectMessage)
+            elif reason == ElevatorConstants.REJECT_NOT_YET_AVAILABLE:
+                base.localAvatar.elevatorNotifier.showMe(TTLocalizer.NotYetAvailable)
         doneStatus = {'where': 'reject'}
         elevator = self.getPlaceElevator()
         if elevator:

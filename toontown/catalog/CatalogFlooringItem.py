@@ -25,7 +25,8 @@ FlooringTypes = {1000: ('phase_5.5/maps/floor_wood_neutral.jpg', CTBasicWoodColo
  10000: ('phase_5.5/maps/floor_icecube.jpg', CTWhite, 225),
  10010: ('phase_5.5/maps/floor_snow.jpg', CTWhite, 225),
  11000: ('phase_5.5/maps/StPatsFloor1.jpg', CTWhite, 225),
- 11010: ('phase_5.5/maps/StPatsFloor2.jpg', CTWhite, 225)}
+ 11010: ('phase_5.5/maps/StPatsFloor2.jpg', CTWhite, 225),
+ 11020: ('phase_5.5/maps/painting84_05.jpg', None, 169)}
 
 class CatalogFlooringItem(CatalogSurfaceItem):
 
@@ -108,8 +109,11 @@ class CatalogFlooringItem(CatalogSurfaceItem):
 
     def decodeDatagram(self, di, versionNumber, store):
         CatalogAtticItem.CatalogAtticItem.decodeDatagram(self, di, versionNumber, store)
-        self.patternIndex = di.getUint16()
-        if store & CatalogItem.Customization:
+        if versionNumber < 3:
+            self.patternIndex = di.getUint8()
+        else:
+            self.patternIndex = di.getUint16()
+        if versionNumber < 4 or store & CatalogItem.Customization:
             self.colorIndex = di.getUint8()
         else:
             self.colorIndex = 0
@@ -136,7 +140,7 @@ def getAllFloorings(*indexList):
     for index in indexList:
         colors = FlooringTypes[index][FTColor]
         if colors:
-            for n in xrange(len(colors)):
+            for n in range(len(colors)):
                 list.append(CatalogFlooringItem(index, n))
 
         else:
@@ -160,7 +164,7 @@ def getFlooringRange(fromIndex, toIndex, *otherRanges):
             if patternIndex >= fromIndex and patternIndex <= toIndex:
                 colors = FlooringTypes[patternIndex][FTColor]
                 if colors:
-                    for n in xrange(len(colors)):
+                    for n in range(len(colors)):
                         list.append(CatalogFlooringItem(patternIndex, n))
 
                 else:

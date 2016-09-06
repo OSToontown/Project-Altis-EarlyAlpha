@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
 from ElevatorConstants import *
@@ -11,21 +11,16 @@ from direct.fsm import State
 from toontown.hood import ZoneUtil
 from toontown.toonbase import TTLocalizer
 
-from toontown.cogdominium.CogdoInterior import CogdoInterior
-
 class DistributedElevatorInt(DistributedElevator.DistributedElevator):
 
     def __init__(self, cr):
         DistributedElevator.DistributedElevator.__init__(self, cr)
-        self.countdownTime = base.config.GetFloat('int-elevator-timeout', INTERIOR_ELEVATOR_COUNTDOWN_TIME)
+        self.countdownTime = config.GetFloat('int-elevator-timeout', INTERIOR_ELEVATOR_COUNTDOWN_TIME)
 
     def setupElevator(self):
         self.leftDoor = self.bldg.leftDoorOut
         self.rightDoor = self.bldg.rightDoorOut
         DistributedElevator.DistributedElevator.setupElevator(self)
-
-        if isinstance(base.cr.playGame.getPlace(), CogdoInterior):
-            self.elevatorSphereNodePath.setY(self.elevatorSphereNodePath, -3)
 
     def forcedExit(self, avId):
         target_sz = base.localAvatar.defaultZone

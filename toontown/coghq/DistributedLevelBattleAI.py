@@ -96,7 +96,7 @@ class DistributedLevelBattleAI(DistributedBattleAI.DistributedBattleAI):
 
     def handleToonsWon(self, toons):
         pass
-    
+
     def enterFaceOff(self):
         self.notify.debug('DistributedLevelBattleAI.enterFaceOff()')
         self.joinableFsm.request('Joinable')

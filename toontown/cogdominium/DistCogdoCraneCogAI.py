@@ -12,3 +12,4 @@ class DistCogdoCraneCogAI(DistributedObjectAI):
 
     def setSpawnInfo(self, todo0, todo1):
         pass
+

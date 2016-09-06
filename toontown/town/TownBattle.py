@@ -17,7 +17,7 @@ from toontown.toonbase import ToontownTimer
 from direct.showbase import PythonUtil
 from toontown.toonbase import TTLocalizer
 from toontown.pets import PetConstants
-from direct.gui.DirectGui import *
+from direct.gui.DirectGui import DGG
 from toontown.battle import FireCogPanel
 
 class TownBattle(StateData.StateData):
@@ -42,7 +42,10 @@ class TownBattle(StateData.StateData):
         self.track = -1
         self.level = -1
         self.target = 0
-        self.toonAttacks = [(-1, 0, 0)] * 4
+        self.toonAttacks = [(-1, 0, 0),
+         (-1, 0, 0),
+         (-1, 0, 0),
+         (-1, 0, 0)]
         self.fsm = ClassicFSM.ClassicFSM('TownBattle', [
             State.State('Off',
                 self.enterOff,
@@ -118,12 +121,17 @@ class TownBattle(StateData.StateData):
         self.SOSPetInfoPanel = TownBattleSOSPetInfoPanel.TownBattleSOSPetInfoPanel(self.SOSPetInfoPanelDoneEvent)
         self.fireCogPanelDoneEvent = 'fire-cog-panel-done'
         self.FireCogPanel = FireCogPanel.FireCogPanel(self.fireCogPanelDoneEvent)
+        self.cogFireCosts = [None,
+         None,
+         None,
+         None]
         self.toonPanels = (TownBattleToonPanel.TownBattleToonPanel(0),
          TownBattleToonPanel.TownBattleToonPanel(1),
          TownBattleToonPanel.TownBattleToonPanel(2),
          TownBattleToonPanel.TownBattleToonPanel(3))
         self.timer = ToontownTimer.ToontownTimer()
-        self.timer.posInTopRightCorner()
+        self.timer.reparentTo(base.a2dTopRight)
+        self.timer.setPos(-0.151, 0, -0.158)
         self.timer.setScale(0.4)
         self.timer.hide()
         return
@@ -155,6 +163,7 @@ class TownBattle(StateData.StateData):
         self.parentFSMState.addChild(self.fsm)
         if not self.isLoaded:
             self.load()
+        print 'Battle Event %s' % event
         self.battleEvent = event
         self.fsm.enterInitialState()
         base.localAvatar.laffMeter.start()
@@ -302,7 +311,10 @@ class TownBattle(StateData.StateData):
             for toonPanel in self.toonPanels:
                 toonPanel.hide()
 
-        self.toonAttacks = [(-1, 0, 0)] * 4
+        self.toonAttacks = [(-1, 0, 0),
+         (-1, 0, 0),
+         (-1, 0, 0),
+         (-1, 0, 0)]
         self.target = 0
         if hasattr(self, 'timer'):
             self.timer.hide()
@@ -421,11 +433,14 @@ class TownBattle(StateData.StateData):
         self.notify.debug('adjustCogsAndToons() numCogs: %s self.numCogs: %s' % (numCogs, self.numCogs))
         self.notify.debug('adjustCogsAndToons() luredIndices: %s self.luredIndices: %s' % (luredIndices, self.luredIndices))
         self.notify.debug('adjustCogsAndToons() trappedIndices: %s self.trappedIndices: %s' % (trappedIndices, self.trappedIndices))
-        toonIds = [toon.doId for toon in toons]
+        toonIds = map(lambda toon: toon.doId, toons)
         self.notify.debug('adjustCogsAndToons() toonIds: %s self.toons: %s' % (toonIds, self.toons))
         maxSuitLevel = 0
+        cogFireCostIndex = 0
         for cog in cogs:
             maxSuitLevel = max(maxSuitLevel, cog.getActualLevel())
+            self.cogFireCosts[cogFireCostIndex] = 1
+            cogFireCostIndex += 1
 
         creditLevel = maxSuitLevel
         if numCogs == self.numCogs and creditLevel == self.creditLevel and luredIndices == self.luredIndices and trappedIndices == self.trappedIndices and toonIds == self.toons:
@@ -551,7 +566,7 @@ class TownBattle(StateData.StateData):
 
     def enterFire(self):
         canHeal, canTrap, canLure = self.checkHealTrapLure()
-        self.FireCogPanel.enter(self.numCogs, luredIndices=self.luredIndices, trappedIndices=self.trappedIndices, track=self.track)
+        self.FireCogPanel.enter(self.numCogs, luredIndices=self.luredIndices, trappedIndices=self.trappedIndices, track=self.track, fireCosts=self.cogFireCosts)
         self.accept(self.fireCogPanelDoneEvent, self.__handleCogFireDone)
         return None
 
@@ -660,10 +675,15 @@ class TownBattle(StateData.StateData):
             self.fsm.request('SOS')
 
     def __isCogChoiceNecessary(self):
-        return self.numCogs > 1 and not self.__isGroupAttack(self.track, self.level)
+        if self.numCogs > 1 and not self.__isGroupAttack(self.track, self.level):
+            return 1
+        else:
+            return 0
 
     def __isGroupAttack(self, trackNum, levelNum):
-        return BattleBase.attackAffectsGroup(trackNum, levelNum)
+        retval = BattleBase.attackAffectsGroup(trackNum, levelNum)
+        return retval
 
     def __isGroupHeal(self, levelNum):
-        return self.__isGroupAttack(HEAL_TRACK, levelNum)
+        retval = BattleBase.attackAffectsGroup(HEAL_TRACK, levelNum)
+        return retval

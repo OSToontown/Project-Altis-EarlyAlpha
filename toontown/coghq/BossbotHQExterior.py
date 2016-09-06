@@ -1,22 +1,17 @@
 from direct.directnotify import DirectNotifyGlobal
+from toontown.battle import BattlePlace
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
-from panda3d.core import *
-
-from toontown.battle import BattlePlace
-from toontown.building import Elevator
-from toontown.coghq import CogHQExterior
-from toontown.dna.DNAParser import loadDNAFileAI, DNAStorage
-from toontown.hood import ZoneUtil
 from toontown.toonbase import ToontownGlobals
-
+from toontown.building import Elevator
+from pandac.PandaModules import *
+from toontown.coghq import CogHQExterior
 
 class BossbotHQExterior(CogHQExterior.CogHQExterior):
     notify = DirectNotifyGlobal.directNotify.newCategory('BossbotHQExterior')
 
     def __init__(self, loader, parentFSM, doneEvent):
         CogHQExterior.CogHQExterior.__init__(self, loader, parentFSM, doneEvent)
-
         self.elevatorDoneEvent = 'elevatorDone'
         self.trains = None
         self.fsm.addState(State.State('elevator', self.enterElevator, self.exitElevator, ['walk', 'stopped']))
@@ -26,10 +21,13 @@ class BossbotHQExterior(CogHQExterior.CogHQExterior):
         state.addTransition('elevator')
         state = self.fsm.getStateNamed('stickerBook')
         state.addTransition('elevator')
+        return
 
-    def enterElevator(self, distElevator):
+    def enterElevator(self, distElevator, skipDFABoard = 0):
         self.accept(self.elevatorDoneEvent, self.handleElevatorDone)
         self.elevator = Elevator.Elevator(self.fsm.getStateNamed('elevator'), self.elevatorDoneEvent, distElevator)
+        if skipDFABoard:
+            self.elevator.skipDFABoard = 1
         self.elevator.setReverseBoardingCamera(True)
         self.elevator.load()
         self.elevator.enter()
@@ -58,26 +56,3 @@ class BossbotHQExterior(CogHQExterior.CogHQExterior):
             messenger.send(self.doneEvent)
         else:
             self.notify.error('Unknown mode: ' + where + ' in handleElevatorDone')
-
-    def enter(self, requestStatus):
-        CogHQExterior.CogHQExterior.enter(self, requestStatus)
-
-        # Load the CogHQ DNA file:
-        dnaStore = DNAStorage()
-        dnaFileName = self.genDNAFileName(self.zoneId)
-        loadDNAFileAI(dnaStore, dnaFileName)
-
-        # Collect all of the vis group zone IDs:
-        self.zoneVisDict = {}
-        for i in xrange(dnaStore.getNumDNAVisGroupsAI()):
-            groupFullName = dnaStore.getDNAVisGroupName(i)
-            visGroup = dnaStore.getDNAVisGroupAI(i)
-            visZoneId = int(base.cr.hoodMgr.extractGroupName(groupFullName))
-            visibles = []
-            for i in xrange(visGroup.getNumVisibles()):
-                visibles.append(int(visGroup.getVisible(i)))
-            visibles.append(ZoneUtil.getBranchZone(visZoneId))
-            self.zoneVisDict[visZoneId] = visibles
-
-        # Next, we want interest in all vis groups due to this being a Cog HQ:
-        base.cr.sendSetZoneMsg(self.zoneId, self.zoneVisDict.values()[0])

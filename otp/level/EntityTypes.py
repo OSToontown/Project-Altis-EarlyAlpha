@@ -13,7 +13,19 @@ class Entity(EntityTypeDesc):
 class LevelMgr(Entity):
     type = 'levelMgr'
     permanent = 1
-    attribs = (('name', 'LevelMgr', 'const'), ('parentEntId', 0, 'const'), ('modelFilename', '', 'const'), ('removeNodes', [], 'const'))
+    attribs = (('name', 'LevelMgr', 'const'), ('parentEntId', 0, 'const'), ('modelFilename', '', 'const'))
+
+
+class EditMgr(Entity):
+    type = 'editMgr'
+    permanent = 1
+    blockAttribs = ('comment',)
+    attribs = (('name', 'LevelMgr', 'const'),
+     ('parentEntId', 0, 'const'),
+     ('requestSave', None, 'const'),
+     ('requestNewEntity', None, 'const'),
+     ('insertEntity', None, 'const'),
+     ('removeEntity', None, 'const'))
 
 
 class AttribModifier(Entity):

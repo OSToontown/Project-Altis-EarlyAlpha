@@ -1,29 +1,35 @@
-from otp.ai.AIBaseGlobal import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.distributed.ClockDelta import *
 from PurchaseManagerConstants import *
 import copy
 from direct.task.Task import Task
 from direct.distributed import DistributedObjectAI
 from direct.directnotify import DirectNotifyGlobal
+from toontown.minigame import TravelGameGlobals
 from toontown.toonbase import ToontownGlobals
 from toontown.minigame import MinigameGlobals
 
 class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
     notify = DirectNotifyGlobal.directNotify.newCategory('PurchaseManagerAI')
 
-    def __init__(self, air, avArray, mpArray, previousMinigameId, trolleyZone, newbieIdList = []):
+    def __init__(self, air, playerArray, mpArray, previousMinigameId, trolleyZone, newbieIdList = [], votesArray = None, metagameRound = -1, desiredNextGame = None):
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
-        self.avIds = copy.deepcopy(avArray)
+        self.playerIds = copy.deepcopy(playerArray)
         self.minigamePoints = copy.deepcopy(mpArray)
         self.previousMinigameId = previousMinigameId
         self.trolleyZone = trolleyZone
         self.newbieIds = copy.deepcopy(newbieIdList)
         self.isShutdown = 0
-        for i in xrange(len(self.avIds), 4):
-            self.avIds.append(0)
+        if votesArray:
+            self.votesArray = copy.deepcopy(votesArray)
+        else:
+            self.votesArray = []
+        self.metagameRound = metagameRound
+        self.desiredNextGame = desiredNextGame
+        for i in range(len(self.playerIds), 4):
+            self.playerIds.append(0)
 
-        for i in xrange(len(self.minigamePoints), 4):
+        for i in range(len(self.minigamePoints), 4):
             self.minigamePoints.append(0)
 
         self.playerStates = [None,
@@ -38,13 +44,13 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
          0,
          0,
          0]
-        for i in xrange(len(self.avIds)):
-            avId = self.avIds[i]
+        for i in range(len(self.playerIds)):
+            avId = self.playerIds[i]
             if avId <= 3:
                 self.playerStates[i] = PURCHASE_NO_CLIENT_STATE
                 self.playersReported[i] = PURCHASE_CANTREPORT_STATE
-            elif avId in self.air.doId2do:
-                if avId not in self.getInvolvedAvIds():
+            elif self.air.doId2do.has_key(avId):
+                if avId not in self.getInvolvedPlayerIds():
                     self.playerStates[i] = PURCHASE_EXIT_STATE
                     self.playersReported[i] = PURCHASE_REPORTED_STATE
                 else:
@@ -54,8 +60,8 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
                 self.playerStates[i] = PURCHASE_DISCONNECTED_STATE
                 self.playersReported[i] = PURCHASE_CANTREPORT_STATE
 
-        for avId in self.getInvolvedAvIds():
-            if avId > 3 and avId in self.air.doId2do:
+        for avId in self.getInvolvedPlayerIds():
+            if avId > 3 and self.air.doId2do.has_key(avId):
                 self.acceptOnce(self.air.getAvatarExitEvent(avId), self.__handleUnexpectedExit, extraArgs=[avId])
                 av = self.air.doId2do[avId]
                 avIndex = self.findAvIndex(avId)
@@ -65,13 +71,23 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
                     continue
                 self.playerMoney[avIndex] = money
                 if self.playerMoney[avIndex] < 0:
-                    simbase.air.writeServerEvent('suspicious', avId, 'toon has invalid money %s, forcing to zero' % money)
+                    simbase.air.writeServerEvent('suspicious', avId=avId, issue='toon has invalid money %s, forcing to zero' % money)
                     self.playerMoney[avIndex] = 0
                 av.addMoney(self.minigamePoints[avIndex])
-                self.air.writeServerEvent('minigame', avId, '%s|%s|%s|%s' % (self.previousMinigameId,
-                 self.trolleyZone,
-                 self.avIds,
-                 self.minigamePoints[avIndex]))
+                self.air.writeServerEvent('minigame', avId=avId, previousMinigameId=self.previousMinigameId,
+                 trolleyZone=self.trolleyZone,
+                 playerIds=self.playerIds,
+                 minigamePoints=self.minigamePoints[avIndex])
+                if self.metagameRound == TravelGameGlobals.FinalMetagameRoundIndex:
+                    numPlayers = len(self.votesArray)
+                    extraBeans = self.votesArray[avIndex] * TravelGameGlobals.PercentOfVotesConverted[numPlayers] / 100.0
+                    if self.air.holidayManager.isHolidayRunning(ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY) or self.air.holidayManager.isHolidayRunning(ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY_MONTH):
+                        extraBeans *= MinigameGlobals.JellybeanTrolleyHolidayScoreMultiplier
+                    av.addMoney(extraBeans)
+                    self.air.writeServerEvent('minigame-extrabeans', avId=avId, previousMinigameId=self.previousMinigameId,
+                     trolleyZone=self.trolleyZone,
+                     playerIds=self.playerIds,
+                     extraBeans=extraBeans)
 
         self.receivingInventory = 1
         self.receivingButtons = 1
@@ -82,10 +98,12 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
         self.ignoreAll()
         DistributedObjectAI.DistributedObjectAI.delete(self)
 
-    def getInvolvedAvIds(self):
+    def getInvolvedPlayerIds(self):
         avIds = []
-        for avId in self.avIds:
+        for avId in self.playerIds:
             if avId not in self.newbieIds:
+                avIds.append(avId)
+            elif self.metagameRound > -1 and self.metagameRound < TravelGameGlobals.FinalMetagameRoundIndex:
                 avIds.append(avId)
 
         return avIds
@@ -93,8 +111,8 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
     def getMinigamePoints(self):
         return self.minigamePoints
 
-    def getAvIds(self):
-        return self.avIds
+    def getPlayerIds(self):
+        return self.playerIds
 
     def getNewbieIds(self):
         return self.newbieIds
@@ -121,13 +139,13 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
         avId = self.air.getAvatarIdFromSender()
         avIndex = self.findAvIndex(avId)
         if avIndex is None:
-            self.air.writeServerEvent('suspicious', avId, 'PurchaseManager.requestExit: unknown avatar: %s' % (avId,))
+            self.air.writeServerEvent('suspicious', avId=avId, issue='PurchaseManager.requestExit: unknown avatar: %s' % (avId,))
             return
         if self.receivingButtons:
-            if avId in self.air.doId2do:
+            if self.air.doId2do.has_key(avId):
                 av = self.air.doId2do[avId]
                 if avIndex == None:
-                    self.air.writeServerEvent('suspicious', avId, 'PurchaseManager.requestExit not on list')
+                    self.air.writeServerEvent('suspicious', avId=avId, issue='PurchaseManager.requestExit not on list')
                     self.notify.warning('Avatar ' + str(avId) + ' requested Exit, but is not on the list!')
                 else:
                     avState = self.playerStates[avIndex]
@@ -135,10 +153,10 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
                         self.playerStates[avIndex] = PURCHASE_EXIT_STATE
                         self.handlePlayerLeaving(avId)
                     else:
-                        self.air.writeServerEvent('suspicious', avId, 'PurchaseManager.requestExit invalid transition to exit')
+                        self.air.writeServerEvent('suspicious', avId=avId, issue='PurchaseManager.requestExit invalid transition to exit')
                         self.notify.warning('Invalid transition to exit state.')
             else:
-                self.air.writeServerEvent('suspicious', avId, 'PurchaseManager.requestExit unknown avatar')
+                self.air.writeServerEvent('suspicious', avId=avId, issue='PurchaseManager.requestExit unknown avatar')
                 self.notify.warning('Avatar ' + str(avId) + ' requested Exit, but is not in doId2do.' + ' Assuming disconnected.')
                 self.playerStates[avIndex] = PURCHASE_DISCONNECTED_STATE
                 self.playersReported[avIndex] = PURCHASE_CANTREPORT_STATE
@@ -147,21 +165,21 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
             if self.getNumUndecided() == 0:
                 self.timeIsUp()
         else:
-            self.air.writeServerEvent('suspicious', avId, 'PurchaseManager.requestExit not receiving requests now')
+            self.air.writeServerEvent('suspicious', avId=avId, issue='PurchaseManager.requestExit not receiving requests now')
             self.notify.warning('Avatar ' + str(avId) + ' requested Exit, but I am not receiving button requests now.')
         return
 
     def requestPlayAgain(self):
         avId = self.air.getAvatarIdFromSender()
         if self.findAvIndex(avId) == None:
-            self.air.writeServerEvent('suspicious', avId, 'PurchaseManager.requestPlayAgain: unknown avatar')
+            self.air.writeServerEvent('suspicious', avId=avId, issue='PurchaseManager.requestPlayAgain: unknown avatar')
             return
         if self.receivingButtons:
-            if avId in self.air.doId2do:
+            if self.air.doId2do.has_key(avId):
                 av = self.air.doId2do[avId]
                 avIndex = self.findAvIndex(avId)
                 if avIndex == None:
-                    self.air.writeServerEvent('suspicious', avId, 'PurchaseManager.requestPlayAgain not on list')
+                    self.air.writeServerEvent('suspicious', avId=avId, issue='PurchaseManager.requestPlayAgain not on list')
                     self.notify.warning('Avatar ' + str(avId) + ' requested PlayAgain, but is not on the list!')
                 else:
                     avState = self.playerStates[avIndex]
@@ -169,10 +187,10 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
                         self.notify.debug(str(avId) + ' wants to play again')
                         self.playerStates[avIndex] = PURCHASE_PLAYAGAIN_STATE
                     else:
-                        self.air.writeServerEvent('suspicious', avId, 'PurchaseManager.requestPlayAgain invalid transition to PlayAgain')
+                        self.air.writeServerEvent('suspicious', avId=avId, issue='PurchaseManager.requestPlayAgain invalid transition to PlayAgain')
                         self.notify.warning('Invalid transition to PlayAgain state.')
             else:
-                self.air.writeServerEvent('suspicious', avId, 'PurchaseManager.requestPlayAgain unknown avatar')
+                self.air.writeServerEvent('suspicious', avId=avId, issue='PurchaseManager.requestPlayAgain unknown avatar')
                 self.notify.warning('Avatar ' + str(avId) + ' requested PlayAgain, but is not in doId2do.' + ' Assuming disconnected.')
                 avIndex = self.findAvIndex(avId)
                 self.playerStates[avIndex] = PURCHASE_DISCONNECTED_STATE
@@ -182,18 +200,18 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
             if self.getNumUndecided() == 0:
                 self.timeIsUp()
         else:
-            self.air.writeServerEvent('suspicious', avId, 'PurchaseManager.requestPlayAgain not receiving requests now')
+            self.air.writeServerEvent('suspicious', avId=avId, issue='PurchaseManager.requestPlayAgain not receiving requests now')
             self.notify.warning('Avatar ' + str(avId) + ' requested PlayAgain, but I am not receiving button ' + 'requests now.')
         return
 
     def setInventory(self, blob, newMoney, done):
         avId = self.air.getAvatarIdFromSender()
         if self.receivingInventory:
-            if avId in self.air.doId2do:
+            if self.air.doId2do.has_key(avId):
                 av = self.air.doId2do[avId]
                 avIndex = self.findAvIndex(avId)
                 if avIndex == None:
-                    self.air.writeServerEvent('suspicious', avId, 'PurchaseManager.setInventory not on list')
+                    self.air.writeServerEvent('suspicious', avId=avId, issue='PurchaseManager.setInventory not on list')
                     self.notify.warning('Avatar ' + str(avId) + ' requested purchase, but is not on the list!')
                 else:
                     newInventory = av.inventory.makeFromNetString(blob)
@@ -203,13 +221,13 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
                         if not done:
                             return
                         if self.playersReported[avIndex] != PURCHASE_UNREPORTED_STATE:
-                            self.air.writeServerEvent('suspicious', avId, 'PurchaseManager.setInventory bad report state')
+                            self.air.writeServerEvent('suspicious', avId=avId, issue='PurchaseManager.setInventory bad report state')
                             self.notify.warning('Bad report state: ' + str(self.playersReported[avIndex]))
                         else:
                             av.d_setInventory(av.inventory.makeNetString())
                             av.d_setMoney(newMoney)
                     else:
-                        self.air.writeServerEvent('suspicious', avId, 'PurchaseManager.setInventory invalid purchase')
+                        self.air.writeServerEvent('suspicious', avId=avId, issue='PurchaseManager.setInventory invalid purchase')
                         self.notify.warning('Avatar ' + str(avId) + ' attempted an invalid purchase.')
                         av.d_setInventory(av.inventory.makeNetString())
                         av.d_setMoney(av.getMoney())
@@ -217,7 +235,7 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
                     if self.getNumUnreported() == 0:
                         self.shutDown()
         else:
-            self.air.writeServerEvent('suspicious', avId, 'PurchaseManager.setInventory not receiving inventory')
+            self.air.writeServerEvent('suspicious', avId=avId, issue='PurchaseManager.setInventory not receiving inventory')
             self.notify.warning('Not receiving inventory. Ignored ' + str(avId) + "'s request")
         return
 
@@ -236,6 +254,18 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
         self.receivingInventory = 1
         return None
 
+    def getVotesArrayMatchingPlayAgainList(self, playAgainList):
+        retval = []
+        for playAgainIndex in range(len(playAgainList)):
+            avId = playAgainList[playAgainIndex]
+            origIndex = self.playerIds.index(avId)
+            if self.votesArray and origIndex < len(self.votesArray):
+                retval.append(self.votesArray[origIndex])
+            else:
+                retval.append(0)
+
+        return retval
+
     def shutDown(self):
         if self.isShutdown:
             self.notify.warning('Got shutDown twice')
@@ -244,7 +274,20 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
         from toontown.minigame import MinigameCreatorAI
         playAgainNum = self.getNumPlayAgain()
         if playAgainNum > 0:
-            MinigameCreatorAI.createMinigame(self.air, self.getPlayAgainList(), self.trolleyZone, minigameZone=self.zoneId, previousGameId=self.previousMinigameId, newbieIds=self.newbieIds)
+            playAgainList = self.getPlayAgainList()
+            newVotesArray = self.getVotesArrayMatchingPlayAgainList(playAgainList)
+            newRound = self.metagameRound
+            newbieIdsToPass = []
+            if newRound > -1:
+                newbieIdsToPass = self.newbieIds
+                if newRound < TravelGameGlobals.FinalMetagameRoundIndex:
+                    newRound += 1
+                else:
+                    newRound = 0
+                    newVotesArray = [TravelGameGlobals.DefaultStartingVotes] * len(playAgainList)
+            if len(playAgainList) == 1 and config.GetBool('metagame-min-2-players', 1):
+                newRound = -1
+            MinigameCreatorAI.createMinigame(self.air, playAgainList, self.trolleyZone, minigameZone=self.zoneId, previousGameId=self.previousMinigameId, newbieIds=newbieIdsToPass, startingVotes=newVotesArray, metagameRound=newRound, desiredNextGame=self.desiredNextGame)
         else:
             MinigameCreatorAI.releaseMinigameZone(self.zoneId)
         self.requestDelete()
@@ -252,8 +295,8 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
         return None
 
     def findAvIndex(self, avId):
-        for i in xrange(len(self.avIds)):
-            if avId == self.avIds[i]:
+        for i in range(len(self.playerIds)):
+            if avId == self.playerIds[i]:
                 return i
 
         return None
@@ -268,9 +311,9 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
 
     def getPlayAgainList(self):
         playAgainList = []
-        for i in xrange(len(self.playerStates)):
+        for i in range(len(self.playerStates)):
             if self.playerStates[i] == PURCHASE_PLAYAGAIN_STATE:
-                playAgainList.append(self.avIds[i])
+                playAgainList.append(self.playerIds[i])
 
         return playAgainList
 
@@ -315,3 +358,9 @@ class PurchaseManagerAI(DistributedObjectAI.DistributedObjectAI):
 
     def handlePlayerLeaving(self, avId):
         pass
+
+    def getMetagameRound(self):
+        return self.metagameRound
+
+    def getVotesArray(self):
+        return self.votesArray

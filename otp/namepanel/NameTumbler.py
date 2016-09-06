@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.showbase import DirectObject
 import random
 from direct.task import Task

@@ -2,7 +2,7 @@ from direct.directnotify import DirectNotifyGlobal
 from toontown.battle import BattlePlace
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
-from panda3d.core import *
+from pandac.PandaModules import *
 from otp.distributed.TelemetryLimiter import RotationLimitToH, TLGatherAllAvs
 from toontown.toon import Toon
 from toontown.toonbase import ToontownGlobals
@@ -33,6 +33,7 @@ class FactoryInterior(BattlePlace.BattlePlace):
           'died',
           'teleportOut',
           'squished',
+          'DFA',
           'fallDown',
           'elevator']),
          State.State('stopped', self.enterStopped, self.exitStopped, ['walk', 'teleportOut']),
@@ -40,6 +41,7 @@ class FactoryInterior(BattlePlace.BattlePlace):
          State.State('push', self.enterPush, self.exitPush, ['walk', 'died', 'teleportOut']),
          State.State('stickerBook', self.enterStickerBook, self.exitStickerBook, ['walk',
           'battle',
+          'DFA',
           'WaitForBattle',
           'died',
           'teleportOut']),
@@ -58,6 +60,8 @@ class FactoryInterior(BattlePlace.BattlePlace):
           'FLA',
           'quietZone',
           'WaitForBattle']),
+         State.State('DFA', self.enterDFA, self.exitDFA, ['DFAReject', 'teleportOut']),
+         State.State('DFAReject', self.enterDFAReject, self.exitDFAReject, ['walkteleportOut']),
          State.State('died', self.enterDied, self.exitDied, ['teleportOut']),
          State.State('FLA', self.enterFLA, self.exitFLA, ['quietZone']),
          State.State('quietZone', self.enterQuietZone, self.exitQuietZone, ['teleportIn']),

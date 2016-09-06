@@ -3,8 +3,9 @@ from toontown.battle import BattlePlace
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
 from direct.showbase import BulletinBoardWatcher
-from panda3d.core import *
+from pandac.PandaModules import *
 from otp.distributed.TelemetryLimiter import RotationLimitToH, TLGatherAllAvs
+from otp.nametag import NametagGlobals
 from toontown.toon import Toon
 from toontown.toonbase import ToontownGlobals
 from toontown.hood import ZoneUtil
@@ -12,7 +13,6 @@ from toontown.toonbase import TTLocalizer
 from toontown.toontowngui import TTDialog
 from toontown.toonbase import ToontownBattleGlobals
 from toontown.coghq import DistributedMint
-from otp.nametag import NametagGlobals
 
 class MintInterior(BattlePlace.BattlePlace):
     notify = DirectNotifyGlobal.directNotify.newCategory('MintInterior')
@@ -30,6 +30,7 @@ class MintInterior(BattlePlace.BattlePlace):
           'died',
           'teleportOut',
           'squished',
+          'DFA',
           'fallDown',
           'stopped']),
          State.State('stopped', self.enterStopped, self.exitStopped, ['walk', 'teleportOut', 'stickerBook']),
@@ -37,6 +38,7 @@ class MintInterior(BattlePlace.BattlePlace):
          State.State('push', self.enterPush, self.exitPush, ['walk', 'died', 'teleportOut']),
          State.State('stickerBook', self.enterStickerBook, self.exitStickerBook, ['walk',
           'battle',
+          'DFA',
           'WaitForBattle',
           'died',
           'teleportOut']),
@@ -55,6 +57,8 @@ class MintInterior(BattlePlace.BattlePlace):
           'FLA',
           'quietZone',
           'WaitForBattle']),
+         State.State('DFA', self.enterDFA, self.exitDFA, ['DFAReject', 'teleportOut']),
+         State.State('DFAReject', self.enterDFAReject, self.exitDFAReject, ['walkteleportOut']),
          State.State('died', self.enterDied, self.exitDied, ['teleportOut']),
          State.State('FLA', self.enterFLA, self.exitFLA, ['quietZone']),
          State.State('quietZone', self.enterQuietZone, self.exitQuietZone, ['teleportIn']),

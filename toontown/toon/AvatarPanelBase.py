@@ -1,10 +1,10 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.gui.DirectGui import *
 from direct.showbase import DirectObject
 from otp.avatar import AvatarPanel
 from toontown.toonbase import TTLocalizer
 from toontown.toontowngui import TTDialog
-from toontown.ai import ReportGlobals
+from otp.distributed import CentralLogger
 IGNORE_SCALE = 0.06
 STOP_IGNORE_SCALE = 0.04
 
@@ -17,13 +17,16 @@ class AvatarPanelBase(AvatarPanel.AvatarPanel):
         return
 
     def getIgnoreButtonInfo(self):
-        if base.localAvatar.isIgnored(self.avId):
+        if base.cr.avatarFriendsManager.checkIgnored(self.avId):
             return (TTLocalizer.AvatarPanelStopIgnoring, self.handleStopIgnoring, STOP_IGNORE_SCALE)
         else:
             return (TTLocalizer.AvatarPanelIgnore, self.handleIgnore, IGNORE_SCALE)
 
     def handleIgnore(self):
-        if base.cr.isFriend(self.avatar.doId):
+        isAvatarFriend = base.cr.isFriend(self.avatar.doId)
+        isPlayerFriend = base.cr.playerFriendsManager.isAvatarOwnerPlayerFriend(self.avatar.doId)
+        isFriend = isAvatarFriend or isPlayerFriend
+        if isFriend:
             self.dialog = TTDialog.TTGlobalDialog(
                 style=TTDialog.CancelOnly,
                 text=TTLocalizer.IgnorePanelAddFriendAvatar % self.avName,
@@ -66,7 +69,7 @@ class AvatarPanelBase(AvatarPanel.AvatarPanel):
         if value == -1:
             self.freeLocalAvatar()
             return
-        base.localAvatar.addIgnore(self.avId)
+        base.cr.avatarFriendsManager.addIgnore(self.avId)
         self.dialog = TTDialog.TTGlobalDialog(style=TTDialog.Acknowledge, text=TTLocalizer.IgnorePanelIgnore % self.avName, text_wordwrap=18.5, text_scale=0.06, topPad=0.1, doneEvent='IgnoreComplete', command=self.handleDoneIgnoring)
         DirectLabel(parent=self.dialog, relief=None, pos=(0, TTLocalizer.APBdirectLabelPosY, 0.15), text=TTLocalizer.IgnorePanelTitle, textMayChange=0, text_scale=0.08)
         self.dialog.show()
@@ -78,7 +81,7 @@ class AvatarPanelBase(AvatarPanel.AvatarPanel):
         if value == -1:
             self.freeLocalAvatar()
             return
-        base.localAvatar.removeIgnore(self.avId)
+        base.cr.avatarFriendsManager.removeIgnore(self.avId)
         self.dialog = TTDialog.TTGlobalDialog(style=TTDialog.Acknowledge, text=TTLocalizer.IgnorePanelEndIgnore % self.avName, text_wordwrap=18.5, text_scale=0.06, topPad=0.1, doneEvent='StopIgnoringComplete', command=self.handleDoneIgnoring)
         DirectLabel(parent=self.dialog, relief=None, pos=(0, TTLocalizer.APBdirectLabelPosY, 0.15), text=TTLocalizer.IgnorePanelTitle, textMayChange=0, text_scale=0.08)
         self.dialog.show()
@@ -90,13 +93,13 @@ class AvatarPanelBase(AvatarPanel.AvatarPanel):
         self.freeLocalAvatar()
 
     def handleReport(self):
-        if base.localAvatar.isReported(self.avId):
+        if base.cr.csm.hasReportedPlayer(self.avId):
             self.alreadyReported()
         else:
             self.confirmReport()
 
     def confirmReport(self):
-        if base.cr.isFriend(self.avId):
+        if base.cr.isFriend(self.avId) or base.cr.playerFriendsManager.isPlayerFriend(self.avId):
             string = TTLocalizer.ReportPanelBodyFriends
             titlePos = 0.41
         else:
@@ -132,7 +135,7 @@ class AvatarPanelBase(AvatarPanel.AvatarPanel):
         DirectLabel(parent=self.dialog, relief=None, pos=(0, 0, 0.225), text=TTLocalizer.ReportPanelTitle, textMayChange=0, text_scale=0.08)
         guiButton = loader.loadModel('phase_3/models/gui/quit_button')
         DirectButton(parent=self.dialog, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=(2.125, 1.0, 1.0), text=TTLocalizer.ReportPanelCategoryLanguage, text_scale=0.06, text_pos=(0, -0.0124), pos=(0, 0, -0.3), command=self.handleReportCategory, extraArgs=[0])
-        DirectButton(parent=self.dialog, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=(2.15, 1.0, 1.0), text=TTLocalizer.ReportPanelCategoryGreening, text_scale=0.06, text_pos=(0, -0.0125), pos=(0, 0, -0.425), command=self.handleReportCategory, extraArgs=[1])
+        DirectButton(parent=self.dialog, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=(2.15, 1.0, 1.0), text=TTLocalizer.ReportPanelCategoryPii, text_scale=0.06, text_pos=(0, -0.0125), pos=(0, 0, -0.425), command=self.handleReportCategory, extraArgs=[1])
         DirectButton(parent=self.dialog, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=(2.125, 1.0, 1.0), text=TTLocalizer.ReportPanelCategoryRude, text_scale=0.06, text_pos=(0, -0.0125), pos=(0, 0, -0.55), command=self.handleReportCategory, extraArgs=[2])
         DirectButton(parent=self.dialog, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=(2.125, 1.0, 1.0), text=TTLocalizer.ReportPanelCategoryName, text_scale=0.06, text_pos=(0, -0.0125), pos=(0, 0, -0.675), command=self.handleReportCategory, extraArgs=[3])
         DirectButton(parent=self.dialog, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=(2.125, 1.0, 1.0), text=TTLocalizer.ReportPanelCategoryHacking, text_scale=0.06, text_pos=(0, -0.0125), pos=(0, 0, -0.8), command=self.handleReportCategory, extraArgs=[4])
@@ -144,8 +147,8 @@ class AvatarPanelBase(AvatarPanel.AvatarPanel):
 
     def handleReportCategory(self, value):
         self.cleanupDialog()
-        if value >= 0 and ReportGlobals.isValidCategory(value):
-            self.category = ReportGlobals.getCategory(value)
+        if value >= 0:
+            self.category = value
             self.confirmReportCategory(value)
         else:
             self.requestWalk()
@@ -162,22 +165,29 @@ class AvatarPanelBase(AvatarPanel.AvatarPanel):
     def handleReportCategoryConfirm(self, value):
         self.cleanupDialog()
         removed = 0
-
+        isPlayer = 0
         if value > 0:
+            base.cr.csm.d_reportPlayer(self.avId, self.category)
             if base.cr.isFriend(self.avId):
                 base.cr.removeFriend(self.avId)
                 removed = 1
-
-            base.cr.reportMgr.sendReport(self.avId, self.category)
-            self.reportComplete(removed)
+            if base.cr.playerFriendsManager.isPlayerFriend(self.playerId):
+                if self.playerId:
+                    base.cr.playerFriendsManager.sendRequestRemove(self.playerId)
+                    removed = 1
+                    isPlayer = 1
+            self.reportComplete(removed, isPlayer)
         else:
             self.requestWalk()
 
-    def reportComplete(self, removed):
+    def reportComplete(self, removed, isPlayer):
         string = TTLocalizer.ReportPanelThanks
         titlePos = 0.25
         if removed:
-            string += ' ' + TTLocalizer.ReportPanelRemovedFriend % self.avName
+            if isPlayer:
+                string += ' ' + TTLocalizer.ReportPanelRemovedPlayerFriend % self.playerId
+            else:
+                string += ' ' + TTLocalizer.ReportPanelRemovedFriend % self.avName
             titlePos = 0.3
         self.dialog = TTDialog.TTGlobalDialog(style=TTDialog.Acknowledge, text=string, text_wordwrap=18.5, text_scale=0.06, topPad=0.1, doneEvent='ReportComplete', command=self.handleReportComplete)
         DirectLabel(parent=self.dialog, relief=None, pos=(0, 0, titlePos), text=TTLocalizer.ReportPanelTitle, textMayChange=0, text_scale=0.08)
@@ -192,15 +202,14 @@ class AvatarPanelBase(AvatarPanel.AvatarPanel):
         self.cleanupDialog()
         self.requestWalk()
 
-    def cleanupDialog(self, state=None):
+    def cleanupDialog(self):
         if self.dialog:
-            base.cr.openAvatarPanels.discard(self)
             self.dialog.ignore('exitingStoppedState')
             self.dialog.cleanup()
             self.dialog = None
+        return
 
     def requestStopped(self):
-        base.cr.openAvatarPanels.add(self)
         if not base.cr.playGame.getPlace().fsm.getCurrentState().getName() == 'stickerBook':
             if base.cr.playGame.getPlace().fsm.hasStateNamed('stopped'):
                 base.cr.playGame.getPlace().fsm.request('stopped')

@@ -80,7 +80,8 @@ class HalloweenHolidayDecorator(HolidayDecorator.HolidayDecorator):
                 for light in place.loader.hood.halloweenLights:
                     light.setColorScaleOff(0)
 
-        if not base.cr.newsManager.isHolidayRunning(ToontownGlobals.HALLOWEEN):
+        holidayIds = base.cr.newsManager.getDecorationHolidayId()
+        if ToontownGlobals.HALLOWEEN_COSTUMES not in holidayIds and ToontownGlobals.SPOOKY_COSTUMES not in holidayIds:
             return
         if (self.__checkHoodValidity() or self.__checkStreetValidity()) and hasattr(base.cr.playGame, 'hood') and base.cr.playGame.hood and hasattr(base.cr.playGame.hood, 'sky') and base.cr.playGame.hood.sky:
             preShow = Sequence(Parallel(LerpColorScaleInterval(base.cr.playGame.hood.sky, 1.5, Vec4(1, 1, 1, 0.25)), LerpColorScaleInterval(base.cr.playGame.hood.loader.geom, 2.5, Vec4(0.55, 0.55, 0.65, 1)), Func(__lightDecorationOn__)), Func(self.__startSpookySky))
@@ -96,12 +97,14 @@ class HalloweenHolidayDecorator(HolidayDecorator.HolidayDecorator):
         distributedEstate = base.cr.doFind('DistributedEstate')
         if distributedEstate:
             distributedEstate.unloadWitch()
-        if base.cr.newsManager.isHolidayRunning(ToontownGlobals.HALLOWEEN):
+        holidayIds = base.cr.newsManager.getDecorationHolidayId()
+        if len(holidayIds) > 0:
             self.decorate()
             return
         storageFile = base.cr.playGame.hood.storageDNAFile
         if storageFile:
-            loadDNAFile(self.dnaStore, storageFile, CSDefault)
+            pass # TODO: DNATODO
+            #loadDNAFile(self.dnaStore, storageFile, CSDefault)
         self.swapIval = self.getSwapVisibleIval()
         if self.swapIval:
             self.swapIval.start()

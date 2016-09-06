@@ -1,17 +1,16 @@
-from direct.directnotify import DirectNotifyGlobal
+from pandac.PandaModules import *
 from direct.showbase import DirectObject
-from panda3d.core import *
+from direct.directnotify import DirectNotifyGlobal
+from toontown.launcher import DownloadForceAcknowledge
+import string
 import random
-
-from toontown.hood import ZoneUtil
 from toontown.toonbase import ToontownGlobals
-
+from toontown.hood import ZoneUtil
 
 class HoodMgr(DirectObject.DirectObject):
     notify = DirectNotifyGlobal.directNotify.newCategory('HoodMgr')
-
     ToontownCentralInitialDropPoints = (
-        [-90.7, -60, 0.025, 102.575, 0, 0],
+        [-90.7, -60.0, 0.025, 102.575, 0, 0],
         [-91.4, -40.5, -3.948, 125.763, 0, 0],
         [-107.8, -17.8, -1.937, 149.456, 0, 0],
         [-108.7, 12.8, -1.767, 158.756, 0, 0],
@@ -23,29 +22,29 @@ class HoodMgr(DirectObject.DirectObject):
         [-53.0, 12.5, -2.948, 281.502, 0, 0],
         [-40.3, -18.5, -0.913, -56.674, 0, 0],
         [-1.9, -37.0, 0.025, -23.43, 0, 0],
-        [1.9, -5.9, 4, -37.941, 0, 0]
+        [1.9, -5.9, 4.0, -37.941, 0, 0]
     )
     ToontownCentralTunnelDropPoints = (
         [-28.3, 40.1, 0.25, 17.25, 0, 0],
         [-63.75, 58.96, -0.5, -23.75, 0, 0],
-        [-106.93, 17.66, -2.2, 99, 0, 0],
-        [-116.0, -21.5, -0.038, 50, 0, 0],
-        [74.88, -115, 2.53, -224.41, 0, 0],
+        [-106.93, 17.66, -2.2, 99.0, 0, 0],
+        [-116.0, -21.5, -0.038, 50.0, 0, 0],
+        [74.88, -115.0, 2.53, -224.41, 0, 0],
         [30.488, -101.5, 2.53, -179.23, 0, 0]
     )
     dropPoints = {
         ToontownGlobals.DonaldsDock: (
-            [-28, -2.5, 5.8, 120, 0, 0],
-            [-22, 13, 5.8, 155.6, 0, 0],
-            [67, 47, 5.7, 134.7, 0, 0],
-            [62, 19, 5.7, 97, 0, 0],
-            [66, -27, 5.7, 80.5, 0, 0],
-            [-114, -7, 5.7, -97, 0, 0],
-            [-108, 36, 5.7, -153.8, 0, 0],
-            [-116, -46, 5.7, -70.1, 0, 0],
-            [-63, -79, 5.7, -41.2, 0, 0],
-            [-2, -79, 5.7, 57.4, 0, 0],
-            [-38, -78, 5.7, 9.1, 0, 0]
+            [-28.0, -2.5, 5.8, 120.0, 0.0, 0.0],
+            [-22, 13, 5.8, 155.6, 0.0, 0.0],
+            [67, 47, 5.7, 134.7, 0.0, 0.0],
+            [62, 19, 5.7, 97.0, 0.0, 0.0],
+            [66, -27, 5.7, 80.5, 0.0, 0.0],
+            [-114, -7, 5.7, -97.0, -0.0, 0.0],
+            [-108, 36, 5.7, -153.8, -0.0, 0.0],
+            [-116, -46, 5.7, -70.1, -0.0, 0.0],
+            [-63, -79, 5.7, -41.2, -0.0, 0.0],
+            [-2, -79, 5.7, 57.4, -0.0, 0.0],
+            [-38, -78, 5.7, 9.1, -0.0, 0.0]
         ),
         ToontownGlobals.ToontownCentral: (
             [-60, -8, 1.3, -90, 0, 0],
@@ -69,52 +68,55 @@ class HoodMgr(DirectObject.DirectObject):
             [-130.7, 50, 0.55, -111, 0, 0]
         ),
         ToontownGlobals.TheBrrrgh: (
-            [35, -32, 6.2, 138, 0, 0],
-            [26, -105, 6.2, -339, 0, 0],
-            [-29, -139, 6.2, -385, 0, 0],
-            [-79, -123, 6.2, -369, 0, 0],
-            [-114, -86, 3, -54, 0, 0],
-            [-136, 9, 6.2, -125, 0, 0],
-            [-75, 92, 6.2, -187, 0, 0],
-            [-7, 75, 6.2, -187, 0, 0],
-            [-106, -42, 8.6, -111, 0, 0],
-            [-116, -44, 8.3, -20, 0, 0]
+            [35, -32, 6.2, 138, 0.0, 0.0],
+            [26, -105, 6.2, -339, 0.0, 0.0],
+            [-29, -139, 6.2, -385, 0.0, 0.0],
+            [-79, -123, 6.2, -369, 0.0, 0.0],
+            [-114, -86, 3, -54, 0.0, 0.0],
+            [-136, 9, 6.2, -125, 0.0, 0.0],
+            [-75, 92, 6.2, -187, 0.0, 0.0],
+            [-7, 75, 6.2, -187, 0.0, 0.0],
+            [-106, -42, 8.6, -111, 0.0, 0.0],
+            [-116, -44, 8.3, -20, 0.0, 0.0]
         ),
         ToontownGlobals.MinniesMelodyland: (
-            [86, 44, -13.5, 121.1, 0, 0],
+            [86, 44, -13.5, 121.1, 0.0, 0.0],
             [88, -8, -13.5, 91, 0, 0],
-            [92, -76, -13.5, 62.5, 0, 0],
-            [53, -112, 6.5, 65.8, 0, 0],
-            [-69, -71, 6.5, -67.2, 0, 0],
-            [-75, 21, 6.5, -100.9, 0, 0],
-            [-21, 72, 6.5, -129.5, 0, 0],
-            [56, 72, 6.5, 138.2, 0, 0],
-            [-41, 47, 6.5, -98.9, 0, 0]
+            [92, -76, -13.5, 62.5, 0.0, 0.0],
+            [53, -112, 6.5, 65.8, 0.0, 0.0],
+            [-69, -71, 6.5, -67.2, 0.0, 0.0],
+            [-75, 21, 6.5, -100.9, 0.0, 0.0],
+            [-21, 72, 6.5, -129.5, 0.0, 0.0],
+            [56, 72, 6.5, 138.2, 0.0, 0.0],
+            [-41, 47, 6.5, -98.9, 0.0, 0.0]
         ),
         ToontownGlobals.DaisyGardens: (
             [0, 0, 0, -10.5, 0, 0],
-            [76, 35, 1.1, -30.2, 0, 0],
-            [97, 106, 0, 51.4, 0, 0],
-            [51, 180, 10, 22.6, 0, 0],
-            [-14, 203, 10, 85.6, 0, 0],
-            [-58, 158, 10, -146.9, 0, 0],
-            [-86, 128, 0, -178.9, 0, 0],
-            [-64, 65, 0, 17.7, 0, 0],
-            [-13, 39, 0, -15.7, 0, 0],
-            [-12, 193, 0, -112.4, 0, 0],
-            [87, 128, 0, 45.4, 0, 0]
+            [76, 35, 1.1, -30.2, 0.0, 0.0],
+            [97, 106, 0.0, 51.4, 0.0, 0.0],
+            [51, 180, 10.0, 22.6, 0.0, 0.0],
+            [-14, 203, 10.0, 85.6, 0.0, 0.0],
+            [-58, 158, 10.0, -146.9, 0.0, 0.0],
+            [-86, 128, 0.0, -178.9, 0.0, 0.0],
+            [-64, 65, 0.0, 17.7, 0.0, 0.0],
+            [-13, 39, 0.0, -15.7, 0.0, 0.0],
+            [-12, 193, 0.0, -112.4, 0.0, 0.0],
+            [87, 128, 0.0, 45.4, 0.0, 0.0]
         ),
         ToontownGlobals.DonaldsDreamland: (
-            [77, 91, 0, 124.4, 0, 0],
-            [29, 92, 0, -154.5, 0, 0],
-            [-28, 49, -16.4, -142, 0, 0],
-            [21, 40, -16, -65.1, 0, 0],
-            [48, 27, -15.4, -161, 0, 0],
-            [-2, -22, -15.2, -132.1, 0, 0],
-            [-92, -88, 0, -116.3, 0, 0],
-            [-56, -93, 0, -21.5, 0, 0],
-            [20, -88, 0, -123.4, 0, 0],
-            [76, -90, 0, 11, 0, 0]
+            [77, 91, 0.0, 124.4, 0.0, 0.0],
+            [29, 92, 0.0, -154.5, 0.0, 0.0],
+            [-28, 49, -16.4, -142.0, 0.0, 0.0],
+            [21, 40, -16.0, -65.1, 0.0, 0.0],
+            [48, 27, -15.4, -161.0, 0.0, 0.0],
+            [-2, -22, -15.2, -132.1, 0.0, 0.0],
+            [-92, -88, 0.0, -116.3, 0.0, 0.0],
+            [-56, -93, 0.0, -21.5, 0.0, 0.0],
+            [20, -88, 0.0, -123.4, 0.0, 0.0],
+            [76, -90, 0.0, 11.0, 0.0, 0.0]
+        ),
+        ToontownGlobals.FunnyFarm: ( # TODO: Drop points!
+            [0, 0, 0, 0, 0, 0],
         ),
         ToontownGlobals.GoofySpeedway: (
             [-0.7, 62, 0.08, 182, 0, 0],
@@ -149,18 +151,18 @@ class HoodMgr(DirectObject.DirectObject):
             [130.9, -8.6, -1.3, 105.5, 0, 0],
         ),
         ToontownGlobals.SellbotHQ: (
-            [56.910, -173.576, -7.037, 15.061, 0, 0],
-            [-53.105, -197.259, -4.812, 25.870, 0, 0],
-            [-103, -118, 0.367, 622.422, 0, 0],
-            [-5.361, -228.596, -10.817, -118.934, 0, 0],
-            [-8.2536, -175.53, -19.5944, -313.592, 0, 0],
-            [66.7811, -96.8434, 0.286679, -567.363, 0, 0]
+            [64, -128, 0.26, 36, 0, 0],
+            [9, -140, 0.26, 0, 0, 0],
+            [-82, -112, 0.26, -127, 0, 0],
+            [-73, -213, 0.26, -23, 0, 0],
+            [-20, -243, 0.26, -9, 0, 0],
+            [79, -208, 0.26, 43, 0, 0]
         ),
         ToontownGlobals.CashbotHQ: (
-            [102, -437, -23.439, 0, 0, 0],
-            [124, -437, -23.439, 0, 0, 0],
-            [110, -446, -23.439, 0, 0, 0],
-            [132, -446, -23.439, 0, 0, 0]
+            [102, -437, -23.439, 360, 0, 0],
+            [124, -437, -23.439, 360, 0, 0],
+            [110, -446, -23.439, 360, 0, 0],
+            [132, -446, -23.439, 360, 0, 0]
         ),
         ToontownGlobals.LawbotHQ: (
             [77.5, 129.13, -68.4, -166.6, 0, 0],
@@ -171,7 +173,6 @@ class HoodMgr(DirectObject.DirectObject):
             [-20.16, -345.76, -68.4, -777.98, 0, 0]
         )
     }
-    DefaultDropPoint = [0, 0, 0, 0, 0, 0]
     hoodName2Id = {
         'dd': ToontownGlobals.DonaldsDock,
         'tt': ToontownGlobals.ToontownCentral,
@@ -205,6 +206,7 @@ class HoodMgr(DirectObject.DirectObject):
         ToontownGlobals.LawbotHQ: 'lawhq',
         ToontownGlobals.GolfZone: 'gz'
     }
+    DefaultDropPoint = [0] * 6
     dbgDropMode = 0
     currentDropPoint = 0
 
@@ -219,6 +221,30 @@ class HoodMgr(DirectObject.DirectObject):
             self.currentDropPoint = (self.currentDropPoint + 1) % len(dropPointList)
             return dropPointList[droppnt]
 
+    def getAvailableZones(self):
+        if base.launcher == None:
+            return self.getZonesInPhase(4) + self.getZonesInPhase(6) + self.getZonesInPhase(8) + self.getZonesInPhase(9) + self.getZonesInPhase(10) + self.getZonesInPhase(11) + self.getZonesInPhase(12) + self.getZonesInPhase(13)
+        else:
+            zones = []
+            for phase in set(ToontownGlobals.phaseMap.values()):
+                if base.launcher.getPhaseComplete(phase):
+                    zones = zones + self.getZonesInPhase(phase)
+
+            return zones
+        return
+
+    def getZonesInPhase(self, phase):
+        p = []
+        for i in ToontownGlobals.phaseMap.items():
+            if i[1] == phase:
+                p.append(i[0])
+
+        return p
+
+    def getPhaseFromHood(self, hoodId):
+        hoodId = ZoneUtil.getCanonicalHoodId(hoodId)
+        return ToontownGlobals.phaseMap[hoodId]
+
     def getPlaygroundCenterFromId(self, hoodId):
         dropPointList = self.dropPoints.get(hoodId, None)
         if dropPointList:
@@ -226,6 +252,7 @@ class HoodMgr(DirectObject.DirectObject):
         else:
             self.notify.warning('getPlaygroundCenterFromId: No such hood name as: ' + str(hoodId))
             return self.DefaultDropPoint
+        return
 
     def getIdFromName(self, hoodName):
         id = self.hoodName2Id.get(hoodName)
@@ -233,6 +260,8 @@ class HoodMgr(DirectObject.DirectObject):
             return id
         else:
             self.notify.error('No such hood name as: %s' % hoodName)
+            return None
+        return None
 
     def getNameFromId(self, hoodId):
         name = self.hoodId2Name.get(hoodId)
@@ -240,16 +269,18 @@ class HoodMgr(DirectObject.DirectObject):
             return name
         else:
             self.notify.error('No such hood id as: %s' % hoodId)
+            return None
+        return None
 
     def getFullnameFromId(self, hoodId):
         hoodId = ZoneUtil.getCanonicalZoneId(hoodId)
         return ToontownGlobals.hoodNameMap[hoodId][-1]
 
-    def addLinkTunnelHooks(self, hoodPart, nodeList):
+    def addLinkTunnelHooks(self, hoodPart, nodeList, currentZoneId):
         tunnelOriginList = []
         for i in nodeList:
             linkTunnelNPC = i.findAllMatches('**/linktunnel*')
-            for p in xrange(linkTunnelNPC.getNumPaths()):
+            for p in range(linkTunnelNPC.getNumPaths()):
                 linkTunnel = linkTunnelNPC.getPath(p)
                 name = linkTunnel.getName()
                 nameParts = name.split('_')
@@ -257,6 +288,8 @@ class HoodMgr(DirectObject.DirectObject):
                 zoneStr = nameParts[2]
                 hoodId = self.getIdFromName(hoodStr)
                 zoneId = int(zoneStr)
+                hoodId = ZoneUtil.getTrueZoneId(hoodId, currentZoneId)
+                zoneId = ZoneUtil.getTrueZoneId(zoneId, currentZoneId)
                 linkSphere = linkTunnel.find('**/tunnel_trigger')
                 if linkSphere.isEmpty():
                     linkSphere = linkTunnel.find('**/tunnel_sphere')

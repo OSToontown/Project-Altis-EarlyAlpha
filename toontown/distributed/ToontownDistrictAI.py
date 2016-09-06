@@ -1,48 +1,22 @@
-from direct.directnotify.DirectNotifyGlobal import directNotify
+from direct.directnotify import DirectNotifyGlobal
 from otp.distributed.DistributedDistrictAI import DistributedDistrictAI
-import time
 
 class ToontownDistrictAI(DistributedDistrictAI):
-    notify = directNotify.newCategory('ToontownDistrictAI')
-    created = 0
+    notify = DirectNotifyGlobal.directNotify.newCategory("ToontownDistrictAI")
+    ahnnLog = 0
 
-    def announceGenerate(self):
-        DistributedDistrictAI.announceGenerate(self)
+    def allowAHNNLog(self, ahnnLog):
+        self.ahnnLog = ahnnLog
 
-        # Remember the time of which this district was created:
-        self.created = int(time.time())
+    def d_allowAHNNLog(self, ahnnLog):
+        self.sendUpdate('allowAHNNLog', [ahnnLog])
 
-        # We want to handle shard status queries so that a ShardStatusReceiver
-        # being created after we're generated will know where we're at:
-        self.air.accept('queryShardStatus', self.handleShardStatusQuery)
+    def b_allowAHNNLog(self, ahnnLog):
+        self.allowAHNNLog(ahnnLog)
+        self.d_allowAHNNLog(ahnnLog)
 
-        # Send a shard status update with the information we have:
-        status = {
-            'available': bool(self.available),
-            'name': self.name,
-            'created': int(time.time())
-        }
-        self.air.sendNetEvent('shardStatus', [self.air.ourChannel, status])
+    def getAllowAHNNLog(self):
+        return self.ahnnLog
 
-    def handleShardStatusQuery(self):
-        # Send a shard status update with the information we have:
-        status = {
-            'available': bool(self.available),
-            'name': self.name,
-            'created': int(time.time())
-        }
-        self.air.sendNetEvent('shardStatus', [self.air.ourChannel, status])
-
-    def setName(self, name):
-        DistributedDistrictAI.setName(self, name)
-
-        # Send a shard status update containing our name:
-        status = {'name': name}
-        self.air.sendNetEvent('shardStatus', [self.air.ourChannel, status])
-
-    def setAvailable(self, available):
-        DistributedDistrictAI.setAvailable(self, available)
-
-        # Send a shard status update containing our availability:
-        status = {'available': bool(available)}
-        self.air.sendNetEvent('shardStatus', [self.air.ourChannel, status])
+    def rpcSetAvailable(self, available):
+        self.b_setAvailable(available)

@@ -154,13 +154,13 @@ class DistributedBanquetTable(DistributedObject.DistributedObject, FSM.FSM, Banq
     def setNumDiners(self, numDiners):
         self.numDiners = numDiners
 
-    def setDinerInfo(self, hungryDurations, eatingDurations, dinerLevels, dinerDept):
+    def setDinerInfo(self, hungryDurations, eatingDurations, dinerLevels):
         self.dinerInfo = {}
         for i in xrange(len(hungryDurations)):
             hungryDur = hungryDurations[i]
             eatingDur = eatingDurations[i]
             dinerLevel = dinerLevels[i]
-            self.dinerInfo[i] = (hungryDur, eatingDur, dinerLevel, dinerDept)
+            self.dinerInfo[i] = (hungryDur, eatingDur, dinerLevel)
 
     def loadAssets(self):
         self.tableGroup = loader.loadModel('phase_12/models/bossbotHQ/BanquetTableChairs')
@@ -190,11 +190,8 @@ class DistributedBanquetTable(DistributedObject.DistributedObject, FSM.FSM, Banq
         diner.dna = SuitDNA.SuitDNA()
         level = self.dinerInfo[i][2]
         level -= 4
-        dept = self.dinerInfo[i][3][i]
-        diner.dna.newSuitRandom(level=level, dept=dept)
+        diner.dna.newSuitRandom(level=level, dept='c')
         diner.setDNA(diner.dna)
-        diner.nametag3d.stash()
-        diner.nametag.destroy()
         if self.useNewAnimations:
             diner.loop('sit', fromFrame=i)
         else:
@@ -226,6 +223,11 @@ class DistributedBanquetTable(DistributedObject.DistributedObject, FSM.FSM, Banq
         newIndicator = DinerStatusIndicator.DinerStatusIndicator(parent=head, pos=Point3(0, 0, 3.5), scale=5.0)
         newIndicator.wrtReparentTo(diner)
         self.dinerStatusIndicators[i] = newIndicator
+        
+        # remove nametag (rip lag)
+        diner.nametag3d.stash()
+        diner.nametag.destroy()
+        
         return diner
 
     def setupChairCols(self):
@@ -300,8 +302,6 @@ class DistributedBanquetTable(DistributedObject.DistributedObject, FSM.FSM, Banq
         serviceLoc = self.serviceLocs[chairIndex]
 
         def foodAttach(self = self, diner = diner):
-            if self.serviceLocs[chairIndex].getNumChildren() < 1:
-                return
             foodModel = self.serviceLocs[chairIndex].getChild(0)
             (foodModel.reparentTo(diner.getRightHand()),)
             (foodModel.setHpr(Point3(0, -94, 0)),)
@@ -318,8 +318,6 @@ class DistributedBanquetTable(DistributedObject.DistributedObject, FSM.FSM, Banq
             foodModel.setScale(newScale)
 
         def foodDetach(self = self, diner = diner):
-            if diner.getRightHand().getNumChildren() < 1:
-                return
             foodModel = diner.getRightHand().getChild(0)
             (foodModel.reparentTo(serviceLoc),)
             (foodModel.setPosHpr(0, 0, 0, 0, 0, 0),)
@@ -404,19 +402,19 @@ class DistributedBanquetTable(DistributedObject.DistributedObject, FSM.FSM, Banq
         self.activeIntervals = {}
 
     def clearInterval(self, name, finish = 1):
-        if name in self.activeIntervals:
+        if self.activeIntervals.has_key(name):
             ival = self.activeIntervals[name]
             if finish:
                 ival.finish()
             else:
                 ival.pause()
-            if name in self.activeIntervals:
+            if self.activeIntervals.has_key(name):
                 del self.activeIntervals[name]
         else:
             self.notify.debug('interval: %s already cleared' % name)
 
     def finishInterval(self, name):
-        if name in self.activeIntervals:
+        if self.activeIntervals.has_key(name):
             interval = self.activeIntervals[name]
             interval.finish()
 
@@ -502,6 +500,7 @@ class DistributedBanquetTable(DistributedObject.DistributedObject, FSM.FSM, Banq
             self.waterPitcherNode = self.tableGroup.attachNewNode('pitcherNode')
             self.waterPitcherNode.setPos(pos)
             self.waterPitcherModel.reparentTo(self.waterPitcherNode)
+            self.waterPitcherModel.ls()
             self.nozzle = self.waterPitcherModel.find('**/nozzle_tip')
             self.handLocator = self.waterPitcherModel.find('**/hand_locator')
             self.handPos = self.handLocator.getPos()
@@ -646,7 +645,7 @@ class DistributedBanquetTable(DistributedObject.DistributedObject, FSM.FSM, Banq
          gui.find('**/CloseBtn_Rllvr'),
          gui.find('**/CloseBtn_UP')), relief=None, scale=2, text=TTLocalizer.BossbotPitcherLeave, text_scale=0.04, text_pos=(0, -0.07), text_fg=VBase4(1, 1, 1, 1), pos=(1.05, 0, -0.82), command=self.__exitPitcher)
         self.accept('escape', self.__exitPitcher)
-        self.accept(base.JUMP, self.__controlPressed)
+        self.accept('control', self.__controlPressed)
         self.accept('control-up', self.__controlReleased)
         self.accept('InputState-forward', self.__upArrow)
         self.accept('InputState-reverse', self.__downArrow)
@@ -667,14 +666,14 @@ class DistributedBanquetTable(DistributedObject.DistributedObject, FSM.FSM, Banq
             self.closeButton = None
         self.__cleanupPitcherAdvice()
         self.ignore('escape')
-        self.ignore(base.JUMP)
+        self.ignore('control')
         self.ignore('control-up')
         self.ignore('InputState-forward')
         self.ignore('InputState-reverse')
         self.ignore('InputState-turnLeft')
         self.ignore('InputState-turnRight')
-        self.ignore(base.MOVE_UP)
-        self.ignore(base.MOVE_DOWN)
+        self.ignore('arrow_up')
+        self.ignore('arrow_down')
         self.arrowVert = 0
         self.arrowHorz = 0
         taskMgr.remove(self.watchControlsName)
@@ -1109,10 +1108,10 @@ class DistributedBanquetTable(DistributedObject.DistributedObject, FSM.FSM, Banq
     def __updateKeyPressRateTask(self, task):
         if self.state not in 'Controlled':
             return Task.done
-        for i in xrange(len(self.keyTTL)):
+        for i in range(len(self.keyTTL)):
             self.keyTTL[i] -= 0.1
 
-        for i in xrange(len(self.keyTTL)):
+        for i in range(len(self.keyTTL)):
             if self.keyTTL[i] <= 0:
                 a = self.keyTTL[0:i]
                 del self.keyTTL

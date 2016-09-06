@@ -4,7 +4,7 @@ from direct.interval.IntervalGlobal import LerpFunc, ActorInterval, LerpPosInter
 from direct.interval.MetaInterval import Sequence
 from direct.directutil import Mopath
 from direct.showbase import PythonUtil
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase import ToontownGlobals
 from toontown.suit import Suit
 from toontown.suit import SuitDNA
@@ -16,7 +16,7 @@ from direct.particles import ParticleEffect
 from direct.particles import Particles
 from direct.particles import ForceGroup
 
-class CogdoFlyingObstacleFactory:
+class CogdoFlyingObtacleFactory:
 
     def __init__(self):
         self._index = -1
@@ -29,9 +29,8 @@ class CogdoFlyingObstacleFactory:
         self._fanModel.removeNode()
         del self._fanModel
         if Globals.Level.AddParticlesToStreamers:
-            if hasattr(self, 'f'):
-                self.f.cleanup()
-                del self.f
+            self.f.cleanup()
+            del self.f
 
     def createFan(self):
         self._index += 1
@@ -238,8 +237,6 @@ class CogdoFlyingMinion(CogdoFlyingObstacle):
         d.newSuit(Globals.Gameplay.MinionDnaName)
         self.suit.setDNA(d)
         self.suit.setScale(Globals.Gameplay.MinionScale)
-        self.suit.nametag3d.stash()
-        self.suit.nametag.destroy()
         swapAvatarShadowPlacer(self.suit, 'minion-%sShadowPlacer' % index)
         self.mopathNodePath = NodePath('mopathNodePath')
         self.suit.reparentTo(self.mopathNodePath)

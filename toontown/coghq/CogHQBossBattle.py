@@ -1,16 +1,16 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from direct.directnotify import DirectNotifyGlobal
 from toontown.hood import Place
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
 from otp.distributed.TelemetryLimiter import RotationLimitToH, TLGatherAllAvs
+from otp.nametag.NametagConstants import *
+from otp.nametag import NametagGlobals
 from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import ToontownBattleGlobals
 from toontown.battle import BattlePlace
 from toontown.suit import Suit
-from otp.nametag.NametagConstants import *
-from otp.nametag import NametagGlobals
 import math
 
 class CogHQBossBattle(BattlePlace.BattlePlace):
@@ -31,6 +31,7 @@ class CogHQBossBattle(BattlePlace.BattlePlace):
           'teleportOut',
           'died',
           'tunnelOut',
+          'DFA',
           'battle',
           'movie',
           'ouch',
@@ -57,6 +58,7 @@ class CogHQBossBattle(BattlePlace.BattlePlace):
           'teleportOut',
           'died',
           'tunnelOut',
+          'DFA',
           'battle',
           'movie',
           'ouch',
@@ -64,12 +66,13 @@ class CogHQBossBattle(BattlePlace.BattlePlace):
           'finalBattle',
           'WaitForBattle']),
          State.State('stickerBook', self.enterStickerBook, self.exitStickerBook, ['walk',
+          'DFA',
           'WaitForBattle',
           'movie',
-          'battle',
-          'tunnelOut',
-          'teleportOut']),
+          'battle']),
          State.State('WaitForBattle', self.enterWaitForBattle, self.exitWaitForBattle, ['battle', 'walk', 'movie']),
+         State.State('DFA', self.enterDFA, self.exitDFA, ['DFAReject', 'teleportOut', 'tunnelOut']),
+         State.State('DFAReject', self.enterDFAReject, self.exitDFAReject, ['walk']),
          State.State('teleportIn', self.enterTeleportIn, self.exitTeleportIn, ['walk']),
          State.State('teleportOut', self.enterTeleportOut, self.exitTeleportOut, ['teleportIn', 'final', 'WaitForBattle']),
          State.State('died', self.enterDied, self.exitDied, ['final']),
@@ -86,7 +89,7 @@ class CogHQBossBattle(BattlePlace.BattlePlace):
         BattlePlace.BattlePlace.load(self)
         self.parentFSM.getStateNamed('cogHQBossBattle').addChild(self.fsm)
         self.townBattle = self.loader.townBattle
-        for i in xrange(1, 3):
+        for i in range(1, 3):
             Suit.loadSuits(i)
 
     def unload(self):
@@ -95,7 +98,7 @@ class CogHQBossBattle(BattlePlace.BattlePlace):
         del self.parentFSM
         del self.fsm
         self.ignoreAll()
-        for i in xrange(1, 3):
+        for i in range(1, 3):
             Suit.unloadSuits(i)
 
     def getTaskZoneId(self):

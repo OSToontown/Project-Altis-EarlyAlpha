@@ -2,7 +2,7 @@ from direct.directnotify import DirectNotifyGlobal
 from direct.distributed.DistributedObjectAI import DistributedObjectAI
 from direct.task import Task
 from otp.distributed.OtpDoGlobals import *
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.parties.DistributedPartyAI import DistributedPartyAI
 from datetime import datetime
 from toontown.parties.PartyGlobals import *
@@ -63,7 +63,7 @@ class DistributedPartyManagerAI(DistributedObjectAI):
 
     def addPartyRequest(self, hostId, startTime, endTime, isPrivate, inviteTheme, activities, decorations, inviteeIds):
         if hostId != simbase.air.getAvatarIdFromSender():
-            self.air.writeServerEvent('suspicious',simbase.air.getAvatarIdFromSender(),'Toon tried to create a party as someone else!')
+            self.air.writeServerEvent('suspicious', avId=simbase.air.getAvatarIdFromSender(), issue='Toon tried to create a party as someone else!')
             return
         print 'party requested: host %s, start %s, end %s, private %s, invitetheme %s, activities omitted, decor omitted, invitees %s' % (hostId, startTime, endTime, isPrivate, inviteTheme, inviteeIds)
         simbase.air.globalPartyMgr.sendAddParty(hostId, self.host2PartyId[hostId], startTime, endTime, isPrivate, inviteTheme, activities, decorations, inviteeIds)
@@ -138,7 +138,7 @@ class DistributedPartyManagerAI(DistributedObjectAI):
                 zoneId = self.partyId2Zone[partyId]
             else:
                 self.notify.warning("getPartyZone did not match a case!")
-
+                
         self.sendUpdateToAvatarId(avId, 'receivePartyZone', [hostId, partyId, zoneId])
 
     def partyInfoOfHostResponseUdToAi(self, partyStruct, inviteeIds):
@@ -149,10 +149,10 @@ class DistributedPartyManagerAI(DistributedObjectAI):
         party['inviteeIds'] = inviteeIds
         partyId = party['partyId']
         # This is issued in response to a request for the party to start, essentially. So let's alloc a zone
-        zoneId = self.air.allocateZone()
+        zoneId = self.air.allocateZone(owner=self)
         self.partyId2Zone[partyId] = zoneId
         self.host2PartyId[party['hostId']] = partyId
-
+        
         # We need to setup the party itself on our end, so make an ai party
         partyAI = DistributedPartyAI(self.air, party['hostId'], zoneId, party)
         partyAI.generateWithRequiredAndId(self.air.allocateChannel(), self.air.districtId, zoneId)
@@ -160,10 +160,10 @@ class DistributedPartyManagerAI(DistributedObjectAI):
 
         # Alert the UD
         self.air.globalPartyMgr.d_partyStarted(partyId, self.air.ourChannel, zoneId, av.getName())
-
+        
         # Don't forget this was initially started by a getPartyZone, so we better tell the host the partyzone
         self.sendUpdateToAvatarId(party['hostId'], 'receivePartyZone', [party['hostId'], partyId, zoneId])
-
+        
         # And last, set up our cleanup stuff
         taskMgr.doMethodLater(PARTY_DURATION, self.closeParty, 'DistributedPartyManagerAI_cleanup%s' % partyId, [partyId])
 
@@ -174,7 +174,7 @@ class DistributedPartyManagerAI(DistributedObjectAI):
             self.sendUpdateToAvatarId(av, 'sendAvToPlayground', [av, 0])
         partyAI.b_setPartyState(PartyStatus.Finished)
         taskMgr.doMethodLater(10, self.__deleteParty, 'closeParty%d' % partyId, extraArgs=[partyId])
-
+    
     def __deleteParty(self, partyId):
         partyAI = self.id2Party[partyId]
         for av in partyAI.avIdsAtParty:
@@ -191,10 +191,11 @@ class DistributedPartyManagerAI(DistributedObjectAI):
         sender = self.air.getAvatarIdFromSender()
         # Only the host of a party can free its zone
         if sender != hostId:
-            self.air.writeServerEvent('suspicious',sender,'Toon tried to free zone for someone else\'s party!')
+            self.air.writeServerEvent('suspicious', avId=sender, issue='Toon tried to free zone for someone else\'s party!')
             return
         partyId = self.host2PartyId[hostId]
         if partyId in self.partyId2PlanningZone:
+            print 'freeing zone'
             self.air.deallocateZone(self.partyId2PlanningZone[partyId])
             del self.partyId2PlanningZone[partyId]
             del self.host2PartyId[hostId]
@@ -211,8 +212,8 @@ class DistributedPartyManagerAI(DistributedObjectAI):
                 party = self.id2Party.get(partyInfo['partyId'])
                 if party:
                     party._removeAvatar(avId)
-
-
+                
+        
 
     def removeGuest(self, ownerId, avId):
         pass
@@ -286,3 +287,14 @@ class DistributedPartyManagerAI(DistributedObjectAI):
 
     def mwResponseUdToAllAi(self, todo0, todo1, todo2, todo3):
         pass
+
+#@magicWord()
+#def endParty():
+#    print 'magicworded'
+#    p = simbase.air.partyManager
+#    for i in p.id2Party:
+#        partyId = i
+#    p.closeParty(i)
+#    return 'bye, such code'
+#
+#    too jank to even use

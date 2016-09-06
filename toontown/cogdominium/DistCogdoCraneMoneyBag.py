@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from direct.directnotify import DirectNotifyGlobal
 from toontown.toonbase import ToontownGlobals
@@ -81,3 +81,9 @@ class DistCogdoCraneMoneyBag(DistCogdoCraneObject):
 
     def exitInitial(self):
         pass
+
+    if __dev__:
+
+        def _handleMoneyBagGrabHeightChanged(self, height):
+            grabPos = DistCogdoCraneMoneyBag.grabPos
+            DistCogdoCraneMoneyBag.grabPos = (grabPos[0], grabPos[1], height)

@@ -31,6 +31,10 @@ class DistributedMintRoomAI(DistributedLevelAI.DistributedLevelAI, MintRoomBase.
         self.notify.debug('loading spec')
         specModule = MintRoomSpecs.getMintRoomSpecModule(self.roomId)
         roomSpec = LevelSpec.LevelSpec(specModule)
+        if __dev__:
+            self.notify.debug('creating entity type registry')
+            typeReg = self.getMintEntityTypeReg()
+            roomSpec.setEntityTypeReg(typeReg)
         self.notify.debug('creating entities')
         DistributedLevelAI.DistributedLevelAI.generate(self, roomSpec)
         self.notify.debug('creating cogs')
@@ -103,12 +107,13 @@ class DistributedMintRoomAI(DistributedLevelAI.DistributedLevelAI, MintRoomBase.
                 activeVictors.append(toon)
                 activeVictorIds.append(victorId)
 
-        description = '%s|%s' % (self.mintId, activeVictorIds)
         for avId in activeVictorIds:
-            self.air.writeServerEvent('mintDefeated', avId, description)
+            self.air.writeServerEvent('mintDefeated', avId=avId, mintId=self.mintId, victors=activeVictorIds)
 
         for toon in activeVictors:
-            simbase.air.questManager.toonDefeatedMint(toon, self.mintId)
+            simbase.air.questManager.toonDefeatedMint(toon, self.mintId, activeVictors)
+
+        return
 
     def b_setDefeated(self):
         self.d_setDefeated()

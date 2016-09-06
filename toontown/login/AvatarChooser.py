@@ -1,12 +1,17 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase import ToontownGlobals
+import AvatarChoice
 from direct.fsm import StateData
+from direct.fsm import ClassicFSM, State
+from direct.fsm import State
+from toontown.launcher import DownloadForceAcknowledge
 from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 from toontown.toonbase import TTLocalizer
+from toontown.toonbase import DisplayOptions
 from direct.directnotify import DirectNotifyGlobal
 from direct.interval.IntervalGlobal import *
-import random, AvatarChoice
-
+import random
 MAX_AVATARS = 6
 POSITIONS = (Vec3(-0.840167, 0, 0.359333),
  Vec3(0.00933349, 0, 0.306533),
@@ -24,19 +29,32 @@ chooser_notify = DirectNotifyGlobal.directNotify.newCategory('AvatarChooser')
 
 class AvatarChooser(StateData.StateData):
 
-    def __init__(self, avatarList, doneEvent):
+    def __init__(self, avatarList, parentFSM, doneEvent):
         StateData.StateData.__init__(self, doneEvent)
         self.choice = None
         self.avatarList = avatarList
+        self.displayOptions = None
+        self.fsm = ClassicFSM.ClassicFSM('AvatarChooser', [State.State('Choose', self.enterChoose, self.exitChoose, ['CheckDownload']), State.State('CheckDownload', self.enterCheckDownload, self.exitCheckDownload, ['Choose'])], 'Choose', 'Choose')
+        self.fsm.enterInitialState()
+        self.parentFSM = parentFSM
+        self.parentFSM.getCurrentState().addChild(self.fsm)
         return
 
     def enter(self):
         self.notify.info('AvatarChooser.enter')
+        if not self.displayOptions:
+            self.displayOptions = DisplayOptions.DisplayOptions()
+        self.notify.info('calling self.displayOptions.restrictToEmbedded(False)')
+        if base.appRunner:
+            self.displayOptions.loadFromSettings()
+            self.displayOptions.restrictToEmbedded(False)
         if self.isLoaded == 0:
             self.load()
         base.disableMouse()
         self.title.reparentTo(aspect2d)
         self.quitButton.show()
+        if base.cr.loginInterface.supportsRelogin():
+            self.logoutButton.show()
         self.pickAToonBG.setBin('background', 1)
         self.pickAToonBG.reparentTo(aspect2d)
         base.setBackgroundColor(Vec4(0.145, 0.368, 0.78, 1))
@@ -56,13 +74,15 @@ class AvatarChooser(StateData.StateData):
         self.ignoreAll()
         self.title.reparentTo(hidden)
         self.quitButton.hide()
+        self.logoutButton.hide()
         self.pickAToonBG.reparentTo(hidden)
         base.setBackgroundColor(ToontownGlobals.DefaultBackgroundColor)
         return None
 
-    def load(self):
+    def load(self, isPaid):
         if self.isLoaded == 1:
             return None
+        self.isPaid = isPaid
         gui = loader.loadModel('phase_3/models/gui/pick_a_toon_gui')
         gui2 = loader.loadModel('phase_3/models/gui/quit_button')
         newGui = loader.loadModel('phase_3/models/gui/tt_m_gui_pat_mainGui')
@@ -72,22 +92,29 @@ class AvatarChooser(StateData.StateData):
         self.pickAToonBG.setScale(1, 1, 1)
         self.title = OnscreenText(TTLocalizer.AvatarChooserPickAToon, scale=TTLocalizer.ACtitle, parent=hidden, font=ToontownGlobals.getSignFont(), fg=(1, 0.9, 0.1, 1), pos=(0.0, 0.82))
         quitHover = gui.find('**/QuitBtn_RLVR')
-        self.quitButton = DirectButton(image=(quitHover, quitHover, quitHover), relief=None, text=TTLocalizer.AvatarChooserQuit, text_font=ToontownGlobals.getSignFont(), text_fg=(0.977, 0.816, 0.133, 1), text_pos=TTLocalizer.ACquitButtonPos, text_scale=TTLocalizer.ACquitButton, image_scale=1, image1_scale=1.05, image2_scale=1.05, scale=1.05, pos=(-0.25, 0, 0.075), command=self.__handleQuit)
-        self.quitButton.reparentTo(base.a2dBottomRight)
+        self.quitButton = DirectButton(image=(quitHover, quitHover, quitHover), relief=None, text=TTLocalizer.AvatarChooserQuit, text_font=ToontownGlobals.getSignFont(), text_fg=(0.977, 0.816, 0.133, 1), text_pos=TTLocalizer.ACquitButtonPos, text_scale=TTLocalizer.ACquitButton, image_scale=1, image1_scale=1.05, image2_scale=1.05, scale=1.05, pos=(1.08, 0, -0.907), command=self.__handleQuit)
+        self.logoutButton = DirectButton(relief=None, image=(quitHover, quitHover, quitHover), text=TTLocalizer.OptionsPageLogout, text_font=ToontownGlobals.getSignFont(), text_fg=(0.977, 0.816, 0.133, 1), text_scale=TTLocalizer.AClogoutButton, text_pos=(0, -0.035), pos=(-1.17, 0, -0.914), image_scale=1.15, image1_scale=1.15, image2_scale=1.18, scale=0.5, command=self.__handleLogoutWithoutConfirm)
+        self.logoutButton.hide()
         gui.removeNode()
         gui2.removeNode()
         newGui.removeNode()
         self.panelList = []
         used_position_indexs = []
         for av in self.avatarList:
-            panel = AvatarChoice.AvatarChoice(av, position=av.position)
+            if base.cr.isPaid():
+                okToLockout = 0
+            else:
+                okToLockout = 1
+                if av.position in AvatarChoice.AvatarChoice.OLD_TRIALER_OPEN_POS:
+                    okToLockout = 0
+            panel = AvatarChoice.AvatarChoice(av, position=av.position, paid=isPaid, okToLockout=okToLockout)
             panel.setPos(POSITIONS[av.position])
             used_position_indexs.append(av.position)
             self.panelList.append(panel)
 
-        for panelNum in xrange(0, MAX_AVATARS):
+        for panelNum in range(0, MAX_AVATARS):
             if panelNum not in used_position_indexs:
-                panel = AvatarChoice.AvatarChoice(position=panelNum)
+                panel = AvatarChoice.AvatarChoice(position=panelNum, paid=isPaid)
                 panel.setPos(POSITIONS[panelNum])
                 self.panelList.append(panel)
 
@@ -115,7 +142,7 @@ class AvatarChooser(StateData.StateData):
             return toonHead.getRandomForwardLookAtPoint()
         else:
             other_toon_idxs = []
-            for i in xrange(len(self.IsLookingAt)):
+            for i in range(len(self.IsLookingAt)):
                 if self.IsLookingAt[i] == toonidx:
                     other_toon_idxs.append(i)
 
@@ -164,7 +191,7 @@ class AvatarChooser(StateData.StateData):
         if len(self.used_panel_indexs) == 0:
             return
         self.IsLookingAt = []
-        for i in xrange(MAX_AVATARS):
+        for i in range(MAX_AVATARS):
             self.IsLookingAt.append('f')
 
         for panel in self.panelList:
@@ -185,9 +212,14 @@ class AvatarChooser(StateData.StateData):
         del self.title
         self.quitButton.destroy()
         del self.quitButton
+        self.logoutButton.destroy()
+        del self.logoutButton
         self.pickAToonBG.removeNode()
         del self.pickAToonBG
         del self.avatarList
+        self.parentFSM.getCurrentState().removeChild(self.fsm)
+        del self.parentFSM
+        del self.fsm
         self.ignoreAll()
         self.isLoaded = 0
         ModelPool.garbageCollect()
@@ -201,12 +233,20 @@ class AvatarChooser(StateData.StateData):
         self.choice = panelChoice
         if panelDoneStatus == 'chose':
             self.__handleChoice()
+        elif panelDoneStatus == 'nameIt':
+            self.__handleCreate()
         elif panelDoneStatus == 'delete':
             self.__handleDelete()
         elif panelDoneStatus == 'create':
-            self.__handleChoice()
+            self.__handleCreate()
+
+    def getChoice(self):
+        return self.choice
 
     def __handleChoice(self):
+        self.fsm.request('CheckDownload')
+
+    def __handleCreate(self):
         base.transitions.fadeOut(finishIval=EventInterval(self.doneEvent, [self.doneStatus]))
 
     def __handleDelete(self):
@@ -217,5 +257,28 @@ class AvatarChooser(StateData.StateData):
         self.doneStatus = {'mode': 'exit'}
         messenger.send(self.doneEvent, [self.doneStatus])
 
-    def getChoice(self):
-        return self.choice
+    def enterChoose(self):
+        pass
+
+    def exitChoose(self):
+        pass
+
+    def enterCheckDownload(self):
+        self.accept('downloadAck-response', self.__handleDownloadAck)
+        self.downloadAck = DownloadForceAcknowledge.DownloadForceAcknowledge('downloadAck-response')
+        self.downloadAck.enter(4)
+
+    def exitCheckDownload(self):
+        self.downloadAck.exit()
+        self.downloadAck = None
+        self.ignore('downloadAck-response')
+        return
+
+    def __handleDownloadAck(self, doneStatus):
+        if doneStatus['mode'] == 'complete':
+            base.transitions.fadeOut(finishIval=EventInterval(self.doneEvent, [self.doneStatus]))
+        else:
+            self.fsm.request('Choose')
+
+    def __handleLogoutWithoutConfirm(self):
+        base.cr.loginFSM.request('login')

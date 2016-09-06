@@ -2,18 +2,17 @@ import TTLocalizer
 from otp.otpbase.OTPGlobals import *
 from direct.showbase.PythonUtil import Enum, invertDict
 from pandac.PandaModules import BitMask32, Vec4
-enable_maintenance = True
+MapHotkeyOn = 'alt'
+MapHotkeyOff = 'alt-up'
 MapHotkey = 'alt'
+AccountDatabaseChannelId = 4008
+ToonDatabaseChannelId = 4021
+DoodleDatabaseChannelId = 4023
+DefaultDatabaseChannelId = AccountDatabaseChannelId
+DatabaseIdFromClassName = {'Account': AccountDatabaseChannelId}
 CogHQCameraFov = 60.0
 BossBattleCameraFov = 72.0
-MakeAToonCameraFov = 48.0
-CogdoFov = 56.9
-VPElevatorFov = 53.0
-CFOElevatorFov = 43.0
-CJElevatorFov = 59.0
-CEOElevatorFov = 59.0
-ChairmanElevatorFov = 59.0
-CBElevatorFov = 42.0
+MakeAToonCameraFov = 52.0
 CeilingBitmask = BitMask32(256)
 FloorEventBitmask = BitMask32(16)
 PieBitmask = BitMask32(256)
@@ -26,7 +25,7 @@ FurnitureDragBitmask = BitMask32(128)
 PetLookatPetBitmask = BitMask32(256)
 PetLookatNonPetBitmask = BitMask32(512)
 BanquetTableBitmask = BitMask32(1024)
-FullPies = 50
+FullPies = 65535
 CogHQCameraFar = 900.0
 CogHQCameraNear = 1.0
 CashbotHQCameraFar = 2000.0
@@ -37,16 +36,16 @@ BossbotHQCameraFar = 3000.0
 BossbotHQCameraNear = 1.0
 SpeedwayCameraFar = 8000.0
 SpeedwayCameraNear = 1.0
-MaxMailboxContents = 60
-MaxHouseItems = 250
-MaxAccessories = 100
+MaxMailboxContents = 30
+MaxHouseItems = 45
+MaxAccessories = 50
 ExtraDeletedItems = 5
 DeletedItemLifetime = 7 * 24 * 60
 CatalogNumWeeksPerSeries = 13
 CatalogNumWeeks = 78
 PetFloorCollPriority = 5
 PetPanelProximityPriority = 6
-P_TooFast = -28
+P_NoTrunk = -28
 P_AlreadyOwnBiggerCloset = -27
 P_ItemAlreadyRented = -26
 P_OnAwardOrderListFull = -25
@@ -96,13 +95,18 @@ FM_DeletedItem = 3
 FM_RecoveredItem = 4
 SPDonaldsBoat = 3
 SPMinniesPiano = 4
+SPSlappysBalloon = 5
 CEVirtual = 14
 MaxHpLimit = 137
 MaxCarryLimit = 80
 MaxQuestCarryLimit = 4
 GravityValue = 32.174
-MaxCogSuitLevel = 13 - 1
-CogSuitHPLevels = (13 - 5)
+MaxCogSuitLevel = 50 - 1
+CogSuitHPLevels = (15 - 1,
+ 20 - 1,
+ 30 - 1,
+ 40 - 1,
+ 50 - 1)
 setInterfaceFont(TTLocalizer.InterfaceFont)
 setSignFont(TTLocalizer.SignFont)
 from toontown.toontowngui import TTDialog
@@ -139,7 +143,7 @@ def getSuitFont():
         SuitFont = loader.loadFont(TTLocalizer.SuitFont, pixelsPerUnit=40, spaceAdvance=0.25, lineHeight=1.0)
     return SuitFont
 
-
+SafezoneToonupFrequency = 30
 DonaldsDock = 1000
 ToontownCentral = 2000
 TheBrrrgh = 3000
@@ -164,19 +168,17 @@ TenorTerrace = 4300
 ElmStreet = 5100
 MapleStreet = 5200
 OakStreet = 5300
-WalnutWay = 6100
-BarkingBoulevard = 7100
 LullabyLane = 9100
 PajamaPlace = 9200
-BedtimeBoulevard = 9300
 ToonHall = 2513
 HoodHierarchy = {ToontownCentral: (SillyStreet, LoopyLane, PunchlinePlace),
  DonaldsDock: (BarnacleBoulevard, SeaweedStreet, LighthouseLane),
  TheBrrrgh: (WalrusWay, SleetStreet, PolarPlace),
  MinniesMelodyland: (AltoAvenue, BaritoneBoulevard, TenorTerrace),
  DaisyGardens: (ElmStreet, MapleStreet, OakStreet),
- DonaldsDreamland: (LullabyLane, PajamaPlace, BedtimeBoulevard),
+ DonaldsDreamland: (LullabyLane, PajamaPlace),
  GoofySpeedway: ()}
+WelcomeValleyToken = 0
 BossbotHQ = 10000
 BossbotLobby = 10100
 BossbotCountryClubIntA = 10500
@@ -185,9 +187,7 @@ BossbotCountryClubIntC = 10700
 SellbotHQ = 11000
 SellbotLobby = 11100
 SellbotFactoryExt = 11200
-SellbotMegaFactoryExt = 11300
 SellbotFactoryInt = 11500
-SellbotMegaCorpInt = 11600
 CashbotHQ = 12000
 CashbotLobby = 12100
 CashbotMintIntA = 12500
@@ -201,42 +201,38 @@ LawbotStageIntA = 13300
 LawbotStageIntB = 13400
 LawbotStageIntC = 13500
 LawbotStageIntD = 13600
-BoardbotHQ = 14000
-BoardbotLobby = 14100
 Tutorial = 15000
 MyEstate = 16000
 GolfZone = 17000
 PartyHood = 18000
 HoodsAlwaysVisited = [17000, 18000]
-DynamicZonesBegin = 22000
+WelcomeValleyBegin = 22000
+WelcomeValleyEnd = 61000
+DynamicZonesBegin = 61000
 DynamicZonesEnd = 1 << 20
 cogDept2index = {'c': 0,
  'l': 1,
  'm': 2,
- 's': 3,
- 'g': 4}
+ 's': 3}
 cogIndex2dept = invertDict(cogDept2index)
 HQToSafezone = {SellbotHQ: DaisyGardens,
  CashbotHQ: DonaldsDreamland,
  LawbotHQ: TheBrrrgh,
  BossbotHQ: DonaldsDock}
-CogDeptNames = [TTLocalizer.Boardbot,
- TTLocalizer.Bossbot,
+CogDeptNames = [TTLocalizer.Bossbot,
  TTLocalizer.Lawbot,
  TTLocalizer.Cashbot,
  TTLocalizer.Sellbot]
 
-def cogHQZoneId2deptIndex(zone): #On and Off Switch for Cog HQs. Controls the type that roams throughout.
-    if zone >= 13000 and zone <= 13999: #Lawbot HQ
+def cogHQZoneId2deptIndex(zone):
+    if zone >= 13000 and zone <= 13999:
         return 1
-    elif zone >= 12000:  #Cashbot HQ
+    elif zone >= 12000:
         return 2
-    elif zone >= 11000: #Sellbot HQ
+    elif zone >= 11000:
         return 3
-    elif zone >= 14000: #Boardbot HQ
-        return 4
     else:
-        return 0 #Bossbot HQ
+        return 0
 
 
 def cogHQZoneId2dept(zone):
@@ -247,13 +243,17 @@ def dept2cogHQ(dept):
     dept2hq = {'c': BossbotHQ,
      'l': LawbotHQ,
      'm': CashbotHQ,
-     's': SellbotHQ,
-     'g': BoardbotHQ}
+     's': SellbotHQ}
     return dept2hq[dept]
 
+
+MockupFactoryId = 0
 MintNumFloors = {CashbotMintIntA: 20,
  CashbotMintIntB: 20,
  CashbotMintIntC: 20}
+CashbotMintCogLevel = 10
+CashbotMintSkelecogLevel = 11
+CashbotMintBossLevel = 12
 MintNumBattles = {CashbotMintIntA: 4,
  CashbotMintIntB: 6,
  CashbotMintIntC: 8}
@@ -263,6 +263,9 @@ MintCogBuckRewards = {CashbotMintIntA: 8,
 MintNumRooms = {CashbotMintIntA: 2 * (6,) + 5 * (7,) + 5 * (8,) + 5 * (9,) + 3 * (10,),
  CashbotMintIntB: 3 * (8,) + 6 * (9,) + 6 * (10,) + 5 * (11,),
  CashbotMintIntC: 4 * (10,) + 10 * (11,) + 6 * (12,)}
+BossbotCountryClubCogLevel = 11
+BossbotCountryClubSkelecogLevel = 12
+BossbotCountryClubBossLevel = 12
 CountryClubNumRooms = {BossbotCountryClubIntA: (4,),
  BossbotCountryClubIntB: 3 * (8,) + 6 * (9,) + 6 * (10,) + 5 * (11,),
  BossbotCountryClubIntC: 4 * (10,) + 10 * (11,) + 6 * (12,)}
@@ -272,6 +275,9 @@ CountryClubNumBattles = {BossbotCountryClubIntA: 3,
 CountryClubCogBuckRewards = {BossbotCountryClubIntA: 8,
  BossbotCountryClubIntB: 14,
  BossbotCountryClubIntC: 20}
+LawbotStageCogLevel = 10
+LawbotStageSkelecogLevel = 11
+LawbotStageBossLevel = 12
 StageNumBattles = {LawbotStageIntA: 0,
  LawbotStageIntB: 0,
  LawbotStageIntC: 0,
@@ -288,8 +294,8 @@ FT_FullSuit = 'fullSuit'
 FT_Leg = 'leg'
 FT_Arm = 'arm'
 FT_Torso = 'torso'
-factoryId2factoryType = {SellbotFactoryInt: FT_FullSuit,
- SellbotMegaCorpInt: FT_FullSuit,
+factoryId2factoryType = {MockupFactoryId: FT_FullSuit,
+ SellbotFactoryInt: FT_FullSuit,
  LawbotOfficeInt: FT_FullSuit}
 StreetNames = TTLocalizer.GlobalStreetNames
 StreetBranchZones = StreetNames.keys()
@@ -313,7 +319,6 @@ HoodsForTeleportAll = (DonaldsDock,
  MinniesMelodyland,
  DaisyGardens,
  OutdoorZone,
- FunnyFarm,
  GoofySpeedway,
  DonaldsDreamland,
  BossbotHQ,
@@ -343,10 +348,14 @@ IceGameId = 13
 CogThiefGameId = 14
 TwoDGameId = 15
 PhotoGameId = 16
+TravelGameId = 100
 MinigameNames = {'race': RaceGameId,
  'cannon': CannonGameId,
  'tag': TagGameId,
  'pattern': PatternGameId,
+ 'minnie': PatternGameId,
+ 'match': PatternGameId,
+ 'matching': PatternGameId,
  'ring': RingGameId,
  'maze': MazeGameId,
  'tug': TugOfWarGameId,
@@ -358,7 +367,8 @@ MinigameNames = {'race': RaceGameId,
  'ice': IceGameId,
  'thief': CogThiefGameId,
  '2d': TwoDGameId,
- 'photo': PhotoGameId}
+ 'photo': PhotoGameId,
+ 'travel': TravelGameId}
 MinigameTemplateId = -1
 MinigameIDs = (RaceGameId,
  CannonGameId,
@@ -375,13 +385,18 @@ MinigameIDs = (RaceGameId,
  IceGameId,
  CogThiefGameId,
  TwoDGameId,
- PhotoGameId)
+ PhotoGameId,
+ TravelGameId)
 MinigamePlayerMatrix = {
-    1: (CannonGameId, MazeGameId, TugOfWarGameId, RingGameId, VineGameId, CogThiefGameId, TwoDGameId, DivingGameId, CatchGameId, TargetGameId, PairingGameId, PhotoGameId),
-    2: (CannonGameId, MazeGameId, TugOfWarGameId, PatternGameId, TagGameId, RingGameId, VineGameId, IceGameId, CogThiefGameId, TwoDGameId, DivingGameId, CatchGameId, TargetGameId, PairingGameId, PhotoGameId),
-    3: (CannonGameId, MazeGameId, TugOfWarGameId, PatternGameId, RaceGameId, TagGameId, VineGameId, RingGameId, IceGameId, CogThiefGameId, TwoDGameId, DivingGameId, CatchGameId, TargetGameId, PairingGameId, PhotoGameId),
-    4: (CannonGameId, MazeGameId, TugOfWarGameId, PatternGameId, RaceGameId, TagGameId, VineGameId, RingGameId, IceGameId, CogThiefGameId, TwoDGameId, DivingGameId, CatchGameId, TargetGameId, PairingGameId, PhotoGameId),
+    1: (CannonGameId, MazeGameId, TugOfWarGameId, RingGameId, VineGameId, CogThiefGameId, TwoDGameId, DivingGameId, PairingGameId, CatchGameId, TargetGameId, PhotoGameId),
+    2: (CannonGameId, MazeGameId, TugOfWarGameId, PatternGameId, TagGameId, RingGameId, VineGameId, IceGameId, CogThiefGameId, TwoDGameId, DivingGameId, PairingGameId, CatchGameId, TargetGameId, PhotoGameId),
+    3: (CannonGameId, MazeGameId, TugOfWarGameId, PatternGameId, RaceGameId, TagGameId, VineGameId, RingGameId, IceGameId, CogThiefGameId, TwoDGameId, DivingGameId, PairingGameId, CatchGameId, TargetGameId, PhotoGameId),
+    4: (CannonGameId, MazeGameId, TugOfWarGameId, PatternGameId, RaceGameId, TagGameId, VineGameId, RingGameId, IceGameId, CogThiefGameId, TwoDGameId, DivingGameId, PairingGameId, CatchGameId, TargetGameId, PhotoGameId),
 }
+MinigameReleaseDates = {IceGameId: (2008, 8, 5),
+ PhotoGameId: (2008, 8, 13),
+ TwoDGameId: (2008, 8, 20),
+ CogThiefGameId: (2008, 8, 27)}
 KeyboardTimeout = 300
 phaseMap = {Tutorial: 4,
  ToontownCentral: 4,
@@ -391,7 +406,7 @@ phaseMap = {Tutorial: 4,
  GoofySpeedway: 6,
  TheBrrrgh: 8,
  DaisyGardens: 8,
- FunnyFarm: 8,
+ FunnyFarm: 6,
  DonaldsDreamland: 8,
  OutdoorZone: 6,
  BossbotHQ: 12,
@@ -421,9 +436,9 @@ dnaMap = {Tutorial: 'toontown_central',
  GoofySpeedway: 'goofy_speedway',
  TheBrrrgh: 'the_burrrgh',
  DaisyGardens: 'daisys_garden',
- FunnyFarm: 'not done yet',
+ FunnyFarm: 'toonfest',
  DonaldsDreamland: 'donalds_dreamland',
- OutdoorZone: 'outdoor_zone',         
+ OutdoorZone: 'outdoor_zone',
  BossbotHQ: 'cog_hq_bossbot',
  SellbotHQ: 'cog_hq_sellbot',
  CashbotHQ: 'cog_hq_cashbot',
@@ -500,6 +515,20 @@ TrophyStarColors = (Vec4(0.9, 0.6, 0.2, 1),
  Vec4(0.8, 0.8, 0.8, 1),
  Vec4(1, 1, 0, 1),
  Vec4(1, 1, 0, 1))
+MickeySpeed = 5.0
+VampireMickeySpeed = 1.15
+MinnieSpeed = 3.2
+WitchMinnieSpeed = 1.8
+DonaldSpeed = 3.68
+FrankenDonaldSpeed = 0.9
+DaisySpeed = 2.3
+GoofySpeed = 5.2
+SuperGoofySpeed = 1.6
+PlutoSpeed = 5.5
+WesternPlutoSpeed = 3.2
+ChipSpeed = 3
+DaleSpeed = 3.5
+DaleOrbitDistance = 3
 SuitWalkSpeed = 4.8
 PieThrowArc = 0
 PieThrowLinear = 1
@@ -517,48 +546,6 @@ PieCodeColors = {PieCodeBossCog: None,
                      0.8,
                      1),
  PieCodeToon: None}
-suitIndex = {
-'ca' : 0,
-'cn' : 1,
-'sw' : 2,
-'mdm' : 3,
-'tm' : 4, 
-'mg' : 5,
-'bfh' : 6,
-'hho' : 7,   
-'f' :  8,
-'p' : 9,
-'ym' : 10,
-'mm' : 11,
-'ds' : 12,
-'hh' : 13,
-'cr' : 14,
-'tbc' : 15,
-'bf' : 16,
-'b' : 17,
-'dt' : 18,
-'ac' : 19,
-'bs' : 20,
-'sd' : 21,
-'le' : 22,
-'bw' : 23,
-'sc' : 24,
-'pp' : 25,
-'tw' : 26,
-'bc' : 27,
-'nc' : 28,
-'mb' : 29,
-'ls' : 30,
-'rb' : 31,
-'cc' : 32,
-'tm' : 33,
-'nd' : 34,
-'gh' : 35,
-'ms' : 36,
-'tf' : 37,
-'m' :  38,
-'mh' : 39
-}
 BossCogRollSpeed = 7.5
 BossCogTurnSpeed = 20
 BossCogTreadSpeed = 3.5
@@ -627,8 +614,8 @@ BossCogBattleBPosHpr = (0,
  180,
  0,
  0)
-SellbotBossMaxDamage = 250
-SellbotBossMaxDamageNerfed = 250
+SellbotBossMaxDamage = 100
+SellbotBossMaxDamageNerfed = 100
 SellbotBossBattleOnePosHpr = (0,
  -35,
  0,
@@ -654,7 +641,7 @@ SellbotBossP3PosA = (-50, 40, 18)
 SellbotBossTopRampPosB = (80, -35, 18)
 SellbotBossTopRampTurnPosB = (80, 10, 18)
 SellbotBossP3PosB = (50, 60, 18)
-CashbotBossMaxDamage = 1000
+CashbotBossMaxDamage = 500
 CashbotBossOffstagePosHpr = (120,
  -195,
  0,
@@ -821,54 +808,40 @@ NoItems = 0
 NewItems = 1
 OldItems = 2
 SuitInvasionBegin = 0
-SuitInvasionEnd = 1
-SuitInvasionUpdate = 2
+SuitInvasionUpdate = 1
+SuitInvasionEnd = 2
 SuitInvasionBulletin = 3
-SkelecogInvasionBegin = 4
-SkelecogInvasionEnd = 5
-SkelecogInvasionBulletin = 6
-WaiterInvasionBegin = 7
-WaiterInvasionEnd = 8
-WaiterInvasionBulletin = 9
-V2InvasionBegin = 10
-V2InvasionEnd = 11
-V2InvasionBulletin = 12
-EndingInvasions = [SuitInvasionEnd, SkelecogInvasionEnd, WaiterInvasionEnd, V2InvasionEnd]
-SuitInvasions = {
- SuitInvasionBegin: TTLocalizer.SuitInvasionBegin,
- SuitInvasionEnd: TTLocalizer.SuitInvasionEnd,
- SuitInvasionUpdate: TTLocalizer.SuitInvasionUpdate,
- SuitInvasionBulletin: TTLocalizer.SuitInvasionBulletin,
- SkelecogInvasionBegin: TTLocalizer.SkelecogInvasionBegin,
- SkelecogInvasionEnd: TTLocalizer.SkelecogInvasionEnd,
- SkelecogInvasionBulletin: TTLocalizer.SkelecogInvasionBulletin,
- WaiterInvasionBegin: TTLocalizer.WaiterInvasionBegin,
- WaiterInvasionEnd: TTLocalizer.WaiterInvasionEnd,
- WaiterInvasionBulletin: TTLocalizer.WaiterInvasionBulletin,
- V2InvasionBegin: TTLocalizer.V2InvasionBegin,
- V2InvasionEnd: TTLocalizer.V2InvasionEnd,
- V2InvasionBulletin: TTLocalizer.V2InvasionBulletin
-}
-SUMMER_FIREWORKS = 1
-NEW_YEAR_FIREWORKS = 2
+NO_HOLIDAY = 0
+JULY4_FIREWORKS = 1
+NEWYEARS_FIREWORKS = 2
 HALLOWEEN = 3
-CHRISTMAS = 4
+WINTER_DECORATIONS = 4
 SKELECOG_INVASION = 5
 MR_HOLLYWOOD_INVASION = 6
+FISH_BINGO_NIGHT = 7
+ELECTION_PROMOTION = 8
 BLACK_CAT_DAY = 9
 RESISTANCE_EVENT = 10
 KART_RECORD_DAILY_RESET = 11
 KART_RECORD_WEEKLY_RESET = 12
+TRICK_OR_TREAT = 13
 CIRCUIT_RACING = 14
 POLAR_PLACE_EVENT = 15
-GRAND_PRIX = 16
-FISH_BINGO = 17
-SILLY_SATURDAY = 18
+CIRCUIT_RACING_EVENT = 16
+TROLLEY_HOLIDAY = 17
+TROLLEY_WEEKEND = 18
+SILLY_SATURDAY_BINGO = 19
+SILLY_SATURDAY_CIRCUIT = 20
+SILLY_SATURDAY_TROLLEY = 21
+ROAMING_TRIALER_WEEKEND = 22
 BOSSCOG_INVASION = 23
 MARCH_INVASION = 24
 MORE_XP_HOLIDAY = 25
+HALLOWEEN_PROPS = 26
+HALLOWEEN_COSTUMES = 27
 DECEMBER_INVASION = 28
-APRIL_TOONS_WEEK = 29
+APRIL_FOOLS_COSTUMES = 29
+CRASHED_LEADERBOARD = 30
 OCTOBER31_FIREWORKS = 31
 NOVEMBER19_FIREWORKS = 32
 SELLBOT_SURPRISE_1 = 33
@@ -896,12 +869,16 @@ COLD_CALLER_INVASION = 53
 BEAN_COUNTER_INVASION = 54
 DOUBLE_TALKER_INVASION = 55
 DOWNSIZER_INVASION = 56
+WINTER_CAROLING = 57
 HYDRANT_ZERO_HOLIDAY = 58
-VALENTOONS_DAY = 59
+VALENTINES_DAY = 59
 SILLYMETER_HOLIDAY = 60
 MAILBOX_ZERO_HOLIDAY = 61
 TRASHCAN_ZERO_HOLIDAY = 62
 SILLY_SURGE_HOLIDAY = 63
+HYDRANTS_BUFF_BATTLES = 64
+MAILBOXES_BUFF_BATTLES = 65
+TRASHCANS_BUFF_BATTLES = 66
 SILLY_CHATTER_ONE = 67
 SILLY_CHATTER_TWO = 68
 SILLY_CHATTER_THREE = 69
@@ -935,6 +912,7 @@ SELLBOT_NERF_HOLIDAY = 96
 JELLYBEAN_TROLLEY_HOLIDAY = 97
 JELLYBEAN_FISHING_HOLIDAY = 98
 JELLYBEAN_PARTIES_HOLIDAY = 99
+BANK_UPGRADE_HOLIDAY = 100
 TOP_TOONS_MARATHON = 101
 SELLBOT_INVASION = 102
 SELLBOT_FIELD_OFFICE = 103
@@ -950,6 +928,12 @@ JELLYBEAN_TROLLEY_HOLIDAY_MONTH = 113
 JELLYBEAN_FISHING_HOLIDAY_MONTH = 114
 JELLYBEAN_PARTIES_HOLIDAY_MONTH = 115
 SILLYMETER_EXT_HOLIDAY = 116
+SPOOKY_BLACK_CAT = 117
+SPOOKY_TRICK_OR_TREAT = 118
+SPOOKY_PROPS = 119
+SPOOKY_COSTUMES = 120
+WACKY_WINTER_DECORATIONS = 121
+WACKY_WINTER_CAROLING = 122
 TOT_REWARD_JELLYBEAN_AMOUNT = 100
 TOT_REWARD_END_OFFSET_AMOUNT = 0
 LawbotBossMaxDamage = 2700
@@ -967,6 +951,12 @@ LawbotBossBattleTwoPosHpr = (-2.798,
  0,
  0,
  0)
+LawbotBossTopRampPosA = (-80, -35, 18)
+LawbotBossTopRampTurnPosA = (-80, 10, 18)
+LawbotBossP3PosA = (55, -9, 0)
+LawbotBossTopRampPosB = (80, -35, 18)
+LawbotBossTopRampTurnPosB = (80, 10, 18)
+LawbotBossP3PosB = (55, -9, 0)
 LawbotBossBattleThreePosHpr = LawbotBossBattleTwoPosHpr
 LawbotBossBottomPos = (50, 39, 0)
 LawbotBossDeathPos = (50, 40, 0)
@@ -1356,7 +1346,7 @@ LawbotBossCannonBallMax = 12
 LawbotBossJuryBoxStartPos = (94, -8, 5)
 LawbotBossJuryBoxRelativeEndPos = (30, 0, 12.645)
 LawbotBossJuryBoxMoveTime = 70
-LawbotBossJurorsForBalancedScale = 9
+LawbotBossJurorsForBalancedScale = 8
 LawbotBossDamagePerJuror = 68
 LawbotBossCogJurorFlightTime = 10
 LawbotBossCogJurorDistance = 75
@@ -1373,15 +1363,9 @@ LawbotBossBonusDuration = 20
 LawbotBossBonusToonup = 10
 LawbotBossBonusWeightMultiplier = 2
 LawbotBossChanceToDoAreaAttack = 11
-LOW_POP_JP = 0
-MID_POP_JP = 100
-HIGH_POP_JP = 200
-LOW_POP_INTL = 399
-MID_POP_INTL = 499
-HIGH_POP_INTL = -1
-LOW_POP = 100
-MID_POP = 200
-HIGH_POP = -1
+LOW_POP = 100 # This is 'Ideal' in the book (green)
+MID_POP = 300 # This is 'Full' in the book, but friends can still TP onto shard (soft red)
+HIGH_POP = 350 # Still 'Full' in book, but nobody joins this shard for any reason (hard red)
 PinballCannonBumper = 0
 PinballCloudBumperLow = 1
 PinballCloudBumperMed = 2
@@ -1434,6 +1418,12 @@ ColorNoChat = (0.8,
  0.5,
  0.1,
  1)
+FactoryLaffMinimums = [
+ (0, 31),         # SBHQ Factory
+ (0, 66, 71),     # CBHQ Mint
+ (0, 81, 86, 96), # LBHQ DA
+ (0, 101, 106)    # BBHQ Golf
+]
 PICNIC_COUNTDOWN_TIME = 60
 BossbotRTIntroStartPosHpr = (0,
  -64,
@@ -1473,7 +1463,6 @@ BossbotElevCamPosHpr = (0,
  0)
 BossbotFoodModelScale = 0.75
 BossbotNumFoodToExplode = 3
-BossbotMaxAngeredCogs = 3
 BossbotBossServingDuration = 300
 BossbotPrepareBattleThreeDuration = 20
 WaiterBattleAPosHpr = (20,
@@ -1506,10 +1495,9 @@ DinerBattleBPosHpr = (-20,
  0,
  0,
  0)
-BossbotOilDamage = 5
 BossbotBossMaxDamage = 500
 BossbotMaxSpeedDamage = 90
-BossbotSpeedRecoverRate = 20
+BossbotSpeedRecoverRate = 2 # This was 20 - far too high - but we need to test and find a good value for this.
 BossbotBossDifficultySettings = [(8,
   4,
   11,
@@ -1557,14 +1545,32 @@ DG = 5
 BR = 6
 OZ = 7
 DL = 8
+DefaultWantNewsPageSetting = 1
+gmMagicWordList = ['restock',
+ 'restockUber',
+ 'autoRestock',
+ 'resistanceRestock',
+ 'restockSummons',
+ 'uberDrop',
+ 'rich',
+ 'maxBankMoney',
+ 'toonUp',
+ 'rod',
+ 'cogPageFull',
+ 'pinkSlips',
+ 'Tickets',
+ 'newSummons',
+ 'who',
+ 'who all']
+NewsPageScaleAdjust = 0.85
 AnimPropTypes = Enum(('Unknown',
  'Hydrant',
  'Mailbox',
  'Trashcan'), start=-1)
 EmblemTypes = Enum(('Silver', 'Gold'))
 NumEmblemTypes = 2
-MaxBankMoney = 30000
-DefaultBankItemId = 1300
+DefaultMaxBankMoney = 15000
+DefaultBankItemId = 1350
 ToonAnimStates = set(['off',
  'neutral',
  'victory',
@@ -1618,30 +1624,3 @@ AV_TOUCH_CHECK_DIST_Z = 5.0
 AV_TOUCH_CHECK_TIMELIMIT_CL = 0.002
 AV_TOUCH_COUNT_LIMIT = 5
 AV_TOUCH_COUNT_TIME = 300
-
-NPCCollisionDelay = 2.5
-
-FISHSALE_COMPLETE = 0
-FISHSALE_TROPHY = 1
-
-CLERK_GOODBYE = 0
-CLERK_GREETING = 1
-CLERK_TOOKTOOLONG = 2
-
-MAX_TF_TRIES = 5
-TF_COOLDOWN_SECS = 60 * 60 * 24
-TF_EXPIRE_SECS = 3 * 60 * 60 * 24
-TF_COOLDOWN = 0
-TF_UNKNOWN_SECRET = 1
-TF_SELF_SECRET = 2
-TF_TOO_FAST = 3
-TF_FRIENDS_LIST_FULL_YOU = 4
-TF_FRIENDS_LIST_FULL_HIM = 5
-TF_ALREADY_FRIENDS = 6
-TF_ALREADY_FRIENDS_NAME = 7
-TF_SUCCESS = 8
-
-GROUP_ZONES = [11000, 11100, 11200, 12000, 12100, 13000, 13100, 13200, 10000, 10100]
-
-TOONUP_PULSE_ZONES = [ToontownCentral, DonaldsDock, DaisyGardens, MinniesMelodyland, TheBrrrgh, DonaldsDreamland]
-TOONUP_FREQUENCY = 30

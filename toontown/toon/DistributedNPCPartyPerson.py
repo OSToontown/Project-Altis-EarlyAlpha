@@ -1,17 +1,16 @@
-from direct.distributed import ClockDelta
-from direct.distributed.DistributedObject import DistributedObject
-from direct.task.Task import Task
-from panda3d.core import *
-
 from DistributedNPCToonBase import DistributedNPCToonBase
-from otp.otpbase import OTPLocalizer
-from otp.nametag.NametagConstants import *
-from toontown.parties import PartyGlobals
+from direct.distributed.DistributedObject import DistributedObject
 from toontown.toon import NPCToons
 from toontown.toonbase import TTLocalizer
-from toontown.toonbase import ToontownGlobals
+from direct.task.Task import Task
+from direct.distributed import ClockDelta
+from pandac.PandaModules import *
+from otp.nametag.NametagConstants import CFSpeech, CFTimeout
 from toontown.toontowngui import TTDialog
-
+from otp.otpbase import OTPLocalizer
+from toontown.parties import PartyGlobals
+from toontown.toonbase import ToontownGlobals
+from toontown.toontowngui import TeaserPanel
 
 class DistributedNPCPartyPerson(DistributedNPCToonBase):
     def __init__(self, cr):
@@ -20,6 +19,7 @@ class DistributedNPCPartyPerson(DistributedNPCToonBase):
         self.av = None
         self.button = None
         self.askGui = None
+        self.teaserDialog = None
         return
 
     def disable(self):
@@ -92,7 +92,8 @@ class DistributedNPCPartyPerson(DistributedNPCToonBase):
         self.detectAvatars()
         self.clearMat()
         if self.isInteractingWithLocalToon:
-            self.freeAvatar()
+            if hasattr(self, 'teaserDialog') and not self.teaserDialog:
+                self.freeAvatar()
         return Task.done
 
     def setMovie(self, mode, npcId, avId, extraArgs, timestamp):
@@ -161,6 +162,14 @@ class DistributedNPCPartyPerson(DistributedNPCToonBase):
             chatStr = TTLocalizer.PartyPlannerHostingTooMany
             self.setChatAbsolute(chatStr, CFSpeech | CFTimeout)
             self.resetPartyPerson()
+        elif mode == NPCToons.PARTY_MOVIE_ONLYPAID:
+            chatStr = TTLocalizer.PartyPlannerOnlyPaid
+            self.setChatAbsolute(chatStr, CFSpeech | CFTimeout)
+            self.resetPartyPerson()
+        elif mode == NPCToons.PARTY_MOVIE_COMINGSOON:
+            chatStr = TTLocalizer.PartyPlannerNpcComingSoon
+            self.setChatAbsolute(chatStr, CFSpeech | CFTimeout)
+            self.resetPartyPerson()
         elif mode == NPCToons.PARTY_MOVIE_MINCOST:
             chatStr = TTLocalizer.PartyPlannerNpcMinCost % PartyGlobals.MinimumPartyCost
             self.setChatAbsolute(chatStr, CFSpeech | CFTimeout)
@@ -169,10 +178,28 @@ class DistributedNPCPartyPerson(DistributedNPCToonBase):
 
     def __handleAskDone(self):
         self.ignore(self.planPartyQuestionGuiDoneEvent)
-        self.sendUpdate('answer', [self.askGui.doneStatus == 'ok'])
+        doneStatus = self.askGui.doneStatus
+        if doneStatus == 'ok':
+            wantsToPlan = 1
+            if localAvatar.getGameAccess() != ToontownGlobals.AccessFull:
+                wantsToPlan = 0
+                place = base.cr.playGame.getPlace()
+                if place:
+                    place.fsm.request('stopped', force=1)
+                self.teaserDialog = TeaserPanel.TeaserPanel(pageName='parties', doneFunc=self.handleOkTeaser)
+        else:
+            wantsToPlan = 0
+        self.sendUpdate('answer', [wantsToPlan])
         self.askGui.hide()
 
     def popupAskGUI(self, task):
         self.setChatAbsolute('', CFSpeech)
         self.acceptOnce(self.planPartyQuestionGuiDoneEvent, self.__handleAskDone)
         self.askGui.show()
+
+    def handleOkTeaser(self):
+        self.teaserDialog.destroy()
+        del self.teaserDialog
+        place = base.cr.playGame.getPlace()
+        if place:
+            place.fsm.request('walk')

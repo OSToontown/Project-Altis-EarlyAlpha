@@ -1,4 +1,4 @@
-from pandac.PandaModules import NodePath, Point3, CollisionTube, CollisionNode, Vec4
+from pandac.PandaModules import NodePath, Point3, CollisionSphere, CollisionNode, Vec4
 from direct.interval.IntervalGlobal import Sequence, LerpPosInterval, Parallel, LerpScaleInterval, Track, ParticleInterval, Wait, Func
 from toontown.toonbase import ToontownGlobals
 from toontown.coghq import MoleFieldBase
@@ -35,7 +35,7 @@ class MoleHill(NodePath):
         self.moleHead = loader.loadModel('phase_12/models/bossbotHQ/mole_norm')
         self.moleHead.reparentTo(self.mole)
         moleColName = 'moleCol-%d-%s' % (self.moleField.doId, self.index)
-        moleSphere = CollisionTube(0, 0, 0, 0, 0, 1, 1)
+        moleSphere = CollisionSphere(0, 0, 0, 1.0)
         collNode = CollisionNode(moleColName)
         collNode.setIntoCollideMask(ToontownGlobals.WallBitmask)
         collNode.addSolid(moleSphere)
@@ -69,11 +69,9 @@ class MoleHill(NodePath):
             self.moleHead = loader.loadModel('phase_12/models/bossbotHQ/mole_norm')
             self.moleColNodePath.setScale(3.0)
             self.moleHead.setH(0)
-            self.mole.setBillboardAxis(localAvatar, 0)
         if type == MoleFieldBase.HILL_BOMB or type == MoleFieldBase.HILL_COGWHACKED:
             self.moleHead = loader.loadModel('phase_12/models/bossbotHQ/mole_cog')
             self.moleColNodePath.setScale(1.0)
-            self.mole.setBillboardAxis(localAvatar, 0)
             if type == MoleFieldBase.HILL_COGWHACKED:
                 self.doMoleDown()
                 BattleParticles.loadParticles()

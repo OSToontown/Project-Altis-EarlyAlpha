@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
 from ElevatorConstants import *
@@ -264,8 +264,9 @@ class DistributedElevatorFloor(DistributedElevatorFSM.DistributedElevatorFSM):
         return self.elevatorModel
 
     def kickEveryoneOut(self):
+        bailFlag = 0
         for avId, slot in self.boardedAvIds.items():
-            self.emptySlot(slot, avId, globalClockDelta.getRealNetworkTime())
+            self.emptySlot(slot, avId, bailFlag, globalClockDelta.getRealNetworkTime())
             if avId == base.localAvatar.doId:
                 pass
 

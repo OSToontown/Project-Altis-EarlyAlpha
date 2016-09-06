@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 import Playground
 from direct.task.Task import Task
 import random
@@ -76,6 +76,7 @@ class DDPlayground(Playground.Playground):
         self.loader.seagullSound.stop()
         taskMgr.remove('dd-seagulls')
         self.cameraSubmerged = 1
+        self.walkStateData.setSwimSoundAudible(1)
 
     def __emergeCamera(self):
         if self.cameraSubmerged == 0:
@@ -85,12 +86,13 @@ class DDPlayground(Playground.Playground):
         self.nextSeagullTime = random.random() * 8.0
         taskMgr.add(self.__seagulls, 'dd-seagulls')
         self.cameraSubmerged = 0
+        self.walkStateData.setSwimSoundAudible(0)
 
     def __submergeToon(self):
         if self.toonSubmerged == 1:
             return
         base.playSfx(self.loader.submergeSound)
-        if base.config.GetBool('disable-flying-glitch') == 0:
+        if config.GetBool('disable-flying-glitch') == 0:
             self.fsm.request('walk')
         self.walkStateData.fsm.request('swimming', [self.loader.swimSound])
         pos = base.localAvatar.getPos(render)

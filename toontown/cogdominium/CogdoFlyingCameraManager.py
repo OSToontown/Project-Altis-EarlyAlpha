@@ -161,30 +161,26 @@ class CogdoFlyingCameraManager:
                 name = entry.getIntoNode().getName()
                 if name.find('col_') >= 0:
                     np = entry.getIntoNodePath().getParent()
-                    if not np in nodesInBetween:
+                    if not nodesInBetween.has_key(np):
                         nodesInBetween[np] = np.getParent()
 
         for np in nodesInBetween.keys():
-            if np in self._betweenCamAndToon:
+            if self._betweenCamAndToon.has_key(np):
                 del self._betweenCamAndToon[np]
             else:
                 np.setTransparency(True)
                 np.wrtReparentTo(self._transNP)
                 if np.getName().find('lightFixture') >= 0:
-                    if not np.find('**/*floor_mesh').isEmpty():
-                        np.find('**/*floor_mesh').hide()
+                    np.find('**/*floor_mesh').hide()
                 elif np.getName().find('platform') >= 0:
-                    if not np.find('**/*Floor').isEmpty():
-                        np.find('**/*Floor').hide()
+                    np.find('**/*Floor').hide()
 
         for np, parent in self._betweenCamAndToon.items():
             np.wrtReparentTo(parent)
             np.setTransparency(False)
             if np.getName().find('lightFixture') >= 0:
-                if not np.find('**/*floor_mesh').isEmpty():
-                    np.find('**/*floor_mesh').show()
+                np.find('**/*floor_mesh').show()
             elif np.getName().find('platform') >= 0:
-                if not np.find('**/*Floor').isEmpty():
-                    np.find('**/*Floor').show()
+                np.find('**/*Floor').show()
 
         self._betweenCamAndToon = nodesInBetween

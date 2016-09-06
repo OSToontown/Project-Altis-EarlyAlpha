@@ -1,7 +1,4 @@
 from pandac.PandaModules import ColorBlendAttrib
-from toontown.suit import SuitDNA
-import random
-
 ModelPhase = 5
 ModelTypes = {'animation': 'a',
  'model': 'm',
@@ -12,26 +9,6 @@ Games = {'flying': 'cfg',
  'maze': 'cmg',
  'shared': 'csa'}
 
-def getAllowedTracks():
-    tracks = []
-
-    if config.GetBool('want-sellbot-cogdo', True):
-        tracks.append('s')
-    if config.GetBool('want-lawbot-cogdo', True):
-        tracks.append('l')
-
-    return tracks
-
-def getCogdoTrack(suitName):
-    tracks = getAllowedTracks()
-
-    if not tracks:
-        return None
-
-    track = SuitDNA.getSuitDept(suitName)
-
-    return track if track in tracks else random.choice(tracks)
-
 def loadFlyingModel(baseName, type = 'model', group = 'area'):
     return loadModel(baseName, 'flying', type=type, group=group)
 
@@ -41,15 +18,11 @@ def loadMazeModel(baseName, type = 'model', group = 'area'):
 
 
 def getModelPath(baseName, game = 'shared', type = 'model', group = 'area'):
-    extension = ''
-    if hasattr(getBase(), 'air'):
-        extension = '.bam'
-    return 'phase_%i/models/cogdominium/tt_%s_%s_%s_%s%s' % (ModelPhase,
+    return 'phase_%i/models/cogdominium/tt_%s_%s_%s_%s' % (ModelPhase,
      ModelTypes[type],
      ModelGroups[group],
      Games[game],
-     baseName,
-     extension)
+     baseName)
 
 
 def loadModel(baseName, game = 'shared', type = 'model', group = 'area'):
@@ -143,9 +116,9 @@ def rotateTable(table, angle):
         t = []
         width = len(table[0])
         height = len(table)
-        for j in xrange(width):
+        for j in range(width):
             row = []
-            for i in xrange(height):
+            for i in range(height):
                 row.append(table[height - 1 - i][j])
 
             t.append(row)
@@ -160,9 +133,9 @@ def rotateTable(table, angle):
         t = []
         width = len(table[0])
         height = len(table)
-        for j in xrange(width):
+        for j in range(width):
             row = []
-            for i in xrange(height):
+            for i in range(height):
                 row.append(table[i][width - 1 - j])
 
             t.append(row)

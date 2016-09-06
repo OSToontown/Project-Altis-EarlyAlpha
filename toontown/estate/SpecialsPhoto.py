@@ -1,5 +1,5 @@
 from direct.directnotify import DirectNotifyGlobal
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from toontown.fishing import FishGlobals
 import GardenGlobals
@@ -127,12 +127,9 @@ class SpecialsPhoto(NodePath):
         rotate = pitch.attachNewNode('rotate')
         scale = rotate.attachNewNode('scale')
         actor.reparentTo(scale)
-        if actor.getTightBounds():
-            bMin, bMax = actor.getTightBounds()
-            center = (bMin + bMax) / 2.0
-            actor.setPos(-center[0], -center[1], -center[2])
-        else:
-            actor.setPos(0, 0, 0)
+        bMin, bMax = actor.getTightBounds()
+        center = (bMin + bMax) / 2.0
+        actor.setPos(-center[0], -center[1], -center[2])
         pitch.setY(2.5)
         return frame
 

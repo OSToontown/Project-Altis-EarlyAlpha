@@ -1,10 +1,16 @@
+from otp.level import DistributedLevelAI
 from direct.directnotify import DirectNotifyGlobal
+import cPickle
+import LevelSuitPlannerAI
+import FactoryBase
 from direct.task import Task
-from otp.level import DistributedLevelAI, LevelSpec
+import FactoryEntityCreatorAI
+import FactorySpecs
+from otp.level import LevelSpec
+import CogDisguiseGlobals
 from toontown.suit import DistributedFactorySuitAI
 from toontown.toonbase import ToontownGlobals, ToontownBattleGlobals
 from toontown.coghq import DistributedBattleFactoryAI
-import FactoryBase, FactoryEntityCreatorAI, FactorySpecs, LevelSuitPlannerAI
 
 class DistributedFactoryAI(DistributedLevelAI.DistributedLevelAI, FactoryBase.FactoryBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedFactoryAI')
@@ -23,9 +29,15 @@ class DistributedFactoryAI(DistributedLevelAI.DistributedLevelAI, FactoryBase.Fa
     def generate(self):
         self.notify.info('generate')
         self.notify.info('start factory %s %s creation, frame=%s' % (self.factoryId, self.doId, globalClock.getFrameCount()))
+        if __dev__:
+            simbase.factory = self
         self.notify.info('loading spec')
         specModule = FactorySpecs.getFactorySpecModule(self.factoryId)
         factorySpec = LevelSpec.LevelSpec(specModule)
+        if __dev__:
+            self.notify.info('creating entity type registry')
+            typeReg = self.getEntityTypeReg()
+            factorySpec.setEntityTypeReg(typeReg)
         self.notify.info('creating entities')
         DistributedLevelAI.DistributedLevelAI.generate(self, factorySpec)
         self.notify.info('creating cogs')
@@ -37,17 +49,16 @@ class DistributedFactoryAI(DistributedLevelAI.DistributedLevelAI, FactoryBase.Fa
         self.reserveSuits = suitHandles['reserveSuits']
         self.d_setSuits()
         scenario = 0
-        description = '%s|%s|%s|%s' % (self.factoryId,
-         self.entranceId,
-         scenario,
-         self.avIdList)
         for avId in self.avIdList:
-            self.air.writeServerEvent('factoryEntered', avId, description)
+            self.air.writeServerEvent('factory-entered', avId=avId, factoryId=self.factoryId, entranceId=self.entranceId, scenario=scenario, avIds=self.avIdList)
 
         self.notify.info('finish factory %s %s creation' % (self.factoryId, self.doId))
 
     def delete(self):
         self.notify.info('delete: %s' % self.doId)
+        if __dev__:
+            if hasattr(simbase, 'factory') and simbase.factory is self:
+                del simbase.factory
         suits = self.suits
         for reserve in self.reserveSuits:
             suits.append(reserve[0])
@@ -81,12 +92,15 @@ class DistributedFactoryAI(DistributedLevelAI.DistributedLevelAI, FactoryBase.Fa
             if toon is not None:
                 activeVictors.append(toon)
                 activeVictorIds.append(victorId)
+
         scenario = 0
-        description = '%s|%s|%s|%s' % (self.factoryId, self.entranceId, scenario, activeVictorIds)
         for avId in activeVictorIds:
-            self.air.writeServerEvent('factoryDefeated', avId, description)
+            self.air.writeServerEvent('factory-defeated', avId=avId, factoryId=self.factoryId, entranceId=self.entranceId, scenario=scenario, avIds=activeVictorIds)
+
         for toon in activeVictors:
-            simbase.air.questManager.toonDefeatedFactory(toon, self.factoryId)
+            simbase.air.questManager.toonDefeatedFactory(toon, self.factoryId, activeVictors)
+
+        return
 
     def b_setDefeated(self):
         self.d_setDefeated()

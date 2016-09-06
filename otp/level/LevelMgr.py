@@ -6,11 +6,9 @@ class LevelMgr(LevelMgrBase.LevelMgrBase):
     def __init__(self, level, entId):
         LevelMgrBase.LevelMgrBase.__init__(self, level, entId)
         self.geom = loader.loadModel(self.modelFilename)
-
-        if hasattr(self, 'removeNodes'):
-            for node in self.removeNodes:
-                self.geom.find(node).removeNode()
-
+        if not self.geom:
+            import pdb
+            pdb.set_trace()
         self.zoneNums = []
         self.level.zoneNum2zoneId = {}
         self.level.zoneId2zoneNum = {}
@@ -39,7 +37,7 @@ class LevelMgr(LevelMgrBase.LevelMgrBase):
 
     def privAssignZoneIds(self):
         self.zoneNums.sort()
-        for i in xrange(len(self.zoneNums)):
+        for i in range(len(self.zoneNums)):
             zoneNum = self.zoneNums[i]
             zoneEnt = self.level.getEntity(zoneNum)
             zoneId = self.level.zoneIds[i]

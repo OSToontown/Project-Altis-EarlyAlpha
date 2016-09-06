@@ -1,7 +1,8 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToontownGlobals import *
 from direct.task.TaskManagerGlobal import *
 from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 from toontown.distributed.ToontownMsgTypes import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.gui import OnscreenText
@@ -17,6 +18,7 @@ import NameGenerator
 import random
 from otp.distributed import PotentialAvatar
 from otp.namepanel import NameCheck
+from toontown.toontowngui import TeaserPanel
 from direct.distributed.PyDatagram import PyDatagram
 from direct.showbase import PythonUtil
 from toontown.toon import NPCToons
@@ -29,9 +31,10 @@ ServerDialogTimeout = 3.0
 class NameShop(StateData.StateData):
     notify = DirectNotifyGlobal.directNotify.newCategory('NameShop')
 
-    def __init__(self, makeAToon, doneEvent, avList, index):
+    def __init__(self, makeAToon, doneEvent, avList, index, isPaid):
         StateData.StateData.__init__(self, doneEvent)
         self.makeAToon = makeAToon
+        self.isPaid = isPaid
         self.avList = avList
         self.index = index
         self.shopsVisited = []
@@ -74,13 +77,16 @@ class NameShop(StateData.StateData):
         self.textRolloverColor = Vec4(1, 1, 0, 1)
         self.textDownColor = Vec4(0.5, 0.9, 1, 1)
         self.textDisabledColor = Vec4(0.4, 0.8, 0.4, 1)
-        self.fsm = ClassicFSM.ClassicFSM('NameShop', [State.State('Init', self.enterInit, self.exitInit, ['PickAName']),
+        self.fsm = ClassicFSM.ClassicFSM('NameShop', [State.State('Init', self.enterInit, self.exitInit, ['PayState']),
+         State.State('PayState', self.enterPayState, self.exitPayState, ['PickAName']),
          State.State('PickAName', self.enterPickANameState, self.exitPickANameState, ['TypeAName', 'Done']),
          State.State('TypeAName', self.enterTypeANameState, self.exitTypeANameState, ['PickAName',
           'Approval',
+          'Accepted',
           'Rejected']),
          State.State('Approval', self.enterApprovalState, self.exitApprovalState, ['PickAName', 'ApprovalAccepted']),
          State.State('ApprovalAccepted', self.enterApprovalAcceptedState, self.exitApprovalAcceptedState, ['Done']),
+         State.State('Accepted', self.enterAcceptedState, self.exitAcceptedState, ['Done']),
          State.State('Rejected', self.enterRejectedState, self.exitRejectedState, ['TypeAName']),
          State.State('Done', self.enterDone, self.exitDone, ['Init'])], 'Init', 'Done')
         self.parentFSM = makeAToon.fsm
@@ -208,7 +214,7 @@ class NameShop(StateData.StateData):
         self.acceptOnce('last', self.__handleBackward)
         self.acceptOnce('skipTutorial', self.__handleSkipTutorial)
         self.__listsChanged()
-        self.fsm.request('PickAName')
+        self.fsm.request('PayState')
         return
 
     def __overflowNameInput(self):
@@ -408,6 +414,8 @@ class NameShop(StateData.StateData):
          self.squareDown,
          self.squareHover,
          self.squareUp), image_scale=(1, 1.1, 0.9), pos=(0.0033, 0, -.38833), scale=(1.2, 1, 1.2), text=TTLocalizer.TypeANameButton, text_scale=TTLocalizer.NStypeANameButton, text_pos=TTLocalizer.NStypeANameButtonPos, command=self.__typeAName)
+        if base.cr.productName in ['DE', 'BR']:
+            self.typeANameButton.hide()
         self.pickANameGUIElements.append(self.typeANameButton)
         self.nameResult = DirectLabel(parent=aspect2d, relief=None, scale=TTLocalizer.NSnameResult, pos=(0.005, 0, 0.585), text=' \n ', text_scale=0.8, text_align=TextNode.ACenter, text_wordwrap=MAX_NAME_WIDTH)
         self.pickANameGUIElements.append(self.nameResult)
@@ -437,12 +445,22 @@ class NameShop(StateData.StateData):
         nameBalloon.removeNode()
         imageList = (guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR'))
         buttonImage = [imageList, imageList]
+        buttonText = [TTLocalizer.NameShopPay, TTLocalizer.NameShopPlay]
+        self.payDialog = DirectDialog(dialogName='paystate', topPad=0, fadeScreen=0.2, pos=(0, 0.1, 0.1), button_relief=None, text_align=TextNode.ACenter, text=TTLocalizer.NameShopOnlyPaid, buttonTextList=buttonText, buttonImageList=buttonImage, image_color=GlobalDialogColor, buttonValueList=[1, 0], command=self.payAction)
+        self.payDialog.buttonList[0].setPos(0, 0, -.27)
+        self.payDialog.buttonList[1].setPos(0, 0, -.4)
+        self.payDialog.buttonList[0]['image_scale'] = (1.2, 1, 1.1)
+        self.payDialog.buttonList[1]['image_scale'] = (1.2, 1, 1.1)
+        self.payDialog['image_scale'] = (0.8, 1, 0.77)
+        self.payDialog.buttonList[0]['text_pos'] = (0, -.02)
+        self.payDialog.buttonList[1]['text_pos'] = (0, -.02)
+        self.payDialog.hide()
         buttonText = [TTLocalizer.NameShopContinueSubmission, TTLocalizer.NameShopChooseAnother]
-        self.approvalDialog = DirectDialog(relief=None, image=DGG.getDefaultDialogGeom(), dialogName='approvalstate', topPad=0, fadeScreen=0.2, pos=(0, 0.1, 0.1), button_relief=None, image_color=GlobalDialogColor, text_align=TextNode.ACenter, text=TTLocalizer.NameShopToonCouncil, buttonTextList=buttonText, buttonImageList=buttonImage, buttonValueList=[1, 0], command=self.approvalAction)
+        self.approvalDialog = DirectDialog(dialogName='approvalstate', topPad=0, fadeScreen=0.2, pos=(0, 0.1, 0.1), button_relief=None, image_color=GlobalDialogColor, text_align=TextNode.ACenter, text=TTLocalizer.NameShopToonCouncil, buttonTextList=buttonText, buttonImageList=buttonImage, buttonValueList=[1, 0], command=self.approvalAction)
         self.approvalDialog.buttonList[0].setPos(0, 0, -.3)
         self.approvalDialog.buttonList[1].setPos(0, 0, -.43)
         self.approvalDialog['image_scale'] = (0.8, 1, 0.77)
-        for x in xrange(0, 2):
+        for x in range(0, 2):
             self.approvalDialog.buttonList[x]['text_pos'] = (0, -.01)
             self.approvalDialog.buttonList[x]['text_scale'] = (0.04, 0.05999)
             self.approvalDialog.buttonList[x].setScale(1.2, 1, 1)
@@ -460,6 +478,9 @@ class NameShop(StateData.StateData):
                 x.show()
             except:
                 print 'NameShop: Tried to show already removed object'
+
+        if base.cr.productName in ['DE', 'BR']:
+            self.typeANameButton.hide()
 
     def hideAll(self):
         self.uberhide(self.pickANameGUIElements)
@@ -500,7 +521,9 @@ class NameShop(StateData.StateData):
         self.uberdestroy(self.pickANameGUIElements)
         self.uberdestroy(self.typeANameGUIElements)
         del self.toon
+        self.payDialog.cleanup()
         self.approvalDialog.cleanup()
+        del self.payDialog
         del self.approvalDialog
         self.parentFSM.getStateNamed('NameShop').removeChild(self.fsm)
         del self.parentFSM
@@ -673,7 +696,7 @@ class NameShop(StateData.StateData):
         self.nameResult['text'] = self.names[0]
 
     def findTempName(self):
-        colorstring = TTLocalizer.ColorfulToon
+        colorstring = TTLocalizer.NumToColor[self.toon.style.headColor]
         animaltype = TTLocalizer.AnimalToSpecies[self.toon.style.getAnimal()]
         tempname = colorstring + ' ' + animaltype
         if not TTLocalizer.NScolorPrecede:
@@ -687,6 +710,28 @@ class NameShop(StateData.StateData):
 
     def exitInit(self):
         pass
+
+    def enterPayState(self):
+        self.notify.debug('enterPayState')
+        if base.cr.allowFreeNames() or self.isPaid:
+            self.fsm.request('PickAName')
+        else:
+            tempname = self.findTempName()
+            self.payDialog['text'] = TTLocalizer.NameShopOnlyPaid + tempname
+            self.payDialog.show()
+
+    def exitPayState(self):
+        pass
+
+    def payAction(self, value):
+        self.notify.debug('payAction')
+        self.payDialog.hide()
+        if value:
+            self.doneStatus = 'paynow'
+            messenger.send(self.doneEvent)
+        else:
+            self.nameAction = 0
+            self.__createAvatar()
 
     def enterPickANameState(self):
         self.notify.debug('enterPickANameState')
@@ -706,6 +751,14 @@ class NameShop(StateData.StateData):
         self.nameEntry['focus'] = 1
 
     def __typeAName(self):
+        if base.cr.productName in ['JP',
+         'DE',
+         'BR',
+         'FR']:
+            if base.restrictTrialers:
+                if not base.cr.isPaid():
+                    dialog = TeaserPanel.TeaserPanel(pageName='typeAName')
+                    return
         if self.fsm.getCurrentState().getName() == 'TypeAName':
             self.typeANameButton['text'] = TTLocalizer.TypeANameButton
             self.typeANameButton.wrtReparentTo(self.namePanel, sort=2)
@@ -763,6 +816,21 @@ class NameShop(StateData.StateData):
         messenger.send(self.doneEvent)
 
     def exitApprovalAcceptedState(self):
+        pass
+
+    def enterAcceptedState(self):
+        self.notify.debug('enterAcceptedState')
+        self.acceptedDialog = TTDialog.TTGlobalDialog(doneEvent='acceptedDone', message=TTLocalizer.NameShopNameAccepted, style=TTDialog.Acknowledge)
+        self.acceptedDialog.show()
+        self.acceptOnce('acceptedDone', self.__handleAccepted)
+
+    def __handleAccepted(self):
+        self.acceptedDialog.cleanup()
+        self.doneStatus = 'done'
+        self.storeSkipTutorialRequest()
+        messenger.send(self.doneEvent)
+
+    def exitAcceptedState(self):
         pass
 
     def enterRejectedState(self):
@@ -895,12 +963,14 @@ class NameShop(StateData.StateData):
         else:
             self.checkNameTyped()
         self.notify.debug('Ending Make A Toon: %s' % self.toon.style)
+        base.cr.centralLogger.writeClientEvent('MAT - endingMakeAToon: %s' % self.toon.style)
 
     def handleCreateAvatarResponse(self, avId):
         self.notify.debug('handleCreateAvatarResponse')
         self.notify.debug('avatar with default name accepted')
         self.avId = avId
         self.avExists = 1
+        self.logAvatarCreation()
         if self.nameAction == 0:
             self.toon.setName(self.names[0])
             newPotAv = PotentialAvatar.PotentialAvatar(self.avId, self.names, self.newDNA, self.index, 1)
@@ -941,7 +1011,7 @@ class NameShop(StateData.StateData):
         base.cr.skipTutorialRequest = self.requestingSkipTutorial
 
     def __isFirstTime(self):
-        if self.makeAToon.warp:
+        if not self.makeAToon.nameList or self.makeAToon.warp:
             self.__createAvatar()
         else:
             self.promptTutorial()
@@ -953,12 +1023,38 @@ class NameShop(StateData.StateData):
     def __openTutorialDialog(self, choice = 0):
         if choice == 1:
             self.notify.debug('enterTutorial')
-            if base.config.GetBool('want-qa-regression', 0):
+            if config.GetBool('want-qa-regression', 0):
                 self.notify.info('QA-REGRESSION: ENTERTUTORIAL: Enter Tutorial')
             self.__createAvatar()
         else:
             self.notify.debug('skipTutorial')
-            if base.config.GetBool('want-qa-regression', 0):
+            if config.GetBool('want-qa-regression', 0):
                 self.notify.info('QA-REGRESSION: SKIPTUTORIAL: Skip Tutorial')
             self.__handleSkipTutorial()
         self.promptTutorialDialog.destroy()
+
+    def logAvatarCreation(self):
+        dislId = 0
+        try:
+            dislId = launcher.getValue('GAME_DISL_ID')
+        except:
+            pass
+
+        if not dislId:
+            self.notify.warning('No dislId, using 0')
+            dislId = 0
+        gameSource = '0'
+        try:
+            gameSource = launcher.getValue('GAME_SOURCE')
+        except:
+            pass
+
+        if not gameSource:
+            gameSource = '0'
+        else:
+            self.notify.info('got GAME_SOURCE=%s' % gameSource)
+        if self.avId > 0:
+            base.cr.centralLogger.writeClientEvent('createAvatar %s-%s-%s' % (self.avId, dislId, gameSource))
+            self.notify.debug('createAvatar %s-%s-%s' % (self.avId, dislId, gameSource))
+        else:
+            self.notify.warning('logAvatarCreation got self.avId =%s' % self.avId)

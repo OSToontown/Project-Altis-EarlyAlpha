@@ -1,6 +1,7 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
@@ -124,13 +125,13 @@ class GolfKart(StateData.StateData):
         del self.noTrolleyBox
 
     def __handleNoTrolleyAck(self):
-        ntdoneStatus = self.noTrolleyBox.doneStatus
-        if ntdoneStatus == 'ok':
+        ntbDoneStatus = self.noTrolleyBox.doneStatus
+        if ntbDoneStatus == 'ok':
             doneStatus = {}
             doneStatus['mode'] = 'reject'
             messenger.send(self.doneEvent, [doneStatus])
         else:
-            self.notify.error('Unrecognized doneStatus: ' + str(ntdoneStatus))
+            self.notify.error('Unrecognized doneStatus: ' + str(ntbDoneStatus))
 
     def enterRequestBoard(self):
         return None

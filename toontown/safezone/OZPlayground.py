@@ -1,6 +1,7 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase import ToontownGlobals
 import Playground
+from toontown.launcher import DownloadForceAcknowledge
 from toontown.building import Elevator
 from toontown.toontowngui import TTDialog
 from toontown.toonbase import TTLocalizer
@@ -39,6 +40,18 @@ class OZPlayground(Playground.Playground):
         taskMgr.remove('oz-check-cam-underwater')
         self.loader.hood.setNoFog()
 
+    def doRequestLeave(self, requestStatus):
+        self.fsm.request('trialerFA', [requestStatus])
+
+    def enterDFA(self, requestStatus):
+        doneEvent = 'dfaDoneEvent'
+        self.accept(doneEvent, self.enterDFACallback, [requestStatus])
+        self.dfa = DownloadForceAcknowledge.DownloadForceAcknowledge(doneEvent)
+        if requestStatus['hoodId'] == ToontownGlobals.MyEstate:
+            self.dfa.enter(base.cr.hoodMgr.getPhaseFromHood(ToontownGlobals.MyEstate))
+        else:
+            self.dfa.enter(5)
+
     def enterStart(self):
         self.cameraSubmerged = 0
         self.toonSubmerged = 0
@@ -65,6 +78,7 @@ class OZPlayground(Playground.Playground):
         self.loader.hood.setUnderwaterFog()
         base.playSfx(self.loader.underwaterSound, looping=1, volume=0.8)
         self.cameraSubmerged = 1
+        self.walkStateData.setSwimSoundAudible(1)
 
     def __emergeCamera(self):
         if self.cameraSubmerged == 0:
@@ -72,12 +86,13 @@ class OZPlayground(Playground.Playground):
         self.loader.hood.setNoFog()
         self.loader.underwaterSound.stop()
         self.cameraSubmerged = 0
+        self.walkStateData.setSwimSoundAudible(0)
 
     def __submergeToon(self):
         if self.toonSubmerged == 1:
             return
         base.playSfx(self.loader.submergeSound)
-        if base.config.GetBool('disable-flying-glitch') == 0:
+        if config.GetBool('disable-flying-glitch') == 0:
             self.fsm.request('walk')
         self.walkStateData.fsm.request('swimming', [self.loader.swimSound])
         pos = base.localAvatar.getPos(render)
@@ -160,3 +175,8 @@ class OZPlayground(Playground.Playground):
             self.fsm.request('walk')
         else:
             self.notify.error('Unknown mode: ' + mode + ' in handlePicnicBasketDone')
+
+    def showPaths(self):
+        from toontown.classicchars import CCharPaths
+        from toontown.toonbase import TTLocalizer
+        self.showPathPoints(CCharPaths.getPaths(TTLocalizer.Chip))

@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToontownGlobals import *
 from direct.showbase import DirectObject
 from direct.directnotify import DirectNotifyGlobal
@@ -135,14 +135,14 @@ class BoardingGroupInvitingPanel(BoardingGroupInviterPanelBase):
         self.dialogName = 'BoardingGroupInvitingPanel'
         self.inviterText = TTLocalizer.BoardingInvitingMessage % self.avatarName
         self.panelStyle = TTDialog.CancelOnly
-        self.buttonTextList = [OTPLocalizer.lCancel]
+        self.buttonTextList = [OTPLocalizer.GuildInviterCancel]
 
     def handleButton(self, value):
         self.boardingParty.requestCancelInvite(self.avId)
         BoardingGroupInviterPanelBase.cleanup(self)
 
     def setupUnexpectedExitHooks(self):
-        if self.avId in base.cr.doId2do:
+        if base.cr.doId2do.has_key(self.avId):
             toon = base.cr.doId2do[self.avId]
             self.unexpectedExitEventName = toon.uniqueName('disable')
             self.accept(self.unexpectedExitEventName, self.forceCleanup)
@@ -163,4 +163,4 @@ class BoardingGroupInvitationRejectedPanel(BoardingGroupInviterPanelBase):
         self.dialogName = 'BoardingGroupInvitationRejectedPanel'
         self.inviterText = TTLocalizer.BoardingInvitationRejected % self.avatarName
         self.panelStyle = TTDialog.Acknowledge
-        self.buttonTextList = [OTPLocalizer.lOK]
+        self.buttonTextList = [OTPLocalizer.GuildInviterOK]

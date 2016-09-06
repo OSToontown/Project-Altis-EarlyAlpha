@@ -1,5 +1,4 @@
-from direct.showbase.PythonUtil import contains, lerp
-from toontown.toonbase.PythonUtil import clampScalar
+from direct.showbase.PythonUtil import contains, lerp, clampScalar
 from direct.distributed import DistributedObjectAI
 from direct.directnotify import DirectNotifyGlobal
 from toontown.pets import PetTraits, PetTricks
@@ -319,6 +318,10 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.d_setTrickAptitudes(aptitudes)
 
     def d_setTrickAptitudes(self, aptitudes):
+        if __dev__:
+            for aptitude in aptitudes:
+                pass
+
         while len(aptitudes) < len(PetTricks.Tricks) - 1:
             aptitudes.append(0.0)
 

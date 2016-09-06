@@ -1,5 +1,6 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.gui.DirectGui import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from otp.avatar.ShadowCaster import ShadowCaster
 

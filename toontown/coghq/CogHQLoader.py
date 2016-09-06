@@ -1,14 +1,13 @@
-import CogHQLobby
 from direct.directnotify import DirectNotifyGlobal
+from direct.fsm import StateData
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
-from direct.fsm import StateData
-from panda3d.core import *
+import CogHQLobby
 from toontown.hood import QuietZoneState
 from toontown.hood import ZoneUtil
-from toontown.suit import Suit
 from toontown.town import TownBattle
-
+from toontown.suit import Suit
+from pandac.PandaModules import *
 
 class CogHQLoader(StateData.StateData):
     notify = DirectNotifyGlobal.directNotify.newCategory('CogHQLoader')
@@ -19,33 +18,13 @@ class CogHQLoader(StateData.StateData):
         self.parentFSMState = parentFSMState
         self.placeDoneEvent = 'cogHQLoaderPlaceDone'
         self.townBattleDoneEvent = 'town-battle-done'
-        self.fsm = ClassicFSM.ClassicFSM(
-            'CogHQLoader', [State.State('start',
-                                        None,
-                                        None,
-                                        ['quietZone', 'cogHQExterior', 'cogHQBossBattle']),
-         State.State('cogHQExterior',
-                     self.enterCogHQExterior,
-                     self.exitCogHQExterior,
-                     ['quietZone', 'cogHQLobby']),
-         State.State('cogHQLobby',
-                     self.enterCogHQLobby,
-                     self.exitCogHQLobby,
-                     ['quietZone', 'cogHQExterior', 'cogHQBossBattle']),
-         State.State('cogHQBossBattle',
-                     self.enterCogHQBossBattle,
-                     self.exitCogHQBossBattle,
-                     ['quietZone']),
-         State.State('quietZone',
-                     self.enterQuietZone,
-                     self.exitQuietZone,
-                     ['cogHQExterior', 'cogHQLobby', 'cogHQBossBattle']),
-         State.State('final',
-                     None,
-                     None,
-                     ['start'])],
-            'start',
-            'final')
+        self.fsm = ClassicFSM.ClassicFSM('CogHQLoader', [State.State('start', None, None, ['quietZone', 'cogHQExterior', 'cogHQBossBattle']),
+         State.State('cogHQExterior', self.enterCogHQExterior, self.exitCogHQExterior, ['quietZone', 'cogHQLobby']),
+         State.State('cogHQLobby', self.enterCogHQLobby, self.exitCogHQLobby, ['quietZone', 'cogHQExterior', 'cogHQBossBattle']),
+         State.State('cogHQBossBattle', self.enterCogHQBossBattle, self.exitCogHQBossBattle, ['quietZone']),
+         State.State('quietZone', self.enterQuietZone, self.exitQuietZone, ['cogHQExterior', 'cogHQLobby', 'cogHQBossBattle']),
+         State.State('final', None, None, ['start'])], 'start', 'final')
+        return
 
     def load(self, zoneId):
         self.parentFSMState.addChild(self.fsm)

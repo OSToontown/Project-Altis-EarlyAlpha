@@ -21,6 +21,9 @@ from toontown.racing.Kart import Kart
 from toontown.racing.KartShopGlobals import KartGlobals
 from toontown.racing import RaceGlobals
 from toontown.toontowngui.TTDialog import TTGlobalDialog
+from toontown.toontowngui.TeaserPanel import TeaserPanel
+if (__debug__):
+    import pdb
 
 class DistributedStartingBlock(DistributedObject.DistributedObject, FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedStartingBlock')
@@ -145,7 +148,7 @@ class DistributedStartingBlock(DistributedObject.DistributedObject, FSM):
             def handleEnterRequest(self = self):
                 self.ignore('stoppedAsleep')
                 if hasattr(self.dialog, 'doneStatus') and self.dialog.doneStatus == 'ok':
-                    self.d_requestEnter()
+                    self.d_requestEnter(base.cr.isPaid())
                 elif self.cr and not self.isDisabled():
                     self.cr.playGame.getPlace().setState('walk')
                 else:
@@ -170,9 +173,9 @@ class DistributedStartingBlock(DistributedObject.DistributedObject, FSM):
         self.notify.debugStateCall(self)
         self.sendUpdate('movieFinished', [])
 
-    def d_requestEnter(self):
+    def d_requestEnter(self, paid):
         self.notify.debugStateCall(self)
-        self.sendUpdate('requestEnter')
+        self.sendUpdate('requestEnter', [paid])
 
     def d_requestExit(self):
         self.notify.debugStateCall(self)
@@ -216,6 +219,8 @@ class DistributedStartingBlock(DistributedObject.DistributedObject, FSM):
             self.dialog = TTGlobalDialog(msg, doneEvent, 2)
             self.dialog.accept(doneEvent, handleTicketError)
             self.accept('stoppedAsleep', handleTicketError)
+        elif errCode == KartGlobals.ERROR_CODE.eUnpaid:
+            self.dialog = TeaserPanel(pageName='karting', doneFunc=handleTicketError)
         else:
             self.cr.playGame.getPlace().setState('walk')
 
@@ -489,7 +494,7 @@ class DistributedStartingBlock(DistributedObject.DistributedObject, FSM):
 
     def enterEnterMovie(self):
         self.notify.debug('%d enterEnterMovie: Entering the Enter Movie State.' % self.doId)
-        if base.config.GetBool('want-qa-regression', 0):
+        if config.GetBool('want-qa-regression', 0):
             raceName = TTLocalizer.KartRace_RaceNames[self.kartPad.trackType]
             self.notify.info('QA-REGRESSION: KARTING: %s' % raceName)
         toonTrack = self.generateToonMoveTrack()
@@ -557,8 +562,7 @@ class DistributedStartingBlock(DistributedObject.DistributedObject, FSM):
         self.movieTrack.start()
 
     def bulkLoad(self):
-        zoneId = 0 #TODO: get zoneId for certain tracks
-        base.loader.beginBulkLoad('atRace', TTLocalizer.StartingBlock_Loading, 60, 1, TTLocalizer.TIP_KARTING, zoneId)
+        base.loader.beginBulkLoad('atRace', TTLocalizer.StartingBlock_Loading, 60, 1, TTLocalizer.TIP_KARTING)
 
 
 class DistributedViewingBlock(DistributedStartingBlock):
@@ -617,7 +621,7 @@ class DistributedViewingBlock(DistributedStartingBlock):
             def handleEnterRequest(self = self):
                 self.ignore('stoppedAsleep')
                 if hasattr(self.dialog, 'doneStatus') and self.dialog.doneStatus == 'ok':
-                    self.d_requestEnter()
+                    self.d_requestEnter(base.cr.isPaid())
                 else:
                     self.cr.playGame.getPlace().setState('walk')
                 self.dialog.ignoreAll()
@@ -671,7 +675,7 @@ class DistributedViewingBlock(DistributedStartingBlock):
 
     def enterEnterMovie(self):
         self.notify.debug('%d enterEnterMovie: Entering the Enter Movie State.' % self.doId)
-        if base.config.GetBool('want-qa-regression', 0):
+        if config.GetBool('want-qa-regression', 0):
             raceName = TTLocalizer.KartRace_RaceNames[self.kartPad.trackType]
             self.notify.info('QA-REGRESSION: KARTING: %s' % raceName)
         pos = self.nodePath.getPos(render)

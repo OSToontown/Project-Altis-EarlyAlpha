@@ -3,7 +3,7 @@ import random
 from direct.showbase.PythonUtil import *
 from direct.showbase.DirectObject import DirectObject
 from direct.task import Task
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.fsm import FSM
 from direct.distributed import DistributedSmoothNode
 from otp.avatar import ShadowCaster
@@ -43,6 +43,7 @@ class Piejectile(DirectObject, FlyingGag):
         self.rotH = randFloat(-360, 360)
         self.rotP = randFloat(-90, 90)
         self.rotR = randFloat(-90, 90)
+        print 'generating Pie %s' % self.name
         self.ownerKart = base.cr.doId2do.get(base.race.kartMap.get(sourceId, None), None)
         if targetId != 0:
             self.targetKart = base.cr.doId2do.get(base.race.kartMap.get(targetId, None), None)
@@ -63,8 +64,10 @@ class Piejectile(DirectObject, FlyingGag):
         else:
             self.splatTask = taskMgr.doMethodLater(self.maxTime / 2.5, self.splat, self.splatTaskName)
         self.reparentTo(render)
+        return
 
     def delete(self):
+        print 'removing piejectile'
         taskMgr.remove(self.taskName)
         self.__undoCollisions()
         self.physicsMgr.clearLinearForces()
@@ -141,13 +144,11 @@ class Piejectile(DirectObject, FlyingGag):
         self.race.effectManager.addSplatEffect(spawner=self.targetKart, parent=self.targetKart)
         taskMgr.remove(self.splatTaskName)
         self.removeNode()
-        self.remove()
 
     def splat(self, optional = None):
         self.race.effectManager.addSplatEffect(spawner=self)
         taskMgr.remove(self.splatTaskName)
         self.removeNode()
-        self.remove()
 
     def __updatePhysics(self, task):
         if self.deleting:
@@ -184,7 +185,7 @@ class Piejectile(DirectObject, FlyingGag):
                 self.engine.setVector(Vec3(0, 10 + 10 * self.timeRatio + targetSpeed * (0.5 + 0.5 * self.timeRatio) + self.d2t * (0.5 + 0.5 * self.timeRatio), 12))
         else:
             self.engine.setVector(Vec3(0, 100, 3))
-        for i in xrange(int(numFrames)):
+        for i in range(int(numFrames)):
             pitch = self.gagNode.getP()
             self.gagNode.setP(pitch + self.rotH * self.physicsDt)
             roll = self.gagNode.getR()

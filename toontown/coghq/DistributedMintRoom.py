@@ -1,17 +1,17 @@
-from direct.directnotify import DirectNotifyGlobal
+from pandac.PandaModules import *
+from toontown.toonbase.ToontownGlobals import *
 from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
-from panda3d.core import *
 import random
-
-import FactoryEntityCreator
-import MintRoomBase, MintRoom
-import MintRoomSpecs
 from otp.level import DistributedLevel
+from direct.directnotify import DirectNotifyGlobal
+import MintRoomBase, MintRoom
+import FactoryEntityCreator
+import MintRoomSpecs
 from otp.level import LevelSpec, LevelConstants
-from otp.nametag.NametagConstants import *
 from toontown.toonbase import TTLocalizer
-from toontown.toonbase.ToontownGlobals import *
+if __dev__:
+    from otp.level import EditorGlobals
 
 def getMintRoomReadyPostName(doId):
     return 'mintRoomReady-%s' % doId
@@ -64,12 +64,19 @@ class DistributedMintRoom(DistributedLevel.DistributedLevel, MintRoomBase.MintRo
         DistributedLevel.DistributedLevel.levelAnnounceGenerate(self)
         specModule = MintRoomSpecs.getMintRoomSpecModule(self.roomId)
         roomSpec = LevelSpec.LevelSpec(specModule)
+        if __dev__:
+            typeReg = self.getEntityTypeReg()
+            roomSpec.setEntityTypeReg(typeReg)
         DistributedLevel.DistributedLevel.initializeLevel(self, roomSpec)
 
     def getReadyPostName(self):
         return getMintRoomReadyPostName(self.doId)
 
     def privGotSpec(self, levelSpec):
+        if __dev__:
+            if not levelSpec.hasEntityTypeReg():
+                typeReg = self.getEntityTypeReg()
+                levelSpec.setEntityTypeReg(typeReg)
         DistributedLevel.DistributedLevel.privGotSpec(self, levelSpec)
         MintRoom.MintRoom.enter(self)
         self.acceptOnce('leavingMint', self.announceLeaving)
@@ -121,14 +128,20 @@ class DistributedMintRoom(DistributedLevel.DistributedLevel, MintRoomBase.MintRo
         pass
 
     def getParentTokenForEntity(self, entId):
+        if __dev__:
+            pass
         return 1000000 * self.roomNum + entId
 
     def enterLtNotPresent(self):
         MintRoom.MintRoom.enterLtNotPresent(self)
+        if __dev__:
+            bboard.removeIfEqual(EditorGlobals.EditTargetPostName, self)
         self.ignore('f2')
 
     def enterLtPresent(self):
         MintRoom.MintRoom.enterLtPresent(self)
+        if __dev__:
+            bboard.post(EditorGlobals.EditTargetPostName, self)
         if self.mint is not None:
             self.mint.currentRoomName = MintRoomSpecs.CashbotMintRoomId2RoomName[self.roomId]
 

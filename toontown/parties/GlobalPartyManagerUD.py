@@ -4,7 +4,7 @@ from direct.directnotify.DirectNotifyGlobal import directNotify
 from direct.task import Task
 from PartyGlobals import *
 from datetime import datetime, timedelta
-from panda3d.core import *
+from pandac.PandaModules import *
 
 class GlobalPartyManagerUD(DistributedObjectGlobalUD):
     notify = directNotify.newCategory('GlobalPartyManagerUD')
@@ -22,13 +22,16 @@ class GlobalPartyManagerUD(DistributedObjectGlobalUD):
         PARTY_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
         startTime = datetime.strptime('2014-01-20 11:50:00', PARTY_TIME_FORMAT)
         endTime = datetime.strptime('2014-01-20 12:20:00', PARTY_TIME_FORMAT)
-        self.nextId = 0
+        self.partyAllocator = UniqueIdAllocator(0, 100000000)
         #self.host2Party[100000001] = {'hostId': 100000001, 'start': startTime, 'end': endTime, 'partyId': 1717986918400000, 'decorations': [[3,5,7,6]], 'activities': [[10,13,6,18],[7,8,7,0]],'inviteTheme':1,'isPrivate':0,'inviteeIds':[]}
         config = getConfigShowbase()
         self.wantInstantParties = config.GetBool('want-instant-parties', 0)
 
         # Setup tasks
         self.runAtNextInterval()
+
+        # Listen out for any events of avatars that logged in.
+        self.air.netMessenger.accept('avatarOnline', self, self.avatarJoined)
 
     # GPMUD -> PartyManagerAI messaging
     def _makeAIMsg(self, field, values, recipient):
@@ -107,7 +110,7 @@ class GlobalPartyManagerUD(DistributedObjectGlobalUD):
                 partyDict.get('status', PartyStatus.Pending)]
 
     # Avatar joined the game, invoked by the CSMUD
-    def avatarJoined(self, avId):
+    def avatarJoined(self, avId, friendsList): # CSMUD also passes friendsList for TTRFMUD.
 #        self.host2PartyId[avId] = (1337 << 32) + 10000
         partyId = self.host2PartyId.get(avId, None)
         if partyId:
@@ -247,6 +250,5 @@ class GlobalPartyManagerUD(DistributedObjectGlobalUD):
     def allocIds(self, numIds):
         ids = []
         while len(ids) < numIds:
-            ids.append(self.nextId)
-            self.nextId += 1
+            ids.append(self.partyAllocator.allocate())
         self.sendToAI('receiveId', ids)

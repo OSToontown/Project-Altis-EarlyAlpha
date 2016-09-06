@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.gui.DirectGui import *
 from direct.showbase import DirectObject
 import Avatar
@@ -21,13 +21,13 @@ class AvatarPanel(DirectObject.DirectObject):
             self.avName = avatar.getName()
         else:
             self.avatar = None
-            self.avName = 'Avatar'
+            self.avName = 'Player'
         if hasattr(avatar, 'uniqueName'):
             self.avId = avatar.doId
             self.avDisableName = avatar.uniqueName('disable')
             self.avGenerateName = avatar.uniqueName('generate')
             self.avHpChangeName = avatar.uniqueName('hpChange')
-            if self.avId in base.cr.doId2do:
+            if base.cr.doId2do.has_key(self.avId):
                 self.avatar = base.cr.doId2do[self.avId]
         else:
             self.avDisableName = None

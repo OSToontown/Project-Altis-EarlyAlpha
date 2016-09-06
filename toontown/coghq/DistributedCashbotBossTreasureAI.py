@@ -12,6 +12,7 @@ class DistributedCashbotBossTreasureAI(DistributedTreasureAI.DistributedTreasure
         self.finalPosition = (fx, fy, fz)
         
     def validAvatar(self, av):
+        # Avatars can only heal if they are missing some health, but aren't sad.
         if av.getHp() < av.getMaxHp() and av.getHp() > 0:
             av.toonUp(self.healAmount)
             return True

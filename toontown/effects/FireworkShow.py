@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from toontown.effects.FireworkGlobals import *
 from toontown.effects.Firework import Firework
@@ -15,9 +15,9 @@ colors = [Vec4(1, 1, 1, 1),
  Vec4(1, 0.1, 1, 1),
  Vec4(0.1, 1, 1, 1),
  Vec4(0.1, 0.5, 1, 1)]
-fireworkShowTypes = [ToontownGlobals.SUMMER_FIREWORKS,
+fireworkShowTypes = [ToontownGlobals.JULY4_FIREWORKS,
  PartyGlobals.FireworkShows.Summer,
- ToontownGlobals.NEW_YEAR_FIREWORKS,
+ ToontownGlobals.NEWYEARS_FIREWORKS,
  ToontownGlobals.COMBO_FIREWORKS]
 
 class FireworkShow(NodePath):
@@ -43,7 +43,7 @@ class FireworkShow(NodePath):
     def rD():
         return random.randint(1, 20) / 10.0
 
-    showData = {ToontownGlobals.SUMMER_FIREWORKS: [[FireworkType.GlowFlare,
+    showData = {ToontownGlobals.JULY4_FIREWORKS: [[FireworkType.GlowFlare,
                                         Vec3(-90, 0, 80),
                                         Vec3(120, 0, 0),
                                         rS(),
@@ -739,7 +739,7 @@ class FireworkShow(NodePath):
                                           Vec4(1, 1, 1, 1),
                                           1.5,
                                           10.0]],
-     ToontownGlobals.NEW_YEAR_FIREWORKS: [[FireworkType.GlowFlare,
+     ToontownGlobals.NEWYEARS_FIREWORKS: [[FireworkType.GlowFlare,
                                            Vec3(0, 0, 180),
                                            Vec3(-120, 0, 0),
                                            rS(),
@@ -1075,10 +1075,10 @@ class FireworkShow(NodePath):
                                            rC(),
                                            2.0,
                                            10.0]]}
-    showData[ToontownGlobals.COMBO_FIREWORKS] = showData[ToontownGlobals.NEW_YEAR_FIREWORKS]
-    sectionData = {ToontownGlobals.SUMMER_FIREWORKS: [(0, 24), (24, len(showData[ToontownGlobals.SUMMER_FIREWORKS]))],
+    showData[ToontownGlobals.COMBO_FIREWORKS] = showData[ToontownGlobals.NEWYEARS_FIREWORKS]
+    sectionData = {ToontownGlobals.JULY4_FIREWORKS: [(0, 24), (24, len(showData[ToontownGlobals.JULY4_FIREWORKS]))],
      PartyGlobals.FireworkShows.Summer: [(0, 24), (24, len(showData[PartyGlobals.FireworkShows.Summer]))],
-     ToontownGlobals.NEW_YEAR_FIREWORKS: [(0, len(showData[PartyGlobals.FireworkShows.Summer]))],
+     ToontownGlobals.NEWYEARS_FIREWORKS: [(0, len(showData[PartyGlobals.FireworkShows.Summer]))],
      ToontownGlobals.COMBO_FIREWORKS: [(0, len(showData[PartyGlobals.FireworkShows.Summer]))]}
     showMusic = {}
 
@@ -1089,7 +1089,7 @@ class FireworkShow(NodePath):
         else:
             return False
 
-    def __init__(self, showType = ToontownGlobals.NEW_YEAR_FIREWORKS):
+    def __init__(self, showType = ToontownGlobals.NEWYEARS_FIREWORKS):
         NodePath.__init__(self, 'FireworkShow')
         self.showType = showType
         self.sectionIvals = []

@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from toontown.toonbase.ToontownGlobals import *
 from direct.directnotify import DirectNotifyGlobal
 import TTDialog
@@ -27,8 +27,6 @@ class ToonHeadDialog(TTDialog.TTDialog):
         TTDialog.TTDialog.__init__(self, style=self['style'])
         self.initialiseoptions(ToonHeadDialog)
         self.postInitialiseFuncList.append(self.replaceHead)
-        self.reparentTo(base.a2dTopRight)
-        self.setPos(-0.85, 0, -0.25)
         return
 
     def replaceHead(self):

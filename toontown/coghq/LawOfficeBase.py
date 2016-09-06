@@ -17,3 +17,11 @@ class LawOfficeBase:
 
     def getFactoryType(self):
         return self.factoryType
+
+    if __dev__:
+
+        def getEntityTypeReg(self):
+            import FactoryEntityTypes
+            from otp.level import EntityTypeRegistry
+            typeReg = EntityTypeRegistry.EntityTypeRegistry(FactoryEntityTypes)
+            return typeReg

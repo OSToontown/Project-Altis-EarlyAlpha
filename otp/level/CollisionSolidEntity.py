@@ -1,4 +1,4 @@
-from panda3d.core import *
+from pandac.PandaModules import *
 from otp.otpbase import OTPGlobals
 from direct.directnotify import DirectNotifyGlobal
 import BasicEntities
@@ -26,9 +26,20 @@ class CollisionSolidEntity(BasicEntities.NodePathEntity):
         node.addSolid(solid)
         node.setCollideMask(OTPGlobals.WallBitmask)
         self.collNodePath = self.attachNewNode(node)
+        if __dev__:
+            if self.showSolid:
+                self.showCS()
+            else:
+                self.hideCS()
 
     def destroySolid(self):
         if self.collNodePath is not None:
             self.collNodePath.removeNode()
             self.collNodePath = None
         return
+
+    if __dev__:
+
+        def attribChanged(self, attrib, value):
+            print 'attribChanged'
+            self.initSolid()

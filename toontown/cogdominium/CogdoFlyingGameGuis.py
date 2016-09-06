@@ -57,10 +57,7 @@ class CogdoFlyingProgressGui(DirectFrame):
         return
 
     def _getToonMarker(self, toon):
-        type = self._laffMeterModel.find('**/' + toon.style.getType() + 'head')
-        if type.isEmpty():
-            type = self._laffMeterModel.find('**/bunnyhead')
-        return type
+        return self._laffMeterModel.find('**/' + toon.style.getType() + 'head')
 
     def update(self):
         for toon, marker in self._toonMarkers.items():
@@ -147,13 +144,13 @@ class CogdoFlyingFuelGui(DirectFrame):
             return
         numBlades = fuelState - 1
         if len(self.activeBlades) != numBlades:
-            for i in xrange(len(self.activeBlades)):
+            for i in range(len(self.activeBlades)):
                 blade = self.activeBlades.pop()
                 blade.stash()
 
             if numBlades > len(self.blades):
                 numBlades = len(self.blades)
-            for i in xrange(numBlades):
+            for i in range(numBlades):
                 blade = self.blades[i]
                 self.activeBlades.append(blade)
                 blade.unstash()
