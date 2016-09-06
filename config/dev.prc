@@ -3,8 +3,8 @@
 # as well as deployment/server.prc if necessary.
 
 # Client settings
-window-title Toontown Rewritten
-server-version dev
+window-title Project Altis
+server-version 1.0.0
 sync-video #f
 want-dev #f
 preload-avatars #t
