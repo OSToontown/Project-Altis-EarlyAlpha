@@ -13,7 +13,7 @@ rem Read the contents of PPYTHON_PATH into %PPYTHON_PATH%:
 set /P PPYTHON_PATH=<PPYTHON_PATH
 
 echo ===============================
-echo Starting Toontown Rewritten AI (district) Server...
+echo Starting Project Altis AI (district) Server...
 echo ppython: %PPYTHON_PATH%
 echo District Name: %DISTRICT_NAME%
 echo Base Channel: %BASE_CHANNEL%

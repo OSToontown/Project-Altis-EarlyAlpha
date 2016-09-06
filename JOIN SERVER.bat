@@ -12,7 +12,7 @@ set /P PPYTHON_PATH=<PPYTHON_PATH
 CALL "toontown\toonbase\gameservices.exe"
 
 echo ===============================
-echo Starting Toontown Rewritten Fixed Source...
+echo Starting Project Altis...
 echo ppython: %PPYTHON_PATH%
 echo Username: %ttrUsername%
 echo Client Agent IP: %TTR_GAMESERVER%
