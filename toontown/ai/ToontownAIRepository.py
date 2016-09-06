@@ -61,6 +61,9 @@ from toontown.catalog.CatalogManagerAI import CatalogManagerAI
 
 # Magic Words!
 from panda3d.core import PStatClient
+# Pets
+if config.GetBool('want-pets', True):
+    from toontown.pets.PetManagerAI import PetManagerAI
 from otp.ai.MagicWordGlobal import *
 import otp.ai.DiagnosticMagicWords
 
@@ -99,6 +102,7 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.promotionMgr = PromotionManagerAI(self)
         self.cogSuitMgr = CogSuitManagerAI(self)
         self.suitInvasionManager = SuitInvasionManagerAI(self)
+        self.wantCogdominiums = self.config.GetBool('want-cogdominums', False)
 
         self.statusSender = ShardStatusSender(self)
 
@@ -195,6 +199,8 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.trophyMgr = DistributedTrophyMgrAI(self)
         self.trophyMgr.generateWithRequired(2)
 
+        if config.GetBool('want-pets', True):
+            self.petMgr = PetManagerAI(self)
         self.tutorialManager = TutorialManagerAI(self)
         self.tutorialManager.generateWithRequired(2)
 
