@@ -357,6 +357,7 @@ class Suit(Avatar.Avatar):
         self.isDisguised = 0
         self.isWaiter = 0
         self.isRental = 0
+        self.setBlend(frameBlend = True)
         return
 
     def delete(self):
@@ -413,6 +414,7 @@ class Suit(Avatar.Avatar):
         self.headTexture = None
         self.loseActor = None
         self.isSkeleton = 0
+        self.setBlend(frameBlend = True)
         scale = SuitBattleGlobals.SuitSizes[dna.name]
         if dna.name == 'f':
             self.scale = scale / cSize
@@ -634,6 +636,7 @@ class Suit(Avatar.Avatar):
             self.loadModel('phase_3.5' + filePrefix + 'mod')
         self.loadAnims(animDict)
         self.setSuitClothes()
+        self.setBlend(frameBlend = True)
 
     def generateAnimDict(self):
         animDict = {}
@@ -951,6 +954,7 @@ class Suit(Avatar.Avatar):
         dropShadow.setScale(0.45)
         dropShadow.setColor(0.0, 0.0, 0.0, 0.5)
         dropShadow.reparentTo(shadowJoint)
+        self.setBlend(frameBlend = True)
         return self.loseActor
 
     def cleanupLoseActor(self):
