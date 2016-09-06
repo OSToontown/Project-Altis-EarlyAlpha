@@ -510,8 +510,8 @@ class DeleteAvatarFSM(GetAvatarsFSM):
         if self.csm.air.friendsManager:
             self.csm.air.friendsManager.clearList(self.avId)
         else:
-            friendsManagerDoId = OtpDoGlobals.OTP_DO_ID_TTR_FRIENDS_MANAGER
-            dg = self.csm.air.dclassesByName['TTRFriendsManagerUD'].aiFormatUpdate(
+            friendsManagerDoId = OtpDoGlobals.OTP_DO_ID_TT_FRIENDS_MANAGER
+            dg = self.csm.air.dclassesByName['TTFriendsManagerUD'].aiFormatUpdate(
                 'clearList', friendsManagerDoId, friendsManagerDoId,
                 self.csm.air.ourChannel, [self.avId]
             )
