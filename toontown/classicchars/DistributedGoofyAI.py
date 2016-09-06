@@ -3,4 +3,3 @@ from toontown.classicchars.DistributedCCharBaseAI import DistributedCCharBaseAI
 
 class DistributedGoofyAI(DistributedCCharBaseAI):
     notify = DirectNotifyGlobal.directNotify.newCategory("DistributedGoofyAI")
-
