@@ -16,6 +16,7 @@ import ToonInteriorColors
 from toontown.hood import ZoneUtil
 from toontown.toon import ToonDNA
 from toontown.toon import ToonHead
+from toontown.dna.DNADoor import DNADoor
 
 class DistributedToonHallInterior(DistributedToonInterior):
 
