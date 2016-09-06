@@ -1,6 +1,8 @@
-from direct.directnotify import DirectNotifyGlobal
+from direct.directnotify.DirectNotifyGlobal import directNotify
 from toontown.building.DistributedElevatorExtAI import DistributedElevatorExtAI
 
 class DistributedCogdoElevatorExtAI(DistributedElevatorExtAI):
-    notify = DirectNotifyGlobal.directNotify.newCategory("DistributedCogdoElevatorExtAI")
+    notify = directNotify.newCategory('DistributedCogdoElevatorExtAI')
 
+    def _createInterior(self):
+        self.bldg.createCogdoInterior()

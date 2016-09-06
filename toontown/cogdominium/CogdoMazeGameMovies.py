@@ -51,8 +51,6 @@ class CogdoMazeGameIntro(CogdoGameMovie):
         for part in suit.getHeadParts():
             part.hide()
 
-        suit.loop('neutral')
-
     def load(self):
         CogdoGameMovie.load(self)
         self.toonDNA = ToonDNA.ToonDNA()
@@ -83,8 +81,10 @@ class CogdoMazeGameIntro(CogdoGameMovie):
         self._toonDialogueSfx = audioMgr.createSfx('toonDialogue')
         suitData = Globals.SuitData[Globals.SuitTypes.Boss]
         bossSuit = Suit.Suit()
+        bossSuit.nametag3d.stash()
+        bossSuit.nametag.destroy()
         d = SuitDNA.SuitDNA()
-        d.newSuit(suitData['dnaName'])
+        d.newSuit('ms')
         bossSuit.setDNA(d)
         bossSuit.setScale(suitData['scale'])
         bossSuit.loop('neutral')
