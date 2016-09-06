@@ -94,7 +94,7 @@ class MakeAToon(StateData.StateData):
         if config.GetBool('want-qa-regression', 0):
             self.notify.info('QA-REGRESSION: MAKEATOON: Starting Make A Toon')
         base.cr.centralLogger.writeClientEvent('MAT - startingMakeAToon')
-        base.camLens.setFov(ToontownGlobals.MakeAToonCameraFov)
+        base.camLens.setMinFov(ToontownGlobals.MakeAToonCameraFov/(4./3.))
         base.playMusic(self.music, looping=1, volume=self.musicVolume)
         camera.setPosHpr(-5.7, -12.3501, 2.15, -24.8499, 2.73, 0)
         if self.warp:
@@ -143,12 +143,16 @@ class MakeAToon(StateData.StateData):
         self.guiCheckButton = DirectButton(parent=self.guiBottomBar, relief=None, image=(guiAcceptUp,
          guiAcceptDown,
          guiAcceptUp,
-         guiAcceptDown), image_scale=halfButtonScale, image1_scale=halfButtonHoverScale, image2_scale=halfButtonHoverScale, pos=(1.165, 0, -0.018), command=self.__handleNext, text=('', TTLocalizer.MakeAToonDone, TTLocalizer.MakeAToonDone), text_font=ToontownGlobals.getInterfaceFont(), text_scale=0.08, text_align=TextNode.ARight, text_pos=(0.13, 0.13), text_fg=(1, 1, 1, 1), text_shadow=(0, 0, 0, 1))
+         guiAcceptDown), image_scale=halfButtonScale, image1_scale=halfButtonHoverScale, image2_scale=halfButtonHoverScale, pos=(1.165, 0, -0.018), command=self.__handleNext, text=('', TTLocalizer.MakeAToonDone, TTLocalizer.MakeAToonDone), text_font=ToontownGlobals.getInterfaceFont(), text_scale=0.08, text_align=TextNode.ARight, text_pos=(0.075, 0.13), text_fg=(1, 1, 1, 1), text_shadow=(0, 0, 0, 1))
+        self.guiCheckButton.setPos(-0.158, 0, 0.123)
+        self.guiCheckButton.reparentTo(base.a2dBottomRight)
         self.guiCheckButton.hide()
         self.guiCancelButton = DirectButton(parent=self.guiBottomBar, relief=None, image=(guiCancelUp,
          guiCancelDown,
          guiCancelUp,
          guiCancelDown), image_scale=halfButtonScale, image1_scale=halfButtonHoverScale, image2_scale=halfButtonHoverScale, pos=(-1.179, 0, -0.011), command=self.__handleCancel, text=('', TTLocalizer.MakeAToonCancel, TTLocalizer.MakeAToonCancel), text_font=ToontownGlobals.getInterfaceFont(), text_scale=TTLocalizer.MATguiCancelButton, text_pos=(0, 0.115), text_fg=(1, 1, 1, 1), text_shadow=(0, 0, 0, 1))
+        self.guiCancelButton.setPos(0.165,0,0.13)
+        self.guiCancelButton.reparentTo(base.a2dBottomLeft)
         self.guiCancelButton.hide()
         self.guiNextButton = DirectButton(parent=self.guiBottomBar, relief=None, image=(guiNextUp,
          guiNextDown,
@@ -157,6 +161,8 @@ class MakeAToon(StateData.StateData):
          TTLocalizer.MakeAToonNext,
          TTLocalizer.MakeAToonNext,
          ''), text_font=ToontownGlobals.getInterfaceFont(), text_scale=TTLocalizer.MATguiNextButton, text_pos=(0, 0.115), text_fg=(1, 1, 1, 1), text_shadow=(0, 0, 0, 1))
+        self.guiNextButton.setPos(-0.159, 0, 0.122)
+        self.guiNextButton.reparentTo(base.a2dBottomRight)
         self.guiNextButton.hide()
         self.guiLastButton = DirectButton(parent=self.guiBottomBar, relief=None, image=(guiNextUp,
          guiNextDown,
@@ -165,18 +171,22 @@ class MakeAToon(StateData.StateData):
          TTLocalizer.MakeAToonLast,
          TTLocalizer.MakeAToonLast,
          ''), text_font=ToontownGlobals.getInterfaceFont(), text_scale=0.08, text_pos=(0, 0.115), text_fg=(1, 1, 1, 1), text_shadow=(0, 0, 0, 1))
+        self.guiLastButton.setPos(-0.498, 0, 0.121)
+        self.guiLastButton.reparentTo(base.a2dBottomRight)
         self.guiLastButton.hide()
         self.rotateLeftButton = DirectButton(parent=self.guiBottomBar, relief=None, image=(rotateUp,
          rotateDown,
          rotateUp,
-         rotateDown), image_scale=(-0.4, 0.4, 0.4), image1_scale=(-0.5, 0.5, 0.5), image2_scale=(-0.5, 0.5, 0.5), pos=(-0.329249, 0, 0.202961))
+         rotateDown), image_scale=(-0.4, 0.4, 0.4), image1_scale=(-0.5, 0.5, 0.5), image2_scale=(-0.5, 0.5, 0.5), pos=(-0.319249, 0, 0.343))
+        self.rotateLeftButton.reparentTo(base.a2dBottomCenter)
         self.rotateLeftButton.hide()
         self.rotateLeftButton.bind(DGG.B1PRESS, self.rotateToonLeft)
         self.rotateLeftButton.bind(DGG.B1RELEASE, self.stopToonRotateLeftTask)
         self.rotateRightButton = DirectButton(parent=self.guiBottomBar, relief=None, image=(rotateUp,
          rotateDown,
          rotateUp,
-         rotateDown), image_scale=(0.4, 0.4, 0.4), image1_scale=(0.5, 0.5, 0.5), image2_scale=(0.5, 0.5, 0.5), pos=(0.309534, 0, 0.206116))
+         rotateDown), image_scale=(0.4, 0.4, 0.4), image1_scale=(0.5, 0.5, 0.5), image2_scale=(0.5, 0.5, 0.5), pos=(0.319249, 0, 0.346))
+        self.rotateRightButton.reparentTo(base.a2dBottomCenter)
         self.rotateRightButton.hide()
         self.rotateRightButton.bind(DGG.B1PRESS, self.rotateToonRight)
         self.rotateRightButton.bind(DGG.B1RELEASE, self.stopToonRotateRightTask)
@@ -572,8 +582,7 @@ class MakeAToon(StateData.StateData):
         self.guiTopBar['text_scale'] = TTLocalizer.MATenterNameShop
         self.accept('NameShop-done', self.__handleNameShopDone)
         self.dropRoom(self.nameWalls, self.nameProps)
-        self.spotlight.setPos(2, -1.95, 0.41)
-        self.spotlight.setScale(2.3)
+        self.spotlight.setPos(1.96, -1.95, 0.41)
         self.toon.setPos(Point3(1.5, -4, 0))
         self.toon.setH(120)
         self.rotateLeftButton.hide()
@@ -589,7 +598,6 @@ class MakeAToon(StateData.StateData):
         self.squishRoom(self.nameWalls)
         self.squishProp(self.nameProps)
         self.spotlight.setPos(1.18, -1.27, 0.41)
-        self.spotlight.setScale(2.6)
         self.ns.exit()
         self.ignore('NameShop-done')
         taskMgr.remove('nameShopOpeningTask')
