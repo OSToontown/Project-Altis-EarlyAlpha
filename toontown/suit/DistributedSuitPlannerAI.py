@@ -21,9 +21,12 @@ from SuitLegList import *
 from toontown.dna import *
 from otp.ai.MagicWordGlobal import *
 
+ALLOWED_FO_TRACKS = ['s', 'l']
+DEFAULT_COGDO_RATIO = .5
+
 class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlannerBase.SuitPlannerBase):
     CogdoPopFactor = config.GetFloat('cogdo-pop-factor', 1.5)
-    CogdoRatio = min(1.0, max(0.0, config.GetFloat('cogdo-ratio', 0.5)))
+    CogdoRatio = min(1.0, max(0.0, config.GetFloat('cogdo-ratio', DEFAULT_COGDO_RATIO)))
     SuitHoodInfo = [[2100,
       5,
       15,
@@ -537,7 +540,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         self.air = air
         self.zoneId = zoneId
         self.canonicalZoneId = ZoneUtil.getCanonicalZoneId(zoneId)
-        if config.GetBool('want-cogdos', False):
+        if config.GetBool('want-cogdominiums', True):
             if not hasattr(self.__class__, 'CogdoPopAdjusted'):
                 self.__class__.CogdoPopAdjusted = True
                 for index in xrange(len(self.SuitHoodInfo)):
@@ -828,7 +831,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         possibles = []
         backup = []
         if cogdoTakeover is None:
-            cogdoTakeover = False
+            if suit.dna.dept in ALLOWED_FO_TRACKS:
+                cogdoTakeover = random.random() < self.CogdoRatio
         if toonBlockTakeover != None:
             suit.attemptingTakeover = 1
             blockNumber = toonBlockTakeover
@@ -1036,11 +1040,12 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         building = self.buildingMgr.getBuilding(blockNumber)
         building.suitTakeOver(suitTrack, difficulty, buildingHeight)
 
-    def cogdoTakeOver(self, blockNumber, difficulty, buildingHeight):
+    def cogdoTakeOver(self, blockNumber, difficulty, buildingHeight, dept):
         if self.pendingBuildingHeights.count(buildingHeight) > 0:
             self.pendingBuildingHeights.remove(buildingHeight)
+
         building = self.buildingMgr.getBuilding(blockNumber)
-        building.cogdoTakeOver(difficulty, buildingHeight)
+        building.cogdoTakeOver(difficulty, buildingHeight, dept)
 
     def recycleBuilding(self):
         bmin = self.SuitHoodInfo[self.hoodInfoIdx][self.SUIT_HOOD_INFO_BMIN]
@@ -1436,10 +1441,10 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         return (level, type, track)
 
 @magicWord(types=[str, int, int], category=CATEGORY_OVERRIDE)
-def spawn(name, level, specialSuit = 0):
+def spawnCog(name, level, specialSuit = 0):
     av = spellbook.getInvoker()
     zoneId = av.getLocation()[1]
     sp = simbase.air.suitPlanners.get(zoneId - (zoneId % 100))
     pointmap = sp.streetPointList
-    sp.createNewSuit([], pointmap, suitName=name, suitLevel=level, specialSuit = 0)
+    sp.createNewSuit([], pointmap, suitName=name, suitLevel=level, specialSuit=specialSuit)
     return "Spawned %s in current zone." % name
