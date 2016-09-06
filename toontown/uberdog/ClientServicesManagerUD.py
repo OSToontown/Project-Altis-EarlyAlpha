@@ -507,15 +507,6 @@ class DeleteAvatarFSM(GetAvatarsFSM):
                 { 'setSlot%dToonId' % index : [0], 'setSlot%dItems' % index : [[]] }
             )
 
-        if self.csm.air.friendsManager:
-            self.csm.air.friendsManager.clearList(self.avId)
-        else:
-            friendsManagerDoId = OtpDoGlobals.OTP_DO_ID_TT_FRIENDS_MANAGER
-            dg = self.csm.air.dclassesByName['TTFriendsManagerUD'].aiFormatUpdate(
-                'clearList', friendsManagerDoId, friendsManagerDoId,
-                self.csm.air.ourChannel, [self.avId]
-            )
-            self.csm.air.send(dg)
 
         self.csm.air.dbInterface.updateObject(
             self.csm.air.dbId,
@@ -531,6 +522,7 @@ class DeleteAvatarFSM(GetAvatarsFSM):
         if fields:
             self.demand('Kill', 'Database failed to mark the avatar deleted!')
             return
+        self.csm.air.friendsManager.clearList(self.avId)
         self.csm.air.writeServerEvent('avatar-deleted', avId=self.avId, accId=self.target)
         self.demand('QueryAvatars')
 
@@ -761,8 +753,9 @@ class LoadAvatarFSM(AvatarOperationFSM):
         self.csm.air.send(dg)
 
         # Tell everything that an avatar is coming online!
-        friendsList = [x for x, y in self.avatar['setFriendsList'][0]]
-        self.csm.air.netMessenger.send('avatarOnline', [self.avId, friendsList])
+        fields = self.avatar
+        fields.update({'setAdminAccess': [self.account.get('ADMIN_ACCESS', 0)]})
+        self.csm.air.friendsManager.toonOnline(self.avId, fields)
 
         # Post-remove for an avatar that disconnects unexpectedly.
         dgcleanup = self.csm.air.netMessenger.prepare('avatarOffline', [self.avId])
@@ -786,8 +779,8 @@ class UnloadAvatarFSM(OperationFSM):
     def enterUnloadAvatar(self):
         channel = self.csm.GetAccountConnectionChannel(self.target)
 
-        # Fire off the avatarOffline message.
-        self.csm.air.netMessenger.send('avatarOffline', [self.avId])
+        # Tell FriendsManager somebody is logging off:
+        self.csm.air.friendsManager.toonOffline(self.avId)
 
         # Get lost, POST_REMOVES!:
         dg = PyDatagram()
@@ -842,14 +835,9 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
         else:
             self.notify.error('Invalid account DB type configured: %s' % dbtype)
 
-        # Listen out for any accounts that disconnect.
-        #self.air.netMessenger.accept('accountDisconnected', self, self.__accountDisconnected)
 
         # This attribute determines if we want to disable logins.
         self.loginsEnabled = True
-        # Listen out for any messages that tell us to disable logins.
-        self.air.netMessenger.accept('enableLogins', self, self.setLoginEnabled)
-
     def killConnection(self, connId, reason):
         dg = PyDatagram()
         dg.addServerHeader(connId, self.air.ourChannel, CLIENTAGENT_EJECT)

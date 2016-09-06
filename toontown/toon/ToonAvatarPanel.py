@@ -54,7 +54,7 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
         self.frame = DirectFrame(
                                  image=gui.find('**/avatar_panel'),
                                  relief=None,
-                                 pos=(-0.22, 0, -0.47),
+                                 pos=(-0.234, 0, -0.475),
                                  parent=base.a2dTopRight)
         self.disabledImageColor = Vec4(1, 1, 1, 0.4)
         self.text0Color = Vec4(1, 1, 1, 1)
