@@ -33,8 +33,8 @@ class PetAvatarPanel(AvatarPanel.AvatarPanel):
         base.panel = self
         gui = loader.loadModel('phase_3.5/models/gui/PetControlPannel')
         guiScale = 0.116
-        guiPos = (1.12, 0, 0.3)
-        self.frame = DirectFrame(parent=aspect2dp, image=gui, scale=guiScale, pos=guiPos, relief=None)
+        guiPos = (-0.213, 0, -0.70)
+        self.frame = DirectFrame(parent=base.a2dTopRight, image=gui, scale=guiScale, pos=guiPos, relief=None)
         disabledImageColor = Vec4(0.6, 0.6, 0.6, 1)
         text0Color = Vec4(1, 1, 1, 1)
         text1Color = Vec4(0.5, 1, 0.5, 1)
@@ -218,7 +218,7 @@ class PetAvatarPanel(AvatarPanel.AvatarPanel):
         return
 
     def __handleCall(self):
-        if config.GetBool('want-qa-regression', 0):
+        if base.config.GetBool('want-qa-regression', 0):
             self.notify.info('QA-REGRESSION: PET: Call')
         self.notify.debug('__handleCall(): doId=%s' % self.avatar.doId)
         base.localAvatar.b_setPetMovie(self.avId, PetConstants.PET_MOVIE_CALL)
@@ -230,7 +230,7 @@ class PetAvatarPanel(AvatarPanel.AvatarPanel):
         return
 
     def __handleFeed(self):
-        if config.GetBool('want-qa-regression', 0):
+        if base.config.GetBool('want-qa-regression', 0):
             self.notify.info('QA-REGRESSION: PET: Feed')
         self.notify.debug('__handleFeed(): doId=%s' % self.avatar.doId)
         base.localAvatar.b_setPetMovie(self.avId, PetConstants.PET_MOVIE_FEED)
@@ -242,7 +242,7 @@ class PetAvatarPanel(AvatarPanel.AvatarPanel):
         return
 
     def __handleScratch(self):
-        if config.GetBool('want-qa-regression', 1):
+        if base.config.GetBool('want-qa-regression', 1):
             self.notify.info('QA-REGRESSION: PET: Scratch')
         self.notify.debug('__handleScratch(): doId=%s' % self.avatar.doId)
         base.localAvatar.b_setPetMovie(self.avId, PetConstants.PET_MOVIE_SCRATCH)
@@ -276,6 +276,8 @@ class PetAvatarPanel(AvatarPanel.AvatarPanel):
         self.notify.debug('__fillPetInfo(): doId=%s' % avatar.doId)
         self.petView = self.frame.attachNewNode('petView')
         self.petView.setPos(0, 0, 5.4)
+        if hasattr(avatar, 'announceGenerate'):
+            avatar.announceGenerate()
         self.petModel = Pet.Pet(forGui=1)
         self.petModel.setDNA(avatar.getDNA())
         self.petModel.fitAndCenterHead(3.575, forGui=1)

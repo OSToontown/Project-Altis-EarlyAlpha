@@ -27,6 +27,10 @@ Component2IconDict = {'boredom': 'Bored',
  'surprise': 'Surprised',
  'affection': 'Love'}
 
+from otp.nametag import *
+from otp.nametag.NametagConstants import *
+from otp.nametag.NametagGroup import *
+
 class Pet(Avatar.Avatar):
     notify = DirectNotifyGlobal.directNotify.newCategory('Pet')
     SerialNum = 0
@@ -321,7 +325,7 @@ class Pet(Avatar.Avatar):
     def speakMood(self, mood):
         if self.moodModel:
             self.moodModel.hide()
-        if config.GetBool('want-speech-bubble', 1):
+        if base.config.GetBool('want-speech-bubble', 1):
             self.nametag.setChat(random.choice(TTLocalizer.SpokenMoods[mood]), CFSpeech)
         else:
             self.nametag.setChat(random.choice(TTLocalizer.SpokenMoods[mood]), CFThought)
