@@ -25,7 +25,8 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedLawbotBossAI')
     limitHitCount = 6
     hitCountDamage = 35
-    numPies = 10
+    numPies = 20
+    throwType = 0
     maxToonLevels = 77
 
     def __init__(self, air):
@@ -146,6 +147,7 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
         toon = simbase.air.doId2do.get(avId)
         if toon:
             toon.b_setNumPies(self.numPies)
+            toon.b_setPieThrowType(self.throwType)
             toon.__touchedCage = 1
 
     def touchWitnessStand(self):
@@ -657,7 +659,7 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
         self.d_setBattleExperience()
         self.b_setState('Reward')
         BattleExperienceAI.assignRewards(self.involvedToons, self.toonSkillPtsGained, self.suitsKilled, ToontownGlobals.dept2cogHQ(self.dept), self.helpfulToons)
-        preferredDept = random.randrange(len(SuitDNA.suitDepts))
+        preferredDept = random.randrange(len(SuitDNA.suitDepts)-1)
         typeWeights = ['single'] * 70 + ['building'] * 27 + ['invasion'] * 3
         preferredSummonType = random.choice(typeWeights)
         for toonId in self.involvedToons:
@@ -682,7 +684,7 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
                 summonType = 'invasion'
             else:
                 foundOne = False
-                for curDeptIndex in range(len(SuitDNA.suitDepts)):
+                for curDeptIndex in range(len(SuitDNA.suitDepts)-1):
                     if not toon.hasParticularCogSummons(curDeptIndex, cogLevel, prefSummonType):
                         deptIndex = curDeptIndex
                         foundOne = True
@@ -704,7 +706,7 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
                         break
 
                 possibleCogLevel = range(SuitDNA.suitsPerDept)
-                possibleDeptIndex = range(len(SuitDNA.suitDepts))
+                possibleDeptIndex = range(len(SuitDNA.suitDepts)-1)
                 possibleSummonType = ['single', 'building', 'invasion']
                 typeWeights = ['single'] * 70 + ['building'] * 27 + ['invasion'] * 3
                 if not foundOne:
@@ -766,6 +768,8 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
             toon = simbase.air.doId2do.get(toonId)
             if toon:
                 toon.d_setPieType(ToontownBattleGlobals.MAX_TRACK_INDEX + 1)
+                toon.b_setPieThrowType(self.throwType)
+
 
     def takeAwayPies(self):
         for toonId in self.involvedToons:
@@ -902,10 +906,10 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
             battleDifficulty = numDifficultyLevels - 1
         self.b_setBattleDifficulty(battleDifficulty)
 
-@magicWord(category=CATEGORY_SYSADMIN)
-def skipcJ():
+@magicWord(category=CATEGORY_SYSADMIN, types=[str])
+def skipCJ(battle='next'):
     """
-    Skips to the final round of the CJ.
+    Skips to the indicated round of the CJ.
     """
     invoker = spellbook.getInvoker()
     boss = None
@@ -916,24 +920,57 @@ def skipcJ():
                 break
     if not boss:
         return "You aren't in a CJ!"
-    if boss.state in ('PrepareBattleThree', 'BattleThree'):
-        return "You can't skip this round."
-    boss.exitIntroduction()
-    boss.b_setState('PrepareBattleThree')
-    return 'Skipping the first round...'
-	
-@magicWord(category=CATEGORY_SYSADMIN, types=[])
-def endcj():
-    toon = spellbook.getTarget()
-    if toon:
-        z = toon.zoneId
-        for obj in simbase.air.doId2do.values():
-            zone = getattr(obj, "zoneId", -1)
-            if zone == z:
-                if obj.__class__.__name__ == "DistributedLawbotBossAI":
-                    obj.b_setState('Victory')
-                    return "CJ defeated!"
-    
-        return "CJ not found!"
+
+    battle = battle.lower()
+
+    if battle == 'two':
+        if boss.state in ('RollToBattleTwo', 'PrepareBattleTwo', 'BattleTwo', 'PrepareBattleThree', 'BattleThree'):
+            return "You can not return to previous rounds!"
+        else:
+            boss.exitIntroduction()
+            boss.b_setState('RollToBattleTwo')
+            return "Skipping to second round..."
+
+    if battle == 'three':
+        if boss.state in ('PrepareBattleThree', 'BattleThree'):
+            return "You can not return to previous rounds!"
+        else:
+            boss.exitIntroduction()
+            boss.b_setState('PrepareBattleThree')
+            return "Skipping to final round..."
+
+    if battle == 'next':
+        if boss.state in ('PrepareBattleOne', 'BattleOne'):
+            boss.exitIntroduction()
+            boss.b_setState('RollToBattleTwo')
+            return "Skipping current round..."
+        elif boss.state in ('RollToBattleTwo', 'PrepareBattleTwo', 'BattleTwo'):
+            boss.exitIntroduction()
+            boss.b_setState('PrepareBattleThree')
+            return "Skipping current round..."
+        elif boss.state in ('PrepareBattleThree', 'BattleThree'):
+            boss.exitIntroduction()
+            boss.enterNearVictory()
+            boss.b_setState('Victory')
+            return "Skipping final round..."
         
-    return "Error!"
+@magicWord(category=CATEGORY_SYSADMIN)
+def fillJury():
+    """
+    Bombs the chairs
+    """
+    invoker = spellbook.getInvoker()
+    boss = None
+    for do in simbase.air.doId2do.values():
+        if isinstance(do, DistributedLawbotBossAI):
+            if invoker.doId in do.involvedToons:
+                boss = do
+                break
+    if not boss:
+        return "You aren't in a CJ!"
+    if not boss.state == 'BattleTwo':
+        return "You aren't in the cannon round."
+    for i in xrange(len(boss.chairs)):
+        boss.chairs[i].b_setToonJurorIndex(0)
+        boss.chairs[i].requestToonJuror()
+    return 'Filled chairs'
