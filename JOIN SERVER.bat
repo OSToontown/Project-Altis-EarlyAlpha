@@ -9,8 +9,6 @@ set TTR_GAMESERVER=127.0.0.1
 rem Read the contents of PPYTHON_PATH into %PPYTHON_PATH%:
 set /P PPYTHON_PATH=<PPYTHON_PATH
 
-CALL "toontown\toonbase\gameservices.exe"
-
 echo ===============================
 echo Starting Project Altis...
 echo ppython: %PPYTHON_PATH%
