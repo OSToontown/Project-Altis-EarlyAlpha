@@ -3,6 +3,7 @@ from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from direct.distributed.ClockDelta import *
 from toontown.toonbase import ToontownGlobals
+from toontown.toon import NPCToons
 import ToonInterior
 from direct.directnotify import DirectNotifyGlobal
 from direct.distributed import DistributedObject
@@ -15,6 +16,8 @@ from toontown.suit import Suit
 from toontown.quest import QuestParser
 from toontown.dna.DNAStorage import DNAStorage
 from toontown.dna.DNADoor import DNADoor
+from otp.nametag.NametagConstants import *
+from otp.nametag import NametagGlobals
 
 class DistributedTutorialInterior(DistributedObject.DistributedObject):
 
@@ -35,13 +38,13 @@ class DistributedTutorialInterior(DistributedObject.DistributedObject):
         del self.street
         self.sky.removeNode()
         del self.sky
-        self.mickeyMovie.cleanup()
-        del self.mickeyMovie
         self.suitWalkTrack.finish()
         del self.suitWalkTrack
         self.suit.delete()
         del self.suit
-        self.ignore('enterTutotialInterior')
+        self.surlee.delete()
+        del self.surlee
+        self.ignore('enterTutorialInterior')
         DistributedObject.DistributedObject.disable(self)
 
     def delete(self):
@@ -103,6 +106,19 @@ class DistributedTutorialInterior(DistributedObject.DistributedObject):
         self.sky.setDepthWrite(0)
         self.sky.setBin('background', 100)
         self.sky.find('**/Sky').reparentTo(self.sky, -1)
+
+        # Doctor Surlee, who is going to introduce our new citizen!
+        self.surlee = NPCToons.createLocalNPC(2019)
+        self.surlee.useLOD(1000)
+        self.surlee.setPosHpr(10, 24, 0, -10, 0, 0)
+        self.surlee.setH(110)
+        self.surlee.head = self.surlee.find('**/__Actor_head')
+        self.surlee.initializeBodyCollisions('toon')
+        self.surlee.reparentTo(render)
+        self.surlee.show()
+        self.surlee.addActive()
+        self.surlee.startBlink()
+
         hoodId = ZoneUtil.getCanonicalHoodId(self.zoneId)
         self.colors = ToonInteriorColors.colors[hoodId]
         self.replaceRandomInModel(self.interior)
@@ -125,25 +141,41 @@ class DistributedTutorialInterior(DistributedObject.DistributedObject):
         del self.dnaStore
         del self.randomGenerator
         self.interior.flattenMedium()
-        npcOrigin = self.interior.find('**/npc_origin_' + `(self.npc.posIndex)`)
-        if not npcOrigin.isEmpty():
-            self.npc.reparentTo(npcOrigin)
-            self.npc.clearMat()
         self.createSuit()
-        self.mickeyMovie = QuestParser.NPCMoviePlayer('tutorial_mickey', base.localAvatar, self.npc)
+        base.localAvatar.setPosHpr(0, 9, 0, -10, 0, 0)
         place = base.cr.playGame.getPlace()
         if place and hasattr(place, 'fsm') and place.fsm.getCurrentState().getName():
-            self.notify.info('Tutorial movie: Place ready.')
-            self.playMovie()
+            self.notify.info('Tutorial loaded: Ready.')
         else:
             self.notify.info('Tutorial movie: Waiting for place=%s, has fsm=%s' % (place, hasattr(place, 'fsm')))
             if hasattr(place, 'fsm'):
                 self.notify.info('Tutorial movie: place state=%s' % place.fsm.getCurrentState().getName())
-            self.acceptOnce('enterTutorialInterior', self.playMovie)
+            self.acceptOnce('enterTutorialInterior')
 
-    def playMovie(self):
-        self.notify.info('Tutorial movie: Play.')
-        self.mickeyMovie.play()
+        # And here's Doctor Surlee's sequence.
+        self.surleeIntroInterval = Sequence(
+            Func(self.surlee.setChatAbsolute, 'Tom, nobody else can know about this. It\'s extremely important that you--', CFSpeech|CFTimeout),
+            Wait(7),
+            Func(self.surlee.loop, 'walk'),
+            Func(self.surlee.setChatAbsolute, 'Oh, hello there! Looks like we have a new Toon in town.', CFSpeech|CFTimeout),
+            self.surlee.posHprInterval(1, (10, 24, 0), (150, 0, 0)),
+            Func(self.surlee.loop, 'neutral'),
+            Wait(6),
+            Func(self.surlee.setChatAbsolute, 'Hey, who let you in here anyways?', CFSpeech|CFTimeout),
+            Wait(5),
+            Func(self.surlee.setChatAbsolute, 'Well no matter. Welcome to Toontown!', CFSpeech|CFTimeout),
+            Wait(6),
+            Func(self.surlee.setChatAbsolute, 'Hey Tom, how about you introduce this fine Toon to our town.', CFSpeech|CFTimeout),
+            Wait(6),
+            Func(self.surlee.setChatAbsolute, 'Go talk to Tutorial Tom! Use the arrow keys to move.', CFSpeech|CFTimeout),
+            Wait(6),
+            Func(self.surlee.setChatAbsolute, 'While you do that, I\'ll be observing Tom\'s performance. Don\'t mind me!', CFSpeech|CFTimeout),
+            Wait(2),
+            Func(self.surlee.loop, 'walk'),
+            self.surlee.posHprInterval(1, (10, 24, 0), (95, 0, 0)),
+            Func(self.surlee.loop, 'neutral'),
+        )
+        self.surleeIntroInterval.start()
 
     def createSuit(self):
         self.suit = Suit.Suit()
@@ -162,4 +194,3 @@ class DistributedTutorialInterior(DistributedObject.DistributedObject):
 
     def setTutorialNpcId(self, npcId):
         self.npcId = npcId
-        self.npc = self.cr.doId2do[npcId]
