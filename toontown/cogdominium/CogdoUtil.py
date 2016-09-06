@@ -18,11 +18,15 @@ def loadMazeModel(baseName, type = 'model', group = 'area'):
 
 
 def getModelPath(baseName, game = 'shared', type = 'model', group = 'area'):
-    return 'phase_%i/models/cogdominium/tt_%s_%s_%s_%s' % (ModelPhase,
+    extension = ''
+    if hasattr(getBase(), 'air'):
+        extension = '.bam'
+    return 'phase_%i/models/cogdominium/tt_%s_%s_%s_%s%s' % (ModelPhase,
      ModelTypes[type],
      ModelGroups[group],
      Games[game],
-     baseName)
+     baseName,
+     extension)
 
 
 def loadModel(baseName, game = 'shared', type = 'model', group = 'area'):

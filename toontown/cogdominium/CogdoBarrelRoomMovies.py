@@ -10,20 +10,15 @@ from toontown.toonbase.ToontownGlobals import *
 from toontown.toonbase import TTLocalizer
 from toontown.suit import Suit, SuitDNA
 from toontown.toon import Toon, ToonHead, ToonDNA
+from DistributedCogdoInterior import *
 from CogdoUtil import CogdoGameMovie
-import CogdoUtil
+import CogdoBarrelRoomConsts, CogdoUtil
 
-class CogdoExecutiveSuiteIntro(CogdoGameMovie):
-    notify = DirectNotifyGlobal.directNotify.newCategory('CogdoExecutiveSuiteIntro')
-    introDuration = 7
-    cameraMoveDuration = 3
+class CogdoBarrelRoomIntro(CogdoGameMovie):
+    notify = DirectNotifyGlobal.directNotify.newCategory('CogdoElevatorMovie')
 
-    def __init__(self, shopOwner):
+    def __init__(self):
         CogdoGameMovie.__init__(self)
-        self._shopOwner = shopOwner
-        self._lookAtCamTarget = False
-        self._camTarget = None
-        self._camHelperNode = None
         self._toonDialogueSfx = None
         self.toonHead = None
         self.frame = None
@@ -32,6 +27,7 @@ class CogdoExecutiveSuiteIntro(CogdoGameMovie):
     def displayLine(self, text):
         self.notify.debug('displayLine')
         self._dialogueLabel.node().setText(text)
+        self._dialogueLabel.setPos(0.32, 0, -0.72)
         self.toonHead.reparentTo(aspect2d)
         self._toonDialogueSfx.play()
         self.toonHead.setClipPlane(self.clipPlane)
@@ -64,7 +60,7 @@ class CogdoExecutiveSuiteIntro(CogdoGameMovie):
         self.chatBubble.reparentTo(aspect2d)
         self.frame = DirectFrame(geom=self.bg, relief=None, pos=(0.2, 0, -0.6667))
         self.bg.wrtReparentTo(self.frame)
-        self.gameTitleText = DirectLabel(parent=self.frame, text=TTLocalizer.CogdoExecutiveSuiteTitle, scale=TTLocalizer.MRPgameTitleText * 0.8, text_align=TextNode.ACenter, text_font=getSignFont(), text_fg=(1.0, 0.33, 0.33, 1.0), pos=TTLocalizer.MRgameTitleTextPos, relief=None)
+        self.gameTitleText = DirectLabel(parent=self.frame, text=TTLocalizer.CogdoBarrelRoomTitle, scale=TTLocalizer.MRPgameTitleText * 0.8, text_align=TextNode.ACenter, text_font=getSignFont(), text_fg=(1.0, 0.33, 0.33, 1.0), pos=TTLocalizer.MRgameTitleTextPos, relief=None)
         self.chatBubble.wrtReparentTo(self.frame)
         self.frame.hide()
         backgroundGui.removeNode()
@@ -85,14 +81,11 @@ class CogdoExecutiveSuiteIntro(CogdoGameMovie):
         self._toonDialogueSfx = loader.loadSfx('phase_3.5/audio/dial/AV_dog_long.ogg')
         self._camHelperNode = NodePath('CamHelperNode')
         self._camHelperNode.reparentTo(render)
-        dialogue = TTLocalizer.CogdoExecutiveSuiteIntroMessage
+        dialogue = TTLocalizer.CogdoBarrelIntroMovieDialogue
 
         def start():
             self.frame.show()
             base.setCellsAvailable(base.bottomCells + base.leftCells + base.rightCells, 0)
-
-        def showShopOwner():
-            self._setCamTarget(self._shopOwner, -10, offset=Point3(0, 0, 5))
 
         def end():
             self._dialogueLabel.reparentTo(hidden)
@@ -101,30 +94,15 @@ class CogdoExecutiveSuiteIntro(CogdoGameMovie):
             base.setCellsAvailable(base.bottomCells + base.leftCells + base.rightCells, 1)
             self._stopUpdateTask()
 
-        self._ival = Sequence(Func(start), Func(self.displayLine, dialogue), Func(showShopOwner), ParallelEndTogether(camera.posInterval(self.cameraMoveDuration, Point3(8, 0, 13), blendType='easeInOut'), camera.hprInterval(0.5, self._camHelperNode.getHpr(), blendType='easeInOut')), Wait(self.introDuration), Func(end))
+        self._ival = Sequence(Func(start), Func(self.displayLine, dialogue), Wait(CogdoBarrelRoomConsts.BarrelRoomIntroTimeout), Func(end))
         self._startUpdateTask()
         return
-
-    def _setCamTarget(self, targetNP, distance, offset = Point3(0, 0, 0), angle = Point3(0, 0, 0)):
-        camera.wrtReparentTo(render)
-        self._camTarget = targetNP
-        self._camOffset = offset
-        self._camAngle = angle
-        self._camDistance = distance
-        self._camHelperNode.setPos(self._camTarget, self._camOffset)
-        self._camHelperNode.setHpr(self._camTarget, 180 + self._camAngle[0], self._camAngle[1], self._camAngle[2])
-        self._camHelperNode.setPos(self._camHelperNode, 0, self._camDistance, 0)
 
     def _updateTask(self, task):
         dt = globalClock.getDt()
         return task.cont
 
     def unload(self):
-        self._shopOwner = None
-        self._camTarget = None
-        if hasattr(self, '_camHelperNode') and self._camHelperNode:
-            self._camHelperNode.removeNode()
-            del self._camHelperNode
         self.frame.destroy()
         del self.frame
         self.bg.removeNode()
@@ -137,4 +115,3 @@ class CogdoExecutiveSuiteIntro(CogdoGameMovie):
         self.toonHead.delete()
         del self.toonHead
         CogdoGameMovie.unload(self)
-        return
