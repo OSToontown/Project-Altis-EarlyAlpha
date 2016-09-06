@@ -128,7 +128,7 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.send(dg)
         self.notify.info('Creating global objects...')
         self.createGlobals()
-        self.notify.info('Creating the playgrounds...')
+        self.notify.info('Creating zones (Playgrounds and Cog HQs)...')
         self.createZones()
 
         self.statusSender.start()

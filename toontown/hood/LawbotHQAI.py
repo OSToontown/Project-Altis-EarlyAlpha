@@ -8,14 +8,16 @@ from toontown.building import DoorTypes
 from toontown.building.DistributedDoorAI import DistributedDoorAI
 from toontown.building import FADoorCodes
 
-
 class LawbotHQAI(CogHoodAI):
+    notify = directNotify.newCategory('CogHoodAI')
+    notify.setInfo(True)
     HOOD = ToontownGlobals.LawbotHQ
 
     def __init__(self, air):
         CogHoodAI.__init__(self, air)
+        self.notify.info("Creating zone... Lawbot HQ")
         self.createZone()
-        
+
     def createDoor(self):
         # DA Offices
         daInteriorDoor = DistributedCogHQDoorAI(self.air, 0, DoorTypes.EXT_COGHQ, self.HOOD, doorIndex=0, lockValue=FADoorCodes.UNLOCKED)
@@ -31,7 +33,7 @@ class LawbotHQAI(CogHoodAI):
         daInteriorDoor.generateWithRequired(ToontownGlobals.LawbotOfficeExt)
         daInteriorDoor.sendUpdate('setDoorIndex', [0])
         self.doors.append(daInteriorDoor)
-        
+
         # CJ Lobby
         interiorDoor = DistributedCogHQDoorAI(self.air, 0, DoorTypes.INT_COGHQ, self.HOOD, doorIndex=0)
         exteriorDoor = DistributedCogHQDoorAI(self.air, 0, DoorTypes.EXT_COGHQ, ToontownGlobals.LawbotLobby, doorIndex=1, lockValue=FADoorCodes.LB_DISGUISE_INCOMPLETE)
@@ -46,23 +48,22 @@ class LawbotHQAI(CogHoodAI):
         interiorDoor.generateWithRequired(ToontownGlobals.LawbotLobby)
         interiorDoor.sendUpdate('setDoorIndex', [0])
         self.doors.append(interiorDoor)
-            
-    
+
     def createZone(self):
         CogHoodAI.createZone(self)
-        
+
         # Create lobby manager...
         self.createLobbyManager(DistributedLawbotBossAI, ToontownGlobals.LawbotLobby)
-        
+
         # Create CJ elevator.
         self.cjElevator = self.createElevator(DistributedCJElevatorAI, self.lobbyMgr, ToontownGlobals.LawbotLobby, ToontownGlobals.LawbotLobby, boss=True)
-        
+
         # Make our doors.
         self.createDoor()
-        
+
         # Create Suit Planners in the cog playground
         self.createSuitPlanner(self.HOOD)
-        
+
         # Create DA Office Elevators.
         mins = ToontownGlobals.FactoryLaffMinimums[2]
         self.officeA = self.createElevator(DistributedLawOfficeElevatorExtAI, self.air.lawOfficeMgr, ToontownGlobals.LawbotOfficeExt, ToontownGlobals.LawbotStageIntA, 0, minLaff=mins[0])

@@ -2,7 +2,7 @@ from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.fsm import StateData
-from direct.showbase.PythonUtil import PriorityCallbacks
+from toontown.distributed.PythonUtil import PriorityCallbacks
 from toontown.safezone import PublicWalk
 from toontown.launcher import DownloadForceAcknowledge
 import TrialerForceAcknowledge
@@ -18,6 +18,7 @@ from otp.avatar.Avatar import teleportNotify
 from direct.task import Task
 import QuietZoneState
 from toontown.distributed import ToontownDistrictStats
+from otp.ai.MagicWordGlobal import *
 
 class Place(StateData.StateData, FriendsListManager.FriendsListManager):
     notify = DirectNotifyGlobal.directNotify.newCategory('Place')
@@ -937,3 +938,44 @@ class Place(StateData.StateData, FriendsListManager.FriendsListManager):
     def handleQuietZoneDone(self):
         how = base.cr.handlerArgs['how']
         self.fsm.request(how, [base.cr.handlerArgs])
+
+def hookTeleportInDone(place):
+    '''
+    Called instead of Place.py's original
+    teleportInDone function; indicates that
+    the destination has been reached.
+    '''
+    global HOOD
+    teleportNotify.debug('Hooked TeleportInDone')
+    if hasattr(place, 'fsm'):
+        teleportNotify.debug('teleportInDone: %s' % place.nextState)
+        place.fsm.request(place.nextState, [1])
+    try:
+        coordinates = ToontownGlobals.hood2Coords[HOOD]
+        base.localAvatar.setPos(*coordinates[0])
+        base.localAvatar.setHpr(*coordinates[1])
+        HOOD = None
+    except:
+        return
+
+@magicWord(category=CATEGORY_MODERATION, types=[str])
+def tp(hood):
+    '''
+    Teleport to hood.
+    '''
+    global HOOD
+    try:
+        HOOD = hood.upper()
+        request = ToontownGlobals.hood2Id[HOOD]
+        hoodNames = ToontownGlobals.hoodNameMap
+        place = base.cr.playGame.getPlace()
+    except:
+        return 'Invalid location!'
+
+    Place.teleportInDone = lambda place: hookTeleportInDone(place)
+    hoodId = request[0]
+    if len(request) == 2:
+        place.handleBookCloseTeleport(*request)
+    else:
+        place.handleBookCloseTeleport(hoodId, hoodId)
+    return 'Heading to: {}!'.format(hoodNames[hoodId][-1])

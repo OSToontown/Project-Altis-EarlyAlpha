@@ -16,7 +16,8 @@ class ToontownUberRepository(ToontownInternalRepository):
             rootObj = DistributedDirectoryAI(self)
             rootObj.generateWithRequiredAndId(self.getGameDoId(), 0, 0)
         self.createGlobals()
-
+        self.notify.info('UberDOG has successfully initialized.')
+		#nice to know it didnt hang
     def createGlobals(self):
         """
         Create "global" objects.

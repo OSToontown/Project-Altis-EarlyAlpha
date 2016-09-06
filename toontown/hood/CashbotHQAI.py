@@ -8,12 +8,15 @@ from toontown.building import DoorTypes
 from toontown.building import FADoorCodes
 
 class CashbotHQAI(CogHoodAI):
+    notify = directNotify.newCategory('CogHoodAI')
+    notify.setInfo(True)
     HOOD = ToontownGlobals.CashbotHQ
 
     def __init__(self, air):
         CogHoodAI.__init__(self, air)
+        self.notify.info("Creating zone... Cashbot HQ")
         self.createZone()
-        
+
     def createDoor(self):
         interiorDoor = DistributedCogHQDoorAI(self.air, 0, DoorTypes.INT_COGHQ, self.HOOD, doorIndex=0)
         exteriorDoor = DistributedCogHQDoorAI(self.air, 0, DoorTypes.EXT_COGHQ, ToontownGlobals.CashbotLobby, doorIndex=0, lockValue=FADoorCodes.CB_DISGUISE_INCOMPLETE)
@@ -27,23 +30,22 @@ class CashbotHQAI(CogHoodAI):
         interiorDoor.generateWithRequired(ToontownGlobals.CashbotLobby)
         interiorDoor.sendUpdate('setDoorIndex', [0])
         self.doors.append(interiorDoor)
-            
-    
+
     def createZone(self):
         CogHoodAI.createZone(self)
-        
+
         # Create lobby manager...
         self.createLobbyManager(DistributedCashbotBossAI, ToontownGlobals.CashbotLobby)
-        
+
         # Create CFO elevator.
         self.cfoElevator = self.createElevator(DistributedCFOElevatorAI, self.lobbyMgr, ToontownGlobals.CashbotLobby, ToontownGlobals.CashbotLobby, boss=True)
-        
+
         # Make our doors.
         self.createDoor()
-        
+
         # Create Suit Planners in the cog playground
         self.createSuitPlanner(self.HOOD)
-        
+
         # Create mint elevators.
         mins = ToontownGlobals.FactoryLaffMinimums[1]
         self.cointMint = self.createElevator(DistributedMintElevatorExtAI, self.air.mintMgr, self.HOOD, ToontownGlobals.CashbotMintIntA, 0, minLaff=mins[0])

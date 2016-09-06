@@ -8,12 +8,15 @@ from toontown.building import DoorTypes
 from toontown.building import FADoorCodes
 
 class SellbotHQAI(CogHoodAI):
+    notify = directNotify.newCategory('CogHoodAI')
+    notify.setInfo(True)
     HOOD = ToontownGlobals.SellbotHQ
 
     def __init__(self, air):
         CogHoodAI.__init__(self, air)
+        self.notify.info("Creating zone... Sellbot HQ")
         self.createZone()
-        
+
     def createDoor(self):
         interiorDoor = DistributedCogHQDoorAI(self.air, 0, DoorTypes.INT_COGHQ, ToontownGlobals.SellbotHQ, doorIndex=0)
         for i in range(4):
@@ -29,24 +32,23 @@ class SellbotHQAI(CogHoodAI):
         interiorDoor.generateWithRequired(ToontownGlobals.SellbotLobby)
         interiorDoor.sendUpdate('setDoorIndex', [0])
         self.doors.append(interiorDoor)
-            
-    
+
     def createZone(self):
         CogHoodAI.createZone(self)
-        
+
         # Create lobby manager...
         self.createLobbyManager(DistributedSellbotBossAI, ToontownGlobals.SellbotLobby)
-        
+
         # Create VP elevator.
         self.vpElevator = self.createElevator(DistributedVPElevatorAI, self.lobbyMgr, ToontownGlobals.SellbotLobby, ToontownGlobals.SellbotLobby, boss=True)
 
         # Make our doors.
         self.createDoor()
-        
+
         # Create Suit Planners in the cog playground and factory waiting area.
         self.createSuitPlanner(self.HOOD)
         self.createSuitPlanner(ToontownGlobals.SellbotFactoryExt)
-        
+
         # Create factory elevators.
         mins = ToontownGlobals.FactoryLaffMinimums[0]
         self.frontEntrance = self.createElevator(DistributedFactoryElevatorExtAI, self.air.factoryMgr, ToontownGlobals.SellbotFactoryExt, ToontownGlobals.SellbotFactoryInt, 0, minLaff=mins[0])

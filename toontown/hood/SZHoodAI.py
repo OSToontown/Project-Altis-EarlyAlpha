@@ -17,13 +17,13 @@ class SZHoodAI(HoodAI):
     HoodAIs are responsible for spawning all TreasurePlanners, ponds, 
     and other hood objects, etc.
     """
-    
+
     def __init__(self, air):
         HoodAI.__init__(self, air)
 
         self.safezone = self.HOOD
         self.streets = {}
-        
+
         self.trolley = None
         self.pond = None
         self.buildingMgr = None
@@ -31,10 +31,11 @@ class SZHoodAI(HoodAI):
         self.createZone()
         self.createStreets()
 
-    def createZone(self):
+    def createZone(self, genTrolley = True):
         HoodAI.createZone(self)
         self.air.dnaStoreMap[self.HOOD] = self.air.loadDNA(self.air.genDNAFileName(self.HOOD)).generateData()
-        self.createTrolley()
+        if genTrolley:
+            self.createTrolley()
         self.createTreasurePlanner()
         self.buildingMgr = DistributedBuildingMgrAI(self.air, self.HOOD, self.air.dnaStoreMap[self.HOOD], self.air.trophyMgr)
         NPCToons.createNpcsInZone(self.air, self.HOOD)
