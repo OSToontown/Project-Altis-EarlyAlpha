@@ -127,6 +127,8 @@ class DistributedLawbotChair(DistributedObject.DistributedObject, FSM.FSM):
         head = self.cogJuror.find('**/joint_head')
         self.cogJuror.prop.reparentTo(head)
         self.propTrack = Sequence(ActorInterval(self.cogJuror.prop, 'propeller', startFrame=8, endFrame=25))
+        self.cogJuror.nametag3d.stash()
+        self.cogJuror.nametag.destroy()
         return
 
     def attachColSphere(self):
@@ -345,6 +347,8 @@ class DistributedLawbotChair(DistributedObject.DistributedObject, FSM.FSM):
     def loadToonJuror(self):
         self.cleanupToonJuror()
         self.toonJuror = NPCToons.createLocalNPC(ToontownGlobals.LawbotBossBaseJurorNpcId + self.toonJurorIndex)
+        self.toonJuror.nametag3d.stash()
+        self.toonJuror.nametag.destroy()
         self.toonJuror.hide()
 
     def setToonJurorIndex(self, newVal):
