@@ -22,7 +22,6 @@ class PhotoAlbumPage(ShtikerPage.ShtikerPage):
         self.photos = {}
         self.selectedFileName = None
         self.selectedFilePath = None
-        #TODO: Localizer support for screenshot storing and names
         self.installPath = os.getcwd()
         self.photoPath = TTLocalizer.ScreenshotPath
         self.photoIndex = 0
@@ -121,7 +120,7 @@ class PhotoAlbumPage(ShtikerPage.ShtikerPage):
             oldName = self.selectedFileName
             numUnders = oldName.count(separator)
             if numUnders == 0:
-                newName = oldName[0:15] + separator + str + separator + oldName[14:]
+                newName = oldName[0:17] + separator + str + separator + oldName[16:]
             elif numUnders == 2:
                 sp = oldName.split(separator)
                 newName = sp[0] + separator + str + separator + sp[2]
@@ -232,7 +231,7 @@ class PhotoAlbumPage(ShtikerPage.ShtikerPage):
         files = os.listdir(self.photoPath)
         photos = []
         for fileName in files:
-            if fileName[0:14] == 'ttr-screenshot' and fileName[-4:] == '.jpg':
+            if fileName[0:16] == 'Altis-screenshot' and fileName[-4:] == '.jpg':
                 photos.append(fileName)          
 
         return photos
@@ -300,10 +299,19 @@ class PhotoAlbumPage(ShtikerPage.ShtikerPage):
         ShtikerPage.ShtikerPage.exit(self)
 
     def updateArrows(self):
-        pass
+        self.photoIndex = 0
+        self.chosePhoto(self.getPhotos()[self.photoIndex])
 
     def prevPhoto(self):
-        pass
+        try:
+            self.chosePhoto(self.getPhotos()[self.photoIndex])
+            self.photoIndex -= 1
+        except:
+            self.photoIndex = 0
 
     def nextPhoto(self):
-        pass
+        try:
+            self.chosePhoto(self.getPhotos()[self.photoIndex])
+            self.photoIndex += 1
+        except:
+            self.photoIndex = 0
