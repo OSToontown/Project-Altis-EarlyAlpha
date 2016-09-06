@@ -1,9 +1,10 @@
 from pandac.PandaModules import *
-from direct.showbase import PythonUtil
+from toontown.distributed import PythonUtil
 import __builtin__
 
 import argparse
 
+import os
 parser = argparse.ArgumentParser()
 parser.add_argument('--base-channel', help='The base channel that the server may use.')
 parser.add_argument('--max-channels', help='The number of channels the server may use.')
@@ -49,10 +50,13 @@ try:
 except SystemExit:
     raise
 except Exception:
-    info = PythonUtil.describeException()
+    if not os.path.exists('logs/'):
+        os.mkdir('logs/')
+    info = describeException()
     simbase.air.writeServerEvent('ai-exception', avId=simbase.air.getAvatarIdFromSender(), accId=simbase.air.getAccountIdFromSender(), exception=info)
-    # TEMP! (due to lack of Kibana) Dump crash to the FS.
-    with open(config.GetString('ai-crash-log-name', 'ai-crash.txt'), 'w+') as file:
-        # w+ empties log and writes fresh (meaning 1 exception at a time)
+    with open(config.GetString('ai-crash-log-name', 'logs/ai-crash.log'), 'w+') as file:
+        # This creates a txt file known as "ai-crash.log" in the logs directory, with all the
+        # other Toontown log files. This will, as stated, log AI crashes. It only logs the most
+        # recent crash, meaning the file is cleared every time there's another crash.
         file.write(info + "\n")
     raise
