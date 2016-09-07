@@ -4751,8 +4751,21 @@ def maxToon(hasConfirmed='UNCONFIRMED'):
     toon.b_setHoodsVisited(ToontownGlobals.Hoods)
     toon.b_setTeleportAccess(ToontownGlobals.HoodsForTeleportAll)
 
+    # Unlock all of the emotes:
+    emotes = list(toon.getEmoteAccess())
+    for emoteId in OTPLocalizer.EmoteFuncDict.values():
+        if emoteId >= len(emotes):
+            continue
+        # The following emotions are ignored because they are unable to be
+        # obtained:
+        if emoteId in (17, 18, 19):
+            continue
+        emotes[emoteId] = 1
+    toon.b_setEmoteAccess(emotes)
+
     # General end game settings
-    toon.b_setQuestCarryLimit(ToontownGlobals.MaxQuestCarryLimit)
+    toon.b_setQuests([])
+    toon.b_setQuestCarryLimit(4)
     toon.b_setRewardHistory(Quests.ELDER_TIER, [])
     toon.b_setMaxMoney(250)
     toon.b_setMoney(toon.getMaxMoney())

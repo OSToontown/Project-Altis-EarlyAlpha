@@ -1,84 +1,76 @@
+from pandac.PandaModules import *
 from direct.gui.DirectGui import *
-from panda3d.core import *
 from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import TTLocalizer
+from toontown.hood import ZoneUtil
 import random
 
-class ToontownLoadingScreen:
+class ToontownLoadingScreen():
+    __module__ = __name__
 
     def __init__(self):
         self.__expectedCount = 0
         self.__count = 0
         self.gui = loader.loadModel('phase_3/models/gui/progress-background')
-        self.tip = DirectLabel(guiId='ToontownLoadingScreenTip', parent=self.gui, relief=None, text='', text_scale=0.05, textMayChange=1, pos=(0.0, 0.0, -0.95), text_fg=(0.4, 0.3, 0.2, 1), text_align=TextNode.ACenter)
-        self.toon = DirectLabel(parent=self.gui, relief=None, pos=(0, 0, 0.80), text='', textMayChange=1, text_scale=0.17, text_fg=(0.952, 0.631, 0.007, 1), text_align=TextNode.ACenter, text_font=ToontownGlobals.getSignFont())
-        self.starring = DirectLabel(parent=self.gui, relief=None, pos=(0, 0, 0.70), text='', textMayChange=1, text_scale=0.10, text_fg=(0.968, 0.917, 0.131, 1), text_align=TextNode.ACenter, text_font=ToontownGlobals.getSignFont())
-        self.title = DirectLabel(guiId='ToontownLoadingScreenTitle', parent=self.gui, relief=None, pos=(0, 0, -0.77), text='', textMayChange=1, text_scale=0.15, text_fg=(0.9, 0.631, 0.007, 1), text_align=TextNode.ACenter, text_font=ToontownGlobals.getSignFont())
+        self.banner = loader.loadModel('phase_3/models/gui/toon_council').find('**/scroll')
+        self.banner.reparentTo(self.gui)
+        self.banner.setScale(0.4, 0.4, 0.4)
+        self.tip = DirectLabel(guiId='ToontownLoadingScreenTip', parent=self.banner, relief=None, text='', text_scale=TTLocalizer.TLStip, textMayChange=1, pos=(-1.2, 0.0, 0.1), text_fg=(0.4, 0.3, 0.2, 1), text_wordwrap=13, text_align=TextNode.ALeft)
+        self.title = DirectLabel(guiId='ToontownLoadingScreenTitle', parent=self.gui, relief=None, pos=(-1.06, 0, -0.77), text='', textMayChange=1, text_scale=0.08, text_fg=(0, 0, 0.5, 1), text_align=TextNode.ALeft)
         self.waitBar = DirectWaitBar(guiId='ToontownLoadingScreenWaitBar', parent=self.gui, frameSize=(-1.06,
          1.06,
          -0.03,
-         0.03), pos=(0, 0, -0.85), text='')
-        self.head = None
-
-        # This will bring up the placer panel, which is useful for positioning objects but also rather buggy.
-        # Make sure the models in {Panda3D}\models\misc are converted to .bam, or it will crash.
-        if config.GetBool('want-placer-panel', False):
-            self.gui.place()
+         0.03), pos=(0, 1, -0.85), text='')
+        logoScale = (1, 1, 0.35)  # Scale for our logo.
+        self.logo = OnscreenImage(
+            image='phase_3/maps/toontown-logo.png',
+            scale=logoScale)
+        self.logo.reparentTo(hidden)
+        self.logo.setTransparency(TransparencyAttrib.MAlpha)
+        scale = self.logo.getScale()
+        # self.logo.setPos(scale[0], 0, -scale[2])
+        self.logo.setPos(0, 0, 0.65)
         return
 
     def destroy(self):
         self.tip.destroy()
-        self.toon.destroy()
-        self.starring.destroy()
         self.title.destroy()
         self.waitBar.destroy()
+        self.banner.removeNode()
         self.gui.removeNode()
+        self.logo.removeNode()
 
     def getTip(self, tipCategory):
-        return TTLocalizer.TipTitle + random.choice(TTLocalizer.TipDict.get(tipCategory))
+        return TTLocalizer.TipTitle + '\n' + random.choice(TTLocalizer.TipDict.get(tipCategory))
 
-    def resetBackground(self):
-        base.setBackgroundColor(ToontownGlobals.DefaultBackgroundColor)
-
-    def begin(self, range, label, gui, tipCategory):
+    def begin(self, range, label, gui, tipCategory, zoneId):
         self.waitBar['range'] = range
-        self.tip['text'] = self.getTip(tipCategory)
         self.title['text'] = label
+        self.tip['text'] = self.getTip(tipCategory)
         self.__count = 0
         self.__expectedCount = range
         if gui:
-            base.setBackgroundColor(Vec4(0.952, 0.796, 0.317, 1))
-            if base.localAvatarStyle:
-                from toontown.toon import ToonHead
-                self.toon['text'] = base.localAvatarName
-                self.starring['text'] = TTLocalizer.StarringIn                
-                self.head = ToonHead.ToonHead()
-                self.head.setupHead(base.localAvatarStyle, forGui=1)
-                self.head.reparentTo(self.gui)
-                self.head.fitAndCenterHead(1, forGui=1)
+            self.waitBar.reparentTo(self.gui)
+            self.title.reparentTo(self.gui)
+            self.logo.reparentTo(self.gui)
             self.gui.reparentTo(aspect2dp, NO_FADE_SORT_INDEX)
         else:
             self.waitBar.reparentTo(aspect2dp, NO_FADE_SORT_INDEX)
             self.title.reparentTo(aspect2dp, NO_FADE_SORT_INDEX)
+            self.logo.reparentTo(hidden)
             self.gui.reparentTo(hidden)
         self.waitBar.update(self.__count)
 
     def end(self):
         self.waitBar.finish()
         self.waitBar.reparentTo(self.gui)
-        self.toon.reparentTo(self.gui)
-        self.starring.reparentTo(self.gui)
         self.title.reparentTo(self.gui)
         self.gui.reparentTo(hidden)
-        self.resetBackground()
-        if self.head:
-            self.head.delete()
-            self.head = None        
+        self.logo.reparentTo(hidden)
         return (self.__expectedCount, self.__count)
 
     def abort(self):
         self.gui.reparentTo(hidden)
-        self.resetBackground()
 
     def tick(self):
         self.__count = self.__count + 1
