@@ -303,6 +303,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
          None,
          None,
          None,
+         None,
+         None,
          None]
         self.elevatorNodePath = hidden.attachNewNode('elevatorNodePath')
         if cogdo:
