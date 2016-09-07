@@ -5,7 +5,7 @@ import PartyGlobals
 
 class DistributedPartyJukeboxActivityBaseAI(DistributedPartyActivityAI):
     notify = DirectNotifyGlobal.directNotify.newCategory("DistributedPartyJukeboxActivityBaseAI")
-    
+
     def __init__(self, air, parent, activityTuple):
         DistributedPartyActivityAI.__init__(self, air, parent, activityTuple)
         self.music = PartyGlobals.PhaseToMusicData40
@@ -13,12 +13,14 @@ class DistributedPartyJukeboxActivityBaseAI(DistributedPartyActivityAI):
         self.owners = []
         self.currentToon = 0
         self.playing = False
-        
+        self.paused = False
+        self.accept('fireworksStarted%i' % self.getPartyDoId(), self.handleFireworksStart)
+        self.accept('fireworksFinished%i' % self.getPartyDoId(), self.handleFireworksEnd)
+
     def delete(self):
         taskMgr.remove('playSong%d' % self.doId)
         DistributedPartyActivityAI.delete(self)
-        
-    
+
     def setNextSong(self, song):
         avId = self.air.getAvatarIdFromSender()
         phase = self.music.get(song[0])
@@ -37,36 +39,42 @@ class DistributedPartyJukeboxActivityBaseAI(DistributedPartyActivityAI):
             self.owners.append(avId)
         for toon in self.toonsPlaying:
             self.sendUpdateToAvatarId(toon, 'setSongInQueue', [song])
+        if self.paused:
+            return
         if not self.playing:
-            #stop default party music...
+            # Stop default party music...
             self.d_setSongPlaying([0, ''], 0)
+            taskMgr.remove('playSong%d' % self.doId)
             self.__startPlaying()
-            
+
     def __startPlaying(self):
+        if self.paused:
+            return
         if len(self.queue) == 0:
-            #start default party music!
+            # Start default party music!
             self.d_setSongPlaying([13, 'party_original_theme.ogg'], 0)
             self.playing = False
+            taskMgr.doMethodLater(56, self.__pause, 'playSong%d' % self.doId, extraArgs=[])
             return
         self.playing = True
-        
-        #get song information....
+
+        # Get song information....
         details = self.queue.pop(0)
         owner = self.owners.pop(0)
-        
+
         songInfo = self.music[details[0]][details[1]]
-        
-        #play song!
+
+        # Play song!
         self.d_setSongPlaying(details, owner)
-        
+
         taskMgr.doMethodLater(songInfo[1]*PartyGlobals.getMusicRepeatTimes(songInfo[1]), self.__pause, 'playSong%d' % self.doId, extraArgs=[])
-        
+
     def __pause(self):
-        #stop music!
+        # Stop music!
         self.d_setSongPlaying([0, ''], 0)
-        #and hold.
+        # And hold.
         taskMgr.doMethodLater(PartyGlobals.MUSIC_GAP, self.__startPlaying, 'playSong%d' % self.doId, extraArgs=[])
-        
+
     def toonJoinRequest(self):
         avId = self.air.getAvatarIdFromSender()
         if self.currentToon:
@@ -95,7 +103,7 @@ class DistributedPartyJukeboxActivityBaseAI(DistributedPartyActivityAI):
         self.toonsPlaying.remove(self.currentToon)
         self.updateToonsPlaying()
         self.currentToon = 0
-        
+
     def d_setSongPlaying(self, details, owner):
         self.sendUpdate('setSongPlaying', [details, owner])
 
@@ -119,12 +127,21 @@ class DistributedPartyJukeboxActivityBaseAI(DistributedPartyActivityAI):
             self.air.writeServerEvent('suspicious', avId=avId, issue='Host tried to move non-existent song to the top of the queue!')
             return
         index = self.owners.index(host)
-        
+
         self.owners.remove(host)
         song = self.queue.pop(index)
-        
+
         self.owners.insert(0, host)
         self.queue.insert(0, song)
-        
+
         for toon in self.toonsPlaying:
             self.sendUpdateToAvatarId(toon, 'moveHostSongToTop', [])
+
+    def handleFireworksStart(self):
+        taskMgr.remove('playSong%d' % self.doId)
+        self.paused = True
+        self.d_setSongPlaying([0, ''], 0)
+
+    def handleFireworksEnd(self):
+        self.paused = False
+        self.__startPlaying()

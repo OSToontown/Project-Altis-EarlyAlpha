@@ -10,7 +10,7 @@ MaxPlannedYear = 2030
 MinPlannedYear = 1975
 JellybeanMultiplier = 1.5
 JellyBeanDayMultiplier = 2
-PARTY_DURATION = 1800
+PARTY_DURATION = 1800.0
 EventsPageGuestNameMaxWidth = 0.42
 EventsPageGuestNameMaxLetters = 18
 EventsPageHostNameMaxWidth = 0.37
@@ -30,7 +30,7 @@ JarLabelMaxedTextColor = (1.0,
 TuftsOfGrass = 75
 MaxToonsAtAParty = 20
 DefaultPartyDuration = 0.5
-DelayBeforeAutoKick = 1.0
+DelayBeforeAutoKick = 30.0
 MaxHostedPartiesPerToon = 1
 PartyEditorGridBounds = ((-0.11, 0.289), (0.55, -0.447))
 PartyEditorGridCenter = (PartyEditorGridBounds[0][0] + (PartyEditorGridBounds[1][0] - PartyEditorGridBounds[0][0]) / 2.0, PartyEditorGridBounds[1][1] + (PartyEditorGridBounds[0][1] - PartyEditorGridBounds[1][1]) / 2.0)
@@ -90,7 +90,8 @@ ActivityIds = PythonUtil.Enum(('PartyJukebox',
  'PartyValentineJukebox',
  'PartyValentineJukebox40',
  'PartyValentineTrampoline'))
-PartyEditorActivityOrder = [ ActivityIds.PartyClock,
+PartyEditorActivityOrder = [ActivityIds.PartyCog,
+ ActivityIds.PartyWinterCog,
  ActivityIds.PartyJukebox,
  ActivityIds.PartyJukebox40,
  ActivityIds.PartyValentineJukebox,
@@ -100,26 +101,16 @@ PartyEditorActivityOrder = [ ActivityIds.PartyClock,
  ActivityIds.PartyValentineTrampoline,
  ActivityIds.PartyVictoryTrampoline,
  ActivityIds.PartyWinterTrampoline,
+ ActivityIds.PartyCatch,
+ ActivityIds.PartyWinterCatch,
  ActivityIds.PartyDance,
  ActivityIds.PartyDance20,
  ActivityIds.PartyValentineDance,
  ActivityIds.PartyValentineDance20,
  ActivityIds.PartyTugOfWar,
- ActivityIds.PartyCatch,
- ActivityIds.PartyWinterCatch,
- ActivityIds.PartyCog,
- ActivityIds.PartyWinterCog,
- ActivityIds.PartyFireworks]
-UnreleasedActivityIds = (ActivityIds.PartyCog,
- ActivityIds.PartyWinterCog,
- ActivityIds.PartyValentineJukebox,
- ActivityIds.PartyValentineJukebox40,
- ActivityIds.PartyValentineTrampoline,
- ActivityIds.PartyWinterTrampoline,
- ActivityIds.PartyWinterCatch,
- ActivityIds.PartyValentineDance,
- ActivityIds.PartyValentineDance20,
- ActivityIds.PartyTugOfWar)
+ ActivityIds.PartyFireworks,
+ ActivityIds.PartyClock]
+UnreleasedActivityIds = ()
 MutuallyExclusiveActivities = ((ActivityIds.PartyJukebox, ActivityIds.PartyJukebox40),
  (ActivityIds.PartyValentineJukebox, ActivityIds.PartyValentineJukebox40),
  (ActivityIds.PartyDance, ActivityIds.PartyDance20),
@@ -166,21 +157,6 @@ DecorationIds = PythonUtil.Enum(('BalloonAnvil',
  'snowman',
  'snowDoodle',
  'BalloonAnvilValentine'))
-TTRUnreleasedDecor = [DecorationIds.HeartTarget,
- DecorationIds.HeartBanner,
- DecorationIds.FlyingHeart,
- DecorationIds.Hydra,
- DecorationIds.BannerVictory,
- DecorationIds.CannonVictory,
- DecorationIds.CogStatueVictory,
- DecorationIds.TubeCogVictory,
- DecorationIds.CogIceCreamVictory,
- DecorationIds.cogIceCreamWinter,
- DecorationIds.StageWinter,
- DecorationIds.CogStatueWinter,
- DecorationIds.snowman,
- DecorationIds.snowDoodle,
- DecorationIds.BalloonAnvilValentine]
 DECORATION_VOLUME = 1.0
 DECORATION_CUTOFF = 45
 VictoryPartyDecorationIds = frozenset([DecorationIds.Hydra,
@@ -226,6 +202,10 @@ PlayGroundToPartyClockColors = {'the_burrrgh': (53.0 / 255.0,
                          62.0 / 255.0,
                          142.0 / 255.0,
                          1.0),
+ 'sewer':   (128.0 / 255.0,
+             128.0 / 255.0,
+             128.0 / 255.0,
+             1.0),
  'toontown_central': (77.0 / 255.0,
                       137.0 / 255.0,
                       52.0 / 255.0,
@@ -233,7 +213,7 @@ PlayGroundToPartyClockColors = {'the_burrrgh': (53.0 / 255.0,
 PartyGridUnitLength = [14.4, 14.6]
 PartyGridHeadingConverter = 15.0
 PartyGridToPandaOffset = (-PartyGridUnitLength[0] * PartyEditorGridSize[0] / 2.0, -PartyGridUnitLength[1] * PartyEditorGridSize[1] / 2.0)
-PartyCostMultiplier = 1 # NO PRICE IS 0, DEFAULT IS 1 NIGGAS
+PartyCostMultiplier = 1
 MinimumPartyCost = 100 * PartyCostMultiplier
 ActivityInformationDict = {ActivityIds.PartyJukebox: {'cost': int(50 * PartyCostMultiplier),
                             'gridsize': (1, 1),
@@ -783,17 +763,26 @@ PhaseToMusicData = {3.5: {'TC_SZ.ogg': [TTLocalizer.MusicTcSz, 57]},
  13: {'party_original_theme.ogg': [TTLocalizer.MusicPartyOriginalTheme, 56],
       'party_generic_theme_jazzy.ogg': [TTLocalizer.MusicPartyGenericThemeJazzy, 64]}}
 PhaseToMusicData40 = {3.5: {'encntr_general_bg.ogg': [TTLocalizer.MusicEncntrGeneralBg, 30],
-       'TC_SZ.ogg': [TTLocalizer.MusicTcSz, 57]},
+       'TC_SZ.ogg': [TTLocalizer.MusicTcSz, 57],
+       'TC_SZ_activity.ogg': [TTLocalizer.MusicTcSzActivity, 53]},
  3: {'create_a_toon.ogg': [TTLocalizer.MusicCreateAToon, 175],
-     'ttr_theme.ogg': [TTLocalizer.MusicTtrTheme, 51]},
+     'tt_theme.ogg': [TTLocalizer.MusicTtTheme, 51],
+     'ttr_theme.ogg': [TTLocalizer.MusicTtrTheme, 84]},
  4: {'minigame_race.ogg': [TTLocalizer.MusicMinigameRace, 77],
      'TC_nbrhood.ogg': [TTLocalizer.MusicTcNbrhood, 59],
      'MG_TwoDGame.ogg': [TTLocalizer.MusicMgTwodgame, 60],
      'MG_CogThief.ogg': [TTLocalizer.MusicMgCogthief, 61],
      'MG_Vine.ogg': [TTLocalizer.MusicMgVine, 32],
      'MG_IceGame.ogg': [TTLocalizer.MusicMgIcegame, 56],
-     'FF_safezone.ogg': [TTLocalizer.MusicFfSafezone, 47]},
+     'MG_Pairing.ogg': [TTLocalizer.MusicMgPairing, 33],
+     'MG_cannon_game.ogg': [TTLocalizer.MusicMgCannonGame, 29],
+     'MG_Diving.ogg': [TTLocalizer.MusicMgTarget, 34],
+     'MG_Target.ogg': [TTLocalizer.MusicMgDiving, 33],
+     'MG_toontag.ogg': [TTLocalizer.MusicMgToontag, 58],
+     'MG_Travel.ogg': [TTLocalizer.MusicMgTravel, 33],
+     'minigame_race.ogg': [TTLocalizer.MusicMinigameRace, 79]},
  6: {'DD_SZ.ogg': [TTLocalizer.MusicDdSz, 33],
+     'DD_SZ_activity.ogg': [TTLocalizer.MusicDdSzActivity, 63],
      'GZ_PlayGolf.ogg': [TTLocalizer.MusicGzPlaygolf, 61],
      'GS_SZ.ogg': [TTLocalizer.MusicGsSz, 60],
      'OZ_SZ.ogg': [TTLocalizer.MusicOzSz, 31],
@@ -802,26 +791,35 @@ PhaseToMusicData40 = {3.5: {'encntr_general_bg.ogg': [TTLocalizer.MusicEncntrGen
      'GS_Race_RR.ogg': [TTLocalizer.MusicGsRaceRr, 60],
      'GZ_SZ.ogg': [TTLocalizer.MusicGzSz, 59],
      'MM_SZ.ogg': [TTLocalizer.MusicMmSz, 76],
+     'MM_SZ_activity.ogg': [TTLocalizer.MusicMmSzActivity, 40],
+     'MM_nbrhood.ogg': [TTLocalizer.MusicMmNbrhood, 55],
      'DD_nbrhood.ogg': [TTLocalizer.MusicDdNbrhood, 67],
      'GS_KartShop.ogg': [TTLocalizer.MusicGsKartshop, 32]},
  7: {'encntr_general_bg_indoor.ogg': [TTLocalizer.MusicEncntrGeneralBgIndoor, 31],
+     'encntr_toon_winning_indoor.ogg': [TTLocalizer.MusicEncntrToonWinningIndoor, 32],
+     'tt_elevator.ogg': [TTLocalizer.MusicTtElevator, 13],
      'encntr_suit_winning_indoor.ogg': [TTLocalizer.MusicEncntrGeneralSuitWinningIndoor, 36]},
  8: {'DL_nbrhood.ogg': [TTLocalizer.MusicDlNbrhood, 30],
+     'DG_nbrhood.ogg': [TTLocalizer.MusicDgNbrhood, 56],
+     'TB_nbrhood.ogg': [TTLocalizer.MusicTbNbrhood, 51],
      'DG_SZ.ogg': [TTLocalizer.MusicDgSz, 48],
      'DL_SZ.ogg': [TTLocalizer.MusicDlSz, 33],
-     'TB_SZ.ogg': [TTLocalizer.MusicTbSz, 54]},
+     'TB_SZ.ogg': [TTLocalizer.MusicTbSz, 54],
+     'DL_SZ_activity.ogg': [TTLocalizer.MusicDlSzActivity, 32],
+     'TB_SZ_activity.ogg': [TTLocalizer.MusicTbSzActivity, 49]},
  9: {'encntr_hall_of_fame.ogg': [TTLocalizer.MusicEncntrHallOfFame, 51],
+     'CogHQ_finale.ogg': [TTLocalizer.MusicCoghqFinale, 65],
      'CHQ_FACT_bg.ogg': [TTLocalizer.MusicChqFactBg, 50],
      'encntr_suit_winning.ogg': [TTLocalizer.MusicEncntrSuitWinning, 31],
+     'encntr_toon_winning.ogg': [TTLocalizer.MusicEncntrToonWinning, 30],
      'encntr_head_suit_theme.ogg': [TTLocalizer.MusicEncntrHeadSuitTheme, 29]},
  11: {'LB_juryBG.ogg': [TTLocalizer.MusicLbJurybg, 30],
       'LB_courtyard.ogg': [TTLocalizer.MusicLbCourtyard, 32]},
- 12: {'Bossbot_Factory_v1.ogg': [TTLocalizer.MusicBossbotFactoryV1, 30],
-      'BossBot_CEO_v1.ogg': [TTLocalizer.MusicBossbotCeoV1, 31]},
- 13: {'party_original_theme.ogg': [TTLocalizer.MusicPartyOriginalTheme, 56],
-      'party_polka_dance.ogg': [TTLocalizer.MusicPartyPolkaDance, 63],
-      'party_waltz_dance.ogg': [TTLocalizer.MusicPartyWaltzDance, 63],
-      'party_generic_theme_jazzy.ogg': [TTLocalizer.MusicPartyGenericThemeJazzy, 64]}}
+ 12: {'Bossbot_Factory_v1.ogg': [TTLocalizer.MusicBossbotFactoryV1, 30]}}
+'''
+ 14: {'SE_SZ.ogg': [TTLocalizer.MusicSeSz, 68],
+      'SE_nbrhood.ogg': [TTLocalizer.MusicSeNbrhood, 54]]}}
+'''
 
 def countMusic():
     numMusic = 0
@@ -840,7 +838,7 @@ def getMusicRepeatTimes(length, minLength = MUSIC_MIN_LENGTH_SECONDS):
     times = round(float(minLength) / length)
     if minLength <= 0 or times < 1.0:
         times = 1.0
-    return times
+    return int(times)
 
 
 def sanitizePhase(phase):

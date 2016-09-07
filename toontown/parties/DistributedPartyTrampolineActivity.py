@@ -116,7 +116,7 @@ class DistributedPartyTrampolineActivity(DistributedPartyActivity):
         self.surface.setZ(self.trampHeight)
         self.trampActor.controlJoint(self.surface, 'modelRoot', 'trampoline_joint1')
         self.sign.setPos(PartyGlobals.TrampolineSignOffset)
-        self.beans = [ loader.loadModelCopy('phase_4/models/props/jellybean4') for i in range(self.numJellyBeans) ]
+        self.beans = [ loader.loadModel('phase_4/models/props/jellybean4') for i in range(self.numJellyBeans) ]
         for bean in self.beans:
             bean.find('**/jellybean').setP(-35.0)
             bean.setScale(3.0)

@@ -9,29 +9,25 @@ from pandac.PandaModules import *
 class GlobalPartyManagerUD(DistributedObjectGlobalUD):
     notify = directNotify.newCategory('GlobalPartyManagerUD')
 
-    # This uberdog MUST be up before the AIs, as AIs talk to this UD
+    # This UberDOG MUST be up before the AIs, as AIs talk to this UD.
 
     def announceGenerate(self):
         DistributedObjectGlobalUD.announceGenerate(self)
         self.notify.debug("GPMUD generated")
         self.senders2Mgrs = {}
-        self.host2PartyId = {} # just a reference mapping
-        self.id2Party = {} # This should be replaced with a longterm datastore
-        self.party2PubInfo = {} # This should not be longterm
+        self.host2PartyId = {} # Just a reference mapping...
+        self.id2Party = {} # This should be replaced with a long term data store.
+        self.party2PubInfo = {} # This should not be long term.
         self.tempSlots = {}
         PARTY_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
         startTime = datetime.strptime('2014-01-20 11:50:00', PARTY_TIME_FORMAT)
         endTime = datetime.strptime('2014-01-20 12:20:00', PARTY_TIME_FORMAT)
         self.partyAllocator = UniqueIdAllocator(0, 100000000)
-        #self.host2Party[100000001] = {'hostId': 100000001, 'start': startTime, 'end': endTime, 'partyId': 1717986918400000, 'decorations': [[3,5,7,6]], 'activities': [[10,13,6,18],[7,8,7,0]],'inviteTheme':1,'isPrivate':0,'inviteeIds':[]}
         config = getConfigShowbase()
         self.wantInstantParties = config.GetBool('want-instant-parties', 0)
 
-        # Setup tasks
+        # Setup tasks.
         self.runAtNextInterval()
-
-        # Listen out for any events of avatars that logged in.
-        self.air.netMessenger.accept('avatarOnline', self, self.avatarJoined)
 
     # GPMUD -> PartyManagerAI messaging
     def _makeAIMsg(self, field, values, recipient):
@@ -43,7 +39,7 @@ class GlobalPartyManagerUD(DistributedObjectGlobalUD):
         dg = self._makeAIMsg(field, values, self.senders2Mgrs.get(sender, sender + 8))
         self.air.send(dg)
 
-    # GPMUD -> toon messaging
+    # GPMUD -> Toon messaging
     def _makeAvMsg(self, field, values, recipient):
         return self.air.dclassesByName['DistributedToonUD'].getFieldByName(field).aiFormatUpdate(recipient, recipient, simbase.air.ourChannel, values)
 
@@ -64,7 +60,7 @@ class GlobalPartyManagerUD(DistributedObjectGlobalUD):
         if self.wantInstantParties:
             return True
         else:
-            return party['start'] < now# and endStartable > now
+            return party['start'] < now
 
     def isTooLate(self, party):
         now = datetime.now()
@@ -110,8 +106,7 @@ class GlobalPartyManagerUD(DistributedObjectGlobalUD):
                 partyDict.get('status', PartyStatus.Pending)]
 
     # Avatar joined the game, invoked by the CSMUD
-    def avatarJoined(self, avId, friendsList): # CSMUD also passes friendsList for TTRFMUD.
-#        self.host2PartyId[avId] = (1337 << 32) + 10000
+    def avatarJoined(self, avId):
         partyId = self.host2PartyId.get(avId, None)
         if partyId:
             party = self.id2Party.get(partyId, None)
@@ -122,7 +117,7 @@ class GlobalPartyManagerUD(DistributedObjectGlobalUD):
                 # The party hasn't started and it can start
                 self.sendToAv(avId, 'setPartyCanStart', [partyId])
 
-    # uberdog coordination of public party info
+    # UberDOG coordination of public party info
     def __updatePartyInfo(self, partyId):
         # Update all the AIs about this public party
         party = self.party2PubInfo[partyId]
@@ -141,9 +136,9 @@ class GlobalPartyManagerUD(DistributedObjectGlobalUD):
     def partyHasStarted(self, partyId, shardId, zoneId, hostName):
         self.party2PubInfo[partyId] = {'partyId': partyId, 'shardId': shardId, 'zoneId': zoneId, 'hostName': hostName, 'numGuests': 0, 'maxGuests': MaxToonsAtAParty, 'started': datetime.now()}
         self.__updatePartyInfo(partyId)
-        # update the host's book
+        # Update the host's book
         if partyId not in self.id2Party:
-            self.notify.warning("didn't find details for starting party id %s hosted by %s" % (partyId, hostName))
+            self.notify.warning("Didn't find details for starting Party ID %s hosted by %s" % (partyId, hostName))
             return
         self.id2Party[partyId]['status'] = PartyStatus.Started
         party = self.id2Party.get(partyId, None)
@@ -171,7 +166,7 @@ class GlobalPartyManagerUD(DistributedObjectGlobalUD):
     def partyManagerAIHello(self, channel):
         # Upon AI boot, DistributedPartyManagerAIs are supposed to say hello.
         # They send along the DPMAI's doId as well, so that I can talk to them later.
-        print 'AI with base channel %s, will send replies to DPM %s' % (simbase.air.getAvatarIdFromSender(), channel)
+        self.notify.info('AI with base channel %s, will send replies to DPM %s' % (simbase.air.getAvatarIdFromSender(), channel))
         self.senders2Mgrs[simbase.air.getAvatarIdFromSender()] = channel
         self.sendToAI('partyManagerUdStartingUp', [])
 
@@ -180,10 +175,10 @@ class GlobalPartyManagerUD(DistributedObjectGlobalUD):
 
     def addParty(self, avId, partyId, start, end, isPrivate, inviteTheme, activities, decorations, inviteeIds):
         PARTY_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
-        print 'start time: %s' % start
+        self.notify.info('Start Time: %s' % start)
         startTime = datetime.strptime(start, PARTY_TIME_FORMAT)
         endTime = datetime.strptime(end, PARTY_TIME_FORMAT)
-        print 'start year: %s' % startTime.year
+        self.notify.info('Start Year: %s' % startTime.year)
         if avId in self.host2PartyId:
             # Sorry, one party at a time
             self.sendToAI('addPartyResponseUdToAi', [partyId, AddPartyErrorCode.TooManyHostedParties, self._formatParty(self.id2Party[partyId])])
@@ -202,7 +197,7 @@ class GlobalPartyManagerUD(DistributedObjectGlobalUD):
             party = self.id2Party[self.host2PartyId[hostId]]
             self.sendToAI('partyInfoOfHostResponseUdToAi', [self._formatParty(party), party.get('inviteeIds', [])])
             return
-        print 'query failed, av %s isnt hosting anything' % hostId
+        self.notify.warning('Query failed, Av %s isn\'t hosting anything!' % hostId)
 
     def requestPartySlot(self, partyId, avId, gateId):
         if partyId not in self.party2PubInfo:
@@ -218,25 +213,25 @@ class GlobalPartyManagerUD(DistributedObjectGlobalUD):
             dg = self.air.dclassesByName['DistributedPartyGateAI'].getFieldByName('partyRequestDenied').aiFormatUpdate(gateId, recipient, sender, [PartyGateDenialReasons.Full])
             self.air.send(dg)
             return
-        # get them a slot
+        # Get them a slot.
         party['numGuests'] += 1
         self.__updatePartyCount(partyId)
-        # note that they might not show up
+        # Note that they might not show up.
         self.tempSlots[avId] = partyId
 
-        #give the client a minute to connect before freeing their slot
+        # Give the client a minute to connect before freeing their slot...
         taskMgr.doMethodLater(60, self._removeTempSlot, 'partyManagerTempSlot%d' % avId, extraArgs=[avId])
 
-        # now format the pubPartyInfo
+        # Now format the pubPartyInfo.
         actIds = []
         for activity in self.id2Party[partyId]['activities']:
             actIds.append(activity[0])
-        info = [party['shardId'], party['zoneId'], party['numGuests'], party['hostName'], actIds, 0] # the param is minleft
-        # find the hostId
+        info = [party['shardId'], party['zoneId'], party['numGuests'], party['hostName'], actIds, 0] # The parameter is minutes left.
+        # Find the hostId.
         hostId = self.id2Party[party['partyId']]['hostId']
-        # send update to client's gate
+        # Send update to client's gate.
         recipient = self.GetPuppetConnectionChannel(avId)
-        sender = simbase.air.getAvatarIdFromSender() # try to pretend the AI sent it. ily2 cfsworks
+        sender = simbase.air.getAvatarIdFromSender()
         dg = self.air.dclassesByName['DistributedPartyGateAI'].getFieldByName('setParty').aiFormatUpdate(gateId, recipient, sender, [info, hostId])
         self.air.send(dg)
 
