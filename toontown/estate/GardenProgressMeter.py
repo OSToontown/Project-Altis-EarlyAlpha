@@ -29,11 +29,11 @@ class GardenProgressMeter(DirectObject.DirectObject):
 
     def __init__(self, typePromotion = 'game', level = 0):
         if typePromotion == 'shovel':
-            self.typePromotion = SHOVEL
+            pass
         elif typePromotion == 'wateringCan':
-            self.typePromotion = WATERINGCAN
+            pass
         elif typePromotion == 'game':
-            self.typePromotion == GAMEWIN
+            base.localAvatar.setSystemMessage(0, 'You won!!!')
         else:
             print 'No type of %s' % typePromotion
         self.level = level

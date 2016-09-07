@@ -3,7 +3,7 @@ from direct.distributed.DistributedObjectAI import DistributedObjectAI
 from toontown.toonbase import ToontownGlobals
 import HouseGlobals
 import GardenGlobals
-import time
+import time, random
 from toontown.fishing.DistributedFishingPondAI import DistributedFishingPondAI
 from toontown.fishing.DistributedFishingTargetAI import DistributedFishingTargetAI
 from toontown.fishing.DistributedPondBingoManagerAI import DistributedPondBingoManagerAI
@@ -11,10 +11,88 @@ from toontown.fishing import FishingTargetGlobals
 from toontown.safezone.DistributedFishingSpotAI import DistributedFishingSpotAI
 from toontown.safezone.SZTreasurePlannerAI import SZTreasurePlannerAI
 from toontown.safezone import TreasureGlobals
-
+from toontown.safezone import DistributedTreasureAI
 from toontown.estate.DistributedGardenBoxAI import DistributedGardenBoxAI
 from toontown.estate.DistributedGardenPlotAI import DistributedGardenPlotAI
+from DistributedCannonAI import *
+from DistributedTargetAI import *
+import CannonGlobals
 
+class Rental:
+    def __init__(self, estate):
+        self.estate = estate
+        self.objects = set()
+
+    def destroy(self):
+        del self.estate
+        for object in self.objects:
+            if not object.isDeleted():
+                object.requestDelete()
+                taskMgr.remove(object.uniqueName('delete'))
+        self.objects = set()
+
+class CannonRental(Rental):
+    def generateObjects(self):
+        target = DistributedTargetAI(self.estate.air)
+        target.generateWithRequired(self.estate.zoneId)
+
+        for drop in CannonGlobals.cannonDrops:
+            cannon = DistributedCannonAI(self.estate.air)
+            cannon.setEstateId(self.estate.doId)
+            cannon.setTargetId(target.doId)
+            cannon.setPosHpr(*drop)
+            cannon.generateWithRequired(self.estate.zoneId)
+            self.objects.add(cannon)
+
+        self.generateTreasures()
+        self.estate.b_setClouds(1)
+
+    def destroy(self):
+        self.estate.b_setClouds(0)
+        Rental.destroy(self)
+
+    def generateTreasures(self):
+        doIds = []
+        z = 35
+
+        for i in xrange(20):
+            x = random.randint(100, 300) - 200
+            y = random.randint(100, 300) - 200
+            treasure = DistributedTreasureAI.DistributedTreasureAI(self.estate.air, self, 9, x, y, z)
+            treasure.generateWithRequired(self.estate.zoneId)
+            self.objects.add(treasure)
+            doIds.append(treasure.doId)
+
+        self.estate.sendUpdate("setTreasureIds", [doIds])
+
+    def grabAttempt(self, avId, treasureId):
+        av = self.estate.air.doId2do.get(avId)
+        if av == None:
+            self.estate.air.writeServerEvent('suspicious', avId, 'TreasurePlannerAI.grabAttempt unknown avatar')
+            self.estate.notify.warning('avid: %s does not exist' % avId)
+            return
+
+        treasure = self.estate.air.doId2do.get(treasureId)
+        if self.validAvatar(av):
+            treasure.d_setGrab(avId)
+            self.deleteTreasureSoon(treasure)
+
+        else:
+            treasure.d_setReject()
+
+    def deleteTreasureSoon(self, treasure):
+        taskName = treasure.uniqueName('delete')
+        taskMgr.doMethodLater(5, self.__deleteTreasureNow, taskName, extraArgs=(treasure, taskName))
+
+    def __deleteTreasureNow(self, treasure, taskName):
+        treasure.requestDelete()
+
+    def validAvatar(self, av):
+        if av.getMaxHp() == av.getHp():
+            return 0
+
+        av.toonUp(3)
+        return 1
 
 class DistributedEstateAI(DistributedObjectAI):
     notify = DirectNotifyGlobal.directNotify.newCategory("DistributedEstateAI")
@@ -23,7 +101,7 @@ class DistributedEstateAI(DistributedObjectAI):
         self.toons = [0, 0, 0, 0, 0, 0]
         self.items = [[], [], [], [], [], []]
         self.decorData = []
-        self.estateType = 0 # NOT SURE IF THIS HAS ANY USE BUT THANKS DISNEY
+        self.estateType = 0
         self.cloudType = 0
         self.dawnTime = 0
         self.lastEpochTimestamp = 0
@@ -34,6 +112,9 @@ class DistributedEstateAI(DistributedObjectAI):
         self.spots = []
         self.targets = []
         self.treasurePlanner = None
+        self.rentalType = 0
+        self.rentalHandle = None
+        self.targets = []
 
         self.owner = None
 
@@ -55,7 +136,7 @@ class DistributedEstateAI(DistributedObjectAI):
             avItems = self.items[i]
             for item in avItems:
                 type, hardPoint, waterLevel, growthLevel, optional = item
-                if type == 2: # broken for now, rip
+                if type == 2:
                     boxes = GardenGlobals.estateBoxes[i]
                     box = DistributedGardenBoxAI(self.air)
                     box.setPlot(i)
@@ -93,7 +174,7 @@ class DistributedEstateAI(DistributedObjectAI):
         self.createTreasurePlanner()
 
     def rentItem(self, type, duration):
-        pass # TODO - implement this
+        pass
 
     def destroy(self):
         for house in self.houses:
@@ -178,7 +259,7 @@ class DistributedEstateAI(DistributedObjectAI):
     def getDecorData(self):
         return self.decorData
 
-    def setLastEpochTimeStamp(self, last): #how do I do this
+    def setLastEpochTimeStamp(self, last):
         self.lastEpochTimestamp = last
 
     def d_setLastEpochTimeStamp(self, last):
@@ -198,17 +279,57 @@ class DistributedEstateAI(DistributedObjectAI):
         self.sendUpdate('setRentalTimeStamp', [rental])
 
     def b_setRentalTimeStamp(self, rental):
-        self.setRentalTimeStamp(self, rental)
-        self.b_setRentalTimeStamp(self, rental)
+        self.setRentalTimeStamp(rental)
+        self.d_setRentalTimeStamp(rental)
 
     def getRentalTimeStamp(self):
         return self.rentalTimestamp
 
-    def setRentalType(self, todo0):
-        pass
+    def b_setRentalType(self, type):
+        self.d_setRentalType(type)
+        self.setRentalType(type)
+
+    def d_setRentalType(self, type):
+        self.sendUpdate("setRentalType", [type])
+
+    def setRentalType(self, type):
+        expirestamp = self.getRentalTimeStamp()
+        if expirestamp == 0:
+            expire = 0
+
+        else:
+            expire = int(expirestamp - time.time())
+
+        if expire < 0:
+            self.rentalType = 0
+            self.d_setRentalType(0)
+            self.b_setRentalTimeStamp(0)
+
+        else:
+            if self.rentalType == type:
+                return
+
+            self.rentalType = type
+            if self.rentalHandle:
+                self.rentalHandle.destroy()
+                self.rentalHandle = None
+
+            if self.rentalType == ToontownGlobals.RentalCannon:
+                self.rentalHandle = CannonRental(self)
+
+            else:
+                self.notify.warning('Unknown rental %s' % self.rentalType)
+                return
+
+            self.rentalHandle.generateObjects()
 
     def getRentalType(self):
-        return 0
+        return self.rentalType
+
+    def rentItem(self, rentType, duration):
+        self.rentalType = rentType
+        self.b_setRentalTimeStamp(time.time() + duration * 60)
+        self.b_setRentalType(rentType)
 
     def setSlot0ToonId(self, id):
         self.toons[0] = id
@@ -326,7 +447,6 @@ class DistributedEstateAI(DistributedObjectAI):
 
     def getSlot4ToonId(self):
         return self.toons[4]
-
 
     def setSlot4Items(self, items):
         self.items[4] = items

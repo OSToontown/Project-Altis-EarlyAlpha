@@ -10,7 +10,7 @@ TreasureDL = 5
 TreasureOZ = 6
 TreasureE  = 7
 TreasureRandom = 8
-
+TreasureEF = 9 # Estate Flying
 TreasureModels = {
     TreasureTT: (
         ['phase_4/models/props/icecream'],
@@ -43,6 +43,9 @@ TreasureModels = {
     TreasureE: (
         ['phase_5.5/models/props/popsicle_treasure'],
         'phase_4/audio/sfx/SZ_DD_treasure.ogg',
+    ),
+    TreasureEF: (
+        'phase_5.5/models/props/popsicle_treasure',
     ),
     TreasureRandom: (
         ['phase_4/models/props/icecream',

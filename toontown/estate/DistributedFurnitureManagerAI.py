@@ -32,7 +32,7 @@ class DistributedFurnitureManagerAI(DistributedObjectAI):
 
         self.ownerId = house.avatarId
         self.ownerName = house.name
-
+        self.avId = None
         self.atticItems = None
         self.atticWallpaper = None
         self.wallpaper = None
@@ -98,32 +98,26 @@ class DistributedFurnitureManagerAI(DistributedObjectAI):
         self.items = []
 
         for item in items:
-            if item.getFlags() & FLCloset:
-                if self.house.gender is 0:
-                    # If they have a male closet, we need to make it a female closet.
-                    if item.furnitureType - 500 < 10:
-                        item.furnitureType += 10
-                elif item.furnitureType - 500 > 10:
-                    # If they have a female closet, we need to make it a male closet.
-                    item.furnitureType -= 10
-                do = DistributedClosetAI(self.air, self, item)
-            elif item.getFlags() & FLBank:
+            if item.getHashContents() in [1300, 1310, 1320, 1330, 1340, 1350]:
                 do = DistributedBankAI(self.air, self, item)
-            elif item.getFlags() & FLPhone:
+
+            elif item.getHashContents() >= 500 and item.getHashContents() <= 518:
+                do = DistributedClosetAI(self.air, self, item)
+                do.setOwnerId(self.avId)
+
+            elif item.getHashContents() == 1399:
                 do = DistributedPhoneAI(self.air, self, item)
-            elif item.getFlags() & FLTrunk:
-                if self.house.gender is 0:
-                    if item.furnitureType - 500 > 10:
-                        item.furnitureType += 10
-                elif item.furnitureType - 500 > 10:
-                    item.furnitureType -=10
+
+            elif item.getHashContents() in [4000, 4010]:
                 do = DistributedTrunkAI(self.air, self, item)
+                do.setOwnerId(self.avId)
+
             else:
                 do = DistributedFurnitureItemAI(self.air, self, item)
 
-
             if self.isGenerated():
                 do.generateWithRequired(self.zoneId)
+
             self.items.append(do)
 
     def getItems(self):
