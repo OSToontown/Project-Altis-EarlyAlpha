@@ -4775,10 +4775,15 @@ def setMaxFishTank(tankVal):
     return 'Max size of fish tank changed to ' + str(tankVal)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[str])
-def setName(nameStr):
+def name(nameStr=''):
     """Set target's name."""
+    oldName = spellbook.getTarget().getName()
     spellbook.getTarget().b_setName(nameStr)
-    return "Changed avId %s's name to %s" % (spellbook.getTarget().doId, nameStr)
+    if nameStr:
+        return "Changed %s's name to %s!" % (oldName, nameStr)
+    else:
+        return "Changed %s's name to nothing!" % oldName
+
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int])
 def setHat(hatId, hatTex=0):
