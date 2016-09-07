@@ -50,7 +50,7 @@ want-gifting #f
 want-cogdominiums #f
 want-boarding-groups #t
 want-cheesy-expirations #t
-want-toontorial #f
+want-toontorial #t
 want-code-redemption #t
 want-new-toonhall #t
 want-picnic-games #f
