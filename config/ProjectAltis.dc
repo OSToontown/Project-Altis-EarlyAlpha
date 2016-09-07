@@ -3875,8 +3875,8 @@ dclass TTFriendsManager : DistributedObjectGlobal {
   comingOnline(uint32 avId, uint32 friendIds[]);
   goingOffline(uint32 avId);
 
-  getAvatarDetails(uint32 friendId) clsend;
-  friendDetails(uint32 friendId, blob details);
+  getAvatarDetails(uint32) clsend;
+  friendDetails(uint32, blob, uint16[], uint16, int16, int16, uint32, uint32, blob, blob, int8[]);
   getPetDetails(uint32) clsend;
   petDetails(uint32, uint32, string, uint32, uint32, uint16/1000[], PetTrait[], int8[], uint32);
 };
