@@ -2271,7 +2271,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
              0])
             self.b_setEmoteAccess(bits)
         elif len(bits) != len(self.emoteAccess):
-            self.notify.warning('New emote access list must be the same size as the old one.')
             return
         self.emoteAccess = bits
 
