@@ -32,10 +32,12 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
         self.titleColor = (1, 1, 1, 1)
         self.titleText = OnscreenText.OnscreenText('', fg=self.titleColor, shadow=(0, 0, 0, 1), font=ToontownGlobals.getSuitFont(), pos=(0, -0.5), scale=0.16, drawOrder=0, mayChange=1)
         self.smallTitleText = OnscreenText.OnscreenText('', fg=self.titleColor, font=ToontownGlobals.getSuitFont(), pos=(0.65, 0.9), scale=0.08, drawOrder=0, mayChange=1, bg=(0.5, 0.5, 0.5, 0.5), align=TextNode.ARight)
+        self.smallTitleText.setPos(-0.685,-0.098)
+        self.smallTitleText.reparentTo(base.a2dTopRight)
+        self.titleSeq = None
         self.zonesEnteredList = []
         self.fColorZones = 0
         self.scenarioIndex = 0
-        return
 
     def generate(self):
         DistributedLevel.notify.debug('generate')
@@ -253,7 +255,7 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
         else:
             DistributedLevel.notify.debug('entity %s requesting reparent to %s, not yet created' % (entity, parentId))
             entity.reparentTo(hidden)
-            if not self.parent2pendingChildren.has_key(parentId):
+            if parentId not in self.parent2pendingChildren:
                 self.parent2pendingChildren[parentId] = []
 
                 def doReparent(parentId = parentId, self = self, wrt = wrt):
@@ -479,7 +481,6 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
             self.levelSpec.setAttribChange(entId, attribName, value, username)
 
     def spawnTitleText(self):
-        return
         def getDescription(zoneNum, self = self):
             ent = self.entities.get(zoneNum)
             if ent and hasattr(ent, 'description'):
@@ -496,25 +497,46 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
             titleSeq = None
             if self.lastCamZone not in self.zonesEnteredList:
                 self.zonesEnteredList.append(self.lastCamZone)
-                titleSeq = Sequence(Func(self.hideSmallTitleText), Func(self.showTitleText), Wait(0.1), Wait(6.0), self.titleText.colorInterval(0.5, Vec4(self.titleColor[0], self.titleColor[1], self.titleColor[2], 0.0)))
+                titleSeq = Sequence(Func(self.hideSmallTitleText), Func(self.showTitleText), Wait(6.1), LerpColorInterval(self.titleText, 0.5, Vec4(self.titleColor[0], self.titleColor[1], self.titleColor[2], self.titleColor[3]), startColor=Vec4(self.titleColor[0], self.titleColor[1], self.titleColor[2], 0.0)))
             smallTitleSeq = Sequence(Func(self.hideTitleText), Func(self.showSmallTitle))
             if titleSeq:
-                seq = Sequence(titleSeq, smallTitleSeq)
+                self.titleSeq = Sequence(titleSeq, smallTitleSeq)
             else:
-                seq = smallTitleSeq
-            seq.start()
+                self.titleSeq = smallTitleSeq
+            self.titleSeq.start()
 
     def showInfoText(self, text = 'hello world'):
-        return
         description = text
         if description and description != '':
-            taskMgr.remove(self.uniqueName('titleText'))
+            if self.titleSeq is not None:
+                self.titleSeq.finish()
+                self.titleSeq = None
             self.smallTitleText.setText(description)
             self.titleText.setText(description)
             self.titleText.setColor(Vec4(*self.titleColor))
             self.titleText.setFg(self.titleColor)
-            #seq = Sequence(Func(self.hideSmallTitleText), Func(self.showTitleText), Wait(0.1), Wait(3.0), self.titleText.colorInterval(0.5, Vec4(self.titleColor[0], self.titleColor[1], self.titleColor[2], 0.0)))
-            #seq.start()
+            titleSeq = None
+            titleSeq = Sequence(Func(self.hideSmallTitleText), Func(self.showTitleText), Wait(3.1), LerpColorInterval(self.titleText, 0.5, Vec4(self.titleColor[0], self.titleColor[1], self.titleColor[2], self.titleColor[3]), startColor=Vec4(self.titleColor[0], self.titleColor[1], self.titleColor[2], 0.0)))
+            if titleSeq:
+                self.titleSeq = Sequence(titleSeq)
+            self.titleSeq.start()
+
+    def showTitleText(self):
+        self.titleText.show()
+
+    def hideTitleText(self):
+        if self.titleText:
+            self.titleText.hide()
+
+    def showSmallTitle(self):
+        if self.titleText:
+            self.titleText.hide()
+        if self.smallTitleText:
+            self.smallTitleText.show()
+
+    def hideSmallTitleText(self):
+        if self.smallTitleText:
+            self.smallTitleText.hide()
 
     def startOuch(self, ouchLevel, period = 2):
         self.notify.debug('startOuch %s' % ouchLevel)
