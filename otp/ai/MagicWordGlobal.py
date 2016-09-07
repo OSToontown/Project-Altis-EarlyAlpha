@@ -1,5 +1,3 @@
-from direct.showbase import PythonUtil
-
 MINIMUM_MAGICWORD_ACCESS = 300
 MINIMUM_AI_OBJ_MW_ACCESS = config.GetInt('mw-minimum-ai-manipulation-access', 500)
 
@@ -44,7 +42,7 @@ class Spellbook:
         except MagicError as e:
             return (e.message, True)
         except Exception:
-            return (PythonUtil.describeException(backTrace=1), True)
+            return (describeException(backTrace=1), True)
         finally:
             self.currentInvoker = None
             self.currentTarget = None

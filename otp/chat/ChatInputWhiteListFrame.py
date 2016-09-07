@@ -7,6 +7,7 @@ from pandac.PandaModules import *
 from otp.otpbase import OTPLocalizer
 from direct.task import Task
 from otp.chat.ChatInputTyped import ChatInputTyped
+from otp.nametag.NametagConstants import CFSpeech, CFTimeout
 
 class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
     notify = DirectNotifyGlobal.directNotify.newCategory('ChatInputWhiteList')
