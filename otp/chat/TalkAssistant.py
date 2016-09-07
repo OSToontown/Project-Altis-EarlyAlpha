@@ -612,6 +612,11 @@ class TalkAssistant(DirectObject.DirectObject):
 
     def sendOpenTalk(self, message):
         error = None
+        try:
+            message.encode('ascii')
+        except UnicodeEncodeError:
+            base.localAvatar.setSystemMessage(0, 'Non-ASCII characters are not supported!')
+            return
         if base.cr.wantMagicWords and len(message) > 0 and message[0] == '~':
             messenger.send('magicWord', [message])
             self.receiveDeveloperMessage(message)
