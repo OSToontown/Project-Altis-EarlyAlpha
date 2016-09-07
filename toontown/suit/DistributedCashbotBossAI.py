@@ -513,26 +513,23 @@ def skipCFO():
                 break
     if not boss:
         return "You aren't in a CFO!"
-    if boss.state in ('PrepareBattleThree', 'BattleThree'):
-        return "You can't skip this round."
-    boss.exitIntroduction()
-    boss.b_setState('PrepareBattleThree')
-    return 'Skipping the first round...'
 
-@magicWord(category=CATEGORY_SYSADMIN, types=[])
-def endcfo():
-    toon = spellbook.getTarget()
-    if toon:
-        z = toon.zoneId
-        for obj in simbase.air.doId2do.values():
-            zone = getattr(obj, "zoneId", -1)
-            if zone == z:
-                if obj.__class__.__name__ == "DistributedCashbotBossAI":
-                    obj.b_setState('Victory')
-                    return "CFO defeated!"
-    
-        return "CFO not found!"
-        
-    return "Error!"
-    
+    battle = battle.lower()
 
+    if battle == 'two':
+        if boss.state in ('PrepareBattleThree', 'BattleThree'):
+            return "You can not return to previous rounds!"
+        else:
+            boss.exitIntroduction()
+            boss.b_setState('PrepareBattleThree')
+            return "Skipping to last round..."
+
+    if battle == 'next':
+        if boss.state in ('PrepareBattleOne', 'BattleOne'):
+            boss.exitIntroduction()
+            boss.b_setState('PrepareBattleThree')
+            return "Skipping current round..."
+        elif boss.state in ('PrepareBattleThree', 'BattleThree'):
+            boss.exitIntroduction()
+            boss.b_setState('Victory')
+            return "Skipping final round..."

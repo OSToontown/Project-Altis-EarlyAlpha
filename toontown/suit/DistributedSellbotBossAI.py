@@ -20,6 +20,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
     limitHitCount = 6
     hitCountDamage = 35
     numPies = ToontownGlobals.FullPies
+    throwType = 0
 
     def __init__(self, air):
         DistributedBossCogAI.DistributedBossCogAI.__init__(self, air, 's')
@@ -93,6 +94,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         toon = simbase.air.doId2do.get(avId)
         if toon:
             toon.b_setNumPies(self.numPies)
+            toon.b_setPieThrowType(self.throwType)
             toon.__touchedCage = 1
             self.__goodJump(avId)
 
@@ -348,7 +350,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         for toonId in self.involvedToons:
             toon = self.air.doId2do.get(toonId)
             if toon:
-                if not toon.attemptAddNPCFriend(self.cagedToonNpcId, numCalls=1):
+                if not toon.attemptAddNPCFriend(self.cagedToonNpcId, numCalls=2):
                     self.notify.info('%s.unable to add NPCFriend %s to %s.' % (self.doId, self.cagedToonNpcId, toonId))
                 toon.b_promote(self.deptIndex)
 
@@ -384,6 +386,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
             toon = simbase.air.doId2do.get(toonId)
             if toon:
                 toon.d_setPieType(4)
+                toon.b_setPieThrowType(self.throwType)
 
     def takeAwayPies(self):
         for toonId in self.involvedToons:
@@ -398,10 +401,10 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
             return
         self.b_setAttackCode(ToontownGlobals.BossCogRecoverDizzyAttack)
 
-@magicWord(category=CATEGORY_SYSADMIN)
-def skipVP():
+@magicWord(category=CATEGORY_SYSADMIN, types=[str])
+def skipVP(battle='next'):
     """
-    Skips to the final round of the VP.
+    Skips to the indicated round of the VP.
     """
     invoker = spellbook.getInvoker()
     boss = None
@@ -412,25 +415,23 @@ def skipVP():
                 break
     if not boss:
         return "You aren't in a VP!"
-    if boss.state in ('PrepareBattleThree', 'BattleThree'):
-        return "You can't skip this round."
-    boss.exitIntroduction()
-    boss.b_setState('PrepareBattleThree')
-    return 'Skipping the first round...'
 
-@magicWord(category=CATEGORY_SYSADMIN, types=[])
-def endvp():
-    toon = spellbook.getTarget()
-    if toon:
-        z = toon.zoneId
-        for obj in simbase.air.doId2do.values():
-            zone = getattr(obj, "zoneId", -1)
-            if zone == z:
-                if obj.__class__.__name__ == "DistributedSellbotBossAI":
-                    obj.b_setState('Victory')
-                    return "VP defeated!"
-    
-        return "VP not found!"
-        
-    return "Error!"
+    battle = battle.lower()
 
+    if battle == 'three':
+        if boss.state in ('PrepareBattleThree', 'BattleThree'):
+            return "You can not return to previous rounds!"
+        else:
+            boss.exitIntroduction()
+            boss.b_setState('PrepareBattleThree')
+            return "Skipping to final round..."
+
+    if battle == 'next':
+        if boss.state in ('PrepareBattleOne', 'BattleOne'):
+            boss.exitIntroduction()
+            boss.b_setState('PrepareBattleThree')
+            return "Skipping current round..."
+        elif boss.state in ('PrepareBattleThree', 'BattleThree'):
+            boss.exitIntroduction()
+            boss.b_setState('Victory')
+            return "Skipping final round..."

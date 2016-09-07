@@ -3540,6 +3540,18 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
          building.block,
          self.zoneId))
         return ['success', suitIndex, building.doId]
+		
+    def doCogdoTakeOver(self, difficulty, buildingHeight, track):
+        streetId = ZoneUtil.getBranchZone(self.zoneId)
+        if streetId not in self.air.suitPlanners:
+            self.notify.warning('Street %d is not known.' % streetId)
+            return ['badlocation', difficulty, 0]
+        building = self.findClosestDoor()
+        if building is None:
+            return ['badlocation', difficulty, 0]
+        building.cogdoTakeOver(difficulty, buildingHeight, track)
+        self.notify.info('cogdoTakeOver {0}, {1}, {2}'.format(difficulty, buildingHeight, track))
+        return ['success', difficulty, building.doId]
 
     def doCogInvasion(self, suitIndex):
         invMgr = self.air.suitInvasionManager
@@ -5080,10 +5092,16 @@ def givePies(pieType, numPies=0):
         return "Wedding cake 'pie' cause client crashes!"
     if not 0 <= pieType <= 7:
         return "pieType value out of range (0-7)"
+    if numPies == -1:
+        # The client wants infinite pies
+        av.b_setPieType(pieType)
+        av.b_setNumPies(ToontownGlobals.FullPies)
+        return "Gave infinite pies."
     if not 0 <= numPies <= 99:
         return "numPies value out of range (0-99)"
     av.b_setPieType(pieType)
     av.b_setNumPies(numPies)
+    av.b_setPieThrowType(throwType)
 
 # TODO: Set minimum access for this MW back to 400, after fishing supports quests.
 @magicWord(category=CATEGORY_OVERRIDE, types=[int, int])
@@ -5181,6 +5199,14 @@ def unites():
     spellbook.getTarget().restockAllResistanceMessages(99)
     return 'Restocked all unites successfully!'
 
+@magicWord(category=CATEGORY_CHARACTERSTATS)
+def tricks():
+    """Unlock all pet tricks."""
+    if not config.GetBool('want-pets', False):
+        return 'You cannot unlock pet tricks when pets are disabled!'
+
+    spellbook.getInvoker().b_setPetTrickPhrases(range(7))
+    return 'Unlocked pet tricks!'
 @magicWord(category=CATEGORY_OVERRIDE)
 def summons():
     """ Restock all CJ summons. """
@@ -5196,11 +5222,45 @@ def summons():
     av.restockAllCogSummons()
     return 'Restocked all cog summons successfully!'
 
-@magicWord(category=CATEGORY_OVERRIDE)
-def pinkslips():
-    """ Restock (to 99) CEO pink slips. """
-    spellbook.getTarget().b_setPinkSlips(99)
-    return 'Restocked 99 pink slips successfully!'
+@magicWord(category=CATEGORY_OVERRIDE, types=[str])
+def spawnBuilding(suitName):
+    """ Spawns a Cog Building with the given suit index """
+    av = spellbook.getInvoker()
+    try:
+        suitIndex = SuitDNA.suitHeadTypes.index(suitName)
+    except:
+        return "Invalid suit type: '{0}'.".format(suitName)
+    if suitIndex >= 32:
+        # you nigger stop with the hackerbots
+        return "Couldn't spawn building with Cog '{0}'.".format(suitName)
+    returnCode = av.doBuildingTakeover(suitIndex)
+    if returnCode[0] == 'success':
+        return "Successfully spawned building with Cog '{0}'!".format(suitName)
+    return "Couldn't spawn building with Cog '{0}'.".format(suitName)
+
+@magicWord(category=CATEGORY_OVERRIDE, types=[str, int])
+def spawnFO(track, difficulty=0):
+    """ Spawns a Field Office with the given type and difficulty """
+    tracks = ['s', 'l']
+    if track not in tracks:
+        return 'Invalid Field Office type! Supported types are "s" and "l"'
+
+    av = spellbook.getInvoker()
+    try:
+        building = av.findClosestDoor()
+    except KeyError:
+        return 'You\'re not on a street!'
+    if building == None:
+        return 'Unable to spawn "%s" Field Office with difficulty %d.' % (track, difficulty)
+
+    building.cogdoTakeOver(difficulty, 2, track)
+    return 'Successfully spawned "%s" Field Office with difficulty %d!' % (track, difficulty)
+
+@magicWord(category=CATEGORY_OVERRIDE, types=[int])
+def pinkslips(amt=255):
+    """ Restock (to 255) CEO pink slips. """
+    spellbook.getTarget().b_setPinkSlips(amt)
+    return 'Restocked {0} pink slips successfully!'.format(amt)
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
 def questTier(tier):

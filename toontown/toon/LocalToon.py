@@ -1006,7 +1006,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         if show:
             claraXPos += AdjustmentForNewsButton
             notifyXPos += AdjustmentForNewsButton
-        newPos = (claraXPos - 0.1, 1.0, -0.63)
+        newPos = (claraXPos, 1.0, -0.63)
         self.__clarabelleButton.setPos(newPos)
         if self.__catalogNotifyDialog == None or self.__catalogNotifyDialog.frame == None:
             return
@@ -1964,6 +1964,11 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         if self.questMap:
             self.questMap.stop()
 
+    def getPetId(self):
+        return self.petId
+
+    def hasPet(self):
+        return self.petId != 0
     def _startZombieCheck(self):
         pass
 

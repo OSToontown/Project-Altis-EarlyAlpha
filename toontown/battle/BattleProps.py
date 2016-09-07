@@ -293,6 +293,12 @@ class PropPool:
         propName = 'trolley'
         self.propStrings[propName] = ('phase_4/models/modules/trolley_station_TT',)
         self.propTypes[propName] = 'model'
+        propName = 'clipboard'
+        self.propStrings[propName] = ('phase_4/models/props/tt_m_prp_acs_clipboard',)
+        self.propTypes[propName] = 'model'
+        propName = 'sillyreader'
+        self.propStrings[propName] = ('phase_4/models/props/tt_m_prp_acs_sillyReader',)
+        self.propTypes[propName] = 'model'
 
     def getPath(self, phase, model):
         return 'phase_%s/models/props/%s' % (phase, model)

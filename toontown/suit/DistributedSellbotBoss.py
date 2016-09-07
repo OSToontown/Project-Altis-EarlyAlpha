@@ -220,8 +220,10 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.cagedToon.reparentTo(self.cage)
         self.cagedToon.setPosHpr(0, -2, 0, 180, 0, 0)
         self.cagedToon.loop('neutral')
-        
-        touch = cs = CollisionSphere(0, 0, 0, 4)
+        touch = CollisionPolygon(
+            Point3(-3.0382, 3.0382, -1), Point3(3.0382, 3.0382, -1),
+            Point3(3.0382, -3.0382, -1), Point3(-3.0382, -3.0382, -1))
+        touch.setTangible(0)
         touchNode = CollisionNode('Cage')
         touchNode.setCollideMask(ToontownGlobals.WallBitmask)
         touchNode.addSolid(touch)

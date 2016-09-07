@@ -964,6 +964,7 @@ def skipCEO(battle='next'):
         if boss.state in ('PrepareBattleFour', 'BattleFour', 'PrepareBattleThree', 'BattleThree', 'PrepareBattleTwo', 'BattleTwo'):
             return "You can not return to previous rounds!"
         else:
+            boss.exitIntroduction()
             boss.b_setState('PrepareBattleTwo')
             return "Skipping to second round..."
 
@@ -971,6 +972,7 @@ def skipCEO(battle='next'):
         if boss.state in ('PrepareBattleFour', 'BattleFour', 'PrepareBattleThree', 'BattleThree'):
             return "You can not return to previous rounds!"
         else:
+            boss.exitIntroduction()
             boss.b_setState('PrepareBattleThree')
             return "Skipping to third round..."
 
@@ -978,21 +980,25 @@ def skipCEO(battle='next'):
         if boss.state in ('PrepareBattleFour', 'BattleFour'):
             return "You can not return to previous rounds!"
         else:
+            boss.exitIntroduction()
             boss.b_setState('PrepareBattleFour')
             return "Skipping to last round..."
 
     if battle == 'next':
         if boss.state in ('PrepareBattleOne', 'BattleOne'):
+            boss.exitIntroduction()
             boss.b_setState('PrepareBattleTwo')
             return "Skipping current round..."
         elif boss.state in ('PrepareBattleTwo', 'BattleTwo'):
+            boss.exitIntroduction()
             boss.b_setState('PrepareBattleThree')
             return "Skipping current round..."
         elif boss.state in ('PrepareBattleThree', 'BattleThree'):
+            boss.exitIntroduction()
             boss.b_setState('PrepareBattleFour')
             return "Skipping current round..."
         elif boss.state in ('PrepareBattleFour', 'BattleFour'):
-            return "Can not skip current round."
+            boss.exitIntroduction()
+            boss.b_setState('Victory')
+            return "Skipping final round..."
 
-    boss.exitIntroduction()
-    
