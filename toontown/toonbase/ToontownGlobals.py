@@ -14,6 +14,10 @@ CogHQCameraFov = 60.0
 BossBattleCameraFov = 72.0
 MakeAToonCameraFov = 48.0
 CogdoFov = 56.9
+VPElevatorFov = 53.0
+CFOElevatorFov = 43.0
+CJElevatorFov = 59.0
+CEOElevatorFov = 59.0
 CeilingBitmask = BitMask32(256)
 FloorEventBitmask = BitMask32(16)
 PieBitmask = BitMask32(256)
@@ -615,8 +619,8 @@ BossCogBattleBPosHpr = (0,
  180,
  0,
  0)
-SellbotBossMaxDamage = 100
-SellbotBossMaxDamageNerfed = 100
+SellbotBossMaxDamage = 250
+SellbotBossMaxDamageNerfed = 2500
 SellbotBossBattleOnePosHpr = (0,
  -35,
  0,
@@ -642,7 +646,7 @@ SellbotBossP3PosA = (-50, 40, 18)
 SellbotBossTopRampPosB = (80, -35, 18)
 SellbotBossTopRampTurnPosB = (80, 10, 18)
 SellbotBossP3PosB = (50, 60, 18)
-CashbotBossMaxDamage = 500
+CashbotBossMaxDamage = 1000
 CashbotBossOffstagePosHpr = (120,
  -195,
  0,
@@ -1420,10 +1424,10 @@ ColorNoChat = (0.8,
  0.1,
  1)
 FactoryLaffMinimums = [
- (0, 31),         # SBHQ Factory
- (0, 66, 71),     # CBHQ Mint
- (0, 81, 86, 96), # LBHQ DA
- (0, 101, 106)    # BBHQ Golf
+ (0, 0),         # SBHQ Factory
+ (60, 66, 71),     # CBHQ Mint
+ (71, 81, 86, 96), # LBHQ DA
+ (81, 101, 106)    # BBHQ Golf
 ]
 PICNIC_COUNTDOWN_TIME = 60
 BossbotRTIntroStartPosHpr = (0,
@@ -1498,7 +1502,7 @@ DinerBattleBPosHpr = (-20,
  0)
 BossbotBossMaxDamage = 500
 BossbotMaxSpeedDamage = 90
-BossbotSpeedRecoverRate = 2 # This was 20 - far too high - but we need to test and find a good value for this.
+BossbotSpeedRecoverRate = 10 # This was 20 - far too high - but we need to test and find a good value for this.
 BossbotBossDifficultySettings = [(8,
   4,
   11,
@@ -1529,12 +1533,12 @@ BossbotBossDifficultySettings = [(8,
   9,
   22,
   29)]
-BossbotRollSpeedMax = 22
-BossbotRollSpeedMin = 7.5
-BossbotTurnSpeedMax = 60
-BossbotTurnSpeedMin = 20
-BossbotTreadSpeedMax = 10.5
-BossbotTreadSpeedMin = 3.5
+BossbotRollSpeedMax = 30
+BossbotRollSpeedMin = 10
+BossbotTurnSpeedMax = 90
+BossbotTurnSpeedMin = 25
+BossbotTreadSpeedMax = 15
+BossbotTreadSpeedMin = 7
 CalendarFilterShowAll = 0
 CalendarFilterShowOnlyHolidays = 1
 CalendarFilterShowOnlyParties = 2
