@@ -4661,14 +4661,25 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         self.sendUpdate('setLastSeen', [int(timestamp)])
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int, int])
-def setCE(CEValue, CEHood=0, CEExpire=0):
-    """Set Cheesy Effect of the target."""
-    CEHood = CEHood * 1000 #So the invoker only has to use '1' for DonaldsDock, '2' for TTC etc.
-    if not 0 <= CEValue <= 18:
-        return 'Invalid value %s specified for Cheesy Effect.' % CEValue
-    if CEHood != 0 and not 100 < CEHood < ToontownGlobals.DynamicZonesBegin:
-        return 'Invalid zoneId specified.'
-    spellbook.getTarget().b_setCheesyEffect(CEValue, CEHood, time.time()+CEExpire)
+def cheesyEffect(value, hood=0, expire=0):
+    """
+    Modify the target's cheesy effect.
+    """
+    try:
+        value = int(value)
+    except:
+        value = value.lower()
+    if isinstance(value, str):
+        if value not in OTPGlobals.CEName2Id:
+            return 'Invalid cheesy effect value: %s' % value
+        value = OTPGlobals.CEName2Id[value]
+    elif not 0 <= value <= 34:
+        return 'Invalid cheesy effect value: %d' % value
+    if (hood != 0) and (not 1000 <= hood < ToontownGlobals.DynamicZonesBegin):
+        return 'Invalid hood ID: %d' % hood
+    target = spellbook.getTarget()
+    target.b_setCheesyEffect(value, hood, expire)
+    return 'Set %s\'s cheesy effect to: %d' % (target.getName(), value)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int], targetClasses=[DistributedToonAI], aliases=['hp', 'toonHp', 'currHp'])
 def setHp(hpVal):

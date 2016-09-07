@@ -17,8 +17,7 @@
 ##Unlocks a new phrase and adds it to target's list of "My Phrases".
 ##If the phrase list is full, the top item will be knocked off and the requested one will be appended to the bottom.
 
-~setCE(CEValue, CEHood, CEExpire)
-##Set Cheesy Effect of the target.
+~cheesyEffect
 
 ~setHp(hpVal)
 ##Set target's current laff.

@@ -106,7 +106,7 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
                 listVersion[14] = weakenedValue
                 SuitBuildingGlobals.SuitBuildingInfo = tuple(listVersion)
                 
-            retval = self.invokeSuitPlanner(14, 0)
+            retval = self.invokeSuitPlanner(16, 0)
             
             return retval
             
