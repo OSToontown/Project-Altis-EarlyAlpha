@@ -115,7 +115,7 @@ class NewsPageButtonManager(FSM.FSM):
     def isNewIssueButtonShown(self):
         if not config.GetBool('want-news-tab', 1):
             return False
-        if localAvatar.getLastTimeReadNews() < base.cr.inGameNewsMgr.getLatestIssue():
+        if localAvatar.getLastTimeReadNews():
             return True
         return False
 
@@ -128,7 +128,7 @@ class NewsPageButtonManager(FSM.FSM):
     def enterNormalWalk(self):
         if not self.buttonsLoaded:
             return
-        if localAvatar.getLastTimeReadNews() < base.cr.inGameNewsMgr.getLatestIssue():
+        if localAvatar.getLastTimeReadNews():
             self.__showNewIssueButton()
             self.__blinkIval.resume()
         else:
