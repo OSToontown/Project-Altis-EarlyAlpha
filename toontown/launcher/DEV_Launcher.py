@@ -38,6 +38,7 @@ class DEV_Launcher(ShowBase):
         os.environ['ttrUsername'] = self.username_entry.get()
         os.environ['ttrPassword'] = self.password_entry.get()
         os.environ['TTR_GAMESERVER'] = self.ip_entry.get()
+        os.environ['TTR_PLAYCOOKIE'] = self.username_entry.get()
 
         os.system('C:\Panda3D-1.10.0\python\ppython.exe -m toontown.toonbase.ToontownStart')
 
