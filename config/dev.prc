@@ -40,7 +40,7 @@ dc-file config/ProjectAltis.dc
 
 # Game Features
 want-estates #t
-want-pets #f
+want-pets #t
 want-news-tab #f
 want-news-page #f
 want-accessories #t
