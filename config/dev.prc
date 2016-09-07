@@ -47,7 +47,7 @@ want-accessories #t
 want-parties #t
 want-gardening #f
 want-gifting #f
-want-cogdominiums #t
+want-cogdominiums #f
 want-boarding-groups #t
 want-cheesy-expirations #t
 want-toontorial #f

@@ -86,7 +86,7 @@ class BossCog(Avatar.Avatar):
 
     def generateBossCog(self):
         self.throwSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_frisbee_gears.ogg')
-        self.swingSfx = loader.loadSfx ('phase_9/audio/sfx/CHQ_VP_boss_cog_wwipe.ogg')
+        self.swingSfx = loader.loadSfx ('phase_9/audio/sfx/CHQ_VP_swipe.ogg')
         self.spinSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_spin.ogg')
         self.rainGearsSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_raining_gears.ogg')
         self.swishSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_VP_swish.ogg')
@@ -113,11 +113,6 @@ class BossCog(Avatar.Avatar):
         filePrefix = ModelDict[dna.dept]
         if filePrefix == 'phase_12/models/char/bossbotBoss':
             self.loadModel(filePrefix + '-legs-zero', 'legs')
-            self.loadModel(GenericModel + '-legs-zero', 'legs')
-            self.doorA = self.__setupDoor('**/joint_doorFront', 'doorA', self.doorACallback, VBase3(0, 0, 0), VBase3(0, 0, -80), CollisionPolygon(Point3(5, -4, 0.32), Point3(0, -4, 0), Point3(0, 4, 0), Point3(5, 4, 0.32)))
-            self.doorB = self.__setupDoor('**/joint_doorRear', 'doorB', self.doorBCallback, VBase3(0, 0, 0), VBase3(0, 0, 80), CollisionPolygon(Point3(-5, 4, 0.84), Point3(0, 4, 0), Point3(0, -4, 0), Point3(-5, -4, 0.84)))
-            self.doorA.request('Closed')
-            self.doorB.request('Closed')
         else:
             self.loadModel(GenericModel + '-legs-zero', 'legs')
         self.loadModel(filePrefix + '-torso-zero', 'torso')
@@ -127,7 +122,7 @@ class BossCog(Avatar.Avatar):
         if filePrefix == 'phase_12/models/char/bossbotBoss':
             self.attach('torso', 'legs', 'joint_legs')
             pelvis = self.getPart('torso')
-            #pelvis.setZ(9.75)
+            pelvis.setZ(9.75)
         else:
              self.attach('torso', 'legs', 'joint_pelvis')
         self.rotateNode = self.attachNewNode('rotate')
@@ -155,14 +150,17 @@ class BossCog(Avatar.Avatar):
         self.neckForwardHpr = VBase3(0, 0, 0)
         self.neckReversedHpr = VBase3(0, -540, 0)
         self.axle = self.find('**/joint_axle')
-        self.doorA = self.__setupDoor('**/joint_doorFront', 'doorA', self.doorACallback, VBase3(0, 0, 0), VBase3(0, 0, -80), CollisionPolygon(Point3(5, -4, 0.32), Point3(0, -4, 0), Point3(0, 4, 0), Point3(5, 4, 0.32)))
-        self.doorB = self.__setupDoor('**/joint_doorRear', 'doorB', self.doorBCallback, VBase3(0, 0, 0), VBase3(0, 0, 80), CollisionPolygon(Point3(-5, 4, 0.84), Point3(0, 4, 0), Point3(0, -4, 0), Point3(-5, -4, 0.84)))
-        treadsModel = loader.loadModel('%s-treads' % filePrefix)
-        treadsModel.reparentTo(self.axle)
-        self.treadsLeft = treadsModel.find('**/right_tread')
-        self.treadsRight = treadsModel.find('**/left_tread')
-        self.doorA.request('Closed')
-        self.doorB.request('Closed')
+        if filePrefix == 'phase_12/models/char/bossbotBoss':
+            pass
+        else:
+            self.doorA = self.__setupDoor('**/joint_doorFront', 'doorA', self.doorACallback, VBase3(0, 0, 0), VBase3(0, 0, -80), CollisionPolygon(Point3(5, -4, 0.32), Point3(0, -4, 0), Point3(0, 4, 0), Point3(5, 4, 0.32)))
+            self.doorB = self.__setupDoor('**/joint_doorRear', 'doorB', self.doorBCallback, VBase3(0, 0, 0), VBase3(0, 0, 80), CollisionPolygon(Point3(-5, 4, 0.84), Point3(0, 4, 0), Point3(0, -4, 0), Point3(-5, -4, 0.84)))
+            treadsModel = loader.loadModel('%s-treads' % GenericModel)
+            treadsModel.reparentTo(self.axle)
+            self.treadsLeft = treadsModel.find('**/right_tread')
+            self.treadsRight = treadsModel.find('**/left_tread')
+            self.doorA.request('Closed')
+            self.doorB.request('Closed')
         self.setBlend(frameBlend = True)
 
     def initializeBodyCollisions(self, collIdStr):

@@ -1,33 +1,32 @@
-from otp.ai.AIBaseGlobal import *
-from direct.distributed.ClockDelta import *
-import DistributedBossCogAI
-from direct.directnotify import DirectNotifyGlobal
-from otp.avatar import DistributedAvatarAI
-import DistributedSuitAI
-from toontown.battle import BattleExperienceAI
-from direct.fsm import FSM
-from toontown.toonbase import ToontownGlobals
-from toontown.toon import InventoryBase
-from toontown.toonbase import TTLocalizer
-from toontown.battle import BattleBase
-from toontown.toon import NPCToons
-from otp.ai.MagicWordGlobal import *
-import SuitDNA
 import random
+from otp.ai.MagicWordGlobal import *
+import DistributedBossCogAI
+import DistributedSuitAI
+import SuitDNA
+from direct.directnotify import DirectNotifyGlobal
+from direct.distributed.ClockDelta import *
+from direct.fsm import FSM
+from otp.ai.AIBaseGlobal import *
+from toontown.battle import BattleExperienceAI
+from toontown.toon import NPCToons
+from toontown.toonbase import TTLocalizer
+from toontown.toonbase import ToontownGlobals
+from toontown.quest import Quests
+
 
 class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedSellbotBossAI')
-    limitHitCount = 6
-    hitCountDamage = 35
-    numPies = ToontownGlobals.FullPies
-    throwType = 0
+    limitHitCount = 4
+    hitCountDamage = 30
+    numPies = 50
+    BossName = "VP"
 
     def __init__(self, air):
         DistributedBossCogAI.DistributedBossCogAI.__init__(self, air, 's')
         FSM.FSM.__init__(self, 'DistributedSellbotBossAI')
         self.doobers = []
         self.cagedToonNpcId = random.choice(NPCToons.HQnpcFriends.keys())
-        self.bossMaxDamage = ToontownGlobals.SellbotBossMaxDamage
+        self.bossMaxDamage = 250
         self.recoverRate = 0
         self.recoverStartTime = 0
 
@@ -94,7 +93,6 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         toon = simbase.air.doId2do.get(avId)
         if toon:
             toon.b_setNumPies(self.numPies)
-            toon.b_setPieThrowType(self.throwType)
             toon.__touchedCage = 1
             self.__goodJump(avId)
 
@@ -123,9 +121,9 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
     def __doAreaAttack(self):
         self.b_setAttackCode(ToontownGlobals.BossCogAreaAttack)
         if self.recoverRate:
-            newRecoverRate = min(200, self.recoverRate * 1.2)
+            newRecoverRate = min(200, self.recoverRate * 9.8)
         else:
-            newRecoverRate = 2
+            newRecoverRate = 1.7
         now = globalClock.getFrameTime()
         self.b_setBossDamage(self.getBossDamage(), newRecoverRate, now)
 
@@ -192,15 +190,14 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
 
     def generateSuits(self, battleNumber):
         if battleNumber == 1:
-            return self.invokeSuitPlanner(9, 0)
+            return self.invokeSuitPlanner(11, 0)
         else:
-            return self.invokeSuitPlanner(10, 1)
+            return self.invokeSuitPlanner(12, 1)
 
     def removeToon(self, avId):
         toon = simbase.air.doId2do.get(avId)
         if toon:
             toon.b_setNumPies(0)
-            toon.b_setHealthDisplay(0)
         DistributedBossCogAI.DistributedBossCogAI.removeToon(self, avId)
 
     def enterOff(self):
@@ -271,7 +268,6 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
             toon = simbase.air.doId2do.get(toonId)
             if toon:
                 toon.__touchedCage = 0
-                toon.b_setHealthDisplay(2)
 
         self.waitForNextAttack(5)
         self.waitForNextStrafe(9)
@@ -316,11 +312,6 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         self.stopStrafes()
         taskName = self.uniqueName('CagedToonSaySomething')
         taskMgr.remove(taskName)
-        for toonId in self.involvedToons + self.looseToons:
-            toon = self.air.doId2do.get(toonId)
-            if not toon:
-                continue
-            toon.b_setHealthDisplay(0)
 
     def enterNearVictory(self):
         self.resetBattles()
@@ -335,8 +326,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
          'track': self.dna.dept,
          'isSkelecog': 0,
          'isForeman': 0,
-         'isVP': 1,
-         'isCFO': 0,
+         'isBoss': 1,
          'isSupervisor': 0,
          'isVirtual': 0,
          'activeToons': self.involvedToons[:]})
@@ -350,7 +340,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         for toonId in self.involvedToons:
             toon = self.air.doId2do.get(toonId)
             if toon:
-                if not toon.attemptAddNPCFriend(self.cagedToonNpcId, numCalls=2):
+                if not toon.attemptAddNPCFriend(self.cagedToonNpcId, Quests.InVP):
                     self.notify.info('%s.unable to add NPCFriend %s to %s.' % (self.doId, self.cagedToonNpcId, toonId))
                 toon.b_promote(self.deptIndex)
 
@@ -369,7 +359,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
 
     def __makeDoobers(self):
         self.__resetDoobers()
-        for i in range(8):
+        for i in xrange(8):
             suit = DistributedSuitAI.DistributedSuitAI(self.air, None)
             level = random.randrange(len(SuitDNA.suitsPerLevel))
             suit.dna = SuitDNA.SuitDNA()
@@ -386,7 +376,6 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
             toon = simbase.air.doId2do.get(toonId)
             if toon:
                 toon.d_setPieType(4)
-                toon.b_setPieThrowType(self.throwType)
 
     def takeAwayPies(self):
         for toonId in self.involvedToons:
@@ -401,10 +390,13 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
             return
         self.b_setAttackCode(ToontownGlobals.BossCogRecoverDizzyAttack)
 
-@magicWord(category=CATEGORY_SYSADMIN, types=[str])
-def skipVP(battle='next'):
+    def enterReward(self):
+        DistributedBossCogAI.DistributedBossCogAI.enterReward(self)
+
+@magicWord(category=CATEGORY_SYSADMIN)
+def skipVP():
     """
-    Skips to the indicated round of the VP.
+    Skips to the final round of the VP.
     """
     invoker = spellbook.getInvoker()
     boss = None
@@ -415,23 +407,25 @@ def skipVP(battle='next'):
                 break
     if not boss:
         return "You aren't in a VP!"
+    if boss.state in ('PrepareBattleThree', 'BattleThree'):
+        return "You can't skip this round."
+    boss.exitIntroduction()
+    boss.b_setState('PrepareBattleThree')
+    return 'Skipping the first round...'
 
-    battle = battle.lower()
-
-    if battle == 'three':
-        if boss.state in ('PrepareBattleThree', 'BattleThree'):
-            return "You can not return to previous rounds!"
-        else:
-            boss.exitIntroduction()
-            boss.b_setState('PrepareBattleThree')
-            return "Skipping to final round..."
-
-    if battle == 'next':
-        if boss.state in ('PrepareBattleOne', 'BattleOne'):
-            boss.exitIntroduction()
-            boss.b_setState('PrepareBattleThree')
-            return "Skipping current round..."
-        elif boss.state in ('PrepareBattleThree', 'BattleThree'):
-            boss.exitIntroduction()
-            boss.b_setState('Victory')
-            return "Skipping final round..."
+@magicWord(category=CATEGORY_SYSADMIN)
+def killVP():
+    """
+    Kills the VP.
+    """
+    invoker = spellbook.getInvoker()
+    boss = None
+    for do in simbase.air.doId2do.values():
+        if isinstance(do, DistributedSellbotBossAI):
+            if invoker.doId in do.involvedToons:
+                boss = do
+                break
+    if not boss:
+        return "You aren't in a VP!"
+    boss.b_setState('Victory')
+    return 'Killed VP.'

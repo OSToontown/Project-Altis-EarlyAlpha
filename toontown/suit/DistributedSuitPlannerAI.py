@@ -477,6 +477,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
      None,
      None,
      None,
+     None,
+     84,
      72,
      60,
      48,
@@ -492,6 +494,11 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
      18,
      25,
      23,
+     20,
+     14,
+     18,
+     25,
+     23,
      20]
     TOTAL_BWEIGHT = 0
     TOTAL_BWEIGHT_PER_TRACK = [0,
@@ -502,12 +509,16 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
      0,
      0,
      0,
+     0,
+     0,
      0]
     for currHoodInfo in SuitHoodInfo:
         weight = currHoodInfo[SUIT_HOOD_INFO_BWEIGHT]
         tracks = currHoodInfo[SUIT_HOOD_INFO_TRACK]
         levels = currHoodInfo[SUIT_HOOD_INFO_LVL]
         heights = [0,
+         0,
+         0,
          0,
          0,
          0,
@@ -528,6 +539,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         TOTAL_BWEIGHT_PER_HEIGHT[2] += weight * heights[2]
         TOTAL_BWEIGHT_PER_HEIGHT[3] += weight * heights[3]
         TOTAL_BWEIGHT_PER_HEIGHT[4] += weight * heights[4]
+        TOTAL_BWEIGHT_PER_HEIGHT[5] += weight * heights[5]
+        TOTAL_BWEIGHT_PER_HEIGHT[6] += weight * heights[6]
 
     defaultSuitName = config.GetString('suit-type', 'random')
     if defaultSuitName == 'random':
@@ -1022,7 +1035,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             return Task.done
         min = hoodInfo[self.SUIT_HOOD_INFO_MIN]
         max = hoodInfo[self.SUIT_HOOD_INFO_MAX]
-        adjustment = random.choice((-2, -1, -1, 0, 0, 0, 1, 1, 2))
+        adjustment = random.choice((-3, -2, -2, -2, -1, -1, 0, 0, 0, 1, 1, 2, 2, 2, 3))
         self.suitCountAdjust += adjustment
         desiredNum = self.calcDesiredNumFlyInSuits()
         if desiredNum < min:
