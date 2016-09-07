@@ -121,7 +121,6 @@ class ChineseTutorial(DirectFrame, FSM.FSM):
             task.done
         return
 
-
 class CheckersTutorial(DirectFrame, FSM.FSM):
 
     def __init__(self, doneFunction, doneEvent = None, callback = None):
@@ -353,4 +352,3 @@ class FindFourTutorial(DirectFrame, FSM.FSM):
         if task != None:
             task.done
         return
-

@@ -51,7 +51,7 @@ class DistributedPicnicBasketAI(DistributedObjectAI.DistributedObjectAI):
             if self.seats[i] == None:
                 return i
                 continue
-            
+
     def findAvatar(self, avId):
         for i in range(len(self.seats)):
             if self.seats[i] == avId:
@@ -64,9 +64,8 @@ class DistributedPicnicBasketAI(DistributedObjectAI.DistributedObjectAI):
             if i:
                 avCounter += 1
                 continue
-        
-        return avCounter
 
+        return avCounter
 
     def rejectingBoardersHandler(self, avId, si):
         self.rejectBoarder(avId)
@@ -74,7 +73,7 @@ class DistributedPicnicBasketAI(DistributedObjectAI.DistributedObjectAI):
     def rejectBoarder(self, avId):
         self.sendUpdateToAvatarId(avId, 'rejectBoard', [
             avId])
-        
+
     def acceptingBoardersHandler(self, avId, si):
         self.notify.debug('acceptingBoardersHandler')
         seatIndex = si
@@ -85,7 +84,7 @@ class DistributedPicnicBasketAI(DistributedObjectAI.DistributedObjectAI):
         self.notify.debug('acceptBoarder %d' % avId)
         if self.findAvatar(avId) != None:
             return None
-        
+
         self.seats[seatIndex] = avId
         self.acceptOnce(self.air.getAvatarExitEvent(avId), self._DistributedPicnicBasketAI__handleUnexpectedExit, extraArgs = [
             avId])
@@ -161,7 +160,7 @@ class DistributedPicnicBasketAI(DistributedObjectAI.DistributedObjectAI):
         if self.findAvatar(avId) != None:
             self.notify.warning('Ignoring multiple requests from %s to board.' % avId)
             return None
-        
+
         av = self.air.doId2do.get(avId)
         if av:
             if av.hp > 0 and self.accepting and self.seats[si] == None:
@@ -272,4 +271,3 @@ def spawn(air, zone, element, match):
             picnic = DistributedPicnicBasketAI(air, index, x, y, z, h, p, r)
             picnic.generateWithRequired(zone)
             picnic.start()
-

@@ -113,7 +113,7 @@ class GameMenu(DirectFrame):
         if not config.GetBool('want-findfour-table', True):
             self.FindFour['command'] = self.doNothing
             self.FindFour.setColor(0.7, 0.7, 0.7, 0.7)
-            
+
         return
 
     def delete(self):
