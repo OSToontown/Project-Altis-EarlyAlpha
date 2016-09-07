@@ -272,7 +272,14 @@ class DistributedFurnitureManagerAI(DistributedObjectAI):
         # TODO: Add DistributedTrunkAI when accessories are enabled
         # TODO2: Is there any point in repeating this? Perhaps we should unify this (and the above)
         # into a single self.__getDOFromItem(item)?
-        if item.getFlags() & FLCloset:
+        if item.getFlags() & FLTrunk:
+            if self.house.gender is 0:
+                if item.furnitureType - 4000 < 10:
+                    item.furnitureType += 10
+            elif item.furnitureType - 4000 > 10:
+                item.furnitureType -= 10
+            do = DistributedTrunkAI(self.air, self, item)
+        elif item.getFlags() & FLCloset:
             if self.house.gender is 0:
                 # If they have a male closet, we need to make it a female closet.
                 if item.furnitureType - 500 < 10:
@@ -285,13 +292,6 @@ class DistributedFurnitureManagerAI(DistributedObjectAI):
             do = DistributedBankAI(self.air, self, item)
         elif item.getFlags() & FLPhone:
             do = DistributedPhoneAI(self.air, self, item)
-        elif item.getFlags() & FLTrunk:
-            if self.house.gender is 0:
-                if item.furnitureType - 500 > 10:
-                    item.furnitureType += 10
-                elif item.furnitureType - 500 > 10:
-                    item.furnitureType -=10
-                do = DistributedTrunkAI(self.air, self, item)
         else:
             do = DistributedFurnitureItemAI(self.air, self, item)
 

@@ -67,12 +67,19 @@ class DistributedPhoneAI(DistributedFurnitureItemAI):
         av.b_setCatalogNotify(ToontownGlobals.NoItems, av.mailboxNotify)
 
     def __gotHouse(self, dclass, fields):
-            if dclass != self.air.dclassesByName['DistributedHouseAI']:
-                return #rip
-            # this is too long
-            numItems = len(CatalogItemList(fields['setInteriorItems'][0], store=CatalogItem.Customization)) + len(CatalogItemList(fields['setAtticItems'][0], store=CatalogItem.Customization)) + len(CatalogItemList(fields['setAtticWallpaper'][0], store=CatalogItem.Customization)) + len(CatalogItemList(fields['setAtticWindows'][0], store=CatalogItem.Customization)) + len(CatalogItemList(fields['setInteriorWallpaper'][0], store=CatalogItem.Customization)) + len(CatalogItemList(fields['setInteriorWindows'][0], store=CatalogItem.Customization))
-            self.sendUpdateToAvatarId(fields['setAvatarId'][0], 'setLimits', [numItems])
-
+        if dclass != self.air.dclassesByName['DistributedHouseAI']:
+            return
+        numItems = len(CatalogItemList(fields['setInteriorItems'][0],
+                                       store=CatalogItem.Customization)) + len(CatalogItemList(fields['setAtticItems'][0],
+                                                                                               store=CatalogItem.Customization)) + len(CatalogItemList(fields['setAtticWallpaper'][0],
+                                                                                                                                                       store=CatalogItem.Customization)) + len(CatalogItemList(fields['setAtticWindows'][0],
+                                                                                                                                                                                                               store=CatalogItem.Customization)) + len(CatalogItemList(fields['setInteriorWallpaper'][0],
+                                                                                                                                                                                                                                                                       store=CatalogItem.Customization)) + len(CatalogItemList(fields['setInteriorWindows'][0],
+                                                                                                                                                                                                                                                                                                                               store=CatalogItem.Customization))
+        self.sendUpdateToAvatarId(
+            fields['setAvatarId'][0],
+            'setLimits',
+            [numItems])
 
     def avatarExit(self):
         avId = self.air.getAvatarIdFromSender()
