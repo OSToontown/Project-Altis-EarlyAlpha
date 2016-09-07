@@ -42,7 +42,7 @@ class FireworkShowMixin:
             self.getSky().clearColorScale()
         if hasattr(base, 'localAvatar') and base.localAvatar:
             base.localAvatar.clearColorScale()
-        base.setBackgroundColor(DefaultBackgroundColor)
+        self.trySettingBackground(1)
         self.ignoreAll()
         return
 
@@ -69,10 +69,21 @@ class FireworkShowMixin:
             self.createFireworkShow()
             if t > self.fireworkShow.getShowDuration():
                 return
+
             preShow = self.preShow(eventId, songId, t)
             postShow = self.postShow(eventId)
             beginFireworkShow = Func(self.beginFireworkShow, max(0, t), root)
-            self.currentShow = Sequence(preShow, beginFireworkShow, Wait(max(0, self.fireworkShow.getShowDuration() - max(0, t))), postShow)
+
+            delay = Wait(max(0, self.fireworkShow.getShowDuration() - max(0, t)))
+            if eventId == JULY4_FIREWORKS:
+                delay = Wait(max(0, self.fireworkShow.getShowDuration() - max(0, t)) - 9.5)
+            elif eventId == NEWYEARS_FIREWORKS:
+                delay = Wait(max(0, self.fireworkShow.getShowDuration() - max(0, t)) + 1.0)
+            elif eventId == PartyGlobals.FireworkShows.Summer:
+                delay = Wait(max(0, self.fireworkShow.getShowDuration() - max(0, t)) - 5.0)
+
+            self.currentShow = Sequence(preShow, beginFireworkShow, delay, postShow)
+            self.currentShow.start()
             self.currentShow.start()
         return
 
@@ -154,6 +165,15 @@ class FireworkShowMixin:
             else:
                 base.camLens.setFar(DefaultCameraFar)
 
+    def trySettingBackground(self, color):
+        if base.localAvatar.isBookOpen():
+            # Our Shtickerbook is open with a custom background already set,
+            # so we don't want to screw that up.
+            pass
+        elif color == 0:
+            base.setBackgroundColor(Vec4(0, 0, 0, 1))
+        else:
+            base.setBackgroundColor(DefaultBackgroundColor)
     def postShow(self, eventId):
         if eventId == JULY4_FIREWORKS:
             endMessage = TTLocalizer.FireworksJuly4Ending
@@ -195,6 +215,18 @@ class FireworkShowMixin:
             self.fireworkShow.begin(timeStamp)
             self.fireworkShow.reparentTo(root)
             hood = self.getHood()
+
+            from toontown.hood import TTHood
+            from toontown.hood import DDHood
+            from toontown.hood import MMHood
+            from toontown.hood import BRHood
+            from toontown.hood import DGHood
+            from toontown.hood import DLHood
+            from toontown.hood import GSHood
+            from toontown.hood import OZHood
+            from toontown.hood import TFHood
+            from toontown.hood import GZHood
+            from toontown.hood import PartyHood
             if isinstance(hood, TTHood.TTHood):
                 self.fireworkShow.setPos(150, 0, 80)
                 self.fireworkShow.setHpr(90, 0, 0)
