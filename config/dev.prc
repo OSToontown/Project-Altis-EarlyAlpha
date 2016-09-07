@@ -12,7 +12,7 @@ default-directnotify-level info
 smooth-lag 0.4
 # Pretty sure you're gonna want membership...
 want-membership #t
-
+want-speedhack-fix #t
 
 
 # VFS for resources.
