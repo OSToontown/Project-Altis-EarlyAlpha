@@ -456,10 +456,10 @@ class NameShop(StateData.StateData):
         self.payDialog.buttonList[1]['text_pos'] = (0, -.02)
         self.payDialog.hide()
         buttonText = [TTLocalizer.NameShopContinueSubmission, TTLocalizer.NameShopChooseAnother]
-        self.approvalDialog = DirectDialog(dialogName='approvalstate', topPad=0, fadeScreen=0.2, pos=(0, 0.1, 0.1), button_relief=None, image_color=GlobalDialogColor, text_align=TextNode.ACenter, text=TTLocalizer.NameShopToonCouncil, buttonTextList=buttonText, buttonImageList=buttonImage, buttonValueList=[1, 0], command=self.approvalAction)
-        self.approvalDialog.buttonList[0].setPos(0, 0, -.3)
-        self.approvalDialog.buttonList[1].setPos(0, 0, -.43)
-        self.approvalDialog['image_scale'] = (0.8, 1, 0.77)
+        self.approvalDialog = DirectDialog(relief=None, image=DGG.getDefaultDialogGeom(), dialogName='approvalstate', topPad=0, fadeScreen=0.2, pos=(0, 0.1, 0.1), button_relief=None, image_color=GlobalDialogColor, text_align=TextNode.ACenter, text=TTLocalizer.NameShopToonCouncil, buttonTextList=buttonText, buttonImageList=buttonImage, buttonValueList=[1, 0], command=self.approvalAction)
+        self.approvalDialog.buttonList[0].setPos(0, 0, -.37)
+        self.approvalDialog.buttonList[1].setPos(0, 0, -.49)
+        self.approvalDialog['image_scale'] = (0.8, 1, 0.88)
         for x in range(0, 2):
             self.approvalDialog.buttonList[x]['text_pos'] = (0, -.01)
             self.approvalDialog.buttonList[x]['text_scale'] = (0.04, 0.05999)
@@ -1012,7 +1012,7 @@ class NameShop(StateData.StateData):
 
     def __isFirstTime(self):
         if not self.makeAToon.nameList or self.makeAToon.warp:
-            self.__createAvatar()
+            self.promptTutorial()
         else:
             self.promptTutorial()
 
