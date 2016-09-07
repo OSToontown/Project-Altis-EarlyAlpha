@@ -1007,8 +1007,11 @@ class DistributedMazeGame(DistributedMinigame):
         suitPeriods = slowerPeriods + fasterPeriods
         self.notify.debug('suit periods: ' + `suitPeriods`)
         self.randomNumGen.shuffle(suitPeriods)
+        invSuit = base.cr.newsManager.getInvadingSuit()
+        if not invSuit:
+            invSuit = 'f'
         for i in xrange(self.numSuits):
-            self.suits.append(MazeSuit(i, self.maze, self.randomNumGen, suitPeriods[i], self.getDifficulty()))
+            self.suits.append(MazeSuit(i, self.maze, self.randomNumGen, suitPeriods[i], self.getDifficulty(), invSuit))
 
     def __unloadSuits(self):
         self.notify.debug('unloadSuits')

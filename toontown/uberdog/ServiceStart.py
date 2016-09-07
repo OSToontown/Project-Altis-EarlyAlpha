@@ -1,5 +1,4 @@
 from pandac.PandaModules import *
-from direct.showbase import PythonUtil
 import __builtin__
 
 import argparse
@@ -46,6 +45,6 @@ try:
 except SystemExit:
     raise
 except Exception:
-    info = PythonUtil.describeException()
+    info = describeException()
     simbase.air.writeServerEvent('uberdog-exception', avId=simbase.air.getAvatarIdFromSender(), accId=simbase.air.getAccountIdFromSender(), info=info)
     raise

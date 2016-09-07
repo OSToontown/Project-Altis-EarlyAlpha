@@ -369,6 +369,9 @@ class DistributedTugOfWarGame(DistributedMinigame):
             self.suitType = 'gh'
         elif suit == 4:
             self.suitType = 'cr'
+        invSuit = base.cr.newsManager.getInvadingSuit()
+        if invSuit:
+            self.suitType = invSuit
 
     def setGameReady(self):
         if not self.hasLocalToon:

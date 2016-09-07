@@ -13,7 +13,6 @@ import time
 import hmac
 import hashlib
 import json
-from ClientServicesManager import FIXED_KEY
 
 def judgeName(name):
     return True
@@ -23,15 +22,14 @@ REPORT_REASONS = [
     'MODERATION_RUDE_BEHAVIOR', 'MODERATION_BAD_NAME', 'MODERATION_HACKING',
 ]
 
-
 # --- ACCOUNT DATABASES ---
 class LocalAccountDB:
     def __init__(self, csm):
         self.csm = csm
-		
-		# This uses dbm, so we open the DB file:
+
+        # This uses dbm, so we open the DB file:
         filename = simbase.config.GetString('accountdb-local-file',
-                                            'dev-accounts.db')
+                                            'astron/databases/accounts.db')
         if platform == 'darwin':
             self.dbm = dumbdbm.open(filename, 'c')
         else:
@@ -67,7 +65,7 @@ class LocalAccountDB:
 class RemoteAccountDB:
     def __init__(self, csm):
         self.csm = csm
-		
+
         self.http = HTTPClient()
         self.http.setVerifySsl(0) # Whatever OS certs my laptop trusts with panda doesn't include ours. whatever
 
@@ -147,9 +145,8 @@ class LoginAccountFSM(OperationFSM):
             return
 
         self.databaseId = result.get('databaseId', 0)
-	accountId = result.get('accountId', 0)
+        accountId = result.get('accountId', 0)
         self.adminAccess = result.get('adminAccess', 0)
-        self.betaKeyQuest = result.get('betaKeyQuest', 0)
 
         # Do they have the minimum access needed to play?
         if self.adminAccess < simbase.config.GetInt('minimum-access', 100):
@@ -181,7 +178,6 @@ class LoginAccountFSM(OperationFSM):
                         'ACCOUNT_AV_SET_DEL': [],
                         'CREATED': time.ctime(),
                         'LAST_LOGIN': time.ctime(),
-                        'BETA_KEY_QUEST': self.betaKeyQuest,
                         'ACCOUNT_ID': str(self.databaseId),
                         'ADMIN_ACCESS': self.adminAccess}
 
@@ -213,8 +209,8 @@ class LoginAccountFSM(OperationFSM):
         if not success:
             self.demand('Kill', 'The account server could not save your account DB ID!')
             return
-			
-	    self.demand('SetAccount')
+
+        self.demand('SetAccount')
 
     def enterSetAccount(self):
         # First, if there's anybody on the account, kill 'em for redundant login:
@@ -271,8 +267,7 @@ class LoginAccountFSM(OperationFSM):
             self.csm.air.dclassesByName['AccountUD'],
             {'LAST_LOGIN': time.ctime(),
              'ACCOUNT_ID': str(self.databaseId),
-             'ADMIN_ACCESS': self.adminAccess,
-             'BETA_KEY_QUEST': self.betaKeyQuest})
+             'ADMIN_ACCESS': self.adminAccess})
 
         # Add a POST_REMOVE to the connection channel to execute the NetMessenger
         # message when the account connection goes RIP on the Client Agent.
@@ -507,7 +502,6 @@ class DeleteAvatarFSM(GetAvatarsFSM):
                 { 'setSlot%dToonId' % index : [0], 'setSlot%dItems' % index : [[]] }
             )
 
-
         self.csm.air.dbInterface.updateObject(
             self.csm.air.dbId,
             self.target, # i.e. the account ID
@@ -733,7 +727,6 @@ class LoadAvatarFSM(AvatarOperationFSM):
                                   self.csm.air.dclassesByName['DistributedToonUD'],
                                   {'setAdminAccess': [self.account.get('ADMIN_ACCESS', 0)]})
 
-
         # Next, add them to the avatar channel:
         dg = PyDatagram()
         dg.addServerHeader(channel, self.csm.air.ourChannel, CLIENTAGENT_OPEN_CHANNEL)
@@ -756,6 +749,9 @@ class LoadAvatarFSM(AvatarOperationFSM):
         fields = self.avatar
         fields.update({'setAdminAccess': [self.account.get('ADMIN_ACCESS', 0)]})
         self.csm.air.friendsManager.toonOnline(self.avId, fields)
+
+        # Tell the GlobalPartyManager as well
+        self.csm.air.globalPartyMgr.avatarJoined(self.avId)
 
         # Post-remove for an avatar that disconnects unexpectedly.
         dgcleanup = self.csm.air.netMessenger.prepare('avatarOffline', [self.avId])
@@ -835,9 +831,9 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
         else:
             self.notify.error('Invalid account DB type configured: %s' % dbtype)
 
-
         # This attribute determines if we want to disable logins.
         self.loginsEnabled = True
+
     def killConnection(self, connId, reason):
         dg = PyDatagram()
         dg.addServerHeader(connId, self.air.ourChannel, CLIENTAGENT_EJECT)
@@ -880,7 +876,7 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
             self.notify.warning('The CSMUD has been told to reject logins! All future logins will now be rejected.')
         self.loginsEnabled = enable
 
-    def login(self, cookie, sig):
+    def login(self, cookie):
         self.notify.debug('Received login cookie %r from %d' % (cookie, self.air.getMsgSender()))
 
         sender = self.air.getMsgSender()
@@ -896,13 +892,6 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
         if sender>>32:
             # Oops, they have an account ID on their connection already!
             self.killConnection(sender, 'Client is already logged in.')
-            return
-
-        # Test the signature
-        key = config.GetString('csmud-secret', 'streetlamps') + config.GetString('server-version', 'no_version_set') + FIXED_KEY
-        computedSig = hmac.new(key, cookie, hashlib.sha256).digest()
-        if sig != computedSig:
-            self.killConnection(sender, 'The accounts database rejected your cookie')
             return
 
         if sender in self.connection2fsm:
@@ -954,6 +943,3 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
             self.air.writeServerEvent("suspicious", avId=reporterId, issue="Invalid report reason index (%d) sent by avatar." % category)
             return
         self.air.writeServerEvent("player-reported", reporterId=reporterId, avId=avId, category=REPORT_REASONS[category])
-        # TODO: RPC call to web to say this person was reported.
-        # This will require a database query to fetch the webId associated with the reported player.
-        # Either that, or the web can make an RPC call to the server to get webId from avId.

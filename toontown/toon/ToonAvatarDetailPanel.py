@@ -54,7 +54,7 @@ class ToonAvatarDetailPanel(DirectFrame):
         self.playerInfo = None
         if self.playerId:
             self.playerInfo = base.cr.playerFriendsManager.playerId2Info.get(playerId)
-        optiondefs = (('pos', (-0.79, 0.0, -0.47), None),
+        optiondefs = (('pos', (-0.807, 0.0, -0.475), None),
          ('scale', 0.5, None),
          ('relief', None, None),
          ('image', detailPanel, None),
@@ -179,7 +179,7 @@ class ToonAvatarDetailPanel(DirectFrame):
                 text = TTLocalizer.AvatarDetailPanelOnline % {'district': shardName,
                  'location': hoodName}
         else:
-            text = TTLocalizer.AvatarDetailPanelOffline % {'last_seen': TTLocalizer.getLastSeenString(self.avatar.getLastSeen())}
+            text = TTLocalizer.AvatarDetailPanelOffline
         self.dataText['text'] = text
         self.__updateTrackInfo()
         self.__updateTrophyInfo()

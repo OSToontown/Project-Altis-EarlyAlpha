@@ -1,4 +1,5 @@
 from pandac.PandaModules import *
+from toontown.distributed import PythonUtil
 import __builtin__
 import os
 
@@ -125,10 +126,9 @@ __builtin__.loader = base.loader
 autoRun = ConfigVariableBool('toontown-auto-run', 1)
 if autoRun:
     try:
-        run()
+        base.run()
     except SystemExit:
         raise
     except:
-        from direct.showbase import PythonUtil
-        print PythonUtil.describeException()
+        print describeException()
         raise

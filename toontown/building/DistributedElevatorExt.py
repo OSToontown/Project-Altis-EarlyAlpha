@@ -46,7 +46,11 @@ class DistributedElevatorExt(DistributedElevator.DistributedElevator):
             self.nametag.setActive(0)
             self.nametag.setAvatar(self.getElevatorModel())
             name = self.cr.playGame.dnaData.getBlock(self.bldg.block).title
-            if not name:
+            if self.bldg.mode == 'cogdo' and not name:
+                name = TTLocalizer.Cogdominiums
+            elif self.bldg.mode == 'cogdo':
+                name += TTLocalizer.CogdominiumsExt
+            elif not name:
                 name = TTLocalizer.CogsInc
             else:
                 name += TTLocalizer.CogsIncExt

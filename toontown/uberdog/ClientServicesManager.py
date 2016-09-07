@@ -4,10 +4,6 @@ from otp.distributed.PotentialAvatar import PotentialAvatar
 from otp.otpbase import OTPLocalizer, OTPGlobals
 from otp.margins.WhisperPopup import *
 from pandac.PandaModules import *
-import hashlib
-import hmac
-
-FIXED_KEY = "wedidntbuildttrinaday,thinkaboutwhatyouredoing"
 
 class ClientServicesManager(DistributedObjectGlobal):
     notify = directNotify.newCategory('ClientServicesManager')
@@ -21,16 +17,11 @@ class ClientServicesManager(DistributedObjectGlobal):
 
         cookie = self.cr.playToken or 'dev'
 
-        # Sign the login cookie
-        key = config.GetString('csmud-secret', 'streetlamps') + config.GetString('server-version', 'no_version_set') + FIXED_KEY
-        sig = hmac.new(key, cookie, hashlib.sha256).digest()
-
         self.notify.debug('Sending login cookie: ' + cookie)
-        self.sendUpdate('login', [cookie, sig])
+        self.sendUpdate('login', [cookie])
 
     def acceptLogin(self):
         messenger.send(self.doneEvent, [{'mode': 'success'}])
-
 
     # --- AVATARS LIST ---
     def requestAvatars(self):
@@ -108,7 +99,7 @@ class ClientServicesManager(DistributedObjectGlobal):
         whisper = WhisperPopup(message, OTPGlobals.getInterfaceFont(), WhisperPopup.WTSystem)
         whisper.manage(base.marginManager)
         if not self.systemMessageSfx:
-            self.systemMessageSfx = base.loadSfx('phase_3/audio/sfx/clock03.ogg')
+            self.systemMessageSfx = base.loadSfx('phase_4/audio/sfx/clock03.ogg')
         if self.systemMessageSfx:
             base.playSfx(self.systemMessageSfx)
 

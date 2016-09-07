@@ -1,7 +1,9 @@
 from direct.directnotify import DirectNotifyGlobal
 from direct.distributed.DistributedObjectAI import DistributedObjectAI
-from direct.distributed.PyDatagram import *
 from otp.ai.MagicWordGlobal import *
+from otp.otpbase import OTPGlobals
+from datetime import datetime
+import random
 
 class FriendManagerAI(DistributedObjectAI):
     notify = DirectNotifyGlobal.directNotify.newCategory("FriendManagerAI")
@@ -11,6 +13,8 @@ class FriendManagerAI(DistributedObjectAI):
         self.air = air
         self.currentContext = 0
         self.requests = {}
+        self.tfCodes = {}
+        taskMgr.add(self.__tfCodesTask, 'TrueFriendsCodesClearTask')
 
     def friendQuery(self, requested):
         avId = self.air.getAvatarIdFromSender()
@@ -75,19 +79,8 @@ class FriendManagerAI(DistributedObjectAI):
                 # Likely they logged off just before a response was sent. RIP.
                 return
 
-
-            # Allow both toons to teleport to each other.
-            dg = PyDatagram()
-            dg.addServerHeader(self.GetPuppetConnectionChannel(requested.getDoId()), self.air.ourChannel, CLIENTAGENT_DECLARE_OBJECT)
-            dg.addUint32(requester.getDoId())
-            dg.addUint16(self.air.dclassesByName['DistributedToonAI'].getNumber())
-            self.air.send(dg)
-
-            dg = PyDatagram()
-            dg.addServerHeader(self.GetPuppetConnectionChannel(requester.getDoId()), self.air.ourChannel, CLIENTAGENT_DECLARE_OBJECT)
-            dg.addUint32(requested.getDoId())
-            dg.addUint16(self.air.dclassesByName['DistributedToonAI'].getNumber())
-            self.air.send(dg)
+            self.air.questManager.toonMadeFriend(requested, requester)
+            self.air.questManager.toonMadeFriend(requester, requested)
 
             requested.extendFriendsList(requester.getDoId(), 0)
             requester.extendFriendsList(requested.getDoId(), 0)
@@ -95,7 +88,6 @@ class FriendManagerAI(DistributedObjectAI):
             requested.d_setFriendsList(requested.getFriendsList())
             requester.d_setFriendsList(requester.getFriendsList())
         del self.requests[context]
-
 
     def inviteeAcknowledgeCancel(self, context):
         avId = self.air.getAvatarIdFromSender()
@@ -110,7 +102,6 @@ class FriendManagerAI(DistributedObjectAI):
             return
         del self.requests[context]
 
-
     def friendConsidering(self, todo0, todo1):
         pass
 
@@ -124,16 +115,95 @@ class FriendManagerAI(DistributedObjectAI):
         pass
 
     def requestSecret(self):
-        pass
+        avId = self.air.getAvatarIdFromSender()
+        av = self.air.doId2do.get(avId)
+        if len(av.getFriendsList()) == OTPGlobals.MaxFriends:
+            self.requestSecretResponse(0, '')
+        else:
+            day = datetime.now().day
+            code = self.generateTrueFriendsCode()
+            self.tfCodes[code] = (avId, day)
+            self.requestSecretResponse(1, code)
+            print code
 
-    def requestSecretResponse(self, todo0, todo1):
-        pass
+    def generateTrueFriendsCode(self):
+        chars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9']
+        def r(): return random.choice(chars)
+        code = '%s%s%s %s%s%s' %(r(),r(),r(),r(),r(),r())
+        return code
 
-    def submitSecret(self, todo0):
-        pass
+    def requestSecretResponse(self, result, secret):
+        avId = self.air.getAvatarIdFromSender()
+        self.sendUpdateToAvatarId(avId, 'requestSecretResponse', [result, secret])
 
-    def submitSecretResponse(self, todo0, todo1):
-        pass
+    def submitSecret(self, secret):
+        productPrefix = OTPGlobals.getDefaultProductPrefix()
+        print secret
+        if not self.tfCodes.has_key(secret):
+            self.submitSecretResponse(0, 0)
+            return
+        secretInfo = self.tfCodes[secret]
+        avId = self.air.getAvatarIdFromSender()
+        av = self.air.doId2do.get(avId)
+        friendAvId = secretInfo[0]
+        friendAv = self.air.doId2do.get(friendAvId)
+        if av:
+            if friendAv:
+                if avId == friendAvId:
+                    self.submitSecretResponse(3, 0)
+                    self.removeSecret(secret)
+                    return
+                elif len(friendAv.getFriendsList()) == OTPGlobals.MaxFriends or len(av.getFriendsList()) == OTPGlobals.MaxFriends:
+                    self.submitSecretResponse(2, friendAvId)
+                    return
+                else:
+                    friendAv.extendFriendsList(av.getDoId(), 1)
+                    friendAv.d_setFriendsList(friendAv.getFriendsList())
+                    av.extendFriendsList(friendAvId, 1)
+                    av.d_setFriendsList(av.getFriendsList())
+                    self.submitSecretResponse(1, friendAvId)
+                    self.removeSecret(secret)
+                    return
+            else:
+                # Friend is offline!
+                def handleQuery(dclass, fields):
+                    if dclass != self.air.dclassesByName['DistributedToonAI']:
+                        return
+                    newFriendsList = []
+                    oldFriendsList = fields['setFriendsList'][0]
+                    if len(oldFriendsList) == OTPGlobals.MaxFriends:
+                        self.submitSecretResponse(2, friendAvId)
+                        return
+
+                    for friend in oldFriendsList: newFriendsList.append(friend)
+                    newFriendsList.append((avId, 1))
+                    self.air.dbInterface.updateObject(self.air.dbId, friendAvId, self.air.dclassesByName['DistributedToonAI'],
+                                                  {'setFriendsList' : [newFriendsList]})
+                    av.extendFriendsList(friendAvId, 1)
+                    av.d_setFriendsList(av.getFriendsList())
+                    self.submitSecretResponse(1, friendAvId)
+                    self.removeSecret(secret)
+
+                self.air.dbInterface.queryObject(self.air.dbId, friendAvId, handleQuery)
+
+    def removeSecret(self, secret):
+        if self.tfCodes.has_key(secret):
+            self.tfCodes.pop(secret)
+
+    def submitSecretResponse(self, result, avId):
+        avId = self.air.getAvatarIdFromSender()
+        self.sendUpdateToAvatarId(avId, 'submitSecretResponse', [result, avId])
+
+    def __tfCodesTask(self, task):
+        for code in self.tfCodes.keys():
+            codeInfo = self.tfCodes[code]
+            codeDay = codeInfo[1]
+            today = datetime.now().day
+            if codeDay + 2 == today:
+                self.notify.info('Removing 2 days secret: %s' %code)
+                self.tfCodes.pop(code)
+
+        return task.again
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
 def truefriend(avIdShort):
@@ -145,9 +215,8 @@ def truefriend(avIdShort):
         return 'avId not found/online!'
     if int(str(avIdFull)[:2]) >= 40: # AI
         return '%s is an NPC!' % av.getName()
-    if not av._isGM:
-        return '%s is not a staff member!' % av.getName()
-
+    if admin == av:
+        return "Cannot true friend yourself!"
 
     admin.extendFriendsList(av.getDoId(), 1)
     av.extendFriendsList(admin.getDoId(), 1)

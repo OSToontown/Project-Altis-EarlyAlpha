@@ -33,6 +33,7 @@ class NewsManager(DistributedObject.DistributedObject):
         DistributedObject.DistributedObject.__init__(self, cr)
         self.population = 0
         self.invading = 0
+        self.invadingSuit = None
 
         forcedHolidayDecorations = config.GetString('force-holiday-decorations', '')
         self.decorationHolidayIds = []
@@ -91,18 +92,22 @@ class NewsManager(DistributedObject.DistributedObject):
             msg1 = TTLocalizer.SuitInvasionBegin1
             msg2 = TTLocalizer.SuitInvasionBegin2 % cogNameP
             self.invading = 1
+            self.invadingSuit = cogType
         elif msgType == ToontownGlobals.SuitInvasionUpdate:
             msg1 = TTLocalizer.SuitInvasionUpdate1 % numRemaining
             msg2 = TTLocalizer.SuitInvasionUpdate2 % cogNameP
             self.invading = 1
+            self.invadingSuit = cogType
         elif msgType == ToontownGlobals.SuitInvasionEnd:
             msg1 = TTLocalizer.SuitInvasionEnd1 % cogName
             msg2 = TTLocalizer.SuitInvasionEnd2
             self.invading = 0
+            self.invadingSuit = None
         elif msgType == ToontownGlobals.SuitInvasionBulletin:
             msg1 = TTLocalizer.SuitInvasionBulletin1
             msg2 = TTLocalizer.SuitInvasionBulletin2 % cogNameP
             self.invading = 1
+            self.invadingSuit = cogType
         else:
             self.notify.warning('setInvasionStatus: invalid msgType: %s' % msgType)
             return
@@ -115,6 +120,9 @@ class NewsManager(DistributedObject.DistributedObject):
 
     def getInvading(self):
         return self.invading
+
+    def getInvadingSuit(self):
+        return self.invadingSuit
 
     def startHoliday(self, holidayId):
         if holidayId not in self.holidayIdList:
