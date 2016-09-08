@@ -553,9 +553,9 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         self.air = air
         self.zoneId = zoneId
         self.canonicalZoneId = ZoneUtil.getCanonicalZoneId(zoneId)
-        if config.GetBool('want-cogdominiums', True):
+        if config.GetBool('want-cogdominiums', False):
             if not hasattr(self.__class__, 'CogdoPopAdjusted'):
-                self.__class__.CogdoPopAdjusted = True
+                self.__class__.CogdoPopAdjusted = False
                 for index in xrange(len(self.SuitHoodInfo)):
                     hoodInfo = self.SuitHoodInfo[index]
                     hoodInfo[self.SUIT_HOOD_INFO_BMIN] = int(0.5 + self.CogdoPopFactor * hoodInfo[self.SUIT_HOOD_INFO_BMIN])
