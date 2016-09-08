@@ -1,5 +1,5 @@
-1412101924
-2 2
+1422500059
+2 3
 12 libp3gsgbase 4 Oe1b 12 panda3d.core 
 23
 23 6 output 0 6 46 25 DisplayRegionBase::output 0 1 1 0
@@ -62,13 +62,13 @@ virtual bool GraphicsStateGuardianBase::get_supports_multisample(void) const = 0
 84
 virtual int GraphicsStateGuardianBase::get_supported_geom_rendering(void) const = 0;
 
-38 28 get_supports_occlusion_query 0 6 50 55 GraphicsStateGuardianBase::get_supports_occlusion_query 0 1 16 0
-85
-virtual bool GraphicsStateGuardianBase::get_supports_occlusion_query(void) const = 0;
-
-39 26 get_supports_shadow_filter 0 6 50 53 GraphicsStateGuardianBase::get_supports_shadow_filter 0 1 17 0
+38 26 get_supports_shadow_filter 0 6 50 53 GraphicsStateGuardianBase::get_supports_shadow_filter 0 1 16 0
 83
 virtual bool GraphicsStateGuardianBase::get_supports_shadow_filter(void) const = 0;
+
+39 25 get_supports_texture_srgb 0 6 50 52 GraphicsStateGuardianBase::get_supports_texture_srgb 0 1 17 0
+82
+virtual bool GraphicsStateGuardianBase::get_supports_texture_srgb(void) const = 0;
 
 40 15 get_default_gsg 0 4 50 42 GraphicsStateGuardianBase::get_default_gsg 0 1 18 651
 ////////////////////////////////////////////////////////////////////
@@ -140,8 +140,8 @@ GraphicsStateGuardianBase::~GraphicsStateGuardianBase(void);
 13 14 Dtool_Oe1bKQsG 0 6 18 66 0 14 Dtool_Oe1bKQsG 0 2 4 this 3 64  16 compression_mode 1 59  
 14 14 Dtool_Oe1bqkID 0 6 19 66 0 14 Dtool_Oe1bqkID 0 1 4 this 3 64  
 15 14 Dtool_Oe1bE6bP 0 6 20 59 0 14 Dtool_Oe1bE6bP 0 1 4 this 3 64  
-16 14 Dtool_Oe1b_NuT 0 6 21 66 0 14 Dtool_Oe1b_NuT 0 1 4 this 3 64  
-17 14 Dtool_Oe1bUaiW 0 6 22 66 0 14 Dtool_Oe1bUaiW 0 1 4 this 3 64  
+16 14 Dtool_Oe1bUaiW 0 6 21 66 0 14 Dtool_Oe1bUaiW 0 1 4 this 3 64  
+17 14 Dtool_Oe1b48rt 0 6 22 66 0 14 Dtool_Oe1b48rt 0 1 4 this 3 64  
 18 14 Dtool_Oe1bE0Tv 0 7 23 67 45 14 Dtool_Oe1bE0Tv 651 ////////////////////////////////////////////////////////////////////
 //     Function: GraphicsStateGuardianBase::get_default_gsg
 //       Access: Published, Static

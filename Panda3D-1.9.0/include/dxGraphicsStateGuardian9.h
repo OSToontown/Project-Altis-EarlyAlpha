@@ -22,6 +22,7 @@
 
 #include "graphicsStateGuardian.h"
 #include "texture.h"
+#include "samplerState.h"
 #include "displayRegion.h"
 #include "material.h"
 #include "depthTestAttrib.h"
@@ -36,9 +37,7 @@
 #include "vertexElementArray.h"
 #include "dxShaderContext9.h"
 
-
-enum GsgPageType
-{
+enum GsgPageType {
   GPT_Texture,
   GPT_VertexBuffer,
   GPT_IndexBuffer,
@@ -51,6 +50,8 @@ class Light;
 class DXTextureContext9;
 class DXVertexBufferContext9;
 class DXIndexBufferContext9;
+
+class wdxGraphicsBuffer9;
 
 ////////////////////////////////////////////////////////////////////
 //       Class : DXGraphicsStateGuardian9
@@ -67,7 +68,7 @@ public:
                        DWORD multisampletype, DWORD multisamplequality);
 
   virtual TextureContext *prepare_texture(Texture *tex, int view);
-  void apply_texture(int i, TextureContext *tc);
+  void apply_texture(int i, TextureContext *tc, const SamplerState &sampler);
   virtual bool update_texture(TextureContext *tc, bool force);
   bool upload_texture(DXTextureContext9 *dtc, bool force);
   virtual void release_texture(TextureContext *tc);
@@ -217,7 +218,7 @@ protected:
   void update_standard_texture_bindings();
 
 protected:
-  INLINE static D3DTEXTUREADDRESS get_texture_wrap_mode(Texture::WrapMode wm);
+  INLINE static D3DTEXTUREADDRESS get_texture_wrap_mode(SamplerState::WrapMode wm);
   INLINE static D3DFOGMODE get_fog_mode_type(Fog::Mode m);
   const D3DCOLORVALUE &get_light_color(Light *light) const;
   INLINE static D3DTRANSFORMSTATETYPE get_tex_mat_sym(int stage_index);
@@ -242,8 +243,8 @@ protected:
   bool release_swap_chain (DXScreenData *new_context);
   void copy_pres_reset(DXScreenData *new_context);
 
-  static D3DTEXTUREFILTERTYPE get_d3d_min_type(Texture::FilterType filter_type);
-  static D3DTEXTUREFILTERTYPE get_d3d_mip_type(Texture::FilterType filter_type);
+  static D3DTEXTUREFILTERTYPE get_d3d_min_type(SamplerState::FilterType filter_type);
+  static D3DTEXTUREFILTERTYPE get_d3d_mip_type(SamplerState::FilterType filter_type);
   static D3DTEXTUREOP get_texture_operation(TextureStage::CombineMode mode, int scale);
   DWORD get_texture_argument(TextureStage::CombineSource source,
            TextureStage::CombineOperand operand) const;
@@ -265,7 +266,7 @@ protected:
 
 public:
   DXScreenData *_screen;
-  
+
 protected:
   LPDIRECT3DDEVICE9 _d3d_device;  // same as _screen->_d3d_device, cached for spd
   IDirect3DSwapChain9 *_swap_chain;
@@ -374,7 +375,7 @@ protected:
 
   list <wdxGraphicsBuffer9 **> _graphics_buffer_list;
 
-  int _supports_gamma_calibration;  
+  int _supports_gamma_calibration;
 
   static LPDIRECT3DDEVICE9 _cg_device;
 

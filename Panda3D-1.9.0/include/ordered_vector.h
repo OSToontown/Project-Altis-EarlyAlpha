@@ -39,6 +39,7 @@ template<class Key, class Compare = less<int> > class ordered_vector
 #include "pandabase.h"
 
 #include "pvector.h"
+#include "epvector.h"
 #include "pset.h"
 #include "pnotify.h"
 #include <algorithm>
@@ -108,7 +109,7 @@ template<class Key, class Compare = less<int> > class ordered_vector
 template<class Key, class Compare = less<Key> >
 class ordered_vector {
 private:
-  typedef pvector<Key> Vector;
+  typedef epvector<Key> Vector;
   
 public:
   // Typedefs

@@ -1,5 +1,5 @@
-1412104298
-2 2
+1422503311
+2 3
 13 libp3recorder 4 ayCl 12 panda3d.core 
 47
 47 24 upcast_to_ReferenceCount 0 12 94 38 RecorderBase::upcast_to_ReferenceCount 0 1 4 42
@@ -16,20 +16,7 @@ ReferenceCount *RecorderBase::upcast_to_ReferenceCount(void);
 42
 virtual RecorderBase::~RecorderBase(void);
 
-49 12 is_recording 0 4 94 26 RecorderBase::is_recording 0 1 1 934
-// Filename: recorderBase.I
-// Created by:  drose (24Jan04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+49 12 is_recording 0 4 94 26 RecorderBase::is_recording 0 1 1 446
 ////////////////////////////////////////////////////////////////////
 //     Function: RecorderBase::is_recording
 //       Access: Published
@@ -142,20 +129,7 @@ bool RecorderController::begin_playback(Filename const &filename);
 37
 void RecorderController::close(void);
 
-63 14 get_start_time 0 4 98 34 RecorderController::get_start_time 0 1 15 912
-// Filename: recorderController.I
-// Created by:  drose (24Jan04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+63 14 get_start_time 0 4 98 34 RecorderController::get_start_time 0 1 15 418
 ////////////////////////////////////////////////////////////////////
 //     Function: RecorderController::get_start_time
 //       Access: Published
@@ -388,20 +362,7 @@ void RecorderController::play_frame(void);
 59
 static TypeHandle RecorderController::get_class_type(void);
 
-82 20 SocketStreamRecorder 0 4 100 42 SocketStreamRecorder::SocketStreamRecorder 0 2 34 35 962
-// Filename: socketStreamRecorder.I
-// Created by:  drose (28Jan04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+82 20 SocketStreamRecorder 0 4 100 42 SocketStreamRecorder::SocketStreamRecorder 0 2 34 35 466
 ////////////////////////////////////////////////////////////////////
 //     Function: SocketStreamRecorder::Constructor
 //       Access: Published
@@ -516,20 +477,7 @@ inline bool SocketStreamRecorder::flush(void);
 static TypeHandle SocketStreamRecorder::get_class_type(void);
 
 46
-1 14 Dtool_ayClK8hL 0 6 5 103 0 14 Dtool_ayClK8hL 934 // Filename: recorderBase.I
-// Created by:  drose (24Jan04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+1 14 Dtool_ayClK8hL 0 6 5 103 0 14 Dtool_ayClK8hL 446 ////////////////////////////////////////////////////////////////////
 //     Function: RecorderBase::is_recording
 //       Access: Published
 //  Description: Returns true if this recorder is presently recording
@@ -584,20 +532,7 @@ static TypeHandle SocketStreamRecorder::get_class_type(void);
 //       Access: Published
 //  Description: Finishes recording data to the indicated filename.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 111  
-15 14 Dtool_ayCl7lBc 0 6 23 118 0 14 Dtool_ayCl7lBc 912 // Filename: recorderController.I
-// Created by:  drose (24Jan04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+15 14 Dtool_ayCl7lBc 0 6 23 118 0 14 Dtool_ayCl7lBc 418 ////////////////////////////////////////////////////////////////////
 //     Function: RecorderController::get_start_time
 //       Access: Published
 //  Description: Returns the time (and date) at which the current
@@ -755,20 +690,7 @@ static TypeHandle SocketStreamRecorder::get_class_type(void);
 //               recorders and adds it to the output file.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 111  
 33 14 Dtool_ayClnwuH 0 7 41 105 0 14 Dtool_ayClnwuH 0 0 
-34 14 Dtool_ayCl4hpl 0 7 43 121 48 14 Dtool_ayCl4hpl 728 // Filename: socketStreamRecorder.I
-// Created by:  drose (28Jan04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+34 14 Dtool_ayCl4hpl 0 7 43 121 48 14 Dtool_ayCl4hpl 232 ////////////////////////////////////////////////////////////////////
 //     Function: SocketStreamRecorder::Constructor
 //       Access: Published
 //  Description:

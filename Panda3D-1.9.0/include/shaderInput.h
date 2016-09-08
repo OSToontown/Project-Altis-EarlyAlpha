@@ -20,9 +20,8 @@
 #include "typedWritableReferenceCount.h"
 #include "pointerTo.h"
 #include "nodePath.h"
-#include "texture.h"
 #include "internalName.h"
-#include "shader.h"
+#include "paramValue.h"
 #include "pta_float.h"
 #include "pta_double.h"
 #include "pta_LMatrix4.h"
@@ -30,6 +29,9 @@
 #include "pta_LVecBase4.h"
 #include "pta_LVecBase3.h"
 #include "pta_LVecBase2.h"
+#include "samplerState.h"
+#include "shader.h"
+#include "texture.h"
 
 ////////////////////////////////////////////////////////////////////
 //       Class : ShaderInput
@@ -37,16 +39,25 @@
 //               one of the value types that can be passed as input
 //               to a shader.
 ////////////////////////////////////////////////////////////////////
-
-class EXPCL_PANDA_PGRAPH ShaderInput: public TypedWritableReferenceCount {
+class EXPCL_PANDA_PGRAPH ShaderInput : public TypedWritableReferenceCount {
 public:
   INLINE ~ShaderInput();
 
 PUBLISHED:
+  // Used when binding texture images.
+  enum AccessFlags {
+    A_read    = 0x01,
+    A_write   = 0x02,
+    A_layered = 0x04,
+  };
+
   static const ShaderInput *get_blank();
   INLINE ShaderInput(const InternalName *id, int priority=0);
   INLINE ShaderInput(const InternalName *id, const NodePath &np, int priority=0);
   INLINE ShaderInput(const InternalName *id, Texture *tex, int priority=0);
+  INLINE ShaderInput(const InternalName *id, Texture *tex, const SamplerState &sampler, int priority=0);
+  INLINE ShaderInput(const InternalName *id, Texture *tex, bool read, bool write, int z=-1, int n=0, int priority=0);
+  INLINE ShaderInput(const InternalName *id, ParamValueBase *param, int priority=0);
   INLINE ShaderInput(const InternalName *id, const PTA_float &ptr, int priority=0);
   INLINE ShaderInput(const InternalName *id, const PTA_LVecBase4f &ptr, int priority=0);
   INLINE ShaderInput(const InternalName *id, const PTA_LVecBase3f &ptr, int priority=0);
@@ -83,29 +94,40 @@ PUBLISHED:
     M_invalid = 0,
     M_texture,
     M_nodepath,
-    M_numeric
+    M_numeric,
+    M_texture_sampler,
+    M_param
   };
-  
+
   INLINE const InternalName *get_name() const;
-  
+
   INLINE int get_value_type() const;
   INLINE int get_priority() const;
   INLINE Texture *get_texture() const;
   INLINE const NodePath &get_nodepath() const;
   INLINE const LVecBase4 &get_vector() const;
   INLINE const Shader::ShaderPtrData &get_ptr() const;
+  INLINE const SamplerState &get_sampler() const;
 
 public:
+  INLINE ParamValueBase *get_param() const;
+
   static void register_with_read_factory();
 
 private:
-  CPT(InternalName) _name;
-  int _type;
-  int _priority;
-  Shader::ShaderPtrData _stored_ptr;
-  PT(Texture) _stored_texture;
-  NodePath _stored_nodepath;
+  SamplerState _sampler;
   LVecBase4 _stored_vector;
+  NodePath _stored_nodepath;
+  Shader::ShaderPtrData _stored_ptr;
+  CPT(InternalName) _name;
+  PT(TypedWritableReferenceCount) _value;
+  int _priority;
+
+public:
+  int _type : 8;
+  int _access : 8;
+  int _bind_level : 16;
+  int _bind_layer;
 
 public:
   static TypeHandle get_class_type() {

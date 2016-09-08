@@ -1,5 +1,5 @@
-1412103034
-2 2
+1422501734
+2 3
 11 libp3dgraph 4 YJkp 12 panda3d.core 
 12
 12 18 DataGraphTraverser 0 4 24 38 DataGraphTraverser::DataGraphTraverser 0 2 1 2 228
@@ -20,20 +20,7 @@ DataGraphTraverser::DataGraphTraverser(Thread *current_thread = ((get_current_th
 46
 DataGraphTraverser::~DataGraphTraverser(void);
 
-14 18 get_current_thread 0 4 24 38 DataGraphTraverser::get_current_thread 0 1 3 841
-// Filename: dataGraphTraverser.I
-// Created by:  drose (11Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+14 18 get_current_thread 0 4 24 38 DataGraphTraverser::get_current_thread 0 1 3 347
 ////////////////////////////////////////////////////////////////////
 //     Function: DataGraphTraverser::get_current_thread
 //       Access: Public
@@ -76,20 +63,7 @@ void DataGraphTraverser::traverse_below(PandaNode *node, DataNodeTransmit const 
 49
 void DataGraphTraverser::collect_leftovers(void);
 
-18 8 DataNode 0 4 25 18 DataNode::DataNode 0 1 7 929
-// Filename: dataNode.I
-// Created by:  drose (11Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+18 8 DataNode 0 4 25 18 DataNode::DataNode 0 1 7 445
 ////////////////////////////////////////////////////////////////////
 //     Function: DataNode::Constructor
 //       Access: Public
@@ -154,20 +128,7 @@ DataNode::~DataNode(void);
 //       Access: Public
 //  Description: 
 //////////////////////////////////////////////////////////////////// 0 
-3 14 Dtool_YJkpiU4k 0 7 4 27 0 14 Dtool_YJkpiU4k 841 // Filename: dataGraphTraverser.I
-// Created by:  drose (11Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+3 14 Dtool_YJkpiU4k 0 7 4 27 0 14 Dtool_YJkpiU4k 347 ////////////////////////////////////////////////////////////////////
 //     Function: DataGraphTraverser::get_current_thread
 //       Access: Public
 //  Description: Returns the currently-executing thread object, as
@@ -194,20 +155,7 @@ DataNode::~DataNode(void);
 //               parents, with at least one parent completely outside
 //               of the data graph.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 29  
-7 14 Dtool_YJkpbRQs 0 7 10 38 23 14 Dtool_YJkpbRQs 702 // Filename: dataNode.I
-// Created by:  drose (11Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+7 14 Dtool_YJkpbRQs 0 7 10 38 23 14 Dtool_YJkpbRQs 218 ////////////////////////////////////////////////////////////////////
 //     Function: DataNode::Constructor
 //       Access: Public
 //  Description: 

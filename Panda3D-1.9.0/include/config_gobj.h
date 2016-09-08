@@ -23,6 +23,7 @@
 #include "configVariableDouble.h"
 #include "configVariableFilename.h"
 #include "configVariableString.h"
+#include "configVariableList.h"
 #include "autoTextureScale.h"
 
 NotifyCategoryDecl(gobj, EXPCL_PANDA_GOBJ, EXPTP_PANDA_GOBJ);
@@ -84,6 +85,7 @@ extern EXPCL_PANDA_GOBJ ConfigVariableInt released_ibuffer_cache_size;
 
 extern EXPCL_PANDA_GOBJ ConfigVariableDouble default_near;
 extern EXPCL_PANDA_GOBJ ConfigVariableDouble default_far;
+extern EXPCL_PANDA_GOBJ ConfigVariableDouble lens_far_limit;
 extern EXPCL_PANDA_GOBJ ConfigVariableDouble default_fov;
 extern EXPCL_PANDA_GOBJ ConfigVariableDouble default_iod;
 extern EXPCL_PANDA_GOBJ ConfigVariableDouble default_converge;
@@ -94,10 +96,12 @@ extern EXPCL_PANDA_GOBJ ConfigVariableString vertex_save_file_prefix;
 extern EXPCL_PANDA_GOBJ ConfigVariableInt vertex_data_small_size;
 extern EXPCL_PANDA_GOBJ ConfigVariableInt vertex_data_page_threads;
 extern EXPCL_PANDA_GOBJ ConfigVariableInt graphics_memory_limit;
+extern EXPCL_PANDA_GOBJ ConfigVariableInt sampler_object_limit;
 extern EXPCL_PANDA_GOBJ ConfigVariableDouble adaptive_lru_weight;
 extern EXPCL_PANDA_GOBJ ConfigVariableInt adaptive_lru_max_updates_per_frame;
 extern EXPCL_PANDA_GOBJ ConfigVariableDouble async_load_delay;
 extern EXPCL_PANDA_GOBJ ConfigVariableInt lens_geom_segments;
+extern EXPCL_PANDA_GOBJ ConfigVariableBool stereo_lens_old_convergence;
 
 extern EXPCL_PANDA_GOBJ ConfigVariableString cg_glsl_version;
 

@@ -1,5 +1,5 @@
-1412103735
-2 2
+1422502670
+2 3
 10 libp3tform 4 v_mB 12 panda3d.core 
 252
 265 13 ButtonThrower 0 4 517 28 ButtonThrower::ButtonThrower 0 1 1 222
@@ -11,20 +11,7 @@
 63
 ButtonThrower::ButtonThrower(basic_string< char > const &name);
 
-266 21 set_button_down_event 0 4 517 36 ButtonThrower::set_button_down_event 0 1 2 1356
-// Filename: buttonThrower.I
-// Created by:  drose (26Dec03)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+266 21 set_button_down_event 0 4 517 36 ButtonThrower::set_button_down_event 0 1 2 867
 ////////////////////////////////////////////////////////////////////
 //     Function: ButtonThrower::set_button_down_event
 //       Access: Published
@@ -535,20 +522,7 @@ static TypeHandle MouseInterfaceNode::get_class_type(void);
 72
 DriveInterface::DriveInterface(basic_string< char > const &name = (""));
 
-305 17 set_forward_speed 0 4 520 33 DriveInterface::set_forward_speed 0 1 43 886
-// Filename: driveInterface.I
-// Created by:  drose (12Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+305 17 set_forward_speed 0 4 520 33 DriveInterface::set_forward_speed 0 1 43 396
 ////////////////////////////////////////////////////////////////////
 //     Function: DriveInterface::set_forward_speed
 //       Access: Published
@@ -787,9 +761,7 @@ inline float DriveInterface::get_rot_speed(void) const;
 33
 void DriveInterface::reset(void);
 
-326 7 get_pos 0 4 520 23 DriveInterface::get_pos 0 1 64 280
-/// **** Translation ****
-
+326 7 get_pos 0 4 520 23 DriveInterface::get_pos 0 1 64 253
 ////////////////////////////////////////////////////////////////////
 //     Function: DriveInterface::get_pos
 //       Access: Published
@@ -832,9 +804,7 @@ inline void DriveInterface::set_y(float y);
 43
 inline void DriveInterface::set_z(float z);
 
-334 7 get_hpr 0 4 520 23 DriveInterface::get_hpr 0 1 73 280
-/// **** Rotation ****
-
+334 7 get_hpr 0 4 520 23 DriveInterface::get_hpr 0 1 73 256
 ////////////////////////////////////////////////////////////////////
 //     Function: DriveInterface::get_hpr
 //       Access: Published
@@ -1003,20 +973,7 @@ static TypeHandle DriveInterface::get_class_type(void);
 65
 MouseSubregion::MouseSubregion(basic_string< char > const &name);
 
-354 8 get_left 0 4 521 24 MouseSubregion::get_left 0 1 94 869
-// Filename: mouseSubregion.I
-// Created by:  drose (13May05)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+354 8 get_left 0 4 521 24 MouseSubregion::get_left 0 1 94 379
 ////////////////////////////////////////////////////////////////////
 //     Function: MouseSubregion::get_left
 //       Access: Published
@@ -1098,20 +1055,7 @@ downcast from Namable to MouseWatcherRegion
 66
 MouseWatcherRegion *Namable::downcast_to_MouseWatcherRegion(void);
 
-364 18 MouseWatcherRegion 0 4 522 38 MouseWatcherRegion::MouseWatcherRegion 0 2 100 101 956
-// Filename: mouseWatcherRegion.I
-// Created by:  drose (13Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+364 18 MouseWatcherRegion 0 4 522 38 MouseWatcherRegion::MouseWatcherRegion 0 2 100 101 462
 ////////////////////////////////////////////////////////////////////
 //     Function: MouseWatcherRegion::Constructor
 //       Access: Published
@@ -1507,20 +1451,7 @@ virtual MouseWatcher::~MouseWatcher(void);
 61
 bool MouseWatcher::remove_region(MouseWatcherRegion *region);
 
-405 9 has_mouse 0 4 528 23 MouseWatcher::has_mouse 0 1 143 828
-// Filename: mouseWatcher.I
-// Created by:  drose (12Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+405 9 has_mouse 0 4 528 23 MouseWatcher::has_mouse 0 1 143 340
 ////////////////////////////////////////////////////////////////////
 //     Function: MouseWatcher::has_mouse
 //       Access: Published
@@ -2470,9 +2401,7 @@ float Trackball::get_forward_scale(void) const;
 50
 void Trackball::set_forward_scale(float fwdscale);
 
-480 7 get_pos 0 4 530 18 Trackball::get_pos 0 1 227 291
-/// **** Translation ****
-
+480 7 get_pos 0 4 530 18 Trackball::get_pos 0 1 227 264
 ////////////////////////////////////////////////////////////////////
 //     Function: Trackball::get_pos
 //       Access: Published
@@ -2515,9 +2444,7 @@ void Trackball::set_y(float y);
 31
 void Trackball::set_z(float z);
 
-488 7 get_hpr 0 4 530 18 Trackball::get_hpr 0 1 236 277
-/// **** Rotation ****
-
+488 7 get_hpr 0 4 530 18 Trackball::get_hpr 0 1 236 253
 ////////////////////////////////////////////////////////////////////
 //     Function: Trackball::get_hpr
 //       Access: Published
@@ -2560,9 +2487,7 @@ void Trackball::set_p(float p);
 31
 void Trackball::set_r(float r);
 
-496 17 reset_origin_here 0 4 530 28 Trackball::reset_origin_here 0 1 245 430
-/// **** Origin of Rotation ****
-
+496 17 reset_origin_here 0 4 530 28 Trackball::reset_origin_here 0 1 245 396
 ////////////////////////////////////////////////////////////////////
 //     Function: Trackball::reset_origin_here
 //       Access: Published
@@ -2771,20 +2696,7 @@ Transform2SG::~Transform2SG(void);
 //       Access: Public
 //  Description:
 //////////////////////////////////////////////////////////////////// 1 4 name 1 533  
-2 14 Dtool_v_mBgXgW 0 4 4 535 0 14 Dtool_v_mBgXgW 1356 // Filename: buttonThrower.I
-// Created by:  drose (26Dec03)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+2 14 Dtool_v_mBgXgW 0 4 4 535 0 14 Dtool_v_mBgXgW 867 ////////////////////////////////////////////////////////////////////
 //     Function: ButtonThrower::set_button_down_event
 //       Access: Published
 //  Description: Specifies the generic event that is generated (if
@@ -3144,20 +3056,7 @@ Transform2SG::~Transform2SG(void);
 //       Access: Published
 //  Description:
 //////////////////////////////////////////////////////////////////// 0 
-43 14 Dtool_v_mBKTpq 0 4 45 535 0 14 Dtool_v_mBKTpq 886 // Filename: driveInterface.I
-// Created by:  drose (12Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+43 14 Dtool_v_mBKTpq 0 4 45 535 0 14 Dtool_v_mBKTpq 396 ////////////////////////////////////////////////////////////////////
 //     Function: DriveInterface::set_forward_speed
 //       Access: Published
 //  Description: Sets the speed of full forward motion, when the mouse
@@ -3425,20 +3324,7 @@ Transform2SG::~Transform2SG(void);
 //       Access: Public
 //  Description:
 //////////////////////////////////////////////////////////////////// 1 4 name 1 533  
-94 14 Dtool_v_mBVI_1 0 6 95 554 0 14 Dtool_v_mBVI_1 869 // Filename: mouseSubregion.I
-// Created by:  drose (13May05)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+94 14 Dtool_v_mBVI_1 0 6 95 554 0 14 Dtool_v_mBVI_1 379 ////////////////////////////////////////////////////////////////////
 //     Function: MouseSubregion::get_left
 //       Access: Published
 //  Description: Retrieves the x coordinate of the left edge of the
@@ -3482,20 +3368,7 @@ Transform2SG::~Transform2SG(void);
 //       Access: Published
 //  Description:
 //////////////////////////////////////////////////////////////////// 2 4 name 1 533  5 frame 1 569  
-101 14 Dtool_v_mBVKEG 0 7 108 572 379 14 Dtool_v_mBVKEG 724 // Filename: mouseWatcherRegion.I
-// Created by:  drose (13Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+101 14 Dtool_v_mBVKEG 0 7 108 572 379 14 Dtool_v_mBVKEG 230 ////////////////////////////////////////////////////////////////////
 //     Function: MouseWatcherRegion::Constructor
 //       Access: Published
 //  Description:
@@ -3725,20 +3598,7 @@ Transform2SG::~Transform2SG(void);
 //               Returns true if it was successfully removed, or false
 //               if it wasn't there in the first place.
 //////////////////////////////////////////////////////////////////// 2 4 this 3 586  6 region 1 572  
-143 14 Dtool_v_mBNnfE 0 6 153 538 0 14 Dtool_v_mBNnfE 828 // Filename: mouseWatcher.I
-// Created by:  drose (12Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+143 14 Dtool_v_mBNnfE 0 6 153 538 0 14 Dtool_v_mBNnfE 340 ////////////////////////////////////////////////////////////////////
 //     Function: MouseWatcher::has_mouse
 //       Access: Published
 //  Description: Returns true if the mouse is anywhere within the
@@ -4622,7 +4482,11 @@ Transform2SG::~Transform2SG(void);
 //               NULL.
 ////////////////////////////////////////////////////////////////////
 
-525 13 SuppressFlags 0 794624 33 MouseWatcherRegion::SuppressFlags 33 MouseWatcherRegion::SuppressFlags 522 0 0 0 0 0 0 0 0 0 4 15 SF_mouse_button 35 MouseWatcherRegion::SF_mouse_button 1 15 SF_other_button 35 MouseWatcherRegion::SF_other_button 2 13 SF_any_button 33 MouseWatcherRegion::SF_any_button 3 17 SF_mouse_position 37 MouseWatcherRegion::SF_mouse_position 4 0 0
+525 13 SuppressFlags 0 794624 33 MouseWatcherRegion::SuppressFlags 33 MouseWatcherRegion::SuppressFlags 522 0 0 0 0 0 0 0 0 0 4 15 SF_mouse_button 35 MouseWatcherRegion::SF_mouse_button 0
+1 15 SF_other_button 35 MouseWatcherRegion::SF_other_button 0
+2 13 SF_any_button 33 MouseWatcherRegion::SF_any_button 0
+3 17 SF_mouse_position 37 MouseWatcherRegion::SF_mouse_position 0
+4 0 0
 
 526 17 MouseWatcherGroup 0 26625 17 MouseWatcherGroup 17 MouseWatcherGroup 0 0 0 0 381 0 16 382 383 384 385 386 387 388 389 390 391 392 393 394 395 396 397 1 622 0 1 5 527 380 0 0 0 290
 ////////////////////////////////////////////////////////////////////
@@ -4693,8 +4557,16 @@ Transform2SG::~Transform2SG(void);
 //               world.
 ////////////////////////////////////////////////////////////////////
 
-531 11 ControlMode 0 794624 22 Trackball::ControlMode 22 Trackball::ControlMode 530 0 0 0 0 0 0 0 0 0 5 10 CM_default 21 Trackball::CM_default 0 8 CM_truck 19 Trackball::CM_truck 1 6 CM_pan 17 Trackball::CM_pan 2 8 CM_dolly 19 Trackball::CM_dolly 3 7 CM_roll 18 Trackball::CM_roll 4 0 18
-/// **** Misc ****
+531 11 ControlMode 0 794624 22 Trackball::ControlMode 22 Trackball::ControlMode 530 0 0 0 0 0 0 0 0 0 5 10 CM_default 21 Trackball::CM_default 0
+0 8 CM_truck 19 Trackball::CM_truck 19
+// Normally mouse 1
+1 6 CM_pan 17 Trackball::CM_pan 19
+// Normally mouse 2
+2 8 CM_dolly 19 Trackball::CM_dolly 19
+// Normally mouse 3
+3 7 CM_roll 18 Trackball::CM_roll 23
+// Normally mouse 2 + 3
+4 0 0
 
 532 12 Transform2SG 0 141313 12 Transform2SG 12 Transform2SG 0 0 0 1 512 516 0 3 513 514 515 0 0 1 0 518 0 0 0 0 348
 ////////////////////////////////////////////////////////////////////
@@ -4721,7 +4593,7 @@ Transform2SG::~Transform2SG(void);
 
 540 20 EventParameter const 0 8832 20 EventParameter const 20 EventParameter const 0 0 541 0 0 0 0 0 0 0 0 0 0
 
-541 14 EventParameter 0 2048 14 EventParameter 14 EventParameter 0 0 0 0 0 0 0 0 0 0 0 0 671
+541 14 EventParameter 0 2048 14 EventParameter 14 EventParameter 0 0 0 0 0 0 0 0 0 0 0 0 652
 ////////////////////////////////////////////////////////////////////
 //       Class : EventParameter
 // Description : An optional parameter associated with an event.  Each
@@ -4730,8 +4602,7 @@ Transform2SG::~Transform2SG(void);
 //               object, which of course could be pretty much
 //               anything.  To store a simple value like a double or a
 //               string, the EventParameter constructors transparently
-//               use the EventStoreValue template class, defined
-//               below.
+//               use the ParamValue template class from paramValue.h.
 ////////////////////////////////////////////////////////////////////
 
 542 3 int 0 8194 3 int 3 int 0 1 0 0 0 0 0 0 0 0 0 0 0
@@ -4798,20 +4669,7 @@ Transform2SG::~Transform2SG(void);
 
 558 14 LPoint3f const 0 8832 14 LPoint3f const 14 LPoint3f const 0 0 559 0 0 0 0 0 0 0 0 0 0
 
-559 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 1083
-// Filename: lpoint3_src.h
-// Created by:  drose (25Sep99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+559 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 596
 ////////////////////////////////////////////////////////////////////
 //       Class : LPoint3
 // Description : This is a three-component point in space (as opposed
@@ -4827,20 +4685,7 @@ Transform2SG::~Transform2SG(void);
 
 561 16 LVecBase3f const 0 8832 16 LVecBase3f const 16 LVecBase3f const 0 0 562 0 0 0 0 0 0 0 0 0 0
 
-562 10 LVecBase3f 0 2048 10 LVecBase3f 10 LVecBase3f 0 0 0 0 0 0 0 0 0 0 0 0 754
-// Filename: lvecBase3_src.h
-// Created by:  drose (08Mar00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+562 10 LVecBase3f 0 2048 10 LVecBase3f 10 LVecBase3f 0 0 0 0 0 0 0 0 0 0 0 0 265
 ////////////////////////////////////////////////////////////////////
 //       Class : LVecBase3
 // Description : This is the base class for all three-component
@@ -4898,86 +4743,7 @@ Transform2SG::~Transform2SG(void);
 
 583 14 NodePath const 0 8832 14 NodePath const 14 NodePath const 0 0 584 0 0 0 0 0 0 0 0 0 0
 
-584 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 628 629 0 0 0 0 4938
-//
-// A NodePath is the fundamental unit of high-level interaction with
-// the scene graph.  It encapsulates the complete path down to a node
-// from some other node, usually the root of the scene graph.  This is
-// used to resolve ambiguities associated with instancing.
-//
-// NodePath also contains a number of handy high-level methods for
-// common scene-graph manipulations, such as reparenting, and common
-// state changes, such as repositioning.
-//
-// There are also a number of NodePath methods for finding nodes deep
-// within the tree by name or by type.  These take a path string,
-// which at its simplest consists of a series of node names separated
-// by slashes, like a directory pathname.
-//
-// Each component of the path string may optionally consist of one of
-// the following special names, instead of a node name:
-//
-//   *          -- matches exactly one node, with any name.
-//   **         -- matches any sequence of zero or more nodes.
-//   +typename  -- matches any node that is or derives from the given type.
-//   -typename  -- matches any node that is the given type exactly.
-//   =tag       -- matches any node that has the indicated tag.
-//   =tag=value -- matches any node whose tag matches the indicated value.
-//
-// Furthermore, a node name may itself contain standard filename
-// globbing characters, like *, ?, and [a-z], that will be accepted as
-// a partial match.  (In fact, the '*' special name may be seen as
-// just a special case of this.)  The globbing characters may not be
-// used with the typename matches or with tag matches, but they may
-// be used to match a tag's value in the =tag=value syntax.
-//
-// The special characters "@@", appearing at the beginning of a node
-// name, indicate a stashed node.  Normally, stashed nodes are not
-// returned by a find (but see the special flags, below), but a
-// stashed node may be found if it is explicitly named with its
-// leading @@ characters.  By extension, "@@*" may be used to identify
-// any stashed node.
-//
-// Examples:
-//
-// "room//graph" will look for a node named "graph", which is a child
-// of an unnamed node, which is a child of a node named "room", which
-// is a child of the starting path.
-//
-// "**/red*" will look for any node anywhere in the tree (below the
-// starting path) with a name that begins with "red".
-//
-// "**/+PartBundleNode/**/head" will look for a node named "head",
-// somewhere below a PartBundleNode anywhere in the tree.
-//
-//
-// The search is always potentially ambiguous, even if the special
-// wildcard operators are not used, because there may be multiple
-// nodes in the tree with the same name.  In general, in the case of
-// an ambiguity, the shortest path is preferred; when a method (such
-// as extend_by) must choose only only one of several possible paths,
-// it will choose the shortest available; on the other hand, when a
-// method (such as find_all_matches) is to return all of the matching
-// paths, it will sort them so that the shortest paths appear first in
-// the output.
-//
-//
-// Special flags.  The entire string may optionally be followed by the
-// ";" character, followed by one or more of the following special
-// control flags, with no intervening spaces or punctuation:
-//
-//    -h    Do not return hidden nodes.
-//    +h    Do return hidden nodes.
-//    -s    Do not return stashed nodes unless explicitly referenced with @@.
-//    +s    Return stashed nodes even without any explicit @@ characters.
-//    -i    Node name comparisons are not case insensitive: case must match
-//          exactly.
-//    +i    Node name comparisons are case insensitive: case is not important.
-//          This affects matches against the node name only; node type
-//          and tag strings are always case sensitive.
-//
-// The default flags are +h-s-i.
-//
+584 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 628 629 0 0 0 0 1139
 ////////////////////////////////////////////////////////////////////
 //       Class : NodePath
 // Description : NodePath is the fundamental system for disambiguating
@@ -5011,20 +4777,7 @@ Transform2SG::~Transform2SG(void);
 
 590 14 LPoint2f const 0 8832 14 LPoint2f const 14 LPoint2f const 0 0 591 0 0 0 0 0 0 0 0 0 0
 
-591 8 LPoint2f 0 2048 8 LPoint2f 8 LPoint2f 0 0 0 0 0 0 0 0 0 0 0 0 706
-// Filename: lpoint2_src.h
-// Created by:  drose (08Mar00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+591 8 LPoint2f 0 2048 8 LPoint2f 8 LPoint2f 0 0 0 0 0 0 0 0 0 0 0 0 219
 ////////////////////////////////////////////////////////////////////
 //       Class : LPoint2
 // Description : This is a two-component point in space.
@@ -5034,7 +4787,7 @@ Transform2SG::~Transform2SG(void);
 
 593 11 PandaNode * 0 8576 11 PandaNode * 11 PandaNode * 0 0 594 0 0 0 0 0 0 0 0 0 0
 
-594 9 PandaNode 0 2048 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 0 0 0 0 0 374
+594 9 PandaNode 0 2048 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 3 630 631 632 0 0 0 0 374
 ////////////////////////////////////////////////////////////////////
 //       Class : PandaNode
 // Description : A basic node of the scene graph or data graph.  This
@@ -5092,7 +4845,7 @@ Transform2SG::~Transform2SG(void);
 
 603 24 PointerEventList const * 0 8576 24 PointerEventList const * 24 PointerEventList const * 0 0 601 0 0 0 0 0 0 0 0 0 0
 
-604 8 GeomNode 0 2048 8 GeomNode 8 GeomNode 0 0 0 0 0 0 0 2 630 631 0 0 0 0 423
+604 8 GeomNode 0 2048 8 GeomNode 8 GeomNode 0 0 0 0 0 0 0 2 633 634 0 0 0 0 423
 ////////////////////////////////////////////////////////////////////
 //       Class : GeomNode
 // Description : A node that holds Geom objects, renderable pieces of
@@ -5109,7 +4862,10 @@ Transform2SG::~Transform2SG(void);
 
 608 27 MouseWatcherParameter const 0 8832 27 MouseWatcherParameter const 27 MouseWatcherParameter const 0 0 529 0 0 0 0 0 0 0 0 0 0
 
-609 8 Encoding 0 794624 21 TextEncoder::Encoding 21 TextEncoder::Encoding 610 0 0 0 0 0 0 0 0 0 3 9 E_iso8859 22 TextEncoder::E_iso8859 0 6 E_utf8 19 TextEncoder::E_utf8 1 9 E_unicode 22 TextEncoder::E_unicode 2 0 0
+609 8 Encoding 0 794624 21 TextEncoder::Encoding 21 TextEncoder::Encoding 610 0 0 0 0 0 0 0 0 0 3 9 E_iso8859 22 TextEncoder::E_iso8859 0
+0 6 E_utf8 19 TextEncoder::E_utf8 0
+1 9 E_unicode 22 TextEncoder::E_unicode 0
+2 0 0
 
 610 11 TextEncoder 0 2048 11 TextEncoder 11 TextEncoder 0 0 0 0 0 0 0 0 0 0 0 0 676
 ////////////////////////////////////////////////////////////////////
@@ -5137,7 +4893,20 @@ Transform2SG::~Transform2SG(void);
 
 616 10 LPoint3f * 0 8576 10 LPoint3f * 10 LPoint3f * 0 0 559 0 0 0 0 0 0 0 0 0 0
 
-617 16 CoordinateSystem 0 532480 16 CoordinateSystem 16 CoordinateSystem 0 0 0 0 0 0 0 0 0 0 6 10 CS_default 10 CS_default 0 12 CS_zup_right 12 CS_zup_right 1 12 CS_yup_right 12 CS_yup_right 2 11 CS_zup_left 11 CS_zup_left 3 11 CS_yup_left 11 CS_yup_left 4 10 CS_invalid 10 CS_invalid 5 0 0
+617 16 CoordinateSystem 0 532480 16 CoordinateSystem 16 CoordinateSystem 0 0 0 0 0 0 0 0 0 0 6 10 CS_default 10 CS_default 213
+// The CS_default entry does not refer to a particular coordinate
+// system, but rather to the value stored in
+// default_coordinate_system, which in turn is loaded from the
+// config variable "coordinate-system".
+0 12 CS_zup_right 12 CS_zup_right 0
+1 12 CS_yup_right 12 CS_yup_right 0
+2 11 CS_zup_left 11 CS_zup_left 0
+3 11 CS_yup_left 11 CS_yup_left 0
+4 10 CS_invalid 10 CS_invalid 155
+// CS_invalid is not a coordinate system at all.  It can be used in
+// user-input processing code to indicate a contradictory coordinate
+// system request.
+5 0 0
 
 618 14 Transform2SG * 0 8576 14 Transform2SG * 14 Transform2SG * 0 0 532 0 0 0 0 0 0 0 0 0 0
 
@@ -5147,7 +4916,7 @@ Transform2SG::~Transform2SG(void);
 
 0
 0
-11
+14
 621 0 0 1 14 get_parameters 18 get_num_parameters 13 get_parameter 
 622 0 0 125 11 get_regions 15 get_num_regions 10 get_region 
 623 0 0 145 10 get_groups 14 get_num_groups 9 get_group 
@@ -5157,5 +4926,8 @@ Transform2SG::~Transform2SG(void);
 627 0 0 391 9 get_row3s 4 size 8 get_row3 
 628 0 0 455 9 get_nodes 13 get_num_nodes 8 get_node 
 629 0 0 455 13 get_ancestors 13 get_num_nodes 12 get_ancestor 
-630 0 0 539 9 get_geoms 13 get_num_geoms 8 get_geom 
-631 0 0 539 15 get_geom_states 13 get_num_geoms 14 get_geom_state 
+630 0 0 504 11 get_parents 15 get_num_parents 10 get_parent 
+631 0 0 504 12 get_children 16 get_num_children 9 get_child 
+632 0 0 504 11 get_stashed 15 get_num_stashed 11 get_stashed 
+633 0 0 539 9 get_geoms 13 get_num_geoms 8 get_geom 
+634 0 0 539 15 get_geom_states 13 get_num_geoms 14 get_geom_state 

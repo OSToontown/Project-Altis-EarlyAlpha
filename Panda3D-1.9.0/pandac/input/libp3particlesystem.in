@@ -1,5 +1,5 @@
-1412104834
-2 2
+1422504204
+2 3
 19 libp3particlesystem 4 BxOc 15 panda3d.physics 
 324
 407 9 make_copy 0 6 731 30 BaseParticleEmitter::make_copy 0 1 1 0
@@ -15,20 +15,7 @@ virtual BaseParticleEmitter *BaseParticleEmitter::make_copy(void) = 0;
 66
 void BaseParticleEmitter::generate(LPoint3f &pos, LVector3f &vel);
 
-409 17 set_emission_type 0 4 731 38 BaseParticleEmitter::set_emission_type 0 1 3 735
-// Filename: baseParticleEmitter.I
-// Created by:  charles (26Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+409 17 set_emission_type 0 4 731 38 BaseParticleEmitter::set_emission_type 0 1 3 238
 ////////////////////////////////////////////////////////////////////
 //    Function : set_emission_type
 //      Access : Public
@@ -55,7 +42,9 @@ inline void BaseParticleEmitter::set_amplitude(float a);
 64
 inline void BaseParticleEmitter::set_amplitude_spread(float as);
 
-412 16 set_offset_force 0 4 731 37 BaseParticleEmitter::set_offset_force 0 1 6 231
+412 16 set_offset_force 0 4 731 37 BaseParticleEmitter::set_offset_force 0 1 6 285
+// this is a constant force applied to all particles
+
 ////////////////////////////////////////////////////////////////////
 //    Function : set_offset_force
 //      Access : Public
@@ -75,9 +64,7 @@ inline void BaseParticleEmitter::set_offset_force(LVector3f const &of);
 82
 inline void BaseParticleEmitter::set_explicit_launch_vector(LVector3f const &elv);
 
-414 18 set_radiate_origin 0 4 731 39 BaseParticleEmitter::set_radiate_origin 0 1 8 312
-// this is a constant force applied to all particles
-
+414 18 set_radiate_origin 0 4 731 39 BaseParticleEmitter::set_radiate_origin 0 1 8 258
 ////////////////////////////////////////////////////////////////////
 //    Function : set_radiate_origin
 //      Access : Public
@@ -176,88 +163,35 @@ virtual void BaseParticleEmitter::write(ostream &out, int indent = (0)) const;
 RingEmitter::RingEmitter(void);
 RingEmitter::RingEmitter(RingEmitter const &copy);
 
-424 10 set_radius 0 4 734 23 RingEmitter::set_radius 0 1 20 706
-// Filename: ringEmitter.I
-// Created by:  charles (26Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-//    Function : set_radius
-//      Access : public
-// Description : radius set
-////////////////////////////////////////////////////////////////////
+424 10 set_radius 0 4 734 23 RingEmitter::set_radius 0 1 20 0
 45
 inline void RingEmitter::set_radius(float r);
 
-425 9 set_angle 0 4 734 22 RingEmitter::set_angle 0 1 21 228
-////////////////////////////////////////////////////////////////////
-//    Function : set_angle
-//      Access : public
-// Description : angle of elevation set
-////////////////////////////////////////////////////////////////////
+425 9 set_angle 0 4 734 22 RingEmitter::set_angle 0 1 21 0
 48
 inline void RingEmitter::set_angle(float angle);
 
-426 17 set_radius_spread 0 4 734 30 RingEmitter::set_radius_spread 0 1 22 231
-////////////////////////////////////////////////////////////////////
-//    Function : set_radius_spread
-//      Access : public
-// Description : radius_spread set
-////////////////////////////////////////////////////////////////////
+426 17 set_radius_spread 0 4 734 30 RingEmitter::set_radius_spread 0 1 22 0
 57
 inline void RingEmitter::set_radius_spread(float spread);
 
-427 20 set_uniform_emission 0 4 734 33 RingEmitter::set_uniform_emission 0 1 23 252
-////////////////////////////////////////////////////////////////////
-//    Function : set_uniform_emission
-//      Access : public
-// Description : uniform_emission set               
-////////////////////////////////////////////////////////////////////
+427 20 set_uniform_emission 0 4 734 33 RingEmitter::set_uniform_emission 0 1 23 0
 68
 inline void RingEmitter::set_uniform_emission(int uniform_emission);
 
-428 10 get_radius 0 4 734 23 RingEmitter::get_radius 0 1 24 217
-////////////////////////////////////////////////////////////////////
-//    Function : get_radius
-//      Access : public
-// Description : radius get
-////////////////////////////////////////////////////////////////////
+428 10 get_radius 0 4 734 23 RingEmitter::get_radius 0 1 24 0
 49
 inline float RingEmitter::get_radius(void) const;
 
-429 9 get_angle 0 4 734 22 RingEmitter::get_angle 0 1 25 228
-////////////////////////////////////////////////////////////////////
-//    Function : get_angle
-//      Access : public
-// Description : angle of elevation get
-////////////////////////////////////////////////////////////////////
+429 9 get_angle 0 4 734 22 RingEmitter::get_angle 0 1 25 0
 48
 inline float RingEmitter::get_angle(void) const;
 
-430 17 get_radius_spread 0 4 734 30 RingEmitter::get_radius_spread 0 1 26 231
-////////////////////////////////////////////////////////////////////
-//    Function : get_radius_spread
-//      Access : public
-// Description : radius_spread get
-////////////////////////////////////////////////////////////////////
+430 17 get_radius_spread 0 4 734 30 RingEmitter::get_radius_spread 0 1 26 0
 56
 inline float RingEmitter::get_radius_spread(void) const;
 
-431 20 get_uniform_emission 0 4 734 33 RingEmitter::get_uniform_emission 0 1 27 252
-////////////////////////////////////////////////////////////////////
-//    Function : get_uniform_emission
-//      Access : public
-// Description : uniform_emission get               
-////////////////////////////////////////////////////////////////////
+431 20 get_uniform_emission 0 4 734 33 RingEmitter::get_uniform_emission 0 1 27 0
 57
 inline int RingEmitter::get_uniform_emission(void) const;
 
@@ -277,78 +211,27 @@ inline int RingEmitter::get_uniform_emission(void) const;
 ArcEmitter::ArcEmitter(void);
 ArcEmitter::ArcEmitter(ArcEmitter const &copy);
 
-433 15 set_start_angle 0 4 735 27 ArcEmitter::set_start_angle 0 1 30 715
-// Filename: arcEmitter.I
-// Created by:  charles (26Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-//    Function : set_start_angle
-//      Access : public
-// Description : start angle set
-////////////////////////////////////////////////////////////////////
+433 15 set_start_angle 0 4 735 27 ArcEmitter::set_start_angle 0 1 30 0
 53
 inline void ArcEmitter::set_start_angle(float angle);
 
-434 13 set_end_angle 0 4 735 25 ArcEmitter::set_end_angle 0 1 31 223
-////////////////////////////////////////////////////////////////////
-//    Function : set_end_angle
-//      Access : public
-// Description : end angle set
-////////////////////////////////////////////////////////////////////
+434 13 set_end_angle 0 4 735 25 ArcEmitter::set_end_angle 0 1 31 0
 51
 inline void ArcEmitter::set_end_angle(float angle);
 
-435 7 set_arc 0 4 735 19 ArcEmitter::set_arc 0 1 32 217
-////////////////////////////////////////////////////////////////////
-//    Function : set_arc
-//      Access : public
-// Description : arc sweep set
-////////////////////////////////////////////////////////////////////
+435 7 set_arc 0 4 735 19 ArcEmitter::set_arc 0 1 32 0
 66
 inline void ArcEmitter::set_arc(float startAngle, float endAngle);
 
-436 15 get_start_angle 0 4 735 27 ArcEmitter::get_start_angle 0 1 33 227
-////////////////////////////////////////////////////////////////////
-//    Function : get_start_angle
-//      Access : public
-// Description : get start angle
-////////////////////////////////////////////////////////////////////
+436 15 get_start_angle 0 4 735 27 ArcEmitter::get_start_angle 0 1 33 0
 47
 inline float ArcEmitter::get_start_angle(void);
 
-437 13 get_end_angle 0 4 735 25 ArcEmitter::get_end_angle 0 1 34 223
-////////////////////////////////////////////////////////////////////
-//    Function : get_end_angle
-//      Access : public
-// Description : get end angle
-////////////////////////////////////////////////////////////////////
+437 13 get_end_angle 0 4 735 25 ArcEmitter::get_end_angle 0 1 34 0
 45
 inline float ArcEmitter::get_end_angle(void);
 
-438 17 set_lifespan_base 0 4 736 38 BaseParticleFactory::set_lifespan_base 0 1 35 693
-// Filename: baseParticleFactory.I
-// Created by:  charles (05Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+438 17 set_lifespan_base 0 4 736 38 BaseParticleFactory::set_lifespan_base 0 1 35 196
 ////////////////////////////////////////////////////////////////////
 //    Function : set_lifespan_base
 // Description : public
@@ -476,20 +359,7 @@ virtual void BaseParticleFactory::output(ostream &out) const;
 78
 virtual void BaseParticleFactory::write(ostream &out, int indent = (0)) const;
 
-454 15 get_render_node 0 4 737 37 BaseParticleRenderer::get_render_node 0 1 52 759
-// Filename: baseParticleRenderer.I
-// Created by:  charles (20Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+454 15 get_render_node 0 4 737 37 BaseParticleRenderer::get_render_node 0 1 52 261
 ////////////////////////////////////////////////////////////////////
 //    Function : BaseParticleRender::get_render_node
 //       Class : Published
@@ -547,8 +417,8 @@ inline float BaseParticleRenderer::get_user_alpha(void) const;
 //      Access : Published
 // Description : sets the ColorBlendAttrib on the _render_node
 ////////////////////////////////////////////////////////////////////
-164
-inline void BaseParticleRenderer::set_color_blend_mode(ColorBlendAttrib::Mode bm, ColorBlendAttrib::Operand oa = (O_zero), ColorBlendAttrib::Operand ob = (O_zero));
+154
+inline void BaseParticleRenderer::set_color_blend_mode(ColorBlendAttrib::Mode bm, ColorBlendAttrib::Operand oa = (0), ColorBlendAttrib::Operand ob = (0));
 
 461 16 set_ignore_scale 0 4 737 38 BaseParticleRenderer::set_ignore_scale 0 1 61 740
 ////////////////////////////////////////////////////////////////////
@@ -613,20 +483,7 @@ virtual void BaseParticleRenderer::write(ostream &out, int indent = (0)) const;
 BoxEmitter::BoxEmitter(void);
 BoxEmitter::BoxEmitter(BoxEmitter const &copy);
 
-466 13 set_min_bound 0 4 740 25 BoxEmitter::set_min_bound 0 1 68 717
-// Filename: boxEmitter.I
-// Created by:  charles (26Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+466 13 set_min_bound 0 4 740 25 BoxEmitter::set_min_bound 0 1 68 229
 ////////////////////////////////////////////////////////////////////
 //    Function : set_min_bound
 //      Access : Public
@@ -662,35 +519,11 @@ inline LPoint3f BoxEmitter::get_min_bound(void) const;
 54
 inline LPoint3f BoxEmitter::get_max_bound(void) const;
 
-470 11 get_color_a 0 4 741 47 ColorInterpolationFunctionConstant::get_color_a 0 1 72 861
-// Filename: colorInterpolationManager.I
-// Created by:  joswilso (02Jun05)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionConstant::get_color_a
-//      Access : public
-// Description : Returns the primary color of the function.
-////////////////////////////////////////////////////////////////////
+470 11 get_color_a 0 4 741 47 ColorInterpolationFunctionConstant::get_color_a 0 1 72 0
 78
 inline LVecBase4f ColorInterpolationFunctionConstant::get_color_a(void) const;
 
-471 11 set_color_a 0 4 741 47 ColorInterpolationFunctionConstant::set_color_a 0 1 73 283
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionConstant::set_color_a
-//      Access : public
-// Description : Sets the primary color of the function.
-////////////////////////////////////////////////////////////////////
+471 11 set_color_a 0 4 741 47 ColorInterpolationFunctionConstant::set_color_a 0 1 73 0
 81
 inline void ColorInterpolationFunctionConstant::set_color_a(LVecBase4f const &c);
 
@@ -702,21 +535,11 @@ static TypeHandle ColorInterpolationFunctionConstant::get_class_type(void);
 78
 ColorInterpolationFunctionConstant::~ColorInterpolationFunctionConstant(void);
 
-474 11 get_color_b 0 4 743 45 ColorInterpolationFunctionLinear::get_color_b 0 1 75 286
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionLinear::get_color_b
-//      Access : public
-// Description : Returns the secondary color of the function.
-////////////////////////////////////////////////////////////////////
+474 11 get_color_b 0 4 743 45 ColorInterpolationFunctionLinear::get_color_b 0 1 75 0
 76
 inline LVecBase4f ColorInterpolationFunctionLinear::get_color_b(void) const;
 
-475 11 set_color_b 0 4 743 45 ColorInterpolationFunctionLinear::set_color_b 0 1 76 283
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionLinear::set_color_b
-//      Access : public
-// Description : Sets the secondary color of the function.
-////////////////////////////////////////////////////////////////////
+475 11 set_color_b 0 4 743 45 ColorInterpolationFunctionLinear::set_color_b 0 1 76 0
 79
 inline void ColorInterpolationFunctionLinear::set_color_b(LVecBase4f const &c);
 
@@ -728,39 +551,19 @@ static TypeHandle ColorInterpolationFunctionLinear::get_class_type(void);
 74
 ColorInterpolationFunctionLinear::~ColorInterpolationFunctionLinear(void);
 
-478 11 get_width_a 0 4 744 47 ColorInterpolationFunctionStepwave::get_width_a 0 1 78 286
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionStepwave::get_width_a
-//      Access : public
-// Description : Returns the primary width of the function.
-////////////////////////////////////////////////////////////////////
+478 11 get_width_a 0 4 744 47 ColorInterpolationFunctionStepwave::get_width_a 0 1 78 0
 73
 inline float ColorInterpolationFunctionStepwave::get_width_a(void) const;
 
-479 11 get_width_b 0 4 744 47 ColorInterpolationFunctionStepwave::get_width_b 0 1 79 288
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionStepwave::get_width_b
-//      Access : public
-// Description : Returns the secondary width of the function.
-////////////////////////////////////////////////////////////////////
+479 11 get_width_b 0 4 744 47 ColorInterpolationFunctionStepwave::get_width_b 0 1 79 0
 73
 inline float ColorInterpolationFunctionStepwave::get_width_b(void) const;
 
-480 11 set_width_a 0 4 744 47 ColorInterpolationFunctionStepwave::set_width_a 0 1 80 283
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionStepwave::set_width_a
-//      Access : public
-// Description : Sets the primary width of the function.
-////////////////////////////////////////////////////////////////////
+480 11 set_width_a 0 4 744 47 ColorInterpolationFunctionStepwave::set_width_a 0 1 80 0
 75
 inline void ColorInterpolationFunctionStepwave::set_width_a(float const w);
 
-481 11 set_width_b 0 4 744 47 ColorInterpolationFunctionStepwave::set_width_b 0 1 81 285
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionStepwave::set_width_b
-//      Access : public
-// Description : Sets the secondary width of the function.
-////////////////////////////////////////////////////////////////////
+481 11 set_width_b 0 4 744 47 ColorInterpolationFunctionStepwave::set_width_b 0 1 81 0
 75
 inline void ColorInterpolationFunctionStepwave::set_width_b(float const w);
 
@@ -772,23 +575,11 @@ static TypeHandle ColorInterpolationFunctionStepwave::get_class_type(void);
 78
 ColorInterpolationFunctionStepwave::~ColorInterpolationFunctionStepwave(void);
 
-484 10 get_period 0 4 745 46 ColorInterpolationFunctionSinusoid::get_period 0 1 83 324
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionSinusoid::get_period
-//      Access : public
-// Description : Returns the time to transition from A to B then back
-//               to A again.
-////////////////////////////////////////////////////////////////////
+484 10 get_period 0 4 745 46 ColorInterpolationFunctionSinusoid::get_period 0 1 83 0
 72
 inline float ColorInterpolationFunctionSinusoid::get_period(void) const;
 
-485 10 set_period 0 4 745 46 ColorInterpolationFunctionSinusoid::set_period 0 1 84 321
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionSinusoid::set_period
-//      Access : public
-// Description : Sets the time to transition from A to B then back
-//               to A again.
-////////////////////////////////////////////////////////////////////
+485 10 set_period 0 4 745 46 ColorInterpolationFunctionSinusoid::set_period 0 1 84 0
 74
 inline void ColorInterpolationFunctionSinusoid::set_period(float const p);
 
@@ -800,246 +591,95 @@ static TypeHandle ColorInterpolationFunctionSinusoid::get_class_type(void);
 78
 ColorInterpolationFunctionSinusoid::~ColorInterpolationFunctionSinusoid(void);
 
-488 25 ColorInterpolationSegment 0 4 746 52 ColorInterpolationSegment::ColorInterpolationSegment 0 2 86 87 527
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::ColorInterpolationSegment
-//      Access : public
-// Description : constructor
-////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::ColorInterpolationSegment
-//      Access : public
-// Description : copy constructor
-////////////////////////////////////////////////////////////////////
+488 25 ColorInterpolationSegment 0 4 746 52 ColorInterpolationSegment::ColorInterpolationSegment 0 2 86 87 0
 268
 ColorInterpolationSegment::ColorInterpolationSegment(ColorInterpolationFunction *function, float const &time_begin, float const &time_end, bool const is_modulated, int const id);
 ColorInterpolationSegment::ColorInterpolationSegment(ColorInterpolationSegment const &s);
 
-489 12 get_function 0 4 746 39 ColorInterpolationSegment::get_function 0 1 88 389
+489 12 get_function 0 4 746 39 ColorInterpolationSegment::get_function 0 1 88 60
 //  INLINE ColorInterpolationFunction* get_function() const;
-
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::get_function
-//      Access : public
-// Description : Returns a reference to the function object 
-//               corresponding to this segment.
-////////////////////////////////////////////////////////////////////
 80
 inline TypedReferenceCount *ColorInterpolationSegment::get_function(void) const;
 
-490 14 get_time_begin 0 4 746 41 ColorInterpolationSegment::get_time_begin 0 1 89 468
-//  INLINE ColorInterpolationFunction* get_function() const;
-
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::get_time_begin
-//      Access : public
-// Description : Returns the point in the particle's lifetime at which
-//               this segment begins its effect.  It is an interpolated
-//               value in the range [0,1].
-////////////////////////////////////////////////////////////////////
+490 14 get_time_begin 0 4 746 41 ColorInterpolationSegment::get_time_begin 0 1 89 0
 67
 inline float ColorInterpolationSegment::get_time_begin(void) const;
 
-491 12 get_time_end 0 4 746 39 ColorInterpolationSegment::get_time_end 0 1 90 401
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::get_time_end
-//      Access : public
-// Description : Returns the point in the particle's lifetime at which
-//               this segment's effect stops.  It is an interpolated
-//               value in the range [0,1].
-////////////////////////////////////////////////////////////////////
+491 12 get_time_end 0 4 746 39 ColorInterpolationSegment::get_time_end 0 1 90 0
 65
 inline float ColorInterpolationSegment::get_time_end(void) const;
 
-492 12 is_modulated 0 4 746 39 ColorInterpolationSegment::is_modulated 0 1 91 290
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::is_modulated
-//      Access : public
-// Description : Returns whether the function is additive or modulated.
-////////////////////////////////////////////////////////////////////
+492 12 is_modulated 0 4 746 39 ColorInterpolationSegment::is_modulated 0 1 91 0
 64
 inline bool ColorInterpolationSegment::is_modulated(void) const;
 
-493 6 get_id 0 4 746 33 ColorInterpolationSegment::get_id 0 1 92 318
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::get_id
-//      Access : public
-// Description : Returns the id assigned to this segment by the
-//               manager that created it.
-////////////////////////////////////////////////////////////////////
+493 6 get_id 0 4 746 33 ColorInterpolationSegment::get_id 0 1 92 0
 57
 inline int ColorInterpolationSegment::get_id(void) const;
 
-494 10 is_enabled 0 4 746 37 ColorInterpolationSegment::is_enabled 0 1 93 291
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::is_enabled()
-//      Access : public
-// Description : Returns whether the segments effects are being applied.
-////////////////////////////////////////////////////////////////////
+494 10 is_enabled 0 4 746 37 ColorInterpolationSegment::is_enabled 0 1 93 0
 62
 inline bool ColorInterpolationSegment::is_enabled(void) const;
 
-495 12 set_function 0 4 746 39 ColorInterpolationSegment::set_function 0 1 94 333
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::set_function
-//      Access : public
-// Description : Sets the function that the segment will use for 
-//               its interpolation calculations.
-////////////////////////////////////////////////////////////////////
+495 12 set_function 0 4 746 39 ColorInterpolationSegment::set_function 0 1 94 0
 90
 inline void ColorInterpolationSegment::set_function(ColorInterpolationFunction *function);
 
-496 14 set_time_begin 0 4 746 41 ColorInterpolationSegment::set_time_begin 0 1 95 403
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::set_time_begin
-//      Access : public
-// Description : Sets the point in the particle's lifetime at which
-//               this segment begins its effect.  It is an interpolated
-//               value in the range [0,1].
-////////////////////////////////////////////////////////////////////
+496 14 set_time_begin 0 4 746 41 ColorInterpolationSegment::set_time_begin 0 1 95 0
 72
 inline void ColorInterpolationSegment::set_time_begin(float const time);
 
-497 12 set_time_end 0 4 746 39 ColorInterpolationSegment::set_time_end 0 1 96 397
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::set_time_end
-//      Access : public
-// Description : Sets the point in the particle's lifetime at which
-//               this segment's effect ends.  It is an interpolated
-//               value in the range [0,1].
-////////////////////////////////////////////////////////////////////
+497 12 set_time_end 0 4 746 39 ColorInterpolationSegment::set_time_end 0 1 96 0
 70
 inline void ColorInterpolationSegment::set_time_end(float const time);
 
-498 16 set_is_modulated 0 4 746 43 ColorInterpolationSegment::set_is_modulated 0 1 97 414
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::set_is_modulated
-//      Access : public
-// Description : Sets how the function is applied to the final color.
-//               If true, the value is multiplied. If false, the value
-//               is simply added. Default is true.
-////////////////////////////////////////////////////////////////////
+498 16 set_is_modulated 0 4 746 43 ColorInterpolationSegment::set_is_modulated 0 1 97 0
 73
 inline void ColorInterpolationSegment::set_is_modulated(bool const flag);
 
-499 11 set_enabled 0 4 746 38 ColorInterpolationSegment::set_enabled 0 1 98 289
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::set_enabled()
-//      Access : public
-// Description : Sets whether the segments effects should be applied.
-////////////////////////////////////////////////////////////////////
+499 11 set_enabled 0 4 746 38 ColorInterpolationSegment::set_enabled 0 1 98 0
 71
 inline void ColorInterpolationSegment::set_enabled(bool const enabled);
 
-500 25 ColorInterpolationManager 0 4 747 52 ColorInterpolationManager::ColorInterpolationManager 0 3 99 100 101 797
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::ColorInterpolationManager
-//      Access : public
-// Description : default constructor
-////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::ColorInterpolationManager
-//      Access : public
-// Description : constructor
-////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::ColorInterpolationManager
-//      Access : public
-// Description : copy constructor
-////////////////////////////////////////////////////////////////////
+500 25 ColorInterpolationManager 0 4 747 52 ColorInterpolationManager::ColorInterpolationManager 0 3 99 100 101 0
 227
 ColorInterpolationManager::ColorInterpolationManager(void);
 ColorInterpolationManager::ColorInterpolationManager(LVecBase4f const &c);
 ColorInterpolationManager::ColorInterpolationManager(ColorInterpolationManager const &copy);
 
-501 12 add_constant 0 4 747 39 ColorInterpolationManager::add_constant 0 5 102 103 104 105 106 385
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_constant
-//      Access : public
-// Description : Adds a constant segment of the specified color to the
-//               manager and returns the segment's id as known
-//               by the manager.
-////////////////////////////////////////////////////////////////////
+501 12 add_constant 0 4 747 39 ColorInterpolationManager::add_constant 0 5 102 103 104 105 106 0
 184
 int ColorInterpolationManager::add_constant(float const time_begin = (0), float const time_end = (1), LVecBase4f const &color = ((LColorf(1, 1, 1, 1))), bool const is_modulated = (1));
 
-502 10 add_linear 0 4 747 37 ColorInterpolationManager::add_linear 0 6 107 108 109 110 111 112 361
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_linear
-//      Access : public
-// Description : Adds a linear segment between two colors to the manager 
-//               and returns the segment's id as known by the manager.
-////////////////////////////////////////////////////////////////////
+502 10 add_linear 0 4 747 37 ColorInterpolationManager::add_linear 0 6 107 108 109 110 111 112 0
 237
 int ColorInterpolationManager::add_linear(float const time_begin = (0), float const time_end = (1), LVecBase4f const &color_a = ((LColorf(1, 0, 0, 1))), LVecBase4f const &color_b = ((LColorf(0, 1, 0, 1))), bool const is_modulated = (1));
 
-503 12 add_stepwave 0 4 747 39 ColorInterpolationManager::add_stepwave 0 8 113 114 115 116 117 118 119 120 360
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_stepwave
-//      Access : public
-// Description : Adds a stepwave segment of two colors to the manager 
-//               and returns the segment's id as known by the manager.
-////////////////////////////////////////////////////////////////////
+503 12 add_stepwave 0 4 747 39 ColorInterpolationManager::add_stepwave 0 8 113 114 115 116 117 118 119 120 0
 297
 int ColorInterpolationManager::add_stepwave(float const time_begin = (0), float const time_end = (1), LVecBase4f const &color_a = ((LColorf(1, 0, 0, 1))), LVecBase4f const &color_b = ((LColorf(0, 1, 0, 1))), float const width_a = (0.5), float const width_b = (0.5), bool const is_modulated = (1));
 
-504 12 add_sinusoid 0 4 747 39 ColorInterpolationManager::add_sinusoid 0 7 121 122 123 124 125 126 127 400
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_sinusoid
-//      Access : public
-// Description : Adds a stepwave segment of two colors and a specified
-//               period to the manager and returns the segment's 
-//               id as known by the manager.
-////////////////////////////////////////////////////////////////////
+504 12 add_sinusoid 0 4 747 39 ColorInterpolationManager::add_sinusoid 0 7 121 122 123 124 125 126 127 0
 265
 int ColorInterpolationManager::add_sinusoid(float const time_begin = (0), float const time_end = (1), LVecBase4f const &color_a = ((LColorf(1, 0, 0, 1))), LVecBase4f const &color_b = ((LColorf(0, 1, 0, 1))), float const period = (1), bool const is_modulated = (1));
 
-505 17 set_default_color 0 4 747 44 ColorInterpolationManager::set_default_color 0 1 128 290
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::set_default_color
-//      Access : public
-// Description : Sets the color to used if no segments are present
-////////////////////////////////////////////////////////////////////
+505 17 set_default_color 0 4 747 44 ColorInterpolationManager::set_default_color 0 1 128 0
 78
 inline void ColorInterpolationManager::set_default_color(LVecBase4f const &c);
 
-506 11 get_segment 0 4 747 38 ColorInterpolationManager::get_segment 0 1 129 284
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::get_segment
-//      Access : public
-// Description : Returns the segment that corresponds to 'seg_id'.
-////////////////////////////////////////////////////////////////////
+506 11 get_segment 0 4 747 38 ColorInterpolationManager::get_segment 0 1 129 0
 91
 inline ColorInterpolationSegment *ColorInterpolationManager::get_segment(int const seg_id);
 
-507 19 get_segment_id_list 0 4 747 46 ColorInterpolationManager::get_segment_id_list 0 1 130 336
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::get_segment_id_list
-//      Access : public
-// Description : Returns a space delimited list of all of the ids
-//               in the manager at the time.
-////////////////////////////////////////////////////////////////////
+507 19 get_segment_id_list 0 4 747 46 ColorInterpolationManager::get_segment_id_list 0 1 130 0
 81
 inline basic_string< char > ColorInterpolationManager::get_segment_id_list(void);
 
-508 13 clear_segment 0 4 747 40 ColorInterpolationManager::clear_segment 0 1 131 282
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::clear_segment
-//      Access : public
-// Description : Removes the segment of 'id' from the manager.
-////////////////////////////////////////////////////////////////////
+508 13 clear_segment 0 4 747 40 ColorInterpolationManager::clear_segment 0 1 131 0
 64
 void ColorInterpolationManager::clear_segment(int const seg_id);
 
-509 16 clear_to_initial 0 4 747 43 ColorInterpolationManager::clear_to_initial 0 1 132 278
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::clear_to_initial
-//      Access : public
-// Description : Removes all segments from the manager.
-////////////////////////////////////////////////////////////////////
+509 16 clear_to_initial 0 4 747 43 ColorInterpolationManager::clear_to_initial 0 1 132 0
 55
 void ColorInterpolationManager::clear_to_initial(void);
 
@@ -1059,165 +699,60 @@ void ColorInterpolationManager::clear_to_initial(void);
 DiscEmitter::DiscEmitter(void);
 DiscEmitter::DiscEmitter(DiscEmitter const &copy);
 
-511 10 set_radius 0 4 748 23 DiscEmitter::set_radius 0 1 135 713
-// Filename: discEmitter.I
-// Created by:  charles (22Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-//    Function : set_radius
-//      Access : Public
-// Description : radius assignment
-////////////////////////////////////////////////////////////////////
+511 10 set_radius 0 4 748 23 DiscEmitter::set_radius 0 1 135 0
 45
 inline void DiscEmitter::set_radius(float r);
 
-512 15 set_outer_angle 0 4 748 28 DiscEmitter::set_outer_angle 0 1 136 227
-////////////////////////////////////////////////////////////////////
-//    Function : set_outer_angle
-//      Access : Public
-// Description : aoe assignement
-////////////////////////////////////////////////////////////////////
+512 15 set_outer_angle 0 4 748 28 DiscEmitter::set_outer_angle 0 1 136 0
 56
 inline void DiscEmitter::set_outer_angle(float o_angle);
 
-513 15 set_inner_angle 0 4 748 28 DiscEmitter::set_inner_angle 0 1 137 226
-////////////////////////////////////////////////////////////////////
-//    Function : set_inner_angle
-//      Access : Public
-// Description : aoe assignment
-////////////////////////////////////////////////////////////////////
+513 15 set_inner_angle 0 4 748 28 DiscEmitter::set_inner_angle 0 1 137 0
 56
 inline void DiscEmitter::set_inner_angle(float i_angle);
 
-514 19 set_outer_magnitude 0 4 748 32 DiscEmitter::set_outer_magnitude 0 1 138 230
-////////////////////////////////////////////////////////////////////
-//    Function : set_outer_magnitude
-//      Access : public
-// Description : mag assignment
-////////////////////////////////////////////////////////////////////
+514 19 set_outer_magnitude 0 4 748 32 DiscEmitter::set_outer_magnitude 0 1 138 0
 58
 inline void DiscEmitter::set_outer_magnitude(float o_mag);
 
-515 19 set_inner_magnitude 0 4 748 32 DiscEmitter::set_inner_magnitude 0 1 139 230
-////////////////////////////////////////////////////////////////////
-//    Function : set_inner_magnitude
-//      Access : public
-// Description : mag assignment
-////////////////////////////////////////////////////////////////////
+515 19 set_inner_magnitude 0 4 748 32 DiscEmitter::set_inner_magnitude 0 1 139 0
 58
 inline void DiscEmitter::set_inner_magnitude(float i_mag);
 
-516 17 set_cubic_lerping 0 4 748 30 DiscEmitter::set_cubic_lerping 0 1 140 224
-////////////////////////////////////////////////////////////////////
-//    Function : set_cubic_lerping
-//      Access : public
-// Description : clerp flag
-////////////////////////////////////////////////////////////////////
+516 17 set_cubic_lerping 0 4 748 30 DiscEmitter::set_cubic_lerping 0 1 140 0
 55
 inline void DiscEmitter::set_cubic_lerping(bool clerp);
 
-517 10 get_radius 0 4 748 23 DiscEmitter::get_radius 0 1 141 222
-////////////////////////////////////////////////////////////////////
-//    Function : get_radius
-//      Access : Public
-// Description : radius accessor
-////////////////////////////////////////////////////////////////////
+517 10 get_radius 0 4 748 23 DiscEmitter::get_radius 0 1 141 0
 49
 inline float DiscEmitter::get_radius(void) const;
 
-518 15 get_outer_angle 0 4 748 28 DiscEmitter::get_outer_angle 0 1 142 224
-////////////////////////////////////////////////////////////////////
-//    Function : get_outer_angle
-//      Access : Public
-// Description : aoe accessor
-////////////////////////////////////////////////////////////////////
+518 15 get_outer_angle 0 4 748 28 DiscEmitter::get_outer_angle 0 1 142 0
 54
 inline float DiscEmitter::get_outer_angle(void) const;
 
-519 15 get_inner_angle 0 4 748 28 DiscEmitter::get_inner_angle 0 1 143 224
-////////////////////////////////////////////////////////////////////
-//    Function : get_inner_angle
-//      Access : Public
-// Description : aoe accessor
-////////////////////////////////////////////////////////////////////
+519 15 get_inner_angle 0 4 748 28 DiscEmitter::get_inner_angle 0 1 143 0
 54
 inline float DiscEmitter::get_inner_angle(void) const;
 
-520 19 get_outer_magnitude 0 4 748 32 DiscEmitter::get_outer_magnitude 0 1 144 228
-////////////////////////////////////////////////////////////////////
-//    Function : get_outer_magnitude
-//      Access : public
-// Description : mag accessor
-////////////////////////////////////////////////////////////////////
+520 19 get_outer_magnitude 0 4 748 32 DiscEmitter::get_outer_magnitude 0 1 144 0
 58
 inline float DiscEmitter::get_outer_magnitude(void) const;
 
-521 19 get_inner_magnitude 0 4 748 32 DiscEmitter::get_inner_magnitude 0 1 145 228
-////////////////////////////////////////////////////////////////////
-//    Function : get_inner_magnitude
-//      Access : public
-// Description : mag accessor
-////////////////////////////////////////////////////////////////////
+521 19 get_inner_magnitude 0 4 748 32 DiscEmitter::get_inner_magnitude 0 1 145 0
 58
 inline float DiscEmitter::get_inner_magnitude(void) const;
 
-522 17 get_cubic_lerping 0 4 748 30 DiscEmitter::get_cubic_lerping 0 1 146 233
-////////////////////////////////////////////////////////////////////
-//    Function : get_cubic_lerping
-//      Access : public
-// Description : clerp flag accessor
-////////////////////////////////////////////////////////////////////
+522 17 get_cubic_lerping 0 4 748 30 DiscEmitter::get_cubic_lerping 0 1 146 0
 55
 inline bool DiscEmitter::get_cubic_lerping(void) const;
 
-523 20 GeomParticleRenderer 0 4 749 42 GeomParticleRenderer::GeomParticleRenderer 0 4 147 148 149 150 463
-////////////////////////////////////////////////////////////////////
-//    Function : GeomParticleRenderer
-//      Access : public
-// Description : constructor
-////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////
-//    Function : GeomParticleRenderer
-//      Access : public
-// Description : copy constructor
-////////////////////////////////////////////////////////////////////
-244
-GeomParticleRenderer::GeomParticleRenderer(BaseParticleRenderer::ParticleRendererAlphaMode am = (PR_ALPHA_NONE), PandaNode *geom_node = ((PandaNode *)((void *)(0))));
+523 20 GeomParticleRenderer 0 4 749 42 GeomParticleRenderer::GeomParticleRenderer 0 4 147 148 149 150 0
+232
+GeomParticleRenderer::GeomParticleRenderer(BaseParticleRenderer::ParticleRendererAlphaMode am = (0), PandaNode *geom_node = ((PandaNode *)((void *)(0))));
 GeomParticleRenderer::GeomParticleRenderer(GeomParticleRenderer const &copy);
 
-524 13 set_geom_node 0 4 749 35 GeomParticleRenderer::set_geom_node 0 1 151 893
-// Filename: geomParticleRenderer.I
-// Created by:  charles (05Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-//  Function : set_geom_node
-//    Access : public
-////////////////////////////////////////////////////////////////////
-// we're forcing a pool resize to remove every node in the vector.
-// this is because nodes are reference-counted, and we have to
-// explicitly remove them from the node they were previously parented
-// to.
+524 13 set_geom_node 0 4 749 35 GeomParticleRenderer::set_geom_node 0 1 151 0
 65
 inline void GeomParticleRenderer::set_geom_node(PandaNode *node);
 
@@ -1397,20 +932,7 @@ inline float GeomParticleRenderer::get_final_z_scale(void) const;
 LineEmitter::LineEmitter(void);
 LineEmitter::LineEmitter(LineEmitter const &copy);
 
-546 13 set_endpoint1 0 4 750 26 LineEmitter::set_endpoint1 0 1 174 718
-// Filename: lineEmitter.I
-// Created by:  charles (26Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+546 13 set_endpoint1 0 4 750 26 LineEmitter::set_endpoint1 0 1 174 229
 ////////////////////////////////////////////////////////////////////
 //    Function : set_endpoint1
 //      Access : Public
@@ -1446,43 +968,13 @@ inline LPoint3f LineEmitter::get_endpoint1(void) const;
 55
 inline LPoint3f LineEmitter::get_endpoint2(void) const;
 
-550 20 LineParticleRenderer 0 4 751 42 LineParticleRenderer::LineParticleRenderer 0 3 178 179 180 701
-////////////////////////////////////////////////////////////////////
-//    Function : LineParticleRenderer
-//      Access : Public
-// Description : Default Constructor
-////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////
-//    Function : LineParticleRenderer
-//      Access : Public
-// Description : Constructor
-////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////
-//    Function : LineParticleRenderer
-//      Access : Public
-// Description : Copy Constructor
-////////////////////////////////////////////////////////////////////
+550 20 LineParticleRenderer 0 4 751 42 LineParticleRenderer::LineParticleRenderer 0 3 178 179 180 0
 279
 LineParticleRenderer::LineParticleRenderer(void);
 LineParticleRenderer::LineParticleRenderer(LineParticleRenderer const &copy);
 LineParticleRenderer::LineParticleRenderer(LVecBase4f const &head, LVecBase4f const &tail, BaseParticleRenderer::ParticleRendererAlphaMode alpha_mode);
 
-551 14 set_head_color 0 4 751 36 LineParticleRenderer::set_head_color 0 1 181 690
-// Filename: lineParticleRenderer.I
-// Created by:  darren (06Oct00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+551 14 set_head_color 0 4 751 36 LineParticleRenderer::set_head_color 0 1 181 193
 ////////////////////////////////////////////////////////////////////
 //    Function : set_head_color
 //      Access : public
@@ -1530,9 +1022,7 @@ inline void LineParticleRenderer::set_line_scale_factor(float sf);
 69
 inline float LineParticleRenderer::get_line_scale_factor(void) const;
 
-557 14 ParticleSystem 0 4 752 30 ParticleSystem::ParticleSystem 0 3 187 188 189 488
-// constructor/destructor
-
+557 14 ParticleSystem 0 4 752 30 ParticleSystem::ParticleSystem 0 3 187 188 189 461
 ////////////////////////////////////////////////////////////////////
 //    Function : ParticleSystem
 //      Access : Public
@@ -1548,42 +1038,20 @@ inline float LineParticleRenderer::get_line_scale_factor(void) const;
 ParticleSystem::ParticleSystem(int pool_size = (0));
 ParticleSystem::ParticleSystem(ParticleSystem const &copy);
 
-558 13 set_pool_size 0 4 752 29 ParticleSystem::set_pool_size 0 1 190 430
+558 13 set_pool_size 0 4 752 29 ParticleSystem::set_pool_size 0 1 190 17
 // access/queries
-
-////             ///////////////////////////////////////////////////////
-//// SET METHODS ///////////////////////////////////////////////////////
-////             ///////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-//    Function : set_pool_size
-//      Access : Public
-////////////////////////////////////////////////////////////////////
 52
 inline void ParticleSystem::set_pool_size(int size);
 
-559 14 set_birth_rate 0 4 752 30 ParticleSystem::set_birth_rate 0 1 191 212
-// access/queries
-
-////////////////////////////////////////////////////////////////////
-//    Function : set_birth_rate
-//      Access : Public
-////////////////////////////////////////////////////////////////////
+559 14 set_birth_rate 0 4 752 30 ParticleSystem::set_birth_rate 0 1 191 0
 57
 inline void ParticleSystem::set_birth_rate(float new_br);
 
-560 19 set_soft_birth_rate 0 4 752 35 ParticleSystem::set_soft_birth_rate 0 1 192 198
-////////////////////////////////////////////////////////////////////
-//    Function : set_soft_birth_rate
-//      Access : Public
-////////////////////////////////////////////////////////////////////
+560 19 set_soft_birth_rate 0 4 752 35 ParticleSystem::set_soft_birth_rate 0 1 192 0
 62
 inline void ParticleSystem::set_soft_birth_rate(float new_br);
 
-561 15 set_litter_size 0 4 752 31 ParticleSystem::set_litter_size 0 1 193 194
-////////////////////////////////////////////////////////////////////
-//    Function : set_litter_size
-//      Access : Public
-////////////////////////////////////////////////////////////////////
+561 15 set_litter_size 0 4 752 31 ParticleSystem::set_litter_size 0 1 193 0
 56
 inline void ParticleSystem::set_litter_size(int new_ls);
 
@@ -1611,19 +1079,11 @@ inline void ParticleSystem::set_local_velocity_flag(bool lv);
 66
 inline void ParticleSystem::set_system_grows_older_flag(bool sgo);
 
-565 19 set_system_lifespan 0 4 752 35 ParticleSystem::set_system_lifespan 0 1 197 198
-////////////////////////////////////////////////////////////////////
-//    Function : set_system_lifespan
-//      Access : public
-////////////////////////////////////////////////////////////////////
+565 19 set_system_lifespan 0 4 752 35 ParticleSystem::set_system_lifespan 0 1 197 0
 58
 inline void ParticleSystem::set_system_lifespan(float sl);
 
-566 14 set_system_age 0 4 752 30 ParticleSystem::set_system_age 0 1 198 193
-////////////////////////////////////////////////////////////////////
-//    Function : set_system_age
-//      Access : public
-////////////////////////////////////////////////////////////////////
+566 14 set_system_age 0 4 752 30 ParticleSystem::set_system_age 0 1 198 0
 54
 inline void ParticleSystem::set_system_age(float age);
 
@@ -1659,11 +1119,7 @@ inline void ParticleSystem::set_spawn_render_node(PandaNode *node);
 77
 inline void ParticleSystem::set_spawn_render_node_path(NodePath const &node);
 
-571 24 set_template_system_flag 0 4 752 40 ParticleSystem::set_template_system_flag 0 1 203 203
-////////////////////////////////////////////////////////////////////
-//    Function : set_template_system_flag
-//      Access : public
-////////////////////////////////////////////////////////////////////
+571 24 set_template_system_flag 0 4 752 40 ParticleSystem::set_template_system_flag 0 1 203 0
 63
 inline void ParticleSystem::set_template_system_flag(bool tsf);
 
@@ -1721,10 +1177,7 @@ inline void ParticleSystem::set_floor_z(float z);
 48
 inline void ParticleSystem::clear_floor_z(void);
 
-578 13 get_pool_size 0 4 752 29 ParticleSystem::get_pool_size 0 1 211 405
-////             /////////////////////////////////////////////////////
-//// GET METHODS /////////////////////////////////////////////////////
-////             /////////////////////////////////////////////////////
+578 13 get_pool_size 0 4 752 29 ParticleSystem::get_pool_size 0 1 211 192
 ////////////////////////////////////////////////////////////////////
 //    Function : get_pool_size
 //      Access : Public
@@ -1884,9 +1337,7 @@ inline BaseParticleFactory *ParticleSystem::get_factory(void) const;
 53
 inline float ParticleSystem::get_floor_z(void) const;
 
-598 18 add_spawn_template 0 4 752 34 ParticleSystem::add_spawn_template 0 1 231 226
-// particle template vector
-
+598 18 add_spawn_template 0 4 752 34 ParticleSystem::add_spawn_template 0 1 231 197
 ////////////////////////////////////////////////////////////////////
 //    Function : add_spawn_template
 //      Access : public
@@ -1902,68 +1353,23 @@ inline void ParticleSystem::add_spawn_template(ParticleSystem *ps);
 56
 inline void ParticleSystem::clear_spawn_templates(void);
 
-600 6 render 0 4 752 22 ParticleSystem::render 0 1 233 861
-// methods
-
-// Filename: particleSystem.I
-// Created by:  charles (14Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-//    Function : render
-//      Access : Public
-// Description : Populates an attached GeomNode structure with the
-//               particle geometry for rendering.  This is a
-//               wrapper for accessability.
-////////////////////////////////////////////////////////////////////
+600 6 render 0 4 752 22 ParticleSystem::render 0 1 233 0
 41
 inline void ParticleSystem::render(void);
 
-601 12 induce_labor 0 4 752 28 ParticleSystem::induce_labor 0 1 234 305
-////////////////////////////////////////////////////////////////////
-//    Function : induce_labor
-//      Access : Public
-// Description : Forces the birth of a particle litter this frame
-//               by resetting _tics_since_birth
-////////////////////////////////////////////////////////////////////
+601 12 induce_labor 0 4 752 28 ParticleSystem::induce_labor 0 1 234 0
 47
 inline void ParticleSystem::induce_labor(void);
 
-602 16 clear_to_initial 0 4 752 32 ParticleSystem::clear_to_initial 0 1 235 320
-////////////////////////////////////////////////////////////////////
-//    Function : clear_to_initial
-//      Access : Public
-// Description : Resets the system to its start state by resizing to 0,
-//               then resizing back to current size.
-////////////////////////////////////////////////////////////////////
+602 16 clear_to_initial 0 4 752 32 ParticleSystem::clear_to_initial 0 1 235 0
 51
 inline void ParticleSystem::clear_to_initial(void);
 
-603 9 soft_stop 0 4 752 25 ParticleSystem::soft_stop 0 2 236 237 284
-////////////////////////////////////////////////////////////////////
-//    Function : soft_stop
-//      Access : Public
-// Description : Causes system to use birth rate set by 
-//               set_soft_birth_rate()
-////////////////////////////////////////////////////////////////////
+603 9 soft_stop 0 4 752 25 ParticleSystem::soft_stop 0 2 236 237 0
 54
 inline void ParticleSystem::soft_stop(float br = (0));
 
-604 10 soft_start 0 4 752 26 ParticleSystem::soft_start 0 2 238 239 262
-////////////////////////////////////////////////////////////////////
-//    Function : soft_start
-//      Access : Public
-// Description : Causes system to use birth rate set by set_birth_rate()
-////////////////////////////////////////////////////////////////////
+604 10 soft_start 0 4 752 26 ParticleSystem::soft_start 0 2 238 239 0
 55
 inline void ParticleSystem::soft_start(float br = (0));
 
@@ -2015,20 +1421,7 @@ static TypeHandle ParticleSystem::get_class_type(void);
 PointEmitter::PointEmitter(void);
 PointEmitter::PointEmitter(PointEmitter const &copy);
 
-611 12 set_location 0 4 754 26 PointEmitter::set_location 0 1 250 709
-// Filename: pointEmitter.I
-// Created by:  charles (26Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+611 12 set_location 0 4 754 26 PointEmitter::set_location 0 1 250 219
 ////////////////////////////////////////////////////////////////////
 //    Function : set_point
 //      Access : public
@@ -2057,36 +1450,12 @@ inline LPoint3f PointEmitter::get_location(void) const;
 PointParticleFactory::PointParticleFactory(void);
 PointParticleFactory::PointParticleFactory(PointParticleFactory const &copy);
 
-614 21 PointParticleRenderer 0 4 756 44 PointParticleRenderer::PointParticleRenderer 0 8 254 255 256 257 258 259 260 261 473
-////////////////////////////////////////////////////////////////////
-//    Function : PointParticleRenderer
-//      Access : Public
-// Description : special constructor
-////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////
-//    Function : PointParticleRenderer
-//      Access : Public
-// Description : Copy constructor
-////////////////////////////////////////////////////////////////////
-453
+614 21 PointParticleRenderer 0 4 756 44 PointParticleRenderer::PointParticleRenderer 0 8 254 255 256 257 258 259 260 261 0
+420
 PointParticleRenderer::PointParticleRenderer(PointParticleRenderer const &copy);
-PointParticleRenderer::PointParticleRenderer(BaseParticleRenderer::ParticleRendererAlphaMode ad = (PR_ALPHA_NONE), float point_size = (1), PointParticleRenderer::PointParticleBlendType bt = (PP_ONE_COLOR), BaseParticleRenderer::ParticleRendererBlendMethod bm = (PP_NO_BLEND), LVecBase4f const &sc = ((LColorf(1, 1, 1, 1))), LVecBase4f const &ec = ((LColorf(1, 1, 1, 1))));
+PointParticleRenderer::PointParticleRenderer(BaseParticleRenderer::ParticleRendererAlphaMode ad = (0), float point_size = (1), PointParticleRenderer::PointParticleBlendType bt = (0), BaseParticleRenderer::ParticleRendererBlendMethod bm = (0), LVecBase4f const &sc = ((LColorf(1, 1, 1, 1))), LVecBase4f const &ec = ((LColorf(1, 1, 1, 1))));
 
-615 14 set_point_size 0 4 756 37 PointParticleRenderer::set_point_size 0 1 262 692
-// Filename: pointParticleRenderer.I
-// Created by:  charles (20Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+615 14 set_point_size 0 4 756 37 PointParticleRenderer::set_point_size 0 1 262 193
 ////////////////////////////////////////////////////////////////////
 //    Function : set_point_size
 //      Access : Public
@@ -2176,20 +1545,7 @@ inline BaseParticleRenderer::ParticleRendererBlendMethod PointParticleRenderer::
 RectangleEmitter::RectangleEmitter(void);
 RectangleEmitter::RectangleEmitter(RectangleEmitter const &copy);
 
-626 13 set_min_bound 0 4 758 31 RectangleEmitter::set_min_bound 0 1 274 716
-// Filename: rectangleEmitter.I
-// Created by:  charles (26Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+626 13 set_min_bound 0 4 758 31 RectangleEmitter::set_min_bound 0 1 274 222
 ////////////////////////////////////////////////////////////////////
 //    Function : set_min_bound
 //      Access : public
@@ -2248,20 +1604,7 @@ SparkleParticleRenderer::SparkleParticleRenderer(void);
 SparkleParticleRenderer::SparkleParticleRenderer(SparkleParticleRenderer const &copy);
 SparkleParticleRenderer::SparkleParticleRenderer(LVecBase4f const &center, LVecBase4f const &edge, float birth_radius, float death_radius, SparkleParticleRenderer::SparkleParticleLifeScale life_scale, BaseParticleRenderer::ParticleRendererAlphaMode alpha_mode);
 
-631 16 set_center_color 0 4 759 41 SparkleParticleRenderer::set_center_color 0 1 281 696
-// Filename: sparkleParticleRenderer.I
-// Created by:  charles (27Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+631 16 set_center_color 0 4 759 41 SparkleParticleRenderer::set_center_color 0 1 281 195
 ////////////////////////////////////////////////////////////////////
 //    Function : set_center_color
 //      Access : public
@@ -2351,21 +1694,11 @@ inline SparkleParticleRenderer::SparkleParticleLifeScale SparkleParticleRenderer
 SphereSurfaceEmitter::SphereSurfaceEmitter(void);
 SphereSurfaceEmitter::SphereSurfaceEmitter(SphereSurfaceEmitter const &copy);
 
-642 10 set_radius 0 4 761 32 SphereSurfaceEmitter::set_radius 0 1 293 217
-////////////////////////////////////////////////////////////////////
-//    Function : set_radius
-//      Access : public
-// Description : radius set
-////////////////////////////////////////////////////////////////////
+642 10 set_radius 0 4 761 32 SphereSurfaceEmitter::set_radius 0 1 293 0
 54
 inline void SphereSurfaceEmitter::set_radius(float r);
 
-643 10 get_radius 0 4 761 32 SphereSurfaceEmitter::get_radius 0 1 294 217
-////////////////////////////////////////////////////////////////////
-//    Function : get_radius
-//      Access : public
-// Description : radius get
-////////////////////////////////////////////////////////////////////
+643 10 get_radius 0 4 761 32 SphereSurfaceEmitter::get_radius 0 1 294 0
 58
 inline float SphereSurfaceEmitter::get_radius(void) const;
 
@@ -2379,21 +1712,11 @@ inline float SphereSurfaceEmitter::get_radius(void) const;
 SphereVolumeEmitter::SphereVolumeEmitter(void);
 SphereVolumeEmitter::SphereVolumeEmitter(SphereVolumeEmitter const &copy);
 
-645 10 set_radius 0 4 762 31 SphereVolumeEmitter::set_radius 0 1 297 217
-////////////////////////////////////////////////////////////////////
-//    Function : set_radius
-//      Access : public
-// Description : radius set
-////////////////////////////////////////////////////////////////////
+645 10 set_radius 0 4 762 31 SphereVolumeEmitter::set_radius 0 1 297 0
 53
 inline void SphereVolumeEmitter::set_radius(float r);
 
-646 10 get_radius 0 4 762 31 SphereVolumeEmitter::get_radius 0 1 298 217
-////////////////////////////////////////////////////////////////////
-//    Function : get_radius
-//      Access : public
-// Description : radius get
-////////////////////////////////////////////////////////////////////
+646 10 get_radius 0 4 762 31 SphereVolumeEmitter::get_radius 0 1 298 0
 57
 inline float SphereVolumeEmitter::get_radius(void) const;
 
@@ -2526,20 +1849,7 @@ void SpriteParticleRenderer::set_from_node(NodePath const &node_path, basic_stri
 void SpriteParticleRenderer::add_from_node(NodePath const &node_path, bool size_from_texels = (0), bool resize = (0));
 void SpriteParticleRenderer::add_from_node(NodePath const &node_path, basic_string< char > const &model, basic_string< char > const &node, bool size_from_texels = (0), bool resize = (0));
 
-657 11 set_texture 0 4 765 35 SpriteParticleRenderer::set_texture 0 2 319 320 1089
-// Filename: spriteParticleRenderer.I
-// Created by:  charles (13Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+657 11 set_texture 0 4 765 35 SpriteParticleRenderer::set_texture 0 2 319 320 589
 ////////////////////////////////////////////////////////////////////
 //    Function : SpriteParticleRenderer::set_texture
 //      Access : Published
@@ -2952,20 +2262,7 @@ inline int SpriteParticleRenderer::get_animate_frames_index(void) const;
 TangentRingEmitter::TangentRingEmitter(void);
 TangentRingEmitter::TangentRingEmitter(TangentRingEmitter const &copy);
 
-701 10 set_radius 0 4 766 30 TangentRingEmitter::set_radius 0 1 372 681
-// Filename: tangentRingEmitter.I
-// Created by:  charles (25Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+701 10 set_radius 0 4 766 30 TangentRingEmitter::set_radius 0 1 372 185
 ////////////////////////////////////////////////////////////////////
 //  Function : set_radius
 //    Access : public
@@ -3013,20 +2310,7 @@ inline float TangentRingEmitter::get_radius_spread(void) const;
 ZSpinParticleFactory::ZSpinParticleFactory(void);
 ZSpinParticleFactory::ZSpinParticleFactory(ZSpinParticleFactory const &copy);
 
-706 17 set_initial_angle 0 4 767 39 ZSpinParticleFactory::set_initial_angle 0 1 378 688
-// Filename: zSpinParticleFactory.I
-// Created by:  charles (16Aug00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+706 17 set_initial_angle 0 4 767 39 ZSpinParticleFactory::set_initial_angle 0 1 378 190
 ////////////////////////////////////////////////////////////////////
 // Function : set_initial_angle
 //   Access : public
@@ -3136,40 +2420,15 @@ ParticleSystemManager::ParticleSystemManager(int every_nth_frame = (1));
 60
 virtual ParticleSystemManager::~ParticleSystemManager(void);
 
-722 18 set_frame_stepping 0 4 768 41 ParticleSystemManager::set_frame_stepping 0 1 394 690
-// Filename: particleSystemManager.I
-// Created by:  charles (28Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-// Function : set_frame_stepping
-//   Access : public
-////////////////////////////////////////////////////////////////////
+722 18 set_frame_stepping 0 4 768 41 ParticleSystemManager::set_frame_stepping 0 1 394 0
 75
 inline void ParticleSystemManager::set_frame_stepping(int every_nth_frame);
 
-723 18 get_frame_stepping 0 4 768 41 ParticleSystemManager::get_frame_stepping 0 1 395 191
-////////////////////////////////////////////////////////////////////
-// Function : get_frame_stepping
-//   Access : public
-////////////////////////////////////////////////////////////////////
+723 18 get_frame_stepping 0 4 768 41 ParticleSystemManager::get_frame_stepping 0 1 395 0
 65
 inline int ParticleSystemManager::get_frame_stepping(void) const;
 
-724 21 attach_particlesystem 0 4 768 44 ParticleSystemManager::attach_particlesystem 0 1 396 194
-////////////////////////////////////////////////////////////////////
-// Function : attach_particlesystem
-//   Access : public
-////////////////////////////////////////////////////////////////////
+724 21 attach_particlesystem 0 4 768 44 ParticleSystemManager::attach_particlesystem 0 1 396 0
 77
 inline void ParticleSystemManager::attach_particlesystem(ParticleSystem *ps);
 
@@ -3182,11 +2441,7 @@ inline void ParticleSystemManager::attach_particlesystem(ParticleSystem *ps);
 70
 void ParticleSystemManager::remove_particlesystem(ParticleSystem *ps);
 
-726 5 clear 0 4 768 28 ParticleSystemManager::clear 0 1 398 178
-////////////////////////////////////////////////////////////////////
-// Function : clear
-//   Access : public
-////////////////////////////////////////////////////////////////////
+726 5 clear 0 4 768 28 ParticleSystemManager::clear 0 1 398 0
 47
 inline void ParticleSystemManager::clear(void);
 
@@ -3249,20 +2504,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : Public
 // Description : parent generation function
 //////////////////////////////////////////////////////////////////// 3 4 this 3 769  3 pos 1 770  3 vel 1 772  
-3 14 Dtool_BxOcvAPb 0 4 6 774 0 14 Dtool_BxOcvAPb 735 // Filename: baseParticleEmitter.I
-// Created by:  charles (26Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+3 14 Dtool_BxOcvAPb 0 4 6 774 0 14 Dtool_BxOcvAPb 238 ////////////////////////////////////////////////////////////////////
 //    Function : set_emission_type
 //      Access : Public
 // Description : emission type assignment
@@ -3350,59 +2592,14 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : Public
 // Description : copy constructor
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 786  
-20 14 Dtool_BxOcHjXu 0 4 22 774 0 14 Dtool_BxOcHjXu 706 // Filename: ringEmitter.I
-// Created by:  charles (26Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-//    Function : set_radius
-//      Access : public
-// Description : radius set
-//////////////////////////////////////////////////////////////////// 2 4 this 3 785  1 r 1 775  
-21 14 Dtool_BxOc23Hl 0 4 23 774 0 14 Dtool_BxOc23Hl 228 ////////////////////////////////////////////////////////////////////
-//    Function : set_angle
-//      Access : public
-// Description : angle of elevation set
-//////////////////////////////////////////////////////////////////// 2 4 this 3 785  5 angle 1 775  
-22 14 Dtool_BxOcGOEK 0 4 24 774 0 14 Dtool_BxOcGOEK 231 ////////////////////////////////////////////////////////////////////
-//    Function : set_radius_spread
-//      Access : public
-// Description : radius_spread set
-//////////////////////////////////////////////////////////////////// 2 4 this 3 785  6 spread 1 775  
-23 14 Dtool_BxOc6UCL 0 4 25 774 0 14 Dtool_BxOc6UCL 252 ////////////////////////////////////////////////////////////////////
-//    Function : set_uniform_emission
-//      Access : public
-// Description : uniform_emission set               
-//////////////////////////////////////////////////////////////////// 2 4 this 3 785  16 uniform_emission 1 784  
-24 14 Dtool_BxOc32I_ 0 6 26 775 0 14 Dtool_BxOc32I_ 217 ////////////////////////////////////////////////////////////////////
-//    Function : get_radius
-//      Access : public
-// Description : radius get
-//////////////////////////////////////////////////////////////////// 1 4 this 3 786  
-25 14 Dtool_BxOcRZ9k 0 6 27 775 0 14 Dtool_BxOcRZ9k 228 ////////////////////////////////////////////////////////////////////
-//    Function : get_angle
-//      Access : public
-// Description : angle of elevation get
-//////////////////////////////////////////////////////////////////// 1 4 this 3 786  
-26 14 Dtool_BxOcAgOJ 0 6 28 775 0 14 Dtool_BxOcAgOJ 231 ////////////////////////////////////////////////////////////////////
-//    Function : get_radius_spread
-//      Access : public
-// Description : radius_spread get
-//////////////////////////////////////////////////////////////////// 1 4 this 3 786  
-27 14 Dtool_BxOcoIQL 0 6 29 784 0 14 Dtool_BxOcoIQL 252 ////////////////////////////////////////////////////////////////////
-//    Function : get_uniform_emission
-//      Access : public
-// Description : uniform_emission get               
-//////////////////////////////////////////////////////////////////// 1 4 this 3 786  
+20 14 Dtool_BxOcHjXu 0 4 22 774 0 14 Dtool_BxOcHjXu 0 2 4 this 3 785  1 r 1 775  
+21 14 Dtool_BxOc23Hl 0 4 23 774 0 14 Dtool_BxOc23Hl 0 2 4 this 3 785  5 angle 1 775  
+22 14 Dtool_BxOcGOEK 0 4 24 774 0 14 Dtool_BxOcGOEK 0 2 4 this 3 785  6 spread 1 775  
+23 14 Dtool_BxOc6UCL 0 4 25 774 0 14 Dtool_BxOc6UCL 0 2 4 this 3 785  16 uniform_emission 1 784  
+24 14 Dtool_BxOc32I_ 0 6 26 775 0 14 Dtool_BxOc32I_ 0 1 4 this 3 786  
+25 14 Dtool_BxOcRZ9k 0 6 27 775 0 14 Dtool_BxOcRZ9k 0 1 4 this 3 786  
+26 14 Dtool_BxOcAgOJ 0 6 28 775 0 14 Dtool_BxOcAgOJ 0 1 4 this 3 786  
+27 14 Dtool_BxOcoIQL 0 6 29 784 0 14 Dtool_BxOcoIQL 0 1 4 this 3 786  
 28 14 Dtool_BxOcLfIe 0 7 31 788 0 14 Dtool_BxOcLfIe 218 ////////////////////////////////////////////////////////////////////
 //    Function : ArcEmitter
 //      Access : Public
@@ -3413,58 +2610,12 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : Public
 // Description : copy constructor
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 789  
-30 14 Dtool_BxOcvrI1 0 4 32 774 0 14 Dtool_BxOcvrI1 715 // Filename: arcEmitter.I
-// Created by:  charles (26Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-//    Function : set_start_angle
-//      Access : public
-// Description : start angle set
-//////////////////////////////////////////////////////////////////// 2 4 this 3 788  5 angle 1 775  
-31 14 Dtool_BxOckNlY 0 4 33 774 0 14 Dtool_BxOckNlY 223 ////////////////////////////////////////////////////////////////////
-//    Function : set_end_angle
-//      Access : public
-// Description : end angle set
-//////////////////////////////////////////////////////////////////// 2 4 this 3 788  5 angle 1 775  
-32 14 Dtool_BxOcAhqa 0 4 34 774 0 14 Dtool_BxOcAhqa 217 ////////////////////////////////////////////////////////////////////
-//    Function : set_arc
-//      Access : public
-// Description : arc sweep set
-//////////////////////////////////////////////////////////////////// 3 4 this 3 788  10 startAngle 1 775  8 endAngle 1 775  
-33 14 Dtool_BxOcQ4vE 0 6 35 775 0 14 Dtool_BxOcQ4vE 227 ////////////////////////////////////////////////////////////////////
-//    Function : get_start_angle
-//      Access : public
-// Description : get start angle
-//////////////////////////////////////////////////////////////////// 1 4 this 3 788  
-34 14 Dtool_BxOcRD_y 0 6 36 775 0 14 Dtool_BxOcRD_y 223 ////////////////////////////////////////////////////////////////////
-//    Function : get_end_angle
-//      Access : public
-// Description : get end angle
-//////////////////////////////////////////////////////////////////// 1 4 this 3 788  
-35 14 Dtool_BxOciQuU 0 4 38 774 0 14 Dtool_BxOciQuU 693 // Filename: baseParticleFactory.I
-// Created by:  charles (05Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+30 14 Dtool_BxOcvrI1 0 4 32 774 0 14 Dtool_BxOcvrI1 0 2 4 this 3 788  5 angle 1 775  
+31 14 Dtool_BxOckNlY 0 4 33 774 0 14 Dtool_BxOckNlY 0 2 4 this 3 788  5 angle 1 775  
+32 14 Dtool_BxOcAhqa 0 4 34 774 0 14 Dtool_BxOcAhqa 0 3 4 this 3 788  10 startAngle 1 775  8 endAngle 1 775  
+33 14 Dtool_BxOcQ4vE 0 6 35 775 0 14 Dtool_BxOcQ4vE 0 1 4 this 3 788  
+34 14 Dtool_BxOcRD_y 0 6 36 775 0 14 Dtool_BxOcRD_y 0 1 4 this 3 788  
+35 14 Dtool_BxOciQuU 0 4 38 774 0 14 Dtool_BxOciQuU 196 ////////////////////////////////////////////////////////////////////
 //    Function : set_lifespan_base
 // Description : public
 //////////////////////////////////////////////////////////////////// 2 4 this 3 791  2 lb 1 775  
@@ -3535,20 +2686,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //  Description : Write a string representation of this instance to
 //                <out>.
 //////////////////////////////////////////////////////////////////// 2 4 this 3 792  3 out 1 782  
-52 14 Dtool_BxOcnoTT 0 7 57 799 0 14 Dtool_BxOcnoTT 759 // Filename: baseParticleRenderer.I
-// Created by:  charles (20Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+52 14 Dtool_BxOcnoTT 0 7 57 799 0 14 Dtool_BxOcnoTT 261 ////////////////////////////////////////////////////////////////////
 //    Function : BaseParticleRender::get_render_node
 //       Class : Published
 // Description : Query the geomnode pointer
@@ -3638,20 +2776,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : Public
 // Description : copy constructor
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 808  
-68 14 Dtool_BxOcfUdv 0 4 70 774 0 14 Dtool_BxOcfUdv 717 // Filename: boxEmitter.I
-// Created by:  charles (26Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+68 14 Dtool_BxOcfUdv 0 4 70 774 0 14 Dtool_BxOcfUdv 229 ////////////////////////////////////////////////////////////////////
 //    Function : set_min_bound
 //      Access : Public
 // Description : boundary assignment
@@ -3671,363 +2796,67 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : Public
 // Description : boundary accessor
 //////////////////////////////////////////////////////////////////// 1 4 this 3 808  
-72 14 Dtool_BxOcTq1Y 0 7 76 813 0 14 Dtool_BxOcTq1Y 861 // Filename: colorInterpolationManager.I
-// Created by:  joswilso (02Jun05)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionConstant::get_color_a
-//      Access : public
-// Description : Returns the primary color of the function.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 811  
-73 14 Dtool_BxOcmbQF 0 4 77 774 0 14 Dtool_BxOcmbQF 283 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionConstant::set_color_a
-//      Access : public
-// Description : Sets the primary color of the function.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 814  1 c 1 815  
+72 14 Dtool_BxOcTq1Y 0 7 76 813 0 14 Dtool_BxOcTq1Y 0 1 4 this 3 811  
+73 14 Dtool_BxOcmbQF 0 4 77 774 0 14 Dtool_BxOcmbQF 0 2 4 this 3 814  1 c 1 815  
 74 14 Dtool_BxOcQV5J 0 7 78 818 0 14 Dtool_BxOcQV5J 0 0 
-75 14 Dtool_BxOc5qpK 0 7 81 813 0 14 Dtool_BxOc5qpK 286 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionLinear::get_color_b
-//      Access : public
-// Description : Returns the secondary color of the function.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 819  
-76 14 Dtool_BxOcrmTD 0 4 82 774 0 14 Dtool_BxOcrmTD 283 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionLinear::set_color_b
-//      Access : public
-// Description : Sets the secondary color of the function.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 821  1 c 1 815  
+75 14 Dtool_BxOc5qpK 0 7 81 813 0 14 Dtool_BxOc5qpK 0 1 4 this 3 819  
+76 14 Dtool_BxOcrmTD 0 4 82 774 0 14 Dtool_BxOcrmTD 0 2 4 this 3 821  1 c 1 815  
 77 14 Dtool_BxOcdiNh 0 7 83 818 0 14 Dtool_BxOcdiNh 0 0 
-78 14 Dtool_BxOck4fw 0 6 86 775 0 14 Dtool_BxOck4fw 286 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionStepwave::get_width_a
-//      Access : public
-// Description : Returns the primary width of the function.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 822  
-79 14 Dtool_BxOch47o 0 6 87 775 0 14 Dtool_BxOch47o 288 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionStepwave::get_width_b
-//      Access : public
-// Description : Returns the secondary width of the function.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 822  
-80 14 Dtool_BxOcMbSc 0 4 88 774 0 14 Dtool_BxOcMbSc 283 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionStepwave::set_width_a
-//      Access : public
-// Description : Sets the primary width of the function.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 824  1 w 1 775  
-81 14 Dtool_BxOcJbuU 0 4 89 774 0 14 Dtool_BxOcJbuU 285 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionStepwave::set_width_b
-//      Access : public
-// Description : Sets the secondary width of the function.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 824  1 w 1 775  
+78 14 Dtool_BxOck4fw 0 6 86 775 0 14 Dtool_BxOck4fw 0 1 4 this 3 822  
+79 14 Dtool_BxOch47o 0 6 87 775 0 14 Dtool_BxOch47o 0 1 4 this 3 822  
+80 14 Dtool_BxOcMbSc 0 4 88 774 0 14 Dtool_BxOcMbSc 0 2 4 this 3 824  1 w 1 775  
+81 14 Dtool_BxOcJbuU 0 4 89 774 0 14 Dtool_BxOcJbuU 0 2 4 this 3 824  1 w 1 775  
 82 14 Dtool_BxOcfIOE 0 7 90 818 0 14 Dtool_BxOcfIOE 0 0 
-83 14 Dtool_BxOc6TsB 0 6 93 775 0 14 Dtool_BxOc6TsB 324 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionSinusoid::get_period
-//      Access : public
-// Description : Returns the time to transition from A to B then back
-//               to A again.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 825  
-84 14 Dtool_BxOc_SEl 0 4 94 774 0 14 Dtool_BxOc_SEl 321 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationFunctionSinusoid::set_period
-//      Access : public
-// Description : Sets the time to transition from A to B then back
-//               to A again.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 827  1 p 1 775  
+83 14 Dtool_BxOc6TsB 0 6 93 775 0 14 Dtool_BxOc6TsB 0 1 4 this 3 825  
+84 14 Dtool_BxOc_SEl 0 4 94 774 0 14 Dtool_BxOc_SEl 0 2 4 this 3 827  1 p 1 775  
 85 14 Dtool_BxOcvz7V 0 7 95 818 0 14 Dtool_BxOcvz7V 0 0 
-86 14 Dtool_BxOc_JTb 0 7 98 829 0 14 Dtool_BxOc_JTb 260 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::ColorInterpolationSegment
-//      Access : public
-// Description : constructor
-//////////////////////////////////////////////////////////////////// 5 8 function 1 828  10 time_begin 1 775  8 time_end 1 775  12 is_modulated 1 806  2 id 1 784  
-87 14 Dtool_BxOcwp_m 0 7 98 829 0 14 Dtool_BxOcwp_m 265 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::ColorInterpolationSegment
-//      Access : public
-// Description : copy constructor
-//////////////////////////////////////////////////////////////////// 1 1 s 1 830  
-88 14 Dtool_BxOc4E2r 0 7 99 833 0 14 Dtool_BxOc4E2r 327 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::get_function
-//      Access : public
-// Description : Returns a reference to the function object 
-//               corresponding to this segment.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 830  
-89 14 Dtool_BxOcB4sN 0 6 100 775 0 14 Dtool_BxOcB4sN 406 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::get_time_begin
-//      Access : public
-// Description : Returns the point in the particle's lifetime at which
-//               this segment begins its effect.  It is an interpolated
-//               value in the range [0,1].
-//////////////////////////////////////////////////////////////////// 1 4 this 3 830  
-90 14 Dtool_BxOcOviy 0 6 101 775 0 14 Dtool_BxOcOviy 401 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::get_time_end
-//      Access : public
-// Description : Returns the point in the particle's lifetime at which
-//               this segment's effect stops.  It is an interpolated
-//               value in the range [0,1].
-//////////////////////////////////////////////////////////////////// 1 4 this 3 830  
-91 14 Dtool_BxOcJqJ6 0 6 102 806 0 14 Dtool_BxOcJqJ6 290 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::is_modulated
-//      Access : public
-// Description : Returns whether the function is additive or modulated.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 830  
-92 14 Dtool_BxOc6RXy 0 6 103 784 0 14 Dtool_BxOc6RXy 318 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::get_id
-//      Access : public
-// Description : Returns the id assigned to this segment by the
-//               manager that created it.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 830  
-93 14 Dtool_BxOcPDxm 0 6 104 806 0 14 Dtool_BxOcPDxm 291 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::is_enabled()
-//      Access : public
-// Description : Returns whether the segments effects are being applied.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 830  
-94 14 Dtool_BxOcUTU7 0 4 105 774 0 14 Dtool_BxOcUTU7 333 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::set_function
-//      Access : public
-// Description : Sets the function that the segment will use for 
-//               its interpolation calculations.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 829  8 function 1 828  
-95 14 Dtool_BxOctTOV 0 4 106 774 0 14 Dtool_BxOctTOV 403 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::set_time_begin
-//      Access : public
-// Description : Sets the point in the particle's lifetime at which
-//               this segment begins its effect.  It is an interpolated
-//               value in the range [0,1].
-//////////////////////////////////////////////////////////////////// 2 4 this 3 829  4 time 1 775  
-96 14 Dtool_BxOcmmt6 0 4 107 774 0 14 Dtool_BxOcmmt6 397 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::set_time_end
-//      Access : public
-// Description : Sets the point in the particle's lifetime at which
-//               this segment's effect ends.  It is an interpolated
-//               value in the range [0,1].
-//////////////////////////////////////////////////////////////////// 2 4 this 3 829  4 time 1 775  
-97 14 Dtool_BxOcADzd 0 4 108 774 0 14 Dtool_BxOcADzd 414 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::set_is_modulated
-//      Access : public
-// Description : Sets how the function is applied to the final color.
-//               If true, the value is multiplied. If false, the value
-//               is simply added. Default is true.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 829  4 flag 1 806  
-98 14 Dtool_BxOcZRhS 0 4 109 774 0 14 Dtool_BxOcZRhS 289 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationSegment::set_enabled()
-//      Access : public
-// Description : Sets whether the segments effects should be applied.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 829  7 enabled 1 806  
-99 14 Dtool_BxOcJ6Vn 0 7 111 834 0 14 Dtool_BxOcJ6Vn 268 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::ColorInterpolationManager
-//      Access : public
-// Description : default constructor
-//////////////////////////////////////////////////////////////////// 0 
-100 14 Dtool_BxOcupdd 0 7 111 834 0 14 Dtool_BxOcupdd 265 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::ColorInterpolationManager
-//      Access : public
-// Description : copy constructor
-//////////////////////////////////////////////////////////////////// 1 4 copy 1 835  
-101 14 Dtool_BxOcsQcF 0 7 111 834 0 14 Dtool_BxOcsQcF 260 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::ColorInterpolationManager
-//      Access : public
-// Description : constructor
-//////////////////////////////////////////////////////////////////// 1 1 c 1 815  
-102 14 Dtool_BxOcTDGv 0 6 112 784 0 14 Dtool_BxOcTDGv 385 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_constant
-//      Access : public
-// Description : Adds a constant segment of the specified color to the
-//               manager and returns the segment's id as known
-//               by the manager.
-//////////////////////////////////////////////////////////////////// 5 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  5 color 1 815  12 is_modulated 1 806  
-103 14 Dtool_BxOcj7Ez 0 6 112 784 0 14 Dtool_BxOcj7Ez 385 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_constant
-//      Access : public
-// Description : Adds a constant segment of the specified color to the
-//               manager and returns the segment's id as known
-//               by the manager.
-//////////////////////////////////////////////////////////////////// 4 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  5 color 1 815  
-104 14 Dtool_BxOcm4ub 0 6 112 784 0 14 Dtool_BxOcm4ub 385 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_constant
-//      Access : public
-// Description : Adds a constant segment of the specified color to the
-//               manager and returns the segment's id as known
-//               by the manager.
-//////////////////////////////////////////////////////////////////// 3 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  
-105 14 Dtool_BxOc17pq 0 6 112 784 0 14 Dtool_BxOc17pq 385 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_constant
-//      Access : public
-// Description : Adds a constant segment of the specified color to the
-//               manager and returns the segment's id as known
-//               by the manager.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 834  10 time_begin 1 775  
-106 14 Dtool_BxOcFtx4 0 6 112 784 0 14 Dtool_BxOcFtx4 385 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_constant
-//      Access : public
-// Description : Adds a constant segment of the specified color to the
-//               manager and returns the segment's id as known
-//               by the manager.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 834  
-107 14 Dtool_BxOcMADt 0 6 113 784 0 14 Dtool_BxOcMADt 361 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_linear
-//      Access : public
-// Description : Adds a linear segment between two colors to the manager 
-//               and returns the segment's id as known by the manager.
-//////////////////////////////////////////////////////////////////// 6 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  12 is_modulated 1 806  
-108 14 Dtool_BxOcF6z8 0 6 113 784 0 14 Dtool_BxOcF6z8 361 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_linear
-//      Access : public
-// Description : Adds a linear segment between two colors to the manager 
-//               and returns the segment's id as known by the manager.
-//////////////////////////////////////////////////////////////////// 5 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  
-109 14 Dtool_BxOcEOQf 0 6 113 784 0 14 Dtool_BxOcEOQf 361 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_linear
-//      Access : public
-// Description : Adds a linear segment between two colors to the manager 
-//               and returns the segment's id as known by the manager.
-//////////////////////////////////////////////////////////////////// 4 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  
-110 14 Dtool_BxOcyeIx 0 6 113 784 0 14 Dtool_BxOcyeIx 361 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_linear
-//      Access : public
-// Description : Adds a linear segment between two colors to the manager 
-//               and returns the segment's id as known by the manager.
-//////////////////////////////////////////////////////////////////// 3 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  
-111 14 Dtool_BxOcjEI2 0 6 113 784 0 14 Dtool_BxOcjEI2 361 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_linear
-//      Access : public
-// Description : Adds a linear segment between two colors to the manager 
-//               and returns the segment's id as known by the manager.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 834  10 time_begin 1 775  
-112 14 Dtool_BxOcdNk6 0 6 113 784 0 14 Dtool_BxOcdNk6 361 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_linear
-//      Access : public
-// Description : Adds a linear segment between two colors to the manager 
-//               and returns the segment's id as known by the manager.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 834  
-113 14 Dtool_BxOcdXMS 0 6 114 784 0 14 Dtool_BxOcdXMS 360 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_stepwave
-//      Access : public
-// Description : Adds a stepwave segment of two colors to the manager 
-//               and returns the segment's id as known by the manager.
-//////////////////////////////////////////////////////////////////// 8 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  7 width_a 1 775  7 width_b 1 775  12 is_modulated 1 806  
-114 14 Dtool_BxOcryND 0 6 114 784 0 14 Dtool_BxOcryND 360 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_stepwave
-//      Access : public
-// Description : Adds a stepwave segment of two colors to the manager 
-//               and returns the segment's id as known by the manager.
-//////////////////////////////////////////////////////////////////// 7 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  7 width_a 1 775  7 width_b 1 775  
-115 14 Dtool_BxOcMMlL 0 6 114 784 0 14 Dtool_BxOcMMlL 360 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_stepwave
-//      Access : public
-// Description : Adds a stepwave segment of two colors to the manager 
-//               and returns the segment's id as known by the manager.
-//////////////////////////////////////////////////////////////////// 6 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  7 width_a 1 775  
-116 14 Dtool_BxOcKBPz 0 6 114 784 0 14 Dtool_BxOcKBPz 360 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_stepwave
-//      Access : public
-// Description : Adds a stepwave segment of two colors to the manager 
-//               and returns the segment's id as known by the manager.
-//////////////////////////////////////////////////////////////////// 5 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  
-117 14 Dtool_BxOca_tn 0 6 114 784 0 14 Dtool_BxOca_tn 360 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_stepwave
-//      Access : public
-// Description : Adds a stepwave segment of two colors to the manager 
-//               and returns the segment's id as known by the manager.
-//////////////////////////////////////////////////////////////////// 4 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  
-118 14 Dtool_BxOc_AWQ 0 6 114 784 0 14 Dtool_BxOc_AWQ 360 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_stepwave
-//      Access : public
-// Description : Adds a stepwave segment of two colors to the manager 
-//               and returns the segment's id as known by the manager.
-//////////////////////////////////////////////////////////////////// 3 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  
-119 14 Dtool_BxOcbNRf 0 6 114 784 0 14 Dtool_BxOcbNRf 360 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_stepwave
-//      Access : public
-// Description : Adds a stepwave segment of two colors to the manager 
-//               and returns the segment's id as known by the manager.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 834  10 time_begin 1 775  
-120 14 Dtool_BxOcHbZt 0 6 114 784 0 14 Dtool_BxOcHbZt 360 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_stepwave
-//      Access : public
-// Description : Adds a stepwave segment of two colors to the manager 
-//               and returns the segment's id as known by the manager.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 834  
-121 14 Dtool_BxOc_8Bx 0 6 115 784 0 14 Dtool_BxOc_8Bx 400 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_sinusoid
-//      Access : public
-// Description : Adds a stepwave segment of two colors and a specified
-//               period to the manager and returns the segment's 
-//               id as known by the manager.
-//////////////////////////////////////////////////////////////////// 7 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  6 period 1 775  12 is_modulated 1 806  
-122 14 Dtool_BxOc1E_u 0 6 115 784 0 14 Dtool_BxOc1E_u 400 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_sinusoid
-//      Access : public
-// Description : Adds a stepwave segment of two colors and a specified
-//               period to the manager and returns the segment's 
-//               id as known by the manager.
-//////////////////////////////////////////////////////////////////// 6 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  6 period 1 775  
-123 14 Dtool_BxOcNaoW 0 6 115 784 0 14 Dtool_BxOcNaoW 400 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_sinusoid
-//      Access : public
-// Description : Adds a stepwave segment of two colors and a specified
-//               period to the manager and returns the segment's 
-//               id as known by the manager.
-//////////////////////////////////////////////////////////////////// 5 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  
-124 14 Dtool_BxOc4pJL 0 6 115 784 0 14 Dtool_BxOc4pJL 400 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_sinusoid
-//      Access : public
-// Description : Adds a stepwave segment of two colors and a specified
-//               period to the manager and returns the segment's 
-//               id as known by the manager.
-//////////////////////////////////////////////////////////////////// 4 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  
-125 14 Dtool_BxOckKwz 0 6 115 784 0 14 Dtool_BxOckKwz 400 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_sinusoid
-//      Access : public
-// Description : Adds a stepwave segment of two colors and a specified
-//               period to the manager and returns the segment's 
-//               id as known by the manager.
-//////////////////////////////////////////////////////////////////// 3 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  
-126 14 Dtool_BxOcyJsC 0 6 115 784 0 14 Dtool_BxOcyJsC 400 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_sinusoid
-//      Access : public
-// Description : Adds a stepwave segment of two colors and a specified
-//               period to the manager and returns the segment's 
-//               id as known by the manager.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 834  10 time_begin 1 775  
-127 14 Dtool_BxOcG00Q 0 6 115 784 0 14 Dtool_BxOcG00Q 400 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::add_sinusoid
-//      Access : public
-// Description : Adds a stepwave segment of two colors and a specified
-//               period to the manager and returns the segment's 
-//               id as known by the manager.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 834  
-128 14 Dtool_BxOcG__q 0 4 116 774 0 14 Dtool_BxOcG__q 290 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::set_default_color
-//      Access : public
-// Description : Sets the color to used if no segments are present
-//////////////////////////////////////////////////////////////////// 2 4 this 3 834  1 c 1 815  
-129 14 Dtool_BxOcxZFl 0 7 117 829 0 14 Dtool_BxOcxZFl 284 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::get_segment
-//      Access : public
-// Description : Returns the segment that corresponds to 'seg_id'.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 834  6 seg_id 1 784  
-130 14 Dtool_BxOcuRLg 0 6 118 837 0 14 Dtool_BxOcuRLg 336 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::get_segment_id_list
-//      Access : public
-// Description : Returns a space delimited list of all of the ids
-//               in the manager at the time.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 834  
-131 14 Dtool_BxOcW5Nf 0 4 119 774 0 14 Dtool_BxOcW5Nf 282 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::clear_segment
-//      Access : public
-// Description : Removes the segment of 'id' from the manager.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 834  6 seg_id 1 784  
-132 14 Dtool_BxOcRYQe 0 4 120 774 0 14 Dtool_BxOcRYQe 278 ////////////////////////////////////////////////////////////////////
-//    Function : ColorInterpolationManager::clear_to_initial
-//      Access : public
-// Description : Removes all segments from the manager.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 834  
+86 14 Dtool_BxOc_JTb 0 7 98 829 0 14 Dtool_BxOc_JTb 0 5 8 function 1 828  10 time_begin 1 775  8 time_end 1 775  12 is_modulated 1 806  2 id 1 784  
+87 14 Dtool_BxOcwp_m 0 7 98 829 0 14 Dtool_BxOcwp_m 0 1 1 s 1 830  
+88 14 Dtool_BxOc4E2r 0 7 99 833 0 14 Dtool_BxOc4E2r 60 //  INLINE ColorInterpolationFunction* get_function() const; 1 4 this 3 830  
+89 14 Dtool_BxOcB4sN 0 6 100 775 0 14 Dtool_BxOcB4sN 0 1 4 this 3 830  
+90 14 Dtool_BxOcOviy 0 6 101 775 0 14 Dtool_BxOcOviy 0 1 4 this 3 830  
+91 14 Dtool_BxOcJqJ6 0 6 102 806 0 14 Dtool_BxOcJqJ6 0 1 4 this 3 830  
+92 14 Dtool_BxOc6RXy 0 6 103 784 0 14 Dtool_BxOc6RXy 0 1 4 this 3 830  
+93 14 Dtool_BxOcPDxm 0 6 104 806 0 14 Dtool_BxOcPDxm 0 1 4 this 3 830  
+94 14 Dtool_BxOcUTU7 0 4 105 774 0 14 Dtool_BxOcUTU7 0 2 4 this 3 829  8 function 1 828  
+95 14 Dtool_BxOctTOV 0 4 106 774 0 14 Dtool_BxOctTOV 0 2 4 this 3 829  4 time 1 775  
+96 14 Dtool_BxOcmmt6 0 4 107 774 0 14 Dtool_BxOcmmt6 0 2 4 this 3 829  4 time 1 775  
+97 14 Dtool_BxOcADzd 0 4 108 774 0 14 Dtool_BxOcADzd 0 2 4 this 3 829  4 flag 1 806  
+98 14 Dtool_BxOcZRhS 0 4 109 774 0 14 Dtool_BxOcZRhS 0 2 4 this 3 829  7 enabled 1 806  
+99 14 Dtool_BxOcJ6Vn 0 7 111 834 0 14 Dtool_BxOcJ6Vn 0 0 
+100 14 Dtool_BxOcupdd 0 7 111 834 0 14 Dtool_BxOcupdd 0 1 4 copy 1 835  
+101 14 Dtool_BxOcsQcF 0 7 111 834 0 14 Dtool_BxOcsQcF 0 1 1 c 1 815  
+102 14 Dtool_BxOcTDGv 0 6 112 784 0 14 Dtool_BxOcTDGv 0 5 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  5 color 1 815  12 is_modulated 1 806  
+103 14 Dtool_BxOcj7Ez 0 6 112 784 0 14 Dtool_BxOcj7Ez 0 4 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  5 color 1 815  
+104 14 Dtool_BxOcm4ub 0 6 112 784 0 14 Dtool_BxOcm4ub 0 3 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  
+105 14 Dtool_BxOc17pq 0 6 112 784 0 14 Dtool_BxOc17pq 0 2 4 this 3 834  10 time_begin 1 775  
+106 14 Dtool_BxOcFtx4 0 6 112 784 0 14 Dtool_BxOcFtx4 0 1 4 this 3 834  
+107 14 Dtool_BxOcMADt 0 6 113 784 0 14 Dtool_BxOcMADt 0 6 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  12 is_modulated 1 806  
+108 14 Dtool_BxOcF6z8 0 6 113 784 0 14 Dtool_BxOcF6z8 0 5 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  
+109 14 Dtool_BxOcEOQf 0 6 113 784 0 14 Dtool_BxOcEOQf 0 4 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  
+110 14 Dtool_BxOcyeIx 0 6 113 784 0 14 Dtool_BxOcyeIx 0 3 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  
+111 14 Dtool_BxOcjEI2 0 6 113 784 0 14 Dtool_BxOcjEI2 0 2 4 this 3 834  10 time_begin 1 775  
+112 14 Dtool_BxOcdNk6 0 6 113 784 0 14 Dtool_BxOcdNk6 0 1 4 this 3 834  
+113 14 Dtool_BxOcdXMS 0 6 114 784 0 14 Dtool_BxOcdXMS 0 8 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  7 width_a 1 775  7 width_b 1 775  12 is_modulated 1 806  
+114 14 Dtool_BxOcryND 0 6 114 784 0 14 Dtool_BxOcryND 0 7 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  7 width_a 1 775  7 width_b 1 775  
+115 14 Dtool_BxOcMMlL 0 6 114 784 0 14 Dtool_BxOcMMlL 0 6 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  7 width_a 1 775  
+116 14 Dtool_BxOcKBPz 0 6 114 784 0 14 Dtool_BxOcKBPz 0 5 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  
+117 14 Dtool_BxOca_tn 0 6 114 784 0 14 Dtool_BxOca_tn 0 4 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  
+118 14 Dtool_BxOc_AWQ 0 6 114 784 0 14 Dtool_BxOc_AWQ 0 3 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  
+119 14 Dtool_BxOcbNRf 0 6 114 784 0 14 Dtool_BxOcbNRf 0 2 4 this 3 834  10 time_begin 1 775  
+120 14 Dtool_BxOcHbZt 0 6 114 784 0 14 Dtool_BxOcHbZt 0 1 4 this 3 834  
+121 14 Dtool_BxOc_8Bx 0 6 115 784 0 14 Dtool_BxOc_8Bx 0 7 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  6 period 1 775  12 is_modulated 1 806  
+122 14 Dtool_BxOc1E_u 0 6 115 784 0 14 Dtool_BxOc1E_u 0 6 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  6 period 1 775  
+123 14 Dtool_BxOcNaoW 0 6 115 784 0 14 Dtool_BxOcNaoW 0 5 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  7 color_b 1 815  
+124 14 Dtool_BxOc4pJL 0 6 115 784 0 14 Dtool_BxOc4pJL 0 4 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  7 color_a 1 815  
+125 14 Dtool_BxOckKwz 0 6 115 784 0 14 Dtool_BxOckKwz 0 3 4 this 3 834  10 time_begin 1 775  8 time_end 1 775  
+126 14 Dtool_BxOcyJsC 0 6 115 784 0 14 Dtool_BxOcyJsC 0 2 4 this 3 834  10 time_begin 1 775  
+127 14 Dtool_BxOcG00Q 0 6 115 784 0 14 Dtool_BxOcG00Q 0 1 4 this 3 834  
+128 14 Dtool_BxOcG__q 0 4 116 774 0 14 Dtool_BxOcG__q 0 2 4 this 3 834  1 c 1 815  
+129 14 Dtool_BxOcxZFl 0 7 117 829 0 14 Dtool_BxOcxZFl 0 2 4 this 3 834  6 seg_id 1 784  
+130 14 Dtool_BxOcuRLg 0 6 118 837 0 14 Dtool_BxOcuRLg 0 1 4 this 3 834  
+131 14 Dtool_BxOcW5Nf 0 4 119 774 0 14 Dtool_BxOcW5Nf 0 2 4 this 3 834  6 seg_id 1 784  
+132 14 Dtool_BxOcRYQe 0 4 120 774 0 14 Dtool_BxOcRYQe 0 1 4 this 3 834  
 133 14 Dtool_BxOcMaqQ 0 7 122 838 0 14 Dtool_BxOcMaqQ 232 ////////////////////////////////////////////////////////////////////
 //    Function : DiscEmitter::DiscEmitter
 //      Access : Public
@@ -4038,108 +2867,23 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : Public
 // Description : copy constructor
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 839  
-135 14 Dtool_BxOc8VPM 0 4 123 774 0 14 Dtool_BxOc8VPM 713 // Filename: discEmitter.I
-// Created by:  charles (22Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-//    Function : set_radius
-//      Access : Public
-// Description : radius assignment
-//////////////////////////////////////////////////////////////////// 2 4 this 3 838  1 r 1 775  
-136 14 Dtool_BxOcwAyy 0 4 124 774 0 14 Dtool_BxOcwAyy 227 ////////////////////////////////////////////////////////////////////
-//    Function : set_outer_angle
-//      Access : Public
-// Description : aoe assignement
-//////////////////////////////////////////////////////////////////// 2 4 this 3 838  7 o_angle 1 775  
-137 14 Dtool_BxOc0naY 0 4 125 774 0 14 Dtool_BxOc0naY 226 ////////////////////////////////////////////////////////////////////
-//    Function : set_inner_angle
-//      Access : Public
-// Description : aoe assignment
-//////////////////////////////////////////////////////////////////// 2 4 this 3 838  7 i_angle 1 775  
-138 14 Dtool_BxOcT8hk 0 4 126 774 0 14 Dtool_BxOcT8hk 230 ////////////////////////////////////////////////////////////////////
-//    Function : set_outer_magnitude
-//      Access : public
-// Description : mag assignment
-//////////////////////////////////////////////////////////////////// 2 4 this 3 838  5 o_mag 1 775  
-139 14 Dtool_BxOcx2JK 0 4 127 774 0 14 Dtool_BxOcx2JK 230 ////////////////////////////////////////////////////////////////////
-//    Function : set_inner_magnitude
-//      Access : public
-// Description : mag assignment
-//////////////////////////////////////////////////////////////////// 2 4 this 3 838  5 i_mag 1 775  
-140 14 Dtool_BxOcD6_D 0 4 128 774 0 14 Dtool_BxOcD6_D 224 ////////////////////////////////////////////////////////////////////
-//    Function : set_cubic_lerping
-//      Access : public
-// Description : clerp flag
-//////////////////////////////////////////////////////////////////// 2 4 this 3 838  5 clerp 1 806  
-141 14 Dtool_BxOcwO_c 0 6 129 775 0 14 Dtool_BxOcwO_c 222 ////////////////////////////////////////////////////////////////////
-//    Function : get_radius
-//      Access : Public
-// Description : radius accessor
-//////////////////////////////////////////////////////////////////// 1 4 this 3 839  
-142 14 Dtool_BxOcfHU_ 0 6 130 775 0 14 Dtool_BxOcfHU_ 224 ////////////////////////////////////////////////////////////////////
-//    Function : get_outer_angle
-//      Access : Public
-// Description : aoe accessor
-//////////////////////////////////////////////////////////////////// 1 4 this 3 839  
-143 14 Dtool_BxOcVl9j 0 6 131 775 0 14 Dtool_BxOcVl9j 224 ////////////////////////////////////////////////////////////////////
-//    Function : get_inner_angle
-//      Access : Public
-// Description : aoe accessor
-//////////////////////////////////////////////////////////////////// 1 4 this 3 839  
-144 14 Dtool_BxOcR43h 0 6 132 775 0 14 Dtool_BxOcR43h 228 ////////////////////////////////////////////////////////////////////
-//    Function : get_outer_magnitude
-//      Access : public
-// Description : mag accessor
-//////////////////////////////////////////////////////////////////// 1 4 this 3 839  
-145 14 Dtool_BxOcrrfH 0 6 133 775 0 14 Dtool_BxOcrrfH 228 ////////////////////////////////////////////////////////////////////
-//    Function : get_inner_magnitude
-//      Access : public
-// Description : mag accessor
-//////////////////////////////////////////////////////////////////// 1 4 this 3 839  
-146 14 Dtool_BxOcX_1y 0 6 134 806 0 14 Dtool_BxOcX_1y 233 ////////////////////////////////////////////////////////////////////
-//    Function : get_cubic_lerping
-//      Access : public
-// Description : clerp flag accessor
-//////////////////////////////////////////////////////////////////// 1 4 this 3 839  
+135 14 Dtool_BxOc8VPM 0 4 123 774 0 14 Dtool_BxOc8VPM 0 2 4 this 3 838  1 r 1 775  
+136 14 Dtool_BxOcwAyy 0 4 124 774 0 14 Dtool_BxOcwAyy 0 2 4 this 3 838  7 o_angle 1 775  
+137 14 Dtool_BxOc0naY 0 4 125 774 0 14 Dtool_BxOc0naY 0 2 4 this 3 838  7 i_angle 1 775  
+138 14 Dtool_BxOcT8hk 0 4 126 774 0 14 Dtool_BxOcT8hk 0 2 4 this 3 838  5 o_mag 1 775  
+139 14 Dtool_BxOcx2JK 0 4 127 774 0 14 Dtool_BxOcx2JK 0 2 4 this 3 838  5 i_mag 1 775  
+140 14 Dtool_BxOcD6_D 0 4 128 774 0 14 Dtool_BxOcD6_D 0 2 4 this 3 838  5 clerp 1 806  
+141 14 Dtool_BxOcwO_c 0 6 129 775 0 14 Dtool_BxOcwO_c 0 1 4 this 3 839  
+142 14 Dtool_BxOcfHU_ 0 6 130 775 0 14 Dtool_BxOcfHU_ 0 1 4 this 3 839  
+143 14 Dtool_BxOcVl9j 0 6 131 775 0 14 Dtool_BxOcVl9j 0 1 4 this 3 839  
+144 14 Dtool_BxOcR43h 0 6 132 775 0 14 Dtool_BxOcR43h 0 1 4 this 3 839  
+145 14 Dtool_BxOcrrfH 0 6 133 775 0 14 Dtool_BxOcrrfH 0 1 4 this 3 839  
+146 14 Dtool_BxOcX_1y 0 6 134 806 0 14 Dtool_BxOcX_1y 0 1 4 this 3 839  
 147 14 Dtool_BxOcfwJz 0 7 136 843 0 14 Dtool_BxOcfwJz 0 2 2 am 1 738  9 geom_node 1 841  
 148 14 Dtool_BxOcQt3X 0 7 136 843 0 14 Dtool_BxOcQt3X 0 1 2 am 1 738  
 149 14 Dtool_BxOcqpfG 0 7 136 843 0 14 Dtool_BxOcqpfG 0 0 
-150 14 Dtool_BxOcf5c7 0 7 136 843 0 14 Dtool_BxOcf5c7 233 ////////////////////////////////////////////////////////////////////
-//    Function : GeomParticleRenderer
-//      Access : public
-// Description : copy constructor
-//////////////////////////////////////////////////////////////////// 1 4 copy 1 844  
-151 14 Dtool_BxOc2Hy2 0 4 137 774 0 14 Dtool_BxOc2Hy2 893 // Filename: geomParticleRenderer.I
-// Created by:  charles (05Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-//  Function : set_geom_node
-//    Access : public
-////////////////////////////////////////////////////////////////////
-// we're forcing a pool resize to remove every node in the vector.
-// this is because nodes are reference-counted, and we have to
-// explicitly remove them from the node they were previously parented
-// to. 2 4 this 3 843  4 node 1 841  
+150 14 Dtool_BxOcf5c7 0 7 136 843 0 14 Dtool_BxOcf5c7 0 1 4 copy 1 844  
+151 14 Dtool_BxOc2Hy2 0 4 137 774 0 14 Dtool_BxOc2Hy2 0 2 4 this 3 843  4 node 1 841  
 152 14 Dtool_BxOcWLyT 0 7 138 841 0 14 Dtool_BxOcWLyT 188 ////////////////////////////////////////////////////////////////////
 //  Function : get_geom_node
 //    Access : public
@@ -4230,20 +2974,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : Public
 // Description : constructor
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 847  
-174 14 Dtool_BxOckFGJ 0 4 160 774 0 14 Dtool_BxOckFGJ 718 // Filename: lineEmitter.I
-// Created by:  charles (26Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+174 14 Dtool_BxOckFGJ 0 4 160 774 0 14 Dtool_BxOckFGJ 229 ////////////////////////////////////////////////////////////////////
 //    Function : set_endpoint1
 //      Access : Public
 // Description : endpoint assignment
@@ -4263,35 +2994,10 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : Public
 // Description : endpoint accessor
 //////////////////////////////////////////////////////////////////// 1 4 this 3 847  
-178 14 Dtool_BxOcEZz7 0 7 165 849 0 14 Dtool_BxOcEZz7 236 ////////////////////////////////////////////////////////////////////
-//    Function : LineParticleRenderer
-//      Access : Public
-// Description : Default Constructor
-//////////////////////////////////////////////////////////////////// 0 
-179 14 Dtool_BxOcsY3q 0 7 165 849 0 14 Dtool_BxOcsY3q 228 ////////////////////////////////////////////////////////////////////
-//    Function : LineParticleRenderer
-//      Access : Public
-// Description : Constructor
-//////////////////////////////////////////////////////////////////// 3 4 head 1 815  4 tail 1 815  10 alpha_mode 1 738  
-180 14 Dtool_BxOcWkxE 0 7 165 849 0 14 Dtool_BxOcWkxE 233 ////////////////////////////////////////////////////////////////////
-//    Function : LineParticleRenderer
-//      Access : Public
-// Description : Copy Constructor
-//////////////////////////////////////////////////////////////////// 1 4 copy 1 850  
-181 14 Dtool_BxOc_Gxm 0 4 166 774 0 14 Dtool_BxOc_Gxm 690 // Filename: lineParticleRenderer.I
-// Created by:  darren (06Oct00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+178 14 Dtool_BxOcEZz7 0 7 165 849 0 14 Dtool_BxOcEZz7 0 0 
+179 14 Dtool_BxOcsY3q 0 7 165 849 0 14 Dtool_BxOcsY3q 0 3 4 head 1 815  4 tail 1 815  10 alpha_mode 1 738  
+180 14 Dtool_BxOcWkxE 0 7 165 849 0 14 Dtool_BxOcWkxE 0 1 4 copy 1 850  
+181 14 Dtool_BxOc_Gxm 0 4 166 774 0 14 Dtool_BxOc_Gxm 193 ////////////////////////////////////////////////////////////////////
 //    Function : set_head_color
 //      Access : public
 //////////////////////////////////////////////////////////////////// 2 4 this 3 849  1 c 1 815  
@@ -4330,25 +3036,10 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : Public
 // Description : Default Constructor.
 //////////////////////////////////////////////////////////////////// 0 
-190 14 Dtool_BxOcpvqS 0 4 175 774 0 14 Dtool_BxOcpvqS 411 ////             ///////////////////////////////////////////////////////
-//// SET METHODS ///////////////////////////////////////////////////////
-////             ///////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-//    Function : set_pool_size
-//      Access : Public
-//////////////////////////////////////////////////////////////////// 2 4 this 3 854  4 size 1 784  
-191 14 Dtool_BxOcBtuQ 0 4 176 774 0 14 Dtool_BxOcBtuQ 193 ////////////////////////////////////////////////////////////////////
-//    Function : set_birth_rate
-//      Access : Public
-//////////////////////////////////////////////////////////////////// 2 4 this 3 854  6 new_br 1 775  
-192 14 Dtool_BxOcx6vw 0 4 177 774 0 14 Dtool_BxOcx6vw 198 ////////////////////////////////////////////////////////////////////
-//    Function : set_soft_birth_rate
-//      Access : Public
-//////////////////////////////////////////////////////////////////// 2 4 this 3 854  6 new_br 1 775  
-193 14 Dtool_BxOcURZZ 0 4 178 774 0 14 Dtool_BxOcURZZ 194 ////////////////////////////////////////////////////////////////////
-//    Function : set_litter_size
-//      Access : Public
-//////////////////////////////////////////////////////////////////// 2 4 this 3 854  6 new_ls 1 784  
+190 14 Dtool_BxOcpvqS 0 4 175 774 0 14 Dtool_BxOcpvqS 17 // access/queries 2 4 this 3 854  4 size 1 784  
+191 14 Dtool_BxOcBtuQ 0 4 176 774 0 14 Dtool_BxOcBtuQ 0 2 4 this 3 854  6 new_br 1 775  
+192 14 Dtool_BxOcx6vw 0 4 177 774 0 14 Dtool_BxOcx6vw 0 2 4 this 3 854  6 new_br 1 775  
+193 14 Dtool_BxOcURZZ 0 4 178 774 0 14 Dtool_BxOcURZZ 0 2 4 this 3 854  6 new_ls 1 784  
 194 14 Dtool_BxOcHkGy 0 4 179 774 0 14 Dtool_BxOcHkGy 196 ////////////////////////////////////////////////////////////////////
 //    Function : set_litter_spread
 //      Access : Public
@@ -4361,14 +3052,8 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //    Function : set_system_grows_older_flag
 //      Access : public
 //////////////////////////////////////////////////////////////////// 2 4 this 3 854  3 sgo 1 806  
-197 14 Dtool_BxOc_Iib 0 4 182 774 0 14 Dtool_BxOc_Iib 198 ////////////////////////////////////////////////////////////////////
-//    Function : set_system_lifespan
-//      Access : public
-//////////////////////////////////////////////////////////////////// 2 4 this 3 854  2 sl 1 775  
-198 14 Dtool_BxOc4GAU 0 4 183 774 0 14 Dtool_BxOc4GAU 193 ////////////////////////////////////////////////////////////////////
-//    Function : set_system_age
-//      Access : public
-//////////////////////////////////////////////////////////////////// 2 4 this 3 854  3 age 1 775  
+197 14 Dtool_BxOc_Iib 0 4 182 774 0 14 Dtool_BxOc_Iib 0 2 4 this 3 854  2 sl 1 775  
+198 14 Dtool_BxOc4GAU 0 4 183 774 0 14 Dtool_BxOc4GAU 0 2 4 this 3 854  3 age 1 775  
 199 14 Dtool_BxOclTf6 0 4 184 774 0 14 Dtool_BxOclTf6 195 ////////////////////////////////////////////////////////////////////
 //    Function : set_active_state
 //      Access : public
@@ -4385,10 +3070,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //    Function : set_spawn_render_node_path
 //      Access : public
 //////////////////////////////////////////////////////////////////// 2 4 this 3 854  4 node 1 855  
-203 14 Dtool_BxOcDbaK 0 4 188 774 0 14 Dtool_BxOcDbaK 203 ////////////////////////////////////////////////////////////////////
-//    Function : set_template_system_flag
-//      Access : public
-//////////////////////////////////////////////////////////////////// 2 4 this 3 854  3 tsf 1 806  
+203 14 Dtool_BxOcDbaK 0 4 188 774 0 14 Dtool_BxOcDbaK 0 2 4 this 3 854  3 tsf 1 806  
 204 14 Dtool_BxOchkLH 0 4 189 774 0 14 Dtool_BxOchkLH 196 ////////////////////////////////////////////////////////////////////
 //    Function : set_render_parent
 //      Access : public
@@ -4417,10 +3099,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //    Function : clear_floor_z
 //      Access : Public
 //////////////////////////////////////////////////////////////////// 1 4 this 3 854  
-211 14 Dtool_BxOcXT57 0 6 195 784 0 14 Dtool_BxOcXT57 405 ////             /////////////////////////////////////////////////////
-//// GET METHODS /////////////////////////////////////////////////////
-////             /////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+211 14 Dtool_BxOcXT57 0 6 195 784 0 14 Dtool_BxOcXT57 192 ////////////////////////////////////////////////////////////////////
 //    Function : get_pool_size
 //      Access : Public
 //////////////////////////////////////////////////////////////////// 1 4 this 3 852  
@@ -4508,60 +3187,13 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //    Function : clear_spawn_templates
 //      Access : public
 //////////////////////////////////////////////////////////////////// 1 4 this 3 854  
-233 14 Dtool_BxOczbqe 0 4 217 774 0 14 Dtool_BxOczbqe 849 // Filename: particleSystem.I
-// Created by:  charles (14Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-//    Function : render
-//      Access : Public
-// Description : Populates an attached GeomNode structure with the
-//               particle geometry for rendering.  This is a
-//               wrapper for accessability.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 854  
-234 14 Dtool_BxOc3z9v 0 4 218 774 0 14 Dtool_BxOc3z9v 305 ////////////////////////////////////////////////////////////////////
-//    Function : induce_labor
-//      Access : Public
-// Description : Forces the birth of a particle litter this frame
-//               by resetting _tics_since_birth
-//////////////////////////////////////////////////////////////////// 1 4 this 3 854  
-235 14 Dtool_BxOcp19v 0 4 219 774 0 14 Dtool_BxOcp19v 320 ////////////////////////////////////////////////////////////////////
-//    Function : clear_to_initial
-//      Access : Public
-// Description : Resets the system to its start state by resizing to 0,
-//               then resizing back to current size.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 854  
-236 14 Dtool_BxOcnhka 0 4 220 774 0 14 Dtool_BxOcnhka 284 ////////////////////////////////////////////////////////////////////
-//    Function : soft_stop
-//      Access : Public
-// Description : Causes system to use birth rate set by 
-//               set_soft_birth_rate()
-//////////////////////////////////////////////////////////////////// 2 4 this 3 854  2 br 1 775  
-237 14 Dtool_BxOcImQe 0 4 220 774 0 14 Dtool_BxOcImQe 284 ////////////////////////////////////////////////////////////////////
-//    Function : soft_stop
-//      Access : Public
-// Description : Causes system to use birth rate set by 
-//               set_soft_birth_rate()
-//////////////////////////////////////////////////////////////////// 1 4 this 3 854  
-238 14 Dtool_BxOch7PT 0 4 221 774 0 14 Dtool_BxOch7PT 262 ////////////////////////////////////////////////////////////////////
-//    Function : soft_start
-//      Access : Public
-// Description : Causes system to use birth rate set by set_birth_rate()
-//////////////////////////////////////////////////////////////////// 2 4 this 3 854  2 br 1 775  
-239 14 Dtool_BxOcAwCJ 0 4 221 774 0 14 Dtool_BxOcAwCJ 262 ////////////////////////////////////////////////////////////////////
-//    Function : soft_start
-//      Access : Public
-// Description : Causes system to use birth rate set by set_birth_rate()
-//////////////////////////////////////////////////////////////////// 1 4 this 3 854  
+233 14 Dtool_BxOczbqe 0 4 217 774 0 14 Dtool_BxOczbqe 0 1 4 this 3 854  
+234 14 Dtool_BxOc3z9v 0 4 218 774 0 14 Dtool_BxOc3z9v 0 1 4 this 3 854  
+235 14 Dtool_BxOcp19v 0 4 219 774 0 14 Dtool_BxOcp19v 0 1 4 this 3 854  
+236 14 Dtool_BxOcnhka 0 4 220 774 0 14 Dtool_BxOcnhka 0 2 4 this 3 854  2 br 1 775  
+237 14 Dtool_BxOcImQe 0 4 220 774 0 14 Dtool_BxOcImQe 0 1 4 this 3 854  
+238 14 Dtool_BxOch7PT 0 4 221 774 0 14 Dtool_BxOch7PT 0 2 4 this 3 854  2 br 1 775  
+239 14 Dtool_BxOcAwCJ 0 4 221 774 0 14 Dtool_BxOcAwCJ 0 1 4 this 3 854  
 240 14 Dtool_BxOc2i2m 0 4 222 774 0 14 Dtool_BxOc2i2m 0 2 4 this 3 854  2 dt 1 775  
 241 14 Dtool_BxOc_rSe 0 4 223 774 0 14 Dtool_BxOc_rSe 298 ////////////////////////////////////////////////////////////////////
 //     Function : write_free_particle_fifo
@@ -4606,20 +3238,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : Public
 // Description : copy constructor
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 858  
-250 14 Dtool_BxOcLDeR 0 4 229 774 0 14 Dtool_BxOcLDeR 709 // Filename: pointEmitter.I
-// Created by:  charles (26Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+250 14 Dtool_BxOcLDeR 0 4 229 774 0 14 Dtool_BxOcLDeR 219 ////////////////////////////////////////////////////////////////////
 //    Function : set_point
 //      Access : public
 // Description : point setting
@@ -4642,25 +3261,8 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 258 14 Dtool_BxOcLWut 0 7 235 863 0 14 Dtool_BxOcLWut 0 2 2 ad 1 738  10 point_size 1 775  
 259 14 Dtool_BxOcg3Ul 0 7 235 863 0 14 Dtool_BxOcg3Ul 0 1 2 ad 1 738  
 260 14 Dtool_BxOcIwvl 0 7 235 863 0 14 Dtool_BxOcIwvl 0 0 
-261 14 Dtool_BxOcC0H3 0 7 235 863 0 14 Dtool_BxOcC0H3 234 ////////////////////////////////////////////////////////////////////
-//    Function : PointParticleRenderer
-//      Access : Public
-// Description : Copy constructor
-//////////////////////////////////////////////////////////////////// 1 4 copy 1 864  
-262 14 Dtool_BxOcn3gj 0 4 236 774 0 14 Dtool_BxOcn3gj 692 // Filename: pointParticleRenderer.I
-// Created by:  charles (20Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+261 14 Dtool_BxOcC0H3 0 7 235 863 0 14 Dtool_BxOcC0H3 0 1 4 copy 1 864  
+262 14 Dtool_BxOcn3gj 0 4 236 774 0 14 Dtool_BxOcn3gj 193 ////////////////////////////////////////////////////////////////////
 //    Function : set_point_size
 //      Access : Public
 //////////////////////////////////////////////////////////////////// 2 4 this 3 863  10 point_size 1 775  
@@ -4706,20 +3308,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : Public
 // Description : copy constructor
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 867  
-274 14 Dtool_BxOc__w9 0 4 248 774 0 14 Dtool_BxOc__w9 716 // Filename: rectangleEmitter.I
-// Created by:  charles (26Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+274 14 Dtool_BxOc__w9 0 4 248 774 0 14 Dtool_BxOc__w9 222 ////////////////////////////////////////////////////////////////////
 //    Function : set_min_bound
 //      Access : public
 // Description : boundary set
@@ -4754,20 +3343,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : Public
 // Description : Copy Constructor
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 874  
-281 14 Dtool_BxOcNoZ9 0 4 255 774 0 14 Dtool_BxOcNoZ9 696 // Filename: sparkleParticleRenderer.I
-// Created by:  charles (27Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+281 14 Dtool_BxOcNoZ9 0 4 255 774 0 14 Dtool_BxOcNoZ9 195 ////////////////////////////////////////////////////////////////////
 //    Function : set_center_color
 //      Access : public
 //////////////////////////////////////////////////////////////////// 2 4 this 3 873  1 c 1 815  
@@ -4813,32 +3389,16 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : Public
 // Description : copy constructor
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 877  
-293 14 Dtool_BxOcD2aF 0 4 267 774 0 14 Dtool_BxOcD2aF 217 ////////////////////////////////////////////////////////////////////
-//    Function : set_radius
-//      Access : public
-// Description : radius set
-//////////////////////////////////////////////////////////////////// 2 4 this 3 876  1 r 1 775  
-294 14 Dtool_BxOcjRgH 0 6 268 775 0 14 Dtool_BxOcjRgH 217 ////////////////////////////////////////////////////////////////////
-//    Function : get_radius
-//      Access : public
-// Description : radius get
-//////////////////////////////////////////////////////////////////// 1 4 this 3 877  
+293 14 Dtool_BxOcD2aF 0 4 267 774 0 14 Dtool_BxOcD2aF 0 2 4 this 3 876  1 r 1 775  
+294 14 Dtool_BxOcjRgH 0 6 268 775 0 14 Dtool_BxOcjRgH 0 1 4 this 3 877  
 295 14 Dtool_BxOcwu67 0 7 270 879 0 14 Dtool_BxOcwu67 0 0 
 296 14 Dtool_BxOc4FjC 0 7 270 879 0 14 Dtool_BxOc4FjC 232 ////////////////////////////////////////////////////////////////////
 //    Function : SphereVolumeEmitter
 //      Access : Public
 // Description : copy constructor
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 880  
-297 14 Dtool_BxOckvji 0 4 271 774 0 14 Dtool_BxOckvji 217 ////////////////////////////////////////////////////////////////////
-//    Function : set_radius
-//      Access : public
-// Description : radius set
-//////////////////////////////////////////////////////////////////// 2 4 this 3 879  1 r 1 775  
-298 14 Dtool_BxOcCKpS 0 6 272 775 0 14 Dtool_BxOcCKpS 217 ////////////////////////////////////////////////////////////////////
-//    Function : get_radius
-//      Access : public
-// Description : radius get
-//////////////////////////////////////////////////////////////////// 1 4 this 3 880  
+297 14 Dtool_BxOckvji 0 4 271 774 0 14 Dtool_BxOckvji 0 2 4 this 3 879  1 r 1 775  
+298 14 Dtool_BxOcCKpS 0 6 272 775 0 14 Dtool_BxOcCKpS 0 1 4 this 3 880  
 299 14 Dtool_BxOcYa22 0 4 275 774 0 14 Dtool_BxOcYa22 0 2 4 this 3 882  3 tex 1 837  
 300 14 Dtool_BxOcQDkb 0 4 275 774 0 14 Dtool_BxOcQDkb 0 3 4 this 3 882  5 model 1 837  4 node 1 837  
 301 14 Dtool_BxOcSnfH 0 6 276 764 0 14 Dtool_BxOcSnfH 0 1 4 this 3 883  
@@ -5034,20 +3594,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //               renderer to use the size information from this 
 //               node from now on. (Default is false)
 //////////////////////////////////////////////////////////////////// 2 4 this 3 887  9 node_path 1 855  
-319 14 Dtool_BxOctzOm 0 4 286 774 0 14 Dtool_BxOctzOm 1089 // Filename: spriteParticleRenderer.I
-// Created by:  charles (13Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+319 14 Dtool_BxOctzOm 0 4 286 774 0 14 Dtool_BxOctzOm 589 ////////////////////////////////////////////////////////////////////
 //    Function : SpriteParticleRenderer::set_texture
 //      Access : Published
 // Description : Sets the renderer up to render the entire texture
@@ -5058,20 +3605,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //               Used to set the size of the particles.  Will clear
 //               all previously loaded textures and animations.
 //////////////////////////////////////////////////////////////////// 3 4 this 3 887  3 tex 1 888  15 texels_per_unit 1 775  
-320 14 Dtool_BxOcsbbZ 0 4 286 774 0 14 Dtool_BxOcsbbZ 1089 // Filename: spriteParticleRenderer.I
-// Created by:  charles (13Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+320 14 Dtool_BxOcsbbZ 0 4 286 774 0 14 Dtool_BxOcsbbZ 589 ////////////////////////////////////////////////////////////////////
 //    Function : SpriteParticleRenderer::set_texture
 //      Access : Published
 // Description : Sets the renderer up to render the entire texture
@@ -5317,20 +3851,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //       Access : public
 //  Description : copy constructor
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 891  
-372 14 Dtool_BxOcT__C 0 4 331 774 0 14 Dtool_BxOcT__C 681 // Filename: tangentRingEmitter.I
-// Created by:  charles (25Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+372 14 Dtool_BxOcT__C 0 4 331 774 0 14 Dtool_BxOcT__C 185 ////////////////////////////////////////////////////////////////////
 //  Function : set_radius
 //    Access : public
 //////////////////////////////////////////////////////////////////// 2 4 this 3 890  1 r 1 775  
@@ -5356,20 +3877,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : public
 // Description : copy constructor
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 894  
-378 14 Dtool_BxOcJQKd 0 4 337 774 0 14 Dtool_BxOcJQKd 688 // Filename: zSpinParticleFactory.I
-// Created by:  charles (16Aug00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+378 14 Dtool_BxOcJQKd 0 4 337 774 0 14 Dtool_BxOcJQKd 190 ////////////////////////////////////////////////////////////////////
 // Function : set_initial_angle
 //   Access : public
 //////////////////////////////////////////////////////////////////// 2 4 this 3 893  5 angle 1 775  
@@ -5420,40 +3928,15 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //      Access : public
 // Description : default constructor
 //////////////////////////////////////////////////////////////////// 0 
-394 14 Dtool_BxOchIpF 0 4 354 774 0 14 Dtool_BxOchIpF 690 // Filename: particleSystemManager.I
-// Created by:  charles (28Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-// Function : set_frame_stepping
-//   Access : public
-//////////////////////////////////////////////////////////////////// 2 4 this 3 896  15 every_nth_frame 1 784  
-395 14 Dtool_BxOc3diP 0 6 355 784 0 14 Dtool_BxOc3diP 191 ////////////////////////////////////////////////////////////////////
-// Function : get_frame_stepping
-//   Access : public
-//////////////////////////////////////////////////////////////////// 1 4 this 3 897  
-396 14 Dtool_BxOcmDR9 0 4 356 774 0 14 Dtool_BxOcmDR9 194 ////////////////////////////////////////////////////////////////////
-// Function : attach_particlesystem
-//   Access : public
-//////////////////////////////////////////////////////////////////// 2 4 this 3 896  2 ps 1 854  
+394 14 Dtool_BxOchIpF 0 4 354 774 0 14 Dtool_BxOchIpF 0 2 4 this 3 896  15 every_nth_frame 1 784  
+395 14 Dtool_BxOc3diP 0 6 355 784 0 14 Dtool_BxOc3diP 0 1 4 this 3 897  
+396 14 Dtool_BxOcmDR9 0 4 356 774 0 14 Dtool_BxOcmDR9 0 2 4 this 3 896  2 ps 1 854  
 397 14 Dtool_BxOcstvE 0 4 357 774 0 14 Dtool_BxOcstvE 256 ////////////////////////////////////////////////////////////////////
 //    Function : remove_particlesystem
 //      Access : public
 // Description : removes a ps from the maintenance list
 //////////////////////////////////////////////////////////////////// 2 4 this 3 896  2 ps 1 854  
-398 14 Dtool_BxOcTEnv 0 4 358 774 0 14 Dtool_BxOcTEnv 178 ////////////////////////////////////////////////////////////////////
-// Function : clear
-//   Access : public
-//////////////////////////////////////////////////////////////////// 1 4 this 3 896  
+398 14 Dtool_BxOcTEnv 0 4 358 774 0 14 Dtool_BxOcTEnv 0 1 4 this 3 896  
 399 14 Dtool_BxOcnA7I 0 4 359 774 0 14 Dtool_BxOcnA7I 518 ////////////////////////////////////////////////////////////////////
 //    Function : do_particles
 //      Access : public
@@ -5524,7 +4007,13 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //               objects when the last pointer to them goes away.
 ////////////////////////////////////////////////////////////////////
 
-733 12 emissionType 0 794624 33 BaseParticleEmitter::emissionType 33 BaseParticleEmitter::emissionType 731 0 0 0 0 0 0 0 0 0 3 11 ET_EXPLICIT 32 BaseParticleEmitter::ET_EXPLICIT 0 10 ET_RADIATE 31 BaseParticleEmitter::ET_RADIATE 1 9 ET_CUSTOM 30 BaseParticleEmitter::ET_CUSTOM 2 0 0
+733 12 emissionType 0 794624 33 BaseParticleEmitter::emissionType 33 BaseParticleEmitter::emissionType 731 0 0 0 0 0 0 0 0 0 3 11 ET_EXPLICIT 32 BaseParticleEmitter::ET_EXPLICIT 62
+// all particles are emitted in parallel along the same vector
+0 10 ET_RADIATE 31 BaseParticleEmitter::ET_RADIATE 49
+// all particles radiate away from a single point
+1 9 ET_CUSTOM 30 BaseParticleEmitter::ET_CUSTOM 70
+// particle launch vectors are dependent on particular derived emitter
+2 0 0
 
 734 11 RingEmitter 0 75777 11 RingEmitter 11 RingEmitter 0 0 0 1 423 0 0 8 424 425 426 427 428 429 430 431 0 0 1 0 731 0 0 0 0 0
 
@@ -5542,9 +4031,18 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 // Description : Pure virtual particle renderer base class
 ////////////////////////////////////////////////////////////////////
 
-738 25 ParticleRendererAlphaMode 0 794624 47 BaseParticleRenderer::ParticleRendererAlphaMode 47 BaseParticleRenderer::ParticleRendererAlphaMode 737 0 0 0 0 0 0 0 0 0 6 13 PR_ALPHA_NONE 35 BaseParticleRenderer::PR_ALPHA_NONE 0 12 PR_ALPHA_OUT 34 BaseParticleRenderer::PR_ALPHA_OUT 1 11 PR_ALPHA_IN 33 BaseParticleRenderer::PR_ALPHA_IN 2 15 PR_ALPHA_IN_OUT 37 BaseParticleRenderer::PR_ALPHA_IN_OUT 3 13 PR_ALPHA_USER 35 BaseParticleRenderer::PR_ALPHA_USER 4 22 PR_NOT_INITIALIZED_YET 44 BaseParticleRenderer::PR_NOT_INITIALIZED_YET 5 0 0
+738 25 ParticleRendererAlphaMode 0 794624 47 BaseParticleRenderer::ParticleRendererAlphaMode 47 BaseParticleRenderer::ParticleRendererAlphaMode 737 0 0 0 0 0 0 0 0 0 6 13 PR_ALPHA_NONE 35 BaseParticleRenderer::PR_ALPHA_NONE 0
+0 12 PR_ALPHA_OUT 34 BaseParticleRenderer::PR_ALPHA_OUT 0
+1 11 PR_ALPHA_IN 33 BaseParticleRenderer::PR_ALPHA_IN 0
+2 15 PR_ALPHA_IN_OUT 37 BaseParticleRenderer::PR_ALPHA_IN_OUT 0
+3 13 PR_ALPHA_USER 35 BaseParticleRenderer::PR_ALPHA_USER 0
+4 22 PR_NOT_INITIALIZED_YET 44 BaseParticleRenderer::PR_NOT_INITIALIZED_YET 0
+5 0 0
 
-739 27 ParticleRendererBlendMethod 0 794624 49 BaseParticleRenderer::ParticleRendererBlendMethod 49 BaseParticleRenderer::ParticleRendererBlendMethod 737 0 0 0 0 0 0 0 0 0 3 11 PP_NO_BLEND 33 BaseParticleRenderer::PP_NO_BLEND 0 15 PP_BLEND_LINEAR 37 BaseParticleRenderer::PP_BLEND_LINEAR 1 14 PP_BLEND_CUBIC 36 BaseParticleRenderer::PP_BLEND_CUBIC 2 0 0
+739 27 ParticleRendererBlendMethod 0 794624 49 BaseParticleRenderer::ParticleRendererBlendMethod 49 BaseParticleRenderer::ParticleRendererBlendMethod 737 0 0 0 0 0 0 0 0 0 3 11 PP_NO_BLEND 33 BaseParticleRenderer::PP_NO_BLEND 0
+0 15 PP_BLEND_LINEAR 37 BaseParticleRenderer::PP_BLEND_LINEAR 0
+1 14 PP_BLEND_CUBIC 36 BaseParticleRenderer::PP_BLEND_CUBIC 0
+2 0 0
 
 740 10 BoxEmitter 0 75777 10 BoxEmitter 10 BoxEmitter 0 0 0 1 465 0 0 4 466 467 468 469 0 0 1 0 731 0 0 0 0 267
 ////////////////////////////////////////////////////////////////////
@@ -5553,67 +4051,19 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //               particles are generated.
 ////////////////////////////////////////////////////////////////////
 
-741 34 ColorInterpolationFunctionConstant 0 141313 34 ColorInterpolationFunctionConstant 34 ColorInterpolationFunctionConstant 0 0 0 0 473 0 3 470 471 472 0 0 1 0 742 0 0 0 0 282
-////////////////////////////////////////////////////////////////////
-//       Class : ColorInterpolationFunctionConstant
-// Description : Defines a constant color over the lifetime of
-//               the segment.
-////////////////////////////////////////////////////////////////////
+741 34 ColorInterpolationFunctionConstant 0 141313 34 ColorInterpolationFunctionConstant 34 ColorInterpolationFunctionConstant 0 0 0 0 473 0 3 470 471 472 0 0 1 0 742 0 0 0 0 0
 
-742 26 ColorInterpolationFunction 0 1050625 26 ColorInterpolationFunction 26 ColorInterpolationFunction 0 0 0 0 0 0 0 0 0 0 0 0 339
-////////////////////////////////////////////////////////////////////
-//       Class : ColorInterpolationFunction
-// Description : Abstract class from which all other functions 
-//               should inherit. Defines the virtual interpolate()
-//               function.
-////////////////////////////////////////////////////////////////////
+742 26 ColorInterpolationFunction 0 1050625 26 ColorInterpolationFunction 26 ColorInterpolationFunction 0 0 0 0 0 0 0 0 0 0 0 0 0
 
-743 32 ColorInterpolationFunctionLinear 0 141313 32 ColorInterpolationFunctionLinear 32 ColorInterpolationFunctionLinear 0 0 0 0 477 0 3 474 475 476 0 0 1 0 741 0 0 0 0 286
-////////////////////////////////////////////////////////////////////
-//       Class : ColorInterpolationFunctionLinear
-// Description : Defines a linear interpolation over the lifetime of
-//               the segment.
-////////////////////////////////////////////////////////////////////
+743 32 ColorInterpolationFunctionLinear 0 141313 32 ColorInterpolationFunctionLinear 32 ColorInterpolationFunctionLinear 0 0 0 0 477 0 3 474 475 476 0 0 1 0 741 0 0 0 0 0
 
-744 34 ColorInterpolationFunctionStepwave 0 141313 34 ColorInterpolationFunctionStepwave 34 ColorInterpolationFunctionStepwave 0 0 0 0 483 0 5 478 479 480 481 482 0 0 1 0 743 0 0 0 0 523
-////////////////////////////////////////////////////////////////////
-//       Class : ColorInterpolationFunctionStepwave
-// Description : Defines a discrete cyclical transition between two colors.
-//               The widths describe a portion of the segment's lifetime
-//               for which the corresponding color should be selected. If
-//               their sum is less than 1, the function repeats until
-//               the end of the segment.
-////////////////////////////////////////////////////////////////////
+744 34 ColorInterpolationFunctionStepwave 0 141313 34 ColorInterpolationFunctionStepwave 34 ColorInterpolationFunctionStepwave 0 0 0 0 483 0 5 478 479 480 481 482 0 0 1 0 743 0 0 0 0 0
 
-745 34 ColorInterpolationFunctionSinusoid 0 141313 34 ColorInterpolationFunctionSinusoid 34 ColorInterpolationFunctionSinusoid 0 0 0 0 487 0 3 484 485 486 0 0 1 0 743 0 0 0 0 545
-////////////////////////////////////////////////////////////////////
-//       Class : ColorInterpolationFunctionSinusoid
-// Description : Defines a sinusoidal blending between two colors.
-//               A period of "1" corresponds to a single transition 
-//               from color_a to color_b and then back to color_a 
-//               over the course of the segment's lifetime. A 
-//               shorter period will result in a higher frequency
-//               cycle.
-////////////////////////////////////////////////////////////////////
+745 34 ColorInterpolationFunctionSinusoid 0 141313 34 ColorInterpolationFunctionSinusoid 34 ColorInterpolationFunctionSinusoid 0 0 0 0 487 0 3 484 485 486 0 0 1 0 743 0 0 0 0 0
 
-746 25 ColorInterpolationSegment 0 75777 25 ColorInterpolationSegment 25 ColorInterpolationSegment 0 0 0 1 488 0 0 11 489 490 491 492 493 494 495 496 497 498 499 0 0 1 0 732 0 0 0 0 440
-////////////////////////////////////////////////////////////////////
-//       Class : ColorInterpolationSegment
-// Description : A single unit of interpolation. The begin and end
-//               times are interpolated over the lifetime of the 
-//               particle, thus have the range of [0,1]. Each segment
-//               also has a function associated with it.
-////////////////////////////////////////////////////////////////////
+746 25 ColorInterpolationSegment 0 75777 25 ColorInterpolationSegment 25 ColorInterpolationSegment 0 0 0 1 488 0 0 11 489 490 491 492 493 494 495 496 497 498 499 0 0 1 0 732 0 0 0 0 0
 
-747 25 ColorInterpolationManager 0 75777 25 ColorInterpolationManager 25 ColorInterpolationManager 0 0 0 1 500 0 0 9 501 502 503 504 505 506 507 508 509 0 0 1 0 732 0 0 0 0 478
-////////////////////////////////////////////////////////////////////
-//       Class : ColorInterpolationManager
-// Description : High level class for color interpolation.  Segments
-//               must be added to the manager in order to achieve
-//               results using the "add_*****()" functions.  Access
-//               to these segments is provided but not necessary
-//               general use.
-////////////////////////////////////////////////////////////////////
+747 25 ColorInterpolationManager 0 75777 25 ColorInterpolationManager 25 ColorInterpolationManager 0 0 0 1 500 0 0 9 501 502 503 504 505 506 507 508 509 0 0 1 0 732 0 0 0 0 0
 
 748 11 DiscEmitter 0 75777 11 DiscEmitter 11 DiscEmitter 0 0 0 1 510 0 0 12 511 512 513 514 515 516 517 518 519 520 521 522 0 0 1 0 731 0 0 0 0 266
 ////////////////////////////////////////////////////////////////////
@@ -5631,12 +4081,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //               particles are generated.
 ////////////////////////////////////////////////////////////////////
 
-751 20 LineParticleRenderer 0 75777 20 LineParticleRenderer 20 LineParticleRenderer 0 0 0 1 550 0 0 6 551 552 553 554 555 556 0 0 1 0 737 0 0 0 0 294
-////////////////////////////////////////////////////////////////////
-//       Class : LineParticleRenderer
-// Description : renders a line from last position to current
-//               position -- good for rain, sparks, etc.
-////////////////////////////////////////////////////////////////////
+751 20 LineParticleRenderer 0 75777 20 LineParticleRenderer 20 LineParticleRenderer 0 0 0 1 550 0 0 6 551 552 553 554 555 556 0 0 1 0 737 0 0 0 0 0
 
 752 14 ParticleSystem 0 75777 14 ParticleSystem 14 ParticleSystem 0 0 0 1 557 0 0 52 558 559 560 561 562 563 564 565 566 567 568 569 570 571 572 573 574 575 576 577 578 579 580 581 582 583 584 585 586 587 588 589 590 591 592 593 594 595 596 597 598 599 600 601 602 603 604 605 606 607 608 609 0 0 1 0 753 0 0 0 0 226
 ////////////////////////////////////////////////////////////////////
@@ -5659,21 +4104,14 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //               particles are generated.
 ////////////////////////////////////////////////////////////////////
 
-755 20 PointParticleFactory 0 75777 20 PointParticleFactory 20 PointParticleFactory 0 0 0 1 613 0 0 0 0 0 1 0 736 0 0 0 0 230
-////////////////////////////////////////////////////////////////////
-//       Class : PointParticleFactory
-// Description : Creates point particles to user specs
-////////////////////////////////////////////////////////////////////
+755 20 PointParticleFactory 0 75777 20 PointParticleFactory 20 PointParticleFactory 0 0 0 1 613 0 0 0 0 0 1 0 736 0 0 0 0 0
 
-756 21 PointParticleRenderer 0 75777 21 PointParticleRenderer 21 PointParticleRenderer 0 0 0 1 614 0 0 10 615 616 617 618 619 620 621 622 623 624 0 0 1 0 737 0 0 0 1 757 334
-////////////////////////////////////////////////////////////////////
-//       Class : PointParticleRenderer
-// Description : Simple point/point particle renderer.  Does NOT
-//               handle billboards- use BillboardParticleRenderer
-//               for that.
-////////////////////////////////////////////////////////////////////
+756 21 PointParticleRenderer 0 75777 21 PointParticleRenderer 21 PointParticleRenderer 0 0 0 1 614 0 0 10 615 616 617 618 619 620 621 622 623 624 0 0 1 0 737 0 0 0 1 757 0
 
-757 22 PointParticleBlendType 0 794624 45 PointParticleRenderer::PointParticleBlendType 45 PointParticleRenderer::PointParticleBlendType 756 0 0 0 0 0 0 0 0 0 3 12 PP_ONE_COLOR 35 PointParticleRenderer::PP_ONE_COLOR 0 13 PP_BLEND_LIFE 36 PointParticleRenderer::PP_BLEND_LIFE 1 12 PP_BLEND_VEL 35 PointParticleRenderer::PP_BLEND_VEL 2 0 0
+757 22 PointParticleBlendType 0 794624 45 PointParticleRenderer::PointParticleBlendType 45 PointParticleRenderer::PointParticleBlendType 756 0 0 0 0 0 0 0 0 0 3 12 PP_ONE_COLOR 35 PointParticleRenderer::PP_ONE_COLOR 0
+0 13 PP_BLEND_LIFE 36 PointParticleRenderer::PP_BLEND_LIFE 0
+1 12 PP_BLEND_VEL 35 PointParticleRenderer::PP_BLEND_VEL 0
+2 0 0
 
 758 16 RectangleEmitter 0 75777 16 RectangleEmitter 16 RectangleEmitter 0 0 0 1 625 0 0 4 626 627 628 629 0 0 1 0 731 0 0 0 0 272
 ////////////////////////////////////////////////////////////////////
@@ -5688,7 +4126,9 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 // Description : pretty sparkly things.
 ////////////////////////////////////////////////////////////////////
 
-760 24 SparkleParticleLifeScale 0 794624 49 SparkleParticleRenderer::SparkleParticleLifeScale 49 SparkleParticleRenderer::SparkleParticleLifeScale 759 0 0 0 0 0 0 0 0 0 2 11 SP_NO_SCALE 36 SparkleParticleRenderer::SP_NO_SCALE 0 8 SP_SCALE 33 SparkleParticleRenderer::SP_SCALE 1 0 0
+760 24 SparkleParticleLifeScale 0 794624 49 SparkleParticleRenderer::SparkleParticleLifeScale 49 SparkleParticleRenderer::SparkleParticleLifeScale 759 0 0 0 0 0 0 0 0 0 2 11 SP_NO_SCALE 36 SparkleParticleRenderer::SP_NO_SCALE 0
+0 8 SP_SCALE 33 SparkleParticleRenderer::SP_SCALE 0
+1 0 0
 
 761 20 SphereSurfaceEmitter 0 75777 20 SphereSurfaceEmitter 20 SphereSurfaceEmitter 0 0 0 1 641 0 0 2 642 643 0 0 1 0 731 0 0 0 0 268
 ////////////////////////////////////////////////////////////////////
@@ -5712,7 +4152,9 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //               and source types.  
 ////////////////////////////////////////////////////////////////////
 
-764 10 SourceType 0 794624 22 SpriteAnim::SourceType 22 SpriteAnim::SourceType 763 0 0 0 0 0 0 0 0 0 2 10 ST_texture 22 SpriteAnim::ST_texture 0 12 ST_from_node 24 SpriteAnim::ST_from_node 1 0 0
+764 10 SourceType 0 794624 22 SpriteAnim::SourceType 22 SpriteAnim::SourceType 763 0 0 0 0 0 0 0 0 0 2 10 ST_texture 22 SpriteAnim::ST_texture 0
+0 12 ST_from_node 24 SpriteAnim::ST_from_node 0
+1 0 0
 
 765 22 SpriteParticleRenderer 0 75777 22 SpriteParticleRenderer 22 SpriteParticleRenderer 0 0 0 1 654 0 0 45 655 656 657 658 659 660 661 662 663 664 665 666 667 668 669 670 671 672 673 674 675 676 677 678 679 680 681 682 683 684 685 686 687 688 689 690 691 692 693 694 695 696 697 698 699 1 902 0 1 0 737 0 0 0 0 274
 ////////////////////////////////////////////////////////////////////
@@ -5748,20 +4190,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 
 770 10 LPoint3f * 0 8576 10 LPoint3f * 10 LPoint3f * 0 0 771 0 0 0 0 0 0 0 0 0 0
 
-771 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 1083
-// Filename: lpoint3_src.h
-// Created by:  drose (25Sep99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+771 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 596
 ////////////////////////////////////////////////////////////////////
 //       Class : LPoint3
 // Description : This is a three-component point in space (as opposed
@@ -5775,20 +4204,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 
 772 11 LVector3f * 0 8576 11 LVector3f * 11 LVector3f * 0 0 773 0 0 0 0 0 0 0 0 0 0
 
-773 9 LVector3f 0 2048 9 LVector3f 9 LVector3f 0 0 0 0 0 0 0 0 0 0 0 0 1086
-// Filename: lvector3_src.h
-// Created by:  drose (24Sep99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+773 9 LVector3f 0 2048 9 LVector3f 9 LVector3f 0 0 0 0 0 0 0 0 0 0 0 0 598
 ////////////////////////////////////////////////////////////////////
 //       Class : LVector3
 // Description : This is a three-component vector distance (as opposed
@@ -5859,86 +4275,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 
 799 10 GeomNode * 0 8576 10 GeomNode * 10 GeomNode * 0 0 796 0 0 0 0 0 0 0 0 0 0
 
-800 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 905 906 0 0 0 0 4938
-//
-// A NodePath is the fundamental unit of high-level interaction with
-// the scene graph.  It encapsulates the complete path down to a node
-// from some other node, usually the root of the scene graph.  This is
-// used to resolve ambiguities associated with instancing.
-//
-// NodePath also contains a number of handy high-level methods for
-// common scene-graph manipulations, such as reparenting, and common
-// state changes, such as repositioning.
-//
-// There are also a number of NodePath methods for finding nodes deep
-// within the tree by name or by type.  These take a path string,
-// which at its simplest consists of a series of node names separated
-// by slashes, like a directory pathname.
-//
-// Each component of the path string may optionally consist of one of
-// the following special names, instead of a node name:
-//
-//   *          -- matches exactly one node, with any name.
-//   **         -- matches any sequence of zero or more nodes.
-//   +typename  -- matches any node that is or derives from the given type.
-//   -typename  -- matches any node that is the given type exactly.
-//   =tag       -- matches any node that has the indicated tag.
-//   =tag=value -- matches any node whose tag matches the indicated value.
-//
-// Furthermore, a node name may itself contain standard filename
-// globbing characters, like *, ?, and [a-z], that will be accepted as
-// a partial match.  (In fact, the '*' special name may be seen as
-// just a special case of this.)  The globbing characters may not be
-// used with the typename matches or with tag matches, but they may
-// be used to match a tag's value in the =tag=value syntax.
-//
-// The special characters "@@", appearing at the beginning of a node
-// name, indicate a stashed node.  Normally, stashed nodes are not
-// returned by a find (but see the special flags, below), but a
-// stashed node may be found if it is explicitly named with its
-// leading @@ characters.  By extension, "@@*" may be used to identify
-// any stashed node.
-//
-// Examples:
-//
-// "room//graph" will look for a node named "graph", which is a child
-// of an unnamed node, which is a child of a node named "room", which
-// is a child of the starting path.
-//
-// "**/red*" will look for any node anywhere in the tree (below the
-// starting path) with a name that begins with "red".
-//
-// "**/+PartBundleNode/**/head" will look for a node named "head",
-// somewhere below a PartBundleNode anywhere in the tree.
-//
-//
-// The search is always potentially ambiguous, even if the special
-// wildcard operators are not used, because there may be multiple
-// nodes in the tree with the same name.  In general, in the case of
-// an ambiguity, the shortest path is preferred; when a method (such
-// as extend_by) must choose only only one of several possible paths,
-// it will choose the shortest available; on the other hand, when a
-// method (such as find_all_matches) is to return all of the matching
-// paths, it will sort them so that the shortest paths appear first in
-// the output.
-//
-//
-// Special flags.  The entire string may optionally be followed by the
-// ";" character, followed by one or more of the following special
-// control flags, with no intervening spaces or punctuation:
-//
-//    -h    Do not return hidden nodes.
-//    +h    Do return hidden nodes.
-//    -s    Do not return stashed nodes unless explicitly referenced with @@.
-//    +s    Return stashed nodes even without any explicit @@ characters.
-//    -i    Node name comparisons are not case insensitive: case must match
-//          exactly.
-//    +i    Node name comparisons are case insensitive: case is not important.
-//          This affects matches against the node name only; node type
-//          and tag strings are always case sensitive.
-//
-// The default flags are +h-s-i.
-//
+800 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 905 906 0 0 0 0 1139
 ////////////////////////////////////////////////////////////////////
 //       Class : NodePath
 // Description : NodePath is the fundamental system for disambiguating
@@ -5964,7 +4301,19 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 
 802 22 BaseParticleRenderer * 0 8576 22 BaseParticleRenderer * 22 BaseParticleRenderer * 0 0 737 0 0 0 0 0 0 0 0 0 0
 
-803 4 Mode 0 794624 22 ColorBlendAttrib::Mode 22 ColorBlendAttrib::Mode 804 0 0 0 0 0 0 0 0 0 6 6 M_none 24 ColorBlendAttrib::M_none 0 5 M_add 23 ColorBlendAttrib::M_add 1 10 M_subtract 28 ColorBlendAttrib::M_subtract 2 14 M_inv_subtract 32 ColorBlendAttrib::M_inv_subtract 3 5 M_min 23 ColorBlendAttrib::M_min 4 5 M_max 23 ColorBlendAttrib::M_max 5 0 0
+803 4 Mode 0 794624 22 ColorBlendAttrib::Mode 22 ColorBlendAttrib::Mode 804 0 0 0 0 0 0 0 0 0 6 6 M_none 24 ColorBlendAttrib::M_none 23
+// Blending is disabled
+0 5 M_add 23 ColorBlendAttrib::M_add 41
+// incoming color * A + fbuffer color * B
+1 10 M_subtract 28 ColorBlendAttrib::M_subtract 41
+// incoming color * A - fbuffer color * B
+2 14 M_inv_subtract 32 ColorBlendAttrib::M_inv_subtract 41
+// fbuffer color * B - incoming color * A
+3 5 M_min 23 ColorBlendAttrib::M_min 37
+// min(incoming color, fbuffer color)
+4 5 M_max 23 ColorBlendAttrib::M_max 37
+// max(incoming color, fbuffer color)
+5 0 0
 
 804 16 ColorBlendAttrib 0 2048 16 ColorBlendAttrib 16 ColorBlendAttrib 0 0 0 0 0 0 0 0 0 0 0 0 368
 ////////////////////////////////////////////////////////////////////
@@ -5974,7 +4323,33 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 //               transparency if transparency is also specified.
 ////////////////////////////////////////////////////////////////////
 
-805 7 Operand 0 794624 25 ColorBlendAttrib::Operand 25 ColorBlendAttrib::Operand 804 0 0 0 0 0 0 0 0 0 19 6 O_zero 24 ColorBlendAttrib::O_zero 0 5 O_one 23 ColorBlendAttrib::O_one 1 16 O_incoming_color 34 ColorBlendAttrib::O_incoming_color 2 26 O_one_minus_incoming_color 44 ColorBlendAttrib::O_one_minus_incoming_color 3 15 O_fbuffer_color 33 ColorBlendAttrib::O_fbuffer_color 4 25 O_one_minus_fbuffer_color 43 ColorBlendAttrib::O_one_minus_fbuffer_color 5 16 O_incoming_alpha 34 ColorBlendAttrib::O_incoming_alpha 6 26 O_one_minus_incoming_alpha 44 ColorBlendAttrib::O_one_minus_incoming_alpha 7 15 O_fbuffer_alpha 33 ColorBlendAttrib::O_fbuffer_alpha 8 25 O_one_minus_fbuffer_alpha 43 ColorBlendAttrib::O_one_minus_fbuffer_alpha 9 16 O_constant_color 34 ColorBlendAttrib::O_constant_color 10 26 O_one_minus_constant_color 44 ColorBlendAttrib::O_one_minus_constant_color 11 16 O_constant_alpha 34 ColorBlendAttrib::O_constant_alpha 12 26 O_one_minus_constant_alpha 44 ColorBlendAttrib::O_one_minus_constant_alpha 13 25 O_incoming_color_saturate 43 ColorBlendAttrib::O_incoming_color_saturate 14 13 O_color_scale 31 ColorBlendAttrib::O_color_scale 15 23 O_one_minus_color_scale 41 ColorBlendAttrib::O_one_minus_color_scale 16 13 O_alpha_scale 31 ColorBlendAttrib::O_alpha_scale 17 23 O_one_minus_alpha_scale 41 ColorBlendAttrib::O_one_minus_alpha_scale 18 0 0
+805 7 Operand 0 794624 25 ColorBlendAttrib::Operand 25 ColorBlendAttrib::Operand 804 0 0 0 0 0 0 0 0 0 19 6 O_zero 24 ColorBlendAttrib::O_zero 0
+0 5 O_one 23 ColorBlendAttrib::O_one 0
+1 16 O_incoming_color 34 ColorBlendAttrib::O_incoming_color 0
+2 26 O_one_minus_incoming_color 44 ColorBlendAttrib::O_one_minus_incoming_color 0
+3 15 O_fbuffer_color 33 ColorBlendAttrib::O_fbuffer_color 0
+4 25 O_one_minus_fbuffer_color 43 ColorBlendAttrib::O_one_minus_fbuffer_color 0
+5 16 O_incoming_alpha 34 ColorBlendAttrib::O_incoming_alpha 0
+6 26 O_one_minus_incoming_alpha 44 ColorBlendAttrib::O_one_minus_incoming_alpha 0
+7 15 O_fbuffer_alpha 33 ColorBlendAttrib::O_fbuffer_alpha 0
+8 25 O_one_minus_fbuffer_alpha 43 ColorBlendAttrib::O_one_minus_fbuffer_alpha 0
+9 16 O_constant_color 34 ColorBlendAttrib::O_constant_color 0
+10 26 O_one_minus_constant_color 44 ColorBlendAttrib::O_one_minus_constant_color 0
+11 16 O_constant_alpha 34 ColorBlendAttrib::O_constant_alpha 0
+12 26 O_one_minus_constant_alpha 44 ColorBlendAttrib::O_one_minus_constant_alpha 0
+13 25 O_incoming_color_saturate 43 ColorBlendAttrib::O_incoming_color_saturate 27
+// valid only for operand a
+14 13 O_color_scale 31 ColorBlendAttrib::O_color_scale 333
+// If you set either of the operands to any of the below, the
+// blend color is taken from the current ColorScaleAttrib.  This
+// also inhibits the normal behavior of the ColorScaleAttrib; it
+// no longer directly scales the vertex colors, on the assumption
+// that you will instead take care of the scale here, in the blend
+// mode.
+15 23 O_one_minus_color_scale 41 ColorBlendAttrib::O_one_minus_color_scale 0
+16 13 O_alpha_scale 31 ColorBlendAttrib::O_alpha_scale 0
+17 23 O_one_minus_alpha_scale 41 ColorBlendAttrib::O_one_minus_alpha_scale 0
+18 0 0
 
 806 4 bool 0 8194 4 bool 4 bool 0 4 0 0 0 0 0 0 0 0 0 0 0
 
@@ -6083,7 +4458,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 
 841 11 PandaNode * 0 8576 11 PandaNode * 11 PandaNode * 0 0 842 0 0 0 0 0 0 0 0 0 0
 
-842 9 PandaNode 0 2048 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 0 0 0 0 0 374
+842 9 PandaNode 0 2048 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 3 907 908 909 0 0 0 0 374
 ////////////////////////////////////////////////////////////////////
 //       Class : PandaNode
 // Description : A basic node of the scene graph or data graph.  This
@@ -6147,20 +4522,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 
 870 14 LPoint2f const 0 8832 14 LPoint2f const 14 LPoint2f const 0 0 871 0 0 0 0 0 0 0 0 0 0
 
-871 8 LPoint2f 0 2048 8 LPoint2f 8 LPoint2f 0 0 0 0 0 0 0 0 0 0 0 0 706
-// Filename: lpoint2_src.h
-// Created by:  drose (08Mar00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+871 8 LPoint2f 0 2048 8 LPoint2f 8 LPoint2f 0 0 0 0 0 0 0 0 0 0 0 0 219
 ////////////////////////////////////////////////////////////////////
 //       Class : LPoint2
 // Description : This is a two-component point in space.
@@ -6242,7 +4604,7 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 
 0
 0
-7
+10
 900 0 0 173 17 get_linear_forces 21 get_num_linear_forces 16 get_linear_force 
 901 0 0 173 18 get_angular_forces 22 get_num_angular_forces 17 get_angular_force 
 902 0 0 282 9 get_anims 13 get_num_anims 8 get_anim 
@@ -6250,3 +4612,6 @@ virtual void ParticleSystemManager::write(ostream &out, int indent = (0)) const;
 904 0 0 441 15 get_geom_states 13 get_num_geoms 14 get_geom_state 
 905 0 0 446 9 get_nodes 13 get_num_nodes 8 get_node 
 906 0 0 446 13 get_ancestors 13 get_num_nodes 12 get_ancestor 
+907 0 0 583 11 get_parents 15 get_num_parents 10 get_parent 
+908 0 0 583 12 get_children 16 get_num_children 9 get_child 
+909 0 0 583 11 get_stashed 15 get_num_stashed 11 get_stashed 

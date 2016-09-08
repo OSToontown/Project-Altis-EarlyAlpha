@@ -1,5 +1,5 @@
-1412104799
-2 2
+1422504155
+2 3
 12 libp3physics 4 1Scs 15 panda3d.physics 
 218
 295 13 PhysicsObject 0 4 513 28 PhysicsObject::PhysicsObject 0 2 1 2 463
@@ -45,20 +45,7 @@ inline void PhysicsObject::set_active(bool flag);
 50
 inline bool PhysicsObject::get_active(void) const;
 
-299 8 set_mass 0 4 513 23 PhysicsObject::set_mass 0 1 6 733
-// Filename: physicsObject.I
-// Created by:  charles (13Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+299 8 set_mass 0 4 513 23 PhysicsObject::set_mass 0 1 6 242
 ////////////////////////////////////////////////////////////////////
 //    Function : set_mass
 //      Access : Public
@@ -76,9 +63,7 @@ inline void PhysicsObject::set_mass(float );
 49
 inline float PhysicsObject::get_mass(void) const;
 
-301 12 set_position 0 4 513 27 PhysicsObject::set_position 0 2 8 9 681
-//INLINE void set_center_of_mass(const LPoint3 &pos); use set_position.
-
+301 12 set_position 0 4 513 27 PhysicsObject::set_position 0 2 8 9 608
 //INLINE void set_center_of_mass(const LPoint3 &pos); use set_position.
 
 ////////////////////////////////////////////////////////////////////
@@ -184,9 +169,7 @@ inline LVector3f PhysicsObject::get_implicit_velocity(void) const;
 64
 inline void PhysicsObject::add_torque(LRotationf const &torque);
 
-310 11 add_impulse 0 4 513 26 PhysicsObject::add_impulse 0 1 19 463
-// Global instantanious forces
-
+310 11 add_impulse 0 4 513 26 PhysicsObject::add_impulse 0 1 19 431
 ////////////////////////////////////////////////////////////////////
 //    Function : add_impulse
 //      Access : Public
@@ -227,9 +210,7 @@ virtual void PhysicsObject::add_impact(LPoint3f const &offset_from_center_of_mas
 70
 inline void PhysicsObject::add_local_torque(LRotationf const &torque);
 
-313 17 add_local_impulse 0 4 513 32 PhysicsObject::add_local_impulse 0 1 22 468
-// Local instantanious forces
-
+313 17 add_local_impulse 0 4 513 32 PhysicsObject::add_local_impulse 0 1 22 437
 ////////////////////////////////////////////////////////////////////
 //    Function : add_local_impulse
 //      Access : Public
@@ -416,29 +397,11 @@ static TypeHandle PhysicsObject::get_class_type(void);
 PhysicsObjectCollection::PhysicsObjectCollection(void);
 PhysicsObjectCollection::PhysicsObjectCollection(PhysicsObjectCollection const &copy);
 
-333 10 operator = 0 4 515 35 PhysicsObjectCollection::operator = 0 1 44 248
-////////////////////////////////////////////////////////////////////
-//     Function: PhysicsObjectCollection::Copy Assignment Operator
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+333 10 operator = 0 4 515 35 PhysicsObjectCollection::operator = 0 1 44 0
 78
 void PhysicsObjectCollection::operator =(PhysicsObjectCollection const &copy);
 
-334 24 ~PhysicsObjectCollection 0 4 515 49 PhysicsObjectCollection::~PhysicsObjectCollection 0 0 736
-// Filename: physicsObjectCollection.I
-// Created by:  joswilso (12Jul06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+334 24 ~PhysicsObjectCollection 0 4 515 49 PhysicsObjectCollection::~PhysicsObjectCollection 0 0 234
 ////////////////////////////////////////////////////////////////////
 //     Function: PhysicsObjectCollection::Destructor
 //       Access: Published
@@ -549,14 +512,7 @@ int PhysicsObjectCollection::get_num_physics_objects(void) const;
 88
 PointerTo< PhysicsObject > PhysicsObjectCollection::get_physics_object(int index) const;
 
-345 11 operator [] 0 4 515 36 PhysicsObjectCollection::operator [] 0 1 55 411
-////////////////////////////////////////////////////////////////////
-//     Function: PhysicsObjectCollection::operator []
-//       Access: Published
-//  Description: Returns the nth PhysicsObject in the collection.  This is
-//               the same as get_physics_object(), but it may be a more
-//               convenient way to access it.
-////////////////////////////////////////////////////////////////////
+345 11 operator [] 0 4 515 36 PhysicsObjectCollection::operator [] 0 1 55 0
 81
 PointerTo< PhysicsObject > PhysicsObjectCollection::operator [](int index) const;
 
@@ -571,22 +527,11 @@ PointerTo< PhysicsObject > PhysicsObjectCollection::operator [](int index) const
 46
 int PhysicsObjectCollection::size(void) const;
 
-347 11 operator += 0 4 515 36 PhysicsObjectCollection::operator += 0 1 57 284
-////////////////////////////////////////////////////////////////////
-//     Function: PhysicsObjectCollection::operator +=
-//       Access: Published
-//  Description: Appends the other list onto the end of this one.
-////////////////////////////////////////////////////////////////////
+347 11 operator += 0 4 515 36 PhysicsObjectCollection::operator += 0 1 57 0
 87
 inline void PhysicsObjectCollection::operator +=(PhysicsObjectCollection const &other);
 
-348 10 operator + 0 4 515 35 PhysicsObjectCollection::operator + 0 1 58 334
-////////////////////////////////////////////////////////////////////
-//     Function: PhysicsObjectCollection::operator +
-//       Access: Published
-//  Description: Returns a PhysicsObjectCollection representing the
-//               concatenation of the two lists.
-////////////////////////////////////////////////////////////////////
+348 10 operator + 0 4 515 35 PhysicsObjectCollection::operator + 0 1 58 0
 111
 inline PhysicsObjectCollection PhysicsObjectCollection::operator +(PhysicsObjectCollection const &other) const;
 
@@ -630,20 +575,7 @@ inline void BaseForce::set_active(bool active);
 50
 virtual bool BaseForce::is_linear(void) const = 0;
 
-354 14 get_force_node 0 4 516 25 BaseForce::get_force_node 0 1 65 680
-// Filename: baseForce.I
-// Created by:  charles (08Aug00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+354 14 get_force_node 0 4 516 25 BaseForce::get_force_node 0 1 65 193
 ////////////////////////////////////////////////////////////////////
 //    Function : get_force_node
 //      Access : Public
@@ -683,20 +615,7 @@ virtual void BaseForce::write(ostream &out, int indent_level = (0)) const;
 50
 static TypeHandle BaseForce::get_class_type(void);
 
-359 13 set_amplitude 0 4 517 26 LinearForce::set_amplitude 0 1 71 681
-// Filename: linearForce.I
-// Created by:  charles (13Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+359 13 set_amplitude 0 4 517 26 LinearForce::set_amplitude 0 1 71 192
 ////////////////////////////////////////////////////////////////////
 //    Function : set_amplitude
 //      Access : Public
@@ -838,9 +757,7 @@ Physical::Physical(Physical const &copy);
 65
 inline PhysicsManager *Physical::get_physics_manager(void) const;
 
-375 17 get_physical_node 0 4 519 27 Physical::get_physical_node 0 1 92 208
-// helpers
-
+375 17 get_physical_node 0 4 519 27 Physical::get_physical_node 0 1 92 196
 ////////////////////////////////////////////////////////////////////
 //    Function : get_physical_node
 //      Access : Public
@@ -1063,20 +980,7 @@ static TypeHandle Physical::get_class_type(void);
 61
 PhysicalNode::PhysicalNode(basic_string< char > const &name);
 
-400 5 clear 0 4 520 19 PhysicalNode::clear 0 1 126 670
-// Filename: physicalNode.I
-// Created by:  charles (01Aug00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+400 5 clear 0 4 520 19 PhysicalNode::clear 0 1 126 180
 ////////////////////////////////////////////////////////////////////
 //  Function : clear
 //    Access : public
@@ -1167,20 +1071,7 @@ ActorNode::ActorNode(ActorNode const &copy);
 51
 PhysicsObject *ActorNode::get_physics_object(void);
 
-410 18 set_contact_vector 0 4 522 29 ActorNode::set_contact_vector 0 1 140 702
-// Filename: actorNode.I
-// Created by:  charles (07Aug00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+410 18 set_contact_vector 0 4 522 29 ActorNode::set_contact_vector 0 1 140 215
 ////////////////////////////////////////////////////////////////////
 //    Function : set_contact_vector
 //      Access : Public
@@ -1292,20 +1183,7 @@ AngularVectorForce::AngularVectorForce(LRotationf const &quat);
 AngularVectorForce::AngularVectorForce(float h, float p, float r);
 AngularVectorForce::AngularVectorForce(AngularVectorForce const &copy);
 
-421 8 set_quat 0 4 527 28 AngularVectorForce::set_quat 0 1 156 677
-// Filename: angularVectorForce.I
-// Created by:  charles (09Aug00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+421 8 set_quat 0 4 527 28 AngularVectorForce::set_quat 0 1 156 181
 ////////////////////////////////////////////////////////////////////
 // Function : set_quat
 //   Access : public
@@ -1348,20 +1226,7 @@ static TypeHandle AngularVectorForce::get_class_type(void);
 55
 ForceNode::ForceNode(basic_string< char > const &name);
 
-426 5 clear 0 4 528 16 ForceNode::clear 0 1 161 667
-// Filename: forceNode.I
-// Created by:  charles (02Aug00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+426 5 clear 0 4 528 16 ForceNode::clear 0 1 161 180
 ////////////////////////////////////////////////////////////////////
 //  Function : clear
 //    Access : public
@@ -1458,20 +1323,7 @@ static TypeHandle ForceNode::get_class_type(void);
 LinearControlForce::LinearControlForce(PhysicsObject const *po = (0), float a = (1), bool mass = (0));
 LinearControlForce::LinearControlForce(LinearControlForce const &copy);
 
-436 20 clear_physics_object 0 4 529 40 LinearControlForce::clear_physics_object 0 1 178 736
-// Filename: linearControlForce.I
-// Created by: Dave Schuyler (2006)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+436 20 clear_physics_object 0 4 529 40 LinearControlForce::clear_physics_object 0 1 178 238
 ////////////////////////////////////////////////////////////////////
 //    Function : clear_physics_object
 //      Access : Public
@@ -1559,20 +1411,7 @@ inline void LinearCylinderVortexForce::set_coef(float coef);
 61
 inline float LinearCylinderVortexForce::get_coef(void) const;
 
-445 10 set_radius 0 4 530 37 LinearCylinderVortexForce::set_radius 0 1 194 686
-// Filename: linearCylinderVortexForce.I
-// Created by:  charles (24Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+445 10 set_radius 0 4 530 37 LinearCylinderVortexForce::set_radius 0 1 194 183
 ////////////////////////////////////////////////////////////////////
 // Function : set_radius
 //   Access : public
@@ -1617,20 +1456,7 @@ static TypeHandle LinearCylinderVortexForce::get_class_type(void);
 53
 inline void LinearDistanceForce::set_radius(float r);
 
-451 16 set_falloff_type 0 4 531 37 LinearDistanceForce::set_falloff_type 0 1 200 741
-// Filename: linearDistanceForce.I
-// Created by:  charles (21Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+451 16 set_falloff_type 0 4 531 37 LinearDistanceForce::set_falloff_type 0 1 200 244
 ////////////////////////////////////////////////////////////////////
 //    Function : set_falloff_type
 //      Access : Public
@@ -1713,20 +1539,7 @@ LinearEulerIntegrator::LinearEulerIntegrator(void);
 LinearFrictionForce::LinearFrictionForce(float coef = (1), float a = (1), bool m = (0));
 LinearFrictionForce::LinearFrictionForce(LinearFrictionForce const &copy);
 
-460 8 set_coef 0 4 535 29 LinearFrictionForce::set_coef 0 1 213 678
-// Filename: linearFrictionForce.I
-// Created by:  charles (31Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+460 8 set_coef 0 4 535 29 LinearFrictionForce::set_coef 0 1 213 181
 ////////////////////////////////////////////////////////////////////
 // Function : set_coef
 //   Access : public
@@ -1860,20 +1673,7 @@ static TypeHandle LinearSourceForce::get_class_type(void);
 LinearUserDefinedForce::LinearUserDefinedForce(LVector3f (*proc)(PhysicsObject const *) = ((void *)(0)), float a = (1), bool md = (0));
 LinearUserDefinedForce::LinearUserDefinedForce(LinearUserDefinedForce const &copy);
 
-473 8 set_proc 0 4 541 32 LinearUserDefinedForce::set_proc 0 0 681
-// Filename: linearUserDefinedForce.I
-// Created by:  charles (31Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+473 8 set_proc 0 4 541 32 LinearUserDefinedForce::set_proc 0 0 181
 ////////////////////////////////////////////////////////////////////
 // Function : set_proc
 //   Access : public
@@ -1908,20 +1708,7 @@ LinearVectorForce::LinearVectorForce(LVector3f const &vec, float a = (1), bool m
 LinearVectorForce::LinearVectorForce(LinearVectorForce const &copy);
 LinearVectorForce::LinearVectorForce(float x = (0), float y = (0), float z = (0), float a = (1), bool mass = (0));
 
-476 10 set_vector 0 4 542 29 LinearVectorForce::set_vector 0 2 252 253 963
-// Filename: linearVectorForce.I
-// Created by:  charles (21Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+476 10 set_vector 0 4 542 29 LinearVectorForce::set_vector 0 2 252 253 468
 ////////////////////////////////////////////////////////////////////
 //    Function : set_vector
 //      Access : Public
@@ -1964,8 +1751,7 @@ PhysicsCollisionHandler::PhysicsCollisionHandler(void);
 78
 inline void PhysicsCollisionHandler::set_almost_stationary_speed(float speed);
 
-481 27 get_almost_stationary_speed 0 4 543 52 PhysicsCollisionHandler::get_almost_stationary_speed 0 1 258 48
-// These setters and getter are a bit of a hack:
+481 27 get_almost_stationary_speed 0 4 543 52 PhysicsCollisionHandler::get_almost_stationary_speed 0 1 258 0
 72
 inline float PhysicsCollisionHandler::get_almost_stationary_speed(void);
 
@@ -2026,20 +1812,7 @@ inline void PhysicsManager::attach_linear_integrator(LinearIntegrator *i);
 76
 inline void PhysicsManager::attach_angular_integrator(AngularIntegrator *i);
 
-491 15 attach_physical 0 4 545 31 PhysicsManager::attach_physical 0 1 267 747
-// Filename: physicsManager.I
-// Created by:  charles (14Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+491 15 attach_physical 0 4 545 31 PhysicsManager::attach_physical 0 1 267 255
 ////////////////////////////////////////////////////////////////////
 //    Function : attach_physical
 //      Access : Public
@@ -2048,7 +1821,9 @@ inline void PhysicsManager::attach_angular_integrator(AngularIntegrator *i);
 57
 inline void PhysicsManager::attach_physical(Physical *p);
 
-492 19 attach_physicalnode 0 4 545 35 PhysicsManager::attach_physicalnode 0 1 268 257
+492 19 attach_physicalnode 0 4 545 35 PhysicsManager::attach_physicalnode 0 1 268 295
+// use attach_physical_node instead.
+
 ////////////////////////////////////////////////////////////////////
 //    Function : attach_physicalnode
 //      Access : Public
@@ -2068,9 +1843,7 @@ inline void PhysicsManager::attach_physicalnode(PhysicalNode *p);
 66
 inline void PhysicsManager::attach_physical_node(PhysicalNode *p);
 
-494 16 add_linear_force 0 4 545 32 PhysicsManager::add_linear_force 0 1 270 303
-// use attach_physical_node instead.
-
+494 16 add_linear_force 0 4 545 32 PhysicsManager::add_linear_force 0 1 270 265
 ////////////////////////////////////////////////////////////////////
 //    Function : attach_linear_force
 //      Access : Public
@@ -2285,20 +2058,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //      Access : Public
 // Description : Process Flag Query
 //////////////////////////////////////////////////////////////////// 1 4 this 3 547  
-6 14 Dtool_1Scs7Zyt 0 4 7 550 0 14 Dtool_1Scs7Zyt 733 // Filename: physicsObject.I
-// Created by:  charles (13Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+6 14 Dtool_1Scs7Zyt 0 4 7 550 0 14 Dtool_1Scs7Zyt 242 ////////////////////////////////////////////////////////////////////
 //    Function : set_mass
 //      Access : Public
 // Description : Set the mass in slugs (or kilograms).
@@ -2511,11 +2271,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //       Access: Published
 //  Description:
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 577  
-44 14 Dtool_1ScsWCBo 0 6 42 576 0 14 Dtool_1ScsWCBo 248 ////////////////////////////////////////////////////////////////////
-//     Function: PhysicsObjectCollection::Copy Assignment Operator
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 576  4 copy 1 577  
+44 14 Dtool_1ScsWCBo 0 6 42 576 0 14 Dtool_1ScsWCBo 0 2 4 this 3 576  4 copy 1 577  
 45 14 Dtool_1Scs37uu 0 4 44 550 0 14 Dtool_1Scs37uu 286 ////////////////////////////////////////////////////////////////////
 //     Function: PhysicsObjectCollection::add_physics_object
 //       Access: Published
@@ -2578,13 +2334,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //       Access: Published
 //  Description: Returns the nth PhysicsObject in the collection.
 //////////////////////////////////////////////////////////////////// 2 4 this 3 577  5 index 1 579  
-55 14 Dtool_1ScsSyZT 0 7 54 546 0 14 Dtool_1ScsSyZT 411 ////////////////////////////////////////////////////////////////////
-//     Function: PhysicsObjectCollection::operator []
-//       Access: Published
-//  Description: Returns the nth PhysicsObject in the collection.  This is
-//               the same as get_physics_object(), but it may be a more
-//               convenient way to access it.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 577  5 index 1 579  
+55 14 Dtool_1ScsSyZT 0 7 54 546 0 14 Dtool_1ScsSyZT 0 2 4 this 3 577  5 index 1 579  
 56 14 Dtool_1Scs2SyP 0 6 55 579 0 14 Dtool_1Scs2SyP 373 ////////////////////////////////////////////////////////////////////
 //     Function: PhysicsObjectCollection::size
 //       Access: Published
@@ -2592,17 +2342,8 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //               collection.  This is the same thing as
 //               get_num_physics_objects().
 //////////////////////////////////////////////////////////////////// 1 4 this 3 577  
-57 14 Dtool_1ScsOZH9 0 6 56 576 0 14 Dtool_1ScsOZH9 284 ////////////////////////////////////////////////////////////////////
-//     Function: PhysicsObjectCollection::operator +=
-//       Access: Published
-//  Description: Appends the other list onto the end of this one.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 576  5 other 1 577  
-58 14 Dtool_1ScsyMtg 0 7 57 576 334 14 Dtool_1ScsyMtg 334 ////////////////////////////////////////////////////////////////////
-//     Function: PhysicsObjectCollection::operator +
-//       Access: Published
-//  Description: Returns a PhysicsObjectCollection representing the
-//               concatenation of the two lists.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 577  5 other 1 577  
+57 14 Dtool_1ScsOZH9 0 6 56 576 0 14 Dtool_1ScsOZH9 0 2 4 this 3 576  5 other 1 577  
+58 14 Dtool_1ScsyMtg 0 7 57 576 334 14 Dtool_1ScsyMtg 0 2 4 this 3 577  5 other 1 577  
 59 14 Dtool_1Scs8PTL 0 4 58 550 0 14 Dtool_1Scs8PTL 346 ////////////////////////////////////////////////////////////////////
 //     Function: PhysicsObjectCollection::output
 //       Access: Published
@@ -2630,20 +2371,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //      Access : Public
 //////////////////////////////////////////////////////////////////// 2 4 this 3 582  6 active 1 549  
 64 14 Dtool_1Scsw2t9 0 6 63 549 0 14 Dtool_1Scsw2t9 0 1 4 this 3 580  
-65 14 Dtool_1Scs_1U0 0 7 64 583 0 14 Dtool_1Scs_1U0 680 // Filename: baseForce.I
-// Created by:  charles (08Aug00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+65 14 Dtool_1Scs_1U0 0 7 64 583 0 14 Dtool_1Scs_1U0 193 ////////////////////////////////////////////////////////////////////
 //    Function : get_force_node
 //      Access : Public
 //////////////////////////////////////////////////////////////////// 1 4 this 3 580  
@@ -2965,20 +2693,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //       Access : public
 //  Description : default constructor
 //////////////////////////////////////////////////////////////////// 1 4 name 1 570  
-126 14 Dtool_1ScsvC_W 0 4 115 550 0 14 Dtool_1ScsvC_W 670 // Filename: physicalNode.I
-// Created by:  charles (01Aug00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+126 14 Dtool_1ScsvC_W 0 4 115 550 0 14 Dtool_1ScsvC_W 180 ////////////////////////////////////////////////////////////////////
 //  Function : clear
 //    Access : public
 //////////////////////////////////////////////////////////////////// 1 4 this 3 596  
@@ -3038,20 +2753,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //  Description : Constructor
 //////////////////////////////////////////////////////////////////// 0 
 139 14 Dtool_1ScsDMRz 0 7 125 546 0 14 Dtool_1ScsDMRz 0 1 4 this 3 601  
-140 14 Dtool_1ScsYUGc 0 4 126 550 0 14 Dtool_1ScsYUGc 702 // Filename: actorNode.I
-// Created by:  charles (07Aug00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+140 14 Dtool_1ScsYUGc 0 4 126 550 0 14 Dtool_1ScsYUGc 215 ////////////////////////////////////////////////////////////////////
 //    Function : set_contact_vector
 //      Access : Public
 // Description : 
@@ -3132,20 +2834,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //      Access : public
 // Description : constructor
 //////////////////////////////////////////////////////////////////// 3 1 h 1 551  1 p 1 551  1 r 1 551  
-156 14 Dtool_1ScszyUf 0 4 142 550 0 14 Dtool_1ScszyUf 677 // Filename: angularVectorForce.I
-// Created by:  charles (09Aug00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+156 14 Dtool_1ScszyUf 0 4 142 550 0 14 Dtool_1ScszyUf 181 ////////////////////////////////////////////////////////////////////
 // Function : set_quat
 //   Access : public
 //////////////////////////////////////////////////////////////////// 2 4 this 3 607  4 quat 1 560  
@@ -3163,20 +2852,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //       Access : public
 //  Description : default constructor
 //////////////////////////////////////////////////////////////////// 1 4 name 1 570  
-161 14 Dtool_1ScscXNM 0 4 148 550 0 14 Dtool_1ScscXNM 667 // Filename: forceNode.I
-// Created by:  charles (02Aug00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+161 14 Dtool_1ScscXNM 0 4 148 550 0 14 Dtool_1ScscXNM 180 ////////////////////////////////////////////////////////////////////
 //  Function : clear
 //    Access : public
 //////////////////////////////////////////////////////////////////// 1 4 this 3 583  
@@ -3257,20 +2933,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //       Access : Public
 //  Description : Vector Constructor
 //////////////////////////////////////////////////////////////////// 0 
-178 14 Dtool_1ScsBcIH 0 4 159 550 0 14 Dtool_1ScsBcIH 736 // Filename: linearControlForce.I
-// Created by: Dave Schuyler (2006)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+178 14 Dtool_1ScsBcIH 0 4 159 550 0 14 Dtool_1ScsBcIH 238 ////////////////////////////////////////////////////////////////////
 //    Function : clear_physics_object
 //      Access : Public
 // Description : encapsulating wrapper
@@ -3344,20 +3007,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 // Function : get_coef
 //   Access : public
 //////////////////////////////////////////////////////////////////// 1 4 this 3 613  
-194 14 Dtool_1Scseg2d 0 4 169 550 0 14 Dtool_1Scseg2d 686 // Filename: linearCylinderVortexForce.I
-// Created by:  charles (24Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+194 14 Dtool_1Scseg2d 0 4 169 550 0 14 Dtool_1Scseg2d 183 ////////////////////////////////////////////////////////////////////
 // Function : set_radius
 //   Access : public
 //////////////////////////////////////////////////////////////////// 2 4 this 3 615  6 radius 1 551  
@@ -3379,20 +3029,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //      Access : Public
 // Description : set the radius
 //////////////////////////////////////////////////////////////////// 2 4 this 3 616  1 r 1 551  
-200 14 Dtool_1ScssEHZ 0 4 177 550 0 14 Dtool_1ScssEHZ 741 // Filename: linearDistanceForce.I
-// Created by:  charles (21Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+200 14 Dtool_1ScssEHZ 0 4 177 550 0 14 Dtool_1ScssEHZ 244 ////////////////////////////////////////////////////////////////////
 //    Function : set_falloff_type
 //      Access : Public
 // Description : falloff_type encapsulating wrap
@@ -3453,20 +3090,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //      Access : Public
 // Description : Constructor
 //////////////////////////////////////////////////////////////////// 0 
-213 14 Dtool_1Scs6iox 0 4 189 550 0 14 Dtool_1Scs6iox 678 // Filename: linearFrictionForce.I
-// Created by:  charles (31Jul00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+213 14 Dtool_1Scs6iox 0 4 189 550 0 14 Dtool_1Scs6iox 181 ////////////////////////////////////////////////////////////////////
 // Function : set_coef
 //   Access : public
 //////////////////////////////////////////////////////////////////// 2 4 this 3 622  4 coef 1 551  
@@ -3631,20 +3255,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //       Access : Public
 //  Description : Default/Piecewise constructor
 //////////////////////////////////////////////////////////////////// 0 
-252 14 Dtool_1Scslk_l 0 4 212 550 0 14 Dtool_1Scslk_l 723 // Filename: linearVectorForce.I
-// Created by:  charles (21Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+252 14 Dtool_1Scslk_l 0 4 212 550 0 14 Dtool_1Scslk_l 228 ////////////////////////////////////////////////////////////////////
 //    Function : set_vector
 //      Access : Public
 // Description : encapsulating wrapper
@@ -3666,7 +3277,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //  Description:
 //////////////////////////////////////////////////////////////////// 0 
 257 14 Dtool_1ScsbPFH 0 4 218 550 0 14 Dtool_1ScsbPFH 48 // These setters and getter are a bit of a hack: 2 4 this 3 641  5 speed 1 551  
-258 14 Dtool_1Scskpbd 0 6 219 551 0 14 Dtool_1Scskpbd 48 // These setters and getter are a bit of a hack: 1 4 this 3 641  
+258 14 Dtool_1Scskpbd 0 6 219 551 0 14 Dtool_1Scskpbd 0 1 4 this 3 641  
 259 14 Dtool_1ScsnSD1 0 4 220 550 0 14 Dtool_1ScsnSD1 0 2 4 this 3 641  4 coef 1 551  
 260 14 Dtool_1ScsDybx 0 6 221 551 0 14 Dtool_1ScsDybx 0 1 4 this 3 641  
 261 14 Dtool_1Scs_3NV 0 4 222 550 0 14 Dtool_1Scs_3NV 0 2 4 this 3 641  4 coef 1 551  
@@ -3688,20 +3299,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //      Access : Public
 // Description : Hooks an angular integrator into the manager
 //////////////////////////////////////////////////////////////////// 2 4 this 3 595  1 i 1 643  
-267 14 Dtool_1ScsWVm7 0 4 230 550 0 14 Dtool_1ScsWVm7 747 // Filename: physicsManager.I
-// Created by:  charles (14Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+267 14 Dtool_1ScsWVm7 0 4 230 550 0 14 Dtool_1ScsWVm7 255 ////////////////////////////////////////////////////////////////////
 //    Function : attach_physical
 //      Access : Public
 // Description : Registers a Physical class with the manager
@@ -3913,7 +3511,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 
 520 12 PhysicalNode 0 75777 12 PhysicalNode 12 PhysicalNode 0 0 0 1 399 0 0 8 400 401 402 403 404 405 406 407 1 650 0 1 0 521 0 0 0 0 0
 
-521 9 PandaNode 0 2049 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 0 0 0 0 0 374
+521 9 PandaNode 0 2049 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 3 651 652 653 0 0 0 0 374
 ////////////////////////////////////////////////////////////////////
 //       Class : PandaNode
 // Description : A basic node of the scene graph or data graph.  This
@@ -3957,7 +3555,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 //               equivalent of simple vector force.
 ////////////////////////////////////////////////////////////////////
 
-528 9 ForceNode 0 75777 9 ForceNode 9 ForceNode 0 0 0 1 425 0 0 9 426 427 428 429 430 431 432 433 434 1 651 0 1 0 521 0 0 0 0 420
+528 9 ForceNode 0 75777 9 ForceNode 9 ForceNode 0 0 0 1 425 0 0 9 426 427 428 429 430 431 432 433 434 1 654 0 1 0 521 0 0 0 0 420
 ////////////////////////////////////////////////////////////////////
 //        Class : ForceNode
 //  Description : A force that lives in the scene graph and is
@@ -3995,7 +3593,10 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 // Description : Pure virtual class for sinks and sources
 ////////////////////////////////////////////////////////////////////
 
-532 11 FalloffType 0 794624 32 LinearDistanceForce::FalloffType 32 LinearDistanceForce::FalloffType 531 0 0 0 0 0 0 0 0 0 3 13 FT_ONE_OVER_R 34 LinearDistanceForce::FT_ONE_OVER_R 0 21 FT_ONE_OVER_R_SQUARED 42 LinearDistanceForce::FT_ONE_OVER_R_SQUARED 1 19 FT_ONE_OVER_R_CUBED 40 LinearDistanceForce::FT_ONE_OVER_R_CUBED 2 0 0
+532 11 FalloffType 0 794624 32 LinearDistanceForce::FalloffType 32 LinearDistanceForce::FalloffType 531 0 0 0 0 0 0 0 0 0 3 13 FT_ONE_OVER_R 34 LinearDistanceForce::FT_ONE_OVER_R 0
+0 21 FT_ONE_OVER_R_SQUARED 42 LinearDistanceForce::FT_ONE_OVER_R_SQUARED 0
+1 19 FT_ONE_OVER_R_CUBED 40 LinearDistanceForce::FT_ONE_OVER_R_CUBED 0
+2 0 0
 
 533 16 LinearIntegrator 0 75777 16 LinearIntegrator 16 LinearIntegrator 0 0 0 0 0 0 0 0 0 1 0 523 0 0 0 0 332
 ////////////////////////////////////////////////////////////////////
@@ -4099,20 +3700,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 
 553 14 LPoint3f const 0 8832 14 LPoint3f const 14 LPoint3f const 0 0 554 0 0 0 0 0 0 0 0 0 0
 
-554 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 1083
-// Filename: lpoint3_src.h
-// Created by:  drose (25Sep99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+554 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 596
 ////////////////////////////////////////////////////////////////////
 //       Class : LPoint3
 // Description : This is a three-component point in space (as opposed
@@ -4130,20 +3718,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 
 557 15 LVector3f const 0 8832 15 LVector3f const 15 LVector3f const 0 0 558 0 0 0 0 0 0 0 0 0 0
 
-558 9 LVector3f 0 2048 9 LVector3f 9 LVector3f 0 0 0 0 0 0 0 0 0 0 0 0 1086
-// Filename: lvector3_src.h
-// Created by:  drose (24Sep99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+558 9 LVector3f 0 2048 9 LVector3f 9 LVector3f 0 0 0 0 0 0 0 0 0 0 0 0 598
 ////////////////////////////////////////////////////////////////////
 //       Class : LVector3
 // Description : This is a three-component vector distance (as opposed
@@ -4161,20 +3736,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 
 561 16 LRotationf const 0 8832 16 LRotationf const 16 LRotationf const 0 0 562 0 0 0 0 0 0 0 0 0 0
 
-562 10 LRotationf 0 2048 10 LRotationf 10 LRotationf 0 0 0 0 0 0 0 0 0 0 0 0 738
-// Filename: lrotation_src.h
-// Created by:  frang, charles (23Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+562 10 LRotationf 0 2048 10 LRotationf 10 LRotationf 0 0 0 0 0 0 0 0 0 0 0 0 240
 ////////////////////////////////////////////////////////////////////////
 //       Class : LRotation
 // Description : This is a unit quaternion representing a rotation.
@@ -4194,7 +3756,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 
 567 12 LRotationf * 0 8576 12 LRotationf * 12 LRotationf * 0 0 562 0 0 0 0 0 0 0 0 0 0
 
-568 9 LMatrix4f 0 2048 9 LMatrix4f 9 LMatrix4f 0 0 0 0 0 0 0 3 652 653 654 0 0 0 0 215
+568 9 LMatrix4f 0 2048 9 LMatrix4f 9 LMatrix4f 0 0 0 0 0 0 0 3 655 656 657 0 0 0 0 215
 ////////////////////////////////////////////////////////////////////
 //       Class : LMatrix4
 // Description : This is a 4-by-4 transform matrix.
@@ -4248,86 +3810,7 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 
 583 11 ForceNode * 0 8576 11 ForceNode * 11 ForceNode * 0 0 528 0 0 0 0 0 0 0 0 0 0
 
-584 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 655 656 0 0 0 0 4938
-//
-// A NodePath is the fundamental unit of high-level interaction with
-// the scene graph.  It encapsulates the complete path down to a node
-// from some other node, usually the root of the scene graph.  This is
-// used to resolve ambiguities associated with instancing.
-//
-// NodePath also contains a number of handy high-level methods for
-// common scene-graph manipulations, such as reparenting, and common
-// state changes, such as repositioning.
-//
-// There are also a number of NodePath methods for finding nodes deep
-// within the tree by name or by type.  These take a path string,
-// which at its simplest consists of a series of node names separated
-// by slashes, like a directory pathname.
-//
-// Each component of the path string may optionally consist of one of
-// the following special names, instead of a node name:
-//
-//   *          -- matches exactly one node, with any name.
-//   **         -- matches any sequence of zero or more nodes.
-//   +typename  -- matches any node that is or derives from the given type.
-//   -typename  -- matches any node that is the given type exactly.
-//   =tag       -- matches any node that has the indicated tag.
-//   =tag=value -- matches any node whose tag matches the indicated value.
-//
-// Furthermore, a node name may itself contain standard filename
-// globbing characters, like *, ?, and [a-z], that will be accepted as
-// a partial match.  (In fact, the '*' special name may be seen as
-// just a special case of this.)  The globbing characters may not be
-// used with the typename matches or with tag matches, but they may
-// be used to match a tag's value in the =tag=value syntax.
-//
-// The special characters "@@", appearing at the beginning of a node
-// name, indicate a stashed node.  Normally, stashed nodes are not
-// returned by a find (but see the special flags, below), but a
-// stashed node may be found if it is explicitly named with its
-// leading @@ characters.  By extension, "@@*" may be used to identify
-// any stashed node.
-//
-// Examples:
-//
-// "room//graph" will look for a node named "graph", which is a child
-// of an unnamed node, which is a child of a node named "room", which
-// is a child of the starting path.
-//
-// "**/red*" will look for any node anywhere in the tree (below the
-// starting path) with a name that begins with "red".
-//
-// "**/+PartBundleNode/**/head" will look for a node named "head",
-// somewhere below a PartBundleNode anywhere in the tree.
-//
-//
-// The search is always potentially ambiguous, even if the special
-// wildcard operators are not used, because there may be multiple
-// nodes in the tree with the same name.  In general, in the case of
-// an ambiguity, the shortest path is preferred; when a method (such
-// as extend_by) must choose only only one of several possible paths,
-// it will choose the shortest available; on the other hand, when a
-// method (such as find_all_matches) is to return all of the matching
-// paths, it will sort them so that the shortest paths appear first in
-// the output.
-//
-//
-// Special flags.  The entire string may optionally be followed by the
-// ";" character, followed by one or more of the following special
-// control flags, with no intervening spaces or punctuation:
-//
-//    -h    Do not return hidden nodes.
-//    +h    Do return hidden nodes.
-//    -s    Do not return stashed nodes unless explicitly referenced with @@.
-//    +s    Return stashed nodes even without any explicit @@ characters.
-//    -i    Node name comparisons are not case insensitive: case must match
-//          exactly.
-//    +i    Node name comparisons are case insensitive: case is not important.
-//          This affects matches against the node name only; node type
-//          and tag strings are always case sensitive.
-//
-// The default flags are +h-s-i.
-//
+584 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 658 659 0 0 0 0 1139
 ////////////////////////////////////////////////////////////////////
 //       Class : NodePath
 // Description : NodePath is the fundamental system for disambiguating
@@ -4475,14 +3958,17 @@ virtual void PhysicsManager::debug_output(ostream &out, unsigned int indent = (0
 
 0
 0
-10
+13
 647 0 0 40 19 get_physics_objects 23 get_num_physics_objects 18 get_physics_object 
 648 0 0 85 17 get_linear_forces 21 get_num_linear_forces 16 get_linear_force 
 649 0 0 85 18 get_angular_forces 22 get_num_angular_forces 17 get_angular_force 
 650 0 0 112 13 get_physicals 17 get_num_physicals 12 get_physical 
-651 0 0 146 10 get_forces 14 get_num_forces 9 get_force 
-652 0 0 306 8 get_rows 4 size 7 get_row 
-653 0 0 306 8 get_cols 4 size 7 get_col 
-654 0 0 306 9 get_row3s 4 size 8 get_row3 
-655 0 0 356 9 get_nodes 13 get_num_nodes 8 get_node 
-656 0 0 356 13 get_ancestors 13 get_num_nodes 12 get_ancestor 
+651 0 0 113 11 get_parents 15 get_num_parents 10 get_parent 
+652 0 0 113 12 get_children 16 get_num_children 9 get_child 
+653 0 0 113 11 get_stashed 15 get_num_stashed 11 get_stashed 
+654 0 0 146 10 get_forces 14 get_num_forces 9 get_force 
+655 0 0 306 8 get_rows 4 size 7 get_row 
+656 0 0 306 8 get_cols 4 size 7 get_col 
+657 0 0 306 9 get_row3s 4 size 8 get_row3 
+658 0 0 356 9 get_nodes 13 get_num_nodes 8 get_node 
+659 0 0 356 13 get_ancestors 13 get_num_nodes 12 get_ancestor 

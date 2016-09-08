@@ -1,5 +1,5 @@
-1412102982
-2 2
+1422501661
+2 3
 9 libp3char 4 uMZI 12 panda3d.core 
 45
 48 14 CharacterJoint 0 4 93 30 CharacterJoint::CharacterJoint 0 1 1 715
@@ -160,20 +160,7 @@ void CharacterJoint::clear_local_transforms(void);
 62
 NodePathCollection CharacterJoint::get_local_transforms(void);
 
-59 13 get_transform 0 4 93 29 CharacterJoint::get_transform 0 2 12 13 1071
-// Filename: characterJoint.I
-// Created by:  drose (20Nov08)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+59 13 get_transform 0 4 93 29 CharacterJoint::get_transform 0 2 12 13 581
 ////////////////////////////////////////////////////////////////////
 //     Function: CharacterJoint::get_transform
 //       Access: Published
@@ -276,20 +263,7 @@ static TypeHandle CharacterSlider::get_class_type(void);
 75
 CharacterVertexSlider::CharacterVertexSlider(CharacterSlider *char_slider);
 
-68 15 get_char_slider 0 4 97 38 CharacterVertexSlider::get_char_slider 0 1 22 834
-// Filename: characterVertexSlider.I
-// Created by:  drose (28Mar05)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+68 15 get_char_slider 0 4 97 38 CharacterVertexSlider::get_char_slider 0 1 22 337
 ////////////////////////////////////////////////////////////////////
 //     Function: CharacterVertexSlider::get_char_slider
 //       Access: Published
@@ -321,20 +295,7 @@ static TypeHandle CharacterVertexSlider::get_class_type(void);
 66
 JointVertexTransform::JointVertexTransform(CharacterJoint *joint);
 
-71 9 get_joint 0 4 99 31 JointVertexTransform::get_joint 0 1 25 806
-// Filename: jointVertexTransform.I
-// Created by:  drose (24Mar05)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+71 9 get_joint 0 4 99 31 JointVertexTransform::get_joint 0 1 25 310
 ////////////////////////////////////////////////////////////////////
 //     Function: JointVertexTransform::get_joint
 //       Access: Published
@@ -717,20 +678,7 @@ CharacterJointEffect::~CharacterJointEffect(void);
 //               even though the local transforms are actually a list of
 //               PandaNodes.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 115  
-12 14 Dtool_uMZI2pbx 0 6 14 112 0 14 Dtool_uMZI2pbx 760 // Filename: characterJoint.I
-// Created by:  drose (20Nov08)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+12 14 Dtool_uMZI2pbx 0 6 14 112 0 14 Dtool_uMZI2pbx 270 ////////////////////////////////////////////////////////////////////
 //     Function: CharacterJoint::get_transform
 //       Access: Published
 //  Description: Returns the transform matrix of the joint
@@ -779,20 +727,7 @@ CharacterJointEffect::~CharacterJointEffect(void);
 //               the indicated joint's coordinate space, into the
 //               other indicated joint's space.
 //////////////////////////////////////////////////////////////////// 1 11 char_slider 1 130  
-22 14 Dtool_uMZIGzr0 0 7 27 137 0 14 Dtool_uMZIGzr0 834 // Filename: characterVertexSlider.I
-// Created by:  drose (28Mar05)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+22 14 Dtool_uMZIGzr0 0 7 27 137 0 14 Dtool_uMZIGzr0 337 ////////////////////////////////////////////////////////////////////
 //     Function: CharacterVertexSlider::get_char_slider
 //       Access: Published
 //  Description: Returns the CharacterSlider object for which this
@@ -806,20 +741,7 @@ CharacterJointEffect::~CharacterJointEffect(void);
 //               the indicated joint's coordinate space, into the
 //               other indicated joint's space.
 //////////////////////////////////////////////////////////////////// 1 5 joint 1 115  
-25 14 Dtool_uMZIewMf 0 7 32 119 0 14 Dtool_uMZIewMf 806 // Filename: jointVertexTransform.I
-// Created by:  drose (24Mar05)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+25 14 Dtool_uMZIewMf 0 7 32 119 0 14 Dtool_uMZIewMf 310 ////////////////////////////////////////////////////////////////////
 //     Function: JointVertexTransform::get_joint
 //       Access: Published
 //  Description: Returns the joint for which this object returns the
@@ -1189,7 +1111,7 @@ CharacterJointEffect::~CharacterJointEffect(void);
 
 116 11 PandaNode * 0 8576 11 PandaNode * 11 PandaNode * 0 0 117 0 0 0 0 0 0 0 0 0 0
 
-117 9 PandaNode 0 2048 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 0 0 0 0 0 374
+117 9 PandaNode 0 2048 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 3 166 167 168 0 0 0 0 374
 ////////////////////////////////////////////////////////////////////
 //       Class : PandaNode
 // Description : A basic node of the scene graph or data graph.  This
@@ -1205,7 +1127,7 @@ CharacterJointEffect::~CharacterJointEffect(void);
 
 121 4 void 0 8194 4 void 4 void 0 6 0 0 0 0 0 0 0 0 0 0 0
 
-122 18 NodePathCollection 0 2048 18 NodePathCollection 18 NodePathCollection 0 0 0 0 0 0 0 1 166 0 0 0 0 403
+122 18 NodePathCollection 0 2048 18 NodePathCollection 18 NodePathCollection 0 0 0 0 0 0 0 1 169 0 0 0 0 403
 ////////////////////////////////////////////////////////////////////
 //       Class : NodePathCollection
 // Description : This is a set of zero or more NodePaths.  It's handy
@@ -1334,20 +1256,7 @@ CharacterJointEffect::~CharacterJointEffect(void);
 
 148 14 LPoint3f const 0 8832 14 LPoint3f const 14 LPoint3f const 0 0 149 0 0 0 0 0 0 0 0 0 0
 
-149 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 1083
-// Filename: lpoint3_src.h
-// Created by:  drose (25Sep99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+149 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 596
 ////////////////////////////////////////////////////////////////////
 //       Class : LPoint3
 // Description : This is a three-component point in space (as opposed
@@ -1379,7 +1288,7 @@ CharacterJointEffect::~CharacterJointEffect(void);
 
 0
 0
-8
+11
 159 0 0 35 11 get_bundles 15 get_num_bundles 10 get_bundle 
 160 0 0 35 18 get_bundle_handles 15 get_num_bundles 17 get_bundle_handle 
 161 0 0 50 9 get_nodes 13 get_num_nodes 8 get_node 
@@ -1387,4 +1296,7 @@ CharacterJointEffect::~CharacterJointEffect(void);
 163 0 0 68 8 get_rows 4 size 7 get_row 
 164 0 0 68 8 get_cols 4 size 7 get_col 
 165 0 0 68 9 get_row3s 4 size 8 get_row3 
-166 0 0 80 9 get_paths 13 get_num_paths 8 get_path 
+166 0 0 72 11 get_parents 15 get_num_parents 10 get_parent 
+167 0 0 72 12 get_children 16 get_num_children 9 get_child 
+168 0 0 72 11 get_stashed 15 get_num_stashed 11 get_stashed 
+169 0 0 80 9 get_paths 13 get_num_paths 8 get_path 

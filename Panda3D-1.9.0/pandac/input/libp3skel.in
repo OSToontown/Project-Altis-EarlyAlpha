@@ -1,21 +1,8 @@
-1412104444
-2 2
+1422503566
+2 3
 9 libp3skel 4 5lWe 12 panda3d.skel 
 12
-12 9 BasicSkel 0 4 24 20 BasicSkel::BasicSkel 0 1 1 703
-// Filename: basicSkel.I
-// Created by: jyelon (31Jan07)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+12 9 BasicSkel 0 4 24 20 BasicSkel::BasicSkel 0 1 1 218
 ////////////////////////////////////////////////////////////////////
 //     Function: BasicSkel::Constructor
 //       Access: Public
@@ -44,9 +31,7 @@ inline BasicSkel::~BasicSkel(void);
 40
 inline void BasicSkel::set_value(int n);
 
-15 9 get_value 0 4 24 20 BasicSkel::get_value 0 1 3 322
-// These inline functions allow you to get and set _value.
-
+15 9 get_value 0 4 24 20 BasicSkel::get_value 0 1 3 262
 ////////////////////////////////////////////////////////////////////
 //     Function: BasicSkel::get_value
 //       Access: Public
@@ -68,9 +53,7 @@ inline int BasicSkel::get_value(void);
 37
 void BasicSkel::set_value_alt(int n);
 
-17 13 get_value_alt 0 4 24 24 BasicSkel::get_value_alt 0 1 5 430
-// These do the same thing as the functions above.
-
+17 13 get_value_alt 0 4 24 24 BasicSkel::get_value_alt 0 1 5 378
 ////////////////////////////////////////////////////////////////////
 //     Function: BasicSkel::get_value
 //       Access: Public
@@ -81,20 +64,7 @@ void BasicSkel::set_value_alt(int n);
 35
 int BasicSkel::get_value_alt(void);
 
-18 9 TypedSkel 0 4 25 20 TypedSkel::TypedSkel 0 1 6 703
-// Filename: typedSkel.I
-// Created by: jyelon (31Jan07)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+18 9 TypedSkel 0 4 25 20 TypedSkel::TypedSkel 0 1 6 218
 ////////////////////////////////////////////////////////////////////
 //     Function: TypedSkel::Constructor
 //       Access: Public
@@ -114,9 +84,7 @@ inline TypedSkel::TypedSkel(void);
 40
 inline void TypedSkel::set_value(int n);
 
-20 9 get_value 0 4 25 20 TypedSkel::get_value 0 1 8 322
-// These inline functions allow you to get and set _value.
-
+20 9 get_value 0 4 25 20 TypedSkel::get_value 0 1 8 262
 ////////////////////////////////////////////////////////////////////
 //     Function: TypedSkel::get_value
 //       Access: Public
@@ -138,9 +106,7 @@ inline int TypedSkel::get_value(void);
 37
 void TypedSkel::set_value_alt(int n);
 
-22 13 get_value_alt 0 4 25 24 TypedSkel::get_value_alt 0 1 10 430
-// These do the same thing as the functions above.
-
+22 13 get_value_alt 0 4 25 24 TypedSkel::get_value_alt 0 1 10 378
 ////////////////////////////////////////////////////////////////////
 //     Function: TypedSkel::get_value
 //       Access: Public
@@ -156,20 +122,7 @@ int TypedSkel::get_value_alt(void);
 static TypeHandle TypedSkel::get_class_type(void);
 
 11
-1 14 Dtool_5lWerD4O 0 7 2 27 13 14 Dtool_5lWerD4O 703 // Filename: basicSkel.I
-// Created by: jyelon (31Jan07)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+1 14 Dtool_5lWerD4O 0 7 2 27 13 14 Dtool_5lWerD4O 218 ////////////////////////////////////////////////////////////////////
 //     Function: BasicSkel::Constructor
 //       Access: Public
 //  Description:
@@ -198,20 +151,7 @@ static TypeHandle TypedSkel::get_class_type(void);
 //               Exact same functionality as get_value, except
 //               that this isn't an inline function.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 27  
-6 14 Dtool_5lWeju_v 0 7 10 30 0 14 Dtool_5lWeju_v 703 // Filename: typedSkel.I
-// Created by: jyelon (31Jan07)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+6 14 Dtool_5lWeju_v 0 7 10 30 0 14 Dtool_5lWeju_v 218 ////////////////////////////////////////////////////////////////////
 //     Function: TypedSkel::Constructor
 //       Access: Public
 //  Description:
@@ -264,7 +204,7 @@ static TypeHandle TypedSkel::get_class_type(void);
 //               "Adding C++ Classes to Panda."
 ////////////////////////////////////////////////////////////////////
 
-26 11 TypedObject 0 2049 11 TypedObject 11 TypedObject 0 0 0 0 0 0 0 0 0 0 0 0 3666
+26 11 TypedObject 0 2049 11 TypedObject 11 TypedObject 0 0 0 0 0 0 0 0 0 0 0 0 3561
 ////////////////////////////////////////////////////////////////////
 //       Class : TypedObject
 // Description : This is an abstract class that all classes which
@@ -274,7 +214,7 @@ static TypeHandle TypedSkel::get_class_type(void);
 //               return the specific type of the derived class.
 //               Inheriting from this automatically provides support
 //               for is_of_type() and is_exact_type().
-//               
+//
 //               All classes that inherit directly or indirectly from
 //               TypedObject should redefine get_type() and
 //               force_init_type(), as shown below.  Some classes that
@@ -286,7 +226,7 @@ static TypeHandle TypedSkel::get_class_type(void);
 //               do not inherit from TypedObject need not define the
 //               virtual functions get_type() and force_init_type()
 //               (or any other virtual functions).
-//               
+//
 //               There is a specific layout for defining the
 //               overrides from this class.  Keeping the definitions
 //               formatted just like these examples will allow
@@ -295,10 +235,10 @@ static TypeHandle TypedSkel::get_class_type(void);
 //               rearranging the braces or the order of the functions
 //               unless you're ready to change them in every file all
 //               at once.
-//               
+//
 //               What follows are some examples that can be used in
 //               new classes that you create.
-//               
+//
 //               @par In the class definition (.h file):
 //               @code
 //               public:
@@ -318,16 +258,16 @@ static TypeHandle TypedSkel::get_class_type(void);
 //                   return get_class_type();
 //                 }
 //                 virtual TypeHandle force_init_type() {init_type(); return get_class_type();}
-//               
+//
 //               private:
 //                 static TypeHandle _type_handle;
 //               @endcode
-//               
+//
 //               @par In the class .cxx file:
 //               @code
 //               TypeHandle <<<ThisClassStringName>>>::_type_handle;
 //               @endcode
-//               
+//
 //               @par In the class config_<<<PackageName>>>.cxx file:
 //               @code
 //               ConfigureFn(config_<<<PackageName>>>) {

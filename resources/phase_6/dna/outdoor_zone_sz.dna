@@ -1,33 +1,6 @@
 group "daisysGarden" [
  visgroup "6000:safe_zone" [
   vis [   "6000:safe_zone"   ]
-  group "fishing_pond_1" [
-   prop "npc_fisherman_origin_0" [
-    code [ "DCS" ]
-    pos [ -116 -48 0.025 ]
-    nhpr [ 340 0 0 ]
-   ]
-   prop "fishing_spot_DNARoot" [
-    code [ "fishing_spot" ]
-    pos [ -115.0 -32.4 -0.025 ]
-    nhpr [ 30 0 0 ]
-   ]
-   prop "fishing_spot_DNARoot" [
-    code [ "fishing_spot" ]
-    pos [ -110.0 -25.8 0.025 ]
-    nhpr [ 60 0 0 ]
-   ]
-   prop "fishing_spot_DNARoot" [
-    code [ "fishing_spot" ]
-    pos [ -105.9 -17.0 0.025 ]
-    nhpr [ 65 0 0 ]
-   ]
-   prop "fishing_spot_DNARoot" [
-    code [ "fishing_spot" ]
-    pos [ -104.3 -9.3 0.025 ]
-    nhpr [ 90 0 0 ]
-   ]
-  ]
   group "props" [
    prop "outdoor_zone_DNARoot" [
     code [ "outdoor_zone" ]
@@ -216,94 +189,104 @@ group "daisysGarden" [
    ]
   ]
  ]
- prop "linktunnel_oz_6101_DNARoot" [
-    code [ "prop_outdoor_zone_entrance" ]
-    pos [ -47.8387 -143.259 0.1 ]
-    nhpr [ 180 0 0.1 ]
-    sign [
-     code [ "DD_sign2" ]
-     pos [ 0 0 0 ]
-     nhpr [ 0 0 -2.0 ]
-     scale [ 1.85 1 1.35 ]
-     baseline [
-      code [ "TT_Comedy" ]
-      color [ 0.439216 0.247059 0.184314 1 ]
-      pos [ 0 0 -0.3 ]
-      scale [ 1.1 1 1.7 ]
-      wiggle [ 7 ]
-      stumble [ 0.1 ]
-      text [
-       letters [ "W" ]
-      ]
-      text [
-       letters [ "a" ]
-      ]
-      text [
-       letters [ "l" ]
-      ]
-      text [
-       letters [ "n" ]
-      ]
-      text [
-       letters [ "u" ]
-      ]
-      text [
-       letters [ "t" ]
-      ]
-      text [
-       letters [ " " ]
-      ]
-      text [
-       letters [ "W" ]
-      ]
-      text [
-       letters [ "a" ]
-      ]
-      text [
-       letters [ "y" ]
-      ]
-     ]
-     baseline [
-      code [ "TT_Comedy" ]
-      color [ 0.439216 0.247059 0.184314 1 ]
-      pos [ 0 0 -1.2 ]
-      scale [ 1.2 1 1.2 ]
-      wiggle [ 3 ]
-      stomp [ 0.0367716 ]
-      text [
-       letters [ "A" ]
-      ]
-      text [
-       letters [ "c" ]
-      ]
-      text [
-       letters [ "o" ]
-      ]
-      text [
-       letters [ "r" ]
-      ]
-      text [
-       letters [ "n" ]
-      ]
-      text [
-       letters [ " " ]
-      ]
-      text [
-       letters [ "A" ]
-      ]
-      text [
-       letters [ "c" ]
-      ]
-      text [
-       letters [ "r" ]
-      ]
-      text [
-       letters [ "e" ]
-      ]
-      text [
-       letters [ "s" ]
-      ]
-     ]
+ prop "prop_outdoor_zone_entrance_DNARoot" [
+  code [ "prop_outdoor_zone_entrance" ]
+  pos [ -47.8387 -143.259 0.1 ]
+  nhpr [ 180 0 0.1 ]
+  sign [
+   code [ "DD_sign2" ]
+   pos [ 0 0 0 ]
+   nhpr [ 0 0 -2.0 ]
+   scale [ 1.85 1 1.35 ]
+   baseline [
+    code [ "TT_Comedy" ]
+    color [ 0.439216 0.247059 0.184314 1 ]
+    pos [ 0 0 -0.3 ]
+    scale [ 1.1 1 1.7 ]
+    wiggle [ 7 ]
+    stumble [ 0.1 ]
+	width [ 2 ]
+    text [
+     letters [ "C" ]
+    ]
+    text [
+     letters [ "H" ]
+    ]
+    text [
+     letters [ "E" ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+	text [
+     letters [ " " ]
+    ]
+	text [
+     letters [ " " ]
+    ]
+	text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
     ]
    ]
+   baseline [
+    code [ "TT_Comedy" ]
+    color [ 0.439216 0.247059 0.184314 1 ]
+    pos [ 0 0 -1.2 ]
+    scale [ 1.2 1 1.2 ]
+    wiggle [ 3 ]
+    stomp [ 0.0367716 ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
+    text [
+     letters [ " " ]
+    ]
    ]
+  ]
+ ]
+]

@@ -1,77 +1,21 @@
-1412104659
-2 2
+1422503889
+2 3
 11 libp3egg2pg 4 KLrJ 11 panda3d.egg 
 2
-6 13 load_egg_file 0 1 0 13 load_egg_file 0 3 1 2 3 568
-////////////////////////////////////////////////////////////////////
-//     Function: load_egg_file
-//  Description: A convenience function; the primary interface to this
-//               package.  Loads up the indicated egg file, and
-//               returns the root of a scene graph.  Returns NULL if
-//               the file cannot be read for some reason.
-//
-//               Also see the EggLoader class, which can exercise a
-//               bit more manual control over the loading process.
-////////////////////////////////////////////////////////////////////
-139
-PointerTo< PandaNode > load_egg_file(Filename const &filename, CoordinateSystem cs = (CS_default), BamCacheRecord *record = ((void *)(0)));
+6 13 load_egg_file 0 1 0 13 load_egg_file 0 3 1 2 3 0
+130
+PointerTo< PandaNode > load_egg_file(Filename const &filename, CoordinateSystem cs = (0), BamCacheRecord *record = ((void *)(0)));
 
-7 13 load_egg_data 0 1 0 13 load_egg_data 0 2 4 5 390
-////////////////////////////////////////////////////////////////////
-//     Function: load_egg_data
-//  Description: Another convenience function; works like
-//               load_egg_file() but starts from an already-filled
-//               EggData structure.  The structure is destroyed in the
-//               loading.
-////////////////////////////////////////////////////////////////////
-88
-PointerTo< PandaNode > load_egg_data(EggData *data, CoordinateSystem cs = (CS_default));
+7 13 load_egg_data 0 1 0 13 load_egg_data 0 2 4 5 0
+79
+PointerTo< PandaNode > load_egg_data(EggData *data, CoordinateSystem cs = (0));
 
 5
-1 14 Dtool_KLrJk3y9 0 7 1 15 0 14 Dtool_KLrJk3y9 568 ////////////////////////////////////////////////////////////////////
-//     Function: load_egg_file
-//  Description: A convenience function; the primary interface to this
-//               package.  Loads up the indicated egg file, and
-//               returns the root of a scene graph.  Returns NULL if
-//               the file cannot be read for some reason.
-//
-//               Also see the EggLoader class, which can exercise a
-//               bit more manual control over the loading process.
-//////////////////////////////////////////////////////////////////// 3 8 filename 1 9  2 cs 1 12  6 record 1 13  
-2 14 Dtool_KLrJEC4j 0 7 1 15 0 14 Dtool_KLrJEC4j 568 ////////////////////////////////////////////////////////////////////
-//     Function: load_egg_file
-//  Description: A convenience function; the primary interface to this
-//               package.  Loads up the indicated egg file, and
-//               returns the root of a scene graph.  Returns NULL if
-//               the file cannot be read for some reason.
-//
-//               Also see the EggLoader class, which can exercise a
-//               bit more manual control over the loading process.
-//////////////////////////////////////////////////////////////////// 2 8 filename 1 9  2 cs 1 12  
-3 14 Dtool_KLrJEO0s 0 7 1 15 0 14 Dtool_KLrJEO0s 568 ////////////////////////////////////////////////////////////////////
-//     Function: load_egg_file
-//  Description: A convenience function; the primary interface to this
-//               package.  Loads up the indicated egg file, and
-//               returns the root of a scene graph.  Returns NULL if
-//               the file cannot be read for some reason.
-//
-//               Also see the EggLoader class, which can exercise a
-//               bit more manual control over the loading process.
-//////////////////////////////////////////////////////////////////// 1 8 filename 1 9  
-4 14 Dtool_KLrJ8_Cl 0 7 2 15 0 14 Dtool_KLrJ8_Cl 390 ////////////////////////////////////////////////////////////////////
-//     Function: load_egg_data
-//  Description: Another convenience function; works like
-//               load_egg_file() but starts from an already-filled
-//               EggData structure.  The structure is destroyed in the
-//               loading.
-//////////////////////////////////////////////////////////////////// 2 4 data 1 16  2 cs 1 12  
-5 14 Dtool_KLrJz5qB 0 7 2 15 0 14 Dtool_KLrJz5qB 390 ////////////////////////////////////////////////////////////////////
-//     Function: load_egg_data
-//  Description: Another convenience function; works like
-//               load_egg_file() but starts from an already-filled
-//               EggData structure.  The structure is destroyed in the
-//               loading.
-//////////////////////////////////////////////////////////////////// 1 4 data 1 16  
+1 14 Dtool_KLrJk3y9 0 7 1 15 0 14 Dtool_KLrJk3y9 0 3 8 filename 1 9  2 cs 1 12  6 record 1 13  
+2 14 Dtool_KLrJEC4j 0 7 1 15 0 14 Dtool_KLrJEC4j 0 2 8 filename 1 9  2 cs 1 12  
+3 14 Dtool_KLrJEO0s 0 7 1 15 0 14 Dtool_KLrJEO0s 0 1 8 filename 1 9  
+4 14 Dtool_KLrJ8_Cl 0 7 2 15 0 14 Dtool_KLrJ8_Cl 0 2 4 data 1 16  2 cs 1 12  
+5 14 Dtool_KLrJz5qB 0 7 2 15 0 14 Dtool_KLrJz5qB 0 1 4 data 1 16  
 10
 8 9 PandaNode 0 2048 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 0 0 0 0 0 374
 ////////////////////////////////////////////////////////////////////
@@ -102,7 +46,20 @@ PointerTo< PandaNode > load_egg_data(EggData *data, CoordinateSystem cs = (CS_de
 //               fstream for reading or writing.
 ////////////////////////////////////////////////////////////////////
 
-12 16 CoordinateSystem 0 532480 16 CoordinateSystem 16 CoordinateSystem 0 0 0 0 0 0 0 0 0 0 6 10 CS_default 10 CS_default 0 12 CS_zup_right 12 CS_zup_right 1 12 CS_yup_right 12 CS_yup_right 2 11 CS_zup_left 11 CS_zup_left 3 11 CS_yup_left 11 CS_yup_left 4 10 CS_invalid 10 CS_invalid 5 0 0
+12 16 CoordinateSystem 0 532480 16 CoordinateSystem 16 CoordinateSystem 0 0 0 0 0 0 0 0 0 0 6 10 CS_default 10 CS_default 213
+// The CS_default entry does not refer to a particular coordinate
+// system, but rather to the value stored in
+// default_coordinate_system, which in turn is loaded from the
+// config variable "coordinate-system".
+0 12 CS_zup_right 12 CS_zup_right 0
+1 12 CS_yup_right 12 CS_yup_right 0
+2 11 CS_zup_left 11 CS_zup_left 0
+3 11 CS_yup_left 11 CS_yup_left 0
+4 10 CS_invalid 10 CS_invalid 155
+// CS_invalid is not a coordinate system at all.  It can be used in
+// user-input processing code to indicate a contradictory coordinate
+// system request.
+5 0 0
 
 13 16 BamCacheRecord * 0 8576 16 BamCacheRecord * 16 BamCacheRecord * 0 0 14 0 0 0 0 0 0 0 0 0 0
 

@@ -1,5 +1,5 @@
-1412104742
-2 2
+1422504020
+2 3
 11 libpandaode 4 sTqO 11 panda3d.ode 
 584
 686 8 OdeWorld 0 4 1277 18 OdeWorld::OdeWorld 0 2 1 2 0
@@ -11,20 +11,7 @@ OdeWorld::OdeWorld(OdeWorld const &copy);
 29
 void OdeWorld::destroy(void);
 
-688 8 is_empty 0 4 1277 18 OdeWorld::is_empty 0 1 4 942
-// Filename: odeWorld.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+688 8 is_empty 0 4 1277 18 OdeWorld::is_empty 0 1 4 455
 ////////////////////////////////////////////////////////////////////
 //     Function: OdeWorld::is_empty
 //       Access: Published
@@ -168,8 +155,7 @@ void OdeWorld::init_surface_table(unsigned char num_surfaces);
 62
 void OdeWorld::add_body_dampening(OdeBody &body, int surface);
 
-720 17 set_surface_entry 0 4 1277 27 OdeWorld::set_surface_entry 0 1 38 55
-//void assign_surface_body(OdeBody& body, int surface);
+720 17 set_surface_entry 0 4 1277 27 OdeWorld::set_surface_entry 0 1 38 0
 173
 void OdeWorld::set_surface_entry(unsigned char pos1, unsigned char pos2, float mu, float bounce, float bounce_vel, float soft_erp, float soft_cfm, float slip, float dampen);
 
@@ -193,20 +179,7 @@ OdeJointGroup::OdeJointGroup(void);
 34
 void OdeJointGroup::destroy(void);
 
-726 6 get_id 0 4 1279 21 OdeJointGroup::get_id 0 1 44 491
-// Filename: odeJointGroup.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+726 6 get_id 0 4 1279 21 OdeJointGroup::get_id 0 1 44 0
 55
 inline dxJointGroup *OdeJointGroup::get_id(void) const;
 
@@ -246,20 +219,7 @@ OdeJointFeedback::~OdeJointFeedback(void);
 29
 void OdeJoint::destroy(void);
 
-736 8 is_empty 0 4 1282 18 OdeJoint::is_empty 0 1 53 942
-// Filename: odeJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+736 8 is_empty 0 4 1282 18 OdeJoint::is_empty 0 1 53 455
 ////////////////////////////////////////////////////////////////////
 //     Function: OdeJoint::is_empty
 //       Access: Published
@@ -348,8 +308,8 @@ inline bool OdeJoint::operator ==(OdeJoint const &other) const;
 bool OdeJoint::operator typecast bool(void) const;
 
 750 7 convert 0 4 1282 17 OdeJoint::convert 0 1 70 0
-40
-PyObject *OdeJoint::convert(void) const;
+39
+_object *OdeJoint::convert(void) const;
 
 751 15 convert_to_ball 0 4 1282 25 OdeJoint::convert_to_ball 0 1 71 0
 51
@@ -404,20 +364,7 @@ static TypeHandle OdeJoint::get_class_type(void);
 OdeAMotorJoint::OdeAMotorJoint(OdeWorld &world);
 OdeAMotorJoint::OdeAMotorJoint(OdeWorld &world, OdeJointGroup &joint_group);
 
-764 12 set_num_axes 0 4 1284 28 OdeAMotorJoint::set_num_axes 0 1 86 492
-// Filename: odeAMotorJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+764 12 set_num_axes 0 4 1284 28 OdeAMotorJoint::set_num_axes 0 1 86 0
 50
 inline void OdeAMotorJoint::set_num_axes(int num);
 
@@ -543,20 +490,7 @@ static TypeHandle OdeAMotorJoint::get_class_type(void);
 OdeBallJoint::OdeBallJoint(OdeWorld &world);
 OdeBallJoint::OdeBallJoint(OdeWorld &world, OdeJointGroup &joint_group);
 
-795 10 set_anchor 0 4 1285 24 OdeBallJoint::set_anchor 0 2 119 120 490
-// Filename: odeBallJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+795 10 set_anchor 0 4 1285 24 OdeBallJoint::set_anchor 0 2 119 120 0
 128
 inline void OdeBallJoint::set_anchor(float x, float y, float z);
 inline void OdeBallJoint::set_anchor(LVecBase3f const &anchor);
@@ -583,20 +517,7 @@ static TypeHandle OdeBallJoint::get_class_type(void);
 OdeMass::OdeMass(void);
 OdeMass::OdeMass(OdeMass const &copy);
 
-801 5 check 0 4 1286 14 OdeMass::check 0 1 128 485
-// Filename: odeMass.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+801 5 check 0 4 1286 14 OdeMass::check 0 1 128 0
 32
 inline int OdeMass::check(void);
 
@@ -688,20 +609,7 @@ OdeBody::OdeBody(OdeWorld &world);
 28
 void OdeBody::destroy(void);
 
-823 8 is_empty 0 4 1288 17 OdeBody::is_empty 0 1 156 936
-// Filename: odeBody.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+823 8 is_empty 0 4 1288 17 OdeBody::is_empty 0 1 156 450
 ////////////////////////////////////////////////////////////////////
 //     Function: OdeBody::is_empty
 //       Access: Published
@@ -747,9 +655,9 @@ inline void OdeBody::set_auto_disable_flag(int do_auto_disable);
 inline void OdeBody::set_auto_disable_defaults(void);
 
 831 8 set_data 0 4 1288 17 OdeBody::set_data 0 1 164 0
-89
+88
 inline void OdeBody::set_data(void *data);
-inline void OdeBody::set_data(PyObject *data);
+inline void OdeBody::set_data(_object *data);
 
 832 12 set_position 0 4 1288 21 OdeBody::set_position 0 2 165 166 0
 119
@@ -799,8 +707,8 @@ inline float OdeBody::get_auto_disable_time(void) const;
 inline int OdeBody::get_auto_disable_flag(void) const;
 
 843 8 get_data 0 4 1288 17 OdeBody::get_data 0 1 179 0
-47
-inline PyObject *OdeBody::get_data(void) const;
+46
+inline _object *OdeBody::get_data(void) const;
 
 844 12 get_position 0 4 1288 21 OdeBody::get_position 0 1 180 0
 52
@@ -932,8 +840,8 @@ inline int OdeBody::get_num_joints(void) const;
 OdeJoint OdeBody::get_joint(int index) const;
 
 872 19 get_converted_joint 0 4 1288 28 OdeBody::get_converted_joint 0 1 225 0
-59
-inline PyObject *OdeBody::get_converted_joint(int i) const;
+58
+inline _object *OdeBody::get_converted_joint(int i) const;
 
 873 6 enable 0 4 1288 15 OdeBody::enable 0 1 226 0
 34
@@ -975,20 +883,7 @@ static TypeHandle OdeBody::get_class_type(void);
 29
 void OdeSpace::destroy(void);
 
-883 8 is_empty 0 4 1289 18 OdeSpace::is_empty 0 1 238 942
-// Filename: odeSpace.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+883 8 is_empty 0 4 1289 18 OdeSpace::is_empty 0 1 238 455
 ////////////////////////////////////////////////////////////////////
 //     Function: OdeSpace::is_empty
 //       Access: Published
@@ -1022,8 +917,8 @@ inline int OdeSpace::get_num_geoms(void) const;
 inline void OdeSpace::get_AABB(LVecBase3f &min, LVecBase3f &max) const;
 
 889 13 get_AA_bounds 0 4 1289 23 OdeSpace::get_AA_bounds 0 1 245 0
-53
-inline PyObject *OdeSpace::get_AA_bounds(void) const;
+52
+inline _object *OdeSpace::get_AA_bounds(void) const;
 
 890 8 is_space 0 4 1289 18 OdeSpace::is_space 0 1 246 0
 36
@@ -1087,9 +982,7 @@ void OdeSpace::clean(void);
 34
 OdeGeom OdeSpace::get_geom(int i);
 
-905 9 get_space 0 4 1289 19 OdeSpace::get_space 0 1 263 104
-// Not INLINE because of forward declaration
-//static int get_surface_type(OdeSpace * self, dGeomID o1);
+905 9 get_space 0 4 1289 19 OdeSpace::get_space 0 1 263 0
 48
 inline OdeSpace OdeSpace::get_space(void) const;
 
@@ -1114,24 +1007,24 @@ OdeHashSpace OdeSpace::convert_to_hash_space(void) const;
 OdeQuadTreeSpace OdeSpace::convert_to_quad_tree_space(void) const;
 
 911 7 convert 0 4 1289 17 OdeSpace::convert 0 1 270 0
-40
-PyObject *OdeSpace::convert(void) const;
+39
+_object *OdeSpace::convert(void) const;
 
 912 18 get_converted_geom 0 4 1289 28 OdeSpace::get_converted_geom 0 1 271 0
-59
-inline PyObject *OdeSpace::get_converted_geom(int i) const;
+58
+inline _object *OdeSpace::get_converted_geom(int i) const;
 
 913 19 get_converted_space 0 4 1289 29 OdeSpace::get_converted_space 0 1 272 0
-59
-inline PyObject *OdeSpace::get_converted_space(void) const;
+58
+inline _object *OdeSpace::get_converted_space(void) const;
 
 914 12 auto_collide 0 4 1289 22 OdeSpace::auto_collide 0 1 273 0
 34
 void OdeSpace::auto_collide(void);
 
 915 7 collide 0 4 1289 17 OdeSpace::collide 0 1 274 0
-62
-int OdeSpace::collide(PyObject *arg, PyObject *near_callback);
+60
+int OdeSpace::collide(_object *arg, _object *near_callback);
 
 916 14 set_collide_id 0 4 1289 24 OdeSpace::set_collide_id 0 2 275 276 0
 118
@@ -1169,20 +1062,7 @@ static TypeHandle OdeSpace::get_class_type(void);
 28
 void OdeGeom::destroy(void);
 
-924 8 is_empty 0 4 1290 17 OdeGeom::is_empty 0 1 288 936
-// Filename: odeGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+924 8 is_empty 0 4 1290 17 OdeGeom::is_empty 0 1 288 450
 ////////////////////////////////////////////////////////////////////
 //     Function: OdeGeom::is_empty
 //       Access: Published
@@ -1208,8 +1088,7 @@ inline dxGeom *OdeGeom::get_id(void) const;
 45
 inline void OdeGeom::set_body(OdeBody &body);
 
-927 8 has_body 0 4 1290 17 OdeGeom::has_body 0 1 291 35
-//INLINE void set_data(void* data);
+927 8 has_body 0 4 1290 17 OdeGeom::has_body 0 1 291 0
 42
 inline bool OdeGeom::has_body(void) const;
 
@@ -1247,8 +1126,8 @@ inline LQuaternionf OdeGeom::get_quaternion(void) const;
 inline void OdeGeom::get_AABB(LVecBase3f &min, LVecBase3f &max) const;
 
 936 13 get_AA_bounds 0 4 1290 22 OdeGeom::get_AA_bounds 0 1 301 0
-52
-inline PyObject *OdeGeom::get_AA_bounds(void) const;
+51
+inline _object *OdeGeom::get_AA_bounds(void) const;
 
 937 8 is_space 0 4 1290 17 OdeGeom::is_space 0 1 302 0
 35
@@ -1332,18 +1211,13 @@ inline LMatrix3f OdeGeom::get_offset_rotation(void) const;
 63
 inline LQuaternionf OdeGeom::get_offset_quaternion(void) const;
 
-957 9 get_space 0 4 1290 18 OdeGeom::get_space 0 1 324 174
-//int get_surface_type() ;
-//int get_collide_id() ;
-//int set_collide_id( int collide_id);
-//void set_surface_type( int surface_type);
-//int test_collide_id( int collide_id);
+957 9 get_space 0 4 1290 18 OdeGeom::get_space 0 1 324 0
 40
 OdeSpace OdeGeom::get_space(void) const;
 
 958 19 get_converted_space 0 4 1290 28 OdeGeom::get_converted_space 0 1 325 0
-58
-inline PyObject *OdeGeom::get_converted_space(void) const;
+57
+inline _object *OdeGeom::get_converted_space(void) const;
 
 959 5 write 0 6 1290 14 OdeGeom::write 0 3 326 327 328 0
 84
@@ -1358,8 +1232,8 @@ bool OdeGeom::operator typecast bool(void) const;
 inline int OdeGeom::compare_to(OdeGeom const &other) const;
 
 962 7 convert 0 4 1290 16 OdeGeom::convert 0 1 330 0
-39
-PyObject *OdeGeom::convert(void) const;
+38
+_object *OdeGeom::convert(void) const;
 
 963 14 convert_to_box 0 4 1290 23 OdeGeom::convert_to_box 0 1 331 0
 47
@@ -1379,8 +1253,7 @@ OdeCylinderGeom OdeGeom::convert_to_cylinder(void) const;
 51
 OdePlaneGeom OdeGeom::convert_to_plane(void) const;
 
-967 14 convert_to_ray 0 4 1290 23 OdeGeom::convert_to_ray 0 1 335 53
-// OdeHeightfieldGeom convert_to_heightfield() const;
+967 14 convert_to_ray 0 4 1290 23 OdeGeom::convert_to_ray 0 1 335 0
 47
 OdeRayGeom OdeGeom::convert_to_ray(void) const;
 
@@ -1414,20 +1287,7 @@ OdeBoxGeom::OdeBoxGeom(float lx, float ly, float lz);
 OdeBoxGeom::OdeBoxGeom(OdeSpace &space, float lx, float ly, float lz);
 OdeBoxGeom::OdeBoxGeom(OdeSpace &space, LVecBase3f const &size);
 
-975 11 set_lengths 0 4 1292 23 OdeBoxGeom::set_lengths 0 2 346 347 488
-// Filename: odeBoxGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+975 11 set_lengths 0 4 1292 23 OdeBoxGeom::set_lengths 0 2 346 347 0
 127
 inline void OdeBoxGeom::set_lengths(float lx, float ly, float lz);
 inline void OdeBoxGeom::set_lengths(LVecBase3f const &size);
@@ -1450,20 +1310,7 @@ static TypeHandle OdeBoxGeom::get_class_type(void);
 OdeCappedCylinderGeom::OdeCappedCylinderGeom(float radius, float length);
 OdeCappedCylinderGeom::OdeCappedCylinderGeom(OdeSpace &space, float radius, float length);
 
-980 10 set_params 0 4 1293 33 OdeCappedCylinderGeom::set_params 0 1 354 499
-// Filename: odeCappedCylinderGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+980 10 set_params 0 4 1293 33 OdeCappedCylinderGeom::set_params 0 1 354 0
 74
 inline void OdeCappedCylinderGeom::set_params(float radius, float length);
 
@@ -1493,20 +1340,7 @@ static TypeHandle OdeCappedCylinderGeom::get_class_type(void);
 OdeContactGeom::OdeContactGeom(void);
 OdeContactGeom::OdeContactGeom(OdeContactGeom const &copy);
 
-987 7 get_pos 0 4 1294 23 OdeContactGeom::get_pos 0 1 362 492
-// Filename: odeContactGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+987 7 get_pos 0 4 1294 23 OdeContactGeom::get_pos 0 1 362 0
 54
 inline LVecBase3f OdeContactGeom::get_pos(void) const;
 
@@ -1623,22 +1457,11 @@ inline LPoint3f OdeCollisionEntry::get_contact_point(unsigned int n) const;
 80
 inline OdeContactGeom OdeCollisionEntry::get_contact_geom(unsigned int n) const;
 
-1007 11 operator [] 0 4 1295 30 OdeCollisionEntry::operator [] 0 1 382 276
-////////////////////////////////////////////////////////////////////
-//     Function: OdeCollisionEntry::operator []
-//       Access: Published
-//  Description: Returns the nth contact geom in the collision.
-////////////////////////////////////////////////////////////////////
+1007 11 operator [] 0 4 1295 30 OdeCollisionEntry::operator [] 0 1 382 0
 75
 inline OdeContactGeom OdeCollisionEntry::operator [](unsigned int n) const;
 
-1008 22 operator typecast bool 0 132 1295 41 OdeCollisionEntry::operator typecast bool 0 1 385 313
-////////////////////////////////////////////////////////////////////
-//     Function: OdeCollisionEntry::operator bool
-//       Access: Published
-//  Description: An OdeCollisionEntry evaluates to False if it
-//               holds no contacts.
-////////////////////////////////////////////////////////////////////
+1008 22 operator typecast bool 0 132 1295 41 OdeCollisionEntry::operator typecast bool 0 1 385 0
 66
 inline bool OdeCollisionEntry::operator typecast bool(void) const;
 
@@ -1659,20 +1482,7 @@ static TypeHandle OdeCollisionEntry::get_class_type(void);
 75
 OdeSurfaceParameters::OdeSurfaceParameters(int mode = (0), float mu = (0));
 
-1012 8 set_mode 0 4 1296 30 OdeSurfaceParameters::set_mode 0 1 389 498
-// Filename: odeSurfaceParameters.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1012 8 set_mode 0 4 1296 30 OdeSurfaceParameters::set_mode 0 1 389 0
 53
 inline void OdeSurfaceParameters::set_mode(int mode);
 
@@ -1770,20 +1580,7 @@ static TypeHandle OdeSurfaceParameters::get_class_type(void);
 OdeContact::OdeContact(void);
 OdeContact::OdeContact(dContact const &contact);
 
-1036 11 get_surface 0 4 1298 23 OdeContact::get_surface 0 1 414 488
-// Filename: odeContact.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1036 11 get_surface 0 4 1298 23 OdeContact::get_surface 0 1 414 0
 64
 inline OdeSurfaceParameters OdeContact::get_surface(void) const;
 
@@ -1825,20 +1622,7 @@ static TypeHandle OdeContactJoint::get_class_type(void);
 OdeCylinderGeom::OdeCylinderGeom(float radius, float length);
 OdeCylinderGeom::OdeCylinderGeom(OdeSpace &space, float radius, float length);
 
-1046 10 set_params 0 4 1300 27 OdeCylinderGeom::set_params 0 1 426 493
-// Filename: odeCylinderGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1046 10 set_params 0 4 1300 27 OdeCylinderGeom::set_params 0 1 426 0
 68
 inline void OdeCylinderGeom::set_params(float radius, float length);
 
@@ -1863,20 +1647,7 @@ static TypeHandle OdeCylinderGeom::get_class_type(void);
 OdeFixedJoint::OdeFixedJoint(OdeWorld &world);
 OdeFixedJoint::OdeFixedJoint(OdeWorld &world, OdeJointGroup &joint_group);
 
-1052 3 set 0 4 1301 18 OdeFixedJoint::set 0 1 432 491
-// Filename: odeFixedJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1052 3 set 0 4 1301 18 OdeFixedJoint::set 0 1 432 0
 37
 inline void OdeFixedJoint::set(void);
 
@@ -1889,20 +1660,7 @@ static TypeHandle OdeFixedJoint::get_class_type(void);
 OdeHashSpace::OdeHashSpace(void);
 OdeHashSpace::OdeHashSpace(OdeSpace &space);
 
-1055 10 set_levels 0 4 1302 24 OdeHashSpace::set_levels 0 1 436 490
-// Filename: odeHashSpace.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1055 10 set_levels 0 4 1302 24 OdeHashSpace::set_levels 0 1 436 0
 65
 inline void OdeHashSpace::set_levels(int minlevel, int maxlevel);
 
@@ -2067,20 +1825,7 @@ static TypeHandle OdeHinge2Joint::get_class_type(void);
 OdeHingeJoint::OdeHingeJoint(OdeWorld &world);
 OdeHingeJoint::OdeHingeJoint(OdeWorld &world, OdeJointGroup &joint_group);
 
-1095 10 set_anchor 0 4 1304 25 OdeHingeJoint::set_anchor 0 2 481 482 491
-// Filename: odeHingeJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1095 10 set_anchor 0 4 1304 25 OdeHingeJoint::set_anchor 0 2 481 482 0
 130
 inline void OdeHingeJoint::set_anchor(float x, float y, float z);
 inline void OdeHingeJoint::set_anchor(LVecBase3f const &anchor);
@@ -2204,20 +1949,7 @@ OdeJointCollection::OdeJointCollection(OdeJointCollection const &copy);
 68
 void OdeJointCollection::operator =(OdeJointCollection const &copy);
 
-1125 19 ~OdeJointCollection 0 4 1305 39 OdeJointCollection::~OdeJointCollection 0 0 723
-// Filename: odeJointCollection.I
-// Created by:  drose (10Nov08)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1125 19 ~OdeJointCollection 0 4 1305 39 OdeJointCollection::~OdeJointCollection 0 0 229
 ////////////////////////////////////////////////////////////////////
 //     Function: OdeJointCollection::Destructor
 //       Access: Published
@@ -2280,22 +2012,11 @@ OdeJoint OdeJointCollection::operator [](int index) const;
 41
 int OdeJointCollection::size(void) const;
 
-1138 11 operator += 0 4 1305 31 OdeJointCollection::operator += 0 1 527 279
-////////////////////////////////////////////////////////////////////
-//     Function: OdeJointCollection::operator +=
-//       Access: Published
-//  Description: Appends the other list onto the end of this one.
-////////////////////////////////////////////////////////////////////
+1138 11 operator += 0 4 1305 31 OdeJointCollection::operator += 0 1 527 0
 77
 inline void OdeJointCollection::operator +=(OdeJointCollection const &other);
 
-1139 10 operator + 0 4 1305 30 OdeJointCollection::operator + 0 1 528 324
-////////////////////////////////////////////////////////////////////
-//     Function: OdeJointCollection::operator +
-//       Access: Published
-//  Description: Returns a OdeJointCollection representing the
-//               concatenation of the two lists.
-////////////////////////////////////////////////////////////////////
+1139 10 operator + 0 4 1305 30 OdeJointCollection::operator + 0 1 528 0
 96
 inline OdeJointCollection OdeJointCollection::operator +(OdeJointCollection const &other) const;
 
@@ -2347,20 +2068,7 @@ static TypeHandle OdeNullJoint::get_class_type(void);
 OdePlane2dJoint::OdePlane2dJoint(OdeWorld &world);
 OdePlane2dJoint::OdePlane2dJoint(OdeWorld &world, OdeJointGroup &joint_group);
 
-1151 11 set_x_param 0 4 1308 28 OdePlane2dJoint::set_x_param 0 1 544 493
-// Filename: odePlane2dJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1151 11 set_x_param 0 4 1308 28 OdePlane2dJoint::set_x_param 0 1 544 0
 69
 inline void OdePlane2dJoint::set_x_param(int parameter, float value);
 
@@ -2383,20 +2091,7 @@ OdePlaneGeom::OdePlaneGeom(LVecBase4f const &params);
 OdePlaneGeom::OdePlaneGeom(OdeSpace &space, float a, float b, float c, float d);
 OdePlaneGeom::OdePlaneGeom(OdeSpace &space, LVecBase4f const &params);
 
-1156 10 set_params 0 4 1309 24 OdePlaneGeom::set_params 0 2 552 553 490
-// Filename: odePlaneGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1156 10 set_params 0 4 1309 24 OdePlaneGeom::set_params 0 2 552 553 0
 137
 inline void OdePlaneGeom::set_params(float a, float b, float c, float d);
 inline void OdePlaneGeom::set_params(LVecBase4f const &params);
@@ -2508,20 +2203,7 @@ static TypeHandle OdeSimpleSpace::get_class_type(void);
 OdeSliderJoint::OdeSliderJoint(OdeWorld &world);
 OdeSliderJoint::OdeSliderJoint(OdeWorld &world, OdeJointGroup &joint_group);
 
-1179 8 set_axis 0 4 1313 24 OdeSliderJoint::set_axis 0 2 581 582 492
-// Filename: odeSliderJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1179 8 set_axis 0 4 1313 24 OdeSliderJoint::set_axis 0 2 581 582 0
 126
 inline void OdeSliderJoint::set_axis(float x, float y, float z);
 inline void OdeSliderJoint::set_axis(LVecBase3f const &axis);
@@ -2629,20 +2311,7 @@ OdeSphereGeom::OdeSphereGeom(float radius);
 OdeSphereGeom::OdeSphereGeom(OdeSpace &space, float radius);
 OdeSphereGeom::OdeSphereGeom(OdeGeom &geom);
 
-1205 10 set_radius 0 4 1314 25 OdeSphereGeom::set_radius 0 1 611 491
-// Filename: odeSphereGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1205 10 set_radius 0 4 1314 25 OdeSphereGeom::set_radius 0 1 611 0
 52
 inline void OdeSphereGeom::set_radius(float radius);
 
@@ -2659,10 +2328,7 @@ inline float OdeSphereGeom::get_point_depth(LPoint3f const &p) const;
 54
 static TypeHandle OdeSphereGeom::get_class_type(void);
 
-1209 14 OdeTriMeshData 0 4 1315 30 OdeTriMeshData::OdeTriMeshData 0 2 616 617 202
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-
+1209 14 OdeTriMeshData 0 4 1315 30 OdeTriMeshData::OdeTriMeshData 0 2 616 617 63
 // Private copy constructor, shouldn't be copying these objects
 78
 OdeTriMeshData::OdeTriMeshData(NodePath const &model, bool use_normals = (0));
@@ -2680,12 +2346,7 @@ void OdeTriMeshData::destroy(void);
 91
 virtual void OdeTriMeshData::write(ostream &out = (cout), unsigned int indent = (0)) const;
 
-1212 11 write_faces 0 4 1315 27 OdeTriMeshData::write_faces 0 1 622 221
-// INLINE void set(int data_id, void* in_data);
-// INLINE void* get(int data_id);
-// INLINE void get_buffer(unsigned char** buf, int* buf_len) const;
-// INLINE void set_buffer(unsigned char* buf);
-// INLINE void update();
+1212 11 write_faces 0 4 1315 27 OdeTriMeshData::write_faces 0 1 622 0
 53
 void OdeTriMeshData::write_faces(ostream &out) const;
 
@@ -2712,20 +2373,7 @@ inline void OdeTriMeshGeom::set_tri_mesh_data(OdeTriMeshData &data);
 81
 inline PointerTo< OdeTriMeshData > OdeTriMeshGeom::get_tri_mesh_data(void) const;
 
-1218 8 set_data 0 4 1317 24 OdeTriMeshGeom::set_data 0 1 630 492
-// Filename: odeTriMeshGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1218 8 set_data 0 4 1317 24 OdeTriMeshGeom::set_data 0 1 630 0
 59
 inline void OdeTriMeshGeom::set_data(OdeTriMeshData &data);
 
@@ -2766,20 +2414,7 @@ static TypeHandle OdeTriMeshGeom::get_class_type(void);
 OdeUniversalJoint::OdeUniversalJoint(OdeWorld &world);
 OdeUniversalJoint::OdeUniversalJoint(OdeWorld &world, OdeJointGroup &joint_group);
 
-1228 10 set_anchor 0 4 1318 29 OdeUniversalJoint::set_anchor 0 2 641 642 495
-// Filename: odeUniversalJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1228 10 set_anchor 0 4 1318 29 OdeUniversalJoint::set_anchor 0 2 641 642 0
 138
 inline void OdeUniversalJoint::set_anchor(float x, float y, float z);
 inline void OdeUniversalJoint::set_anchor(LVecBase3f const &anchor);
@@ -2963,8 +2598,8 @@ static int OdeUtil::are_connected_excluding(OdeBody const &body1, OdeBody const 
 static PointerTo< OdeCollisionEntry > OdeUtil::collide(OdeGeom const &geom1, OdeGeom const &geom2, short int const max_contacts = (150));
 
 1264 8 collide2 0 4 1319 17 OdeUtil::collide2 0 1 681 0
-108
-static int OdeUtil::collide2(OdeGeom const &geom1, OdeGeom const &geom2, PyObject *arg, PyObject *callback);
+106
+static int OdeUtil::collide2(OdeGeom const &geom1, OdeGeom const &geom2, _object *arg, _object *callback);
 
 1265 13 space_to_geom 0 4 1319 22 OdeUtil::space_to_geom 0 1 682 0
 61
@@ -2991,20 +2626,7 @@ OdeUtil::~OdeUtil(void);
 1 14 Dtool_sTqOSgW9 0 7 10 1320 0 14 Dtool_sTqOSgW9 0 0 
 2 14 Dtool_sTqOK2Lv 0 7 10 1320 0 14 Dtool_sTqOK2Lv 0 1 4 copy 1 1321  
 3 14 Dtool_sTqOQY8E 0 4 11 1323 0 14 Dtool_sTqOQY8E 0 1 4 this 3 1320  
-4 14 Dtool_sTqOqrmt 0 6 12 1324 0 14 Dtool_sTqOqrmt 942 // Filename: odeWorld.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+4 14 Dtool_sTqOqrmt 0 6 12 1324 0 14 Dtool_sTqOqrmt 455 ////////////////////////////////////////////////////////////////////
 //     Function: OdeWorld::is_empty
 //       Access: Published
 //  Description: Returns true if the ID is 0, meaning the OdeWorld
@@ -3049,25 +2671,13 @@ OdeUtil::~OdeUtil(void);
 35 14 Dtool_sTqOYsYo 0 6 41 1330 0 14 Dtool_sTqOYsYo 0 2 4 this 3 1321  5 other 1 1321  
 36 14 Dtool_sTqOmm6V 0 4 42 1323 0 14 Dtool_sTqOmm6V 0 2 4 this 3 1320  12 num_surfaces 1 1332  
 37 14 Dtool_sTqOCIbf 0 4 43 1323 0 14 Dtool_sTqOCIbf 55 //void assign_surface_body(OdeBody& body, int surface); 3 4 this 3 1320  4 body 1 1333  7 surface 1 1330  
-38 14 Dtool_sTqO3lGk 0 4 44 1323 0 14 Dtool_sTqO3lGk 55 //void assign_surface_body(OdeBody& body, int surface); 10 4 this 3 1320  4 pos1 1 1332  4 pos2 1 1332  2 mu 1 1329  6 bounce 1 1329  10 bounce_vel 1 1329  8 soft_erp 1 1329  8 soft_cfm 1 1329  4 slip 1 1329  6 dampen 1 1329  
+38 14 Dtool_sTqO3lGk 0 4 44 1323 0 14 Dtool_sTqO3lGk 0 10 4 this 3 1320  4 pos1 1 1332  4 pos2 1 1332  2 mu 1 1329  6 bounce 1 1329  10 bounce_vel 1 1329  8 soft_erp 1 1329  8 soft_cfm 1 1329  4 slip 1 1329  6 dampen 1 1329  
 39 14 Dtool_sTqOOfqx 0 6 45 1329 0 14 Dtool_sTqOOfqx 0 3 4 this 3 1320  2 dt 1 1329  4 body 1 1333  
 40 14 Dtool_sTqO05DB 0 7 47 1335 0 14 Dtool_sTqO05DB 0 0 
 41 14 Dtool_sTqO_scl 0 6 46 1324 0 14 Dtool_sTqO_scl 0 1 4 this 3 1321  
 42 14 Dtool_sTqO8kx4 0 7 49 1336 0 14 Dtool_sTqO8kx4 0 0 
 43 14 Dtool_sTqO7Etj 0 4 50 1323 0 14 Dtool_sTqO7Etj 0 1 4 this 3 1336  
-44 14 Dtool_sTqO0a67 0 6 51 1339 0 14 Dtool_sTqO0a67 491 // Filename: odeJointGroup.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 1 4 this 3 1337  
+44 14 Dtool_sTqO0a67 0 6 51 1339 0 14 Dtool_sTqO0a67 0 1 4 this 3 1337  
 45 14 Dtool_sTqO9_fM 0 4 52 1323 0 14 Dtool_sTqO9_fM 0 1 4 this 3 1337  
 46 14 Dtool_sTqOoK_U 0 6 53 1330 0 14 Dtool_sTqOoK_U 0 2 4 this 3 1337  5 other 1 1337  
 47 14 Dtool_sTqO436b 0 7 54 1335 0 14 Dtool_sTqO436b 0 0 
@@ -3076,20 +2686,7 @@ OdeUtil::~OdeUtil(void);
 50 14 Dtool_sTqOjUNA 0 7 59 1344 0 14 Dtool_sTqOjUNA 0 1 4 this 3 1342  
 51 14 Dtool_sTqObQNc 0 7 60 1344 0 14 Dtool_sTqObQNc 0 1 4 this 3 1342  
 52 14 Dtool_sTqOIKi8 0 4 64 1323 0 14 Dtool_sTqOIKi8 0 1 4 this 3 1345  
-53 14 Dtool_sTqOhYNl 0 6 65 1324 0 14 Dtool_sTqOhYNl 942 // Filename: odeJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+53 14 Dtool_sTqOhYNl 0 6 65 1324 0 14 Dtool_sTqOhYNl 455 ////////////////////////////////////////////////////////////////////
 //     Function: OdeJoint::is_empty
 //       Access: Published
 //  Description: Returns true if the ID is 0, meaning the OdeJoint
@@ -3148,19 +2745,7 @@ OdeUtil::~OdeUtil(void);
 83 14 Dtool_sTqOqeCd 0 6 78 1324 0 14 Dtool_sTqOqeCd 0 1 4 this 3 1346  
 84 14 Dtool_sTqOX6_b 0 7 93 1365 0 14 Dtool_sTqOX6_b 0 1 5 world 1 1320  
 85 14 Dtool_sTqO2TWl 0 7 93 1365 0 14 Dtool_sTqO2TWl 0 2 5 world 1 1320  11 joint_group 1 1336  
-86 14 Dtool_sTqO3gnC 0 4 94 1323 0 14 Dtool_sTqO3gnC 492 // Filename: odeAMotorJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 2 4 this 3 1365  3 num 1 1330  
+86 14 Dtool_sTqO3gnC 0 4 94 1323 0 14 Dtool_sTqO3gnC 0 2 4 this 3 1365  3 num 1 1330  
 87 14 Dtool_sTqOb2u3 0 4 95 1323 0 14 Dtool_sTqOb2u3 0 4 4 this 3 1365  4 anum 1 1330  3 rel 1 1330  4 axis 1 1326  
 88 14 Dtool_sTqOrAqW 0 4 95 1323 0 14 Dtool_sTqOrAqW 0 6 4 this 3 1365  4 anum 1 1330  3 rel 1 1330  1 x 1 1329  1 y 1 1329  1 z 1 1329  
 89 14 Dtool_sTqOU3BV 0 4 96 1323 0 14 Dtool_sTqOU3BV 0 3 4 this 3 1365  4 anum 1 1330  5 angle 1 1329  
@@ -3194,19 +2779,7 @@ OdeUtil::~OdeUtil(void);
 117 14 Dtool_sTqO0ou4 0 7 125 1357 0 14 Dtool_sTqO0ou4 0 1 5 world 1 1320  
 118 14 Dtool_sTqOkXuP 0 7 125 1357 0 14 Dtool_sTqOkXuP 0 2 5 world 1 1320  11 joint_group 1 1336  
 119 14 Dtool_sTqOqXP7 0 4 126 1323 0 14 Dtool_sTqOqXP7 0 2 4 this 3 1357  6 anchor 1 1326  
-120 14 Dtool_sTqO7e9y 0 4 126 1323 0 14 Dtool_sTqO7e9y 490 // Filename: odeBallJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 4 4 this 3 1357  1 x 1 1329  1 y 1 1329  1 z 1 1329  
+120 14 Dtool_sTqO7e9y 0 4 126 1323 0 14 Dtool_sTqO7e9y 0 4 4 this 3 1357  1 x 1 1329  1 y 1 1329  1 z 1 1329  
 121 14 Dtool_sTqO1Rm1 0 4 127 1323 0 14 Dtool_sTqO1Rm1 0 2 4 this 3 1357  6 anchor 1 1326  
 122 14 Dtool_sTqOScGt 0 4 127 1323 0 14 Dtool_sTqOScGt 0 4 4 this 3 1357  1 x 1 1329  1 y 1 1329  1 z 1 1329  
 123 14 Dtool_sTqOPwkP 0 7 128 1331 0 14 Dtool_sTqOPwkP 0 1 4 this 3 1370  
@@ -3214,19 +2787,7 @@ OdeUtil::~OdeUtil(void);
 125 14 Dtool_sTqOMY4I 0 7 130 1335 0 14 Dtool_sTqOMY4I 0 0 
 126 14 Dtool_sTqOl7RU 0 7 133 1372 0 14 Dtool_sTqOl7RU 0 0 
 127 14 Dtool_sTqOFvRR 0 7 133 1372 0 14 Dtool_sTqOFvRR 0 1 4 copy 1 1373  
-128 14 Dtool_sTqO64Kq 0 6 134 1330 0 14 Dtool_sTqO64Kq 485 // Filename: odeMass.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 1 4 this 3 1372  
+128 14 Dtool_sTqO64Kq 0 6 134 1330 0 14 Dtool_sTqO64Kq 0 1 4 this 3 1372  
 129 14 Dtool_sTqOoBsr 0 4 135 1323 0 14 Dtool_sTqOoBsr 0 1 4 this 3 1372  
 130 14 Dtool_sTqOz44c 0 4 136 1323 0 14 Dtool_sTqOz44c 0 4 4 this 3 1372  7 themass 1 1329  6 center 1 1326  1 r 1 1375  
 131 14 Dtool_sTqOKsYE 0 4 136 1323 0 14 Dtool_sTqOKsYE 0 11 4 this 3 1372  7 themass 1 1329  3 cgx 1 1329  3 cgy 1 1329  3 cgz 1 1329  3 I11 1 1329  3 I22 1 1329  3 I33 1 1329  3 I12 1 1329  3 I13 1 1329  3 I23 1 1329  
@@ -3254,20 +2815,7 @@ OdeUtil::~OdeUtil(void);
 153 14 Dtool_sTqOAuG7 0 7 153 1335 0 14 Dtool_sTqOAuG7 0 0 
 154 14 Dtool_sTqOUz7M 0 7 155 1333 0 14 Dtool_sTqOUz7M 0 1 5 world 1 1320  
 155 14 Dtool_sTqOWmXm 0 4 156 1323 0 14 Dtool_sTqOWmXm 0 1 4 this 3 1333  
-156 14 Dtool_sTqOu8oN 0 6 157 1324 0 14 Dtool_sTqOu8oN 936 // Filename: odeBody.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+156 14 Dtool_sTqOu8oN 0 6 157 1324 0 14 Dtool_sTqOu8oN 450 ////////////////////////////////////////////////////////////////////
 //     Function: OdeBody::is_empty
 //       Access: Published
 //  Description: Returns true if the ID is 0, meaning the OdeBody
@@ -3286,7 +2834,7 @@ OdeUtil::~OdeUtil(void);
 161 14 Dtool_sTqOWebs 0 4 162 1323 0 14 Dtool_sTqOWebs 0 2 4 this 3 1333  4 time 1 1329  
 162 14 Dtool_sTqOiqiM 0 4 163 1323 0 14 Dtool_sTqOiqiM 0 2 4 this 3 1333  15 do_auto_disable 1 1330  
 163 14 Dtool_sTqOQBwk 0 4 164 1323 0 14 Dtool_sTqOQBwk 0 1 4 this 3 1333  
-164 14 Dtool_sTqO8wp1 0 4 165 1323 0 14 Dtool_sTqO8wp1 0 2 4 this 3 1333  4 data 1 1355  
+164 14 Dtool_sTqODZsf 0 4 165 1323 0 14 Dtool_sTqODZsf 0 2 4 this 3 1333  4 data 1 1355  
 165 14 Dtool_sTqOnLY5 0 4 166 1323 0 14 Dtool_sTqOnLY5 0 2 4 this 3 1333  3 pos 1 1326  
 166 14 Dtool_sTqOXcNy 0 4 166 1323 0 14 Dtool_sTqOXcNy 0 4 4 this 3 1333  1 x 1 1329  1 y 1 1329  1 z 1 1329  
 167 14 Dtool_sTqOllWo 0 4 167 1323 0 14 Dtool_sTqOllWo 0 2 4 this 3 1333  1 r 1 1375  
@@ -3360,20 +2908,7 @@ OdeUtil::~OdeUtil(void);
 235 14 Dtool_sTqOD2Pw 0 7 215 1335 0 14 Dtool_sTqOD2Pw 0 0 
 236 14 Dtool_sTqOu8Ux 0 6 213 1324 0 14 Dtool_sTqOu8Ux 0 1 4 this 3 1350  
 237 14 Dtool_sTqOoE44 0 4 217 1323 0 14 Dtool_sTqOoE44 0 1 4 this 3 1387  
-238 14 Dtool_sTqO_njh 0 6 218 1324 0 14 Dtool_sTqO_njh 942 // Filename: odeSpace.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+238 14 Dtool_sTqO_njh 0 6 218 1324 0 14 Dtool_sTqO_njh 455 ////////////////////////////////////////////////////////////////////
 //     Function: OdeSpace::is_empty
 //       Access: Published
 //  Description: Returns true if the ID is 0, meaning the OdeSpace
@@ -3405,8 +2940,7 @@ OdeUtil::~OdeUtil(void);
 260 14 Dtool_sTqOfLFM 0 4 237 1323 0 14 Dtool_sTqOfLFM 0 2 4 this 3 1387  5 space 1 1387  
 261 14 Dtool_sTqOJCvo 0 4 238 1323 0 14 Dtool_sTqOJCvo 0 1 4 this 3 1387  
 262 14 Dtool_sTqOtlfI 0 7 239 1396 0 14 Dtool_sTqOtlfI 0 2 4 this 3 1387  1 i 1 1330  
-263 14 Dtool_sTqO0Iyp 0 7 240 1387 0 14 Dtool_sTqO0Iyp 104 // Not INLINE because of forward declaration
-//static int get_surface_type(OdeSpace * self, dGeomID o1); 1 4 this 3 1388  
+263 14 Dtool_sTqO0Iyp 0 7 240 1387 0 14 Dtool_sTqO0Iyp 0 1 4 this 3 1388  
 264 14 Dtool_sTqO2l3S 0 4 241 1323 0 14 Dtool_sTqO2l3S 0 3 4 this 3 1388  3 out 1 1352  6 indent 1 1354  
 265 14 Dtool_sTqOXVpl 0 4 241 1323 0 14 Dtool_sTqOXVpl 0 2 4 this 3 1388  3 out 1 1352  
 266 14 Dtool_sTqOSr_3 0 4 241 1323 0 14 Dtool_sTqOSr_3 0 1 4 this 3 1388  
@@ -3417,7 +2951,7 @@ OdeUtil::~OdeUtil(void);
 271 14 Dtool_sTqOkE_1 0 6 247 1355 0 14 Dtool_sTqOkE_1 0 2 4 this 3 1388  1 i 1 1330  
 272 14 Dtool_sTqOavdB 0 6 248 1355 0 14 Dtool_sTqOavdB 0 1 4 this 3 1388  
 273 14 Dtool_sTqODPpW 0 4 249 1323 0 14 Dtool_sTqODPpW 0 1 4 this 3 1387  
-274 14 Dtool_sTqOQBGE 0 6 250 1330 0 14 Dtool_sTqOQBGE 0 3 4 this 3 1387  3 arg 1 1355  13 near_callback 1 1355  
+274 14 Dtool_sTqOXLQb 0 6 250 1330 0 14 Dtool_sTqOXLQb 0 3 4 this 3 1387  3 arg 1 1355  13 near_callback 1 1355  
 275 14 Dtool_sTqO2IlA 0 6 251 1330 0 14 Dtool_sTqO2IlA 0 3 4 this 3 1387  4 geom 1 1396  10 collide_id 1 1330  
 276 14 Dtool_sTqObtO9 0 6 251 1330 0 14 Dtool_sTqObtO9 0 3 4 this 3 1387  10 collide_id 1 1330  2 id 1 1400  
 277 14 Dtool_sTqOrMQD 0 4 252 1323 0 14 Dtool_sTqOrMQD 0 3 4 this 3 1387  4 geom 1 1396  12 surface_type 1 1330  
@@ -3431,20 +2965,7 @@ OdeUtil::~OdeUtil(void);
 285 14 Dtool_sTqOst_0 0 7 257 1335 0 14 Dtool_sTqOst_0 0 0 
 286 14 Dtool_sTqOqaYZ 0 6 242 1324 0 14 Dtool_sTqOqaYZ 0 1 4 this 3 1388  
 287 14 Dtool_sTqODmh0 0 4 260 1323 0 14 Dtool_sTqODmh0 0 1 4 this 3 1396  
-288 14 Dtool_sTqOUuxb 0 6 261 1324 0 14 Dtool_sTqOUuxb 936 // Filename: odeGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+288 14 Dtool_sTqOUuxb 0 6 261 1324 0 14 Dtool_sTqOUuxb 450 ////////////////////////////////////////////////////////////////////
 //     Function: OdeGeom::is_empty
 //       Access: Published
 //  Description: Returns true if the ID is 0, meaning the OdeGeom
@@ -3458,7 +2979,7 @@ OdeUtil::~OdeUtil(void);
 //  Description: Returns the underlying dGeomID.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 1390  
 290 14 Dtool_sTqOtSQY 0 4 263 1323 0 14 Dtool_sTqOtSQY 35 //INLINE void set_data(void* data); 2 4 this 3 1396  4 body 1 1333  
-291 14 Dtool_sTqOXAml 0 6 264 1324 0 14 Dtool_sTqOXAml 35 //INLINE void set_data(void* data); 1 4 this 3 1390  
+291 14 Dtool_sTqOXAml 0 6 264 1324 0 14 Dtool_sTqOXAml 0 1 4 this 3 1390  
 292 14 Dtool_sTqOf0Vw 0 7 265 1333 0 14 Dtool_sTqOf0Vw 0 1 4 this 3 1390  
 293 14 Dtool_sTqOO_iH 0 4 266 1323 0 14 Dtool_sTqOO_iH 0 2 4 this 3 1396  3 pos 1 1326  
 294 14 Dtool_sTqOwOXA 0 4 266 1323 0 14 Dtool_sTqOwOXA 0 4 4 this 3 1396  1 x 1 1329  1 y 1 1329  1 z 1 1329  
@@ -3491,11 +3012,7 @@ OdeUtil::~OdeUtil(void);
 321 14 Dtool_sTqOADQ7 0 7 291 1379 0 14 Dtool_sTqOADQ7 0 1 4 this 3 1390  
 322 14 Dtool_sTqOEoTE 0 7 292 1380 0 14 Dtool_sTqOEoTE 0 1 4 this 3 1390  
 323 14 Dtool_sTqOn5PY 0 7 293 1402 0 14 Dtool_sTqOn5PY 0 1 4 this 3 1390  
-324 14 Dtool_sTqOp_Ay 0 7 294 1387 0 14 Dtool_sTqOp_Ay 174 //int get_surface_type() ;
-//int get_collide_id() ;
-//int set_collide_id( int collide_id);
-//void set_surface_type( int surface_type);
-//int test_collide_id( int collide_id); 1 4 this 3 1390  
+324 14 Dtool_sTqOp_Ay 0 7 294 1387 0 14 Dtool_sTqOp_Ay 0 1 4 this 3 1390  
 325 14 Dtool_sTqOm8tw 0 6 295 1355 0 14 Dtool_sTqOm8tw 0 1 4 this 3 1390  
 326 14 Dtool_sTqOiWOz 0 4 296 1323 0 14 Dtool_sTqOiWOz 0 3 4 this 3 1390  3 out 1 1352  6 indent 1 1354  
 327 14 Dtool_sTqOdY3L 0 4 296 1323 0 14 Dtool_sTqOdY3L 0 2 4 this 3 1390  3 out 1 1352  
@@ -3506,7 +3023,7 @@ OdeUtil::~OdeUtil(void);
 332 14 Dtool_sTqOfK7w 0 7 301 1404 0 14 Dtool_sTqOfK7w 0 1 4 this 3 1390  
 333 14 Dtool_sTqOahYj 0 7 302 1405 0 14 Dtool_sTqOahYj 43 // OdeConvexGeom convert_to_convex() const; 1 4 this 3 1390  
 334 14 Dtool_sTqOeq3c 0 7 303 1406 0 14 Dtool_sTqOeq3c 53 // OdeHeightfieldGeom convert_to_heightfield() const; 1 4 this 3 1390  
-335 14 Dtool_sTqOqZZJ 0 7 304 1407 0 14 Dtool_sTqOqZZJ 53 // OdeHeightfieldGeom convert_to_heightfield() const; 1 4 this 3 1390  
+335 14 Dtool_sTqOqZZJ 0 7 304 1407 0 14 Dtool_sTqOqZZJ 0 1 4 this 3 1390  
 336 14 Dtool_sTqOyqpD 0 7 305 1408 0 14 Dtool_sTqOyqpD 0 1 4 this 3 1390  
 337 14 Dtool_sTqOXaIY 0 7 306 1409 0 14 Dtool_sTqOXaIY 0 1 4 this 3 1390  
 338 14 Dtool_sTqOX_CC 0 7 307 1397 0 14 Dtool_sTqOX_CC 0 1 4 this 3 1390  
@@ -3518,38 +3035,14 @@ OdeUtil::~OdeUtil(void);
 344 14 Dtool_sTqOG0nP 0 7 312 1403 0 14 Dtool_sTqOG0nP 0 4 5 space 1 1387  2 lx 1 1329  2 ly 1 1329  2 lz 1 1329  
 345 14 Dtool_sTqOUAjx 0 7 312 1403 0 14 Dtool_sTqOUAjx 0 3 2 lx 1 1329  2 ly 1 1329  2 lz 1 1329  
 346 14 Dtool_sTqOrilP 0 4 313 1323 0 14 Dtool_sTqOrilP 0 2 4 this 3 1403  4 size 1 1326  
-347 14 Dtool_sTqOTeQ7 0 4 313 1323 0 14 Dtool_sTqOTeQ7 488 // Filename: odeBoxGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 4 4 this 3 1403  2 lx 1 1329  2 ly 1 1329  2 lz 1 1329  
+347 14 Dtool_sTqOTeQ7 0 4 313 1323 0 14 Dtool_sTqOTeQ7 0 4 4 this 3 1403  2 lx 1 1329  2 ly 1 1329  2 lz 1 1329  
 348 14 Dtool_sTqOiU9Y 0 7 314 1331 0 14 Dtool_sTqOiU9Y 0 1 4 this 3 1403  
 349 14 Dtool_sTqOmkzM 0 6 315 1329 0 14 Dtool_sTqOmkzM 0 2 4 this 3 1403  1 p 1 1410  
 350 14 Dtool_sTqOmr58 0 6 315 1329 0 14 Dtool_sTqOmr58 0 4 4 this 3 1403  1 x 1 1329  1 y 1 1329  1 z 1 1329  
 351 14 Dtool_sTqO4h7F 0 7 316 1335 0 14 Dtool_sTqO4h7F 0 0 
 352 14 Dtool_sTqOfjkn 0 7 318 1404 0 14 Dtool_sTqOfjkn 0 3 5 space 1 1387  6 radius 1 1329  6 length 1 1329  
 353 14 Dtool_sTqOVPcL 0 7 318 1404 0 14 Dtool_sTqOVPcL 0 2 6 radius 1 1329  6 length 1 1329  
-354 14 Dtool_sTqOSpf3 0 4 319 1323 0 14 Dtool_sTqOSpf3 499 // Filename: odeCappedCylinderGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 3 4 this 3 1404  6 radius 1 1329  6 length 1 1329  
+354 14 Dtool_sTqOSpf3 0 4 319 1323 0 14 Dtool_sTqOSpf3 0 3 4 this 3 1404  6 radius 1 1329  6 length 1 1329  
 355 14 Dtool_sTqOBhyZ 0 6 321 1329 0 14 Dtool_sTqOBhyZ 0 1 4 this 3 1412  
 356 14 Dtool_sTqOFELI 0 6 322 1329 0 14 Dtool_sTqOFELI 0 1 4 this 3 1412  
 357 14 Dtool_sTqOaaTf 0 6 323 1329 0 14 Dtool_sTqOaaTf 0 2 4 this 3 1412  1 p 1 1410  
@@ -3557,19 +3050,7 @@ OdeUtil::~OdeUtil(void);
 359 14 Dtool_sTqObowg 0 7 324 1335 0 14 Dtool_sTqObowg 0 0 
 360 14 Dtool_sTqOrDgj 0 7 326 1414 0 14 Dtool_sTqOrDgj 0 0 
 361 14 Dtool_sTqOxR7P 0 7 326 1414 0 14 Dtool_sTqOxR7P 0 1 4 copy 1 1415  
-362 14 Dtool_sTqO_ppo 0 7 327 1331 0 14 Dtool_sTqO_ppo 492 // Filename: odeContactGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 1 4 this 3 1415  
+362 14 Dtool_sTqO_ppo 0 7 327 1331 0 14 Dtool_sTqO_ppo 0 1 4 this 3 1415  
 363 14 Dtool_sTqOchdK 0 7 328 1331 0 14 Dtool_sTqOchdK 0 1 4 this 3 1415  
 364 14 Dtool_sTqOv0Qh 0 6 329 1329 0 14 Dtool_sTqOv0Qh 0 1 4 this 3 1415  
 365 14 Dtool_sTqOBzZu 0 7 330 1396 0 14 Dtool_sTqOBzZu 0 1 4 this 3 1415  
@@ -3619,39 +3100,18 @@ OdeUtil::~OdeUtil(void);
 //       Access: Published
 //  Description: Returns the nth contact geom in the collision.
 //////////////////////////////////////////////////////////////////// 2 4 this 3 1417  1 n 1 1354  
-382 14 Dtool_sTqOHg3X 0 7 348 1414 0 14 Dtool_sTqOHg3X 276 ////////////////////////////////////////////////////////////////////
-//     Function: OdeCollisionEntry::operator []
-//       Access: Published
-//  Description: Returns the nth contact geom in the collision.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 1417  1 n 1 1354  
+382 14 Dtool_sTqOHg3X 0 7 348 1414 0 14 Dtool_sTqOHg3X 0 2 4 this 3 1417  1 n 1 1354  
 383 14 Dtool_sTqO5L6p 0 6 350 1324 0 14 Dtool_sTqO5L6p 271 ////////////////////////////////////////////////////////////////////
 //     Function: OdeCollisionEntry::is_empty
 //       Access: Published
 //  Description: Returns true if the entry holds no contacts.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 1417  
 384 14 Dtool_sTqOLNW0 0 7 351 1335 0 14 Dtool_sTqOLNW0 0 0 
-385 14 Dtool_sTqOtk24 0 6 349 1324 0 14 Dtool_sTqOtk24 313 ////////////////////////////////////////////////////////////////////
-//     Function: OdeCollisionEntry::operator bool
-//       Access: Published
-//  Description: An OdeCollisionEntry evaluates to False if it
-//               holds no contacts.
-//////////////////////////////////////////////////////////////////// 1 4 this 3 1417  
+385 14 Dtool_sTqOtk24 0 6 349 1324 0 14 Dtool_sTqOtk24 0 1 4 this 3 1417  
 386 14 Dtool_sTqOWmWA 0 7 354 1419 0 14 Dtool_sTqOWmWA 0 2 4 mode 1 1330  2 mu 1 1329  
 387 14 Dtool_sTqOP6Dl 0 7 354 1419 0 14 Dtool_sTqOP6Dl 0 1 4 mode 1 1330  
 388 14 Dtool_sTqO1ZXM 0 7 354 1419 0 14 Dtool_sTqO1ZXM 0 0 
-389 14 Dtool_sTqOVM_j 0 4 355 1323 0 14 Dtool_sTqOVM_j 498 // Filename: odeSurfaceParameters.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 2 4 this 3 1419  4 mode 1 1330  
+389 14 Dtool_sTqOVM_j 0 4 355 1323 0 14 Dtool_sTqOVM_j 0 2 4 this 3 1419  4 mode 1 1330  
 390 14 Dtool_sTqOCbx_ 0 4 356 1323 0 14 Dtool_sTqOCbx_ 0 2 4 this 3 1419  2 mu 1 1329  
 391 14 Dtool_sTqOfGNz 0 4 357 1323 0 14 Dtool_sTqOfGNz 0 2 4 this 3 1419  3 mu2 1 1329  
 392 14 Dtool_sTqOC0q9 0 4 358 1323 0 14 Dtool_sTqOC0q9 0 2 4 this 3 1419  6 bounce 1 1329  
@@ -3676,19 +3136,7 @@ OdeUtil::~OdeUtil(void);
 411 14 Dtool_sTqOyAtM 0 7 377 1335 0 14 Dtool_sTqOyAtM 0 0 
 412 14 Dtool_sTqOoVpX 0 7 379 1422 0 14 Dtool_sTqOoVpX 0 0 
 413 14 Dtool_sTqO5d7O 0 7 379 1422 0 14 Dtool_sTqO5d7O 38 // OdeContact(const OdeContact &copy); 1 7 contact 1 1423  
-414 14 Dtool_sTqOTEDY 0 7 380 1419 0 14 Dtool_sTqOTEDY 488 // Filename: odeContact.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 1 4 this 3 1426  
+414 14 Dtool_sTqOTEDY 0 7 380 1419 0 14 Dtool_sTqOTEDY 0 1 4 this 3 1426  
 415 14 Dtool_sTqOTva8 0 7 381 1414 0 14 Dtool_sTqOTva8 0 1 4 this 3 1422  
 416 14 Dtool_sTqO86si 0 7 382 1331 0 14 Dtool_sTqO86si 0 1 4 this 3 1426  
 417 14 Dtool_sTqOwAkR 0 4 383 1323 0 14 Dtool_sTqOwAkR 0 2 4 this 3 1422  18 surface_parameters 1 1420  
@@ -3700,53 +3148,17 @@ OdeUtil::~OdeUtil(void);
 423 14 Dtool_sTqOlL36 0 7 389 1335 0 14 Dtool_sTqOlL36 0 0 
 424 14 Dtool_sTqOoKYd 0 7 391 1405 0 14 Dtool_sTqOoKYd 0 3 5 space 1 1387  6 radius 1 1329  6 length 1 1329  
 425 14 Dtool_sTqOpiV_ 0 7 391 1405 0 14 Dtool_sTqOpiV_ 0 2 6 radius 1 1329  6 length 1 1329  
-426 14 Dtool_sTqOr5k1 0 4 392 1323 0 14 Dtool_sTqOr5k1 493 // Filename: odeCylinderGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 3 4 this 3 1405  6 radius 1 1329  6 length 1 1329  
+426 14 Dtool_sTqOr5k1 0 4 392 1323 0 14 Dtool_sTqOr5k1 0 3 4 this 3 1405  6 radius 1 1329  6 length 1 1329  
 427 14 Dtool_sTqOlFIl 0 6 394 1329 0 14 Dtool_sTqOlFIl 0 1 4 this 3 1428  
 428 14 Dtool_sTqONs2A 0 6 395 1329 0 14 Dtool_sTqONs2A 0 1 4 this 3 1428  
 429 14 Dtool_sTqOuZP3 0 7 396 1335 0 14 Dtool_sTqOuZP3 0 0 
 430 14 Dtool_sTqOl0Dv 0 7 398 1363 0 14 Dtool_sTqOl0Dv 0 1 5 world 1 1320  
 431 14 Dtool_sTqON2YW 0 7 398 1363 0 14 Dtool_sTqON2YW 0 2 5 world 1 1320  11 joint_group 1 1336  
-432 14 Dtool_sTqO__C8 0 4 399 1323 0 14 Dtool_sTqO__C8 491 // Filename: odeFixedJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 1 4 this 3 1363  
+432 14 Dtool_sTqO__C8 0 4 399 1323 0 14 Dtool_sTqO__C8 0 1 4 this 3 1363  
 433 14 Dtool_sTqOCbRZ 0 7 400 1335 0 14 Dtool_sTqOCbRZ 0 0 
 434 14 Dtool_sTqOYwng 0 7 402 1398 0 14 Dtool_sTqOYwng 0 0 
 435 14 Dtool_sTqOK4tA 0 7 402 1398 0 14 Dtool_sTqOK4tA 0 1 5 space 1 1387  
-436 14 Dtool_sTqOu9tU 0 4 403 1323 0 14 Dtool_sTqOu9tU 490 // Filename: odeHashSpace.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 3 4 this 3 1398  8 minlevel 1 1330  8 maxlevel 1 1330  
+436 14 Dtool_sTqOu9tU 0 4 403 1323 0 14 Dtool_sTqOu9tU 0 3 4 this 3 1398  8 minlevel 1 1330  8 maxlevel 1 1330  
 437 14 Dtool_sTqOeDbq 0 6 404 1330 0 14 Dtool_sTqOeDbq 0 1 4 this 3 1430  
 438 14 Dtool_sTqOCkZt 0 6 405 1330 0 14 Dtool_sTqOCkZt 0 1 4 this 3 1430  
 439 14 Dtool_sTqOgfSF 0 7 406 1335 0 14 Dtool_sTqOgfSF 0 0 
@@ -3792,19 +3204,7 @@ OdeUtil::~OdeUtil(void);
 479 14 Dtool_sTqOfM0Q 0 7 444 1358 0 14 Dtool_sTqOfM0Q 0 1 5 world 1 1320  
 480 14 Dtool_sTqOkrK4 0 7 444 1358 0 14 Dtool_sTqOkrK4 0 2 5 world 1 1320  11 joint_group 1 1336  
 481 14 Dtool_sTqOQ9qv 0 4 445 1323 0 14 Dtool_sTqOQ9qv 0 2 4 this 3 1358  6 anchor 1 1326  
-482 14 Dtool_sTqOa7Ln 0 4 445 1323 0 14 Dtool_sTqOa7Ln 491 // Filename: odeHingeJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 4 4 this 3 1358  1 x 1 1329  1 y 1 1329  1 z 1 1329  
+482 14 Dtool_sTqOa7Ln 0 4 445 1323 0 14 Dtool_sTqOa7Ln 0 4 4 this 3 1358  1 x 1 1329  1 y 1 1329  1 z 1 1329  
 483 14 Dtool_sTqOry6s 0 4 446 1323 0 14 Dtool_sTqOry6s 0 3 4 this 3 1358  6 anchor 1 1326  3 vec 1 1326  
 484 14 Dtool_sTqOy9wf 0 4 446 1323 0 14 Dtool_sTqOy9wf 0 7 4 this 3 1358  1 x 1 1329  1 y 1 1329  1 z 1 1329  2 ax 1 1329  2 ay 1 1329  2 az 1 1329  
 485 14 Dtool_sTqOlcqG 0 4 447 1323 0 14 Dtool_sTqOlcqG 0 2 4 this 3 1358  4 axis 1 1326  
@@ -3854,17 +3254,8 @@ OdeUtil::~OdeUtil(void);
 //  Description: Returns the number of joints in the collection.  This
 //               is the same thing as get_num_joints().
 //////////////////////////////////////////////////////////////////// 1 4 this 3 1437  
-527 14 Dtool_sTqOvSRf 0 6 489 1436 0 14 Dtool_sTqOvSRf 279 ////////////////////////////////////////////////////////////////////
-//     Function: OdeJointCollection::operator +=
-//       Access: Published
-//  Description: Appends the other list onto the end of this one.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 1436  5 other 1 1437  
-528 14 Dtool_sTqO8PkF 0 7 490 1436 1125 14 Dtool_sTqO8PkF 324 ////////////////////////////////////////////////////////////////////
-//     Function: OdeJointCollection::operator +
-//       Access: Published
-//  Description: Returns a OdeJointCollection representing the
-//               concatenation of the two lists.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 1437  5 other 1 1437  
+527 14 Dtool_sTqOvSRf 0 6 489 1436 0 14 Dtool_sTqOvSRf 0 2 4 this 3 1436  5 other 1 1437  
+528 14 Dtool_sTqO8PkF 0 7 490 1436 1125 14 Dtool_sTqO8PkF 0 2 4 this 3 1437  5 other 1 1437  
 529 14 Dtool_sTqO5DtV 0 7 492 1366 0 14 Dtool_sTqO5DtV 0 1 5 world 1 1320  
 530 14 Dtool_sTqOYSGf 0 7 492 1366 0 14 Dtool_sTqOYSGf 0 2 5 world 1 1320  11 joint_group 1 1336  
 531 14 Dtool_sTqOIhPc 0 4 493 1323 0 14 Dtool_sTqOIhPc 0 2 4 this 3 1366  3 num 1 1330  
@@ -3880,19 +3271,7 @@ OdeUtil::~OdeUtil(void);
 541 14 Dtool_sTqOEhZD 0 7 502 1335 0 14 Dtool_sTqOEhZD 0 0 
 542 14 Dtool_sTqO_I6P 0 7 504 1367 0 14 Dtool_sTqO_I6P 0 1 5 world 1 1320  
 543 14 Dtool_sTqOP5XS 0 7 504 1367 0 14 Dtool_sTqOP5XS 0 2 5 world 1 1320  11 joint_group 1 1336  
-544 14 Dtool_sTqOnFwY 0 4 505 1323 0 14 Dtool_sTqOnFwY 493 // Filename: odePlane2dJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 3 4 this 3 1367  9 parameter 1 1330  5 value 1 1329  
+544 14 Dtool_sTqOnFwY 0 4 505 1323 0 14 Dtool_sTqOnFwY 0 3 4 this 3 1367  9 parameter 1 1330  5 value 1 1329  
 545 14 Dtool_sTqOn9hi 0 4 506 1323 0 14 Dtool_sTqOn9hi 0 3 4 this 3 1367  9 parameter 1 1330  5 value 1 1329  
 546 14 Dtool_sTqO4759 0 4 507 1323 0 14 Dtool_sTqO4759 0 3 4 this 3 1367  9 parameter 1 1330  5 value 1 1329  
 547 14 Dtool_sTqO9i2A 0 7 508 1335 0 14 Dtool_sTqO9i2A 0 0 
@@ -3901,19 +3280,7 @@ OdeUtil::~OdeUtil(void);
 550 14 Dtool_sTqOs4w8 0 7 510 1406 0 14 Dtool_sTqOs4w8 0 5 5 space 1 1387  1 a 1 1329  1 b 1 1329  1 c 1 1329  1 d 1 1329  
 551 14 Dtool_sTqOCRGY 0 7 510 1406 0 14 Dtool_sTqOCRGY 0 4 1 a 1 1329  1 b 1 1329  1 c 1 1329  1 d 1 1329  
 552 14 Dtool_sTqO0DLj 0 4 511 1323 0 14 Dtool_sTqO0DLj 0 2 4 this 3 1406  6 params 1 1441  
-553 14 Dtool_sTqO_vSr 0 4 511 1323 0 14 Dtool_sTqO_vSr 490 // Filename: odePlaneGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 5 4 this 3 1406  1 a 1 1329  1 b 1 1329  1 c 1 1329  1 d 1 1329  
+553 14 Dtool_sTqO_vSr 0 4 511 1323 0 14 Dtool_sTqO_vSr 0 5 4 this 3 1406  1 a 1 1329  1 b 1 1329  1 c 1 1329  1 d 1 1329  
 554 14 Dtool_sTqOfzg_ 0 7 512 1386 0 14 Dtool_sTqOfzg_ 0 1 4 this 3 1443  
 555 14 Dtool_sTqOWeOH 0 6 513 1329 0 14 Dtool_sTqOWeOH 0 2 4 this 3 1443  1 p 1 1410  
 556 14 Dtool_sTqOGPkc 0 6 513 1329 0 14 Dtool_sTqOGPkc 0 4 4 this 3 1443  1 x 1 1329  1 y 1 1329  1 z 1 1329  
@@ -3954,19 +3321,7 @@ OdeUtil::~OdeUtil(void);
 579 14 Dtool_sTqO4ugR 0 7 537 1359 0 14 Dtool_sTqO4ugR 0 1 5 world 1 1320  
 580 14 Dtool_sTqOZI5a 0 7 537 1359 0 14 Dtool_sTqOZI5a 0 2 5 world 1 1320  11 joint_group 1 1336  
 581 14 Dtool_sTqOfgOX 0 4 538 1323 0 14 Dtool_sTqOfgOX 0 2 4 this 3 1359  4 axis 1 1326  
-582 14 Dtool_sTqOMn8O 0 4 538 1323 0 14 Dtool_sTqOMn8O 492 // Filename: odeSliderJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 4 4 this 3 1359  1 x 1 1329  1 y 1 1329  1 z 1 1329  
+582 14 Dtool_sTqOMn8O 0 4 538 1323 0 14 Dtool_sTqOMn8O 0 4 4 this 3 1359  1 x 1 1329  1 y 1 1329  1 z 1 1329  
 583 14 Dtool_sTqOOVHP 0 4 539 1323 0 14 Dtool_sTqOOVHP 0 3 4 this 3 1359  4 axis 1 1326  3 vec 1 1326  
 584 14 Dtool_sTqOLtnI 0 4 539 1323 0 14 Dtool_sTqOLtnI 0 7 4 this 3 1359  1 x 1 1329  1 y 1 1329  1 z 1 1329  2 ax 1 1329  2 ay 1 1329  2 az 1 1329  
 585 14 Dtool_sTqOTFFs 0 4 540 1323 0 14 Dtool_sTqOTFFs 0 2 4 this 3 1359  5 force 1 1329  
@@ -3995,27 +3350,13 @@ OdeUtil::~OdeUtil(void);
 608 14 Dtool_sTqOyzLV 0 7 564 1408 0 14 Dtool_sTqOyzLV 0 1 4 geom 1 1396  
 609 14 Dtool_sTqOb_sr 0 7 564 1408 0 14 Dtool_sTqOb_sr 0 2 5 space 1 1387  6 radius 1 1329  
 610 14 Dtool_sTqOV_0T 0 7 564 1408 0 14 Dtool_sTqOV_0T 0 1 6 radius 1 1329  
-611 14 Dtool_sTqOXrVf 0 4 565 1323 0 14 Dtool_sTqOXrVf 491 // Filename: odeSphereGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 2 4 this 3 1408  6 radius 1 1329  
+611 14 Dtool_sTqOXrVf 0 4 565 1323 0 14 Dtool_sTqOXrVf 0 2 4 this 3 1408  6 radius 1 1329  
 612 14 Dtool_sTqObwFy 0 6 566 1329 0 14 Dtool_sTqObwFy 0 1 4 this 3 1449  
 613 14 Dtool_sTqOUms_ 0 6 567 1329 0 14 Dtool_sTqOUms_ 0 2 4 this 3 1449  1 p 1 1410  
 614 14 Dtool_sTqOmqCr 0 6 567 1329 0 14 Dtool_sTqOmqCr 0 4 4 this 3 1449  1 x 1 1329  1 y 1 1329  1 z 1 1329  
 615 14 Dtool_sTqO__Wp 0 7 568 1335 0 14 Dtool_sTqO__Wp 0 0 
-616 14 Dtool_sTqOWaU0 0 7 571 1454 0 14 Dtool_sTqOWaU0 137 ////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////// 2 5 model 1 1451  11 use_normals 1 1324  
-617 14 Dtool_sTqOqx4u 0 7 571 1454 0 14 Dtool_sTqOqx4u 137 ////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////// 1 5 model 1 1451  
+616 14 Dtool_sTqOWaU0 0 7 571 1454 0 14 Dtool_sTqOWaU0 0 2 5 model 1 1451  11 use_normals 1 1324  
+617 14 Dtool_sTqOqx4u 0 7 571 1454 0 14 Dtool_sTqOqx4u 0 1 5 model 1 1451  
 618 14 Dtool_sTqO9RYo 0 4 572 1323 0 14 Dtool_sTqO9RYo 0 1 4 this 3 1454  
 619 14 Dtool_sTqO7eXr 0 4 573 1323 0 14 Dtool_sTqO7eXr 221 // INLINE void set(int data_id, void* in_data);
 // INLINE void* get(int data_id);
@@ -4032,11 +3373,7 @@ OdeUtil::~OdeUtil(void);
 // INLINE void get_buffer(unsigned char** buf, int* buf_len) const;
 // INLINE void set_buffer(unsigned char* buf);
 // INLINE void update(); 1 4 this 3 1455  
-622 14 Dtool_sTqOfNl3 0 4 574 1323 0 14 Dtool_sTqOfNl3 221 // INLINE void set(int data_id, void* in_data);
-// INLINE void* get(int data_id);
-// INLINE void get_buffer(unsigned char** buf, int* buf_len) const;
-// INLINE void set_buffer(unsigned char* buf);
-// INLINE void update(); 2 4 this 3 1455  3 out 1 1352  
+622 14 Dtool_sTqOfNl3 0 4 574 1323 0 14 Dtool_sTqOfNl3 0 2 4 this 3 1455  3 out 1 1352  
 623 14 Dtool_sTqOqO9v 0 7 575 1335 0 14 Dtool_sTqOqO9v 0 0 
 624 14 Dtool_sTqOwQ8d 0 7 577 1409 0 14 Dtool_sTqOwQ8d 0 2 5 space 1 1387  4 data 1 1454  
 625 14 Dtool_sTqOOaZH 0 7 577 1409 0 14 Dtool_sTqOOaZH 162 /* ODE_API dGeomID dCreateTriMesh(dSpaceID space, dTriMeshDataID Data, dTriCallback* Callback, dTriArrayCallback* ArrayCallback, dTriRayCallback* RayCallback); */ 1 4 data 1 1454  
@@ -4044,19 +3381,7 @@ OdeUtil::~OdeUtil(void);
 627 14 Dtool_sTqOY90V 0 4 578 1323 0 14 Dtool_sTqOY90V 0 1 4 this 3 1409  
 628 14 Dtool_sTqOOglb 0 4 579 1323 0 14 Dtool_sTqOOglb 0 2 4 this 3 1409  4 data 1 1454  
 629 14 Dtool_sTqOVIJR 0 7 580 1454 0 14 Dtool_sTqOVIJR 0 1 4 this 3 1457  
-630 14 Dtool_sTqO2HMT 0 4 581 1323 0 14 Dtool_sTqO2HMT 492 // Filename: odeTriMeshGeom.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 2 4 this 3 1409  4 data 1 1454  
+630 14 Dtool_sTqO2HMT 0 4 581 1323 0 14 Dtool_sTqO2HMT 0 2 4 this 3 1409  4 data 1 1454  
 631 14 Dtool_sTqOTQpZ 0 7 582 1454 0 14 Dtool_sTqOTQpZ 0 1 4 this 3 1457  
 632 14 Dtool_sTqO1PsA 0 4 583 1323 0 14 Dtool_sTqO1PsA 0 3 4 this 3 1409  10 geom_class 1 1330  6 enable 1 1330  
 633 14 Dtool_sTqO61Qi 0 6 584 1330 0 14 Dtool_sTqO61Qi 0 2 4 this 3 1457  10 geom_class 1 1330  
@@ -4068,19 +3393,7 @@ OdeUtil::~OdeUtil(void);
 639 14 Dtool_sTqOFrPO 0 7 591 1361 0 14 Dtool_sTqOFrPO 0 1 5 world 1 1320  
 640 14 Dtool_sTqOtIUq 0 7 591 1361 0 14 Dtool_sTqOtIUq 0 2 5 world 1 1320  11 joint_group 1 1336  
 641 14 Dtool_sTqOxQ_F 0 4 592 1323 0 14 Dtool_sTqOxQ_F 0 2 4 this 3 1361  6 anchor 1 1326  
-642 14 Dtool_sTqOoWc1 0 4 592 1323 0 14 Dtool_sTqOoWc1 495 // Filename: odeUniversalJoint.I
-// Created by:  joswilso (27Dec06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-//////////////////////////////////////////////////////////////////// 4 4 this 3 1361  1 x 1 1329  1 y 1 1329  1 z 1 1329  
+642 14 Dtool_sTqOoWc1 0 4 592 1323 0 14 Dtool_sTqOoWc1 0 4 4 this 3 1361  1 x 1 1329  1 y 1 1329  1 z 1 1329  
 643 14 Dtool_sTqOKFpG 0 4 593 1323 0 14 Dtool_sTqOKFpG 0 2 4 this 3 1361  4 axis 1 1326  
 644 14 Dtool_sTqOXGHe 0 4 593 1323 0 14 Dtool_sTqOXGHe 0 4 4 this 3 1361  1 x 1 1329  1 y 1 1329  1 z 1 1329  
 645 14 Dtool_sTqOTFh3 0 4 594 1323 0 14 Dtool_sTqOTFh3 0 2 4 this 3 1361  4 axis 1 1326  
@@ -4156,7 +3469,7 @@ OdeUtil::~OdeUtil(void);
 //               (geom1 and geom2), generate contact information
 //               for them. Returns an OdeCollisionEntry.
 //////////////////////////////////////////////////////////////////// 2 5 geom1 1 1390  5 geom2 1 1390  
-681 14 Dtool_sTqOux7A 0 6 629 1330 0 14 Dtool_sTqOux7A 0 4 5 geom1 1 1390  5 geom2 1 1390  3 arg 1 1355  8 callback 1 1355  
+681 14 Dtool_sTqOAPT9 0 6 629 1330 0 14 Dtool_sTqOAPT9 0 4 5 geom1 1 1390  5 geom2 1 1390  3 arg 1 1355  8 callback 1 1355  
 682 14 Dtool_sTqOyL0C 0 7 630 1396 0 14 Dtool_sTqOyL0C 0 1 5 space 1 1388  
 683 14 Dtool_sTqOrRAh 0 6 631 1329 0 14 Dtool_sTqOrRAh 73 // RAU we can't access OC_infinity as constants are not exposed in python 0 
 684 14 Dtool_sTqO3iBL 0 6 632 1330 0 14 Dtool_sTqO3iBL 0 0 
@@ -4182,7 +3495,7 @@ OdeUtil::~OdeUtil(void);
 // Description : 
 ////////////////////////////////////////////////////////////////////
 
-1278 11 TypedObject 0 2049 11 TypedObject 11 TypedObject 0 0 0 0 0 0 0 0 0 0 0 0 3666
+1278 11 TypedObject 0 2049 11 TypedObject 11 TypedObject 0 0 0 0 0 0 0 0 0 0 0 0 3561
 ////////////////////////////////////////////////////////////////////
 //       Class : TypedObject
 // Description : This is an abstract class that all classes which
@@ -4192,7 +3505,7 @@ OdeUtil::~OdeUtil(void);
 //               return the specific type of the derived class.
 //               Inheriting from this automatically provides support
 //               for is_of_type() and is_exact_type().
-//               
+//
 //               All classes that inherit directly or indirectly from
 //               TypedObject should redefine get_type() and
 //               force_init_type(), as shown below.  Some classes that
@@ -4204,7 +3517,7 @@ OdeUtil::~OdeUtil(void);
 //               do not inherit from TypedObject need not define the
 //               virtual functions get_type() and force_init_type()
 //               (or any other virtual functions).
-//               
+//
 //               There is a specific layout for defining the
 //               overrides from this class.  Keeping the definitions
 //               formatted just like these examples will allow
@@ -4213,10 +3526,10 @@ OdeUtil::~OdeUtil(void);
 //               rearranging the braces or the order of the functions
 //               unless you're ready to change them in every file all
 //               at once.
-//               
+//
 //               What follows are some examples that can be used in
 //               new classes that you create.
-//               
+//
 //               @par In the class definition (.h file):
 //               @code
 //               public:
@@ -4236,16 +3549,16 @@ OdeUtil::~OdeUtil(void);
 //                   return get_class_type();
 //                 }
 //                 virtual TypeHandle force_init_type() {init_type(); return get_class_type();}
-//               
+//
 //               private:
 //                 static TypeHandle _type_handle;
 //               @endcode
-//               
+//
 //               @par In the class .cxx file:
 //               @code
 //               TypeHandle <<<ThisClassStringName>>>::_type_handle;
 //               @endcode
-//               
+//
 //               @par In the class config_<<<PackageName>>>.cxx file:
 //               @code
 //               ConfigureFn(config_<<<PackageName>>>) {
@@ -4272,7 +3585,20 @@ OdeUtil::~OdeUtil(void);
 // Description :
 ////////////////////////////////////////////////////////////////////
 
-1283 9 JointType 0 794624 19 OdeJoint::JointType 19 OdeJoint::JointType 1282 0 0 0 0 0 0 0 0 0 12 7 JT_none 17 OdeJoint::JT_none 0 7 JT_ball 17 OdeJoint::JT_ball 1 8 JT_hinge 18 OdeJoint::JT_hinge 2 9 JT_slider 19 OdeJoint::JT_slider 3 10 JT_contact 20 OdeJoint::JT_contact 4 12 JT_universal 22 OdeJoint::JT_universal 5 9 JT_hinge2 19 OdeJoint::JT_hinge2 6 8 JT_fixed 18 OdeJoint::JT_fixed 7 7 JT_null 17 OdeJoint::JT_null 8 10 JT_a_motor 20 OdeJoint::JT_a_motor 9 10 JT_l_motor 20 OdeJoint::JT_l_motor 10 10 JT_plane2d 20 OdeJoint::JT_plane2d 11 0 18
+1283 9 JointType 0 794624 19 OdeJoint::JointType 19 OdeJoint::JointType 1282 0 0 0 0 0 0 0 0 0 12 7 JT_none 17 OdeJoint::JT_none 18
+/* or "unknown" */
+0 7 JT_ball 17 OdeJoint::JT_ball 0
+1 8 JT_hinge 18 OdeJoint::JT_hinge 0
+2 9 JT_slider 19 OdeJoint::JT_slider 0
+3 10 JT_contact 20 OdeJoint::JT_contact 0
+4 12 JT_universal 22 OdeJoint::JT_universal 0
+5 9 JT_hinge2 19 OdeJoint::JT_hinge2 0
+6 8 JT_fixed 18 OdeJoint::JT_fixed 0
+7 7 JT_null 17 OdeJoint::JT_null 0
+8 10 JT_a_motor 20 OdeJoint::JT_a_motor 0
+9 10 JT_l_motor 20 OdeJoint::JT_l_motor 0
+10 10 JT_plane2d 20 OdeJoint::JT_plane2d 0
+11 0 18
 /* or "unknown" */
 
 1284 14 OdeAMotorJoint 0 75777 14 OdeAMotorJoint 14 OdeAMotorJoint 0 0 0 1 763 0 0 30 764 765 766 767 768 769 770 771 772 773 774 775 776 777 778 779 780 781 782 783 784 785 786 787 788 789 790 791 792 793 1 1463 0 1 0 1282 0 0 0 0 187
@@ -4325,7 +3651,19 @@ OdeUtil::~OdeUtil(void);
 // Description : 
 ////////////////////////////////////////////////////////////////////
 
-1291 9 GeomClass 0 794624 18 OdeGeom::GeomClass 18 OdeGeom::GeomClass 1290 0 0 0 0 0 0 0 0 0 10 9 GC_sphere 18 OdeGeom::GC_sphere 0 6 GC_box 15 OdeGeom::GC_box 1 18 GC_capped_cylinder 27 OdeGeom::GC_capped_cylinder 2 11 GC_cylinder 20 OdeGeom::GC_cylinder 3 8 GC_plane 17 OdeGeom::GC_plane 4 6 GC_ray 15 OdeGeom::GC_ray 5 11 GC_tri_mesh 20 OdeGeom::GC_tri_mesh 8 15 GC_simple_space 24 OdeGeom::GC_simple_space 10 13 GC_hash_space 22 OdeGeom::GC_hash_space 11 18 GC_quad_tree_space 27 OdeGeom::GC_quad_tree_space 12 0 0
+1291 9 GeomClass 0 794624 18 OdeGeom::GeomClass 18 OdeGeom::GeomClass 1290 0 0 0 0 0 0 0 0 0 10 9 GC_sphere 18 OdeGeom::GC_sphere 0
+0 6 GC_box 15 OdeGeom::GC_box 0
+1 18 GC_capped_cylinder 27 OdeGeom::GC_capped_cylinder 0
+2 11 GC_cylinder 20 OdeGeom::GC_cylinder 0
+3 8 GC_plane 17 OdeGeom::GC_plane 0
+4 6 GC_ray 15 OdeGeom::GC_ray 0
+5 11 GC_tri_mesh 20 OdeGeom::GC_tri_mesh 35
+// GC_convex,
+// GC_geom_transform,
+8 15 GC_simple_space 24 OdeGeom::GC_simple_space 0
+10 13 GC_hash_space 22 OdeGeom::GC_hash_space 0
+11 18 GC_quad_tree_space 27 OdeGeom::GC_quad_tree_space 0
+12 0 0
 
 1292 10 OdeBoxGeom 0 75777 10 OdeBoxGeom 10 OdeBoxGeom 0 0 0 1 974 0 0 4 975 976 977 978 0 0 1 0 1290 0 0 0 0 183
 ////////////////////////////////////////////////////////////////////
@@ -4358,7 +3696,20 @@ OdeUtil::~OdeUtil(void);
 // Description : 
 ////////////////////////////////////////////////////////////////////
 
-1297 9 ModeFlags 0 794624 31 OdeSurfaceParameters::ModeFlags 31 OdeSurfaceParameters::ModeFlags 1296 0 0 0 0 0 0 0 0 0 13 14 MF_contact_mu2 36 OdeSurfaceParameters::MF_contact_mu2 1 15 MF_contactFDir1 37 OdeSurfaceParameters::MF_contactFDir1 2 16 MF_contactBounce 38 OdeSurfaceParameters::MF_contactBounce 4 17 MF_contactSoftERP 39 OdeSurfaceParameters::MF_contactSoftERP 8 17 MF_contactSoftCFM 39 OdeSurfaceParameters::MF_contactSoftCFM 16 17 MF_contactMotion1 39 OdeSurfaceParameters::MF_contactMotion1 32 17 MF_contactMotion2 39 OdeSurfaceParameters::MF_contactMotion2 64 15 MF_contactSlip1 37 OdeSurfaceParameters::MF_contactSlip1 128 15 MF_contactSlip2 37 OdeSurfaceParameters::MF_contactSlip2 256 17 MF_contactApprox0 39 OdeSurfaceParameters::MF_contactApprox0 0 19 MF_contactApprox1_1 41 OdeSurfaceParameters::MF_contactApprox1_1 4096 19 MF_contactApprox1_2 41 OdeSurfaceParameters::MF_contactApprox1_2 8192 17 MF_contactApprox1 39 OdeSurfaceParameters::MF_contactApprox1 12288 0 0
+1297 9 ModeFlags 0 794624 31 OdeSurfaceParameters::ModeFlags 31 OdeSurfaceParameters::ModeFlags 1296 0 0 0 0 0 0 0 0 0 13 14 MF_contact_mu2 36 OdeSurfaceParameters::MF_contact_mu2 0
+1 15 MF_contactFDir1 37 OdeSurfaceParameters::MF_contactFDir1 0
+2 16 MF_contactBounce 38 OdeSurfaceParameters::MF_contactBounce 0
+4 17 MF_contactSoftERP 39 OdeSurfaceParameters::MF_contactSoftERP 0
+8 17 MF_contactSoftCFM 39 OdeSurfaceParameters::MF_contactSoftCFM 0
+16 17 MF_contactMotion1 39 OdeSurfaceParameters::MF_contactMotion1 0
+32 17 MF_contactMotion2 39 OdeSurfaceParameters::MF_contactMotion2 0
+64 15 MF_contactSlip1 37 OdeSurfaceParameters::MF_contactSlip1 0
+128 15 MF_contactSlip2 37 OdeSurfaceParameters::MF_contactSlip2 0
+256 17 MF_contactApprox0 39 OdeSurfaceParameters::MF_contactApprox0 0
+0 19 MF_contactApprox1_1 41 OdeSurfaceParameters::MF_contactApprox1_1 0
+4096 19 MF_contactApprox1_2 41 OdeSurfaceParameters::MF_contactApprox1_2 0
+8192 17 MF_contactApprox1 39 OdeSurfaceParameters::MF_contactApprox1 0
+12288 0 0
 
 1298 10 OdeContact 0 75777 10 OdeContact 10 OdeContact 0 0 0 1 1035 0 0 7 1036 1037 1038 1039 1040 1041 1042 0 0 1 0 1287 0 0 0 0 183
 ////////////////////////////////////////////////////////////////////
@@ -4468,7 +3819,9 @@ OdeUtil::~OdeUtil(void);
 // Description : 
 ////////////////////////////////////////////////////////////////////
 
-1316 8 DataType 0 794624 24 OdeTriMeshData::DataType 24 OdeTriMeshData::DataType 1315 0 0 0 0 0 0 0 0 0 2 15 DT_face_normals 31 OdeTriMeshData::DT_face_normals 0 22 DT_last_transformation 38 OdeTriMeshData::DT_last_transformation 1 0 0
+1316 8 DataType 0 794624 24 OdeTriMeshData::DataType 24 OdeTriMeshData::DataType 1315 0 0 0 0 0 0 0 0 0 2 15 DT_face_normals 31 OdeTriMeshData::DT_face_normals 0
+0 22 DT_last_transformation 38 OdeTriMeshData::DT_last_transformation 0
+1 0 0
 
 1317 14 OdeTriMeshGeom 0 75777 14 OdeTriMeshGeom 14 OdeTriMeshGeom 0 0 0 1 1214 0 0 12 1215 1216 1217 1218 1219 1220 1221 1222 1223 1224 1225 1226 0 0 1 0 1290 0 0 0 0 187
 ////////////////////////////////////////////////////////////////////
@@ -4504,20 +3857,7 @@ OdeUtil::~OdeUtil(void);
 
 1327 16 LVecBase3f const 0 8832 16 LVecBase3f const 16 LVecBase3f const 0 0 1328 0 0 0 0 0 0 0 0 0 0
 
-1328 10 LVecBase3f 0 2048 10 LVecBase3f 10 LVecBase3f 0 0 0 0 0 0 0 0 0 0 0 0 754
-// Filename: lvecBase3_src.h
-// Created by:  drose (08Mar00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1328 10 LVecBase3f 0 2048 10 LVecBase3f 10 LVecBase3f 0 0 0 0 0 0 0 0 0 0 0 0 265
 ////////////////////////////////////////////////////////////////////
 //       Class : LVecBase3
 // Description : This is the base class for all three-component
@@ -4566,20 +3906,7 @@ OdeUtil::~OdeUtil(void);
 
 1340 15 LVector3f const 0 8832 15 LVector3f const 15 LVector3f const 0 0 1341 0 0 0 0 0 0 0 0 0 0
 
-1341 9 LVector3f 0 2048 9 LVector3f 9 LVector3f 0 0 0 0 0 0 0 0 0 0 0 0 1086
-// Filename: lvector3_src.h
-// Created by:  drose (24Sep99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1341 9 LVector3f 0 2048 9 LVector3f 9 LVector3f 0 0 0 0 0 0 0 0 0 0 0 0 598
 ////////////////////////////////////////////////////////////////////
 //       Class : LVector3
 // Description : This is a three-component vector distance (as opposed
@@ -4617,9 +3944,9 @@ OdeUtil::~OdeUtil(void);
 
 1354 12 unsigned int 0 8198 12 unsigned int 12 unsigned int 0 1 0 0 0 0 0 0 0 0 0 0 0
 
-1355 10 PyObject * 0 8576 10 PyObject * 10 PyObject * 0 0 1356 0 0 0 0 0 0 0 0 0 0
+1355 9 _object * 0 8576 9 _object * 9 _object * 0 0 1356 0 0 0 0 0 0 0 0 0 0
 
-1356 8 PyObject 0 2048 8 PyObject 8 PyObject 0 0 0 0 0 0 0 0 0 0 0 0 0
+1356 7 _object 0 1024 7 _object 7 _object 0 0 0 0 0 0 0 0 0 0 0 0 0
 
 1357 14 OdeBallJoint * 0 8576 14 OdeBallJoint * 14 OdeBallJoint * 0 0 1285 0 0 0 0 0 0 0 0 0 0
 
@@ -4671,20 +3998,7 @@ OdeUtil::~OdeUtil(void);
 //               texture matrix.
 ////////////////////////////////////////////////////////////////////
 
-1378 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 1083
-// Filename: lpoint3_src.h
-// Created by:  drose (25Sep99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1378 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 596
 ////////////////////////////////////////////////////////////////////
 //       Class : LPoint3
 // Description : This is a three-component point in space (as opposed
@@ -4706,20 +4020,7 @@ OdeUtil::~OdeUtil(void);
 
 1383 18 LQuaternionf const 0 8832 18 LQuaternionf const 18 LQuaternionf const 0 0 1384 0 0 0 0 0 0 0 0 0 0
 
-1384 12 LQuaternionf 0 2048 12 LQuaternionf 12 LQuaternionf 0 0 0 0 0 0 0 0 0 0 0 0 719
-// Filename: lquaternion_src.h
-// Created by:  frang (06Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+1384 12 LQuaternionf 0 2048 12 LQuaternionf 12 LQuaternionf 0 0 0 0 0 0 0 0 0 0 0 0 228
 ////////////////////////////////////////////////////////////////////
 //       Class : FLOATNAME(LQuaternion)
 // Description : This is the base quaternion class
@@ -4866,86 +4167,7 @@ OdeUtil::~OdeUtil(void);
 
 1452 14 NodePath const 0 8832 14 NodePath const 14 NodePath const 0 0 1453 0 0 0 0 0 0 0 0 0 0
 
-1453 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 1473 1474 0 0 0 0 4938
-//
-// A NodePath is the fundamental unit of high-level interaction with
-// the scene graph.  It encapsulates the complete path down to a node
-// from some other node, usually the root of the scene graph.  This is
-// used to resolve ambiguities associated with instancing.
-//
-// NodePath also contains a number of handy high-level methods for
-// common scene-graph manipulations, such as reparenting, and common
-// state changes, such as repositioning.
-//
-// There are also a number of NodePath methods for finding nodes deep
-// within the tree by name or by type.  These take a path string,
-// which at its simplest consists of a series of node names separated
-// by slashes, like a directory pathname.
-//
-// Each component of the path string may optionally consist of one of
-// the following special names, instead of a node name:
-//
-//   *          -- matches exactly one node, with any name.
-//   **         -- matches any sequence of zero or more nodes.
-//   +typename  -- matches any node that is or derives from the given type.
-//   -typename  -- matches any node that is the given type exactly.
-//   =tag       -- matches any node that has the indicated tag.
-//   =tag=value -- matches any node whose tag matches the indicated value.
-//
-// Furthermore, a node name may itself contain standard filename
-// globbing characters, like *, ?, and [a-z], that will be accepted as
-// a partial match.  (In fact, the '*' special name may be seen as
-// just a special case of this.)  The globbing characters may not be
-// used with the typename matches or with tag matches, but they may
-// be used to match a tag's value in the =tag=value syntax.
-//
-// The special characters "@@", appearing at the beginning of a node
-// name, indicate a stashed node.  Normally, stashed nodes are not
-// returned by a find (but see the special flags, below), but a
-// stashed node may be found if it is explicitly named with its
-// leading @@ characters.  By extension, "@@*" may be used to identify
-// any stashed node.
-//
-// Examples:
-//
-// "room//graph" will look for a node named "graph", which is a child
-// of an unnamed node, which is a child of a node named "room", which
-// is a child of the starting path.
-//
-// "**/red*" will look for any node anywhere in the tree (below the
-// starting path) with a name that begins with "red".
-//
-// "**/+PartBundleNode/**/head" will look for a node named "head",
-// somewhere below a PartBundleNode anywhere in the tree.
-//
-//
-// The search is always potentially ambiguous, even if the special
-// wildcard operators are not used, because there may be multiple
-// nodes in the tree with the same name.  In general, in the case of
-// an ambiguity, the shortest path is preferred; when a method (such
-// as extend_by) must choose only only one of several possible paths,
-// it will choose the shortest available; on the other hand, when a
-// method (such as find_all_matches) is to return all of the matching
-// paths, it will sort them so that the shortest paths appear first in
-// the output.
-//
-//
-// Special flags.  The entire string may optionally be followed by the
-// ";" character, followed by one or more of the following special
-// control flags, with no intervening spaces or punctuation:
-//
-//    -h    Do not return hidden nodes.
-//    +h    Do return hidden nodes.
-//    -s    Do not return stashed nodes unless explicitly referenced with @@.
-//    +s    Return stashed nodes even without any explicit @@ characters.
-//    -i    Node name comparisons are not case insensitive: case must match
-//          exactly.
-//    +i    Node name comparisons are case insensitive: case is not important.
-//          This affects matches against the node name only; node type
-//          and tag strings are always case sensitive.
-//
-// The default flags are +h-s-i.
-//
+1453 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 1473 1474 0 0 0 0 1139
 ////////////////////////////////////////////////////////////////////
 //       Class : NodePath
 // Description : NodePath is the fundamental system for disambiguating

@@ -12,7 +12,7 @@
 #define GLOBAL_ARGC __argc
 #define GLOBAL_ARGV __argv
 #undef GLOBAL_OPERATOR_NEW_EXCEPTIONS
-#undef HAVE_ARTOOLKIT
+#define HAVE_ARTOOLKIT 1
 #define HAVE_AUDIO 1
 #define HAVE_BMP 1
 #undef HAVE_CARBON
@@ -22,14 +22,14 @@
 #undef HAVE_CHROMIUM
 #undef HAVE_COCOA
 #undef HAVE_DINKUM
-#undef HAVE_DIRECTCAM
+#define HAVE_DIRECTCAM 1
 #undef HAVE_DX8
 #define HAVE_DX9 1
 #define HAVE_EGG 1
 #undef HAVE_EGL
 #undef HAVE_EIGEN
-#undef HAVE_FCOLLADA
-#undef HAVE_FFMPEG
+#define HAVE_FCOLLADA 1
+#define HAVE_FFMPEG 1
 #undef HAVE_FFTW
 #define HAVE_FMODEX 1
 #define HAVE_FREETYPE 1
@@ -50,7 +50,7 @@
 #define HAVE_NET 1
 #define HAVE_NVIDIACG 1
 #define HAVE_ODE 1
-#undef HAVE_OPENAL
+#define HAVE_OPENAL 1
 #undef HAVE_OPENAL_FRAMEWORK
 #undef HAVE_OPENCV
 #define HAVE_OPENSSL 1
@@ -76,11 +76,11 @@
 #define HAVE_SQUISH 1
 #undef HAVE_STL_HASH
 #define HAVE_STREAMSIZE 1
-#undef HAVE_SWRESAMPLE
-#undef HAVE_SWSCALE
+#define HAVE_SWRESAMPLE 1
+#define HAVE_SWSCALE 1
 #define HAVE_TGA 1
 #define HAVE_THREADS 1
-#undef HAVE_TIFF
+#define HAVE_TIFF 1
 #define HAVE_TYPENAME 1
 #undef HAVE_VIDEO4LINUX
 #define HAVE_VORBIS 1

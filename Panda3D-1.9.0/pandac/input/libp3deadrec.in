@@ -1,5 +1,5 @@
-1412104980
-2 2
+1422504472
+2 3
 12 libp3deadrec 4 FP4V 14 panda3d.direct 
 54
 60 11 SmoothMover 0 4 114 24 SmoothMover::SmoothMover 0 1 1 224
@@ -20,32 +20,13 @@ SmoothMover::SmoothMover(void);
 32
 SmoothMover::~SmoothMover(void);
 
-62 7 set_pos 0 4 114 20 SmoothMover::set_pos 0 2 2 3 2649
+62 7 set_pos 0 4 114 20 SmoothMover::set_pos 0 2 2 3 1882
 // These methods are used to specify each position update.  Call the
 // appropriate set_* function(s), as needed, and then call
 // mark_position().  The return value of each function is true if
 // the parameter value has changed, or false if it remains the same
 // as last time.
 
-// These methods are used to specify each position update.  Call the
-// appropriate set_* function(s), as needed, and then call
-// mark_position().  The return value of each function is true if
-// the parameter value has changed, or false if it remains the same
-// as last time.
-
-// Filename: smoothMover.I
-// Created by:  drose (19Oct01)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 //     Function: SmoothMover::set_pos
 //       Access: Published
@@ -745,20 +726,7 @@ void SmoothMover::write(ostream &out) const;
 //       Access: Published
 //  Description: 
 //////////////////////////////////////////////////////////////////// 0 
-2 14 Dtool_FP4VO99C 0 6 4 121 0 14 Dtool_FP4VO99C 1287 // Filename: smoothMover.I
-// Created by:  drose (19Oct01)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+2 14 Dtool_FP4VO99C 0 6 4 121 0 14 Dtool_FP4VO99C 800 ////////////////////////////////////////////////////////////////////
 //     Function: SmoothMover::set_pos
 //       Access: Published
 //  Description: Specifies the position of the SmoothMover at a
@@ -1273,11 +1241,13 @@ void SmoothMover::write(ostream &out) const;
 //               same mode together.
 ////////////////////////////////////////////////////////////////////
 
-115 10 SmoothMode 0 794624 23 SmoothMover::SmoothMode 23 SmoothMover::SmoothMode 114 0 0 0 0 0 0 0 0 0 2 6 SM_off 19 SmoothMover::SM_off 0 5 SM_on 18 SmoothMover::SM_on 1 0 0
+115 10 SmoothMode 0 794624 23 SmoothMover::SmoothMode 23 SmoothMover::SmoothMode 114 0 0 0 0 0 0 0 0 0 2 6 SM_off 19 SmoothMover::SM_off 0
+0 5 SM_on 18 SmoothMover::SM_on 0
+1 0 0
 
-116 14 PredictionMode 0 794624 27 SmoothMover::PredictionMode 27 SmoothMover::PredictionMode 114 0 0 0 0 0 0 0 0 0 2 6 PM_off 19 SmoothMover::PM_off 0 5 PM_on 18 SmoothMover::PM_on 1 0 89
-// We might conceivably add more kinds of smooth modes later, for
-// instance, SM_spline.
+116 14 PredictionMode 0 794624 27 SmoothMover::PredictionMode 27 SmoothMover::PredictionMode 114 0 0 0 0 0 0 0 0 0 2 6 PM_off 19 SmoothMover::PM_off 0
+0 5 PM_on 18 SmoothMover::PM_on 0
+1 0 0
 
 117 13 SmoothMover * 0 8576 13 SmoothMover * 13 SmoothMover * 0 0 114 0 0 0 0 0 0 0 0 0 0
 
@@ -1285,20 +1255,7 @@ void SmoothMover::write(ostream &out) const;
 
 119 16 LVecBase3f const 0 8832 16 LVecBase3f const 16 LVecBase3f const 0 0 120 0 0 0 0 0 0 0 0 0 0
 
-120 10 LVecBase3f 0 2048 10 LVecBase3f 10 LVecBase3f 0 0 0 0 0 0 0 0 0 0 0 0 754
-// Filename: lvecBase3_src.h
-// Created by:  drose (08Mar00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+120 10 LVecBase3f 0 2048 10 LVecBase3f 10 LVecBase3f 0 0 0 0 0 0 0 0 0 0 0 0 265
 ////////////////////////////////////////////////////////////////////
 //       Class : LVecBase3
 // Description : This is the base class for all three-component
@@ -1317,20 +1274,7 @@ void SmoothMover::write(ostream &out) const;
 
 126 14 LPoint3f const 0 8832 14 LPoint3f const 14 LPoint3f const 0 0 127 0 0 0 0 0 0 0 0 0 0
 
-127 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 1083
-// Filename: lpoint3_src.h
-// Created by:  drose (25Sep99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+127 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 596
 ////////////////////////////////////////////////////////////////////
 //       Class : LPoint3
 // Description : This is a three-component point in space (as opposed
@@ -1348,86 +1292,7 @@ void SmoothMover::write(ostream &out) const;
 
 130 10 NodePath * 0 8576 10 NodePath * 10 NodePath * 0 0 131 0 0 0 0 0 0 0 0 0 0
 
-131 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 134 135 0 0 0 0 4938
-//
-// A NodePath is the fundamental unit of high-level interaction with
-// the scene graph.  It encapsulates the complete path down to a node
-// from some other node, usually the root of the scene graph.  This is
-// used to resolve ambiguities associated with instancing.
-//
-// NodePath also contains a number of handy high-level methods for
-// common scene-graph manipulations, such as reparenting, and common
-// state changes, such as repositioning.
-//
-// There are also a number of NodePath methods for finding nodes deep
-// within the tree by name or by type.  These take a path string,
-// which at its simplest consists of a series of node names separated
-// by slashes, like a directory pathname.
-//
-// Each component of the path string may optionally consist of one of
-// the following special names, instead of a node name:
-//
-//   *          -- matches exactly one node, with any name.
-//   **         -- matches any sequence of zero or more nodes.
-//   +typename  -- matches any node that is or derives from the given type.
-//   -typename  -- matches any node that is the given type exactly.
-//   =tag       -- matches any node that has the indicated tag.
-//   =tag=value -- matches any node whose tag matches the indicated value.
-//
-// Furthermore, a node name may itself contain standard filename
-// globbing characters, like *, ?, and [a-z], that will be accepted as
-// a partial match.  (In fact, the '*' special name may be seen as
-// just a special case of this.)  The globbing characters may not be
-// used with the typename matches or with tag matches, but they may
-// be used to match a tag's value in the =tag=value syntax.
-//
-// The special characters "@@", appearing at the beginning of a node
-// name, indicate a stashed node.  Normally, stashed nodes are not
-// returned by a find (but see the special flags, below), but a
-// stashed node may be found if it is explicitly named with its
-// leading @@ characters.  By extension, "@@*" may be used to identify
-// any stashed node.
-//
-// Examples:
-//
-// "room//graph" will look for a node named "graph", which is a child
-// of an unnamed node, which is a child of a node named "room", which
-// is a child of the starting path.
-//
-// "**/red*" will look for any node anywhere in the tree (below the
-// starting path) with a name that begins with "red".
-//
-// "**/+PartBundleNode/**/head" will look for a node named "head",
-// somewhere below a PartBundleNode anywhere in the tree.
-//
-//
-// The search is always potentially ambiguous, even if the special
-// wildcard operators are not used, because there may be multiple
-// nodes in the tree with the same name.  In general, in the case of
-// an ambiguity, the shortest path is preferred; when a method (such
-// as extend_by) must choose only only one of several possible paths,
-// it will choose the shortest available; on the other hand, when a
-// method (such as find_all_matches) is to return all of the matching
-// paths, it will sort them so that the shortest paths appear first in
-// the output.
-//
-//
-// Special flags.  The entire string may optionally be followed by the
-// ";" character, followed by one or more of the following special
-// control flags, with no intervening spaces or punctuation:
-//
-//    -h    Do not return hidden nodes.
-//    +h    Do return hidden nodes.
-//    -s    Do not return stashed nodes unless explicitly referenced with @@.
-//    +s    Return stashed nodes even without any explicit @@ characters.
-//    -i    Node name comparisons are not case insensitive: case must match
-//          exactly.
-//    +i    Node name comparisons are case insensitive: case is not important.
-//          This affects matches against the node name only; node type
-//          and tag strings are always case sensitive.
-//
-// The default flags are +h-s-i.
-//
+131 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 134 135 0 0 0 0 1139
 ////////////////////////////////////////////////////////////////////
 //       Class : NodePath
 // Description : NodePath is the fundamental system for disambiguating

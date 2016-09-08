@@ -1,21 +1,8 @@
-1412105013
-2 2
+1422504531
+2 3
 13 libp3interval 4 ceEZ 14 panda3d.direct 
 161
-171 8 get_name 0 4 332 19 CInterval::get_name 0 1 1 732
-// Filename: cInterval.I
-// Created by:  drose (27Aug02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+171 8 get_name 0 4 332 19 CInterval::get_name 0 1 1 247
 ////////////////////////////////////////////////////////////////////
 //     Function: CInterval::get_name
 //       Access: Published
@@ -344,11 +331,7 @@ double CInterval::get_play_rate(void) const;
 48
 void CInterval::set_play_rate(double play_rate);
 
-198 13 priv_do_event 0 4 332 24 CInterval::priv_do_event 0 1 35 709
-// These functions control the actual playback of the interval.
-// Don't call them directly; they're intended to be called from a
-// supervising object, e.g. the Python start() .. finish()
-// interface.
+198 13 priv_do_event 0 4 332 24 CInterval::priv_do_event 0 1 35 506
 // These cannot be declared private because they must be accessible
 // to Python, but the method names are prefixed with priv_ to remind
 // you that you probably don't want to be using them directly.
@@ -362,15 +345,7 @@ void CInterval::set_play_rate(double play_rate);
 68
 void CInterval::priv_do_event(double t, CInterval::EventType event);
 
-199 15 priv_initialize 0 6 332 26 CInterval::priv_initialize 0 1 36 889
-// These functions control the actual playback of the interval.
-// Don't call them directly; they're intended to be called from a
-// supervising object, e.g. the Python start() .. finish()
-// interface.
-// These cannot be declared private because they must be accessible
-// to Python, but the method names are prefixed with priv_ to remind
-// you that you probably don't want to be using them directly.
-
+199 15 priv_initialize 0 6 332 26 CInterval::priv_initialize 0 1 36 485
 ////////////////////////////////////////////////////////////////////
 //     Function: CInterval::priv_initialize
 //       Access: Published, Virtual
@@ -549,12 +524,12 @@ bool CInterval::step_play(void);
 50
 static TypeHandle CInterval::get_class_type(void);
 
-214 18 get_bogus_variable 0 20 336 39 CConstraintInterval::get_bogus_variable 0 1 52 52
+214 18 get_bogus_variable 0 20 336 39 CConstraintInterval::get_bogus_variable 0 1 53 52
 getter for bool CConstraintInterval::bogus_variable;
 57
 bool CConstraintInterval::get_bogus_variable(void) const;
 
-215 18 set_bogus_variable 0 36 336 39 CConstraintInterval::set_bogus_variable 0 1 53 52
+215 18 set_bogus_variable 0 36 336 39 CConstraintInterval::set_bogus_variable 0 1 52 52
 setter for bool CConstraintInterval::bogus_variable;
 57
 void CConstraintInterval::set_bogus_variable(bool value);
@@ -583,20 +558,7 @@ CConstraintInterval::~CConstraintInterval(void);
 193
 CConstrainHprInterval::CConstrainHprInterval(basic_string< char > const &name, double duration, NodePath const &node, NodePath const &target, bool wrt, LVecBase3f const hprOffset = ((zero())));
 
-219 8 get_node 0 4 338 31 CConstrainHprInterval::get_node 0 1 56 754
-// Filename: cConstrainHprInterval.I
-// Created by:  pratt (10Mar08)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+219 8 get_node 0 4 338 31 CConstrainHprInterval::get_node 0 1 56 257
 ////////////////////////////////////////////////////////////////////
 //     Function: CConstrainHprInterval::get_node
 //       Access: Published
@@ -639,20 +601,7 @@ CConstrainHprInterval::~CConstrainHprInterval(void);
 240
 CConstrainPosHprInterval::CConstrainPosHprInterval(basic_string< char > const &name, double duration, NodePath const &node, NodePath const &target, bool wrt, LVecBase3f const posOffset = ((zero())), LVecBase3f const hprOffset = ((zero())));
 
-224 8 get_node 0 4 339 34 CConstrainPosHprInterval::get_node 0 1 62 760
-// Filename: cConstrainPosHprInterval.I
-// Created by:  pratt (10Mar08)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+224 8 get_node 0 4 339 34 CConstrainPosHprInterval::get_node 0 1 62 260
 ////////////////////////////////////////////////////////////////////
 //     Function: CConstrainPosHprInterval::get_node
 //       Access: Published
@@ -693,20 +642,7 @@ CConstrainPosHprInterval::~CConstrainPosHprInterval(void);
 193
 CConstrainPosInterval::CConstrainPosInterval(basic_string< char > const &name, double duration, NodePath const &node, NodePath const &target, bool wrt, LVecBase3f const posOffset = ((zero())));
 
-229 8 get_node 0 4 340 31 CConstrainPosInterval::get_node 0 1 67 754
-// Filename: cConstrainPosInterval.I
-// Created by:  pratt (29Sep06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+229 8 get_node 0 4 340 31 CConstrainPosInterval::get_node 0 1 67 257
 ////////////////////////////////////////////////////////////////////
 //     Function: CConstrainPosInterval::get_node
 //       Access: Published
@@ -748,20 +684,7 @@ CConstrainPosInterval::~CConstrainPosInterval(void);
 164
 CConstrainTransformInterval::CConstrainTransformInterval(basic_string< char > const &name, double duration, NodePath const &node, NodePath const &target, bool wrt);
 
-234 8 get_node 0 4 341 37 CConstrainTransformInterval::get_node 0 1 71 766
-// Filename: cConstrainTransformInterval.I
-// Created by:  pratt (29Sep06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+234 8 get_node 0 4 341 37 CConstrainTransformInterval::get_node 0 1 71 263
 ////////////////////////////////////////////////////////////////////
 //     Function: CConstrainTransformInterval::get_node
 //       Access: Published
@@ -805,20 +728,7 @@ CIntervalManager::CIntervalManager(void);
 42
 CIntervalManager::~CIntervalManager(void);
 
-240 15 set_event_queue 0 4 342 33 CIntervalManager::set_event_queue 0 1 75 1195
-// Filename: cIntervalManager.I
-// Created by:  drose (10Sep02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+240 15 set_event_queue 0 4 342 33 CIntervalManager::set_event_queue 0 1 75 703
 ////////////////////////////////////////////////////////////////////
 //     Function: CIntervalManager::set_event_queue
 //       Access: Published
@@ -1051,20 +961,7 @@ static TypeHandle CLerpInterval::get_class_type(void);
 36
 CLerpInterval::~CLerpInterval(void);
 
-259 23 CLerpAnimEffectInterval 0 4 345 48 CLerpAnimEffectInterval::CLerpAnimEffectInterval 0 1 93 735
-// Filename: cLerpAnimEffectInterval.I
-// Created by:  drose (27Aug02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+259 23 CLerpAnimEffectInterval 0 4 345 48 CLerpAnimEffectInterval::CLerpAnimEffectInterval 0 1 93 236
 ////////////////////////////////////////////////////////////////////
 //     Function: CLerpAnimEffectInterval::Constructor
 //       Access: Published
@@ -1131,20 +1028,7 @@ CLerpAnimEffectInterval::~CLerpAnimEffectInterval(void);
 210
 CLerpNodePathInterval::CLerpNodePathInterval(basic_string< char > const &name, double duration, CLerpInterval::BlendType blend_type, bool bake_in_start, bool fluid, NodePath const &node, NodePath const &other);
 
-264 8 get_node 0 4 346 31 CLerpNodePathInterval::get_node 0 1 97 758
-// Filename: cLerpNodePathInterval.I
-// Created by:  drose (27Aug02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+264 8 get_node 0 4 346 31 CLerpNodePathInterval::get_node 0 1 97 261
 ////////////////////////////////////////////////////////////////////
 //     Function: CLerpNodePathInterval::get_node
 //       Access: Published
@@ -1540,20 +1424,7 @@ CLerpNodePathInterval::~CLerpNodePathInterval(void);
 63
 CMetaInterval::CMetaInterval(basic_string< char > const &name);
 
-292 13 set_precision 0 4 347 28 CMetaInterval::set_precision 0 1 128 1201
-// Filename: cMetaInterval.I
-// Created by:  drose (27Aug02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+292 13 set_precision 0 4 347 28 CMetaInterval::set_precision 0 1 128 712
 ////////////////////////////////////////////////////////////////////
 //     Function: CMetaInterval::set_precision
 //       Access: Published
@@ -1616,8 +1487,8 @@ int CMetaInterval::push_level(basic_string< char > const &name, double rel_time,
 //               The return value is the index of the def entry
 //               representing the new interval.
 ////////////////////////////////////////////////////////////////////
-137
-int CMetaInterval::add_c_interval(CInterval *c_interval, double rel_time = (0), CMetaInterval::RelativeStart rel_to = (RS_previous_end));
+123
+int CMetaInterval::add_c_interval(CInterval *c_interval, double rel_time = (0), CMetaInterval::RelativeStart rel_to = (0));
 
 297 13 add_ext_index 0 4 347 28 CMetaInterval::add_ext_index 0 1 135 1156
 ////////////////////////////////////////////////////////////////////
@@ -1677,8 +1548,8 @@ int CMetaInterval::pop_level(double duration = (-1));
 //               interval is not found, nothing is changed and false
 //               is returned.
 ////////////////////////////////////////////////////////////////////
-151
-bool CMetaInterval::set_interval_start_time(basic_string< char > const &name, double rel_time, CMetaInterval::RelativeStart rel_to = (RS_level_begin));
+138
+bool CMetaInterval::set_interval_start_time(basic_string< char > const &name, double rel_time, CMetaInterval::RelativeStart rel_to = (2));
 
 300 23 get_interval_start_time 0 4 347 38 CMetaInterval::get_interval_start_time 0 1 140 451
 ////////////////////////////////////////////////////////////////////
@@ -1901,20 +1772,7 @@ static TypeHandle ShowInterval::get_class_type(void);
 34
 ShowInterval::~ShowInterval(void);
 
-329 12 WaitInterval 0 4 357 26 WaitInterval::WaitInterval 0 1 169 827
-// Filename: waitInterval.I
-// Created by:  drose (12Sep02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+329 12 WaitInterval 0 4 357 26 WaitInterval::WaitInterval 0 1 169 339
 ////////////////////////////////////////////////////////////////////
 //     Function: WaitInterval::Constructor
 //       Access: Published
@@ -1933,20 +1791,7 @@ static TypeHandle WaitInterval::get_class_type(void);
 WaitInterval::~WaitInterval(void);
 
 170
-1 14 Dtool_ceEZfV5F 0 6 3 360 0 14 Dtool_ceEZfV5F 732 // Filename: cInterval.I
-// Created by:  drose (27Aug02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+1 14 Dtool_ceEZfV5F 0 6 3 360 0 14 Dtool_ceEZfV5F 247 ////////////////////////////////////////////////////////////////////
 //     Function: CInterval::get_name
 //       Access: Published
 //  Description: Returns the interval's name.
@@ -2231,13 +2076,12 @@ WaitInterval::~WaitInterval(void);
 //               to start() and loop(), the next call to start() or
 //               loop() will reset this parameter.
 //////////////////////////////////////////////////////////////////// 2 4 this 3 362  9 play_rate 1 361  
-35 14 Dtool_ceEZsrd8 0 4 32 363 0 14 Dtool_ceEZsrd8 402 // These functions control the actual playback of the interval.
-// Don't call them directly; they're intended to be called from a
-// supervising object, e.g. the Python start() .. finish()
-// interface.
-// These cannot be declared private because they must be accessible
-// to Python, but the method names are prefixed with priv_ to remind
-// you that you probably don't want to be using them directly. 3 4 this 3 362  1 t 1 361  5 event 1 334  
+35 14 Dtool_ceEZsrd8 0 4 32 363 0 14 Dtool_ceEZsrd8 305 ////////////////////////////////////////////////////////////////////
+//     Function: CInterval::priv_do_event
+//       Access: Published
+//  Description: Calls the appropriate event function indicated by the
+//               EventType.
+//////////////////////////////////////////////////////////////////// 3 4 this 3 362  1 t 1 361  5 event 1 334  
 36 14 Dtool_ceEZADw2 0 4 33 363 0 14 Dtool_ceEZADw2 485 ////////////////////////////////////////////////////////////////////
 //     Function: CInterval::priv_initialize
 //       Access: Published, Virtual
@@ -2359,8 +2203,8 @@ WaitInterval::~WaitInterval(void);
 //////////////////////////////////////////////////////////////////// 1 4 this 3 362  
 50 14 Dtool_ceEZStxv 0 7 47 369 0 14 Dtool_ceEZStxv 0 0 
 51 14 Dtool_ceEZ3rB9 0 7 53 369 0 14 Dtool_ceEZ3rB9 0 0 
-52 14 Dtool_ceEZ6b9E 0 6 50 337 0 14 Dtool_ceEZ6b9E 0 1 4 this 3 370  
-53 14 Dtool_ceEZnsBv 0 4 51 363 0 14 Dtool_ceEZnsBv 0 2 4 this 3 372  5 value 1 337  
+52 14 Dtool_ceEZnsBv 0 4 51 363 0 14 Dtool_ceEZnsBv 0 2 4 this 3 370  5 value 1 337  
+53 14 Dtool_ceEZ6b9E 0 6 50 337 0 14 Dtool_ceEZ6b9E 0 1 4 this 3 371  
 54 14 Dtool_ceEZjm3B 0 7 56 379 222 14 Dtool_ceEZjm3B 682 ////////////////////////////////////////////////////////////////////
 //     Function: CConstrainHprInterval::Constructor
 //       Access: Published
@@ -2385,20 +2229,7 @@ WaitInterval::~WaitInterval(void);
 //               before being copied.  If wrt is false, the target
 //               node's local orientation will be copied unaltered.
 //////////////////////////////////////////////////////////////////// 5 4 name 1 360  8 duration 1 361  4 node 1 373  6 target 1 373  3 wrt 1 337  
-56 14 Dtool_ceEZG_dN 0 6 57 373 0 14 Dtool_ceEZG_dN 754 // Filename: cConstrainHprInterval.I
-// Created by:  pratt (10Mar08)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+56 14 Dtool_ceEZG_dN 0 6 57 373 0 14 Dtool_ceEZG_dN 257 ////////////////////////////////////////////////////////////////////
 //     Function: CConstrainHprInterval::get_node
 //       Access: Published
 //  Description: Returns the "source" node.
@@ -2448,20 +2279,7 @@ WaitInterval::~WaitInterval(void);
 //               target node's local position and orientation will be
 //               copied unaltered.
 //////////////////////////////////////////////////////////////////// 5 4 name 1 360  8 duration 1 361  4 node 1 373  6 target 1 373  3 wrt 1 337  
-62 14 Dtool_ceEZV1_L 0 6 63 373 0 14 Dtool_ceEZV1_L 760 // Filename: cConstrainPosHprInterval.I
-// Created by:  pratt (10Mar08)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+62 14 Dtool_ceEZV1_L 0 6 63 373 0 14 Dtool_ceEZV1_L 260 ////////////////////////////////////////////////////////////////////
 //     Function: CConstrainPosHprInterval::get_node
 //       Access: Published
 //  Description: Returns the "source" node.
@@ -2494,20 +2312,7 @@ WaitInterval::~WaitInterval(void);
 //               before being copied.  If wrt is false, the target
 //               node's local position will be copied unaltered.
 //////////////////////////////////////////////////////////////////// 5 4 name 1 360  8 duration 1 361  4 node 1 373  6 target 1 373  3 wrt 1 337  
-67 14 Dtool_ceEZnovZ 0 6 69 373 0 14 Dtool_ceEZnovZ 754 // Filename: cConstrainPosInterval.I
-// Created by:  pratt (29Sep06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+67 14 Dtool_ceEZnovZ 0 6 69 373 0 14 Dtool_ceEZnovZ 257 ////////////////////////////////////////////////////////////////////
 //     Function: CConstrainPosInterval::get_node
 //       Access: Published
 //  Description: Returns the "source" node.
@@ -2530,20 +2335,7 @@ WaitInterval::~WaitInterval(void);
 //               before being copied.  If wrt is false, the node's
 //               local transform will be copied unaltered.
 //////////////////////////////////////////////////////////////////// 5 4 name 1 360  8 duration 1 361  4 node 1 373  6 target 1 373  3 wrt 1 337  
-71 14 Dtool_ceEZFPOL 0 6 75 373 0 14 Dtool_ceEZFPOL 766 // Filename: cConstrainTransformInterval.I
-// Created by:  pratt (29Sep06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+71 14 Dtool_ceEZFPOL 0 6 75 373 0 14 Dtool_ceEZFPOL 263 ////////////////////////////////////////////////////////////////////
 //     Function: CConstrainTransformInterval::get_node
 //       Access: Published
 //  Description: Returns the "source" node.
@@ -2559,20 +2351,7 @@ WaitInterval::~WaitInterval(void);
 //       Access: Published
 //  Description: 
 //////////////////////////////////////////////////////////////////// 0 
-75 14 Dtool_ceEZH947 0 4 82 363 0 14 Dtool_ceEZH947 1195 // Filename: cIntervalManager.I
-// Created by:  drose (10Sep02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+75 14 Dtool_ceEZH947 0 4 82 363 0 14 Dtool_ceEZH947 703 ////////////////////////////////////////////////////////////////////
 //     Function: CIntervalManager::set_event_queue
 //       Access: Published
 //  Description: Specifies a custom event queue to be used for
@@ -2730,20 +2509,7 @@ WaitInterval::~WaitInterval(void);
 //               doesn't match anything.
 //////////////////////////////////////////////////////////////////// 1 10 blend_type 1 360  
 92 14 Dtool_ceEZFioW 0 7 101 369 0 14 Dtool_ceEZFioW 0 0 
-93 14 Dtool_ceEZZ1mi 0 7 104 397 262 14 Dtool_ceEZZ1mi 735 // Filename: cLerpAnimEffectInterval.I
-// Created by:  drose (27Aug02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+93 14 Dtool_ceEZZ1mi 0 7 104 397 262 14 Dtool_ceEZZ1mi 236 ////////////////////////////////////////////////////////////////////
 //     Function: CLerpAnimEffectInterval::Constructor
 //       Access: Published
 //  Description: 
@@ -2791,20 +2557,7 @@ WaitInterval::~WaitInterval(void);
 //               If fluid is true, the prev_transform is not adjusted
 //               by the lerp; otherwise, it is reset.
 //////////////////////////////////////////////////////////////////// 7 4 name 1 360  8 duration 1 361  10 blend_type 1 344  13 bake_in_start 1 337  5 fluid 1 337  4 node 1 373  5 other 1 373  
-97 14 Dtool_ceEZ9PvW 0 6 110 373 0 14 Dtool_ceEZ9PvW 758 // Filename: cLerpNodePathInterval.I
-// Created by:  drose (27Aug02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+97 14 Dtool_ceEZ9PvW 0 6 110 373 0 14 Dtool_ceEZ9PvW 261 ////////////////////////////////////////////////////////////////////
 //     Function: CLerpNodePathInterval::get_node
 //       Access: Published
 //  Description: Returns the node being lerped.
@@ -3081,20 +2834,7 @@ WaitInterval::~WaitInterval(void);
 //       Access: Published
 //  Description: 
 //////////////////////////////////////////////////////////////////// 1 4 name 1 360  
-128 14 Dtool_ceEZxSCe 0 4 140 363 0 14 Dtool_ceEZxSCe 1201 // Filename: cMetaInterval.I
-// Created by:  drose (27Aug02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+128 14 Dtool_ceEZxSCe 0 4 140 363 0 14 Dtool_ceEZxSCe 712 ////////////////////////////////////////////////////////////////////
 //     Function: CMetaInterval::set_precision
 //       Access: Published
 //  Description: Indicates the precision with which time measurements
@@ -3359,20 +3099,7 @@ WaitInterval::~WaitInterval(void);
 //  Description: 
 //////////////////////////////////////////////////////////////////// 1 4 node 1 373  
 168 14 Dtool_ceEZ1PEe 0 7 183 369 0 14 Dtool_ceEZ1PEe 0 0 
-169 14 Dtool_ceEZJUNH 0 7 186 425 331 14 Dtool_ceEZJUNH 827 // Filename: waitInterval.I
-// Created by:  drose (12Sep02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+169 14 Dtool_ceEZJUNH 0 7 186 425 331 14 Dtool_ceEZJUNH 339 ////////////////////////////////////////////////////////////////////
 //     Function: WaitInterval::Constructor
 //       Access: Published
 //  Description: All Wait intervals have the same name.  No one really
@@ -3409,9 +3136,21 @@ WaitInterval::~WaitInterval(void);
 //               See also TypedObject for detailed instructions.
 ////////////////////////////////////////////////////////////////////
 
-334 9 EventType 0 794624 20 CInterval::EventType 20 CInterval::EventType 332 0 0 0 0 0 0 0 0 0 8 13 ET_initialize 24 CInterval::ET_initialize 0 10 ET_instant 21 CInterval::ET_instant 1 7 ET_step 18 CInterval::ET_step 2 11 ET_finalize 22 CInterval::ET_finalize 3 21 ET_reverse_initialize 32 CInterval::ET_reverse_initialize 4 18 ET_reverse_instant 29 CInterval::ET_reverse_instant 5 19 ET_reverse_finalize 30 CInterval::ET_reverse_finalize 6 12 ET_interrupt 23 CInterval::ET_interrupt 7 0 0
+334 9 EventType 0 794624 20 CInterval::EventType 20 CInterval::EventType 332 0 0 0 0 0 0 0 0 0 8 13 ET_initialize 24 CInterval::ET_initialize 0
+0 10 ET_instant 21 CInterval::ET_instant 0
+1 7 ET_step 18 CInterval::ET_step 0
+2 11 ET_finalize 22 CInterval::ET_finalize 0
+3 21 ET_reverse_initialize 32 CInterval::ET_reverse_initialize 0
+4 18 ET_reverse_instant 29 CInterval::ET_reverse_instant 0
+5 19 ET_reverse_finalize 30 CInterval::ET_reverse_finalize 0
+6 12 ET_interrupt 23 CInterval::ET_interrupt 0
+7 0 0
 
-335 5 State 0 794624 16 CInterval::State 16 CInterval::State 332 0 0 0 0 0 0 0 0 0 4 9 S_initial 20 CInterval::S_initial 0 9 S_started 20 CInterval::S_started 1 8 S_paused 19 CInterval::S_paused 2 7 S_final 18 CInterval::S_final 3 0 0
+335 5 State 0 794624 16 CInterval::State 16 CInterval::State 332 0 0 0 0 0 0 0 0 0 4 9 S_initial 20 CInterval::S_initial 0
+0 9 S_started 20 CInterval::S_started 0
+1 8 S_paused 19 CInterval::S_paused 0
+2 7 S_final 18 CInterval::S_final 0
+3 0 0
 
 336 19 CConstraintInterval 0 141313 19 CConstraintInterval 19 CConstraintInterval 0 0 0 0 217 1 426 1 216 0 0 1 0 332 0 0 0 0 300
 ////////////////////////////////////////////////////////////////////
@@ -3476,7 +3215,12 @@ WaitInterval::~WaitInterval(void);
 //               time.
 ////////////////////////////////////////////////////////////////////
 
-344 9 BlendType 0 794624 24 CLerpInterval::BlendType 24 CLerpInterval::BlendType 343 0 0 0 0 0 0 0 0 0 5 11 BT_no_blend 26 CLerpInterval::BT_no_blend 0 10 BT_ease_in 25 CLerpInterval::BT_ease_in 1 11 BT_ease_out 26 CLerpInterval::BT_ease_out 2 14 BT_ease_in_out 29 CLerpInterval::BT_ease_in_out 3 10 BT_invalid 25 CLerpInterval::BT_invalid 4 0 0
+344 9 BlendType 0 794624 24 CLerpInterval::BlendType 24 CLerpInterval::BlendType 343 0 0 0 0 0 0 0 0 0 5 11 BT_no_blend 26 CLerpInterval::BT_no_blend 0
+0 10 BT_ease_in 25 CLerpInterval::BT_ease_in 0
+1 11 BT_ease_out 26 CLerpInterval::BT_ease_out 0
+2 14 BT_ease_in_out 29 CLerpInterval::BT_ease_in_out 0
+3 10 BT_invalid 25 CLerpInterval::BT_invalid 0
+4 0 0
 
 345 23 CLerpAnimEffectInterval 0 141313 23 CLerpAnimEffectInterval 23 CLerpAnimEffectInterval 0 0 0 1 259 262 0 2 260 261 0 0 1 0 343 0 0 0 0 649
 ////////////////////////////////////////////////////////////////////
@@ -3498,11 +3242,24 @@ WaitInterval::~WaitInterval(void);
 //               pos, hpr, etc.) on a NodePath over time.
 ////////////////////////////////////////////////////////////////////
 
-347 13 CMetaInterval 0 75777 13 CMetaInterval 13 CMetaInterval 0 0 0 1 291 0 0 21 292 293 294 295 296 297 298 299 300 301 302 303 304 305 306 307 308 309 310 311 312 0 0 1 0 332 0 0 0 2 348 349 0
+347 13 CMetaInterval 0 75777 13 CMetaInterval 13 CMetaInterval 0 0 0 1 291 0 0 21 292 293 294 295 296 297 298 299 300 301 302 303 304 305 306 307 308 309 310 311 312 0 0 1 0 332 0 0 0 2 348 349 369
+////////////////////////////////////////////////////////////////////
+//       Class : CMetaInterval
+// Description : This interval contains a list of nested intervals,
+//               each of which has its own begin and end times.  Some
+//               of them may overlap and some of them may not.
+////////////////////////////////////////////////////////////////////
 
-348 13 RelativeStart 0 794624 28 CMetaInterval::RelativeStart 28 CMetaInterval::RelativeStart 347 0 0 0 0 0 0 0 0 0 3 15 RS_previous_end 30 CMetaInterval::RS_previous_end 0 17 RS_previous_begin 32 CMetaInterval::RS_previous_begin 1 14 RS_level_begin 29 CMetaInterval::RS_level_begin 2 0 0
+348 13 RelativeStart 0 794624 28 CMetaInterval::RelativeStart 28 CMetaInterval::RelativeStart 347 0 0 0 0 0 0 0 0 0 3 15 RS_previous_end 30 CMetaInterval::RS_previous_end 0
+0 17 RS_previous_begin 32 CMetaInterval::RS_previous_begin 0
+1 14 RS_level_begin 29 CMetaInterval::RS_level_begin 0
+2 0 0
 
-349 7 DefType 0 794624 22 CMetaInterval::DefType 22 CMetaInterval::DefType 347 0 0 0 0 0 0 0 0 0 4 13 DT_c_interval 28 CMetaInterval::DT_c_interval 0 12 DT_ext_index 27 CMetaInterval::DT_ext_index 1 13 DT_push_level 28 CMetaInterval::DT_push_level 2 12 DT_pop_level 27 CMetaInterval::DT_pop_level 3 0 0
+349 7 DefType 0 794624 22 CMetaInterval::DefType 22 CMetaInterval::DefType 347 0 0 0 0 0 0 0 0 0 4 13 DT_c_interval 28 CMetaInterval::DT_c_interval 0
+0 12 DT_ext_index 27 CMetaInterval::DT_ext_index 0
+1 13 DT_push_level 28 CMetaInterval::DT_push_level 0
+2 12 DT_pop_level 27 CMetaInterval::DT_pop_level 0
+3 0 0
 
 350 12 HideInterval 0 141313 12 HideInterval 12 HideInterval 0 0 0 1 313 315 0 1 314 0 0 1 0 332 0 0 0 0 225
 ////////////////////////////////////////////////////////////////////
@@ -3576,96 +3333,17 @@ WaitInterval::~WaitInterval(void);
 
 369 12 TypeHandle * 0 8576 12 TypeHandle * 12 TypeHandle * 0 0 368 0 0 0 0 0 0 0 0 0 0
 
-370 27 CConstraintInterval const * 0 8576 27 CConstraintInterval const * 27 CConstraintInterval const * 0 0 371 0 0 0 0 0 0 0 0 0 0
+370 21 CConstraintInterval * 0 8576 21 CConstraintInterval * 21 CConstraintInterval * 0 0 336 0 0 0 0 0 0 0 0 0 0
 
-371 25 CConstraintInterval const 0 8832 25 CConstraintInterval const 25 CConstraintInterval const 0 0 336 0 0 0 0 0 0 0 0 0 0
+371 27 CConstraintInterval const * 0 8576 27 CConstraintInterval const * 27 CConstraintInterval const * 0 0 372 0 0 0 0 0 0 0 0 0 0
 
-372 21 CConstraintInterval * 0 8576 21 CConstraintInterval * 21 CConstraintInterval * 0 0 336 0 0 0 0 0 0 0 0 0 0
+372 25 CConstraintInterval const 0 8832 25 CConstraintInterval const 25 CConstraintInterval const 0 0 336 0 0 0 0 0 0 0 0 0 0
 
 373 16 NodePath const * 0 8576 16 NodePath const * 16 NodePath const * 0 0 374 0 0 0 0 0 0 0 0 0 0
 
 374 14 NodePath const 0 8832 14 NodePath const 14 NodePath const 0 0 375 0 0 0 0 0 0 0 0 0 0
 
-375 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 427 428 0 0 0 0 4938
-//
-// A NodePath is the fundamental unit of high-level interaction with
-// the scene graph.  It encapsulates the complete path down to a node
-// from some other node, usually the root of the scene graph.  This is
-// used to resolve ambiguities associated with instancing.
-//
-// NodePath also contains a number of handy high-level methods for
-// common scene-graph manipulations, such as reparenting, and common
-// state changes, such as repositioning.
-//
-// There are also a number of NodePath methods for finding nodes deep
-// within the tree by name or by type.  These take a path string,
-// which at its simplest consists of a series of node names separated
-// by slashes, like a directory pathname.
-//
-// Each component of the path string may optionally consist of one of
-// the following special names, instead of a node name:
-//
-//   *          -- matches exactly one node, with any name.
-//   **         -- matches any sequence of zero or more nodes.
-//   +typename  -- matches any node that is or derives from the given type.
-//   -typename  -- matches any node that is the given type exactly.
-//   =tag       -- matches any node that has the indicated tag.
-//   =tag=value -- matches any node whose tag matches the indicated value.
-//
-// Furthermore, a node name may itself contain standard filename
-// globbing characters, like *, ?, and [a-z], that will be accepted as
-// a partial match.  (In fact, the '*' special name may be seen as
-// just a special case of this.)  The globbing characters may not be
-// used with the typename matches or with tag matches, but they may
-// be used to match a tag's value in the =tag=value syntax.
-//
-// The special characters "@@", appearing at the beginning of a node
-// name, indicate a stashed node.  Normally, stashed nodes are not
-// returned by a find (but see the special flags, below), but a
-// stashed node may be found if it is explicitly named with its
-// leading @@ characters.  By extension, "@@*" may be used to identify
-// any stashed node.
-//
-// Examples:
-//
-// "room//graph" will look for a node named "graph", which is a child
-// of an unnamed node, which is a child of a node named "room", which
-// is a child of the starting path.
-//
-// "**/red*" will look for any node anywhere in the tree (below the
-// starting path) with a name that begins with "red".
-//
-// "**/+PartBundleNode/**/head" will look for a node named "head",
-// somewhere below a PartBundleNode anywhere in the tree.
-//
-//
-// The search is always potentially ambiguous, even if the special
-// wildcard operators are not used, because there may be multiple
-// nodes in the tree with the same name.  In general, in the case of
-// an ambiguity, the shortest path is preferred; when a method (such
-// as extend_by) must choose only only one of several possible paths,
-// it will choose the shortest available; on the other hand, when a
-// method (such as find_all_matches) is to return all of the matching
-// paths, it will sort them so that the shortest paths appear first in
-// the output.
-//
-//
-// Special flags.  The entire string may optionally be followed by the
-// ";" character, followed by one or more of the following special
-// control flags, with no intervening spaces or punctuation:
-//
-//    -h    Do not return hidden nodes.
-//    +h    Do return hidden nodes.
-//    -s    Do not return stashed nodes unless explicitly referenced with @@.
-//    +s    Return stashed nodes even without any explicit @@ characters.
-//    -i    Node name comparisons are not case insensitive: case must match
-//          exactly.
-//    +i    Node name comparisons are case insensitive: case is not important.
-//          This affects matches against the node name only; node type
-//          and tag strings are always case sensitive.
-//
-// The default flags are +h-s-i.
-//
+375 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 427 428 0 0 0 0 1139
 ////////////////////////////////////////////////////////////////////
 //       Class : NodePath
 // Description : NodePath is the fundamental system for disambiguating
@@ -3691,20 +3369,7 @@ WaitInterval::~WaitInterval(void);
 
 377 16 LVecBase3f const 0 8832 16 LVecBase3f const 16 LVecBase3f const 0 0 378 0 0 0 0 0 0 0 0 0 0
 
-378 10 LVecBase3f 0 2048 10 LVecBase3f 10 LVecBase3f 0 0 0 0 0 0 0 0 0 0 0 0 754
-// Filename: lvecBase3_src.h
-// Created by:  drose (08Mar00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+378 10 LVecBase3f 0 2048 10 LVecBase3f 10 LVecBase3f 0 0 0 0 0 0 0 0 0 0 0 0 265
 ////////////////////////////////////////////////////////////////////
 //       Class : LVecBase3
 // Description : This is the base class for all three-component
@@ -3780,20 +3445,7 @@ WaitInterval::~WaitInterval(void);
 
 405 18 LQuaternionf const 0 8832 18 LQuaternionf const 18 LQuaternionf const 0 0 406 0 0 0 0 0 0 0 0 0 0
 
-406 12 LQuaternionf 0 2048 12 LQuaternionf 12 LQuaternionf 0 0 0 0 0 0 0 0 0 0 0 0 719
-// Filename: lquaternion_src.h
-// Created by:  frang (06Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+406 12 LQuaternionf 0 2048 12 LQuaternionf 12 LQuaternionf 0 0 0 0 0 0 0 0 0 0 0 0 228
 ////////////////////////////////////////////////////////////////////
 //       Class : FLOATNAME(LQuaternion)
 // Description : This is the base quaternion class
@@ -3828,20 +3480,7 @@ WaitInterval::~WaitInterval(void);
 
 413 16 LVecBase2f const 0 8832 16 LVecBase2f const 16 LVecBase2f const 0 0 414 0 0 0 0 0 0 0 0 0 0
 
-414 10 LVecBase2f 0 2048 10 LVecBase2f 10 LVecBase2f 0 0 0 0 0 0 0 0 0 0 0 0 752
-// Filename: lvecBase2_src.h
-// Created by:  drose (08Mar00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+414 10 LVecBase2f 0 2048 10 LVecBase2f 10 LVecBase2f 0 0 0 0 0 0 0 0 0 0 0 0 263
 ////////////////////////////////////////////////////////////////////
 //       Class : LVecBase2
 // Description : This is the base class for all two-component
@@ -3872,7 +3511,8 @@ WaitInterval::~WaitInterval(void);
 
 0
 1
-426 14 bogus_variable 0 6 337 214 215 35 CConstraintInterval::bogus_variable 
+426 14 bogus_variable 0 6 337 214 215 35 CConstraintInterval::bogus_variable 0
+
 2
 427 0 0 260 9 get_nodes 13 get_num_nodes 8 get_node 
 428 0 0 260 13 get_ancestors 13 get_num_nodes 12 get_ancestor 

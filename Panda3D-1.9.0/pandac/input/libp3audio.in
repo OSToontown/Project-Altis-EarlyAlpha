@@ -1,25 +1,12 @@
-1412101807
-2 2
+1422499945
+2 3
 10 libp3audio 4 M_1l 12 panda3d.core 
 93
 134 16 FilterProperties 0 4 227 34 FilterProperties::FilterProperties 0 1 1 0
 41
 FilterProperties::FilterProperties(void);
 
-135 5 clear 0 4 227 23 FilterProperties::clear 0 1 2 745
-// Filename: filterProperties.I
-// Created by: jyelon (01Aug2007)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+135 5 clear 0 4 227 23 FilterProperties::clear 0 1 2 251
 ////////////////////////////////////////////////////////////////////
 //    Function: FilterProperties::clear
 //      Access: Published
@@ -142,14 +129,7 @@ static TypeHandle FilterProperties::get_class_type(void);
 40
 virtual void AudioSound::play(void) = 0;
 
-149 4 stop 0 6 229 16 AudioSound::stop 0 1 30 359
-// For best compatibility, set the loop_count,
-// volume, and balance, prior to calling play().  You may
-// set them while they're playing, but it's implementation
-// specific whether you get the results.
-// - Calling play() a second time on the same sound before it is
-//   finished will start the sound again (creating a skipping or
-//   stuttering effect).
+149 4 stop 0 6 229 16 AudioSound::stop 0 1 30 0
 40
 virtual void AudioSound::stop(void) = 0;
 
@@ -159,9 +139,7 @@ virtual void AudioSound::stop(void) = 0;
 55
 virtual void AudioSound::set_loop(bool loop = (1)) = 0;
 
-151 8 get_loop 0 6 229 20 AudioSound::get_loop 0 1 33 67
-// loop: false = play once; true = play forever.
-// inits to false.
+151 8 get_loop 0 6 229 20 AudioSound::get_loop 0 1 33 0
 50
 virtual bool AudioSound::get_loop(void) const = 0;
 
@@ -171,9 +149,7 @@ virtual bool AudioSound::get_loop(void) const = 0;
 80
 virtual void AudioSound::set_loop_count(unsigned long int loop_count = (1)) = 0;
 
-153 14 get_loop_count 0 6 229 26 AudioSound::get_loop_count 0 1 36 75
-// loop_count: 0 = forever; 1 = play once; n = play n times.
-// inits to 1.
+153 14 get_loop_count 0 6 229 26 AudioSound::get_loop_count 0 1 36 0
 69
 virtual unsigned long int AudioSound::get_loop_count(void) const = 0;
 
@@ -195,21 +171,7 @@ virtual unsigned long int AudioSound::get_loop_count(void) const = 0;
 62
 virtual void AudioSound::set_time(float start_time = (0)) = 0;
 
-155 8 get_time 0 6 229 20 AudioSound::get_time 0 1 39 688
-// Control time position within the sound.
-// This is similar (in concept) to the seek position within
-// a file.
-// time in seconds: 0 = beginning; length() = end.
-// inits to 0.0.
-// - The current time position will not change while the sound is
-//   playing; you must call play() again to effect the change.  To
-//   play the same sound from a time offset a second time,
-//   explicitly set the time position again.  When looping, the
-//   second and later loops will start from the beginning of the
-//   sound.
-// - If a sound is playing, calling get_time() repeatedly will
-//   return different results over time.  e.g.:
-//   PN_stdfloat percent_complete = s.get_time() / s.length();
+155 8 get_time 0 6 229 20 AudioSound::get_time 0 1 39 0
 51
 virtual float AudioSound::get_time(void) const = 0;
 
@@ -219,9 +181,7 @@ virtual float AudioSound::get_time(void) const = 0;
 60
 virtual void AudioSound::set_volume(float volume = (1)) = 0;
 
-157 10 get_volume 0 6 229 22 AudioSound::get_volume 0 1 42 47
-// 0 = minimum; 1.0 = maximum.
-// inits to 1.0.
+157 10 get_volume 0 6 229 22 AudioSound::get_volume 0 1 42 0
 53
 virtual float AudioSound::get_volume(void) const = 0;
 
@@ -233,11 +193,7 @@ virtual float AudioSound::get_volume(void) const = 0;
 68
 virtual void AudioSound::set_balance(float balance_right = (0)) = 0;
 
-159 11 get_balance 0 6 229 23 AudioSound::get_balance 0 1 45 77
-// -1.0 is hard left
-// 0.0 is centered
-// 1.0 is hard right
-// inits to 0.0.
+159 11 get_balance 0 6 229 23 AudioSound::get_balance 0 1 45 0
 54
 virtual float AudioSound::get_balance(void) const = 0;
 
@@ -247,9 +203,7 @@ virtual float AudioSound::get_balance(void) const = 0;
 66
 virtual void AudioSound::set_play_rate(float play_rate = (1)) = 0;
 
-161 13 get_play_rate 0 6 229 25 AudioSound::get_play_rate 0 1 48 64
-// play_rate is any positive PN_stdfloat value.
-// inits to 1.0.
+161 13 get_play_rate 0 6 229 25 AudioSound::get_play_rate 0 1 48 0
 56
 virtual float AudioSound::get_play_rate(void) const = 0;
 
@@ -258,8 +212,7 @@ virtual float AudioSound::get_play_rate(void) const = 0;
 57
 virtual void AudioSound::set_active(bool flag = (1)) = 0;
 
-163 10 get_active 0 6 229 22 AudioSound::get_active 0 1 51 28
-// inits to manager's state.
+163 10 get_active 0 6 229 22 AudioSound::get_active 0 1 51 0
 52
 virtual bool AudioSound::get_active(void) const = 0;
 
@@ -269,9 +222,7 @@ virtual bool AudioSound::get_active(void) const = 0;
 83
 virtual void AudioSound::set_finished_event(basic_string< char > const &event) = 0;
 
-165 18 get_finished_event 0 6 229 30 AudioSound::get_finished_event 0 1 53 126
-// Set (or clear) the event that will be thrown when the sound
-// finishes playing.  To clear the event, pass an empty string.
+165 18 get_finished_event 0 6 229 30 AudioSound::get_finished_event 0 1 53 0
 83
 virtual basic_string< char > const &AudioSound::get_finished_event(void) const = 0;
 
@@ -305,12 +256,7 @@ virtual void AudioSound::get_3d_attributes(float *px, float *py, float *pz, floa
 57
 virtual void AudioSound::set_3d_min_distance(float dist);
 
-171 19 get_3d_min_distance 0 6 229 31 AudioSound::get_3d_min_distance 0 1 58 175
-// Controls the distance (in units) that this sound begins to fall off.
-// Also affects the rate it falls off.
-// Default is 1.0
-// Closer/Faster, <1.0
-// Farther/Slower, >1.0
+171 19 get_3d_min_distance 0 6 229 31 AudioSound::get_3d_min_distance 0 1 58 0
 58
 virtual float AudioSound::get_3d_min_distance(void) const;
 
@@ -322,11 +268,7 @@ virtual float AudioSound::get_3d_min_distance(void) const;
 57
 virtual void AudioSound::set_3d_max_distance(float dist);
 
-173 19 get_3d_max_distance 0 6 229 31 AudioSound::get_3d_max_distance 0 1 60 222
-// Controls the maximum distance (in units) that this sound stops falling off.
-// The sound does not stop at that point, it just doesn't get any quieter.
-// You should rarely need to adjust this.
-// Default is 1000000000.0
+173 19 get_3d_max_distance 0 6 229 31 AudioSound::get_3d_max_distance 0 1 60 0
 58
 virtual float AudioSound::get_3d_max_distance(void) const;
 
@@ -340,13 +282,7 @@ virtual float AudioSound::get_3d_max_distance(void) const;
 55
 virtual float AudioSound::get_speaker_mix(int speaker);
 
-175 15 set_speaker_mix 0 6 229 27 AudioSound::set_speaker_mix 0 1 62 314
-// *_speaker_mix and *_speaker_level(s) serve the same purpose.
-// *_speaker_mix is for use with FMOD.
-// *_speaker_level(s) is for use with Miles.
-// Both interfaces exist because of a significant difference in the
-// two APIs.  Hopefully the difference can be reconciled into a single
-// interface at some point.
+175 15 set_speaker_mix 0 6 229 27 AudioSound::set_speaker_mix 0 1 62 0
 167
 virtual void AudioSound::set_speaker_mix(float frontleft, float frontright, float center, float sub, float backleft, float backright, float sideleft, float sideright);
 
@@ -398,14 +334,7 @@ virtual void AudioManager::setSpeakerSetup(AudioManager::SpeakerModeCategory cat
 71
 virtual bool AudioManager::configure_filters(FilterProperties *config);
 
-188 19 create_AudioManager 0 4 231 33 AudioManager::create_AudioManager 0 1 83 315
-// Create an AudioManager for each category of sounds you have.
-// E.g.
-//   MySoundEffects = create_AudioManager::AudioManager();
-//   MyMusicManager = create_AudioManager::AudioManager();
-//   ...
-//   my_sound = MySoundEffects.get_sound("neatSfx.mp3");
-//   my_music = MyMusicManager.get_sound("introTheme.mid");
+188 19 create_AudioManager 0 4 231 33 AudioManager::create_AudioManager 0 1 83 0
 73
 static PointerTo< AudioManager > AudioManager::create_AudioManager(void);
 
@@ -424,13 +353,11 @@ virtual void AudioManager::shutdown(void);
 46
 virtual bool AudioManager::is_valid(void) = 0;
 
-191 9 get_sound 0 6 231 23 AudioManager::get_sound 0 6 86 87 88 89 90 91 32
+191 9 get_sound 0 6 231 23 AudioManager::get_sound 0 6 86 87 88 89 90 91 15
 // Get a sound:
-
-// Get a sound:
-280
-virtual PointerTo< AudioSound > AudioManager::get_sound(basic_string< char > const &file_name, bool positional = (0), int mode = (SM_heuristic)) = 0;
-virtual PointerTo< AudioSound > AudioManager::get_sound(MovieAudio *source, bool positional = (0), int mode = (SM_heuristic)) = 0;
+258
+virtual PointerTo< AudioSound > AudioManager::get_sound(basic_string< char > const &file_name, bool positional = (0), int mode = (0)) = 0;
+virtual PointerTo< AudioSound > AudioManager::get_sound(MovieAudio *source, bool positional = (0), int mode = (0)) = 0;
 
 192 14 get_null_sound 0 4 231 28 AudioManager::get_null_sound 0 1 92 0
 59
@@ -445,12 +372,7 @@ PointerTo< AudioSound > AudioManager::get_null_sound(void);
 84
 virtual void AudioManager::uncache_sound(basic_string< char > const &file_name) = 0;
 
-194 11 clear_cache 0 6 231 25 AudioManager::clear_cache 0 1 94 281
-// Tell the AudioManager there is no need to keep this one cached.
-// This doesn't break any connection between AudioSounds that have
-// already given by get_sound() from this manager.  It's
-// only affecting whether the AudioManager keeps a copy of the sound
-// in its pool/cache.
+194 11 clear_cache 0 6 231 25 AudioManager::clear_cache 0 1 94 0
 49
 virtual void AudioManager::clear_cache(void) = 0;
 
@@ -472,13 +394,7 @@ virtual unsigned int AudioManager::get_cache_limit(void) const = 0;
 56
 virtual void AudioManager::set_volume(float volume) = 0;
 
-198 10 get_volume 0 6 231 24 AudioManager::get_volume 0 1 98 206
-// Control volume:
-// FYI:
-//   If you start a sound with the volume off and turn the volume 
-//   up later, you'll hear the sound playing at that late point.
-// 0 = minimum; 1.0 = maximum.
-// inits to 1.0.
+198 10 get_volume 0 6 231 24 AudioManager::get_volume 0 1 98 0
 55
 virtual float AudioManager::get_volume(void) const = 0;
 
@@ -494,15 +410,7 @@ virtual float AudioManager::get_volume(void) const = 0;
 53
 virtual void AudioManager::set_active(bool flag) = 0;
 
-200 10 get_active 0 6 231 24 AudioManager::get_active 0 1 100 362
-// Turn the manager on or off.
-// If you play a sound while the manager is inactive, it won't start.
-// If you deactivate the manager while sounds are playing, they'll
-// stop.
-// If you activate the manager while looping sounds are playing
-// (those that have a loop_count of zero),
-// they will start playing from the beginning of their loop.
-// inits to true.
+200 10 get_active 0 6 231 24 AudioManager::get_active 0 1 100 0
 54
 virtual bool AudioManager::get_active(void) const = 0;
 
@@ -517,14 +425,7 @@ virtual bool AudioManager::get_active(void) const = 0;
 84
 virtual void AudioManager::set_concurrent_sound_limit(unsigned int limit = (0)) = 0;
 
-202 26 get_concurrent_sound_limit 0 6 231 40 AudioManager::get_concurrent_sound_limit 0 1 103 347
-// This controls the number of sounds that you allow at once.  This
-// is more of a user choice -- it avoids talk over and the creation
-// of a cacophony.
-// It can also be used to help performance.
-// 0 == unlimited.
-// 1 == mutually exclusive (one sound at a time).  Which is an example of:
-// n == allow n sounds to be playing at the same time.
+202 26 get_concurrent_sound_limit 0 6 231 40 AudioManager::get_concurrent_sound_limit 0 1 103 0
 78
 virtual unsigned int AudioManager::get_concurrent_sound_limit(void) const = 0;
 
@@ -572,11 +473,7 @@ virtual void AudioManager::audio_3d_get_listener_attributes(float *px, float *py
 70
 virtual void AudioManager::audio_3d_set_distance_factor(float factor);
 
-209 28 audio_3d_get_distance_factor 0 6 231 42 AudioManager::audio_3d_get_distance_factor 0 1 109 261
-// Control the "relative scale that sets the distance factor" units for 3D spacialized audio. Default is 1.0
-// Fmod uses meters internally, so give a float in Units-per meter
-// Don't know what Miles uses.
-// Default is 1.0 which is adjust in panda to be feet.
+209 28 audio_3d_get_distance_factor 0 6 231 42 AudioManager::audio_3d_get_distance_factor 0 1 109 0
 69
 virtual float AudioManager::audio_3d_get_distance_factor(void) const;
 
@@ -587,10 +484,7 @@ virtual float AudioManager::audio_3d_get_distance_factor(void) const;
 69
 virtual void AudioManager::audio_3d_set_doppler_factor(float factor);
 
-211 27 audio_3d_get_doppler_factor 0 6 231 41 AudioManager::audio_3d_get_doppler_factor 0 1 111 125
-// Control the presence of the Doppler effect. Default is 1.0
-// Exaggerated Doppler, use >1.0
-// Diminshed Doppler, use <1.0
+211 27 audio_3d_get_doppler_factor 0 6 231 41 AudioManager::audio_3d_get_doppler_factor 0 1 111 0
 68
 virtual float AudioManager::audio_3d_get_doppler_factor(void) const;
 
@@ -602,11 +496,7 @@ virtual float AudioManager::audio_3d_get_doppler_factor(void) const;
 70
 virtual void AudioManager::audio_3d_set_drop_off_factor(float factor);
 
-213 28 audio_3d_get_drop_off_factor 0 6 231 42 AudioManager::audio_3d_get_drop_off_factor 0 1 113 157
-// Exaggerate or diminish the effect of distance on sound. Default is 1.0
-// Valid range is 0 to 10
-// Faster drop off, use >1.0
-// Slower drop off, use <1.0
+213 28 audio_3d_get_drop_off_factor 0 6 231 42 AudioManager::audio_3d_get_drop_off_factor 0 1 113 0
 69
 virtual float AudioManager::audio_3d_get_drop_off_factor(void) const;
 
@@ -631,20 +521,7 @@ virtual void AudioManager::set_speaker_configuration(LVecBase3f *speaker1, LVecB
 53
 static TypeHandle AudioManager::get_class_type(void);
 
-219 16 AudioLoadRequest 0 4 235 34 AudioLoadRequest::AudioLoadRequest 0 1 127 842
-// Filename: audioLoadRequest.I
-// Created by:  drose (29Aug06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+219 16 AudioLoadRequest 0 4 235 34 AudioLoadRequest::AudioLoadRequest 0 1 127 350
 ////////////////////////////////////////////////////////////////////
 //     Function: AudioLoadRequest::Constructor
 //       Access: Published
@@ -716,20 +593,7 @@ AudioLoadRequest::~AudioLoadRequest(void);
 
 133
 1 14 Dtool_M_1lijEN 0 7 3 237 0 14 Dtool_M_1lijEN 0 0 
-2 14 Dtool_M_1lk3Vr 0 4 4 238 0 14 Dtool_M_1lk3Vr 745 // Filename: filterProperties.I
-// Created by: jyelon (01Aug2007)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+2 14 Dtool_M_1lk3Vr 0 4 4 238 0 14 Dtool_M_1lk3Vr 251 ////////////////////////////////////////////////////////////////////
 //    Function: FilterProperties::clear
 //      Access: Published
 // Description: Removes all DSP postprocessing.
@@ -867,25 +731,17 @@ AudioLoadRequest::~AudioLoadRequest(void);
 // - Calling play() a second time on the same sound before it is
 //   finished will start the sound again (creating a skipping or
 //   stuttering effect). 1 4 this 3 242  
-30 14 Dtool_M_1ldOiG 0 4 19 238 0 14 Dtool_M_1ldOiG 359 // For best compatibility, set the loop_count,
-// volume, and balance, prior to calling play().  You may
-// set them while they're playing, but it's implementation
-// specific whether you get the results.
-// - Calling play() a second time on the same sound before it is
-//   finished will start the sound again (creating a skipping or
-//   stuttering effect). 1 4 this 3 242  
+30 14 Dtool_M_1ldOiG 0 4 19 238 0 14 Dtool_M_1ldOiG 0 1 4 this 3 242  
 31 14 Dtool_M_1lsQm7 0 4 20 238 0 14 Dtool_M_1lsQm7 67 // loop: false = play once; true = play forever.
 // inits to false. 2 4 this 3 242  4 loop 1 243  
 32 14 Dtool_M_1lepXp 0 4 20 238 0 14 Dtool_M_1lepXp 67 // loop: false = play once; true = play forever.
 // inits to false. 1 4 this 3 242  
-33 14 Dtool_M_1lk9fo 0 6 21 243 0 14 Dtool_M_1lk9fo 67 // loop: false = play once; true = play forever.
-// inits to false. 1 4 this 3 244  
+33 14 Dtool_M_1lk9fo 0 6 21 243 0 14 Dtool_M_1lk9fo 0 1 4 this 3 244  
 34 14 Dtool_M_1lZahU 0 4 22 238 0 14 Dtool_M_1lZahU 75 // loop_count: 0 = forever; 1 = play once; n = play n times.
 // inits to 1. 2 4 this 3 242  10 loop_count 1 246  
 35 14 Dtool_M_1lVL64 0 4 22 238 0 14 Dtool_M_1lVL64 75 // loop_count: 0 = forever; 1 = play once; n = play n times.
 // inits to 1. 1 4 this 3 242  
-36 14 Dtool_M_1lUTas 0 6 23 246 0 14 Dtool_M_1lUTas 75 // loop_count: 0 = forever; 1 = play once; n = play n times.
-// inits to 1. 1 4 this 3 244  
+36 14 Dtool_M_1lUTas 0 6 23 246 0 14 Dtool_M_1lUTas 0 1 4 this 3 244  
 37 14 Dtool_M_1lsxJX 0 4 24 238 0 14 Dtool_M_1lsxJX 688 // Control time position within the sound.
 // This is similar (in concept) to the seek position within
 // a file.
@@ -914,26 +770,12 @@ AudioLoadRequest::~AudioLoadRequest(void);
 // - If a sound is playing, calling get_time() repeatedly will
 //   return different results over time.  e.g.:
 //   PN_stdfloat percent_complete = s.get_time() / s.length(); 1 4 this 3 242  
-39 14 Dtool_M_1lhsI4 0 6 25 239 0 14 Dtool_M_1lhsI4 688 // Control time position within the sound.
-// This is similar (in concept) to the seek position within
-// a file.
-// time in seconds: 0 = beginning; length() = end.
-// inits to 0.0.
-// - The current time position will not change while the sound is
-//   playing; you must call play() again to effect the change.  To
-//   play the same sound from a time offset a second time,
-//   explicitly set the time position again.  When looping, the
-//   second and later loops will start from the beginning of the
-//   sound.
-// - If a sound is playing, calling get_time() repeatedly will
-//   return different results over time.  e.g.:
-//   PN_stdfloat percent_complete = s.get_time() / s.length(); 1 4 this 3 244  
+39 14 Dtool_M_1lhsI4 0 6 25 239 0 14 Dtool_M_1lhsI4 0 1 4 this 3 244  
 40 14 Dtool_M_1le1I3 0 4 26 238 0 14 Dtool_M_1le1I3 47 // 0 = minimum; 1.0 = maximum.
 // inits to 1.0. 2 4 this 3 242  6 volume 1 239  
 41 14 Dtool_M_1l7_nT 0 4 26 238 0 14 Dtool_M_1l7_nT 47 // 0 = minimum; 1.0 = maximum.
 // inits to 1.0. 1 4 this 3 242  
-42 14 Dtool_M_1lzxr3 0 6 27 239 0 14 Dtool_M_1lzxr3 47 // 0 = minimum; 1.0 = maximum.
-// inits to 1.0. 1 4 this 3 244  
+42 14 Dtool_M_1lzxr3 0 6 27 239 0 14 Dtool_M_1lzxr3 0 1 4 this 3 244  
 43 14 Dtool_M_1lnpIq 0 4 28 238 0 14 Dtool_M_1lnpIq 77 // -1.0 is hard left
 // 0.0 is centered
 // 1.0 is hard right
@@ -942,23 +784,18 @@ AudioLoadRequest::~AudioLoadRequest(void);
 // 0.0 is centered
 // 1.0 is hard right
 // inits to 0.0. 1 4 this 3 242  
-45 14 Dtool_M_1lwRl7 0 6 29 239 0 14 Dtool_M_1lwRl7 77 // -1.0 is hard left
-// 0.0 is centered
-// 1.0 is hard right
-// inits to 0.0. 1 4 this 3 244  
+45 14 Dtool_M_1lwRl7 0 6 29 239 0 14 Dtool_M_1lwRl7 0 1 4 this 3 244  
 46 14 Dtool_M_1lE6kx 0 4 30 238 0 14 Dtool_M_1lE6kx 64 // play_rate is any positive PN_stdfloat value.
 // inits to 1.0. 2 4 this 3 242  9 play_rate 1 239  
 47 14 Dtool_M_1lgAS1 0 4 30 238 0 14 Dtool_M_1lgAS1 64 // play_rate is any positive PN_stdfloat value.
 // inits to 1.0. 1 4 this 3 242  
-48 14 Dtool_M_1lSK3c 0 6 31 239 0 14 Dtool_M_1lSK3c 64 // play_rate is any positive PN_stdfloat value.
-// inits to 1.0. 1 4 this 3 244  
+48 14 Dtool_M_1lSK3c 0 6 31 239 0 14 Dtool_M_1lSK3c 0 1 4 this 3 244  
 49 14 Dtool_M_1l_M0J 0 4 32 238 0 14 Dtool_M_1l_M0J 28 // inits to manager's state. 2 4 this 3 242  4 flag 1 243  
 50 14 Dtool_M_1lTHGV 0 4 32 238 0 14 Dtool_M_1lTHGV 28 // inits to manager's state. 1 4 this 3 242  
-51 14 Dtool_M_1lyDK5 0 6 33 243 0 14 Dtool_M_1lyDK5 28 // inits to manager's state. 1 4 this 3 244  
+51 14 Dtool_M_1lyDK5 0 6 33 243 0 14 Dtool_M_1lyDK5 0 1 4 this 3 244  
 52 14 Dtool_M_1lkLpd 0 4 34 238 0 14 Dtool_M_1lkLpd 126 // Set (or clear) the event that will be thrown when the sound
 // finishes playing.  To clear the event, pass an empty string. 2 4 this 3 242  5 event 1 247  
-53 14 Dtool_M_1lyGD1 0 6 35 247 0 14 Dtool_M_1lyGD1 126 // Set (or clear) the event that will be thrown when the sound
-// finishes playing.  To clear the event, pass an empty string. 1 4 this 3 244  
+53 14 Dtool_M_1lyGD1 0 6 35 247 0 14 Dtool_M_1lyGD1 0 1 4 this 3 244  
 54 14 Dtool_M_1l10F5 0 6 36 247 0 14 Dtool_M_1l10F5 47 // There is no set_name(), this is intentional. 1 4 this 3 244  
 55 14 Dtool_M_1l1TDx 0 6 37 239 0 14 Dtool_M_1l1TDx 35 // return: playing time in seconds. 1 4 this 3 244  
 56 14 Dtool_M_1lOwRY 0 4 38 238 0 14 Dtool_M_1lOwRY 177 // Controls the position of this sound's emitter.
@@ -969,31 +806,19 @@ AudioLoadRequest::~AudioLoadRequest(void);
 // Default is 1.0
 // Closer/Faster, <1.0
 // Farther/Slower, >1.0 2 4 this 3 242  4 dist 1 239  
-58 14 Dtool_M_1lO2dr 0 6 41 239 0 14 Dtool_M_1lO2dr 175 // Controls the distance (in units) that this sound begins to fall off.
-// Also affects the rate it falls off.
-// Default is 1.0
-// Closer/Faster, <1.0
-// Farther/Slower, >1.0 1 4 this 3 244  
+58 14 Dtool_M_1lO2dr 0 6 41 239 0 14 Dtool_M_1lO2dr 0 1 4 this 3 244  
 59 14 Dtool_M_1lq_vO 0 4 42 238 0 14 Dtool_M_1lq_vO 222 // Controls the maximum distance (in units) that this sound stops falling off.
 // The sound does not stop at that point, it just doesn't get any quieter.
 // You should rarely need to adjust this.
 // Default is 1000000000.0 2 4 this 3 242  4 dist 1 239  
-60 14 Dtool_M_1lMIqK 0 6 43 239 0 14 Dtool_M_1lMIqK 222 // Controls the maximum distance (in units) that this sound stops falling off.
-// The sound does not stop at that point, it just doesn't get any quieter.
-// You should rarely need to adjust this.
-// Default is 1000000000.0 1 4 this 3 244  
+60 14 Dtool_M_1lMIqK 0 6 43 239 0 14 Dtool_M_1lMIqK 0 1 4 this 3 244  
 61 14 Dtool_M_1lgKBm 0 6 44 239 0 14 Dtool_M_1lgKBm 314 // *_speaker_mix and *_speaker_level(s) serve the same purpose.
 // *_speaker_mix is for use with FMOD.
 // *_speaker_level(s) is for use with Miles.
 // Both interfaces exist because of a significant difference in the
 // two APIs.  Hopefully the difference can be reconciled into a single
 // interface at some point. 2 4 this 3 242  7 speaker 1 248  
-62 14 Dtool_M_1l7IMU 0 4 45 238 0 14 Dtool_M_1l7IMU 314 // *_speaker_mix and *_speaker_level(s) serve the same purpose.
-// *_speaker_mix is for use with FMOD.
-// *_speaker_level(s) is for use with Miles.
-// Both interfaces exist because of a significant difference in the
-// two APIs.  Hopefully the difference can be reconciled into a single
-// interface at some point. 9 4 this 3 242  9 frontleft 1 239  10 frontright 1 239  6 center 1 239  3 sub 1 239  8 backleft 1 239  9 backright 1 239  8 sideleft 1 239  9 sideright 1 239  
+62 14 Dtool_M_1l7IMU 0 4 45 238 0 14 Dtool_M_1l7IMU 0 9 4 this 3 242  9 frontleft 1 239  10 frontright 1 239  6 center 1 239  3 sub 1 239  8 backleft 1 239  9 backright 1 239  8 sideleft 1 239  9 sideright 1 239  
 63 14 Dtool_M_1lBoqv 0 6 46 239 0 14 Dtool_M_1lBoqv 0 2 4 this 3 242  5 index 1 248  
 64 14 Dtool_M_1lny4l 0 4 47 238 0 14 Dtool_M_1lny4l 0 10 4 this 3 242  6 level1 1 239  6 level2 1 239  6 level3 1 239  6 level4 1 239  6 level5 1 239  6 level6 1 239  6 level7 1 239  6 level8 1 239  6 level9 1 239  
 65 14 Dtool_M_1l7xhL 0 4 47 238 0 14 Dtool_M_1l7xhL 0 9 4 this 3 242  6 level1 1 239  6 level2 1 239  6 level3 1 239  6 level4 1 239  6 level5 1 239  6 level6 1 239  6 level7 1 239  6 level8 1 239  
@@ -1014,13 +839,7 @@ AudioLoadRequest::~AudioLoadRequest(void);
 80 14 Dtool_M_1l30SK 0 6 60 248 0 14 Dtool_M_1l30SK 0 1 4 this 3 251  
 81 14 Dtool_M_1lWsSe 0 4 61 238 0 14 Dtool_M_1lWsSe 0 2 4 this 3 251  3 cat 1 232  
 82 14 Dtool_M_1lhUR_ 0 6 62 243 0 14 Dtool_M_1lhUR_ 0 2 4 this 3 251  6 config 1 237  
-83 14 Dtool_M_1lvL8W 0 7 63 251 0 14 Dtool_M_1lvL8W 315 // Create an AudioManager for each category of sounds you have.
-// E.g.
-//   MySoundEffects = create_AudioManager::AudioManager();
-//   MyMusicManager = create_AudioManager::AudioManager();
-//   ...
-//   my_sound = MySoundEffects.get_sound("neatSfx.mp3");
-//   my_music = MyMusicManager.get_sound("introTheme.mid"); 0 
+83 14 Dtool_M_1lvL8W 0 7 63 251 0 14 Dtool_M_1lvL8W 0 0 
 84 14 Dtool_M_1lHh1v 0 4 64 238 0 14 Dtool_M_1lHh1v 0 1 4 this 3 251  
 85 14 Dtool_M_1lYnlD 0 6 65 243 0 14 Dtool_M_1lYnlD 411 // If you're interested in knowing whether this audio manager
 // is valid, here's the call to do it.  It is not necessary
@@ -1029,9 +848,9 @@ AudioLoadRequest::~AudioLoadRequest(void);
 // may get silent sounds from it though.  The sound manager and
 // the sounds it creates should not crash the application even
 // when the objects are not valid. 1 4 this 3 251  
-86 14 Dtool_M_1lA0bS 0 7 66 242 0 14 Dtool_M_1lA0bS 15 // Get a sound: 4 4 this 3 251  6 source 1 252  10 positional 1 243  4 mode 1 248  
-87 14 Dtool_M_1lC3Ua 0 7 66 242 0 14 Dtool_M_1lC3Ua 15 // Get a sound: 3 4 this 3 251  6 source 1 252  10 positional 1 243  
-88 14 Dtool_M_1lP8Fq 0 7 66 242 0 14 Dtool_M_1lP8Fq 15 // Get a sound: 2 4 this 3 251  6 source 1 252  
+86 14 Dtool_M_1lA0bS 0 7 66 242 0 14 Dtool_M_1lA0bS 0 4 4 this 3 251  6 source 1 252  10 positional 1 243  4 mode 1 248  
+87 14 Dtool_M_1lC3Ua 0 7 66 242 0 14 Dtool_M_1lC3Ua 0 3 4 this 3 251  6 source 1 252  10 positional 1 243  
+88 14 Dtool_M_1lP8Fq 0 7 66 242 0 14 Dtool_M_1lP8Fq 0 2 4 this 3 251  6 source 1 252  
 89 14 Dtool_M_1l02J_ 0 7 66 242 0 14 Dtool_M_1l02J_ 15 // Get a sound: 4 4 this 3 251  9 file_name 1 247  10 positional 1 243  4 mode 1 248  
 90 14 Dtool_M_1lz8cY 0 7 66 242 0 14 Dtool_M_1lz8cY 15 // Get a sound: 3 4 this 3 251  9 file_name 1 247  10 positional 1 243  
 91 14 Dtool_M_1lyCgN 0 7 66 242 0 14 Dtool_M_1lyCgN 15 // Get a sound: 2 4 this 3 251  9 file_name 1 247  
@@ -1041,11 +860,7 @@ AudioLoadRequest::~AudioLoadRequest(void);
 // already given by get_sound() from this manager.  It's
 // only affecting whether the AudioManager keeps a copy of the sound
 // in its pool/cache. 2 4 this 3 251  9 file_name 1 247  
-94 14 Dtool_M_1lV3uV 0 4 69 238 0 14 Dtool_M_1lV3uV 281 // Tell the AudioManager there is no need to keep this one cached.
-// This doesn't break any connection between AudioSounds that have
-// already given by get_sound() from this manager.  It's
-// only affecting whether the AudioManager keeps a copy of the sound
-// in its pool/cache. 1 4 this 3 251  
+94 14 Dtool_M_1lV3uV 0 4 69 238 0 14 Dtool_M_1lV3uV 0 1 4 this 3 251  
 95 14 Dtool_M_1lJsMW 0 4 70 238 0 14 Dtool_M_1lJsMW 0 2 4 this 3 251  5 count 1 254  
 96 14 Dtool_M_1lZu93 0 6 71 254 0 14 Dtool_M_1lZu93 0 1 4 this 3 255  
 97 14 Dtool_M_1lqSxW 0 4 72 238 0 14 Dtool_M_1lqSxW 206 // Control volume:
@@ -1054,12 +869,7 @@ AudioLoadRequest::~AudioLoadRequest(void);
 //   up later, you'll hear the sound playing at that late point.
 // 0 = minimum; 1.0 = maximum.
 // inits to 1.0. 2 4 this 3 251  6 volume 1 239  
-98 14 Dtool_M_1lr_Wv 0 6 73 239 0 14 Dtool_M_1lr_Wv 206 // Control volume:
-// FYI:
-//   If you start a sound with the volume off and turn the volume 
-//   up later, you'll hear the sound playing at that late point.
-// 0 = minimum; 1.0 = maximum.
-// inits to 1.0. 1 4 this 3 255  
+98 14 Dtool_M_1lr_Wv 0 6 73 239 0 14 Dtool_M_1lr_Wv 0 1 4 this 3 255  
 99 14 Dtool_M_1lJ_GE 0 4 74 238 0 14 Dtool_M_1lJ_GE 362 // Turn the manager on or off.
 // If you play a sound while the manager is inactive, it won't start.
 // If you deactivate the manager while sounds are playing, they'll
@@ -1068,14 +878,7 @@ AudioLoadRequest::~AudioLoadRequest(void);
 // (those that have a loop_count of zero),
 // they will start playing from the beginning of their loop.
 // inits to true. 2 4 this 3 251  4 flag 1 243  
-100 14 Dtool_M_1lb_cl 0 6 75 243 0 14 Dtool_M_1lb_cl 362 // Turn the manager on or off.
-// If you play a sound while the manager is inactive, it won't start.
-// If you deactivate the manager while sounds are playing, they'll
-// stop.
-// If you activate the manager while looping sounds are playing
-// (those that have a loop_count of zero),
-// they will start playing from the beginning of their loop.
-// inits to true. 1 4 this 3 255  
+100 14 Dtool_M_1lb_cl 0 6 75 243 0 14 Dtool_M_1lb_cl 0 1 4 this 3 255  
 101 14 Dtool_M_1l0VhR 0 4 76 238 0 14 Dtool_M_1l0VhR 347 // This controls the number of sounds that you allow at once.  This
 // is more of a user choice -- it avoids talk over and the creation
 // of a cacophony.
@@ -1090,13 +893,7 @@ AudioLoadRequest::~AudioLoadRequest(void);
 // 0 == unlimited.
 // 1 == mutually exclusive (one sound at a time).  Which is an example of:
 // n == allow n sounds to be playing at the same time. 1 4 this 3 251  
-103 14 Dtool_M_1l4gS3 0 6 77 254 0 14 Dtool_M_1l4gS3 347 // This controls the number of sounds that you allow at once.  This
-// is more of a user choice -- it avoids talk over and the creation
-// of a cacophony.
-// It can also be used to help performance.
-// 0 == unlimited.
-// 1 == mutually exclusive (one sound at a time).  Which is an example of:
-// n == allow n sounds to be playing at the same time. 1 4 this 3 255  
+103 14 Dtool_M_1l4gS3 0 6 77 254 0 14 Dtool_M_1l4gS3 0 1 4 this 3 255  
 104 14 Dtool_M_1lUjBl 0 4 78 238 0 14 Dtool_M_1lUjBl 371 // This is likely to be a utility function for the concurrent_sound_limit
 // options.  It is exposed as an API, because it's reasonable that it
 // may be useful to be here.  It reduces the number of concurrently
@@ -1117,24 +914,16 @@ AudioLoadRequest::~AudioLoadRequest(void);
 // Fmod uses meters internally, so give a float in Units-per meter
 // Don't know what Miles uses.
 // Default is 1.0 which is adjust in panda to be feet. 2 4 this 3 251  6 factor 1 239  
-109 14 Dtool_M_1lhJ5G 0 6 84 239 0 14 Dtool_M_1lhJ5G 261 // Control the "relative scale that sets the distance factor" units for 3D spacialized audio. Default is 1.0
-// Fmod uses meters internally, so give a float in Units-per meter
-// Don't know what Miles uses.
-// Default is 1.0 which is adjust in panda to be feet. 1 4 this 3 255  
+109 14 Dtool_M_1lhJ5G 0 6 84 239 0 14 Dtool_M_1lhJ5G 0 1 4 this 3 255  
 110 14 Dtool_M_1lR8Fh 0 4 85 238 0 14 Dtool_M_1lR8Fh 125 // Control the presence of the Doppler effect. Default is 1.0
 // Exaggerated Doppler, use >1.0
 // Diminshed Doppler, use <1.0 2 4 this 3 251  6 factor 1 239  
-111 14 Dtool_M_1lhs_N 0 6 86 239 0 14 Dtool_M_1lhs_N 125 // Control the presence of the Doppler effect. Default is 1.0
-// Exaggerated Doppler, use >1.0
-// Diminshed Doppler, use <1.0 1 4 this 3 255  
+111 14 Dtool_M_1lhs_N 0 6 86 239 0 14 Dtool_M_1lhs_N 0 1 4 this 3 255  
 112 14 Dtool_M_1lQhOE 0 4 87 238 0 14 Dtool_M_1lQhOE 157 // Exaggerate or diminish the effect of distance on sound. Default is 1.0
 // Valid range is 0 to 10
 // Faster drop off, use >1.0
 // Slower drop off, use <1.0 2 4 this 3 251  6 factor 1 239  
-113 14 Dtool_M_1lV1m5 0 6 88 239 0 14 Dtool_M_1lV1m5 157 // Exaggerate or diminish the effect of distance on sound. Default is 1.0
-// Valid range is 0 to 10
-// Faster drop off, use >1.0
-// Slower drop off, use <1.0 1 4 this 3 255  
+113 14 Dtool_M_1lV1m5 0 6 88 239 0 14 Dtool_M_1lV1m5 0 1 4 this 3 255  
 114 14 Dtool_M_1lvzRi 0 7 89 258 0 14 Dtool_M_1lvzRi 0 0 
 115 14 Dtool_M_1lvvgN 0 4 90 238 0 14 Dtool_M_1lvvgN 0 2 4 this 3 255  3 out 1 249  
 116 14 Dtool_M_1l1L41 0 4 91 238 0 14 Dtool_M_1l1L41 0 2 4 this 3 255  3 out 1 249  
@@ -1148,20 +937,7 @@ AudioLoadRequest::~AudioLoadRequest(void);
 124 14 Dtool_M_1lFzQ3 0 4 92 238 0 14 Dtool_M_1lFzQ3 52 // set_speaker_configuration is a Miles only method. 3 4 this 3 251  8 speaker1 1 259  8 speaker2 1 259  
 125 14 Dtool_M_1l63gH 0 4 92 238 0 14 Dtool_M_1l63gH 52 // set_speaker_configuration is a Miles only method. 2 4 this 3 251  8 speaker1 1 259  
 126 14 Dtool_M_1lbs2a 0 7 93 241 0 14 Dtool_M_1lbs2a 0 0 
-127 14 Dtool_M_1lsPCP 0 7 96 261 226 14 Dtool_M_1lsPCP 842 // Filename: audioLoadRequest.I
-// Created by:  drose (29Aug06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+127 14 Dtool_M_1lsPCP 0 7 96 261 226 14 Dtool_M_1lsPCP 350 ////////////////////////////////////////////////////////////////////
 //     Function: AudioLoadRequest::Constructor
 //       Access: Published
 //  Description: Create a new AudioLoadRequest, and add it to the loader
@@ -1201,11 +977,7 @@ AudioLoadRequest::~AudioLoadRequest(void);
 //////////////////////////////////////////////////////////////////// 1 4 this 3 262  
 133 14 Dtool_M_1lz0Qm 0 7 102 241 0 14 Dtool_M_1lz0Qm 0 0 
 38
-227 16 FilterProperties 0 75777 16 FilterProperties 16 FilterProperties 0 0 0 1 134 0 0 13 135 136 137 138 139 140 141 142 143 144 145 146 147 0 0 1 0 228 0 0 0 0 243
-////////////////////////////////////////////////////////////////////
-//       Class : FilterProperties
-// Description : Stores a configuration for a set of audio DSP filters.
-////////////////////////////////////////////////////////////////////
+227 16 FilterProperties 0 75777 16 FilterProperties 16 FilterProperties 0 0 0 1 134 0 0 13 135 136 137 138 139 140 141 142 143 144 145 146 147 0 0 1 0 228 0 0 0 0 0
 
 228 19 TypedReferenceCount 0 2049 19 TypedReferenceCount 19 TypedReferenceCount 0 0 0 0 0 0 0 0 0 0 0 0 710
 ////////////////////////////////////////////////////////////////////
@@ -1223,15 +995,42 @@ AudioLoadRequest::~AudioLoadRequest(void);
 
 229 10 AudioSound 0 75777 10 AudioSound 10 AudioSound 0 0 0 0 0 0 37 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 0 0 1 0 228 0 0 0 1 230 0
 
-230 11 SoundStatus 0 794624 23 AudioSound::SoundStatus 23 AudioSound::SoundStatus 229 0 0 0 0 0 0 0 0 0 3 3 BAD 15 AudioSound::BAD 0 5 READY 17 AudioSound::READY 1 7 PLAYING 19 AudioSound::PLAYING 2 0 0
+230 11 SoundStatus 0 794624 23 AudioSound::SoundStatus 23 AudioSound::SoundStatus 229 0 0 0 0 0 0 0 0 0 3 3 BAD 15 AudioSound::BAD 0
+0 5 READY 17 AudioSound::READY 0
+1 7 PLAYING 19 AudioSound::PLAYING 0
+2 0 0
 
 231 12 AudioManager 0 75777 12 AudioManager 12 AudioManager 0 0 0 0 0 0 34 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 0 0 1 0 228 0 0 0 3 232 233 234 0
 
-232 19 SpeakerModeCategory 0 794624 33 AudioManager::SpeakerModeCategory 33 AudioManager::SpeakerModeCategory 231 0 0 0 0 0 0 0 0 0 9 15 SPEAKERMODE_raw 29 AudioManager::SPEAKERMODE_raw 0 16 SPEAKERMODE_mono 30 AudioManager::SPEAKERMODE_mono 1 18 SPEAKERMODE_stereo 32 AudioManager::SPEAKERMODE_stereo 2 16 SPEAKERMODE_quad 30 AudioManager::SPEAKERMODE_quad 3 20 SPEAKERMODE_surround 34 AudioManager::SPEAKERMODE_surround 4 19 SPEAKERMODE_5point1 33 AudioManager::SPEAKERMODE_5point1 5 19 SPEAKERMODE_7point1 33 AudioManager::SPEAKERMODE_7point1 6 15 SPEAKERMODE_max 29 AudioManager::SPEAKERMODE_max 7 17 SPEAKERMODE_COUNT 31 AudioManager::SPEAKERMODE_COUNT 8 0 0
+232 19 SpeakerModeCategory 0 794624 33 AudioManager::SpeakerModeCategory 33 AudioManager::SpeakerModeCategory 231 0 0 0 0 0 0 0 0 0 9 15 SPEAKERMODE_raw 29 AudioManager::SPEAKERMODE_raw 79
+// These enumerants line up one-to-one
+// with the FMOD SPEAKERMODE enumerants.
+0 16 SPEAKERMODE_mono 30 AudioManager::SPEAKERMODE_mono 0
+1 18 SPEAKERMODE_stereo 32 AudioManager::SPEAKERMODE_stereo 0
+2 16 SPEAKERMODE_quad 30 AudioManager::SPEAKERMODE_quad 0
+3 20 SPEAKERMODE_surround 34 AudioManager::SPEAKERMODE_surround 0
+4 19 SPEAKERMODE_5point1 33 AudioManager::SPEAKERMODE_5point1 0
+5 19 SPEAKERMODE_7point1 33 AudioManager::SPEAKERMODE_7point1 0
+6 15 SPEAKERMODE_max 29 AudioManager::SPEAKERMODE_max 0
+7 17 SPEAKERMODE_COUNT 31 AudioManager::SPEAKERMODE_COUNT 0
+8 0 0
 
-233 9 SpeakerId 0 794624 23 AudioManager::SpeakerId 23 AudioManager::SpeakerId 231 0 0 0 0 0 0 0 0 0 10 8 SPK_none 22 AudioManager::SPK_none 0 13 SPK_frontleft 27 AudioManager::SPK_frontleft 1 14 SPK_frontright 28 AudioManager::SPK_frontright 2 10 SPK_center 24 AudioManager::SPK_center 3 7 SPK_sub 21 AudioManager::SPK_sub 4 12 SPK_backleft 26 AudioManager::SPK_backleft 5 13 SPK_backright 27 AudioManager::SPK_backright 6 12 SPK_sideleft 26 AudioManager::SPK_sideleft 7 13 SPK_sideright 27 AudioManager::SPK_sideright 8 9 SPK_COUNT 23 AudioManager::SPK_COUNT 9 0 0
+233 9 SpeakerId 0 794624 23 AudioManager::SpeakerId 23 AudioManager::SpeakerId 231 0 0 0 0 0 0 0 0 0 10 8 SPK_none 22 AudioManager::SPK_none 0
+0 13 SPK_frontleft 27 AudioManager::SPK_frontleft 0
+1 14 SPK_frontright 28 AudioManager::SPK_frontright 0
+2 10 SPK_center 24 AudioManager::SPK_center 0
+3 7 SPK_sub 21 AudioManager::SPK_sub 0
+4 12 SPK_backleft 26 AudioManager::SPK_backleft 0
+5 13 SPK_backright 27 AudioManager::SPK_backright 0
+6 12 SPK_sideleft 26 AudioManager::SPK_sideleft 0
+7 13 SPK_sideright 27 AudioManager::SPK_sideright 0
+8 9 SPK_COUNT 23 AudioManager::SPK_COUNT 0
+9 0 0
 
-234 10 StreamMode 0 794624 24 AudioManager::StreamMode 24 AudioManager::StreamMode 231 0 0 0 0 0 0 0 0 0 3 12 SM_heuristic 26 AudioManager::SM_heuristic 0 9 SM_sample 23 AudioManager::SM_sample 1 9 SM_stream 23 AudioManager::SM_stream 2 0 0
+234 10 StreamMode 0 794624 24 AudioManager::StreamMode 24 AudioManager::StreamMode 231 0 0 0 0 0 0 0 0 0 3 12 SM_heuristic 26 AudioManager::SM_heuristic 0
+0 9 SM_sample 23 AudioManager::SM_sample 0
+1 9 SM_stream 23 AudioManager::SM_stream 0
+2 0 0
 
 235 16 AudioLoadRequest 0 141313 16 AudioLoadRequest 16 AudioLoadRequest 0 0 0 1 219 226 0 6 220 221 222 223 224 225 0 0 1 0 236 0 0 0 0 554
 ////////////////////////////////////////////////////////////////////
@@ -1344,20 +1143,7 @@ AudioLoadRequest::~AudioLoadRequest(void);
 
 259 12 LVecBase3f * 0 8576 12 LVecBase3f * 12 LVecBase3f * 0 0 260 0 0 0 0 0 0 0 0 0 0
 
-260 10 LVecBase3f 0 2048 10 LVecBase3f 10 LVecBase3f 0 0 0 0 0 0 0 0 0 0 0 0 754
-// Filename: lvecBase3_src.h
-// Created by:  drose (08Mar00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+260 10 LVecBase3f 0 2048 10 LVecBase3f 10 LVecBase3f 0 0 0 0 0 0 0 0 0 0 0 0 265
 ////////////////////////////////////////////////////////////////////
 //       Class : LVecBase3
 // Description : This is the base class for all three-component

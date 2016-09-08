@@ -184,6 +184,9 @@
 
 #ifdef CPPPARSER
 #include <stdtypedefs.h>
+
+// Also pick up the forward declaration of PyObject.
+#include <Python.h>
 #endif
 
 #ifdef USE_TAU
@@ -322,14 +325,17 @@
 #define ALIGN_4BYTE
 #define ALIGN_8BYTE
 #define ALIGN_16BYTE
-#elif defined(WIN32_VC)
+#define ALIGN_64BYTE
+#elif defined(_MSC_VER)
 #define ALIGN_4BYTE __declspec(align(4))
 #define ALIGN_8BYTE __declspec(align(8))
 #define ALIGN_16BYTE __declspec(align(16))
+#define ALIGN_64BYTE __declspec(align(64))
 #elif defined(__GNUC__)
 #define ALIGN_4BYTE __attribute__ ((aligned (4)))
 #define ALIGN_8BYTE __attribute__ ((aligned (8)))
 #define ALIGN_16BYTE __attribute__ ((aligned (16)))
+#define ALIGN_64BYTE __attribute__ ((aligned (64)))
 #else
 #define ALIGN_4BYTE
 #define ALIGN_8BYTE
@@ -397,17 +403,16 @@
 #define BEGIN_PUBLISH __begin_publish
 #define END_PUBLISH __end_publish
 #define BLOCKING __blocking
+#define MAKE_PROPERTY(property_name, ...) __make_property(property_name, __VA_ARGS__)
 #define MAKE_SEQ(seq_name, num_name, element_name) __make_seq(seq_name, num_name, element_name)
 #undef USE_STL_ALLOCATOR  /* Don't try to parse these template classes in interrogate. */
 #define EXTENSION(x) __extension x
 #define EXTEND __extension
-#define EXT_FUNC(func) ::func()
-#define EXT_FUNC_ARGS(func, ...) ::func(__VA_ARGS__)
-#define CALL_EXT_FUNC(func, ...) ::func (__VA_ARGS__)
 #else
 #define BEGIN_PUBLISH
 #define END_PUBLISH
 #define BLOCKING
+#define MAKE_PROPERTY(property_name, ...)
 #define MAKE_SEQ(seq_name, num_name, element_name)
 #define EXTENSION(x)
 #define EXTEND

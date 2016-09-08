@@ -1,21 +1,8 @@
-1412104461
-2 2
+1422503591
+2 3
 12 libp3distort 4 2YN4 10 panda3d.fx 
 65
-64 15 CylindricalLens 0 4 129 32 CylindricalLens::CylindricalLens 0 1 1 946
-// Filename: cylindricalLens.I
-// Created by:  drose (12Dec01)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+64 15 CylindricalLens 0 4 129 32 CylindricalLens::CylindricalLens 0 1 1 455
 ////////////////////////////////////////////////////////////////////
 //     Function: CylindricalLens::Constructor
 //       Access: Public
@@ -38,20 +25,7 @@ static TypeHandle CylindricalLens::get_class_type(void);
 40
 CylindricalLens::~CylindricalLens(void);
 
-67 11 FisheyeLens 0 4 131 24 FisheyeLens::FisheyeLens 0 1 3 934
-// Filename: fisheyeLens.I
-// Created by:  drose (12Dec01)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+67 11 FisheyeLens 0 4 131 24 FisheyeLens::FisheyeLens 0 1 3 447
 ////////////////////////////////////////////////////////////////////
 //     Function: FisheyeLens::Constructor
 //       Access: Public
@@ -105,20 +79,7 @@ ProjectionScreen::ProjectionScreen(basic_string< char > const &name = (""));
 64
 void ProjectionScreen::set_projector(NodePath const &projector);
 
-72 13 get_projector 0 4 132 31 ProjectionScreen::get_projector 0 1 8 884
-// Filename: projectionScreen.I
-// Created by:  drose (11Dec01)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+72 13 get_projector 0 4 132 31 ProjectionScreen::get_projector 0 1 8 392
 ////////////////////////////////////////////////////////////////////
 //     Function: ProjectionScreen::get_projector
 //       Access: Published
@@ -804,20 +765,7 @@ GraphicsEngine *NonlinearImager::get_graphics_engine(void) const;
 38
 void NonlinearImager::recompute(void);
 
-123 11 OSphereLens 0 4 135 24 OSphereLens::OSphereLens 0 1 60 934
-// Filename: oSphereLens.I
-// Created by:  drose (25Feb11)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+123 11 OSphereLens 0 4 135 24 OSphereLens::OSphereLens 0 1 60 447
 ////////////////////////////////////////////////////////////////////
 //     Function: OSphereLens::Constructor
 //       Access: Public
@@ -840,20 +788,7 @@ static TypeHandle OSphereLens::get_class_type(void);
 32
 OSphereLens::~OSphereLens(void);
 
-126 11 PSphereLens 0 4 136 24 PSphereLens::PSphereLens 0 1 62 934
-// Filename: pSphereLens.I
-// Created by:  drose (12Dec01)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+126 11 PSphereLens 0 4 136 24 PSphereLens::PSphereLens 0 1 62 447
 ////////////////////////////////////////////////////////////////////
 //     Function: PSphereLens::Constructor
 //       Access: Public
@@ -877,39 +812,13 @@ static TypeHandle PSphereLens::get_class_type(void);
 PSphereLens::~PSphereLens(void);
 
 63
-1 14 Dtool_2YN4c_uw 0 7 3 137 66 14 Dtool_2YN4c_uw 715 // Filename: cylindricalLens.I
-// Created by:  drose (12Dec01)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+1 14 Dtool_2YN4c_uw 0 7 3 137 66 14 Dtool_2YN4c_uw 224 ////////////////////////////////////////////////////////////////////
 //     Function: CylindricalLens::Constructor
 //       Access: Public
 //  Description:
 //////////////////////////////////////////////////////////////////// 0 
 2 14 Dtool_2YN4XUqH 0 7 4 139 0 14 Dtool_2YN4XUqH 0 0 
-3 14 Dtool_2YN41U_J 0 7 7 140 69 14 Dtool_2YN41U_J 707 // Filename: fisheyeLens.I
-// Created by:  drose (12Dec01)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+3 14 Dtool_2YN41U_J 0 7 7 140 69 14 Dtool_2YN41U_J 220 ////////////////////////////////////////////////////////////////////
 //     Function: FisheyeLens::Constructor
 //       Access: Public
 //  Description:
@@ -937,20 +846,7 @@ PSphereLens::~PSphereLens(void);
 //
 //               The NodePath must refer to a LensNode (or a Camera).
 //////////////////////////////////////////////////////////////////// 2 4 this 3 142  9 projector 1 143  
-8 14 Dtool_2YN4qx3t 0 6 14 143 0 14 Dtool_2YN4qx3t 884 // Filename: projectionScreen.I
-// Created by:  drose (11Dec01)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+8 14 Dtool_2YN4qx3t 0 6 14 143 0 14 Dtool_2YN4qx3t 392 ////////////////////////////////////////////////////////////////////
 //     Function: ProjectionScreen::get_projector
 //       Access: Published
 //  Description: Returns the NodePath to the LensNode that is to serve
@@ -1424,39 +1320,13 @@ PSphereLens::~PSphereLens(void);
 //       Access: Published
 //  Description: Forces a regeneration of all the mesh objects, etc.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 164  
-60 14 Dtool_2YN4Ad0P 0 7 67 174 125 14 Dtool_2YN4Ad0P 707 // Filename: oSphereLens.I
-// Created by:  drose (25Feb11)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+60 14 Dtool_2YN4Ad0P 0 7 67 174 125 14 Dtool_2YN4Ad0P 220 ////////////////////////////////////////////////////////////////////
 //     Function: OSphereLens::Constructor
 //       Access: Public
 //  Description:
 //////////////////////////////////////////////////////////////////// 0 
 61 14 Dtool_2YN4ZnTK 0 7 68 139 0 14 Dtool_2YN4ZnTK 0 0 
-62 14 Dtool_2YN4ggVT 0 7 71 175 128 14 Dtool_2YN4ggVT 707 // Filename: pSphereLens.I
-// Created by:  drose (12Dec01)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+62 14 Dtool_2YN4ggVT 0 7 71 175 128 14 Dtool_2YN4ggVT 220 ////////////////////////////////////////////////////////////////////
 //     Function: PSphereLens::Constructor
 //       Access: Public
 //  Description:
@@ -1533,7 +1403,7 @@ PSphereLens::~PSphereLens(void);
 //               cylindrical lenses.
 ////////////////////////////////////////////////////////////////////
 
-133 9 PandaNode 0 2049 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 0 0 0 0 0 374
+133 9 PandaNode 0 2049 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 3 176 177 178 0 0 0 0 374
 ////////////////////////////////////////////////////////////////////
 //       Class : PandaNode
 // Description : A basic node of the scene graph or data graph.  This
@@ -1541,7 +1411,7 @@ PSphereLens::~PSphereLens(void);
 //               serves as a generic node with no special properties.
 ////////////////////////////////////////////////////////////////////
 
-134 15 NonlinearImager 0 26625 15 NonlinearImager 15 NonlinearImager 0 0 0 1 98 99 0 23 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 3 176 177 178 0 0 0 0 3171
+134 15 NonlinearImager 0 26625 15 NonlinearImager 15 NonlinearImager 0 0 0 1 98 99 0 23 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 3 179 180 181 0 0 0 0 3171
 ////////////////////////////////////////////////////////////////////
 //       Class : NonlinearImager
 // Description : This class object combines the rendered output of a
@@ -1665,86 +1535,7 @@ PSphereLens::~PSphereLens(void);
 
 144 14 NodePath const 0 8832 14 NodePath const 14 NodePath const 0 0 145 0 0 0 0 0 0 0 0 0 0
 
-145 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 179 180 0 0 0 0 4938
-//
-// A NodePath is the fundamental unit of high-level interaction with
-// the scene graph.  It encapsulates the complete path down to a node
-// from some other node, usually the root of the scene graph.  This is
-// used to resolve ambiguities associated with instancing.
-//
-// NodePath also contains a number of handy high-level methods for
-// common scene-graph manipulations, such as reparenting, and common
-// state changes, such as repositioning.
-//
-// There are also a number of NodePath methods for finding nodes deep
-// within the tree by name or by type.  These take a path string,
-// which at its simplest consists of a series of node names separated
-// by slashes, like a directory pathname.
-//
-// Each component of the path string may optionally consist of one of
-// the following special names, instead of a node name:
-//
-//   *          -- matches exactly one node, with any name.
-//   **         -- matches any sequence of zero or more nodes.
-//   +typename  -- matches any node that is or derives from the given type.
-//   -typename  -- matches any node that is the given type exactly.
-//   =tag       -- matches any node that has the indicated tag.
-//   =tag=value -- matches any node whose tag matches the indicated value.
-//
-// Furthermore, a node name may itself contain standard filename
-// globbing characters, like *, ?, and [a-z], that will be accepted as
-// a partial match.  (In fact, the '*' special name may be seen as
-// just a special case of this.)  The globbing characters may not be
-// used with the typename matches or with tag matches, but they may
-// be used to match a tag's value in the =tag=value syntax.
-//
-// The special characters "@@", appearing at the beginning of a node
-// name, indicate a stashed node.  Normally, stashed nodes are not
-// returned by a find (but see the special flags, below), but a
-// stashed node may be found if it is explicitly named with its
-// leading @@ characters.  By extension, "@@*" may be used to identify
-// any stashed node.
-//
-// Examples:
-//
-// "room//graph" will look for a node named "graph", which is a child
-// of an unnamed node, which is a child of a node named "room", which
-// is a child of the starting path.
-//
-// "**/red*" will look for any node anywhere in the tree (below the
-// starting path) with a name that begins with "red".
-//
-// "**/+PartBundleNode/**/head" will look for a node named "head",
-// somewhere below a PartBundleNode anywhere in the tree.
-//
-//
-// The search is always potentially ambiguous, even if the special
-// wildcard operators are not used, because there may be multiple
-// nodes in the tree with the same name.  In general, in the case of
-// an ambiguity, the shortest path is preferred; when a method (such
-// as extend_by) must choose only only one of several possible paths,
-// it will choose the shortest available; on the other hand, when a
-// method (such as find_all_matches) is to return all of the matching
-// paths, it will sort them so that the shortest paths appear first in
-// the output.
-//
-//
-// Special flags.  The entire string may optionally be followed by the
-// ";" character, followed by one or more of the following special
-// control flags, with no intervening spaces or punctuation:
-//
-//    -h    Do not return hidden nodes.
-//    +h    Do return hidden nodes.
-//    -s    Do not return stashed nodes unless explicitly referenced with @@.
-//    +s    Return stashed nodes even without any explicit @@ characters.
-//    -i    Node name comparisons are not case insensitive: case must match
-//          exactly.
-//    +i    Node name comparisons are case insensitive: case is not important.
-//          This affects matches against the node name only; node type
-//          and tag strings are always case sensitive.
-//
-// The default flags are +h-s-i.
-//
+145 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 182 183 0 0 0 0 1139
 ////////////////////////////////////////////////////////////////////
 //       Class : NodePath
 // Description : NodePath is the fundamental system for disambiguating
@@ -1786,7 +1577,7 @@ PSphereLens::~PSphereLens(void);
 
 152 4 bool 0 8194 4 bool 4 bool 0 4 0 0 0 0 0 0 0 0 0 0 0
 
-153 8 GeomNode 0 2048 8 GeomNode 8 GeomNode 0 0 0 0 0 0 0 2 181 182 0 0 0 0 423
+153 8 GeomNode 0 2048 8 GeomNode 8 GeomNode 0 0 0 0 0 0 0 2 184 185 0 0 0 0 423
 ////////////////////////////////////////////////////////////////////
 //       Class : GeomNode
 // Description : A node that holds Geom objects, renderable pieces of
@@ -1847,7 +1638,7 @@ PSphereLens::~PSphereLens(void);
 
 167 10 NodePath * 0 8576 10 NodePath * 10 NodePath * 0 0 145 0 0 0 0 0 0 0 0 0 0
 
-168 14 GraphicsOutput 0 2048 14 GraphicsOutput 14 GraphicsOutput 0 0 0 0 0 0 0 2 183 184 0 0 0 0 1111
+168 14 GraphicsOutput 0 2048 14 GraphicsOutput 14 GraphicsOutput 0 0 0 0 0 0 0 2 186 187 0 0 0 0 1111
 ////////////////////////////////////////////////////////////////////
 //       Class : GraphicsOutput
 // Description : This is a base class for the various different
@@ -1886,7 +1677,7 @@ PSphereLens::~PSphereLens(void);
 //               a 3-d scene.
 ////////////////////////////////////////////////////////////////////
 
-172 14 GraphicsEngine 0 2048 14 GraphicsEngine 14 GraphicsEngine 0 0 0 0 0 0 0 1 185 0 0 0 0 823
+172 14 GraphicsEngine 0 2048 14 GraphicsEngine 14 GraphicsEngine 0 0 0 0 0 0 0 1 188 0 0 0 0 823
 ////////////////////////////////////////////////////////////////////
 //       Class : GraphicsEngine
 // Description : This class is the main interface to controlling the
@@ -1911,14 +1702,17 @@ PSphereLens::~PSphereLens(void);
 
 0
 0
-10
-176 0 0 40 11 get_screens 15 get_num_screens 10 get_screen 
-177 0 0 40 11 get_buffers 15 get_num_screens 10 get_buffer 
-178 0 0 40 11 get_viewers 15 get_num_viewers 10 get_viewer 
-179 0 0 89 9 get_nodes 13 get_num_nodes 8 get_node 
-180 0 0 89 13 get_ancestors 13 get_num_nodes 12 get_ancestor 
-181 0 0 102 9 get_geoms 13 get_num_geoms 8 get_geom 
-182 0 0 102 15 get_geom_states 13 get_num_geoms 14 get_geom_state 
-183 0 0 147 19 get_display_regions 23 get_num_display_regions 18 get_display_region 
-184 0 0 147 26 get_active_display_regions 30 get_num_active_display_regions 25 get_active_display_region 
-185 0 0 166 11 get_windows 15 get_num_windows 10 get_window 
+13
+176 0 0 11 11 get_parents 15 get_num_parents 10 get_parent 
+177 0 0 11 12 get_children 16 get_num_children 9 get_child 
+178 0 0 11 11 get_stashed 15 get_num_stashed 11 get_stashed 
+179 0 0 40 11 get_screens 15 get_num_screens 10 get_screen 
+180 0 0 40 11 get_buffers 15 get_num_screens 10 get_buffer 
+181 0 0 40 11 get_viewers 15 get_num_viewers 10 get_viewer 
+182 0 0 89 9 get_nodes 13 get_num_nodes 8 get_node 
+183 0 0 89 13 get_ancestors 13 get_num_nodes 12 get_ancestor 
+184 0 0 102 9 get_geoms 13 get_num_geoms 8 get_geom 
+185 0 0 102 15 get_geom_states 13 get_num_geoms 14 get_geom_state 
+186 0 0 150 19 get_display_regions 23 get_num_display_regions 18 get_display_region 
+187 0 0 150 26 get_active_display_regions 30 get_num_active_display_regions 25 get_active_display_region 
+188 0 0 169 11 get_windows 15 get_num_windows 10 get_window 

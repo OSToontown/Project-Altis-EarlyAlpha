@@ -1,5 +1,5 @@
-1412102906
-2 2
+1422501562
+2 3
 9 libp3chan 4 8NZB 12 panda3d.core 
 218
 216 37 upcast_to_TypedWritableReferenceCount 0 12 434 48 AnimGroup::upcast_to_TypedWritableReferenceCount 0 1 10 52
@@ -54,9 +54,7 @@ AnimGroup *Namable::downcast_to_AnimGroup(void);
 74
 AnimGroup::AnimGroup(AnimGroup *parent, basic_string< char > const &name);
 
-221 10 ~AnimGroup 0 6 434 21 AnimGroup::~AnimGroup 0 0 276
-// This is the normal AnimGroup constructor.
-
+221 10 ~AnimGroup 0 6 434 21 AnimGroup::~AnimGroup 0 0 230
 ////////////////////////////////////////////////////////////////////
 //     Function: AnimGroup::Destructor
 //       Access: Published, Virtual
@@ -144,20 +142,7 @@ virtual void AnimGroup::write(ostream &out, int indent_level) const;
 50
 static TypeHandle AnimGroup::get_class_type(void);
 
-230 10 AnimBundle 0 4 437 22 AnimBundle::AnimBundle 0 1 14 1374
-// Filename: animBundle.I
-// Created by:  drose (21Feb99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+230 10 AnimBundle 0 4 437 22 AnimBundle::AnimBundle 0 1 14 888
 ////////////////////////////////////////////////////////////////////
 //     Function: AnimBundle::Constructor
 //       Access: Public
@@ -226,20 +211,7 @@ static TypeHandle AnimBundle::get_class_type(void);
 30
 AnimBundle::~AnimBundle(void);
 
-236 14 AnimBundleNode 0 4 438 30 AnimBundleNode::AnimBundleNode 0 1 19 1557
-// Filename: animBundleNode.I
-// Created by:  drose (06Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+236 14 AnimBundleNode 0 4 438 30 AnimBundleNode::AnimBundleNode 0 1 19 1067
 ////////////////////////////////////////////////////////////////////
 //     Function: AnimBundleNode::Constructor
 //       Access: Public
@@ -314,22 +286,9 @@ downcast from Namable to PartGroup
 48
 PartGroup *Namable::downcast_to_PartGroup(void);
 
-245 9 PartGroup 0 4 440 20 PartGroup::PartGroup 0 1 23 1727
+245 9 PartGroup 0 4 440 20 PartGroup::PartGroup 0 1 23 1242
 // This is the normal PartGroup constructor.
 
-// Filename: partGroup.I
-// Created by:  drose (22Feb99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 //     Function: PartGroup::Default Constructor
 //       Access: Protected
@@ -356,9 +315,7 @@ PartGroup *Namable::downcast_to_PartGroup(void);
 74
 PartGroup::PartGroup(PartGroup *parent, basic_string< char > const &name);
 
-246 10 ~PartGroup 0 6 440 21 PartGroup::~PartGroup 0 0 266
-// This is the normal PartGroup constructor.
-
+246 10 ~PartGroup 0 6 440 21 PartGroup::~PartGroup 0 0 220
 ////////////////////////////////////////////////////////////////////
 //     Function: PartGroup::Destructor
 //       Access: Published
@@ -605,20 +562,7 @@ AnimControl *Namable::downcast_to_AnimControl(void);
 40
 virtual AnimControl::~AnimControl(void);
 
-271 10 is_pending 0 4 442 23 AnimControl::is_pending 0 1 45 1061
-// Filename: animControl.I
-// Created by:  drose (19Feb99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+271 10 is_pending 0 4 442 23 AnimControl::is_pending 0 1 45 574
 ////////////////////////////////////////////////////////////////////
 //     Function: AnimControl::is_pending
 //       Access: Published
@@ -790,8 +734,7 @@ virtual void ::AnimChannel< ACMatrixSwitchType >::get_value(int frame, LMatrix4f
 104
 virtual void ::AnimChannel< ACMatrixSwitchType >::get_value_no_scale_shear(int frame, LMatrix4f &value);
 
-289 9 get_scale 0 6 446 44 AnimChannel< ACMatrixSwitchType >::get_scale 0 1 68 72
-// These transform-component methods only have meaning for matrix types.
+289 9 get_scale 0 6 446 44 AnimChannel< ACMatrixSwitchType >::get_scale 0 1 68 0
 90
 virtual void ::AnimChannel< ACMatrixSwitchType >::get_scale(int frame, LVecBase3f &scale);
 
@@ -828,8 +771,7 @@ virtual void ::AnimChannel< ACScalarSwitchType >::get_value(int frame, float &va
 100
 virtual void ::AnimChannel< ACScalarSwitchType >::get_value_no_scale_shear(int frame, float &value);
 
-298 9 get_scale 0 6 447 44 AnimChannel< ACScalarSwitchType >::get_scale 0 1 75 72
-// These transform-component methods only have meaning for matrix types.
+298 9 get_scale 0 6 447 44 AnimChannel< ACScalarSwitchType >::get_scale 0 1 75 0
 90
 virtual void ::AnimChannel< ACScalarSwitchType >::get_scale(int frame, LVecBase3f &scale);
 
@@ -885,20 +827,7 @@ void AnimChannelMatrixDynamic::set_value(TransformState const *value);
 63
 void AnimChannelMatrixDynamic::set_value_node(PandaNode *node);
 
-307 19 get_value_transform 0 4 448 45 AnimChannelMatrixDynamic::get_value_transform 0 1 85 841
-// Filename: animChannelMatrixDynamic.I
-// Created by:  drose (20Oct03)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+307 19 get_value_transform 0 4 448 45 AnimChannelMatrixDynamic::get_value_transform 0 1 85 341
 ////////////////////////////////////////////////////////////////////
 //     Function: AnimChannelMatrixDynamic::get_value_transform
 //       Access: Published
@@ -950,20 +879,7 @@ AnimChannelMatrixDynamic::~AnimChannelMatrixDynamic(void);
 106
 AnimChannelMatrixXfmTable::AnimChannelMatrixXfmTable(AnimGroup *parent, basic_string< char > const &name);
 
-312 11 is_valid_id 0 4 449 38 AnimChannelMatrixXfmTable::is_valid_id 0 1 89 830
-// Filename: animChannelMatrixXfmTable.I
-// Created by:  drose (21Feb99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+312 11 is_valid_id 0 4 449 38 AnimChannelMatrixXfmTable::is_valid_id 0 1 89 329
 ////////////////////////////////////////////////////////////////////
 //     Function: AnimChannelMatrixXfmTable::is_valid_id
 //       Access: Public, Static
@@ -1066,20 +982,7 @@ AnimChannelScalarDynamic::~AnimChannelScalarDynamic(void);
 82
 void AnimChannelScalarTable::set_table(ConstPointerToArray< float > const &table);
 
-324 9 get_table 0 4 451 33 AnimChannelScalarTable::get_table 0 1 100 821
-// Filename: animChannelScalarTable.I
-// Created by:  drose (22Feb99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+324 9 get_table 0 4 451 33 AnimChannelScalarTable::get_table 0 1 100 323
 ////////////////////////////////////////////////////////////////////
 //     Function: AnimChannelScalarTable::get_table
 //       Access: Public
@@ -1208,23 +1111,7 @@ basic_string< char > AnimControlCollection::get_anim_name(int n) const;
 46
 void AnimControlCollection::clear_anims(void);
 
-338 4 play 0 4 452 27 AnimControlCollection::play 0 2 112 113 1146
-// The following functions are convenience functions that vector
-// directly into the AnimControl's functionality by anim name.
-
-// Filename: animControlCollection.I
-// Created by:  drose (22Feb00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+338 4 play 0 4 452 27 AnimControlCollection::play 0 2 112 113 520
 ////////////////////////////////////////////////////////////////////
 //     Function: AnimControlCollection::play
 //       Access: Public
@@ -1274,9 +1161,7 @@ inline bool AnimControlCollection::stop(basic_string< char > const &anim_name);
 90
 inline bool AnimControlCollection::pose(basic_string< char > const &anim_name, int frame);
 
-342 8 play_all 0 4 452 31 AnimControlCollection::play_all 0 2 118 119 624
-// These functions operate on all anims at once.
-
+342 8 play_all 0 4 452 31 AnimControlCollection::play_all 0 2 118 119 574
 // These functions operate on all anims at once.
 
 ////////////////////////////////////////////////////////////////////
@@ -1541,26 +1426,7 @@ virtual void AnimPreloadTable::write(ostream &out, int indent_level) const;
 57
 static TypeHandle AnimPreloadTable::get_class_type(void);
 
-365 9 auto_bind 0 1 0 9 auto_bind 0 2 214 215 962
-////////////////////////////////////////////////////////////////////
-//     Function: auto_bind
-//  Description: Walks the scene graph or subgraph beginning at the
-//               indicated node, and attempts to bind any AnimBundles
-//               found to their matching PartBundles, when possible.
-//
-//               The list of all resulting AnimControls created is
-//               filled into controls.
-////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////
-//     Function: auto_bind
-//  Description: Walks the scene graph or subgraph beginning at the
-//               indicated node, and attempts to bind any AnimBundles
-//               found to their matching PartBundles, when possible.
-//
-//               The list of all resulting AnimControls created is
-//               filled into controls.
-////////////////////////////////////////////////////////////////////
+365 9 auto_bind 0 1 0 9 auto_bind 0 2 214 215 0
 103
 void auto_bind(PandaNode *root_node, AnimControlCollection &controls, int hierarchy_match_flags = (0));
 
@@ -1580,12 +1446,7 @@ void auto_bind(PandaNode *root_node, AnimControlCollection &controls, int hierar
 PartSubset::PartSubset(void);
 PartSubset::PartSubset(PartSubset const &copy);
 
-367 10 operator = 0 4 455 22 PartSubset::operator = 0 1 148 236
-////////////////////////////////////////////////////////////////////
-//     Function: PartSubset::Copy Assignment Operator
-//       Access: Published
-//  Description: 
-////////////////////////////////////////////////////////////////////
+367 10 operator = 0 4 455 22 PartSubset::operator = 0 1 148 0
 52
 void PartSubset::operator =(PartSubset const &copy);
 
@@ -1710,20 +1571,7 @@ BindAnimRequest::~BindAnimRequest(void);
 64
 PartBundle::PartBundle(basic_string< char > const &name = (""));
 
-380 16 get_anim_preload 0 4 458 28 PartBundle::get_anim_preload 0 1 160 929
-// Filename: partBundle.I
-// Created by:  drose (22Feb99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+380 16 get_anim_preload 0 4 458 28 PartBundle::get_anim_preload 0 1 160 443
 ////////////////////////////////////////////////////////////////////
 //     Function: PartBundle::get_anim_preload
 //       Access: Published
@@ -2259,20 +2107,7 @@ inline float ::MovingPart< ACScalarSwitchType >::get_default_value(void) const;
 57
 static TypeHandle MovingPartScalar::get_class_type(void);
 
-426 16 PartBundleHandle 0 4 465 34 PartBundleHandle::PartBundleHandle 0 1 206 721
-// Filename: partBundleHandle.I
-// Created by:  drose (01Oct07)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+426 16 PartBundleHandle 0 4 465 34 PartBundleHandle::PartBundleHandle 0 1 206 229
 ////////////////////////////////////////////////////////////////////
 //     Function: PartBundleHandle::Constructor
 //       Access: Published
@@ -2301,20 +2136,7 @@ inline PartBundle *PartBundleHandle::get_bundle(void);
 61
 inline void PartBundleHandle::set_bundle(PartBundle *bundle);
 
-429 14 PartBundleNode 0 4 467 30 PartBundleNode::PartBundleNode 0 1 209 1631
-// Filename: partBundleNode.I
-// Created by:  drose (06Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+429 14 PartBundleNode 0 4 467 30 PartBundleNode::PartBundleNode 0 1 209 1141
 ////////////////////////////////////////////////////////////////////
 //     Function: PartBundleNode::Constructor
 //       Access: Public
@@ -2436,20 +2258,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 11 14 Dtool_8NZBrs9M 0 7 4 468 221 14 Dtool_8NZBrs9M 0 1 4 this 3 478  
 12 14 Dtool_8NZBGlFu 0 6 6 479 0 14 Dtool_8NZBGlFu 0 1 4 this 3 468  
 13 14 Dtool_8NZB4p9k 0 7 7 468 221 14 Dtool_8NZB4p9k 0 1 4 this 3 479  
-14 14 Dtool_8NZB3LBr 0 7 19 481 235 14 Dtool_8NZB3LBr 705 // Filename: animBundle.I
-// Created by:  drose (21Feb99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+14 14 Dtool_8NZB3LBr 0 7 19 481 235 14 Dtool_8NZB3LBr 219 ////////////////////////////////////////////////////////////////////
 //     Function: AnimBundle::Constructor
 //       Access: Public
 //  Description:
@@ -2480,20 +2289,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //               the animation has no fixed number of frames.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 482  
 18 14 Dtool_8NZBzlnG 0 7 23 477 0 14 Dtool_8NZBzlnG 0 0 
-19 14 Dtool_8NZB0P9l 0 7 27 485 240 14 Dtool_8NZB0P9l 991 // Filename: animBundleNode.I
-// Created by:  drose (06Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+19 14 Dtool_8NZB0P9l 0 7 27 485 240 14 Dtool_8NZB0P9l 501 ////////////////////////////////////////////////////////////////////
 //     Function: AnimBundleNode::Constructor
 //       Access: Public
 //  Description: The AnimBundle and its node should be constructed
@@ -2659,20 +2455,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 42 14 Dtool_8NZB0Te7 0 7 34 489 246 14 Dtool_8NZB0Te7 0 1 4 this 3 478  
 43 14 Dtool_8NZBEyTs 0 6 35 479 0 14 Dtool_8NZBEyTs 0 1 4 this 3 489  
 44 14 Dtool_8NZBoV3X 0 7 36 489 246 14 Dtool_8NZBoV3X 0 1 4 this 3 479  
-45 14 Dtool_8NZBj5H5 0 6 67 492 0 14 Dtool_8NZBj5H5 1061 // Filename: animControl.I
-// Created by:  drose (19Feb99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+45 14 Dtool_8NZBj5H5 0 6 67 492 0 14 Dtool_8NZBj5H5 574 ////////////////////////////////////////////////////////////////////
 //     Function: AnimControl::is_pending
 //       Access: Published
 //  Description: Returns true if the AnimControl is being bound
@@ -2782,14 +2565,14 @@ static TypeHandle PartBundleNode::get_class_type(void);
 65 14 Dtool_8NZBORV4 0 7 82 477 0 14 Dtool_8NZBORV4 0 0 
 66 14 Dtool_8NZBqZzQ 0 4 85 473 0 14 Dtool_8NZBqZzQ 0 3 4 this 3 511  5 frame 1 472  5 value 1 512  
 67 14 Dtool_8NZB5C0s 0 4 86 473 0 14 Dtool_8NZB5C0s 72 // These transform-component methods only have meaning for matrix types. 3 4 this 3 511  5 frame 1 472  5 value 1 512  
-68 14 Dtool_8NZBz_3E 0 4 87 473 0 14 Dtool_8NZBz_3E 72 // These transform-component methods only have meaning for matrix types. 3 4 this 3 511  5 frame 1 472  5 scale 1 514  
+68 14 Dtool_8NZBz_3E 0 4 87 473 0 14 Dtool_8NZBz_3E 0 3 4 this 3 511  5 frame 1 472  5 scale 1 514  
 69 14 Dtool_8NZBUEM9 0 4 88 473 0 14 Dtool_8NZBUEM9 0 3 4 this 3 511  5 frame 1 472  3 hpr 1 514  
 70 14 Dtool_8NZBOmSj 0 4 89 473 0 14 Dtool_8NZBOmSj 0 3 4 this 3 511  5 frame 1 472  4 quat 1 515  
 71 14 Dtool_8NZBqs83 0 4 90 473 0 14 Dtool_8NZBqs83 0 3 4 this 3 511  5 frame 1 472  3 pos 1 514  
 72 14 Dtool_8NZBl2ej 0 4 91 473 0 14 Dtool_8NZBl2ej 0 3 4 this 3 511  5 frame 1 472  5 shear 1 514  
 73 14 Dtool_8NZBdaSG 0 7 92 477 0 14 Dtool_8NZBdaSG 0 1 4 this 3 517  
 74 14 Dtool_8NZB7LXI 0 7 93 477 0 14 Dtool_8NZB7LXI 0 0 
-75 14 Dtool_8NZBIOa5 0 4 97 473 0 14 Dtool_8NZBIOa5 72 // These transform-component methods only have meaning for matrix types. 3 4 this 3 519  5 frame 1 472  5 scale 1 514  
+75 14 Dtool_8NZBIOa5 0 4 97 473 0 14 Dtool_8NZBIOa5 0 3 4 this 3 519  5 frame 1 472  5 scale 1 514  
 76 14 Dtool_8NZBNRwx 0 4 98 473 0 14 Dtool_8NZBNRwx 0 3 4 this 3 519  5 frame 1 472  3 hpr 1 514  
 77 14 Dtool_8NZBEl2X 0 4 99 473 0 14 Dtool_8NZBEl2X 0 3 4 this 3 519  5 frame 1 472  4 quat 1 515  
 78 14 Dtool_8NZBU_gs 0 4 100 473 0 14 Dtool_8NZBU_gs 0 3 4 this 3 519  5 frame 1 472  3 pos 1 514  
@@ -2814,20 +2597,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //               frame to implicitly specify the transform of this
 //               joint.
 //////////////////////////////////////////////////////////////////// 2 4 this 3 522  4 node 1 488  
-85 14 Dtool_8NZBAlQj 0 7 107 493 0 14 Dtool_8NZBAlQj 841 // Filename: animChannelMatrixDynamic.I
-// Created by:  drose (20Oct03)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+85 14 Dtool_8NZBAlQj 0 7 107 493 0 14 Dtool_8NZBAlQj 341 ////////////////////////////////////////////////////////////////////
 //     Function: AnimChannelMatrixDynamic::get_value_transform
 //       Access: Published
 //  Description: Returns the explicit TransformState value that was
@@ -2845,20 +2615,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //       Access: Public
 //  Description:
 //////////////////////////////////////////////////////////////////// 2 6 parent 1 468  4 name 1 469  
-89 14 Dtool_8NZBKOH5 0 6 113 492 0 14 Dtool_8NZBKOH5 830 // Filename: animChannelMatrixXfmTable.I
-// Created by:  drose (21Feb99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+89 14 Dtool_8NZBKOH5 0 6 113 492 0 14 Dtool_8NZBKOH5 329 ////////////////////////////////////////////////////////////////////
 //     Function: AnimChannelMatrixXfmTable::is_valid_id
 //       Access: Public, Static
 //  Description: Returns true if the given letter is one of the nine
@@ -2915,20 +2672,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //       Access: Public
 //  Description: Assigns the data table.
 //////////////////////////////////////////////////////////////////// 2 4 this 3 536  5 table 1 529  
-100 14 Dtool_8NZB8IHc 0 7 127 534 0 14 Dtool_8NZB8IHc 821 // Filename: animChannelScalarTable.I
-// Created by:  drose (22Feb99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+100 14 Dtool_8NZB8IHc 0 7 127 534 0 14 Dtool_8NZB8IHc 323 ////////////////////////////////////////////////////////////////////
 //     Function: AnimChannelScalarTable::get_table
 //       Access: Public
 //  Description: Returns a pointer to the table's data,
@@ -2997,20 +2741,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //       Access: Published
 //  Description: Disassociates all anims from this collection.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 539  
-112 14 Dtool_8NZBUNjN 0 6 142 492 0 14 Dtool_8NZBUNjN 756 // Filename: animControlCollection.I
-// Created by:  drose (22Feb00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+112 14 Dtool_8NZBUNjN 0 6 142 492 0 14 Dtool_8NZBUNjN 259 ////////////////////////////////////////////////////////////////////
 //     Function: AnimControlCollection::play
 //       Access: Public
 //  Description: Starts the named animation playing.
@@ -3212,11 +2943,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //       Access: Published
 //  Description: 
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 546  
-148 14 Dtool_8NZBxWwX 0 6 174 545 0 14 Dtool_8NZBxWwX 236 ////////////////////////////////////////////////////////////////////
-//     Function: PartSubset::Copy Assignment Operator
-//       Access: Published
-//  Description: 
-//////////////////////////////////////////////////////////////////// 2 4 this 3 545  4 copy 1 546  
+148 14 Dtool_8NZBxWwX 0 6 174 545 0 14 Dtool_8NZBxWwX 0 2 4 this 3 545  4 copy 1 546  
 149 14 Dtool_8NZB0f2j 0 4 175 473 0 14 Dtool_8NZB0f2j 650 ////////////////////////////////////////////////////////////////////
 //     Function: PartSubset::add_include_joint
 //       Access: Published
@@ -3291,20 +3018,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //               called directly--it will get created when a
 //               PartBundleNode is created.
 //////////////////////////////////////////////////////////////////// 0 
-160 14 Dtool_8NZBrxqe 0 7 190 543 0 14 Dtool_8NZBrxqe 929 // Filename: partBundle.I
-// Created by:  drose (22Feb99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+160 14 Dtool_8NZBrxqe 0 7 190 543 0 14 Dtool_8NZBrxqe 443 ////////////////////////////////////////////////////////////////////
 //     Function: PartBundle::get_anim_preload
 //       Access: Published
 //  Description: Returns the AnimPreloadTable associated with
@@ -3709,20 +3423,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 203 14 Dtool_8NZBaeah 0 7 237 477 0 14 Dtool_8NZBaeah 0 0 
 204 14 Dtool_8NZBjrS_ 0 6 238 480 0 14 Dtool_8NZBjrS_ 0 1 4 this 3 567  
 205 14 Dtool_8NZBpo2D 0 6 239 480 0 14 Dtool_8NZBpo2D 0 1 4 this 3 567  
-206 14 Dtool_8NZBiUxe 0 7 244 569 0 14 Dtool_8NZBiUxe 721 // Filename: partBundleHandle.I
-// Created by:  drose (01Oct07)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+206 14 Dtool_8NZBiUxe 0 7 244 569 0 14 Dtool_8NZBiUxe 229 ////////////////////////////////////////////////////////////////////
 //     Function: PartBundleHandle::Constructor
 //       Access: Published
 //  Description: 
@@ -3739,20 +3440,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //  Description: Changes the actual PartBundle embedded within the
 //               handle.
 //////////////////////////////////////////////////////////////////// 2 4 this 3 569  6 bundle 1 503  
-209 14 Dtool_8NZBWbFa 0 7 248 562 0 14 Dtool_8NZBWbFa 991 // Filename: partBundleNode.I
-// Created by:  drose (06Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+209 14 Dtool_8NZBWbFa 0 7 248 562 0 14 Dtool_8NZBWbFa 501 ////////////////////////////////////////////////////////////////////
 //     Function: PartBundleNode::Constructor
 //       Access: Public
 //  Description: The PartBundle and its node should be constructed
@@ -3780,24 +3468,8 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //               the PartBundleHandle will not.
 //////////////////////////////////////////////////////////////////// 2 4 this 3 570  1 n 1 472  
 213 14 Dtool_8NZBGgiE 0 7 252 477 0 14 Dtool_8NZBGgiE 0 0 
-214 14 Dtool_8NZBknU_ 0 4 171 473 0 14 Dtool_8NZBknU_ 480 ////////////////////////////////////////////////////////////////////
-//     Function: auto_bind
-//  Description: Walks the scene graph or subgraph beginning at the
-//               indicated node, and attempts to bind any AnimBundles
-//               found to their matching PartBundles, when possible.
-//
-//               The list of all resulting AnimControls created is
-//               filled into controls.
-//////////////////////////////////////////////////////////////////// 3 9 root_node 1 488  8 controls 1 539  21 hierarchy_match_flags 1 472  
-215 14 Dtool_8NZBP30i 0 4 171 473 0 14 Dtool_8NZBP30i 480 ////////////////////////////////////////////////////////////////////
-//     Function: auto_bind
-//  Description: Walks the scene graph or subgraph beginning at the
-//               indicated node, and attempts to bind any AnimBundles
-//               found to their matching PartBundles, when possible.
-//
-//               The list of all resulting AnimControls created is
-//               filled into controls.
-//////////////////////////////////////////////////////////////////// 2 9 root_node 1 488  8 controls 1 539  
+214 14 Dtool_8NZBknU_ 0 4 171 473 0 14 Dtool_8NZBknU_ 0 3 9 root_node 1 488  8 controls 1 539  21 hierarchy_match_flags 1 472  
+215 14 Dtool_8NZBP30i 0 4 171 473 0 14 Dtool_8NZBP30i 0 2 9 root_node 1 488  8 controls 1 539  
 139
 434 9 AnimGroup 0 26625 9 AnimGroup 9 AnimGroup 0 0 0 1 220 221 0 8 222 223 224 225 226 227 228 229 1 573 0 2 3 435 216 217 3 436 218 219 0 0 381
 ////////////////////////////////////////////////////////////////////
@@ -3846,7 +3518,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //               make it easy to store AnimBundles in the scene graph.
 ////////////////////////////////////////////////////////////////////
 
-439 9 PandaNode 0 2049 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 0 0 0 0 0 374
+439 9 PandaNode 0 2049 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 3 574 575 576 0 0 0 0 374
 ////////////////////////////////////////////////////////////////////
 //       Class : PandaNode
 // Description : A basic node of the scene graph or data graph.  This
@@ -3854,14 +3526,17 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //               serves as a generic node with no special properties.
 ////////////////////////////////////////////////////////////////////
 
-440 9 PartGroup 0 26625 9 PartGroup 9 PartGroup 0 0 0 1 245 246 0 17 247 248 249 250 251 252 253 254 255 256 257 258 259 260 261 262 263 1 574 0 2 3 435 241 242 3 436 243 244 0 1 441 290
+440 9 PartGroup 0 26625 9 PartGroup 9 PartGroup 0 0 0 1 245 246 0 17 247 248 249 250 251 252 253 254 255 256 257 258 259 260 261 262 263 1 577 0 2 3 435 241 242 3 436 243 244 0 1 441 290
 ////////////////////////////////////////////////////////////////////
 //       Class : PartGroup
 // Description : This is the base class for PartRoot and
 //               MovingPart.  It defines a hierarchy of MovingParts.
 ////////////////////////////////////////////////////////////////////
 
-441 19 HierarchyMatchFlags 0 794624 30 PartGroup::HierarchyMatchFlags 30 PartGroup::HierarchyMatchFlags 440 0 0 0 0 0 0 0 0 0 3 17 HMF_ok_part_extra 28 PartGroup::HMF_ok_part_extra 1 17 HMF_ok_anim_extra 28 PartGroup::HMF_ok_anim_extra 2 22 HMF_ok_wrong_root_name 33 PartGroup::HMF_ok_wrong_root_name 4 0 218
+441 19 HierarchyMatchFlags 0 794624 30 PartGroup::HierarchyMatchFlags 30 PartGroup::HierarchyMatchFlags 440 0 0 0 0 0 0 0 0 0 3 17 HMF_ok_part_extra 28 PartGroup::HMF_ok_part_extra 0
+1 17 HMF_ok_anim_extra 28 PartGroup::HMF_ok_anim_extra 0
+2 22 HMF_ok_wrong_root_name 33 PartGroup::HMF_ok_wrong_root_name 0
+4 0 218
 // This enum defines bits which may be passed into check_hierarchy()
 // and PartBundle::bind_anim() to allow an inexact match of channel
 // hierarchies.  This specifies conditions that we don't care about
@@ -3961,7 +3636,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //               an egg file.
 ////////////////////////////////////////////////////////////////////
 
-452 21 AnimControlCollection 0 26625 21 AnimControlCollection 21 AnimControlCollection 0 0 0 1 329 330 0 21 331 332 333 334 335 336 337 338 339 340 341 342 343 344 345 346 347 348 349 350 351 2 575 576 0 0 0 0 628
+452 21 AnimControlCollection 0 26625 21 AnimControlCollection 21 AnimControlCollection 0 0 0 1 329 330 0 21 331 332 333 334 335 336 337 338 339 340 341 342 343 344 345 346 347 348 349 350 351 2 578 579 0 0 0 0 628
 ////////////////////////////////////////////////////////////////////
 //       Class : AnimControlCollection
 // Description : This is a named collection of AnimControl pointers.
@@ -4019,7 +3694,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //               an asynchronous load.
 ////////////////////////////////////////////////////////////////////
 
-458 10 PartBundle 0 141313 10 PartBundle 10 PartBundle 0 0 0 1 379 410 0 30 380 381 382 383 384 385 386 387 388 389 390 391 392 393 394 395 396 397 398 399 400 401 402 403 404 405 406 407 408 409 1 577 0 1 0 440 0 0 0 1 459 337
+458 10 PartBundle 0 141313 10 PartBundle 10 PartBundle 0 0 0 1 379 410 0 30 380 381 382 383 384 385 386 387 388 389 390 391 392 393 394 395 396 397 398 399 400 401 402 403 404 405 406 407 408 409 1 580 0 1 0 440 0 0 0 1 459 337
 ////////////////////////////////////////////////////////////////////
 //       Class : PartBundle
 // Description : This is the root of a MovingPart hierarchy.  It
@@ -4027,7 +3702,30 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //               animatable object.
 ////////////////////////////////////////////////////////////////////
 
-459 9 BlendType 0 794624 21 PartBundle::BlendType 21 PartBundle::BlendType 458 0 0 0 0 0 0 0 0 0 4 9 BT_linear 21 PartBundle::BT_linear 0 20 BT_normalized_linear 32 PartBundle::BT_normalized_linear 1 16 BT_componentwise 28 PartBundle::BT_componentwise 2 21 BT_componentwise_quat 33 PartBundle::BT_componentwise_quat 3 0 240
+459 9 BlendType 0 794624 21 PartBundle::BlendType 21 PartBundle::BlendType 458 0 0 0 0 0 0 0 0 0 4 9 BT_linear 21 PartBundle::BT_linear 390
+// BT_linear does a componentwise average of all blended matrices,
+// which is a linear blend.  The result of this is that if a
+// particular vertex would have been at point P in one animation
+// and point Q in another one, it will end up on the line in
+// between them in the resulting blend animation.  However, this
+// tends to stretch and squash limbs in strange and disturbing
+// ways.
+0 20 BT_normalized_linear 32 PartBundle::BT_normalized_linear 453
+// BT_normalized_linear is a compromise on BT_linear.  The matrix
+// is blended linearly without the scale and shear components, and
+// the blended scale and shear components are applied separately.
+// This keeps all of the character's body parts in the correct
+// size and shape.  However, if the hierarchy is disconnected,
+// body parts can fly off.  It's essential the skeleton hierarchy
+// be completely connected to use this blend mode successully.
+1 16 BT_componentwise 28 PartBundle::BT_componentwise 115
+// BT_componentwise linearly blends all components separately,
+// including H, P, and R, and recomposes the matrix.
+2 21 BT_componentwise_quat 33 PartBundle::BT_componentwise_quat 127
+// BT_componentwise_quat linearly blends all components
+// separately, except for rotation which is blended as a
+// quaternion.
+3 0 240
 // This is the parameter to set_blend_type() and specifies the kind
 // of blending operation to be performed when multiple controls are
 // in effect simultaneously (see set_control_effect()) or between
@@ -4090,7 +3788,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 //               objects when the last pointer to them goes away.
 ////////////////////////////////////////////////////////////////////
 
-467 14 PartBundleNode 0 75777 14 PartBundleNode 14 PartBundleNode 0 0 0 1 429 0 0 4 430 431 432 433 2 578 579 0 1 0 439 0 0 0 0 605
+467 14 PartBundleNode 0 75777 14 PartBundleNode 14 PartBundleNode 0 0 0 1 429 0 0 4 430 431 432 433 2 581 582 0 1 0 439 0 0 0 0 605
 ////////////////////////////////////////////////////////////////////
 //       Class : PartBundleNode
 // Description : This is a node that contains a pointer to an
@@ -4203,20 +3901,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 
 497 16 LVecBase3f const 0 8832 16 LVecBase3f const 16 LVecBase3f const 0 0 498 0 0 0 0 0 0 0 0 0 0
 
-498 10 LVecBase3f 0 2048 10 LVecBase3f 10 LVecBase3f 0 0 0 0 0 0 0 0 0 0 0 0 754
-// Filename: lvecBase3_src.h
-// Created by:  drose (08Mar00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+498 10 LVecBase3f 0 2048 10 LVecBase3f 10 LVecBase3f 0 0 0 0 0 0 0 0 0 0 0 0 265
 ////////////////////////////////////////////////////////////////////
 //       Class : LVecBase3
 // Description : This is the base class for all three-component
@@ -4259,7 +3944,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 
 512 11 LMatrix4f * 0 8576 11 LMatrix4f * 11 LMatrix4f * 0 0 513 0 0 0 0 0 0 0 0 0 0
 
-513 9 LMatrix4f 0 2048 9 LMatrix4f 9 LMatrix4f 0 0 0 0 0 0 0 3 580 581 582 0 0 0 0 215
+513 9 LMatrix4f 0 2048 9 LMatrix4f 9 LMatrix4f 0 0 0 0 0 0 0 3 583 584 585 0 0 0 0 215
 ////////////////////////////////////////////////////////////////////
 //       Class : LMatrix4
 // Description : This is a 4-by-4 transform matrix.
@@ -4269,20 +3954,7 @@ static TypeHandle PartBundleNode::get_class_type(void);
 
 515 14 LQuaternionf * 0 8576 14 LQuaternionf * 14 LQuaternionf * 0 0 516 0 0 0 0 0 0 0 0 0 0
 
-516 12 LQuaternionf 0 2048 12 LQuaternionf 12 LQuaternionf 0 0 0 0 0 0 0 0 0 0 0 0 719
-// Filename: lquaternion_src.h
-// Created by:  frang (06Jun00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+516 12 LQuaternionf 0 2048 12 LQuaternionf 12 LQuaternionf 0 0 0 0 0 0 0 0 0 0 0 0 228
 ////////////////////////////////////////////////////////////////////
 //       Class : FLOATNAME(LQuaternion)
 // Description : This is the base quaternion class
@@ -4452,14 +4124,17 @@ static TypeHandle PartBundleNode::get_class_type(void);
 
 0
 0
-10
+13
 573 0 0 1 12 get_children 16 get_num_children 9 get_child 
-574 0 0 32 12 get_children 16 get_num_children 9 get_child 
-575 0 0 132 9 get_anims 13 get_num_anims 8 get_anim 
-576 0 0 132 14 get_anim_names 13 get_num_anims 13 get_anim_name 
-577 0 0 188 9 get_nodes 13 get_num_nodes 8 get_node 
-578 0 0 247 11 get_bundles 15 get_num_bundles 10 get_bundle 
-579 0 0 247 18 get_bundle_handles 15 get_num_bundles 17 get_bundle_handle 
-580 0 0 366 8 get_rows 4 size 7 get_row 
-581 0 0 366 8 get_cols 4 size 7 get_col 
-582 0 0 366 9 get_row3s 4 size 8 get_row3 
+574 0 0 26 11 get_parents 15 get_num_parents 10 get_parent 
+575 0 0 26 12 get_children 16 get_num_children 9 get_child 
+576 0 0 26 11 get_stashed 15 get_num_stashed 11 get_stashed 
+577 0 0 32 12 get_children 16 get_num_children 9 get_child 
+578 0 0 132 9 get_anims 13 get_num_anims 8 get_anim 
+579 0 0 132 14 get_anim_names 13 get_num_anims 13 get_anim_name 
+580 0 0 188 9 get_nodes 13 get_num_nodes 8 get_node 
+581 0 0 247 11 get_bundles 15 get_num_bundles 10 get_bundle 
+582 0 0 247 18 get_bundle_handles 15 get_num_bundles 17 get_bundle_handle 
+583 0 0 369 8 get_rows 4 size 7 get_row 
+584 0 0 369 8 get_cols 4 size 7 get_col 
+585 0 0 369 9 get_row3s 4 size 8 get_row3 

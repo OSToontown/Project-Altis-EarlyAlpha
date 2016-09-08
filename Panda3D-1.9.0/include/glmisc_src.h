@@ -58,6 +58,7 @@ extern ConfigVariableEnum<GeomEnums::UsageHint> gl_min_buffer_usage_hint;
 extern ConfigVariableBool gl_debug;
 extern ConfigVariableBool gl_debug_synchronous;
 extern ConfigVariableEnum<NotifySeverity> gl_debug_abort_level;
+extern ConfigVariableBool gl_debug_object_labels;
 extern ConfigVariableBool gl_debug_buffers;
 extern ConfigVariableBool gl_finish;
 extern ConfigVariableBool gl_force_depth_stencil;
@@ -70,6 +71,9 @@ extern ConfigVariableBool gl_dump_compiled_shaders;
 extern ConfigVariableBool gl_immutable_texture_storage;
 extern ConfigVariableBool gl_use_bindless_texture;
 extern ConfigVariableBool gl_enable_memory_barriers;
+extern ConfigVariableBool gl_vertex_array_objects;
+extern ConfigVariableBool gl_support_primitive_restart_index;
+extern ConfigVariableBool gl_support_sampler_objects;
 
 extern EXPCL_GL void CLP(init_classes)();
 

@@ -1,5 +1,5 @@
-1412104967
-2 2
+1422504450
+2 3
 13 libp3dcparser 4 zIbG 14 panda3d.direct 
 231
 246 18 ~DCPackerInterface 0 6 479 37 DCPackerInterface::~DCPackerInterface 0 0 235
@@ -11,20 +11,7 @@
 52
 virtual DCPackerInterface::~DCPackerInterface(void);
 
-247 8 get_name 0 4 479 27 DCPackerInterface::get_name 0 1 1 809
-// Filename: dcPackerInterface.I
-// Created by:  drose (18Jun04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+247 8 get_name 0 4 479 27 DCPackerInterface::get_name 0 1 1 316
 ////////////////////////////////////////////////////////////////////
 //     Function: DCPackerInterface::get_name
 //       Access: Published
@@ -224,20 +211,7 @@ DCField *DCKeywordList::downcast_to_DCField(void);
 32
 virtual DCField::~DCField(void);
 
-264 10 get_number 0 4 481 19 DCField::get_number 0 1 18 852
-// Filename: dcField.I
-// Created by:  drose (10Jan06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+264 10 get_number 0 4 481 19 DCField::get_number 0 1 18 369
 ////////////////////////////////////////////////////////////////////
 //     Function: DCField::get_number
 //       Access: Published
@@ -523,8 +497,8 @@ inline void DCField::write(ostream &out, int indent_level) const;
 //               It is assumed that the packer is currently positioned
 //               on this field.
 ////////////////////////////////////////////////////////////////////
-68
-bool DCField::pack_args(DCPacker &packer, PyObject *sequence) const;
+67
+bool DCField::pack_args(DCPacker &packer, _object *sequence) const;
 
 288 11 unpack_args 0 4 481 20 DCField::unpack_args 0 1 47 491
 ////////////////////////////////////////////////////////////////////
@@ -537,8 +511,8 @@ bool DCField::pack_args(DCPacker &packer, PyObject *sequence) const;
 //               It is assumed that the packer is currently positioned
 //               on this field.
 ////////////////////////////////////////////////////////////////////
-55
-PyObject *DCField::unpack_args(DCPacker &packer) const;
+54
+_object *DCField::unpack_args(DCPacker &packer) const;
 
 289 14 receive_update 0 4 481 23 DCField::receive_update 0 1 48 378
 ////////////////////////////////////////////////////////////////////
@@ -548,8 +522,8 @@ PyObject *DCField::unpack_args(DCPacker &packer) const;
 //               applies it to the indicated object by calling the
 //               appropriate method.
 ////////////////////////////////////////////////////////////////////
-72
-void DCField::receive_update(DCPacker &packer, PyObject *distobj) const;
+71
+void DCField::receive_update(DCPacker &packer, _object *distobj) const;
 
 290 20 client_format_update 0 4 481 29 DCField::client_format_update 0 1 49 388
 ////////////////////////////////////////////////////////////////////
@@ -559,8 +533,8 @@ void DCField::receive_update(DCPacker &packer, PyObject *distobj) const;
 //               to send an update for the indicated distributed
 //               object from the client.
 ////////////////////////////////////////////////////////////////////
-81
-Datagram DCField::client_format_update(unsigned int do_id, PyObject *args) const;
+80
+Datagram DCField::client_format_update(unsigned int do_id, _object *args) const;
 
 291 16 ai_format_update 0 4 481 25 DCField::ai_format_update 0 1 50 380
 ////////////////////////////////////////////////////////////////////
@@ -570,8 +544,8 @@ Datagram DCField::client_format_update(unsigned int do_id, PyObject *args) const
 //               to send an update for the indicated distributed
 //               object from the AI.
 ////////////////////////////////////////////////////////////////////
-127
-Datagram DCField::ai_format_update(unsigned int do_id, unsigned __int64 to_id, unsigned __int64 from_id, PyObject *args) const;
+126
+Datagram DCField::ai_format_update(unsigned int do_id, unsigned __int64 to_id, unsigned __int64 from_id, _object *args) const;
 
 292 25 ai_format_update_msg_type 0 4 481 34 DCField::ai_format_update_msg_type 0 1 51 426
 ////////////////////////////////////////////////////////////////////
@@ -582,23 +556,10 @@ Datagram DCField::ai_format_update(unsigned int do_id, unsigned __int64 to_id, u
 //               for the indicated distributed
 //               object from the AI.
 ////////////////////////////////////////////////////////////////////
-150
-Datagram DCField::ai_format_update_msg_type(unsigned int do_id, unsigned __int64 to_id, unsigned __int64 from_id, int msg_type, PyObject *args) const;
+149
+Datagram DCField::ai_format_update_msg_type(unsigned int do_id, unsigned __int64 to_id, unsigned __int64 from_id, int msg_type, _object *args) const;
 
-293 10 DCPackData 0 4 482 22 DCPackData::DCPackData 0 1 56 709
-// Filename: dcPackData.I
-// Created by:  drose (15Jun04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+293 10 DCPackData 0 4 482 22 DCPackData::DCPackData 0 1 56 223
 ////////////////////////////////////////////////////////////////////
 //     Function: DCPackData::Constructor
 //       Access: Published
@@ -665,20 +626,7 @@ DCPacker::DCPacker(void);
 26
 DCPacker::~DCPacker(void);
 
-300 10 clear_data 0 4 483 20 DCPacker::clear_data 0 1 61 928
-// Filename: dcPacker.I
-// Created by:  drose (15Jun04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+300 10 clear_data 0 4 483 20 DCPacker::clear_data 0 1 61 444
 ////////////////////////////////////////////////////////////////////
 //     Function: DCPacker::clear_data
 //       Access: Published
@@ -1213,8 +1161,8 @@ void DCPacker::unpack_skip(void);
 //               sequence maps to a push() followed by all of the
 //               tuple's contents followed by a pop().
 ////////////////////////////////////////////////////////////////////
-45
-void DCPacker::pack_object(PyObject *object);
+44
+void DCPacker::pack_object(_object *object);
 
 337 13 unpack_object 0 4 483 23 DCPacker::unpack_object 0 1 99 509
 ////////////////////////////////////////////////////////////////////
@@ -1226,11 +1174,10 @@ void DCPacker::pack_object(PyObject *object);
 //               current field represents a list of fields it will be
 //               a tuple.
 ////////////////////////////////////////////////////////////////////
-40
-PyObject *DCPacker::unpack_object(void);
+39
+_object *DCPacker::unpack_object(void);
 
-338 14 parse_and_pack 0 4 483 24 DCPacker::parse_and_pack 0 2 100 101 837
-// HAVE_PYTHON
+338 14 parse_and_pack 0 4 483 24 DCPacker::parse_and_pack 0 2 100 101 822
 ////////////////////////////////////////////////////////////////////
 //     Function: DCPacker::parse_and_pack
 //       Access: Published
@@ -1409,11 +1356,7 @@ inline basic_string< char > DCPacker::get_unpack_string(void) const;
 72
 static inline int DCPacker::get_num_stack_elements_ever_allocated(void);
 
-350 13 raw_pack_int8 0 4 483 23 DCPacker::raw_pack_int8 0 1 116 481
-// The following methods are used only for packing (or unpacking)
-// raw data into the buffer between packing sessions (e.g. between
-// calls to end_pack() and the next begin_pack()).
-
+350 13 raw_pack_int8 0 4 483 23 DCPacker::raw_pack_int8 0 1 116 296
 ////////////////////////////////////////////////////////////////////
 //     Function: DCPacker::raw_pack_int8
 //       Access: Published
@@ -1796,9 +1739,7 @@ DCParameter *DCAtomicField::get_element(int n) const;
 69
 basic_string< char > DCAtomicField::get_element_default(int n) const;
 
-380 19 has_element_default 0 4 486 34 DCAtomicField::has_element_default 0 1 148 474
-// These five methods are deprecated and will be removed soon.
-
+380 19 has_element_default 0 4 486 34 DCAtomicField::has_element_default 0 1 148 410
 ////////////////////////////////////////////////////////////////////
 //     Function: DCAtomicField::has_element_default
 //       Access: Published
@@ -1913,20 +1854,7 @@ virtual void DCDeclaration::output(ostream &out) const;
 64
 void DCDeclaration::write(ostream &out, int indent_level) const;
 
-389 11 get_dc_file 0 4 488 20 DCClass::get_dc_file 0 1 158 753
-// Filename: dcClass.I
-// Created by:  drose (15Sep04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+389 11 get_dc_file 0 4 488 20 DCClass::get_dc_file 0 1 158 270
 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::get_dc_file
 //       Access: Published
@@ -2134,7 +2062,7 @@ inline void DCClass::start_generate(void);
 41
 inline void DCClass::stop_generate(void);
 
-407 6 output 0 6 488 15 DCClass::output 0 1 176 616
+407 6 output 0 6 488 15 DCClass::output 0 1 176 601
 ////////////////////////////////////////////////////////////////////
 //     Function : DCClass::output
 //       Access : Published, Virtual
@@ -2142,7 +2070,6 @@ inline void DCClass::stop_generate(void);
 //                <out>.
 ////////////////////////////////////////////////////////////////////
 
-// HAVE_PYTHON
 ////////////////////////////////////////////////////////////////////
 //     Function : DCClass::output
 //       Access : Public, Virtual
@@ -2170,8 +2097,8 @@ bool DCClass::has_class_def(void) const;
 //               DistributedClass.  This object will be used to
 //               construct new instances of the class.
 ////////////////////////////////////////////////////////////////////
-49
-void DCClass::set_class_def(PyObject *class_def);
+48
+void DCClass::set_class_def(_object *class_def);
 
 410 13 get_class_def 0 4 488 22 DCClass::get_class_def 0 1 179 388
 ////////////////////////////////////////////////////////////////////
@@ -2181,8 +2108,8 @@ void DCClass::set_class_def(PyObject *class_def);
 //               associated with this DistributedClass.  This will
 //               return a new reference to the object.
 ////////////////////////////////////////////////////////////////////
-45
-PyObject *DCClass::get_class_def(void) const;
+44
+_object *DCClass::get_class_def(void) const;
 
 411 19 has_owner_class_def 0 4 488 28 DCClass::has_owner_class_def 0 1 180 345
 ////////////////////////////////////////////////////////////////////
@@ -2202,8 +2129,8 @@ bool DCClass::has_owner_class_def(void) const;
 //               DistributedClass.  This object will be used to
 //               construct new owner instances of the class.
 ////////////////////////////////////////////////////////////////////
-61
-void DCClass::set_owner_class_def(PyObject *owner_class_def);
+60
+void DCClass::set_owner_class_def(_object *owner_class_def);
 
 413 19 get_owner_class_def 0 4 488 28 DCClass::get_owner_class_def 0 1 182 400
 ////////////////////////////////////////////////////////////////////
@@ -2213,8 +2140,8 @@ void DCClass::set_owner_class_def(PyObject *owner_class_def);
 //               associated with this DistributedClass.  This will
 //               return a new reference to the object.
 ////////////////////////////////////////////////////////////////////
-51
-PyObject *DCClass::get_owner_class_def(void) const;
+50
+_object *DCClass::get_owner_class_def(void) const;
 
 414 14 receive_update 0 4 488 23 DCClass::receive_update 0 1 183 376
 ////////////////////////////////////////////////////////////////////
@@ -2224,8 +2151,8 @@ PyObject *DCClass::get_owner_class_def(void) const;
 //               applies it to the indicated object by calling the
 //               appropriate method.
 ////////////////////////////////////////////////////////////////////
-76
-void DCClass::receive_update(PyObject *distobj, DatagramIterator &di) const;
+75
+void DCClass::receive_update(_object *distobj, DatagramIterator &di) const;
 
 415 33 receive_update_broadcast_required 0 4 488 42 DCClass::receive_update_broadcast_required 0 1 184 500
 ////////////////////////////////////////////////////////////////////
@@ -2236,8 +2163,8 @@ void DCClass::receive_update(PyObject *distobj, DatagramIterator &di) const;
 //               "generate with required" message.  This is all of the
 //               atomic fields that are marked "broadcast required".
 ////////////////////////////////////////////////////////////////////
-95
-void DCClass::receive_update_broadcast_required(PyObject *distobj, DatagramIterator &di) const;
+94
+void DCClass::receive_update_broadcast_required(_object *distobj, DatagramIterator &di) const;
 
 416 39 receive_update_broadcast_required_owner 0 4 488 48 DCClass::receive_update_broadcast_required_owner 0 1 185 563
 ////////////////////////////////////////////////////////////////////
@@ -2249,8 +2176,8 @@ void DCClass::receive_update_broadcast_required(PyObject *distobj, DatagramItera
 //               atomic fields that are marked "broadcast ownrecv". Should
 //               be used for 'owner-view' objects.
 ////////////////////////////////////////////////////////////////////
-101
-void DCClass::receive_update_broadcast_required_owner(PyObject *distobj, DatagramIterator &di) const;
+100
+void DCClass::receive_update_broadcast_required_owner(_object *distobj, DatagramIterator &di) const;
 
 417 27 receive_update_all_required 0 4 488 36 DCClass::receive_update_all_required 0 1 186 492
 ////////////////////////////////////////////////////////////////////
@@ -2261,8 +2188,8 @@ void DCClass::receive_update_broadcast_required_owner(PyObject *distobj, Datagra
 //               created.  This is all of the atomic fields that are
 //               marked "required", whether they are broadcast or not.
 ////////////////////////////////////////////////////////////////////
-89
-void DCClass::receive_update_all_required(PyObject *distobj, DatagramIterator &di) const;
+88
+void DCClass::receive_update_all_required(_object *distobj, DatagramIterator &di) const;
 
 418 20 receive_update_other 0 4 488 29 DCClass::receive_update_other 0 1 187 333
 ////////////////////////////////////////////////////////////////////
@@ -2271,8 +2198,8 @@ void DCClass::receive_update_all_required(PyObject *distobj, DatagramIterator &d
 //  Description: Processes a datagram that lists some additional
 //               fields that are broadcast in one chunk.
 ////////////////////////////////////////////////////////////////////
-82
-void DCClass::receive_update_other(PyObject *distobj, DatagramIterator &di) const;
+81
+void DCClass::receive_update_other(_object *distobj, DatagramIterator &di) const;
 
 419 13 direct_update 0 4 488 22 DCClass::direct_update 0 2 188 189 604
 ////////////////////////////////////////////////////////////////////
@@ -2288,9 +2215,9 @@ void DCClass::receive_update_other(PyObject *distobj, DatagramIterator &di) cons
 //  Description: Processes an update for a named field from a packed
 //               datagram.
 ////////////////////////////////////////////////////////////////////
-241
-void DCClass::direct_update(PyObject *distobj, basic_string< char > const &field_name, basic_string< char > const &value_blob);
-void DCClass::direct_update(PyObject *distobj, basic_string< char > const &field_name, Datagram const &datagram);
+239
+void DCClass::direct_update(_object *distobj, basic_string< char > const &field_name, basic_string< char > const &value_blob);
+void DCClass::direct_update(_object *distobj, basic_string< char > const &field_name, Datagram const &datagram);
 
 420 19 pack_required_field 0 4 488 28 DCClass::pack_required_field 0 2 190 191 1330
 ////////////////////////////////////////////////////////////////////
@@ -2318,9 +2245,9 @@ void DCClass::direct_update(PyObject *distobj, basic_string< char > const &field
 //
 //               Returns true on success, false on failure.
 ////////////////////////////////////////////////////////////////////
-201
-bool DCClass::pack_required_field(Datagram &datagram, PyObject *distobj, DCField const *field) const;
-bool DCClass::pack_required_field(DCPacker &packer, PyObject *distobj, DCField const *field) const;
+199
+bool DCClass::pack_required_field(Datagram &datagram, _object *distobj, DCField const *field) const;
+bool DCClass::pack_required_field(DCPacker &packer, _object *distobj, DCField const *field) const;
 
 421 20 client_format_update 0 4 488 29 DCClass::client_format_update 0 1 192 388
 ////////////////////////////////////////////////////////////////////
@@ -2330,8 +2257,8 @@ bool DCClass::pack_required_field(DCPacker &packer, PyObject *distobj, DCField c
 //               to send an update for the indicated distributed
 //               object from the client.
 ////////////////////////////////////////////////////////////////////
-121
-Datagram DCClass::client_format_update(basic_string< char > const &field_name, unsigned int do_id, PyObject *args) const;
+120
+Datagram DCClass::client_format_update(basic_string< char > const &field_name, unsigned int do_id, _object *args) const;
 
 422 16 ai_format_update 0 4 488 25 DCClass::ai_format_update 0 1 193 380
 ////////////////////////////////////////////////////////////////////
@@ -2341,8 +2268,8 @@ Datagram DCClass::client_format_update(basic_string< char > const &field_name, u
 //               to send an update for the indicated distributed
 //               object from the AI.
 ////////////////////////////////////////////////////////////////////
-167
-Datagram DCClass::ai_format_update(basic_string< char > const &field_name, unsigned int do_id, unsigned __int64 to_id, unsigned __int64 from_id, PyObject *args) const;
+166
+Datagram DCClass::ai_format_update(basic_string< char > const &field_name, unsigned int do_id, unsigned __int64 to_id, unsigned __int64 from_id, _object *args) const;
 
 423 25 ai_format_update_msg_type 0 4 488 34 DCClass::ai_format_update_msg_type 0 1 194 436
 ////////////////////////////////////////////////////////////////////
@@ -2353,8 +2280,8 @@ Datagram DCClass::ai_format_update(basic_string< char > const &field_name, unsig
 //               for the indicated distributed
 //               object from the AI.
 ////////////////////////////////////////////////////////////////////
-190
-Datagram DCClass::ai_format_update_msg_type(basic_string< char > const &field_name, unsigned int do_id, unsigned __int64 to_id, unsigned __int64 from_id, int msg_type, PyObject *args) const;
+189
+Datagram DCClass::ai_format_update_msg_type(basic_string< char > const &field_name, unsigned int do_id, unsigned __int64 to_id, unsigned __int64 from_id, int msg_type, _object *args) const;
 
 424 18 ai_format_generate 0 4 488 27 DCClass::ai_format_generate 0 1 195 593
 ////////////////////////////////////////////////////////////////////
@@ -2368,8 +2295,8 @@ Datagram DCClass::ai_format_update_msg_type(basic_string< char > const &field_na
 //               optional_fields is a list of fieldNames to generate
 //               in addition to the normal required fields.
 ////////////////////////////////////////////////////////////////////
-227
-Datagram DCClass::ai_format_generate(PyObject *distobj, unsigned int do_id, unsigned int parent_id, unsigned int zone_id, unsigned __int64 district_channel_id, unsigned __int64 from_channel_id, PyObject *optional_fields) const;
+225
+Datagram DCClass::ai_format_generate(_object *distobj, unsigned int do_id, unsigned int parent_id, unsigned int zone_id, unsigned __int64 district_channel_id, unsigned __int64 from_channel_id, _object *optional_fields) const;
 
 425 26 client_format_generate_CMU 0 4 488 35 DCClass::client_format_generate_CMU 0 1 196 679
 ////////////////////////////////////////////////////////////////////
@@ -2385,8 +2312,8 @@ Datagram DCClass::ai_format_generate(PyObject *distobj, unsigned int do_id, unsi
 //
 //               This method is only called by the CMU implementation.
 ////////////////////////////////////////////////////////////////////
-139
-Datagram DCClass::client_format_generate_CMU(PyObject *distobj, unsigned int do_id, unsigned int zone_id, PyObject *optional_fields) const;
+137
+Datagram DCClass::client_format_generate_CMU(_object *distobj, unsigned int do_id, unsigned int zone_id, _object *optional_fields) const;
 
 426 9 get_class 0 4 489 27 DCClassParameter::get_class 0 1 197 278
 ////////////////////////////////////////////////////////////////////
@@ -2440,8 +2367,7 @@ void DCFile::clear(void);
 28
 bool DCFile::read_all(void);
 
-432 4 read 0 4 490 12 DCFile::read 0 3 201 202 203 1410
-// WITHIN_PANDA
+432 4 read 0 4 490 12 DCFile::read 0 3 201 202 203 1394
 ////////////////////////////////////////////////////////////////////
 //     Function: DCFile::read
 //       Access: Published
@@ -2555,20 +2481,7 @@ DCSwitch *DCFile::get_switch_by_name(basic_string< char > const &name) const;
 60
 DCField *DCFile::get_field_by_index(int index_number) const;
 
-439 17 all_objects_valid 0 4 490 25 DCFile::all_objects_valid 0 1 211 949
-// Filename: dcFile.I
-// Created by:  drose (10Jan06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+439 17 all_objects_valid 0 4 490 25 DCFile::all_objects_valid 0 1 211 467
 ////////////////////////////////////////////////////////////////////
 //     Function: DCFile::all_objects_valid
 //       Access: Published
@@ -2949,20 +2862,7 @@ bool DCTypedef::is_bogus_typedef(void) const;
 bool DCTypedef::is_implicit_typedef(void) const;
 
 245
-1 14 Dtool_zIbGEqeZ 0 6 5 499 0 14 Dtool_zIbGEqeZ 809 // Filename: dcPackerInterface.I
-// Created by:  drose (18Jun04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+1 14 Dtool_zIbGEqeZ 0 6 5 499 0 14 Dtool_zIbGEqeZ 316 ////////////////////////////////////////////////////////////////////
 //     Function: DCPackerInterface::get_name
 //       Access: Published
 //  Description: Returns the name of this field, or empty string
@@ -3083,20 +2983,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               as the other list, false if some keywords differ.
 //               Order is not considered important.
 //////////////////////////////////////////////////////////////////// 2 4 this 3 513  5 other 1 513  
-18 14 Dtool_zIbGYIQq 0 6 24 500 0 14 Dtool_zIbGYIQq 852 // Filename: dcField.I
-// Created by:  drose (10Jan06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+18 14 Dtool_zIbGYIQq 0 6 24 500 0 14 Dtool_zIbGYIQq 369 ////////////////////////////////////////////////////////////////////
 //     Function: DCField::get_number
 //       Access: Published
 //  Description: Returns a unique index number associated with this
@@ -3278,7 +3165,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //  Description : Write a string representation of this instance to
 //                <out>.
 //////////////////////////////////////////////////////////////////// 3 4 this 3 503  3 out 1 527  12 indent_level 1 500  
-46 14 Dtool_zIbGBNMR 0 6 47 511 0 14 Dtool_zIbGBNMR 470 ////////////////////////////////////////////////////////////////////
+46 14 Dtool_zIbGluip 0 6 47 511 0 14 Dtool_zIbGluip 470 ////////////////////////////////////////////////////////////////////
 //     Function: DCField::pack_args
 //       Access: Published
 //  Description: Packs the Python arguments from the indicated tuple
@@ -3298,28 +3185,28 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               It is assumed that the packer is currently positioned
 //               on this field.
 //////////////////////////////////////////////////////////////////// 2 4 this 3 503  6 packer 1 530  
-48 14 Dtool_zIbGc4tY 0 4 49 529 0 14 Dtool_zIbGc4tY 378 ////////////////////////////////////////////////////////////////////
+48 14 Dtool_zIbG1_ZJ 0 4 49 529 0 14 Dtool_zIbG1_ZJ 378 ////////////////////////////////////////////////////////////////////
 //     Function: DCField::receive_update
 //       Access: Published
 //  Description: Extracts the update message out of the datagram and
 //               applies it to the indicated object by calling the
 //               appropriate method.
 //////////////////////////////////////////////////////////////////// 3 4 this 3 503  6 packer 1 530  7 distobj 1 531  
-49 14 Dtool_zIbGF0YR 0 7 50 535 0 14 Dtool_zIbGF0YR 388 ////////////////////////////////////////////////////////////////////
+49 14 Dtool_zIbGuujW 0 7 50 535 0 14 Dtool_zIbGuujW 388 ////////////////////////////////////////////////////////////////////
 //     Function: DCField::client_format_update
 //       Access: Published
 //  Description: Generates a datagram containing the message necessary
 //               to send an update for the indicated distributed
 //               object from the client.
 //////////////////////////////////////////////////////////////////// 3 4 this 3 503  5 do_id 1 534  4 args 1 531  
-50 14 Dtool_zIbGRmQd 0 7 51 535 0 14 Dtool_zIbGRmQd 380 ////////////////////////////////////////////////////////////////////
+50 14 Dtool_zIbGQyxN 0 7 51 535 0 14 Dtool_zIbGQyxN 380 ////////////////////////////////////////////////////////////////////
 //     Function: DCField::ai_format_update
 //       Access: Published
 //  Description: Generates a datagram containing the message necessary
 //               to send an update for the indicated distributed
 //               object from the AI.
 //////////////////////////////////////////////////////////////////// 5 4 this 3 503  5 do_id 1 534  5 to_id 1 536  7 from_id 1 536  4 args 1 531  
-51 14 Dtool_zIbGw7EM 0 7 52 535 0 14 Dtool_zIbGw7EM 426 ////////////////////////////////////////////////////////////////////
+51 14 Dtool_zIbGcvM4 0 7 52 535 0 14 Dtool_zIbGcvM4 426 ////////////////////////////////////////////////////////////////////
 //     Function: DCField::ai_format_update_msg_type
 //       Access: Published
 //  Description: Generates a datagram containing the message necessary
@@ -3331,20 +3218,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 53 14 Dtool_zIbGvejk 0 6 20 502 0 14 Dtool_zIbGvejk 0 1 4 this 3 501  
 54 14 Dtool_zIbGyCOi 0 6 21 537 0 14 Dtool_zIbGyCOi 0 1 4 this 3 502  
 55 14 Dtool_zIbGS2_O 0 6 22 502 0 14 Dtool_zIbGS2_O 0 1 4 this 3 537  
-56 14 Dtool_zIbGb_tg 0 7 54 538 294 14 Dtool_zIbGb_tg 709 // Filename: dcPackData.I
-// Created by:  drose (15Jun04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+56 14 Dtool_zIbGb_tg 0 7 54 538 294 14 Dtool_zIbGb_tg 223 ////////////////////////////////////////////////////////////////////
 //     Function: DCPackData::Constructor
 //       Access: Published
 //  Description: 
@@ -3373,20 +3247,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //       Access: Published
 //  Description: 
 //////////////////////////////////////////////////////////////////// 0 
-61 14 Dtool_zIbGJSK8 0 4 62 529 0 14 Dtool_zIbGJSK8 928 // Filename: dcPacker.I
-// Created by:  drose (15Jun04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+61 14 Dtool_zIbGJSK8 0 4 62 529 0 14 Dtool_zIbGJSK8 444 ////////////////////////////////////////////////////////////////////
 //     Function: DCPacker::clear_data
 //       Access: Published
 //  Description: Empties the data in the pack buffer and unpack
@@ -3707,7 +3568,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               advances to the next field.  If the current field
 //               contains nested fields, skips all of them.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 530  
-98 14 Dtool_zIbGbgXg 0 4 98 529 0 14 Dtool_zIbGbgXg 528 ////////////////////////////////////////////////////////////////////
+98 14 Dtool_zIbG39A7 0 4 98 529 0 14 Dtool_zIbG39A7 528 ////////////////////////////////////////////////////////////////////
 //     Function: DCPacker::pack_object
 //       Access: Published
 //  Description: Packs the Python object of whatever type into the
@@ -3725,8 +3586,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               current field represents a list of fields it will be
 //               a tuple.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 530  
-100 14 Dtool_zIbGOrNi 0 6 100 511 0 14 Dtool_zIbGOrNi 425 // HAVE_PYTHON
-////////////////////////////////////////////////////////////////////
+100 14 Dtool_zIbGOrNi 0 6 100 511 0 14 Dtool_zIbGOrNi 410 ////////////////////////////////////////////////////////////////////
 //     Function: DCPacker::parse_and_pack
 //       Access: Published
 //  Description: Parses an object's value according to the DC file
@@ -4119,20 +3979,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //  Description : Write a string representation of this instance to
 //                <out>.
 //////////////////////////////////////////////////////////////////// 3 4 this 3 556  3 out 1 527  12 indent_level 1 500  
-158 14 Dtool_zIbGbBzT 0 6 156 512 0 14 Dtool_zIbGbBzT 753 // Filename: dcClass.I
-// Created by:  drose (15Sep04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+158 14 Dtool_zIbGbBzT 0 6 156 512 0 14 Dtool_zIbGbBzT 270 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::get_dc_file
 //       Access: Published
 //  Description: Returns the DCFile object that contains the class.
@@ -4280,7 +4127,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //  Description: Returns true if the DCClass object has an associated
 //               Python class definition, false otherwise.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 558  
-178 14 Dtool_zIbGnYZY 0 4 176 529 0 14 Dtool_zIbGnYZY 383 ////////////////////////////////////////////////////////////////////
+178 14 Dtool_zIbGCGes 0 4 176 529 0 14 Dtool_zIbGCGes 383 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::set_class_def
 //       Access: Published
 //  Description: Sets the class object associated with this
@@ -4300,7 +4147,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //  Description: Returns true if the DCClass object has an associated
 //               Python owner class definition, false otherwise.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 558  
-181 14 Dtool_zIbG3p5u 0 4 179 529 0 14 Dtool_zIbG3p5u 401 ////////////////////////////////////////////////////////////////////
+181 14 Dtool_zIbGbiM0 0 4 179 529 0 14 Dtool_zIbGbiM0 401 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::set_owner_class_def
 //       Access: Published
 //  Description: Sets the owner class object associated with this
@@ -4314,14 +4161,14 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               associated with this DistributedClass.  This will
 //               return a new reference to the object.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 558  
-183 14 Dtool_zIbGQPjh 0 4 181 529 0 14 Dtool_zIbGQPjh 376 ////////////////////////////////////////////////////////////////////
+183 14 Dtool_zIbGPs2n 0 4 181 529 0 14 Dtool_zIbGPs2n 376 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::receive_update
 //       Access: Published
 //  Description: Extracts the update message out of the packer and
 //               applies it to the indicated object by calling the
 //               appropriate method.
 //////////////////////////////////////////////////////////////////// 3 4 this 3 558  7 distobj 1 531  2 di 1 563  
-184 14 Dtool_zIbGLA_2 0 4 182 529 0 14 Dtool_zIbGLA_2 500 ////////////////////////////////////////////////////////////////////
+184 14 Dtool_zIbGhWJa 0 4 182 529 0 14 Dtool_zIbGhWJa 500 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::receive_update_broadcast_required
 //       Access: Published
 //  Description: Processes a big datagram that includes all of the
@@ -4329,7 +4176,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               "generate with required" message.  This is all of the
 //               atomic fields that are marked "broadcast required".
 //////////////////////////////////////////////////////////////////// 3 4 this 3 558  7 distobj 1 531  2 di 1 563  
-185 14 Dtool_zIbGHOff 0 4 183 529 0 14 Dtool_zIbGHOff 563 ////////////////////////////////////////////////////////////////////
+185 14 Dtool_zIbGi0_o 0 4 183 529 0 14 Dtool_zIbGi0_o 563 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::receive_update_broadcast_required_owner
 //       Access: Published
 //  Description: Processes a big datagram that includes all of the
@@ -4338,7 +4185,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               atomic fields that are marked "broadcast ownrecv". Should
 //               be used for 'owner-view' objects.
 //////////////////////////////////////////////////////////////////// 3 4 this 3 558  7 distobj 1 531  2 di 1 563  
-186 14 Dtool_zIbGkwBe 0 4 184 529 0 14 Dtool_zIbGkwBe 492 ////////////////////////////////////////////////////////////////////
+186 14 Dtool_zIbG7jjI 0 4 184 529 0 14 Dtool_zIbG7jjI 492 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::receive_update_all_required
 //       Access: Published
 //  Description: Processes a big datagram that includes all of the
@@ -4346,25 +4193,25 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               created.  This is all of the atomic fields that are
 //               marked "required", whether they are broadcast or not.
 //////////////////////////////////////////////////////////////////// 3 4 this 3 558  7 distobj 1 531  2 di 1 563  
-187 14 Dtool_zIbG5Jl7 0 4 185 529 0 14 Dtool_zIbG5Jl7 333 ////////////////////////////////////////////////////////////////////
+187 14 Dtool_zIbGG4mO 0 4 185 529 0 14 Dtool_zIbGG4mO 333 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::receive_update_other
 //       Access: Published
 //  Description: Processes a datagram that lists some additional
 //               fields that are broadcast in one chunk.
 //////////////////////////////////////////////////////////////////// 3 4 this 3 558  7 distobj 1 531  2 di 1 563  
-188 14 Dtool_zIbGTp_A 0 4 186 529 0 14 Dtool_zIbGTp_A 300 ////////////////////////////////////////////////////////////////////
+188 14 Dtool_zIbGTRfY 0 4 186 529 0 14 Dtool_zIbGTRfY 300 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::direct_update
 //       Access: Published
 //  Description: Processes an update for a named field from a packed
 //               datagram.
 //////////////////////////////////////////////////////////////////// 4 4 this 3 517  7 distobj 1 531  10 field_name 1 499  8 datagram 1 565  
-189 14 Dtool_zIbGx5ko 0 4 186 529 0 14 Dtool_zIbGx5ko 302 ////////////////////////////////////////////////////////////////////
+189 14 Dtool_zIbGn4q5 0 4 186 529 0 14 Dtool_zIbGn4q5 302 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::direct_update
 //       Access: Published
 //  Description: Processes an update for a named field from a packed
 //               value blob.
 //////////////////////////////////////////////////////////////////// 4 4 this 3 517  7 distobj 1 531  10 field_name 1 499  10 value_blob 1 499  
-190 14 Dtool_zIbGQSyU 0 6 187 511 0 14 Dtool_zIbGQSyU 663 ////////////////////////////////////////////////////////////////////
+190 14 Dtool_zIbGjn3J 0 6 187 511 0 14 Dtool_zIbGjn3J 663 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::pack_required_field
 //       Access: Published
 //  Description: Looks up the current value of the indicated field by
@@ -4376,7 +4223,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //
 //               Returns true on success, false on failure.
 //////////////////////////////////////////////////////////////////// 4 4 this 3 558  6 packer 1 530  7 distobj 1 531  5 field 1 503  
-191 14 Dtool_zIbGAQnH 0 6 187 511 0 14 Dtool_zIbGAQnH 665 ////////////////////////////////////////////////////////////////////
+191 14 Dtool_zIbGrRq8 0 6 187 511 0 14 Dtool_zIbGrRq8 665 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::pack_required_field
 //       Access: Published
 //  Description: Looks up the current value of the indicated field by
@@ -4388,21 +4235,21 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //
 //               Returns true on success, false on failure.
 //////////////////////////////////////////////////////////////////// 4 4 this 3 558  8 datagram 1 535  7 distobj 1 531  5 field 1 503  
-192 14 Dtool_zIbGl72J 0 7 188 535 0 14 Dtool_zIbGl72J 388 ////////////////////////////////////////////////////////////////////
+192 14 Dtool_zIbGxO_1 0 7 188 535 0 14 Dtool_zIbGxO_1 388 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::client_format_update
 //       Access: Published
 //  Description: Generates a datagram containing the message necessary
 //               to send an update for the indicated distributed
 //               object from the client.
 //////////////////////////////////////////////////////////////////// 4 4 this 3 558  10 field_name 1 499  5 do_id 1 534  4 args 1 531  
-193 14 Dtool_zIbGXxSU 0 7 189 535 0 14 Dtool_zIbGXxSU 380 ////////////////////////////////////////////////////////////////////
+193 14 Dtool_zIbGibfg 0 7 189 535 0 14 Dtool_zIbGibfg 380 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::ai_format_update
 //       Access: Published
 //  Description: Generates a datagram containing the message necessary
 //               to send an update for the indicated distributed
 //               object from the AI.
 //////////////////////////////////////////////////////////////////// 6 4 this 3 558  10 field_name 1 499  5 do_id 1 534  5 to_id 1 536  7 from_id 1 536  4 args 1 531  
-194 14 Dtool_zIbG_Eiu 0 7 190 535 0 14 Dtool_zIbG_Eiu 436 ////////////////////////////////////////////////////////////////////
+194 14 Dtool_zIbGQkkB 0 7 190 535 0 14 Dtool_zIbGQkkB 436 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::ai_format_update_msg_type
 //       Access: Published
 //  Description: Generates a datagram containing the message necessary
@@ -4410,7 +4257,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               for the indicated distributed
 //               object from the AI.
 //////////////////////////////////////////////////////////////////// 7 4 this 3 558  10 field_name 1 499  5 do_id 1 534  5 to_id 1 536  7 from_id 1 536  8 msg_type 1 500  4 args 1 531  
-195 14 Dtool_zIbGsOMz 0 7 191 535 0 14 Dtool_zIbGsOMz 593 ////////////////////////////////////////////////////////////////////
+195 14 Dtool_zIbG9eD5 0 7 191 535 0 14 Dtool_zIbG9eD5 593 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::ai_format_generate
 //       Access: Published
 //  Description: Generates a datagram containing the message necessary
@@ -4421,7 +4268,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               optional_fields is a list of fieldNames to generate
 //               in addition to the normal required fields.
 //////////////////////////////////////////////////////////////////// 8 4 this 3 558  7 distobj 1 531  5 do_id 1 534  9 parent_id 1 534  7 zone_id 1 534  19 district_channel_id 1 536  15 from_channel_id 1 536  15 optional_fields 1 531  
-196 14 Dtool_zIbGXnoc 0 7 192 535 0 14 Dtool_zIbGXnoc 679 ////////////////////////////////////////////////////////////////////
+196 14 Dtool_zIbGgdUj 0 7 192 535 0 14 Dtool_zIbGgdUj 679 ////////////////////////////////////////////////////////////////////
 //     Function: DCClass::client_format_generate_CMU
 //       Access: Published
 //  Description: Generates a datagram containing the message necessary
@@ -4457,8 +4304,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               by the "dc-file" config.prc variable, and loads them
 //               into the DCFile namespace.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 512  
-201 14 Dtool_zIbGEDwK 0 6 201 511 0 14 Dtool_zIbGEDwK 634 // WITHIN_PANDA
-////////////////////////////////////////////////////////////////////
+201 14 Dtool_zIbGEDwK 0 6 201 511 0 14 Dtool_zIbGEDwK 618 ////////////////////////////////////////////////////////////////////
 //     Function: DCFile::read
 //       Access: Published
 //  Description: Opens and reads the indicated .dc file by name.  The
@@ -4556,20 +4402,7 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               setting, different DCFields may share the same index
 //               number, so this global lookup is not possible.
 //////////////////////////////////////////////////////////////////// 2 4 this 3 569  12 index_number 1 500  
-211 14 Dtool_zIbGuN3i 0 6 208 511 0 14 Dtool_zIbGuN3i 949 // Filename: dcFile.I
-// Created by:  drose (10Jan06)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+211 14 Dtool_zIbGuN3i 0 6 208 511 0 14 Dtool_zIbGuN3i 467 ////////////////////////////////////////////////////////////////////
 //     Function: DCFile::all_objects_valid
 //       Access: Published
 //  Description: Returns true if all of the classes read from the DC
@@ -4798,7 +4631,35 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               DCClass that was referenced inline as a type.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 553  
 97
-477 15 DCSubatomicType 0 532481 15 DCSubatomicType 15 DCSubatomicType 0 0 0 0 0 0 0 0 0 0 21 7 ST_int8 7 ST_int8 0 8 ST_int16 8 ST_int16 1 8 ST_int32 8 ST_int32 2 8 ST_int64 8 ST_int64 3 8 ST_uint8 8 ST_uint8 4 9 ST_uint16 9 ST_uint16 5 9 ST_uint32 9 ST_uint32 6 9 ST_uint64 9 ST_uint64 7 10 ST_float64 10 ST_float64 8 9 ST_string 9 ST_string 9 7 ST_blob 7 ST_blob 10 9 ST_blob32 9 ST_blob32 11 13 ST_int16array 13 ST_int16array 12 13 ST_int32array 13 ST_int32array 13 14 ST_uint16array 14 ST_uint16array 14 14 ST_uint32array 14 ST_uint32array 15 12 ST_int8array 12 ST_int8array 16 13 ST_uint8array 13 ST_uint8array 17 19 ST_uint32uint8array 19 ST_uint32uint8array 18 7 ST_char 7 ST_char 19 10 ST_invalid 10 ST_invalid 20 0 410
+477 15 DCSubatomicType 0 532481 15 DCSubatomicType 15 DCSubatomicType 0 0 0 0 0 0 0 0 0 0 21 7 ST_int8 7 ST_int8 0
+0 8 ST_int16 8 ST_int16 0
+1 8 ST_int32 8 ST_int32 0
+2 8 ST_int64 8 ST_int64 0
+3 8 ST_uint8 8 ST_uint8 0
+4 9 ST_uint16 9 ST_uint16 0
+5 9 ST_uint32 9 ST_uint32 0
+6 9 ST_uint64 9 ST_uint64 0
+7 10 ST_float64 10 ST_float64 0
+8 9 ST_string 9 ST_string 27
+// a human-printable string
+9 7 ST_blob 7 ST_blob 50
+// any variable length message, stored as a string
+10 9 ST_blob32 9 ST_blob32 49
+// a blob with a 32-bit length, up to 4.2 GB long
+11 13 ST_int16array 13 ST_int16array 0
+12 13 ST_int32array 13 ST_int32array 0
+13 14 ST_uint16array 14 ST_uint16array 0
+14 14 ST_uint32array 14 ST_uint32array 0
+15 12 ST_int8array 12 ST_int8array 0
+16 13 ST_uint8array 13 ST_uint8array 0
+17 19 ST_uint32uint8array 19 ST_uint32uint8array 122
+// A special-purpose array: a list of alternating uint32 and uint8
+// values.  In Python, this becomes a list of 2-tuples.
+18 7 ST_char 7 ST_char 76
+// Equivalent to uint8, except that it suggests a pack_type of
+// PT_string.
+19 10 ST_invalid 10 ST_invalid 0
+20 0 410
 ////////////////////////////////////////////////////////////////////
 //        Enum : DCSubatomicType
 // Description : This defines the numeric type of each element of a
@@ -4807,7 +4668,27 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               method is called.
 ////////////////////////////////////////////////////////////////////
 
-478 10 DCPackType 0 532481 10 DCPackType 10 DCPackType 0 0 0 0 0 0 0 0 0 0 12 10 PT_invalid 10 PT_invalid 0 9 PT_double 9 PT_double 1 6 PT_int 6 PT_int 2 7 PT_uint 7 PT_uint 3 8 PT_int64 8 PT_int64 4 9 PT_uint64 9 PT_uint64 5 9 PT_string 9 PT_string 6 7 PT_blob 7 PT_blob 7 8 PT_array 8 PT_array 8 8 PT_field 8 PT_field 9 8 PT_class 8 PT_class 10 9 PT_switch 9 PT_switch 11 0 137
+478 10 DCPackType 0 532481 10 DCPackType 10 DCPackType 0 0 0 0 0 0 0 0 0 0 12 10 PT_invalid 10 PT_invalid 59
+// This one should never be returned in a normal situation.
+0 9 PT_double 9 PT_double 237
+// These PackTypes are all fundamental types, and should be packed
+// (or unpacked) with the corresponding call to pack_double(),
+// pack_int(), etc.  PT_blob is the same as PT_string, but implies
+// that the string contains binary data.
+1 6 PT_int 6 PT_int 0
+2 7 PT_uint 7 PT_uint 0
+3 8 PT_int64 8 PT_int64 0
+4 9 PT_uint64 9 PT_uint64 0
+5 9 PT_string 9 PT_string 0
+6 7 PT_blob 7 PT_blob 0
+7 8 PT_array 8 PT_array 192
+// The remaining PackTypes imply a need to call push() and pop().
+// They are all variants on the same thing: a list of nested fields,
+// but the PackType provides a bit of a semantic context.
+8 8 PT_field 8 PT_field 0
+9 8 PT_class 8 PT_class 0
+10 9 PT_switch 9 PT_switch 0
+11 0 137
 // This enumerated type is returned by get_pack_type() and represents
 // the best choice for a subsequent call to pack_*() or unpack_*().
 
@@ -4878,7 +4759,14 @@ bool DCTypedef::is_implicit_typedef(void) const;
 //               fields, all of which are of the same type.
 ////////////////////////////////////////////////////////////////////
 
-486 13 DCAtomicField 0 75777 13 DCAtomicField 13 DCAtomicField 0 0 0 0 263 0 7 377 378 379 380 381 382 383 0 0 1 0 481 0 0 0 0 0
+486 13 DCAtomicField 0 75777 13 DCAtomicField 13 DCAtomicField 0 0 0 0 263 0 7 377 378 379 380 381 382 383 0 0 1 0 481 0 0 0 0 416
+////////////////////////////////////////////////////////////////////
+//       Class : DCAtomicField
+// Description : A single atomic field of a Distributed Class, as read
+//               from a .dc file.  This defines an interface to the
+//               Distributed Class, and is always implemented as a
+//               remote procedure method.
+////////////////////////////////////////////////////////////////////
 
 487 13 DCDeclaration 0 26625 13 DCDeclaration 13 DCDeclaration 0 0 0 0 384 0 4 385 386 387 388 0 0 0 0 0 634
 ////////////////////////////////////////////////////////////////////
@@ -5036,9 +4924,9 @@ bool DCTypedef::is_implicit_typedef(void) const;
 
 530 10 DCPacker * 0 8576 10 DCPacker * 10 DCPacker * 0 0 483 0 0 0 0 0 0 0 0 0 0
 
-531 10 PyObject * 0 8576 10 PyObject * 10 PyObject * 0 0 532 0 0 0 0 0 0 0 0 0 0
+531 9 _object * 0 8576 9 _object * 9 _object * 0 0 532 0 0 0 0 0 0 0 0 0 0
 
-532 8 PyObject 0 2048 8 PyObject 8 PyObject 0 0 0 0 0 0 0 0 0 0 0 0 0
+532 7 _object 0 1024 7 _object 7 _object 0 0 0 0 0 0 0 0 0 0 0 0 0
 
 533 8 Datagram 0 2048 8 Datagram 8 Datagram 0 0 0 0 0 0 0 0 0 0 0 0 900
 ////////////////////////////////////////////////////////////////////

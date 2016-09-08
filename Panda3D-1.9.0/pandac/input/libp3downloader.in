@@ -1,5 +1,5 @@
-1412101749
-2 2
+1422499813
+2 3
 15 libp3downloader 4 _Rn_ 12 panda3d.core 
 387
 407 9 ~SSReader 0 6 794 19 SSReader::~SSReader 0 0 226
@@ -11,20 +11,7 @@
 34
 virtual SSReader::~SSReader(void);
 
-408 16 receive_datagram 0 4 794 26 SSReader::receive_datagram 0 1 1 1015
-// Filename: socketStream.I
-// Created by:  drose (15Oct02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+408 16 receive_datagram 0 4 794 26 SSReader::receive_datagram 0 1 1 527
 ////////////////////////////////////////////////////////////////////
 //     Function: SSReader::receive_datagram
 //       Access: Published
@@ -364,20 +351,7 @@ inline bool SocketStream::flush(void);
 34
 SocketStream::~SocketStream(void);
 
-453 7 URLSpec 0 4 803 16 URLSpec::URLSpec 0 4 42 43 44 45 1149
-// Filename: urlSpec.I
-// Created by:  drose (24Sep02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+453 7 URLSpec 0 4 803 16 URLSpec::URLSpec 0 4 42 43 44 45 666
 ////////////////////////////////////////////////////////////////////
 //     Function: URLSpec::Constructor
 //       Access: Published
@@ -400,46 +374,20 @@ URLSpec::URLSpec(void);
 inline URLSpec::URLSpec(basic_string< char > const &url, bool server_name_expected = (0));
 inline URLSpec::URLSpec(URLSpec const &copy);
 
-454 10 operator = 0 4 803 19 URLSpec::operator = 0 2 46 47 461
-////////////////////////////////////////////////////////////////////
-//     Function: URLSpec::Assignment Operator
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////
-//     Function: URLSpec::Copy Assignment Operator
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+454 10 operator = 0 4 803 19 URLSpec::operator = 0 2 46 47 0
 112
 inline void URLSpec::operator =(basic_string< char > const &url);
 void URLSpec::operator =(URLSpec const &copy);
 
-455 11 operator == 0 4 803 20 URLSpec::operator == 0 1 48 219
-////////////////////////////////////////////////////////////////////
-//     Function: URLSpec::Operator ==
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+455 11 operator == 0 4 803 20 URLSpec::operator == 0 1 48 0
 61
 inline bool URLSpec::operator ==(URLSpec const &other) const;
 
-456 11 operator != 0 4 803 20 URLSpec::operator != 0 1 49 219
-////////////////////////////////////////////////////////////////////
-//     Function: URLSpec::Operator !=
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+456 11 operator != 0 4 803 20 URLSpec::operator != 0 1 49 0
 61
 inline bool URLSpec::operator !=(URLSpec const &other) const;
 
-457 10 operator < 0 4 803 19 URLSpec::operator < 0 1 50 218
-////////////////////////////////////////////////////////////////////
-//     Function: URLSpec::Operator <
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+457 10 operator < 0 4 803 19 URLSpec::operator < 0 1 50 0
 60
 inline bool URLSpec::operator <(URLSpec const &other) const;
 
@@ -770,12 +718,7 @@ void URLSpec::set_query(basic_string< char > const &query);
 88
 void URLSpec::set_url(basic_string< char > const &url, bool server_name_expected = (0));
 
-489 17 operator typecast 0 132 803 26 URLSpec::operator typecast 0 1 96 229
-////////////////////////////////////////////////////////////////////
-//     Function: URLSpec::string typecast operator
-//       Access: Public
-//  Description:
-////////////////////////////////////////////////////////////////////
+489 17 operator typecast 0 132 803 26 URLSpec::operator typecast 0 1 96 0
 74
 inline basic_string< char > const &URLSpec::operator typecast(void) const;
 
@@ -806,12 +749,7 @@ inline bool URLSpec::empty(void) const;
 48
 inline unsigned int URLSpec::length(void) const;
 
-493 11 operator [] 0 4 803 20 URLSpec::operator [] 0 1 87 222
-////////////////////////////////////////////////////////////////////
-//     Function: URLSpec::Indexing operator
-//       Access: Public
-//  Description:
-////////////////////////////////////////////////////////////////////
+493 11 operator [] 0 4 803 20 URLSpec::operator [] 0 1 87 0
 46
 inline char URLSpec::operator [](int n) const;
 
@@ -888,20 +826,7 @@ URLSpec::~URLSpec(void);
 26
 HTTPEnum::~HTTPEnum(void);
 
-502 8 HTTPDate 0 4 807 18 HTTPDate::HTTPDate 0 4 97 98 99 100 1518
-// Filename: httpDate.I
-// Created by:  drose (28Jan03)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+502 8 HTTPDate 0 4 807 18 HTTPDate::HTTPDate 0 4 97 98 99 100 1034
 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPDate::Constructor
 //       Access: Published
@@ -933,12 +858,7 @@ inline HTTPDate::HTTPDate(unsigned int time);
 HTTPDate::HTTPDate(basic_string< char > const &format);
 inline HTTPDate::HTTPDate(HTTPDate const &copy);
 
-503 10 operator = 0 4 807 20 HTTPDate::operator = 0 1 101 233
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::Copy Assignment Operator
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+503 10 operator = 0 4 807 20 HTTPDate::operator = 0 1 101 0
 55
 inline void HTTPDate::operator =(HTTPDate const &copy);
 
@@ -981,39 +901,19 @@ basic_string< char > HTTPDate::get_string(void) const;
 51
 inline unsigned int HTTPDate::get_time(void) const;
 
-508 11 operator == 0 4 807 21 HTTPDate::operator == 0 1 106 220
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::Operator ==
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+508 11 operator == 0 4 807 21 HTTPDate::operator == 0 1 106 0
 63
 inline bool HTTPDate::operator ==(HTTPDate const &other) const;
 
-509 11 operator != 0 4 807 21 HTTPDate::operator != 0 1 107 220
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::Operator !=
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+509 11 operator != 0 4 807 21 HTTPDate::operator != 0 1 107 0
 63
 inline bool HTTPDate::operator !=(HTTPDate const &other) const;
 
-510 10 operator < 0 4 807 20 HTTPDate::operator < 0 1 108 219
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::Operator <
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+510 10 operator < 0 4 807 20 HTTPDate::operator < 0 1 108 0
 62
 inline bool HTTPDate::operator <(HTTPDate const &other) const;
 
-511 10 operator > 0 4 807 20 HTTPDate::operator > 0 1 109 219
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::Operator >
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+511 10 operator > 0 4 807 20 HTTPDate::operator > 0 1 109 0
 62
 inline bool HTTPDate::operator >(HTTPDate const &other) const;
 
@@ -1028,45 +928,19 @@ inline bool HTTPDate::operator >(HTTPDate const &other) const;
 61
 inline int HTTPDate::compare_to(HTTPDate const &other) const;
 
-513 11 operator += 0 4 807 21 HTTPDate::operator += 0 1 111 220
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::operator +=
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+513 11 operator += 0 4 807 21 HTTPDate::operator += 0 1 111 0
 47
 inline void HTTPDate::operator +=(int seconds);
 
-514 11 operator -= 0 4 807 21 HTTPDate::operator -= 0 1 112 220
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::operator -=
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+514 11 operator -= 0 4 807 21 HTTPDate::operator -= 0 1 112 0
 47
 inline void HTTPDate::operator -=(int seconds);
 
-515 10 operator + 0 4 807 20 HTTPDate::operator + 0 1 113 219
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::operator +
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+515 10 operator + 0 4 807 20 HTTPDate::operator + 0 1 113 0
 56
 inline HTTPDate HTTPDate::operator +(int seconds) const;
 
-516 10 operator - 0 4 807 20 HTTPDate::operator - 0 2 114 115 440
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::operator -
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::operator -
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+516 10 operator - 0 4 807 20 HTTPDate::operator - 0 2 114 115 0
 118
 inline HTTPDate HTTPDate::operator -(int seconds) const;
 inline int HTTPDate::operator -(HTTPDate const &other) const;
@@ -1093,20 +967,7 @@ void HTTPDate::output(ostream &out) const;
 26
 HTTPDate::~HTTPDate(void);
 
-520 10 HTTPCookie 0 4 808 22 HTTPCookie::HTTPCookie 0 3 118 119 120 1629
-// Filename: httpCookie.I
-// Created by:  drose (26Aug04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+520 10 HTTPCookie 0 4 808 22 HTTPCookie::HTTPCookie 0 3 118 119 120 1143
 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPCookie::Constructor
 //       Access: Published
@@ -1278,14 +1139,7 @@ inline void HTTPCookie::set_secure(bool flag);
 47
 inline bool HTTPCookie::get_secure(void) const;
 
-536 10 operator < 0 4 808 22 HTTPCookie::operator < 0 1 135 412
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPCookie::operator <
-//       Access: Published
-//  Description: The sorting operator allows the cookies to be stored
-//               in a single dictionary; it returns nonequal only if
-//               the cookies are different in name, path, or domain.
-////////////////////////////////////////////////////////////////////
+536 10 operator < 0 4 808 22 HTTPCookie::operator < 0 1 135 0
 59
 bool HTTPCookie::operator <(HTTPCookie const &other) const;
 
@@ -1362,12 +1216,7 @@ void HTTPCookie::output(ostream &out) const;
 HTTPClient::HTTPClient(void);
 HTTPClient::HTTPClient(HTTPClient const &copy);
 
-543 10 operator = 0 4 809 22 HTTPClient::operator = 0 1 144 235
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPClient::Copy Assignment Operator
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+543 10 operator = 0 4 809 22 HTTPClient::operator = 0 1 144 0
 52
 void HTTPClient::operator =(HTTPClient const &copy);
 
@@ -1448,20 +1297,7 @@ void HTTPClient::set_direct_host_spec(basic_string< char > const &direct_host_sp
 66
 basic_string< char > HTTPClient::get_direct_host_spec(void) const;
 
-549 18 set_try_all_direct 0 4 809 30 HTTPClient::set_try_all_direct 0 1 150 1087
-// Filename: httpClient.I
-// Created by:  drose (24Sep02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+549 18 set_try_all_direct 0 4 809 30 HTTPClient::set_try_all_direct 0 1 150 601
 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPClient::set_try_all_direct
 //       Access: Published
@@ -2030,20 +1866,7 @@ static inline basic_string< char > HTTPClient::base64_decode(basic_string< char 
 52
 static HTTPClient *HTTPClient::get_global_ptr(void);
 
-591 13 HTTPEntityTag 0 4 812 28 HTTPEntityTag::HTTPEntityTag 0 4 193 194 195 196 1659
-// Filename: httpEntityTag.I
-// Created by:  drose (28Jan03)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+591 13 HTTPEntityTag 0 4 812 28 HTTPEntityTag::HTTPEntityTag 0 4 193 194 195 196 1170
 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPEntityTag::Constructor
 //       Access: Published
@@ -2076,12 +1899,7 @@ HTTPEntityTag::HTTPEntityTag(basic_string< char > const &text);
 inline HTTPEntityTag::HTTPEntityTag(bool weak, basic_string< char > const &tag);
 inline HTTPEntityTag::HTTPEntityTag(HTTPEntityTag const &copy);
 
-592 10 operator = 0 4 812 25 HTTPEntityTag::operator = 0 1 197 238
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPEntityTag::Copy Assignment Operator
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+592 10 operator = 0 4 812 25 HTTPEntityTag::operator = 0 1 197 0
 65
 inline void HTTPEntityTag::operator =(HTTPEntityTag const &copy);
 
@@ -2138,32 +1956,15 @@ inline bool HTTPEntityTag::strong_equiv(HTTPEntityTag const &other) const;
 72
 inline bool HTTPEntityTag::weak_equiv(HTTPEntityTag const &other) const;
 
-598 11 operator == 0 4 812 26 HTTPEntityTag::operator == 0 1 203 381
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPEntityTag::Operator ==
-//       Access: Published
-//  Description: The == operator tests object equivalence; see also
-//               strong_equiv() and weak_equiv() for the two kinds of
-//               HTTP equivalence.
-////////////////////////////////////////////////////////////////////
+598 11 operator == 0 4 812 26 HTTPEntityTag::operator == 0 1 203 0
 73
 inline bool HTTPEntityTag::operator ==(HTTPEntityTag const &other) const;
 
-599 11 operator != 0 4 812 26 HTTPEntityTag::operator != 0 1 204 225
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPEntityTag::Operator !=
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+599 11 operator != 0 4 812 26 HTTPEntityTag::operator != 0 1 204 0
 73
 inline bool HTTPEntityTag::operator !=(HTTPEntityTag const &other) const;
 
-600 10 operator < 0 4 812 25 HTTPEntityTag::operator < 0 1 205 224
-////////////////////////////////////////////////////////////////////
-//     Function: HTTPEntityTag::Operator <
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+600 10 operator < 0 4 812 25 HTTPEntityTag::operator < 0 1 205 0
 72
 inline bool HTTPEntityTag::operator <(HTTPEntityTag const &other) const;
 
@@ -2191,20 +1992,7 @@ inline void HTTPEntityTag::output(ostream &out) const;
 36
 HTTPEntityTag::~HTTPEntityTag(void);
 
-604 12 DocumentSpec 0 4 813 26 DocumentSpec::DocumentSpec 0 4 208 209 210 211 1395
-// Filename: documentSpec.I
-// Created by:  drose (28Jan03)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+604 12 DocumentSpec 0 4 813 26 DocumentSpec::DocumentSpec 0 4 208 209 210 211 907
 ////////////////////////////////////////////////////////////////////
 //     Function: DocumentSpec::Constructor
 //       Access: Published
@@ -2234,39 +2022,19 @@ inline DocumentSpec::DocumentSpec(basic_string< char > const &url);
 inline DocumentSpec::DocumentSpec(URLSpec const &url);
 inline DocumentSpec::DocumentSpec(DocumentSpec const &copy);
 
-605 10 operator = 0 4 813 24 DocumentSpec::operator = 0 1 212 237
-////////////////////////////////////////////////////////////////////
-//     Function: DocumentSpec::Copy Assignment Operator
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+605 10 operator = 0 4 813 24 DocumentSpec::operator = 0 1 212 0
 63
 inline void DocumentSpec::operator =(DocumentSpec const &copy);
 
-606 11 operator == 0 4 813 25 DocumentSpec::operator == 0 1 213 224
-////////////////////////////////////////////////////////////////////
-//     Function: DocumentSpec::operator ==
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+606 11 operator == 0 4 813 25 DocumentSpec::operator == 0 1 213 0
 71
 inline bool DocumentSpec::operator ==(DocumentSpec const &other) const;
 
-607 11 operator != 0 4 813 25 DocumentSpec::operator != 0 1 214 224
-////////////////////////////////////////////////////////////////////
-//     Function: DocumentSpec::operator !=
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+607 11 operator != 0 4 813 25 DocumentSpec::operator != 0 1 214 0
 71
 inline bool DocumentSpec::operator !=(DocumentSpec const &other) const;
 
-608 10 operator < 0 4 813 24 DocumentSpec::operator < 0 1 215 223
-////////////////////////////////////////////////////////////////////
-//     Function: DocumentSpec::operator <
-//       Access: Published
-//  Description:
-////////////////////////////////////////////////////////////////////
+608 10 operator < 0 4 813 24 DocumentSpec::operator < 0 1 215 0
 70
 inline bool DocumentSpec::operator <(DocumentSpec const &other) const;
 
@@ -2509,20 +2277,7 @@ void DocumentSpec::write(ostream &out, int indent_level = (0)) const;
 34
 DocumentSpec::~DocumentSpec(void);
 
-628 10 get_client 0 4 816 23 HTTPChannel::get_client 0 1 235 763
-// Filename: httpChannel.I
-// Created by:  drose (24Sep02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+628 10 get_client 0 4 816 23 HTTPChannel::get_client 0 1 235 276
 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPChannel::get_client
 //       Access: Published
@@ -3829,9 +3584,7 @@ void DownloadDb::write_version_map(ostream &out) const;
 49
 bool DownloadDb::write_client_db(Filename &file);
 
-715 15 write_server_db 0 4 820 27 DownloadDb::write_server_db 0 1 327 234
-// Write a database file
-
+715 15 write_server_db 0 4 820 27 DownloadDb::write_server_db 0 1 327 208
 ////////////////////////////////////////////////////////////////////
 //     Function: DownloadDb::
 //       Access: Public
@@ -3840,20 +3593,7 @@ bool DownloadDb::write_client_db(Filename &file);
 49
 bool DownloadDb::write_server_db(Filename &file);
 
-716 25 get_client_num_multifiles 0 4 820 37 DownloadDb::get_client_num_multifiles 0 1 328 696
-// Filename: downloadDb.I
-// Created by:  shochet (08Sep00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+716 25 get_client_num_multifiles 0 4 820 37 DownloadDb::get_client_num_multifiles 0 1 328 208
 ////////////////////////////////////////////////////////////////////
 //     Function: DownloadDb::
 //       Access: Public
@@ -4017,9 +3757,7 @@ inline basic_string< char > DownloadDb::get_server_file_name(basic_string< char 
 76
 bool DownloadDb::client_multifile_exists(basic_string< char > mfname) const;
 
-734 25 client_multifile_complete 0 4 820 37 DownloadDb::client_multifile_complete 0 1 346 405
-// Queries from the Launcher
-
+734 25 client_multifile_complete 0 4 820 37 DownloadDb::client_multifile_complete 0 1 346 375
 ////////////////////////////////////////////////////////////////////
 //     Function: DownloadDb::
 //       Access: Public
@@ -4059,9 +3797,7 @@ bool DownloadDb::client_multifile_extracted(basic_string< char > mfname) const;
 81
 HashVal DownloadDb::get_client_multifile_hash(basic_string< char > mfname) const;
 
-738 25 set_client_multifile_hash 0 4 820 37 DownloadDb::set_client_multifile_hash 0 1 350 313
-// Ask what version (told with the hash) this multifile is
-
+738 25 set_client_multifile_hash 0 4 820 37 DownloadDb::set_client_multifile_hash 0 1 350 253
 ////////////////////////////////////////////////////////////////////
 //     Function: DownloadDb::
 //       Access: Public
@@ -4088,10 +3824,9 @@ HashVal DownloadDb::get_server_multifile_hash(basic_string< char > mfname) const
 85
 void DownloadDb::set_server_multifile_hash(basic_string< char > mfname, HashVal val);
 
-741 23 delete_client_multifile 0 4 820 35 DownloadDb::delete_client_multifile 0 1 353 265
+741 23 delete_client_multifile 0 4 820 35 DownloadDb::delete_client_multifile 0 1 353 237
 // Operations on multifiles
 
-// Operations on multifiles
 ////////////////////////////////////////////////////////////////////
 //     Function: DownloadDb::
 //       Access: Public
@@ -4100,9 +3835,7 @@ void DownloadDb::set_server_multifile_hash(basic_string< char > mfname, HashVal 
 70
 void DownloadDb::delete_client_multifile(basic_string< char > mfname);
 
-742 20 add_client_multifile 0 4 820 32 DownloadDb::add_client_multifile 0 1 354 237
-// Operations on multifiles
-
+742 20 add_client_multifile 0 4 820 32 DownloadDb::add_client_multifile 0 1 354 208
 ////////////////////////////////////////////////////////////////////
 //     Function: DownloadDb::
 //       Access: Public
@@ -4132,9 +3865,7 @@ void DownloadDb::expand_client_multifile(basic_string< char > mfname);
 44
 void DownloadDb::create_new_server_db(void);
 
-745 20 server_add_multifile 0 4 820 32 DownloadDb::server_add_multifile 0 1 357 263
-// Server side operations to create multifile records
-
+745 20 server_add_multifile 0 4 820 32 DownloadDb::server_add_multifile 0 1 357 208
 ////////////////////////////////////////////////////////////////////
 //     Function: DownloadDb::
 //       Access: Public
@@ -4380,20 +4111,7 @@ float Extractor::get_progress(void) const;
 26
 bool Extractor::run(void);
 
-768 15 MultiplexStream 0 4 823 32 MultiplexStream::MultiplexStream 0 1 378 715
-// Filename: multiplexStream.I
-// Created by:  drose (27Nov00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+768 15 MultiplexStream 0 4 823 32 MultiplexStream::MultiplexStream 0 1 378 224
 ////////////////////////////////////////////////////////////////////
 //     Function: MultiplexStream::Constructor
 //       Access: Public
@@ -4484,20 +4202,7 @@ static TypeHandle VirtualFileHTTP::get_class_type(void);
 105
 VirtualFileMountHTTP::VirtualFileMountHTTP(URLSpec const &root, HTTPClient *http = ((get_global_ptr())));
 
-778 15 get_http_client 0 4 826 37 VirtualFileMountHTTP::get_http_client 0 1 389 811
-// Filename: virtualFileMountHTTP.I
-// Created by:  drose (30Oct08)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+778 15 get_http_client 0 4 826 37 VirtualFileMountHTTP::get_http_client 0 1 389 315
 ////////////////////////////////////////////////////////////////////
 //     Function: VirtualFileMountHTTP::get_http_client
 //       Access: Published
@@ -4582,20 +4287,7 @@ int Patcher::initiate(Filename &patch, Filename &infile);
 23
 int Patcher::run(void);
 
-786 12 get_progress 0 4 828 21 Patcher::get_progress 0 1 397 701
-// Filename: patcher.I
-// Created by:  darren (20Dec00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+786 12 get_progress 0 4 828 21 Patcher::get_progress 0 1 397 217
 ////////////////////////////////////////////////////////////////////
 //     Function: Patcher::get_progress
 //       Access: Public
@@ -4604,20 +4296,7 @@ int Patcher::run(void);
 47
 inline float Patcher::get_progress(void) const;
 
-787 12 StringStream 0 4 829 26 StringStream::StringStream 0 2 398 399 1033
-// Filename: stringStream.I
-// Created by:  drose (03Jul07)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+787 12 StringStream 0 4 829 26 StringStream::StringStream 0 2 398 399 545
 ////////////////////////////////////////////////////////////////////
 //     Function: StringStream::Constructor
 //       Access: Published
@@ -4687,20 +4366,7 @@ inline void StringStream::swap_data(vector< unsigned char > &data);
 StringStream::~StringStream(void);
 
 406
-1 14 Dtool__Rn_67qN 0 6 3 833 0 14 Dtool__Rn_67qN 1015 // Filename: socketStream.I
-// Created by:  drose (15Oct02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+1 14 Dtool__Rn_67qN 0 6 3 833 0 14 Dtool__Rn_67qN 527 ////////////////////////////////////////////////////////////////////
 //     Function: SSReader::receive_datagram
 //       Access: Published
 //  Description: Receives a datagram over the socket by expecting a
@@ -4871,67 +4537,21 @@ StringStream::~StringStream(void);
 //       Access: Published
 //  Description:
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 853  
-44 14 Dtool__Rn_bRSb 0 7 57 852 500 14 Dtool__Rn_bRSb 702 // Filename: urlSpec.I
-// Created by:  drose (24Sep02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+44 14 Dtool__Rn_bRSb 0 7 57 852 500 14 Dtool__Rn_bRSb 219 ////////////////////////////////////////////////////////////////////
 //     Function: URLSpec::Constructor
 //       Access: Published
 //  Description:
 //////////////////////////////////////////////////////////////////// 2 3 url 1 855  20 server_name_expected 1 833  
-45 14 Dtool__Rn_qRHT 0 7 57 852 500 14 Dtool__Rn_qRHT 702 // Filename: urlSpec.I
-// Created by:  drose (24Sep02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+45 14 Dtool__Rn_qRHT 0 7 57 852 500 14 Dtool__Rn_qRHT 219 ////////////////////////////////////////////////////////////////////
 //     Function: URLSpec::Constructor
 //       Access: Published
 //  Description:
 //////////////////////////////////////////////////////////////////// 1 3 url 1 855  
-46 14 Dtool__Rn_eMOO 0 6 58 852 0 14 Dtool__Rn_eMOO 232 ////////////////////////////////////////////////////////////////////
-//     Function: URLSpec::Copy Assignment Operator
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 852  4 copy 1 853  
-47 14 Dtool__Rn_hCwY 0 6 58 852 0 14 Dtool__Rn_hCwY 227 ////////////////////////////////////////////////////////////////////
-//     Function: URLSpec::Assignment Operator
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 852  3 url 1 855  
-48 14 Dtool__Rn_UZVF 0 6 59 833 0 14 Dtool__Rn_UZVF 219 ////////////////////////////////////////////////////////////////////
-//     Function: URLSpec::Operator ==
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 853  5 other 1 853  
-49 14 Dtool__Rn_j_VB 0 6 60 833 0 14 Dtool__Rn_j_VB 219 ////////////////////////////////////////////////////////////////////
-//     Function: URLSpec::Operator !=
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 853  5 other 1 853  
-50 14 Dtool__Rn_p_Dk 0 6 61 833 0 14 Dtool__Rn_p_Dk 218 ////////////////////////////////////////////////////////////////////
-//     Function: URLSpec::Operator <
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 853  5 other 1 853  
+46 14 Dtool__Rn_eMOO 0 6 58 852 0 14 Dtool__Rn_eMOO 0 2 4 this 3 852  4 copy 1 853  
+47 14 Dtool__Rn_hCwY 0 6 58 852 0 14 Dtool__Rn_hCwY 0 2 4 this 3 852  3 url 1 855  
+48 14 Dtool__Rn_UZVF 0 6 59 833 0 14 Dtool__Rn_UZVF 0 2 4 this 3 853  5 other 1 853  
+49 14 Dtool__Rn_j_VB 0 6 60 833 0 14 Dtool__Rn_j_VB 0 2 4 this 3 853  5 other 1 853  
+50 14 Dtool__Rn_p_Dk 0 6 61 833 0 14 Dtool__Rn_p_Dk 0 2 4 this 3 853  5 other 1 853  
 51 14 Dtool__Rn_OeWk 0 6 62 835 0 14 Dtool__Rn_OeWk 397 ////////////////////////////////////////////////////////////////////
 //     Function: URLSpec::compare_to
 //       Access: Published
@@ -5156,11 +4776,7 @@ StringStream::~StringStream(void);
 //       Access: Public
 //  Description:
 //////////////////////////////////////////////////////////////////// 1 4 this 3 853  
-87 14 Dtool__Rn_4pUs 0 6 97 857 0 14 Dtool__Rn_4pUs 222 ////////////////////////////////////////////////////////////////////
-//     Function: URLSpec::Indexing operator
-//       Access: Public
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 853  1 n 1 835  
+87 14 Dtool__Rn_4pUs 0 6 97 857 0 14 Dtool__Rn_4pUs 0 2 4 this 3 853  1 n 1 835  
 88 14 Dtool__Rn_TPRh 0 6 98 833 0 14 Dtool__Rn_TPRh 214 ////////////////////////////////////////////////////////////////////
 //     Function: URLSpec::input
 //       Access: Published
@@ -5219,25 +4835,8 @@ StringStream::~StringStream(void);
 //               characters of the form "%xx" to their ascii
 //               equivalent, and also converts plus signs to spaces.
 //////////////////////////////////////////////////////////////////// 1 6 source 1 855  
-96 14 Dtool__Rn_qwwt 0 6 93 855 0 14 Dtool__Rn_qwwt 229 ////////////////////////////////////////////////////////////////////
-//     Function: URLSpec::string typecast operator
-//       Access: Public
-//  Description:
-//////////////////////////////////////////////////////////////////// 1 4 this 3 853  
-97 14 Dtool__Rn_xUCO 0 7 110 858 519 14 Dtool__Rn_xUCO 704 // Filename: httpDate.I
-// Created by:  drose (28Jan03)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+96 14 Dtool__Rn_qwwt 0 6 93 855 0 14 Dtool__Rn_qwwt 0 1 4 this 3 853  
+97 14 Dtool__Rn_xUCO 0 7 110 858 519 14 Dtool__Rn_xUCO 220 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPDate::Constructor
 //       Access: Published
 //  Description:
@@ -5259,11 +4858,7 @@ StringStream::~StringStream(void);
 //       Access: Published
 //  Description:
 //////////////////////////////////////////////////////////////////// 1 4 time 1 856  
-101 14 Dtool__Rn_SJN6 0 6 111 858 0 14 Dtool__Rn_SJN6 233 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::Copy Assignment Operator
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 858  4 copy 1 859  
+101 14 Dtool__Rn_SJN6 0 6 111 858 0 14 Dtool__Rn_SJN6 0 2 4 this 3 858  4 copy 1 859  
 102 14 Dtool__Rn_Dz_E 0 7 112 858 519 14 Dtool__Rn_Dz_E 320 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPDate::now (named constructor)
 //       Access: Published, Static
@@ -5287,26 +4882,10 @@ StringStream::~StringStream(void);
 //       Access: Published
 //  Description: Returns the date as a C time_t value.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 859  
-106 14 Dtool__Rn_b8yo 0 6 116 833 0 14 Dtool__Rn_b8yo 220 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::Operator ==
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 859  5 other 1 859  
-107 14 Dtool__Rn_95ho 0 6 117 833 0 14 Dtool__Rn_95ho 220 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::Operator !=
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 859  5 other 1 859  
-108 14 Dtool__Rn_f7Fy 0 6 118 833 0 14 Dtool__Rn_f7Fy 219 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::Operator <
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 859  5 other 1 859  
-109 14 Dtool__Rn_UJHy 0 6 119 833 0 14 Dtool__Rn_UJHy 219 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::Operator >
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 859  5 other 1 859  
+106 14 Dtool__Rn_b8yo 0 6 116 833 0 14 Dtool__Rn_b8yo 0 2 4 this 3 859  5 other 1 859  
+107 14 Dtool__Rn_95ho 0 6 117 833 0 14 Dtool__Rn_95ho 0 2 4 this 3 859  5 other 1 859  
+108 14 Dtool__Rn_f7Fy 0 6 118 833 0 14 Dtool__Rn_f7Fy 0 2 4 this 3 859  5 other 1 859  
+109 14 Dtool__Rn_UJHy 0 6 119 833 0 14 Dtool__Rn_UJHy 0 2 4 this 3 859  5 other 1 859  
 110 14 Dtool__Rn__D07 0 6 120 835 0 14 Dtool__Rn__D07 399 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPDate::compare_to
 //       Access: Published
@@ -5314,31 +4893,11 @@ StringStream::~StringStream(void);
 //               sorts before the other one, greater than zero if it
 //               sorts after, or zero if they are equivalent.
 //////////////////////////////////////////////////////////////////// 2 4 this 3 859  5 other 1 859  
-111 14 Dtool__Rn_jIFs 0 6 121 858 0 14 Dtool__Rn_jIFs 220 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::operator +=
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 858  7 seconds 1 835  
-112 14 Dtool__Rn_q_Hs 0 6 122 858 0 14 Dtool__Rn_q_Hs 220 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::operator -=
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 858  7 seconds 1 835  
-113 14 Dtool__Rn_Nh_f 0 7 123 858 519 14 Dtool__Rn_Nh_f 219 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::operator +
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 859  7 seconds 1 835  
-114 14 Dtool__Rn_Th8R 0 6 124 835 0 14 Dtool__Rn_Th8R 219 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::operator -
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 859  5 other 1 859  
-115 14 Dtool__Rn_2wBg 0 7 124 858 519 14 Dtool__Rn_2wBg 219 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPDate::operator -
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 859  7 seconds 1 835  
+111 14 Dtool__Rn_jIFs 0 6 121 858 0 14 Dtool__Rn_jIFs 0 2 4 this 3 858  7 seconds 1 835  
+112 14 Dtool__Rn_q_Hs 0 6 122 858 0 14 Dtool__Rn_q_Hs 0 2 4 this 3 858  7 seconds 1 835  
+113 14 Dtool__Rn_Nh_f 0 7 123 858 519 14 Dtool__Rn_Nh_f 0 2 4 this 3 859  7 seconds 1 835  
+114 14 Dtool__Rn_Th8R 0 6 124 835 0 14 Dtool__Rn_Th8R 0 2 4 this 3 859  5 other 1 859  
+115 14 Dtool__Rn_2wBg 0 7 124 858 519 14 Dtool__Rn_2wBg 0 2 4 this 3 859  7 seconds 1 835  
 116 14 Dtool__Rn_DJiR 0 6 125 833 0 14 Dtool__Rn_DJiR 215 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPDate::input
 //       Access: Published
@@ -5349,20 +4908,7 @@ StringStream::~StringStream(void);
 //       Access: Published
 //  Description: 
 //////////////////////////////////////////////////////////////////// 2 4 this 3 859  3 out 1 847  
-118 14 Dtool__Rn_2hG5 0 7 129 861 521 14 Dtool__Rn_2hG5 736 // Filename: httpCookie.I
-// Created by:  drose (26Aug04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+118 14 Dtool__Rn_2hG5 0 7 129 861 521 14 Dtool__Rn_2hG5 250 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPCookie::Constructor
 //       Access: Published
 //  Description: Constructs an empty cookie.
@@ -5461,13 +5007,7 @@ StringStream::~StringStream(void);
 //               "secure" cookie which should only be sent over an
 //               HTTPS channel.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 862  
-135 14 Dtool__Rn_FRXJ 0 6 145 833 0 14 Dtool__Rn_FRXJ 412 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPCookie::operator <
-//       Access: Published
-//  Description: The sorting operator allows the cookies to be stored
-//               in a single dictionary; it returns nonequal only if
-//               the cookies are different in name, path, or domain.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 862  5 other 1 862  
+135 14 Dtool__Rn_FRXJ 0 6 145 833 0 14 Dtool__Rn_FRXJ 0 2 4 this 3 862  5 other 1 862  
 136 14 Dtool__Rn_f06y 0 4 146 834 0 14 Dtool__Rn_f06y 660 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPCookie::update_from
 //       Access: Published
@@ -5521,11 +5061,7 @@ StringStream::~StringStream(void);
 //       Access: Published
 //  Description:
 //////////////////////////////////////////////////////////////////// 1 4 copy 1 865  
-144 14 Dtool__Rn_KPp_ 0 7 154 864 0 14 Dtool__Rn_KPp_ 235 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPClient::Copy Assignment Operator
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 864  4 copy 1 865  
+144 14 Dtool__Rn_KPp_ 0 7 154 864 0 14 Dtool__Rn_KPp_ 0 2 4 this 3 864  4 copy 1 865  
 145 14 Dtool__Rn_IeNt 0 4 155 834 0 14 Dtool__Rn_IeNt 935 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPClient::init_random_seed
 //       Access: Published, Static
@@ -5583,20 +5119,7 @@ StringStream::~StringStream(void);
 //               semicolon-separated list of hostnames that may
 //               contain wildcard characters ("*").
 //////////////////////////////////////////////////////////////////// 1 4 this 3 865  
-150 14 Dtool__Rn_qHMi 0 4 160 834 0 14 Dtool__Rn_qHMi 1087 // Filename: httpClient.I
-// Created by:  drose (24Sep02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+150 14 Dtool__Rn_qHMi 0 4 160 834 0 14 Dtool__Rn_qHMi 601 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPClient::set_try_all_direct
 //       Access: Published
 //  Description: If this is set true, then after a connection attempt
@@ -5995,20 +5518,7 @@ StringStream::~StringStream(void);
 //       Access: Published, Static
 //  Description: Returns the default global HTTPClient.
 //////////////////////////////////////////////////////////////////// 0 
-193 14 Dtool__Rn_4tMA 0 7 204 873 603 14 Dtool__Rn_4tMA 715 // Filename: httpEntityTag.I
-// Created by:  drose (28Jan03)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+193 14 Dtool__Rn_4tMA 0 7 204 873 603 14 Dtool__Rn_4tMA 226 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPEntityTag::Constructor
 //       Access: Published
 //  Description: 
@@ -6031,11 +5541,7 @@ StringStream::~StringStream(void);
 //  Description: This constructor accepts an explicit weak flag and a
 //               literal (not quoted) tag string.
 //////////////////////////////////////////////////////////////////// 2 4 weak 1 833  3 tag 1 855  
-197 14 Dtool__Rn_F2kZ 0 6 205 873 0 14 Dtool__Rn_F2kZ 238 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPEntityTag::Copy Assignment Operator
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 873  4 copy 1 874  
+197 14 Dtool__Rn_F2kZ 0 6 205 873 0 14 Dtool__Rn_F2kZ 0 2 4 this 3 873  4 copy 1 874  
 198 14 Dtool__Rn_s54_ 0 6 206 833 0 14 Dtool__Rn_s54_ 525 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPEntityTag::is_weak
 //       Access: Published
@@ -6069,23 +5575,9 @@ StringStream::~StringStream(void);
 //  Description: Returns true if the two tags have "weak" equivalence:
 //               they are the same tag, and one or both may be "weak".
 //////////////////////////////////////////////////////////////////// 2 4 this 3 874  5 other 1 874  
-203 14 Dtool__Rn_uwLK 0 6 211 833 0 14 Dtool__Rn_uwLK 381 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPEntityTag::Operator ==
-//       Access: Published
-//  Description: The == operator tests object equivalence; see also
-//               strong_equiv() and weak_equiv() for the two kinds of
-//               HTTP equivalence.
-//////////////////////////////////////////////////////////////////// 2 4 this 3 874  5 other 1 874  
-204 14 Dtool__Rn_qnpJ 0 6 212 833 0 14 Dtool__Rn_qnpJ 225 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPEntityTag::Operator !=
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 874  5 other 1 874  
-205 14 Dtool__Rn_T6L5 0 6 213 833 0 14 Dtool__Rn_T6L5 224 ////////////////////////////////////////////////////////////////////
-//     Function: HTTPEntityTag::Operator <
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 874  5 other 1 874  
+203 14 Dtool__Rn_uwLK 0 6 211 833 0 14 Dtool__Rn_uwLK 0 2 4 this 3 874  5 other 1 874  
+204 14 Dtool__Rn_qnpJ 0 6 212 833 0 14 Dtool__Rn_qnpJ 0 2 4 this 3 874  5 other 1 874  
+205 14 Dtool__Rn_T6L5 0 6 213 833 0 14 Dtool__Rn_T6L5 0 2 4 this 3 874  5 other 1 874  
 206 14 Dtool__Rn_dIqM 0 6 214 835 0 14 Dtool__Rn_dIqM 409 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPEntityTag::compare_to
 //       Access: Published
@@ -6098,20 +5590,7 @@ StringStream::~StringStream(void);
 //       Access: Published
 //  Description: 
 //////////////////////////////////////////////////////////////////// 2 4 this 3 874  3 out 1 847  
-208 14 Dtool__Rn_aGVJ 0 7 218 876 627 14 Dtool__Rn_aGVJ 712 // Filename: documentSpec.I
-// Created by:  drose (28Jan03)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+208 14 Dtool__Rn_aGVJ 0 7 218 876 627 14 Dtool__Rn_aGVJ 224 ////////////////////////////////////////////////////////////////////
 //     Function: DocumentSpec::Constructor
 //       Access: Published
 //  Description:
@@ -6131,26 +5610,10 @@ StringStream::~StringStream(void);
 //       Access: Published
 //  Description:
 //////////////////////////////////////////////////////////////////// 1 3 url 1 855  
-212 14 Dtool__Rn_pTpy 0 6 219 876 0 14 Dtool__Rn_pTpy 237 ////////////////////////////////////////////////////////////////////
-//     Function: DocumentSpec::Copy Assignment Operator
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 876  4 copy 1 877  
-213 14 Dtool__Rn_iL7f 0 6 220 833 0 14 Dtool__Rn_iL7f 224 ////////////////////////////////////////////////////////////////////
-//     Function: DocumentSpec::operator ==
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 877  5 other 1 877  
-214 14 Dtool__Rn_zx6X 0 6 221 833 0 14 Dtool__Rn_zx6X 224 ////////////////////////////////////////////////////////////////////
-//     Function: DocumentSpec::operator !=
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 877  5 other 1 877  
-215 14 Dtool__Rn_2Z_X 0 6 222 833 0 14 Dtool__Rn_2Z_X 223 ////////////////////////////////////////////////////////////////////
-//     Function: DocumentSpec::operator <
-//       Access: Published
-//  Description:
-//////////////////////////////////////////////////////////////////// 2 4 this 3 877  5 other 1 877  
+212 14 Dtool__Rn_pTpy 0 6 219 876 0 14 Dtool__Rn_pTpy 0 2 4 this 3 876  4 copy 1 877  
+213 14 Dtool__Rn_iL7f 0 6 220 833 0 14 Dtool__Rn_iL7f 0 2 4 this 3 877  5 other 1 877  
+214 14 Dtool__Rn_zx6X 0 6 221 833 0 14 Dtool__Rn_zx6X 0 2 4 this 3 877  5 other 1 877  
+215 14 Dtool__Rn_2Z_X 0 6 222 833 0 14 Dtool__Rn_2Z_X 0 2 4 this 3 877  5 other 1 877  
 216 14 Dtool__Rn_4ZmY 0 6 223 835 0 14 Dtool__Rn_4ZmY 224 ////////////////////////////////////////////////////////////////////
 //     Function: DocumentSpec::compare_to
 //       Access: Published
@@ -6319,20 +5782,7 @@ StringStream::~StringStream(void);
 //       Access: Published
 //  Description: 
 //////////////////////////////////////////////////////////////////// 2 4 this 3 877  3 out 1 847  
-235 14 Dtool__Rn_GDrT 0 7 247 864 0 14 Dtool__Rn_GDrT 763 // Filename: httpChannel.I
-// Created by:  drose (24Sep02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+235 14 Dtool__Rn_GDrT 0 7 247 864 0 14 Dtool__Rn_GDrT 276 ////////////////////////////////////////////////////////////////////
 //     Function: HTTPChannel::get_client
 //       Access: Published
 //  Description: Returns the HTTPClient object that owns this channel.
@@ -7370,20 +6820,7 @@ StringStream::~StringStream(void);
 //       Access: Public
 //  Description:
 //////////////////////////////////////////////////////////////////// 2 4 this 3 889  4 file 1 890  
-328 14 Dtool__Rn_d__n 0 6 338 835 0 14 Dtool__Rn_d__n 696 // Filename: downloadDb.I
-// Created by:  shochet (08Sep00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+328 14 Dtool__Rn_d__n 0 6 338 835 0 14 Dtool__Rn_d__n 208 ////////////////////////////////////////////////////////////////////
 //     Function: DownloadDb::
 //       Access: Public
 //  Description:
@@ -7510,8 +6947,7 @@ StringStream::~StringStream(void);
 //       Access: Public
 //  Description: Set the hash value of file we are working on
 //////////////////////////////////////////////////////////////////// 3 4 this 3 889  6 mfname 1 855  3 val 1 894  
-353 14 Dtool__Rn_U638 0 4 363 834 0 14 Dtool__Rn_U638 236 // Operations on multifiles
-////////////////////////////////////////////////////////////////////
+353 14 Dtool__Rn_U638 0 4 363 834 0 14 Dtool__Rn_U638 208 ////////////////////////////////////////////////////////////////////
 //     Function: DownloadDb::
 //       Access: Public
 //  Description:
@@ -7679,20 +7115,7 @@ StringStream::~StringStream(void);
 //               when you would like the extraction to happen as a
 //               background task.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 899  
-378 14 Dtool__Rn_Zfxv 0 7 392 902 775 14 Dtool__Rn_Zfxv 715 // Filename: multiplexStream.I
-// Created by:  drose (27Nov00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+378 14 Dtool__Rn_Zfxv 0 7 392 902 775 14 Dtool__Rn_Zfxv 224 ////////////////////////////////////////////////////////////////////
 //     Function: MultiplexStream::Constructor
 //       Access: Public
 //  Description:
@@ -7756,20 +7179,7 @@ StringStream::~StringStream(void);
 //       Access: Published
 //  Description: 
 //////////////////////////////////////////////////////////////////// 1 4 root 1 853  
-389 14 Dtool__Rn_QLpa 0 7 406 864 0 14 Dtool__Rn_QLpa 811 // Filename: virtualFileMountHTTP.I
-// Created by:  drose (30Oct08)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+389 14 Dtool__Rn_QLpa 0 7 406 864 0 14 Dtool__Rn_QLpa 315 ////////////////////////////////////////////////////////////////////
 //     Function: VirtualFileMountHTTP::get_http_client
 //       Access: Published
 //  Description: Returns the HTTPClient object that services this
@@ -7816,38 +7226,12 @@ StringStream::~StringStream(void);
 //       Access: Public
 //  Description:
 //////////////////////////////////////////////////////////////////// 1 4 this 3 908  
-397 14 Dtool__Rn_x_F5 0 6 415 888 0 14 Dtool__Rn_x_F5 701 // Filename: patcher.I
-// Created by:  darren (20Dec00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+397 14 Dtool__Rn_x_F5 0 6 415 888 0 14 Dtool__Rn_x_F5 217 ////////////////////////////////////////////////////////////////////
 //     Function: Patcher::get_progress
 //       Access: Public
 //  Description:
 //////////////////////////////////////////////////////////////////// 1 4 this 3 911  
-398 14 Dtool__Rn_KnUw 0 7 417 913 793 14 Dtool__Rn_KnUw 713 // Filename: stringStream.I
-// Created by:  drose (03Jul07)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+398 14 Dtool__Rn_KnUw 0 7 417 913 793 14 Dtool__Rn_KnUw 225 ////////////////////////////////////////////////////////////////////
 //     Function: StringStream::Constructor
 //       Access: Published
 //  Description: 
@@ -7920,7 +7304,11 @@ StringStream::~StringStream(void);
 
 797 7 istream 0 2049 7 istream 7 istream 0 0 0 0 0 0 0 0 0 0 0 0 0
 
-798 9 ReadState 0 794624 24 ISocketStream::ReadState 24 ISocketStream::ReadState 796 0 0 0 0 0 0 0 0 0 4 10 RS_initial 25 ISocketStream::RS_initial 0 10 RS_reading 25 ISocketStream::RS_reading 1 11 RS_complete 26 ISocketStream::RS_complete 2 8 RS_error 23 ISocketStream::RS_error 3 0 0
+798 9 ReadState 0 794624 24 ISocketStream::ReadState 24 ISocketStream::ReadState 796 0 0 0 0 0 0 0 0 0 4 10 RS_initial 25 ISocketStream::RS_initial 0
+0 10 RS_reading 25 ISocketStream::RS_reading 0
+1 11 RS_complete 26 ISocketStream::RS_complete 0
+2 8 RS_error 23 ISocketStream::RS_error 0
+3 0 0
 
 799 13 OSocketStream 0 141313 13 OSocketStream 13 OSocketStream 0 0 0 0 440 0 3 437 438 439 0 0 2 3 800 433 434 3 795 435 436 0 0 486
 ////////////////////////////////////////////////////////////////////
@@ -7961,9 +7349,24 @@ StringStream::~StringStream(void);
 //               within the HTTPClient family.
 ////////////////////////////////////////////////////////////////////
 
-805 11 HTTPVersion 0 794624 21 HTTPEnum::HTTPVersion 21 HTTPEnum::HTTPVersion 804 0 0 0 0 0 0 0 0 0 4 5 HV_09 15 HTTPEnum::HV_09 0 5 HV_10 15 HTTPEnum::HV_10 1 5 HV_11 15 HTTPEnum::HV_11 2 8 HV_other 18 HTTPEnum::HV_other 3 0 0
+805 11 HTTPVersion 0 794624 21 HTTPEnum::HTTPVersion 21 HTTPEnum::HTTPVersion 804 0 0 0 0 0 0 0 0 0 4 5 HV_09 15 HTTPEnum::HV_09 20
+// HTTP 0.9 or older
+0 5 HV_10 15 HTTPEnum::HV_10 11
+// HTTP 1.0
+1 5 HV_11 15 HTTPEnum::HV_11 11
+// HTTP 1.1
+2 8 HV_other 18 HTTPEnum::HV_other 0
+3 0 0
 
-806 6 Method 0 794624 16 HTTPEnum::Method 16 HTTPEnum::Method 804 0 0 0 0 0 0 0 0 0 8 9 M_options 19 HTTPEnum::M_options 0 5 M_get 15 HTTPEnum::M_get 1 6 M_head 16 HTTPEnum::M_head 2 6 M_post 16 HTTPEnum::M_post 3 5 M_put 15 HTTPEnum::M_put 4 8 M_delete 18 HTTPEnum::M_delete 5 7 M_trace 17 HTTPEnum::M_trace 6 9 M_connect 19 HTTPEnum::M_connect 7 0 0
+806 6 Method 0 794624 16 HTTPEnum::Method 16 HTTPEnum::Method 804 0 0 0 0 0 0 0 0 0 8 9 M_options 19 HTTPEnum::M_options 0
+0 5 M_get 15 HTTPEnum::M_get 0
+1 6 M_head 16 HTTPEnum::M_head 0
+2 6 M_post 16 HTTPEnum::M_post 0
+3 5 M_put 15 HTTPEnum::M_put 0
+4 8 M_delete 18 HTTPEnum::M_delete 0
+5 7 M_trace 17 HTTPEnum::M_trace 0
+6 9 M_connect 19 HTTPEnum::M_connect 0
+7 0 0
 
 807 8 HTTPDate 0 141313 8 HTTPDate 8 HTTPDate 0 0 0 1 502 519 0 16 503 504 505 506 507 508 509 510 511 512 513 514 515 516 517 518 0 0 0 0 0 466
 ////////////////////////////////////////////////////////////////////
@@ -8009,7 +7412,13 @@ StringStream::~StringStream(void);
 //               objects when the last pointer to them goes away.
 ////////////////////////////////////////////////////////////////////
 
-811 9 VerifySSL 0 794624 21 HTTPClient::VerifySSL 21 HTTPClient::VerifySSL 809 0 0 0 0 0 0 0 0 0 3 12 VS_no_verify 24 HTTPClient::VS_no_verify 0 16 VS_no_date_check 28 HTTPClient::VS_no_date_check 1 9 VS_normal 21 HTTPClient::VS_normal 2 0 0
+811 9 VerifySSL 0 794624 21 HTTPClient::VerifySSL 21 HTTPClient::VerifySSL 809 0 0 0 0 0 0 0 0 0 3 12 VS_no_verify 24 HTTPClient::VS_no_verify 28
+// Don't care who we talk to
+0 16 VS_no_date_check 28 HTTPClient::VS_no_date_check 53
+// Must identify certs, but old, expired certs are OK
+1 9 VS_normal 21 HTTPClient::VS_normal 50
+// Identify certs and also check expiration dates.
+2 0 0
 
 812 13 HTTPEntityTag 0 141313 13 HTTPEntityTag 13 HTTPEntityTag 0 0 0 1 591 603 0 11 592 593 594 595 596 597 598 599 600 601 602 0 0 0 0 0 404
 ////////////////////////////////////////////////////////////////////
@@ -8032,9 +7441,16 @@ StringStream::~StringStream(void);
 //               instance to refresh a cached document.
 ////////////////////////////////////////////////////////////////////
 
-814 11 RequestMode 0 794624 25 DocumentSpec::RequestMode 25 DocumentSpec::RequestMode 813 0 0 0 0 0 0 0 0 0 4 6 RM_any 20 DocumentSpec::RM_any 0 8 RM_equal 22 DocumentSpec::RM_equal 1 8 RM_newer 22 DocumentSpec::RM_newer 2 17 RM_equal_or_newer 31 DocumentSpec::RM_equal_or_newer 3 0 0
+814 11 RequestMode 0 794624 25 DocumentSpec::RequestMode 25 DocumentSpec::RequestMode 813 0 0 0 0 0 0 0 0 0 4 6 RM_any 20 DocumentSpec::RM_any 0
+0 8 RM_equal 22 DocumentSpec::RM_equal 0
+1 8 RM_newer 22 DocumentSpec::RM_newer 0
+2 17 RM_equal_or_newer 31 DocumentSpec::RM_equal_or_newer 0
+3 0 0
 
-815 12 CacheControl 0 794624 26 DocumentSpec::CacheControl 26 DocumentSpec::CacheControl 813 0 0 0 0 0 0 0 0 0 3 14 CC_allow_cache 28 DocumentSpec::CC_allow_cache 0 13 CC_revalidate 27 DocumentSpec::CC_revalidate 1 11 CC_no_cache 25 DocumentSpec::CC_no_cache 2 0 0
+815 12 CacheControl 0 794624 26 DocumentSpec::CacheControl 26 DocumentSpec::CacheControl 813 0 0 0 0 0 0 0 0 0 3 14 CC_allow_cache 28 DocumentSpec::CC_allow_cache 0
+0 13 CC_revalidate 27 DocumentSpec::CC_revalidate 0
+1 11 CC_no_cache 25 DocumentSpec::CC_no_cache 0
+2 0 0
 
 816 11 HTTPChannel 0 75777 11 HTTPChannel 11 HTTPChannel 0 0 0 0 0 0 75 628 629 630 631 632 633 634 635 636 637 638 639 640 641 642 643 644 645 646 647 648 649 650 651 652 653 654 655 656 657 658 659 660 661 662 663 664 665 666 667 668 669 670 671 672 673 674 675 676 677 678 679 680 681 682 683 684 685 686 687 688 689 690 691 692 693 694 695 696 697 698 699 700 701 702 1 918 0 1 0 817 0 0 0 1 818 875
 ////////////////////////////////////////////////////////////////////
@@ -8067,7 +7483,31 @@ StringStream::~StringStream(void);
 //               See also TypedObject for detailed instructions.
 ////////////////////////////////////////////////////////////////////
 
-818 10 StatusCode 0 794624 23 HTTPChannel::StatusCode 23 HTTPChannel::StatusCode 816 0 0 0 0 0 0 0 0 0 20 13 SC_incomplete 26 HTTPChannel::SC_incomplete 0 17 SC_internal_error 30 HTTPChannel::SC_internal_error 1 16 SC_no_connection 29 HTTPChannel::SC_no_connection 2 10 SC_timeout 23 HTTPChannel::SC_timeout 3 18 SC_lost_connection 31 HTTPChannel::SC_lost_connection 4 20 SC_non_http_response 33 HTTPChannel::SC_non_http_response 5 15 SC_invalid_http 28 HTTPChannel::SC_invalid_http 6 24 SC_socks_invalid_version 37 HTTPChannel::SC_socks_invalid_version 7 35 SC_socks_no_acceptable_login_method 48 HTTPChannel::SC_socks_no_acceptable_login_method 8 16 SC_socks_refused 29 HTTPChannel::SC_socks_refused 9 22 SC_socks_no_connection 35 HTTPChannel::SC_socks_no_connection 10 23 SC_ssl_internal_failure 36 HTTPChannel::SC_ssl_internal_failure 11 19 SC_ssl_no_handshake 32 HTTPChannel::SC_ssl_no_handshake 12 23 SC_http_error_watermark 36 HTTPChannel::SC_http_error_watermark 13 33 SC_ssl_invalid_server_certificate 46 HTTPChannel::SC_ssl_invalid_server_certificate 14 37 SC_ssl_self_signed_server_certificate 50 HTTPChannel::SC_ssl_self_signed_server_certificate 15 24 SC_ssl_unexpected_server 37 HTTPChannel::SC_ssl_unexpected_server 16 22 SC_download_open_error 35 HTTPChannel::SC_download_open_error 17 23 SC_download_write_error 36 HTTPChannel::SC_download_write_error 18 25 SC_download_invalid_range 38 HTTPChannel::SC_download_invalid_range 19 0 194
+818 10 StatusCode 0 794624 23 HTTPChannel::StatusCode 23 HTTPChannel::StatusCode 816 0 0 0 0 0 0 0 0 0 20 13 SC_incomplete 26 HTTPChannel::SC_incomplete 0
+0 17 SC_internal_error 30 HTTPChannel::SC_internal_error 0
+1 16 SC_no_connection 29 HTTPChannel::SC_no_connection 0
+2 10 SC_timeout 23 HTTPChannel::SC_timeout 0
+3 18 SC_lost_connection 31 HTTPChannel::SC_lost_connection 0
+4 20 SC_non_http_response 33 HTTPChannel::SC_non_http_response 0
+5 15 SC_invalid_http 28 HTTPChannel::SC_invalid_http 0
+6 24 SC_socks_invalid_version 37 HTTPChannel::SC_socks_invalid_version 0
+7 35 SC_socks_no_acceptable_login_method 48 HTTPChannel::SC_socks_no_acceptable_login_method 0
+8 16 SC_socks_refused 29 HTTPChannel::SC_socks_refused 0
+9 22 SC_socks_no_connection 35 HTTPChannel::SC_socks_no_connection 0
+10 23 SC_ssl_internal_failure 36 HTTPChannel::SC_ssl_internal_failure 0
+11 19 SC_ssl_no_handshake 32 HTTPChannel::SC_ssl_no_handshake 0
+12 23 SC_http_error_watermark 36 HTTPChannel::SC_http_error_watermark 129
+// No one returns this code, but StatusCode values higher than
+// this are deemed more successful than any generic HTTP response.
+13 33 SC_ssl_invalid_server_certificate 46 HTTPChannel::SC_ssl_invalid_server_certificate 0
+14 37 SC_ssl_self_signed_server_certificate 50 HTTPChannel::SC_ssl_self_signed_server_certificate 0
+15 24 SC_ssl_unexpected_server 37 HTTPChannel::SC_ssl_unexpected_server 0
+16 22 SC_download_open_error 35 HTTPChannel::SC_download_open_error 79
+// These errors are only generated after a download_to_*() call
+// been issued.
+17 23 SC_download_write_error 36 HTTPChannel::SC_download_write_error 0
+18 25 SC_download_invalid_range 38 HTTPChannel::SC_download_invalid_range 0
+19 0 194
 // get_status_code() will either return an HTTP-style status code >=
 // 100 (e.g. 404), or one of the following values.  In general,
 // these are ordered from less-successful to more-successful.
@@ -8093,7 +7533,11 @@ StringStream::~StringStream(void);
 //               files the server has available.
 ////////////////////////////////////////////////////////////////////
 
-821 6 Status 0 794624 18 DownloadDb::Status 18 DownloadDb::Status 820 0 0 0 0 0 0 0 0 0 4 17 Status_incomplete 29 DownloadDb::Status_incomplete 0 15 Status_complete 27 DownloadDb::Status_complete 1 19 Status_decompressed 31 DownloadDb::Status_decompressed 2 16 Status_extracted 28 DownloadDb::Status_extracted 3 0 213
+821 6 Status 0 794624 18 DownloadDb::Status 18 DownloadDb::Status 820 0 0 0 0 0 0 0 0 0 4 17 Status_incomplete 29 DownloadDb::Status_incomplete 0
+0 15 Status_complete 27 DownloadDb::Status_complete 0
+1 19 Status_decompressed 31 DownloadDb::Status_decompressed 0
+2 16 Status_extracted 28 DownloadDb::Status_extracted 0
+3 0 213
 // Status of a multifile is stored in this enum
 // Note these values are in increasing order of "doneness"
 // So if you are decompressed, you are complete

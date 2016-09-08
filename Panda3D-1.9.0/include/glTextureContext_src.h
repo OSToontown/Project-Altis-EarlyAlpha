@@ -15,8 +15,10 @@
 #include "pandabase.h"
 #include "textureContext.h"
 #include "deletedChain.h"
+#include "samplerState.h"
 
 class CLP(GraphicsStateGuardian);
+class CLP(SamplerContext);
 
 ////////////////////////////////////////////////////////////////////
 //       Class : GLTextureContext
@@ -37,10 +39,10 @@ public:
   GLuint64 get_handle();
 
 #ifdef OPENGLES
-  CONSTEXPR bool needs_barrier(GLbitfield barrier) { return false; };
+  static CONSTEXPR bool needs_barrier(GLbitfield barrier) { return false; };
 #else
   bool needs_barrier(GLbitfield barrier);
-  void mark_incoherent();
+  void mark_incoherent(bool wrote);
 #endif
 
   // This is the GL "name" of the texture object.
@@ -49,11 +51,6 @@ public:
   // This is the bindless "handle" to the texture object.
   GLuint64 _handle;
   bool _handle_resident;
-
-  // This is true if the texture was recently written to in a
-  // non-coherent way, and Panda may have to call glMemoryBarrier
-  // for the results of this write to become visible.
-  bool _needs_barrier;
 
   // These are the parameters that we specified with the last
   // glTexImage2D() or glTexStorage2D() call.  If none of these have
@@ -67,6 +64,7 @@ public:
   GLsizei _height;
   GLsizei _depth;
   GLenum _target;
+  SamplerState _active_sampler;
 
   CLP(GraphicsStateGuardian) *_glgsg;
 

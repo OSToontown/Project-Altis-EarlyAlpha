@@ -7,7 +7,8 @@ __all__ = ['ShowBase', 'WindowControls']
 # Annoying and very noisy, but sometimes useful
 #import VerboseImport
 
-from pandac.PandaModules import *
+from panda3d.core import *
+from panda3d.direct import *
 
 # This needs to be available early for DirectGUI imports
 import __builtin__
@@ -1623,6 +1624,7 @@ class ShowBase(DirectObject.DirectObject):
 
             if not self.physicsMgr:
                 from PhysicsManagerGlobal import physicsMgr
+                from panda3d.physics import LinearEulerIntegrator
                 self.physicsMgr = physicsMgr
                 integrator = LinearEulerIntegrator()
                 self.physicsMgr.attachLinearIntegrator(integrator)

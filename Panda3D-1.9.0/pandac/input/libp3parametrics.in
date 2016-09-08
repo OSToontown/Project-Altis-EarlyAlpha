@@ -1,5 +1,5 @@
-1412103920
-2 2
+1422502899
+2 3
 16 libp3parametrics 4 UKlv 12 panda3d.core 
 243
 268 8 is_valid 0 6 511 25 ParametricCurve::is_valid 0 1 1 415
@@ -207,8 +207,8 @@ virtual bool ParametricCurve::stitch(ParametricCurve const *a, ParametricCurve c
 //               specified output stream.  Returns true if the file is
 //               successfully written.
 ////////////////////////////////////////////////////////////////////
-181
-bool ParametricCurve::write_egg(Filename filename, CoordinateSystem cs = (CS_default));
+172
+bool ParametricCurve::write_egg(Filename filename, CoordinateSystem cs = (0));
 bool ParametricCurve::write_egg(ostream &out, Filename const &filename, CoordinateSystem cs);
 
 286 14 get_class_type 0 4 511 31 ParametricCurve::get_class_type 0 1 22 0
@@ -461,9 +461,9 @@ void ParametricCurveCollection::reset_max_t(float max_t);
 //               within the bounds of the curves themselves), or false
 //               otherwise.
 ////////////////////////////////////////////////////////////////////
-202
+193
 bool ParametricCurveCollection::evaluate(float t, LVecBase3f &xyz, LVecBase3f &hpr) const;
-bool ParametricCurveCollection::evaluate(float t, LMatrix4f &result, CoordinateSystem cs = (CS_default)) const;
+bool ParametricCurveCollection::evaluate(float t, LMatrix4f &result, CoordinateSystem cs = (0)) const;
 
 307 10 evaluate_t 0 4 514 37 ParametricCurveCollection::evaluate_t 0 1 47 490
 ////////////////////////////////////////////////////////////////////
@@ -602,8 +602,8 @@ void ParametricCurveCollection::write(ostream &out, int indent_level = (0)) cons
 //               the collection to the specified output stream.  Returns
 //               true if the file is successfully written.
 ////////////////////////////////////////////////////////////////////
-201
-bool ParametricCurveCollection::write_egg(Filename filename, CoordinateSystem cs = (CS_default));
+192
+bool ParametricCurveCollection::write_egg(Filename filename, CoordinateSystem cs = (0));
 bool ParametricCurveCollection::write_egg(ostream &out, Filename const &filename, CoordinateSystem cs);
 
 317 11 CurveFitter 0 4 516 24 CurveFitter::CurveFitter 0 1 62 220
@@ -1086,20 +1086,7 @@ virtual int NurbsCurveInterface::get_num_knots(void) const = 0;
 57
 virtual bool NurbsCurveInterface::insert_cv(float t) = 0;
 
-367 9 append_cv 0 4 519 30 NurbsCurveInterface::append_cv 0 3 118 119 120 1186
-// Filename: nurbsCurveInterface.I
-// Created by:  drose (02Mar01)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+367 9 append_cv 0 4 519 30 NurbsCurveInterface::append_cv 0 3 118 119 120 691
 ////////////////////////////////////////////////////////////////////
 //     Function: NurbsCurveInterface::append_cv
 //       Access: Published
@@ -1470,20 +1457,7 @@ inline LPoint3f const &NurbsCurveResult::get_sample_point(int n) const;
 47
 NurbsCurveEvaluator::NurbsCurveEvaluator(void);
 
-404 9 set_order 0 4 522 30 NurbsCurveEvaluator::set_order 0 1 156 997
-// Filename: nurbsCurveEvaluator.I
-// Created by:  drose (05Dec02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+404 9 set_order 0 4 522 30 NurbsCurveEvaluator::set_order 0 1 156 502
 ////////////////////////////////////////////////////////////////////
 //     Function: NurbsCurveEvaluator::set_order
 //       Access: Published
@@ -1947,20 +1921,7 @@ inline float NurbsSurfaceResult::get_segment_v(int vi, float v) const;
 51
 NurbsSurfaceEvaluator::NurbsSurfaceEvaluator(void);
 
-439 11 set_u_order 0 4 524 34 NurbsSurfaceEvaluator::set_u_order 0 1 194 1025
-// Filename: nurbsSurfaceEvaluator.I
-// Created by:  drose (10Oct03)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+439 11 set_u_order 0 4 524 34 NurbsSurfaceEvaluator::set_u_order 0 1 194 528
 ////////////////////////////////////////////////////////////////////
 //     Function: NurbsSurfaceEvaluator::set_u_order
 //       Access: Published
@@ -3530,20 +3491,7 @@ SheetNode::~SheetNode(void);
 //       Access: Published
 //  Description:
 //////////////////////////////////////////////////////////////////// 2 4 this 3 564  1 v 1 567  
-120 14 Dtool_UKlvB3ZR 0 6 109 530 0 14 Dtool_UKlvB3ZR 724 // Filename: nurbsCurveInterface.I
-// Created by:  drose (02Mar01)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+120 14 Dtool_UKlvB3ZR 0 6 109 530 0 14 Dtool_UKlvB3ZR 229 ////////////////////////////////////////////////////////////////////
 //     Function: NurbsCurveInterface::append_cv
 //       Access: Published
 //  Description:
@@ -3726,20 +3674,7 @@ SheetNode::~SheetNode(void);
 //       Access: Published
 //  Description:
 //////////////////////////////////////////////////////////////////// 0 
-156 14 Dtool_UKlv59cz 0 4 149 536 0 14 Dtool_UKlv59cz 997 // Filename: nurbsCurveEvaluator.I
-// Created by:  drose (05Dec02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+156 14 Dtool_UKlv59cz 0 4 149 536 0 14 Dtool_UKlv59cz 502 ////////////////////////////////////////////////////////////////////
 //     Function: NurbsCurveEvaluator::set_order
 //       Access: Published
 //  Description: Sets the order of the curve.  This resets the knot
@@ -4044,20 +3979,7 @@ SheetNode::~SheetNode(void);
 //       Access: Published
 //  Description:
 //////////////////////////////////////////////////////////////////// 0 
-194 14 Dtool_UKlvU5Cj 0 4 186 536 0 14 Dtool_UKlvU5Cj 1025 // Filename: nurbsSurfaceEvaluator.I
-// Created by:  drose (10Oct03)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+194 14 Dtool_UKlvU5Cj 0 4 186 536 0 14 Dtool_UKlvU5Cj 528 ////////////////////////////////////////////////////////////////////
 //     Function: NurbsSurfaceEvaluator::set_u_order
 //       Access: Published
 //  Description: Sets the order of the surface in the U direction.
@@ -4618,7 +4540,7 @@ SheetNode::~SheetNode(void);
 //               for a single parameter t in the range [0,get_max_t()].
 ////////////////////////////////////////////////////////////////////
 
-512 9 PandaNode 0 2049 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 0 0 0 0 0 374
+512 9 PandaNode 0 2049 9 PandaNode 9 PandaNode 0 0 0 0 0 0 0 3 611 612 613 0 0 0 0 374
 ////////////////////////////////////////////////////////////////////
 //       Class : PandaNode
 // Description : A basic node of the scene graph or data graph.  This
@@ -4652,7 +4574,7 @@ SheetNode::~SheetNode(void);
 //               in a subclass (for instance, HermiteCurve).
 ////////////////////////////////////////////////////////////////////
 
-514 25 ParametricCurveCollection 0 75777 25 ParametricCurveCollection 25 ParametricCurveCollection 0 0 0 1 288 0 0 28 289 290 291 292 293 294 295 296 297 298 299 300 301 302 303 304 305 306 307 308 309 310 311 312 313 314 315 316 2 611 612 0 1 0 515 0 0 0 0 620
+514 25 ParametricCurveCollection 0 75777 25 ParametricCurveCollection 25 ParametricCurveCollection 0 0 0 1 288 0 0 28 289 290 291 292 293 294 295 296 297 298 299 300 301 302 303 304 305 306 307 308 309 310 311 312 313 314 315 316 2 614 615 0 1 0 515 0 0 0 0 620
 ////////////////////////////////////////////////////////////////////
 //       Class : ParametricCurveCollection
 // Description : This is a set of zero or more ParametricCurves, which
@@ -4702,7 +4624,7 @@ SheetNode::~SheetNode(void);
 //               (since the CubicCurveseg class doesn't retain these).
 ////////////////////////////////////////////////////////////////////
 
-519 19 NurbsCurveInterface 0 26625 19 NurbsCurveInterface 19 NurbsCurveInterface 0 0 0 0 361 0 18 362 363 364 365 366 367 368 369 370 371 372 373 374 375 376 377 378 379 2 613 614 0 0 0 0 454
+519 19 NurbsCurveInterface 0 26625 19 NurbsCurveInterface 19 NurbsCurveInterface 0 0 0 0 361 0 18 362 363 364 365 366 367 368 369 370 371 372 373 374 375 376 377 378 379 2 616 617 0 0 0 0 454
 ////////////////////////////////////////////////////////////////////
 //       Class : NurbsCurveInterface
 // Description : This abstract class defines the interface only for a
@@ -4738,7 +4660,7 @@ SheetNode::~SheetNode(void);
 //               class then becomes vestigial.
 ////////////////////////////////////////////////////////////////////
 
-521 16 NurbsCurveResult 0 75777 16 NurbsCurveResult 16 NurbsCurveResult 0 0 0 0 0 0 16 387 388 389 390 391 392 393 394 395 396 397 398 399 400 401 402 2 615 616 0 1 0 515 0 0 0 0 748
+521 16 NurbsCurveResult 0 75777 16 NurbsCurveResult 16 NurbsCurveResult 0 0 0 0 0 0 16 387 388 389 390 391 392 393 394 395 396 397 398 399 400 401 402 2 618 619 0 1 0 515 0 0 0 0 748
 ////////////////////////////////////////////////////////////////////
 //       Class : NurbsCurveResult
 // Description : The result of a NurbsCurveEvaluator.  This object
@@ -4753,7 +4675,7 @@ SheetNode::~SheetNode(void);
 //               the whole ParametricCurve class hierarchy.
 ////////////////////////////////////////////////////////////////////
 
-522 19 NurbsCurveEvaluator 0 75777 19 NurbsCurveEvaluator 19 NurbsCurveEvaluator 0 0 0 1 403 0 0 18 404 405 406 407 408 409 410 411 412 413 414 415 416 417 418 419 420 421 2 617 618 0 1 0 515 0 0 0 0 808
+522 19 NurbsCurveEvaluator 0 75777 19 NurbsCurveEvaluator 19 NurbsCurveEvaluator 0 0 0 1 403 0 0 18 404 405 406 407 408 409 410 411 412 413 414 415 416 417 418 419 420 421 2 620 621 0 1 0 515 0 0 0 0 808
 ////////////////////////////////////////////////////////////////////
 //       Class : NurbsCurveEvaluator
 // Description : This class is an abstraction for evaluating NURBS
@@ -4778,7 +4700,7 @@ SheetNode::~SheetNode(void);
 //               at any point.
 ////////////////////////////////////////////////////////////////////
 
-524 21 NurbsSurfaceEvaluator 0 75777 21 NurbsSurfaceEvaluator 21 NurbsSurfaceEvaluator 0 0 0 1 438 0 0 26 439 440 441 442 443 444 445 446 447 448 449 450 451 452 453 454 455 456 457 458 459 460 461 462 463 464 2 619 620 0 1 0 515 0 0 0 0 472
+524 21 NurbsSurfaceEvaluator 0 75777 21 NurbsSurfaceEvaluator 21 NurbsSurfaceEvaluator 0 0 0 1 438 0 0 26 439 440 441 442 443 444 445 446 447 448 449 450 451 452 453 454 455 456 457 458 459 460 461 462 463 464 2 622 623 0 1 0 515 0 0 0 0 472
 ////////////////////////////////////////////////////////////////////
 //       Class : NurbsSurfaceEvaluator
 // Description : This class is an abstraction for evaluating NURBS
@@ -4802,11 +4724,40 @@ SheetNode::~SheetNode(void);
 //               the whole ParametricCurve class hierarchy.
 ////////////////////////////////////////////////////////////////////
 
-526 10 RenderMode 0 794624 20 RopeNode::RenderMode 20 RopeNode::RenderMode 525 0 0 0 0 0 0 0 0 0 4 9 RM_thread 19 RopeNode::RM_thread 0 7 RM_tape 17 RopeNode::RM_tape 1 12 RM_billboard 22 RopeNode::RM_billboard 2 7 RM_tube 17 RopeNode::RM_tube 3 0 0
+526 10 RenderMode 0 794624 20 RopeNode::RenderMode 20 RopeNode::RenderMode 525 0 0 0 0 0 0 0 0 0 4 9 RM_thread 19 RopeNode::RM_thread 59
+// Render the rope as a one-pixel thread using a linestrip.
+0 7 RM_tape 17 RopeNode::RM_tape 93
+// Render the rope as a triangle strip oriented to be
+// perpendicular to the tube_up vector.
+1 12 RM_billboard 22 RopeNode::RM_billboard 90
+// Render the rope as a triangle strip oriented to be
+// perpendicular to the view vector.
+2 7 RM_tube 17 RopeNode::RM_tube 62
+// Render the rope as a hollow tube extruded along its length.
+3 0 0
 
-527 6 UVMode 0 794624 16 RopeNode::UVMode 16 RopeNode::UVMode 525 0 0 0 0 0 0 0 0 0 4 7 UV_none 17 RopeNode::UV_none 0 13 UV_parametric 23 RopeNode::UV_parametric 1 11 UV_distance 21 RopeNode::UV_distance 2 12 UV_distance2 22 RopeNode::UV_distance2 3 0 0
+527 6 UVMode 0 794624 16 RopeNode::UVMode 16 RopeNode::UVMode 525 0 0 0 0 0 0 0 0 0 4 7 UV_none 17 RopeNode::UV_none 39
+// Don't generate UV's along the curve.
+0 13 UV_parametric 23 RopeNode::UV_parametric 72
+// Generate UV's based on the parametric coordinates along the
+// curve.
+1 11 UV_distance 21 RopeNode::UV_distance 143
+// Generate UV's in proportion to spatial distance along the
+// curve, by using the distance function to compute the length of
+// each segment.
+2 12 UV_distance2 22 RopeNode::UV_distance2 311
+// As above, but don't bother to take the square root of each
+// segment.  The distance is then in proportion to the
+// sum-of-squares of the segments along the rope.  If the segments
+// are similar in length, this approximates the proportion of
+// UV_distance while avoiding hundreds of square root operations.
+3 0 0
 
-528 10 NormalMode 0 794624 20 RopeNode::NormalMode 20 RopeNode::NormalMode 525 0 0 0 0 0 0 0 0 0 2 7 NM_none 17 RopeNode::NM_none 0 9 NM_vertex 19 RopeNode::NM_vertex 1 0 0
+528 10 NormalMode 0 794624 20 RopeNode::NormalMode 20 RopeNode::NormalMode 525 0 0 0 0 0 0 0 0 0 2 7 NM_none 17 RopeNode::NM_none 26
+// Don't generate normals.
+0 9 NM_vertex 19 RopeNode::NM_vertex 43
+// Generate vertex (smooth-shaded) normals.
+1 0 0
 
 529 9 SheetNode 0 141313 9 SheetNode 9 SheetNode 0 0 0 1 499 510 0 10 500 501 502 503 504 505 506 507 508 509 0 0 1 0 512 0 0 0 0 736
 ////////////////////////////////////////////////////////////////////
@@ -4839,20 +4790,7 @@ SheetNode::~SheetNode(void);
 
 537 12 LVecBase3f * 0 8576 12 LVecBase3f * 12 LVecBase3f * 0 0 538 0 0 0 0 0 0 0 0 0 0
 
-538 10 LVecBase3f 0 2048 10 LVecBase3f 10 LVecBase3f 0 0 0 0 0 0 0 0 0 0 0 0 754
-// Filename: lvecBase3_src.h
-// Created by:  drose (08Mar00)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+538 10 LVecBase3f 0 2048 10 LVecBase3f 10 LVecBase3f 0 0 0 0 0 0 0 0 0 0 0 0 265
 ////////////////////////////////////////////////////////////////////
 //       Class : LVecBase3
 // Description : This is the base class for all three-component
@@ -4878,7 +4816,20 @@ SheetNode::~SheetNode(void);
 //               fstream for reading or writing.
 ////////////////////////////////////////////////////////////////////
 
-541 16 CoordinateSystem 0 532480 16 CoordinateSystem 16 CoordinateSystem 0 0 0 0 0 0 0 0 0 0 6 10 CS_default 10 CS_default 0 12 CS_zup_right 12 CS_zup_right 1 12 CS_yup_right 12 CS_yup_right 2 11 CS_zup_left 11 CS_zup_left 3 11 CS_yup_left 11 CS_yup_left 4 10 CS_invalid 10 CS_invalid 5 0 0
+541 16 CoordinateSystem 0 532480 16 CoordinateSystem 16 CoordinateSystem 0 0 0 0 0 0 0 0 0 0 6 10 CS_default 10 CS_default 213
+// The CS_default entry does not refer to a particular coordinate
+// system, but rather to the value stored in
+// default_coordinate_system, which in turn is loaded from the
+// config variable "coordinate-system".
+0 12 CS_zup_right 12 CS_zup_right 0
+1 12 CS_yup_right 12 CS_yup_right 0
+2 11 CS_zup_left 11 CS_zup_left 0
+3 11 CS_yup_left 11 CS_yup_left 0
+4 10 CS_invalid 10 CS_invalid 155
+// CS_invalid is not a coordinate system at all.  It can be used in
+// user-input processing code to indicate a contradictory coordinate
+// system request.
+5 0 0
 
 542 9 ostream * 0 8576 9 ostream * 9 ostream * 0 0 543 0 0 0 0 0 0 0 0 0 0
 
@@ -4920,7 +4871,7 @@ SheetNode::~SheetNode(void);
 
 552 11 LMatrix4f * 0 8576 11 LMatrix4f * 11 LMatrix4f * 0 0 553 0 0 0 0 0 0 0 0 0 0
 
-553 9 LMatrix4f 0 2048 9 LMatrix4f 9 LMatrix4f 0 0 0 0 0 0 0 3 621 622 623 0 0 0 0 215
+553 9 LMatrix4f 0 2048 9 LMatrix4f 9 LMatrix4f 0 0 0 0 0 0 0 3 624 625 626 0 0 0 0 215
 ////////////////////////////////////////////////////////////////////
 //       Class : LMatrix4
 // Description : This is a 4-by-4 transform matrix.
@@ -4977,20 +4928,7 @@ SheetNode::~SheetNode(void);
 
 576 14 LPoint3f const 0 8832 14 LPoint3f const 14 LPoint3f const 0 0 577 0 0 0 0 0 0 0 0 0 0
 
-577 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 1083
-// Filename: lpoint3_src.h
-// Created by:  drose (25Sep99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+577 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 596
 ////////////////////////////////////////////////////////////////////
 //       Class : LPoint3
 // Description : This is a three-component point in space (as opposed
@@ -5012,86 +4950,7 @@ SheetNode::~SheetNode(void);
 
 582 14 NodePath const 0 8832 14 NodePath const 14 NodePath const 0 0 583 0 0 0 0 0 0 0 0 0 0
 
-583 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 624 625 0 0 0 0 4938
-//
-// A NodePath is the fundamental unit of high-level interaction with
-// the scene graph.  It encapsulates the complete path down to a node
-// from some other node, usually the root of the scene graph.  This is
-// used to resolve ambiguities associated with instancing.
-//
-// NodePath also contains a number of handy high-level methods for
-// common scene-graph manipulations, such as reparenting, and common
-// state changes, such as repositioning.
-//
-// There are also a number of NodePath methods for finding nodes deep
-// within the tree by name or by type.  These take a path string,
-// which at its simplest consists of a series of node names separated
-// by slashes, like a directory pathname.
-//
-// Each component of the path string may optionally consist of one of
-// the following special names, instead of a node name:
-//
-//   *          -- matches exactly one node, with any name.
-//   **         -- matches any sequence of zero or more nodes.
-//   +typename  -- matches any node that is or derives from the given type.
-//   -typename  -- matches any node that is the given type exactly.
-//   =tag       -- matches any node that has the indicated tag.
-//   =tag=value -- matches any node whose tag matches the indicated value.
-//
-// Furthermore, a node name may itself contain standard filename
-// globbing characters, like *, ?, and [a-z], that will be accepted as
-// a partial match.  (In fact, the '*' special name may be seen as
-// just a special case of this.)  The globbing characters may not be
-// used with the typename matches or with tag matches, but they may
-// be used to match a tag's value in the =tag=value syntax.
-//
-// The special characters "@@", appearing at the beginning of a node
-// name, indicate a stashed node.  Normally, stashed nodes are not
-// returned by a find (but see the special flags, below), but a
-// stashed node may be found if it is explicitly named with its
-// leading @@ characters.  By extension, "@@*" may be used to identify
-// any stashed node.
-//
-// Examples:
-//
-// "room//graph" will look for a node named "graph", which is a child
-// of an unnamed node, which is a child of a node named "room", which
-// is a child of the starting path.
-//
-// "**/red*" will look for any node anywhere in the tree (below the
-// starting path) with a name that begins with "red".
-//
-// "**/+PartBundleNode/**/head" will look for a node named "head",
-// somewhere below a PartBundleNode anywhere in the tree.
-//
-//
-// The search is always potentially ambiguous, even if the special
-// wildcard operators are not used, because there may be multiple
-// nodes in the tree with the same name.  In general, in the case of
-// an ambiguity, the shortest path is preferred; when a method (such
-// as extend_by) must choose only only one of several possible paths,
-// it will choose the shortest available; on the other hand, when a
-// method (such as find_all_matches) is to return all of the matching
-// paths, it will sort them so that the shortest paths appear first in
-// the output.
-//
-//
-// Special flags.  The entire string may optionally be followed by the
-// ";" character, followed by one or more of the following special
-// control flags, with no intervening spaces or punctuation:
-//
-//    -h    Do not return hidden nodes.
-//    +h    Do return hidden nodes.
-//    -s    Do not return stashed nodes unless explicitly referenced with @@.
-//    +s    Return stashed nodes even without any explicit @@ characters.
-//    -i    Node name comparisons are not case insensitive: case must match
-//          exactly.
-//    +i    Node name comparisons are case insensitive: case is not important.
-//          This affects matches against the node name only; node type
-//          and tag strings are always case sensitive.
-//
-// The default flags are +h-s-i.
-//
+583 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 627 628 0 0 0 0 1139
 ////////////////////////////////////////////////////////////////////
 //       Class : NodePath
 // Description : NodePath is the fundamental system for disambiguating
@@ -5141,20 +5000,7 @@ SheetNode::~SheetNode(void);
 
 597 15 LVector3f const 0 8832 15 LVector3f const 15 LVector3f const 0 0 598 0 0 0 0 0 0 0 0 0 0
 
-598 9 LVector3f 0 2048 9 LVector3f 9 LVector3f 0 0 0 0 0 0 0 0 0 0 0 0 1086
-// Filename: lvector3_src.h
-// Created by:  drose (24Sep99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+598 9 LVector3f 0 2048 9 LVector3f 9 LVector3f 0 0 0 0 0 0 0 0 0 0 0 0 598
 ////////////////////////////////////////////////////////////////////
 //       Class : LVector3
 // Description : This is a three-component vector distance (as opposed
@@ -5184,19 +5030,22 @@ SheetNode::~SheetNode(void);
 609 5 PCT_T 0 5 3 530 0 1 3 
 610 7 PCT_XYZ 0 5 1 530 0 1 1 
 0
-15
-611 0 0 24 10 get_curves 14 get_num_curves 9 get_curve 
-612 0 0 24 19 get_timewarp_curves 17 get_num_timewarps 18 get_timewarp_curve 
-613 0 0 102 7 get_cvs 11 get_num_cvs 6 get_cv 
-614 0 0 102 9 get_knots 13 get_num_knots 8 get_knot 
-615 0 0 130 13 get_sample_ts 15 get_num_samples 12 get_sample_t 
-616 0 0 130 17 get_sample_points 15 get_num_samples 17 get_sample_points 
-617 0 0 147 12 get_vertices 16 get_num_vertices 10 get_vertex 
-618 0 0 147 9 get_knots 13 get_num_knots 8 get_knot 
-619 0 0 184 11 get_u_knots 15 get_num_u_knots 10 get_u_knot 
-620 0 0 184 11 get_v_knots 15 get_num_v_knots 10 get_v_knot 
-621 0 0 338 8 get_rows 4 size 7 get_row 
-622 0 0 338 8 get_cols 4 size 7 get_col 
-623 0 0 338 9 get_row3s 4 size 8 get_row3 
-624 0 0 494 9 get_nodes 13 get_num_nodes 8 get_node 
-625 0 0 494 13 get_ancestors 13 get_num_nodes 12 get_ancestor 
+18
+611 0 0 2 11 get_parents 15 get_num_parents 10 get_parent 
+612 0 0 2 12 get_children 16 get_num_children 9 get_child 
+613 0 0 2 11 get_stashed 15 get_num_stashed 11 get_stashed 
+614 0 0 24 10 get_curves 14 get_num_curves 9 get_curve 
+615 0 0 24 19 get_timewarp_curves 17 get_num_timewarps 18 get_timewarp_curve 
+616 0 0 102 7 get_cvs 11 get_num_cvs 6 get_cv 
+617 0 0 102 9 get_knots 13 get_num_knots 8 get_knot 
+618 0 0 130 13 get_sample_ts 15 get_num_samples 12 get_sample_t 
+619 0 0 130 17 get_sample_points 15 get_num_samples 17 get_sample_points 
+620 0 0 147 12 get_vertices 16 get_num_vertices 10 get_vertex 
+621 0 0 147 9 get_knots 13 get_num_knots 8 get_knot 
+622 0 0 184 11 get_u_knots 15 get_num_u_knots 10 get_u_knot 
+623 0 0 184 11 get_v_knots 15 get_num_v_knots 10 get_v_knot 
+624 0 0 341 8 get_rows 4 size 7 get_row 
+625 0 0 341 8 get_cols 4 size 7 get_col 
+626 0 0 341 9 get_row3s 4 size 8 get_row3 
+627 0 0 497 9 get_nodes 13 get_num_nodes 8 get_node 
+628 0 0 497 13 get_ancestors 13 get_num_nodes 12 get_ancestor 

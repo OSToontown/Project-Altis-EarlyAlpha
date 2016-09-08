@@ -734,12 +734,27 @@ operator /= (FLOATTYPE scalar) {
 }
 
 ////////////////////////////////////////////////////////////////////
+//     Function: LVecBase2::componentwise_mult
+//       Access: Published
+//  Description:
+////////////////////////////////////////////////////////////////////
+INLINE_LINMATH void FLOATNAME(LVecBase2)::
+componentwise_mult(const FLOATNAME(LVecBase2) &other) {
+#ifdef HAVE_EIGEN
+  _v = _v.cwiseProduct(other._v);
+#else
+  _v(0) *= other._v(0);
+  _v(1) *= other._v(1);
+#endif  // HAVE_EIGEN
+}
+
+////////////////////////////////////////////////////////////////////
 //     Function: LVecBase2::fmax
 //       Access: Published
 //  Description:
 ////////////////////////////////////////////////////////////////////
 INLINE_LINMATH FLOATNAME(LVecBase2) FLOATNAME(LVecBase2)::
-fmax(const FLOATNAME(LVecBase2) &other) {
+fmax(const FLOATNAME(LVecBase2) &other) const {
   TAU_PROFILE("LVecBase2::fmax()", " ", TAU_USER);
   return FLOATNAME(LVecBase2)(_v(0) > other._v(0) ? _v(0) : other._v(0),
                               _v(1) > other._v(1) ? _v(1) : other._v(1));
@@ -751,7 +766,7 @@ fmax(const FLOATNAME(LVecBase2) &other) {
 //  Description:
 ////////////////////////////////////////////////////////////////////
 INLINE_LINMATH FLOATNAME(LVecBase2) FLOATNAME(LVecBase2)::
-fmin(const FLOATNAME(LVecBase2) &other) {
+fmin(const FLOATNAME(LVecBase2) &other) const {
   TAU_PROFILE("LVecBase2::fmin()", " ", TAU_USER);
   return FLOATNAME(LVecBase2)(_v(0) < other._v(0) ? _v(0) : other._v(0),
                               _v(1) < other._v(1) ? _v(1) : other._v(1));

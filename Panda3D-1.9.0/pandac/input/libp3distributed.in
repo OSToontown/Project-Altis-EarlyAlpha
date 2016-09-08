@@ -1,5 +1,5 @@
-1412104997
-2 2
+1422504504
+2 3
 16 libp3distributed 4 nqI8 14 panda3d.direct 
 60
 62 21 CConnectionRepository 0 4 122 44 CConnectionRepository::CConnectionRepository 0 3 1 2 3 234
@@ -20,30 +20,7 @@ CConnectionRepository::CConnectionRepository(bool has_owner_view = (0), bool thr
 52
 CConnectionRepository::~CConnectionRepository(void);
 
-64 11 get_dc_file 0 4 122 34 CConnectionRepository::get_dc_file 0 1 4 1346
-// Any methods of this class that acquire _lock (which is most of
-// them) *must* be tagged BLOCKING, to avoid risk of a race
-// condition in Python when running in true threaded mode.  The
-// BLOCKING tag releases the Python GIL during the function call,
-// and we re-acquire it when needed within these functions to call
-// out to Python.  If any functions acquire _lock while already
-// holding the Python GIL, there could be a deadlock between these
-// functions and the ones that are acquiring the GIL while already
-// holding _lock.
-
-// Filename: cConnectionRepository.I
-// Created by:  drose (17May04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+64 11 get_dc_file 0 4 122 34 CConnectionRepository::get_dc_file 0 1 4 309
 ////////////////////////////////////////////////////////////////////
 //     Function: CConnectionRepository::get_dc_file
 //       Access: Published
@@ -165,8 +142,8 @@ inline int CConnectionRepository::get_tcp_header_size(void) const;
 //               implementation to directly manipulation some python
 //               structures on the repository.
 ////////////////////////////////////////////////////////////////////
-86
-inline void CConnectionRepository::set_python_repository(PyObject *python_repository);
+85
+inline void CConnectionRepository::set_python_repository(_object *python_repository);
 
 75 19 set_connection_http 0 4 122 42 CConnectionRepository::set_connection_http 0 1 15 476
 ////////////////////////////////////////////////////////////////////
@@ -294,20 +271,9 @@ inline int CConnectionRepository::get_msg_channel_count(void) const;
 74
 inline unsigned __int64 CConnectionRepository::get_msg_sender(void) const;
 
-87 12 get_msg_type 0 4 122 35 CConnectionRepository::get_msg_type 0 1 28 893
+87 12 get_msg_type 0 4 122 35 CConnectionRepository::get_msg_type 0 1 28 378
 //  INLINE unsigned char get_sec_code() const;
 
-////////////////////////////////////////////////////////////////////
-//     Function: CConnectionRepository::get_sec_code
-//       Access: Published
-//  Description: Returns the security code associated with the current
-//               message, according to the datagram headers.  This
-//               information is not available to the client.
-////////////////////////////////////////////////////////////////////
-//INLINE unsigned char CConnectionRepository::
-//get_sec_code() const {
-//  return _sec_code;
-//}
 ////////////////////////////////////////////////////////////////////
 //     Function: CConnectionRepository::get_msg_type
 //       Access: Published
@@ -560,8 +526,7 @@ inline void CConnectionRepository::set_time_warning(float time_warning);
 65
 inline float CConnectionRepository::get_time_warning(void) const;
 
-111 26 CDistributedSmoothNodeBase 0 4 123 54 CDistributedSmoothNodeBase::CDistributedSmoothNodeBase 0 1 52 264
-// Matches ClockDelta.py
+111 26 CDistributedSmoothNodeBase 0 4 123 54 CDistributedSmoothNodeBase::CDistributedSmoothNodeBase 0 1 52 239
 ////////////////////////////////////////////////////////////////////
 //     Function: CDistributedSmoothNodeBase::Constructor
 //       Access: Published
@@ -579,20 +544,7 @@ CDistributedSmoothNodeBase::CDistributedSmoothNodeBase(void);
 62
 CDistributedSmoothNodeBase::~CDistributedSmoothNodeBase(void);
 
-113 14 set_repository 0 4 123 42 CDistributedSmoothNodeBase::set_repository 0 1 53 865
-// Filename: cDistributedSmoothNodeBase.I
-// Created by:  drose (03Sep04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+113 14 set_repository 0 4 123 42 CDistributedSmoothNodeBase::set_repository 0 1 53 363
 ////////////////////////////////////////////////////////////////////
 //     Function: CDistributedSmoothNodeBase::set_repository
 //       Access: Published, Static
@@ -609,8 +561,8 @@ inline void CDistributedSmoothNodeBase::set_repository(CConnectionRepository *re
 //  Description: Tells the C++ instance definition about the global
 //               ClockDelta object.
 ////////////////////////////////////////////////////////////////////
-79
-inline void CDistributedSmoothNodeBase::set_clock_delta(PyObject *clock_delta);
+78
+inline void CDistributedSmoothNodeBase::set_clock_delta(_object *clock_delta);
 
 115 10 initialize 0 4 123 38 CDistributedSmoothNodeBase::initialize 0 1 55 533
 ////////////////////////////////////////////////////////////////////
@@ -697,20 +649,7 @@ void CDistributedSmoothNodeBase::print_curr_l(void);
 //       Access: Published
 //  Description: 
 //////////////////////////////////////////////////////////////////// 0 
-4 14 Dtool_nqI8WMFU 0 6 4 126 0 14 Dtool_nqI8WMFU 806 // Filename: cConnectionRepository.I
-// Created by:  drose (17May04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+4 14 Dtool_nqI8WMFU 0 6 4 126 0 14 Dtool_nqI8WMFU 309 ////////////////////////////////////////////////////////////////////
 //     Function: CConnectionRepository::get_dc_file
 //       Access: Published
 //  Description: Returns the DCFile object associated with this
@@ -783,7 +722,7 @@ void CDistributedSmoothNodeBase::print_curr_l(void);
 //  Description: Returns the current setting of TCP header size.
 //               See set_tcp_header_size().
 //////////////////////////////////////////////////////////////////// 1 4 this 3 128  
-14 14 Dtool_nqI8fmXG 0 4 14 130 0 14 Dtool_nqI8fmXG 478 ////////////////////////////////////////////////////////////////////
+14 14 Dtool_nqI8zVMR 0 4 14 130 0 14 Dtool_nqI8zVMR 478 ////////////////////////////////////////////////////////////////////
 //     Function: CConnectionRepository::set_python_repository
 //       Access: Published
 //  Description: Records the pointer to the Python class that derives
@@ -877,18 +816,7 @@ void CDistributedSmoothNodeBase::print_curr_l(void);
 //               according to the datagram headers.  This information
 //               is not available to the client.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 128  
-28 14 Dtool_nqI8lfYY 0 6 27 152 0 14 Dtool_nqI8lfYY 845 ////////////////////////////////////////////////////////////////////
-//     Function: CConnectionRepository::get_sec_code
-//       Access: Published
-//  Description: Returns the security code associated with the current
-//               message, according to the datagram headers.  This
-//               information is not available to the client.
-////////////////////////////////////////////////////////////////////
-//INLINE unsigned char CConnectionRepository::
-//get_sec_code() const {
-//  return _sec_code;
-//}
-////////////////////////////////////////////////////////////////////
+28 14 Dtool_nqI8lfYY 0 6 27 152 0 14 Dtool_nqI8lfYY 330 ////////////////////////////////////////////////////////////////////
 //     Function: CConnectionRepository::get_msg_type
 //       Access: Published
 //  Description: Returns the type ID of the current message,
@@ -1045,32 +973,18 @@ void CDistributedSmoothNodeBase::print_curr_l(void);
 //       Access: Published
 //  Description: Returns the current setting of the time_warning field.
 //////////////////////////////////////////////////////////////////// 1 4 this 3 128  
-52 14 Dtool_nqI8Yl7d 0 7 52 157 112 14 Dtool_nqI8Yl7d 264 // Matches ClockDelta.py
-////////////////////////////////////////////////////////////////////
+52 14 Dtool_nqI8Yl7d 0 7 52 157 112 14 Dtool_nqI8Yl7d 239 ////////////////////////////////////////////////////////////////////
 //     Function: CDistributedSmoothNodeBase::Constructor
 //       Access: Published
 //  Description: 
 //////////////////////////////////////////////////////////////////// 0 
-53 14 Dtool_nqI89rX6 0 4 54 130 0 14 Dtool_nqI89rX6 865 // Filename: cDistributedSmoothNodeBase.I
-// Created by:  drose (03Sep04)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+53 14 Dtool_nqI89rX6 0 4 54 130 0 14 Dtool_nqI89rX6 363 ////////////////////////////////////////////////////////////////////
 //     Function: CDistributedSmoothNodeBase::set_repository
 //       Access: Published, Static
 //  Description: Tells the C++ instance definition about the AI or Client
 //               repository, used for sending datagrams.
 //////////////////////////////////////////////////////////////////// 4 4 this 3 157  10 repository 1 125  5 is_ai 1 124  5 ai_id 1 151  
-54 14 Dtool_nqI81CY3 0 4 55 130 0 14 Dtool_nqI81CY3 337 ////////////////////////////////////////////////////////////////////
+54 14 Dtool_nqI8fcth 0 4 55 130 0 14 Dtool_nqI8fcth 337 ////////////////////////////////////////////////////////////////////
 //     Function: CDistributedSmoothNodeBase::set_clock_delta
 //       Access: Published, Static
 //  Description: Tells the C++ instance definition about the global
@@ -1165,9 +1079,9 @@ void CDistributedSmoothNodeBase::print_curr_l(void);
 
 131 3 int 0 8194 3 int 3 int 0 1 0 0 0 0 0 0 0 0 0 0 0
 
-132 10 PyObject * 0 8576 10 PyObject * 10 PyObject * 0 0 133 0 0 0 0 0 0 0 0 0 0
+132 9 _object * 0 8576 9 _object * 9 _object * 0 0 133 0 0 0 0 0 0 0 0 0 0
 
-133 8 PyObject 0 2048 8 PyObject 8 PyObject 0 0 0 0 0 0 0 0 0 0 0 0 0
+133 7 _object 0 1024 7 _object 7 _object 0 0 0 0 0 0 0 0 0 0 0 0 0
 
 134 13 HTTPChannel * 0 8576 13 HTTPChannel * 13 HTTPChannel * 0 0 135 0 0 0 0 0 0 0 0 0 0
 
@@ -1305,86 +1219,7 @@ void CDistributedSmoothNodeBase::print_curr_l(void);
 
 159 14 NodePath const 0 8832 14 NodePath const 14 NodePath const 0 0 160 0 0 0 0 0 0 0 0 0 0
 
-160 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 163 164 0 0 0 0 4938
-//
-// A NodePath is the fundamental unit of high-level interaction with
-// the scene graph.  It encapsulates the complete path down to a node
-// from some other node, usually the root of the scene graph.  This is
-// used to resolve ambiguities associated with instancing.
-//
-// NodePath also contains a number of handy high-level methods for
-// common scene-graph manipulations, such as reparenting, and common
-// state changes, such as repositioning.
-//
-// There are also a number of NodePath methods for finding nodes deep
-// within the tree by name or by type.  These take a path string,
-// which at its simplest consists of a series of node names separated
-// by slashes, like a directory pathname.
-//
-// Each component of the path string may optionally consist of one of
-// the following special names, instead of a node name:
-//
-//   *          -- matches exactly one node, with any name.
-//   **         -- matches any sequence of zero or more nodes.
-//   +typename  -- matches any node that is or derives from the given type.
-//   -typename  -- matches any node that is the given type exactly.
-//   =tag       -- matches any node that has the indicated tag.
-//   =tag=value -- matches any node whose tag matches the indicated value.
-//
-// Furthermore, a node name may itself contain standard filename
-// globbing characters, like *, ?, and [a-z], that will be accepted as
-// a partial match.  (In fact, the '*' special name may be seen as
-// just a special case of this.)  The globbing characters may not be
-// used with the typename matches or with tag matches, but they may
-// be used to match a tag's value in the =tag=value syntax.
-//
-// The special characters "@@", appearing at the beginning of a node
-// name, indicate a stashed node.  Normally, stashed nodes are not
-// returned by a find (but see the special flags, below), but a
-// stashed node may be found if it is explicitly named with its
-// leading @@ characters.  By extension, "@@*" may be used to identify
-// any stashed node.
-//
-// Examples:
-//
-// "room//graph" will look for a node named "graph", which is a child
-// of an unnamed node, which is a child of a node named "room", which
-// is a child of the starting path.
-//
-// "**/red*" will look for any node anywhere in the tree (below the
-// starting path) with a name that begins with "red".
-//
-// "**/+PartBundleNode/**/head" will look for a node named "head",
-// somewhere below a PartBundleNode anywhere in the tree.
-//
-//
-// The search is always potentially ambiguous, even if the special
-// wildcard operators are not used, because there may be multiple
-// nodes in the tree with the same name.  In general, in the case of
-// an ambiguity, the shortest path is preferred; when a method (such
-// as extend_by) must choose only only one of several possible paths,
-// it will choose the shortest available; on the other hand, when a
-// method (such as find_all_matches) is to return all of the matching
-// paths, it will sort them so that the shortest paths appear first in
-// the output.
-//
-//
-// Special flags.  The entire string may optionally be followed by the
-// ";" character, followed by one or more of the following special
-// control flags, with no intervening spaces or punctuation:
-//
-//    -h    Do not return hidden nodes.
-//    +h    Do return hidden nodes.
-//    -s    Do not return stashed nodes unless explicitly referenced with @@.
-//    +s    Return stashed nodes even without any explicit @@ characters.
-//    -i    Node name comparisons are not case insensitive: case must match
-//          exactly.
-//    +i    Node name comparisons are case insensitive: case is not important.
-//          This affects matches against the node name only; node type
-//          and tag strings are always case sensitive.
-//
-// The default flags are +h-s-i.
-//
+160 8 NodePath 0 2048 8 NodePath 8 NodePath 0 0 0 0 0 0 0 2 163 164 0 0 0 0 1139
 ////////////////////////////////////////////////////////////////////
 //       Class : NodePath
 // Description : NodePath is the fundamental system for disambiguating

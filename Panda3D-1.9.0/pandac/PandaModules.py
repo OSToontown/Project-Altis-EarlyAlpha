@@ -23,6 +23,12 @@ except ImportError, err:
     raise
 
 try:
+  from panda3dVisionModules import *
+except ImportError, err:
+  if "DLL loader cannot find" not in str(err):
+    raise
+
+try:
   from panda3dSkelModules import *
 except ImportError, err:
   if "DLL loader cannot find" not in str(err):
@@ -36,6 +42,12 @@ except ImportError, err:
 
 try:
   from panda3dOdeModules import *
+except ImportError, err:
+  if "DLL loader cannot find" not in str(err):
+    raise
+
+try:
+  from panda3dVrpnModules import *
 except ImportError, err:
   if "DLL loader cannot find" not in str(err):
     raise

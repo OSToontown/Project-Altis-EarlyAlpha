@@ -1,5 +1,5 @@
-1412103239
-2 2
+1422502049
+2 3
 11 libp3device 4 k0F5 12 panda3d.core 
 57
 57 24 fork_asynchronous_thread 0 4 114 36 ClientBase::fork_asynchronous_thread 0 1 1 612
@@ -16,20 +16,7 @@
 60
 bool ClientBase::fork_asynchronous_thread(double poll_time);
 
-58 9 is_forked 0 4 114 21 ClientBase::is_forked 0 1 2 854
-// Filename: clientBase.I
-// Created by:  drose (25Jan01)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+58 9 is_forked 0 4 114 21 ClientBase::is_forked 0 1 2 368
 ////////////////////////////////////////////////////////////////////
 //     Function: ClientBase::is_forked
 //       Access: Public
@@ -201,20 +188,7 @@ static TypeHandle AnalogNode::get_class_type(void);
 84
 ButtonNode::ButtonNode(ClientBase *client, basic_string< char > const &device_name);
 
-75 8 is_valid 0 4 118 20 ButtonNode::is_valid 0 1 19 803
-// Filename: buttonNode.I
-// Created by:  drose (12Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+75 8 is_valid 0 4 118 20 ButtonNode::is_valid 0 1 19 317
 ////////////////////////////////////////////////////////////////////
 //     Function: ButtonNode::is_valid
 //       Access: Public
@@ -303,20 +277,7 @@ static TypeHandle ButtonNode::get_class_type(void);
 80
 DialNode::DialNode(ClientBase *client, basic_string< char > const &device_name);
 
-83 8 is_valid 0 4 119 18 DialNode::is_valid 0 1 27 797
-// Filename: dialNode.I
-// Created by:  drose (12Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+83 8 is_valid 0 4 119 18 DialNode::is_valid 0 1 27 313
 ////////////////////////////////////////////////////////////////////
 //     Function: DialNode::is_valid
 //       Access: Public
@@ -426,20 +387,7 @@ MouseAndKeyboard::~MouseAndKeyboard(void);
 TrackerNode::TrackerNode(ClientBase *client, basic_string< char > const &device_name);
 TrackerNode::TrackerNode(ClientTrackerDevice *device);
 
-95 8 is_valid 0 4 121 21 TrackerNode::is_valid 0 1 39 806
-// Filename: trackerNode.I
-// Created by:  drose (12Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+95 8 is_valid 0 4 121 21 TrackerNode::is_valid 0 1 39 319
 ////////////////////////////////////////////////////////////////////
 //     Function: TrackerNode::is_valid
 //       Access: Public
@@ -630,20 +578,7 @@ VirtualMouse::~VirtualMouse(void);
 //               instance, because we were already forked, or because
 //               asynchronous threads are disabled).
 //////////////////////////////////////////////////////////////////// 2 4 this 3 123  9 poll_time 1 124  
-2 14 Dtool_k0F5pe_A 0 6 4 125 0 14 Dtool_k0F5pe_A 854 // Filename: clientBase.I
-// Created by:  drose (25Jan01)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+2 14 Dtool_k0F5pe_A 0 6 4 125 0 14 Dtool_k0F5pe_A 368 ////////////////////////////////////////////////////////////////////
 //     Function: ClientBase::is_forked
 //       Access: Public
 //  Description: Returns true if the ClientBase has been forked (and,
@@ -749,20 +684,7 @@ VirtualMouse::~VirtualMouse(void);
 //       Access: Public
 //  Description:
 //////////////////////////////////////////////////////////////////// 2 6 client 1 123  11 device_name 1 132  
-19 14 Dtool_k0F5Woo7 0 6 24 125 0 14 Dtool_k0F5Woo7 803 // Filename: buttonNode.I
-// Created by:  drose (12Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+19 14 Dtool_k0F5Woo7 0 6 24 125 0 14 Dtool_k0F5Woo7 317 ////////////////////////////////////////////////////////////////////
 //     Function: ButtonNode::is_valid
 //       Access: Public
 //  Description: Returns true if the ButtonNode is valid and
@@ -820,20 +742,7 @@ VirtualMouse::~VirtualMouse(void);
 //       Access: Public
 //  Description:
 //////////////////////////////////////////////////////////////////// 2 6 client 1 123  11 device_name 1 132  
-27 14 Dtool_k0F5onZa 0 6 33 125 0 14 Dtool_k0F5onZa 797 // Filename: dialNode.I
-// Created by:  drose (12Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+27 14 Dtool_k0F5onZa 0 6 33 125 0 14 Dtool_k0F5onZa 313 ////////////////////////////////////////////////////////////////////
 //     Function: DialNode::is_valid
 //       Access: Public
 //  Description: Returns true if the DialNode is valid and
@@ -895,20 +804,7 @@ VirtualMouse::~VirtualMouse(void);
 //       Access: Public
 //  Description:
 //////////////////////////////////////////////////////////////////// 1 6 device 1 151  
-39 14 Dtool_k0F5DEoZ 0 6 47 125 0 14 Dtool_k0F5DEoZ 806 // Filename: trackerNode.I
-// Created by:  drose (12Mar02)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+39 14 Dtool_k0F5DEoZ 0 6 47 125 0 14 Dtool_k0F5DEoZ 319 ////////////////////////////////////////////////////////////////////
 //     Function: TrackerNode::is_valid
 //       Access: Public
 //  Description: Returns true if the TrackerNode is valid and
@@ -1163,7 +1059,20 @@ VirtualMouse::~VirtualMouse(void);
 
 127 16 ClientBase const 0 8832 16 ClientBase const 16 ClientBase const 0 0 114 0 0 0 0 0 0 0 0 0 0
 
-128 16 CoordinateSystem 0 532480 16 CoordinateSystem 16 CoordinateSystem 0 0 0 0 0 0 0 0 0 0 6 10 CS_default 10 CS_default 0 12 CS_zup_right 12 CS_zup_right 1 12 CS_yup_right 12 CS_yup_right 2 11 CS_zup_left 11 CS_zup_left 3 11 CS_yup_left 11 CS_yup_left 4 10 CS_invalid 10 CS_invalid 5 0 0
+128 16 CoordinateSystem 0 532480 16 CoordinateSystem 16 CoordinateSystem 0 0 0 0 0 0 0 0 0 0 6 10 CS_default 10 CS_default 213
+// The CS_default entry does not refer to a particular coordinate
+// system, but rather to the value stored in
+// default_coordinate_system, which in turn is loaded from the
+// config variable "coordinate-system".
+0 12 CS_zup_right 12 CS_zup_right 0
+1 12 CS_yup_right 12 CS_yup_right 0
+2 11 CS_zup_left 11 CS_zup_left 0
+3 11 CS_yup_left 11 CS_yup_left 0
+4 10 CS_invalid 10 CS_invalid 155
+// CS_invalid is not a coordinate system at all.  It can be used in
+// user-input processing code to indicate a contradictory coordinate
+// system request.
+5 0 0
 
 129 4 void 0 8194 4 void 4 void 0 6 0 0 0 0 0 0 0 0 0 0 0
 
@@ -1257,20 +1166,7 @@ VirtualMouse::~VirtualMouse(void);
 
 156 14 LPoint3f const 0 8832 14 LPoint3f const 14 LPoint3f const 0 0 157 0 0 0 0 0 0 0 0 0 0
 
-157 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 1083
-// Filename: lpoint3_src.h
-// Created by:  drose (25Sep99)
-//
-////////////////////////////////////////////////////////////////////
-//
-// PANDA 3D SOFTWARE
-// Copyright (c) Carnegie Mellon University.  All rights reserved.
-//
-// All use of this software is subject to the terms of the revised BSD
-// license.  You should have received a copy of this license along
-// with this source code in a file named "LICENSE."
-//
-////////////////////////////////////////////////////////////////////
+157 8 LPoint3f 0 2048 8 LPoint3f 8 LPoint3f 0 0 0 0 0 0 0 0 0 0 0 0 596
 ////////////////////////////////////////////////////////////////////
 //       Class : LPoint3
 // Description : This is a three-component point in space (as opposed
