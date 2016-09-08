@@ -40,7 +40,7 @@ class DEV_Launcher(ShowBase):
         os.environ['TTR_GAMESERVER'] = self.ip_entry.get()
         os.environ['TTR_PLAYCOOKIE'] = self.username_entry.get()
 
-        os.system('C:\Panda3D-1.10.0\python\ppython.exe -m toontown.toonbase.ToontownStart')
+        os.system('C:\Panda3D-1.9.0\python\ppython.exe -m toontown.toonbase.ToontownStart')
 
         sys.exit(1)
 
