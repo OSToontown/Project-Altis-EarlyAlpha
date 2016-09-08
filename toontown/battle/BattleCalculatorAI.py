@@ -15,7 +15,6 @@ class BattleCalculatorAI:
     AccuracyBonuses = [0, 20, 40, 60]
     DamageBonuses = [0, 20, 20, 20]
     AttackExpPerTrack = [0, 10, 20, 30, 40, 50, 60]
-    NumRoundsLured = [2, 2, 3, 3, 4, 4, 15]
     TRAP_CONFLICT = -2
     APPLY_HEALTH_ADJUSTMENTS = 1
     TOONS_TAKE_NO_DAMAGE = 0
@@ -417,7 +416,7 @@ class BattleCalculatorAI:
                         if not self.__suitIsLured(targetId, prevRound=1):
                             if not self.__combatantDead(targetId, toon=toonTarget):
                                 validTargetAvail = 1
-                            rounds = self.NumRoundsLured[atkLevel]
+                            rounds = NumRoundsLured[atkLevel]
                             wakeupChance = 100 - atkAcc * 2
                             npcLurer = attack[TOON_TRACK_COL] == NPCSOS
                             currLureId = self.__addLuredSuitInfo(targetId, -1, rounds, wakeupChance, toonId, atkLevel, lureId=currLureId, npc=npcLurer)
@@ -447,7 +446,7 @@ class BattleCalculatorAI:
                     if not self.__suitIsLured(targetId, prevRound=1):
                         if not self.__combatantDead(targetId, toon=toonTarget):
                             validTargetAvail = 1
-                        rounds = self.NumRoundsLured[atkLevel]
+                        rounds = NumRoundsLured[atkLevel]
                         wakeupChance = 100 - atkAcc * 2
                         npcLurer = attack[TOON_TRACK_COL] == NPCSOS
                         currLureId = self.__addLuredSuitInfo(targetId, -1, rounds, wakeupChance, toonId, atkLevel, lureId=currLureId, npc=npcLurer)

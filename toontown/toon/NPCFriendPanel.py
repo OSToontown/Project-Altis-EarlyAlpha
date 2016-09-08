@@ -80,7 +80,7 @@ class NPCFriendCard(DirectFrame):
         cardModel = loader.loadModel('phase_3.5/models/gui/playingCard')
         self.front = DirectFrame(parent=self, relief=None, image=cardModel.find('**/card_front'))
         self.front.hide()
-        self.back = DirectFrame(parent=self, relief=None, image=cardModel.find('**/card_back'), geom=cardModel.find('**/logo'))
+        self.back = DirectFrame(parent=self, relief=None, image=cardModel.find('**/card_back'))
         callButtonPosZ = -0.9
         textWordWrap = 16.0
         textScale = 0.35

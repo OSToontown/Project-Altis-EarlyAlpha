@@ -8,6 +8,7 @@ from direct.showbase import PythonUtil
 from pandac.PandaModules import *
 from otp.nametag.NametagConstants import *
 from otp.avatar import Emote
+import random
 from direct.directnotify import DirectNotifyGlobal
 EmoteSleepIndex = 4
 EmoteClear = -1
@@ -203,11 +204,14 @@ def doCringe(toon, volume = 1):
     return (track, duration, None)
 
 
-def doResistanceSalute(toon, volume = 1):
-    playRate = 0.75
-    duration = 10.0 / 24.0 * (1 / playRate) * 2
-    animTrack = Sequence(Func(toon.setChatAbsolute, OTPLocalizer.CustomSCStrings[4020], CFSpeech | CFTimeout), Func(toon.setPlayRate, playRate, 'victory'), ActorInterval(toon, 'victory', playRate=playRate, startFrame=0, endFrame=9), ActorInterval(toon, 'victory', playRate=playRate, startFrame=9, endFrame=0))
-    track = Sequence(animTrack, duration=0)
+def doResistanceSalute(toon, volume=1):
+    track = Sequence(
+        Func(toon.setChatAbsolute, OTPLocalizer.CustomSCStrings[4020], CFSpeech|CFTimeout),
+        Func(toon.setPlayRate, 0.75, 'victory'),
+        Func(toon.pingpong, 'victory', fromFrame=0, toFrame=9),
+        Func(toon.setPlayRate, 1, 'victory')
+    )
+    duration = 20 / toon.getFrameRate('victory')
     return (track, duration, None)
 
 
@@ -237,8 +241,8 @@ def doSurprise(toon, volume = 1):
 
 
 def doUpset(toon, volume = 1):
-    sfx = None
-    sfx = base.loadSfx('phase_4/audio/sfx/avatar_emotion_very_sad_1.ogg')
+    sfxList = ('phase_4/audio/sfx/avatar_emotion_very_sad_1.ogg', 'phase_4/audio/sfx/avatar_emotion_very_sad.ogg')
+    sfx = base.loadSfx(random.choice(sfxList))
 
     def playSfx(volume = 1):
         base.playSfx(sfx, volume=volume, node=toon)
@@ -309,121 +313,109 @@ def doLaugh(toon, volume = 1):
     exitTrack = Sequence(Func(toon.hideLaughMuzzle), Func(toon.blinkEyes), Func(stopAnim))
     return (track, 2, exitTrack)
 
+def doTaunt(toon, volume=1):
+    sfx = base.loadSfx('phase_4/audio/sfx/avatar_emotion_taunt.ogg')
+    track = Sequence(
+        Func(toon.blinkEyes),
+        Func(toon.play, 'taunt'),
+        Func(base.playSfx, sfx, volume=volume, node=toon)
+    )
+    duration = toon.getDuration('taunt')
+    return (track, duration, None)
 
-def getSingingNote(toon, note, volume = 1):
-    sfx = None
-    filePath = 'phase_3.5/audio/dial/'
-    filePrefix = 'tt_s_dlg_sng_'
-    fileSuffix = '.ogg'
+def doRage(toon, volume=1):
+    sfx = base.loadSfx('phase_4/audio/sfx/furious_03.ogg')
+    track = Sequence(
+        Func(toon.blinkEyes),
+        Func(toon.play, 'good-putt', fromFrame=12),
+        Func(base.playSfx, sfx, volume=volume, node=toon)
+    )
+    duration = toon.getDuration('rage')
+    return (track, duration, None)
+
+def doGreened(toon, volume=1):
+    sfx = base.loadSfx('phase_5/audio/sfx/ENC_Lose.ogg')
+    track = Sequence(
+        Func(toon.blinkEyes),
+        Func(toon.sadEyes), 
+        Func(toon.play, 'lose'),
+        Wait(1),
+        Func(base.playSfx, sfx, volume=volume, node=toon)
+    )
+    duration = toon.getDuration('lose')
+    exitTrack = Sequence(Func(toon.normalEyes), Func(toon.blinkEyes))
+    return (track, duration, exitTrack)
+
+def doMelt(toon, volume=1):
     speciesName = ToonDNA.getSpeciesName(toon.style.head)
-    sfx = base.loadSfx(filePath + filePrefix + speciesName + '_' + note + fileSuffix)
+    sfx = base.loadSfx('phase_3.5/audio/dial/AV_' + speciesName + '_exclaim.ogg')
+    sfx2 = base.loadSfx('phase_5/audio/sfx/TL_quicksand.ogg')
+    track = Sequence(
+        Func(toon.blinkEyes),
+        Func(toon.sadEyes), 
+        Func(toon.play, 'melt'),
+        Wait(2),
+        Func(toon.play, 'teleportIn'),
+        Func(toon.play, 'teleportIn'),
+        Func(toon.play, 'teleportIn'),
+        Func(base.playSfx, sfx, volume=volume, node=toon),
+        Func(base.playSfx, sfx2, volume=volume, node=toon)
+    )
+    duration = toon.getDuration('melt')
+    exitTrack = Sequence(Func(toon.normalEyes), Func(toon.blinkEyes))
+    return (track, duration, exitTrack)
 
-    def playSfx(volume = 1):
-        base.playSfx(sfx, volume=volume, node=toon)
+def doCheer(toon, volume=1):
+    sfx = base.loadSfx('phase_4/audio/sfx/MG_win.ogg')
+    track = Sequence(
+        Func(toon.blinkEyes),
+        Func(toon.showSmileMuzzle),
+        Func(toon.play, 'good-putt'),
+        Func(base.playSfx, sfx, volume=volume, node=toon)
+    )
+    duration = toon.getDuration('good-putt')
+    exitTrack = Sequence(Func(toon.normalEyes), Func(toon.blinkEyes), Func(toon.hideSmileMuzzle))
+    return (track, duration, exitTrack)
 
-    def playAnim():
-        toon.loop('neutral')
+def doDuck(toon, volume=1):
+    sfx = base.loadSfx('phase_5/audio/sfx/tt_s_ara_cmg_groundquake.ogg')
+    track = Sequence(
+        Func(toon.stopBlink),
+        Func(toon.surpriseEyes),
+        Func(toon.play, 'duck'),
+        Func(base.playSfx, sfx, volume=volume, node=toon)
+    )
+    duration = toon.getDuration('duck')
+    exitTrack = Sequence(Func(toon.normalEyes), Func(toon.blinkEyes))
+    return (track, duration, exitTrack)
 
-    def stopAnim():
-        toon.setPlayRate(1, 'neutral')
+def doLevitate(toon, volume=1):
+    sfx = base.loadSfx('phase_4/audio/sfx/Holy_Mackerel.ogg')
+    track = Sequence(
+        Func(toon.stopBlink),
+        Func(toon.showSmileMuzzle),
+        Func(toon.play, 'jump'),
+        Wait(toon.getDuration('jump') / 3.5),
+        Func(toon.play, 'jump-idle'),
+        Func(base.playSfx, sfx, volume=volume, node=toon),
+        Wait(toon.getDuration('jump-idle')),
+        Func(toon.play, 'jump-idle'),  
+        Wait(toon.getDuration('jump-idle')),
+        Func(toon.play, 'jump-land')
 
-    track = Sequence(Func(toon.showSurpriseMuzzle), Parallel(Func(playAnim), Func(playSfx, volume)))
-    exitTrack = Sequence(Func(toon.hideSurpriseMuzzle), Func(stopAnim))
-    return (track, 0.1, exitTrack)
+    )
+    duration = toon.getDuration('jump-idle') + toon.getDuration('jump')/1.75
+    exitTrack = Sequence(Func(toon.normalEyes), Func(toon.blinkEyes), Func(toon.hideSmileMuzzle))
+    return (track, duration, exitTrack)
 
-
-def playSingingAnim(toon):
-    pass
-
-
-def stopSinginAnim(toon):
-    pass
-
-
-def singNote1(toon, volume = 1):
-    if config.GetBool('want-octaves', True):
-        if toon.style.getTorsoSize() == 'short':
-            return getSingingNote(toon, 'g1')
-        elif toon.style.getTorsoSize() == 'medium':
-            return getSingingNote(toon, 'g2')
-        elif toon.style.getTorsoSize() == 'long':
-            return getSingingNote(toon, 'g3')
-
-
-def singNote2(toon, volume = 1):
-    if config.GetBool('want-octaves', True):
-        if toon.style.getTorsoSize() == 'short':
-            return getSingingNote(toon, 'a1')
-        elif toon.style.getTorsoSize() == 'medium':
-            return getSingingNote(toon, 'a2')
-        elif toon.style.getTorsoSize() == 'long':
-            return getSingingNote(toon, 'a3')
-
-
-def singNote3(toon, volume = 1):
-    if config.GetBool('want-octaves', True):
-        if toon.style.getTorsoSize() == 'short':
-            return getSingingNote(toon, 'b1')
-        elif toon.style.getTorsoSize() == 'medium':
-            return getSingingNote(toon, 'b2')
-        elif toon.style.getTorsoSize() == 'long':
-            return getSingingNote(toon, 'b3')
-
-
-def singNote4(toon, volume = 1):
-    if config.GetBool('want-octaves', True):
-        if toon.style.getTorsoSize() == 'short':
-            return getSingingNote(toon, 'c1')
-        elif toon.style.getTorsoSize() == 'medium':
-            return getSingingNote(toon, 'c2')
-        elif toon.style.getTorsoSize() == 'long':
-            return getSingingNote(toon, 'c3')
-
-
-def singNote5(toon, volume = 1):
-    if config.GetBool('want-octaves', True):
-        if toon.style.getTorsoSize() == 'short':
-            return getSingingNote(toon, 'd1')
-        elif toon.style.getTorsoSize() == 'medium':
-            return getSingingNote(toon, 'd2')
-        elif toon.style.getTorsoSize() == 'long':
-            return getSingingNote(toon, 'd3')
-
-
-def singNote6(toon, volume = 1):
-    if config.GetBool('want-octaves', True):
-        if toon.style.getTorsoSize() == 'short':
-            return getSingingNote(toon, 'e1')
-        elif toon.style.getTorsoSize() == 'medium':
-            return getSingingNote(toon, 'e2')
-        elif toon.style.getTorsoSize() == 'long':
-            return getSingingNote(toon, 'e3')
-
-
-def singNote7(toon, volume = 1):
-    if config.GetBool('want-octaves', True):
-        if toon.style.getTorsoSize() == 'short':
-            return getSingingNote(toon, 'f1')
-        elif toon.style.getTorsoSize() == 'medium':
-            return getSingingNote(toon, 'f2')
-        elif toon.style.getTorsoSize() == 'long':
-            return getSingingNote(toon, 'f3')
-
-
-def singNote8(toon, volume = 1):
-    if config.GetBool('want-octaves', True):
-        if toon.style.getTorsoSize() == 'short':
-            return getSingingNote(toon, 'g2')
-        elif toon.style.getTorsoSize() == 'medium':
-            return getSingingNote(toon, 'g3')
-        elif toon.style.getTorsoSize() == 'long':
-            return getSingingNote(toon, 'g4')
-
-
-def singNoteEmpty(toon, volume = 0):
-    track = Sequence()
-    return (track, 0.1, None)
-
+def doTeleport(toon, volume=1):
+    sfx = base.loadSfx('phase_3.5/audio/sfx/AV_teleport.ogg')
+    track = Sequence(
+        Func(toon.play, 'teleport'), 
+        Func(base.playSfx, sfx, volume=volume, node=toon),
+    )
+    duration = toon.getDuration('teleport')
+    return (track, duration, None)
 
 def returnToLastAnim(toon):
     if hasattr(toon, 'playingAnim') and toon.playingAnim:
@@ -458,7 +450,15 @@ EmoteFunc = [[doWave, 0],
  [doUpset, 0],
  [doDelighted, 0],
  [doFurious, 0],
- [doLaugh, 0]]
+ [doLaugh, 0],
+ [doTaunt, 0],
+ [doRage, 0],
+ [doGreened, 0],
+ [doMelt, 0],
+ [doCheer, 0],
+ [doDuck, 0],
+ [doLevitate, 0],
+ [doTeleport, 0]]
 
 class TTEmote(Emote.Emote):
     notify = DirectNotifyGlobal.directNotify.newCategory('TTEmote')
@@ -485,7 +485,15 @@ class TTEmote(Emote.Emote):
          21,
          22,
          23,
-         24]
+         24,
+         25,
+         26,
+         27,
+         28,
+         29,
+         30,
+         31,
+         32]
         self.headEmotes = [2,
          17,
          18,
