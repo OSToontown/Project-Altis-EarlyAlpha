@@ -35,10 +35,10 @@ class DEV_Launcher(ShowBase):
             self.ip_entry['focus'] = 1
 
     def login(self):
-        os.environ['ttrUsername'] = self.username_entry.get()
-        os.environ['ttrPassword'] = self.password_entry.get()
-        os.environ['TTR_GAMESERVER'] = self.ip_entry.get()
-        os.environ['TTR_PLAYCOOKIE'] = self.username_entry.get()
+        os.environ['ttUsername'] = self.username_entry.get()
+        os.environ['ttPassword'] = self.password_entry.get()
+        os.environ['TT_GAMESERVER'] = self.ip_entry.get()
+        os.environ['TT_PLAYCOOKIE'] = self.username_entry.get()
 
         os.system('C:\Panda3D-1.9.0\python\ppython.exe -m toontown.toonbase.ToontownStart')
 

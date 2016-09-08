@@ -1883,7 +1883,28 @@ def getTops(gender, tailorId = MAKE_A_TOON):
 
     return tops
 
-
+def getTopColors(gender, top, tailorId = MAKE_A_TOON):
+    if gender == 'm':
+        collection = TailorCollections[tailorId][BOY_SHIRTS]
+    else:
+        collection = TailorCollections[tailorId][GIRL_SHIRTS]
+    tops = getTopStyles(gender, tailorId)
+    colors = []
+    index = collection[tops.index(top)]
+    for color in ShirtStyles[index][2]:
+        colors.append((color[0], color[1]))
+    return colors
+ 
+def getTopStyles(gender, tailorId = MAKE_A_TOON):
+    if gender == 'm':
+        collection = TailorCollections[tailorId][BOY_SHIRTS]
+    else:
+        collection = TailorCollections[tailorId][GIRL_SHIRTS]
+    tops = []
+    for style in collection:
+        tops.append((ShirtStyles[style][0], ShirtStyles[style][1]))
+    return tops
+ 
 def getAllTops(gender):
     tops = []
     for style in ShirtStyles.keys():
@@ -1913,7 +1934,29 @@ def getBottoms(gender, tailorId = MAKE_A_TOON):
 
     return bottoms
 
-
+def getBottomStyles(gender, tailorId = MAKE_A_TOON):
+    if gender == 'm':
+        collection = TailorCollections[tailorId][BOY_SHORTS]
+    else:
+        collection = TailorCollections[tailorId][GIRL_BOTTOMS]
+    bottoms = []
+    for style in collection:
+            bottoms.append(BottomStyles[style][0])
+ 
+    return bottoms
+ 
+def getBottomColors(gender, bottom, tailorId = MAKE_A_TOON):
+    if gender == 'm':
+        collection = TailorCollections[tailorId][BOY_SHORTS]
+    else:
+        collection = TailorCollections[tailorId][GIRL_BOTTOMS]
+    bottoms = getBottomStyles(gender, tailorId)
+    colors = []
+    index = collection[bottoms.index(bottom)]
+    for color in BottomStyles[index][1]:
+        colors.append(color)
+    return colors
+ 
 def getAllBottoms(gender, output = 'both'):
     bottoms = []
     for style in BottomStyles.keys():
@@ -1961,7 +2004,8 @@ allColorsList = [VBase4(1.0, 1.0, 1.0, 1.0),
  VBase4(0.898438, 0.617188, 0.90625, 1.0),
  VBase4(0.7, 0.7, 0.8, 1.0),
  VBase4(0.3, 0.3, 0.35, 1.0)]
-defaultBoyColorList = [1,
+defaultBoyColorList = [0,
+ 1,
  2,
  3,
  4,
@@ -1984,8 +2028,11 @@ defaultBoyColorList = [1,
  21,
  22,
  23,
- 24]
-defaultGirlColorList = [1,
+ 24,
+ 25,
+ 26]
+defaultGirlColorList = [0,
+ 1,
  2,
  3,
  4,
@@ -2008,7 +2055,9 @@ defaultGirlColorList = [1,
  21,
  22,
  23,
- 24]
+ 24,
+ 25,
+ 26]
 allColorsListApproximations = map(lambda x: VBase4(round(x[0], 3), round(x[1], 3), round(x[2], 3), round(x[3], 3)), allColorsList)
 allowedColors = set(map(lambda x: allColorsListApproximations[x], set([0] + defaultBoyColorList + defaultGirlColorList + [26])))
 HatModels = [None,
