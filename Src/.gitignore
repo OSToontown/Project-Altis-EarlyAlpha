@@ -1,9 +1,6 @@
 *.pyc
 preferences.json
-logs/
 screenshots/
-backups/
-contentpacks/
 *.json
 *.mp
 ai-crash.txt
