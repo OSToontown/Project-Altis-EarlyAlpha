@@ -971,26 +971,22 @@ class Suit(Avatar.Avatar):
         return
 
     def makeSkeleton(self):
-        model = 'phase_5/models/char/cog' + self.style.body.upper() + '_robot-zero'
+        model = 'phase_5/models/char/cog' + string.upper(self.style.body) + '_robot-zero'
         anims = self.generateAnimDict()
         anim = self.getCurrentAnim()
-        # Remove all of the previous cog except for a few necessary joints
-        modelRoot = self.getGeomNode()
-        modelRoot.find('**/torso').removeNode()
-        modelRoot.find('**/arms').removeNode()
-        modelRoot.find('**/hands').removeNode()
-        modelRoot.find('**/legs').removeNode()
-        modelRoot.find('**/').removeNode() # These are feet
-        modelRoot.find('**/joint_head').removeNode()
-        # Now, to load our skelecog
+        dropShadow = self.dropShadow
+        if not dropShadow.isEmpty():
+            dropShadow.reparentTo(hidden)
+        self.removePart('modelRoot')
         self.loadModel(model)
         self.loadAnims(anims)
         self.getGeomNode().setScale(self.scale * 1.0173)
         self.generateHealthBar()
+        self.generateCorporateMedallion()
         self.generateCorporateTie()
         self.setHeight(self.height)
         parts = self.findAllMatches('**/pPlane*')
-        for partNum in range(0, parts.getNumPaths()):
+        for partNum in xrange(0, parts.getNumPaths()):
             bb = parts.getPath(partNum)
             bb.setTwoSided(1)
 
@@ -1003,9 +999,13 @@ class Suit(Avatar.Avatar):
         self.rightHand = self.find('**/joint_Rhold')
         self.shadowJoint = self.find('**/joint_shadow')
         self.nametagNull = self.find('**/joint_nameTag')
+        if not dropShadow.isEmpty():
+            dropShadow.setScale(0.75)
+            if not self.shadowJoint.isEmpty():
+                dropShadow.reparentTo(self.shadowJoint)
         self.loop(anim)
         self.isSkeleton = 1
-
+        
     def getHeadParts(self):
         return self.headParts
 
