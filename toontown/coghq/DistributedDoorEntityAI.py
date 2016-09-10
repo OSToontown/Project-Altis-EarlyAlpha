@@ -13,7 +13,9 @@ class Lock(DistributedDoorEntityBase.LockBase, DirectObject.DirectObject, FourSt
 
     def __init__(self, door, lockIndex, event, isUnlocked):
         self.door = door
+        self.stateIndex = 0
         self.lockIndex = lockIndex
+        self.stateIndex = lockIndex
         FourStateAI.FourStateAI.__init__(self, self.stateNames, durations=self.stateDurations)
         self.unlockEvent = None
         self.setUnlockEvent(event)
@@ -60,6 +62,7 @@ class DistributedDoorEntityAI(DistributedDoorEntityBase.DistributedDoorEntityBas
         self.entId = entId
         self._isGenerated = 0
         self.isOpenInput = None
+        self.stateIndex = 0
         DistributedEntityAI.DistributedEntityAI.__init__(self, level, entId)
         self.stateDurations[2] = self.secondsOpen
         FourStateAI.FourStateAI.__init__(self, self.stateNames, durations=self.stateDurations)
@@ -204,9 +207,3 @@ class DistributedDoorEntityAI(DistributedDoorEntityBase.DistributedDoorEntityBas
         if self.isUnlocked():
             if self.fsm.getCurrentState() is not self.states[2]:
                 self.fsm.request(self.states[1])
-
-    if __dev__:
-
-        def attribChanged(self, attrib, value):
-            self.takedown()
-            self.setup()

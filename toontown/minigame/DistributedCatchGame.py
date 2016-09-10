@@ -26,6 +26,7 @@ from CatchGameGlobals import DropObjectTypes
 from CatchGameGlobals import Name2DropObjectType
 from DropPlacer import *
 from DropScheduler import *
+import random
 
 class DistributedCatchGame(DistributedMinigame):
     DropTaskName = 'dropSomething'
@@ -106,10 +107,7 @@ class DistributedCatchGame(DistributedMinigame):
         self.toonSDs[avId] = toonSD
         toonSD.load()
         if self.WantSuits:
-            suitTypes = ['f',
-             'tm',
-             'pp',
-             'dt']
+            suitTypes = random.choice(['f','p', 'b', 'm'])
             self.suits = []
             for type in suitTypes:
                 suit = Suit.Suit()

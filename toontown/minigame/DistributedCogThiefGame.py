@@ -18,6 +18,7 @@ from toontown.minigame.DistributedMinigame import DistributedMinigame
 from toontown.minigame import Trajectory
 from toontown.minigame import MinigameGlobals
 from toontown.minigame import CogThiefWalk
+import random 
 CTGG = CogThiefGameGlobals
 
 class DistributedCogThiefGame(DistributedMinigame):
@@ -361,10 +362,7 @@ class DistributedCogThiefGame(DistributedMinigame):
         return
 
     def loadCogs(self):
-        suitTypes = ['ds',
-         'ac',
-         'bc',
-         'ms']
+        suitTypes = random.choice(['f','p', 'b', 'm'])
         for suitIndex in xrange(self.getNumCogs()):
             st = base.cr.newsManager.getInvadingSuit()
             if not st:
