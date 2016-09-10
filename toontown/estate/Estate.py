@@ -137,7 +137,6 @@ class Estate(Place.Place):
             base.localAvatar.startAprilToonsControls()
         self.accept('doorDoneEvent', self.handleDoorDoneEvent)
         self.accept('DistributedDoor_doorTrigger', self.handleDoorTrigger)
-        base.playMusic(self.loader.music, looping=1, volume=0.8)
         self.fsm.request(requestStatus['how'], [requestStatus])
 
     def exit(self):
@@ -154,7 +153,6 @@ class Estate(Place.Place):
         self.loader.hood.stopSky()
         render.setFogOff()
         base.cr.cache.flush()
-        self.loader.music.stop()
 
     def __setZoneId(self, zoneId):
         self.zoneId = zoneId

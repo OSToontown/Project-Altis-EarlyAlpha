@@ -3,15 +3,12 @@ from toontown.estate.DistributedFurnitureItemAI import DistributedFurnitureItemA
 from toontown.toon.ToonDNA import ToonDNA
 from direct.distributed.ClockDelta import *
 import ClosetGlobals
-from toontown.ai.InteractableAI import InteractableAI
 
-class DistributedClosetAI(DistributedFurnitureItemAI, InteractableAI):
-    notify = DirectNotifyGlobal.directNotify.newCategory('DistributedClosetAI')
+class DistributedClosetAI(DistributedFurnitureItemAI):
+    notify = DirectNotifyGlobal.directNotify.newCategory("DistributedClosetAI")
 
     def __init__(self, air, furnitureMgr, itemType):
         DistributedFurnitureItemAI.__init__(self, air, furnitureMgr, itemType)
-        InteractableAI.__init__(self)
-        self.ownerId = 0
         self.avId = None
         self.customerDNA = None
         self.topList = []
@@ -19,7 +16,7 @@ class DistributedClosetAI(DistributedFurnitureItemAI, InteractableAI):
         self.gender = 'm'
         self.removedBottoms = []
         self.removedTops = []
-
+        
     def generate(self):
         if self.furnitureMgr.ownerId:
             owner = self.air.doId2do.get(self.furnitureMgr.ownerId)
@@ -30,12 +27,6 @@ class DistributedClosetAI(DistributedFurnitureItemAI, InteractableAI):
             else:
                 self.air.dbInterface.queryObject(self.air.dbId, self.furnitureMgr.ownerId, self.__gotOwner)
 
-    def setOwnerId(self, id):
-        self.ownerId = id
-
-    def getOwnerId(self):
-        return self.ownerId
-
     def __gotOwner(self, dclass, fields):
         if dclass != self.air.dclassesByName['DistributedToonAI']:
             self.notify.warning('Got object of wrong type!')
@@ -44,10 +35,10 @@ class DistributedClosetAI(DistributedFurnitureItemAI, InteractableAI):
         self.topList = fields['setClothesTopsList'][0]
         dna = ToonDNA(str=fields['setDNAString'][0])
         self.gender = dna.gender
-
+    
     def getOwnerId(self):
         return self.furnitureMgr.ownerId
-
+        
     def __verifyAvatarInMyZone(self, av):
         return av.getLocation() == self.getLocation()
 
@@ -68,6 +59,7 @@ class DistributedClosetAI(DistributedFurnitureItemAI, InteractableAI):
         self.customerDNA = av.dna
         self.avId = avId
         self.d_setState(ClosetGlobals.OPEN, avId, self.furnitureMgr.ownerId, self.gender, self.topList, self.botList)
+        
 
     def removeItem(self, item, topOrBottom):
         avId = self.air.getAvatarIdFromSender()
@@ -93,14 +85,16 @@ class DistributedClosetAI(DistributedFurnitureItemAI, InteractableAI):
         else:
             self.air.writeServerEvent('suspicious', avId=avId, issue='Set an invalid topOrBottom value!')
             return
-
+        
     def __checkValidDNAChange(self, av, testDNA):
+        # verify they aren't trying to change anything other than their clothing.
+        # FML this took some time to write...
         if testDNA.head != av.dna.head:
             return False
         if testDNA.torso != av.dna.torso:
             if av.dna.gender == 'm':
                 return False
-            elif testDNA.torso[0] != av.dna.torso[0]:
+            elif testDNA.torso[0] != av.dna.torso[0]: #first character of torso ('size') must remain the same, otherwise you are hacker scum.
                 return False
         if testDNA.legs != av.dna.legs:
             return False
@@ -109,6 +103,7 @@ class DistributedClosetAI(DistributedFurnitureItemAI, InteractableAI):
         if testDNA.armColor != av.dna.armColor:
             return False
         if testDNA.gloveColor != av.dna.gloveColor:
+            # wtf u little hackin' shit.
             return False
         if testDNA.legColor != av.dna.legColor:
             return False
@@ -141,7 +136,7 @@ class DistributedClosetAI(DistributedFurnitureItemAI, InteractableAI):
             return
         elif finished == 1:
             self.d_setMovie(ClosetGlobals.CLOSET_MOVIE_COMPLETE, avId, globalClockDelta.getRealNetworkTime())
-            taskMgr.doMethodLater(1, self.resetMovie, 'resetMovie-%d' % self.getDoId(), extraArgs=[])
+            taskMgr.doMethodLater(1, self.__resetMovie, 'resetMovie-%d' % self.getDoId(), extraArgs=[])
             self.d_setState(ClosetGlobals.CLOSED, 0, self.furnitureMgr.ownerId, self.gender, self.topList, self.botList)
             av.b_setDNAString(self.customerDNA.makeNetString())
             self.removedBottoms = []
@@ -202,14 +197,14 @@ class DistributedClosetAI(DistributedFurnitureItemAI, InteractableAI):
 
     def setState(self, todo0, todo1, todo2, todo3, todo4, todo5):
         pass
-
+        
     def d_setState(self, mode, avId, ownerId, gender, topList, botList):
         self.sendUpdate('setState', [mode, avId, ownerId, gender, topList, botList])
-
+        
     def d_setMovie(self, movie, avId, time):
         self.sendUpdate('setMovie', [movie, avId, time])
-
-    def resetMovie(self):
+        
+    def __resetMovie(self):
         self.d_setMovie(ClosetGlobals.CLOSET_MOVIE_CLEAR, 0, globalClockDelta.getRealNetworkTime())
 
     def setMovie(self, todo0, todo1, todo2):
@@ -220,3 +215,4 @@ class DistributedClosetAI(DistributedFurnitureItemAI, InteractableAI):
 
     def setCustomerDNA(self, todo0, todo1):
         pass
+
