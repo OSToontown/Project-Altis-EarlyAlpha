@@ -16,9 +16,9 @@ from toontown.quest import Quests
 
 class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedSellbotBossAI')
-    limitHitCount = 4
+    limitHitCount = 3
     hitCountDamage = 30
-    numPies = 50
+    numPies = 20
     BossName = "VP"
 
     def __init__(self, air):

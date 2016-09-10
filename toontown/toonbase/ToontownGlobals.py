@@ -619,8 +619,8 @@ BossCogBattleBPosHpr = (0,
  180,
  0,
  0)
-SellbotBossMaxDamage = 250
-SellbotBossMaxDamageNerfed = 2500
+SellbotBossMaxDamage = 100
+SellbotBossMaxDamageNerfed = 100
 SellbotBossBattleOnePosHpr = (0,
  -35,
  0,
