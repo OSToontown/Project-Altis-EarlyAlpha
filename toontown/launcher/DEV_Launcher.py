@@ -8,7 +8,6 @@ from direct.gui.DirectButton import DirectButton
 from socket import *
 import json
 from Crypto.Cipher import XOR
-from Crypto import Random
 import base64
 
 import os
@@ -19,9 +18,6 @@ class DEV_Launcher(ShowBase):
 
     def __init__(self):
         ShowBase.__init__(self)
-
-        #  Set up encryption algorithms
-        self.iv = Random.get_random_bytes(16)
 
         #  Create the socket and configure it
         self.clientsock = socket(AF_INET, SOCK_STREAM)
