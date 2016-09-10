@@ -184,6 +184,8 @@ class QuestPoster(DirectFrame):
          None,
          None,
          None,
+         None,
+         None,
          None]
         npc = elevatorModel.findAllMatches('**/floor_light_?;+s')
         for i in range(npc.getNumPaths()):
