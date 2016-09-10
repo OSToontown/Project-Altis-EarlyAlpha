@@ -5,6 +5,12 @@ from direct.gui.DirectFrame import DirectFrame
 from direct.gui.DirectEntry import DirectEntry
 from direct.gui.DirectButton import DirectButton
 
+from socket import *
+import json
+from Crypto.Cipher import XOR
+from Crypto import Random
+import base64
+
 import os
 import sys
 
@@ -13,6 +19,14 @@ class DEV_Launcher(ShowBase):
 
     def __init__(self):
         ShowBase.__init__(self)
+
+        #  Set up encryption algorithms
+        self.iv = Random.get_random_bytes(16)
+
+        #  Create the socket and configure it
+        self.clientsock = socket(AF_INET, SOCK_STREAM)
+        self.clientsock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+        self.clientsock.settimeout(5)
 
         self.createGUI()
 
@@ -24,6 +38,34 @@ class DEV_Launcher(ShowBase):
 
         self.current_focus = 0
 
+    def client(self):
+        data = self.clientsock.recv(1024)
+        self.handle(data)
+
+        self.clientsock.close()
+
+    def handle(self, data):
+        data = json.loads(data)
+        self.key = ''
+        for key, value in data.iteritems():
+            self.key = key
+        self.value = data[self.key]
+        self.key = self.decrypt(self.key)
+        self.value = self.decrypt(self.value)
+
+        if self.key == 'error':
+            print self.key + ': ' + self.value
+        elif self.key == 'playcookie':
+            self.playgame(self.value)
+
+    def encrypt(self, plaintext):
+        cipher = XOR.new('iplaypokemongoeveryday')
+        return base64.b64encode(cipher.encrypt(plaintext))
+
+    def decrypt(self, ciphertext):
+        cipher = XOR.new('iplaypokemongoeveryday')
+        return cipher.decrypt(base64.b64decode(ciphertext))
+
     def focus(self):
         if self.current_focus == 0:
             self.current_focus = 1
@@ -34,13 +76,26 @@ class DEV_Launcher(ShowBase):
             self.username_entry['focus'] = 0
             self.ip_entry['focus'] = 1
 
-    def login(self):
+    def loginbutton(self):
         os.environ['ttUsername'] = self.username_entry.get()
         os.environ['ttPassword'] = self.password_entry.get()
         os.environ['TT_GAMESERVER'] = self.ip_entry.get()
-        os.environ['TT_PLAYCOOKIE'] = self.username_entry.get()
 
-        os.system('C:\Panda3D-1.9.0\python\ppython.exe -m toontown.toonbase.ToontownStart')
+        self.clientsock.connect((str(self.ip_entry.get()), 4014))
+        username = str(self.username_entry.get())
+        password = str(self.password_entry.get())
+
+        sendData = {str(self.encrypt(username)): str(self.encrypt(password))}
+        sendData = json.dumps(sendData)
+        self.clientsock.send(sendData)
+        self.client()
+
+    def playgame(self, playcookie):
+        os.environ['TT_PLAYCOOKIE'] = playcookie
+        try:
+            os.system('C:\Panda3D-1.9.0\python\ppython.exe -m toontown.toonbase.ToontownStart')
+        except:
+            pass
 
         sys.exit(1)
 
@@ -58,7 +113,7 @@ class DEV_Launcher(ShowBase):
         self.ip_entry = DirectEntry(text="", initialText="", scale=0.1, numLines=1, pos=(-0.3, 0, -0.4),
                                     cursorKeys=1,
                                     obscured=0, width=10)
-        self.login_button = DirectButton(text="Login", scale=0.1, pos=(0, 0, -0.6), command=self.login)
+        self.login_button = DirectButton(text="Login", scale=0.1, pos=(0, 0, -0.6), command=self.loginbutton)
 
         self.username_entry.reparentTo(self.main_frame)
         self.username_text.reparentTo(self.main_frame)
