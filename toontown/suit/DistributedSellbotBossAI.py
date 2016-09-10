@@ -1,32 +1,32 @@
-import random
-from otp.ai.MagicWordGlobal import *
-import DistributedBossCogAI
-import DistributedSuitAI
-import SuitDNA
-from direct.directnotify import DirectNotifyGlobal
-from direct.distributed.ClockDelta import *
-from direct.fsm import FSM
 from otp.ai.AIBaseGlobal import *
+from direct.distributed.ClockDelta import *
+import DistributedBossCogAI
+from direct.directnotify import DirectNotifyGlobal
+from otp.avatar import DistributedAvatarAI
+import DistributedSuitAI
 from toontown.battle import BattleExperienceAI
-from toontown.toon import NPCToons
-from toontown.toonbase import TTLocalizer
+from direct.fsm import FSM
 from toontown.toonbase import ToontownGlobals
-from toontown.quest import Quests
-
+from toontown.toon import InventoryBase
+from toontown.toonbase import TTLocalizer
+from toontown.battle import BattleBase
+from toontown.toon import NPCToons
+from otp.ai.MagicWordGlobal import *
+import SuitDNA
+import random
 
 class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedSellbotBossAI')
-    limitHitCount = 3
-    hitCountDamage = 30
+    limitHitCount = 3.5
+    hitCountDamage = 35
     numPies = 20
-    BossName = "VP"
 
     def __init__(self, air):
         DistributedBossCogAI.DistributedBossCogAI.__init__(self, air, 's')
         FSM.FSM.__init__(self, 'DistributedSellbotBossAI')
         self.doobers = []
         self.cagedToonNpcId = random.choice(NPCToons.HQnpcFriends.keys())
-        self.bossMaxDamage = 250
+        self.bossMaxDamage = ToontownGlobals.SellbotBossMaxDamage
         self.recoverRate = 0
         self.recoverStartTime = 0
 
@@ -121,7 +121,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
     def __doAreaAttack(self):
         self.b_setAttackCode(ToontownGlobals.BossCogAreaAttack)
         if self.recoverRate:
-            newRecoverRate = min(200, self.recoverRate * 9.8)
+            newRecoverRate = min(200, self.recoverRate * 7.5)
         else:
             newRecoverRate = 1.7
         now = globalClock.getFrameTime()
@@ -198,6 +198,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         toon = simbase.air.doId2do.get(avId)
         if toon:
             toon.b_setNumPies(0)
+            toon.b_setHealthDisplay(0)
         DistributedBossCogAI.DistributedBossCogAI.removeToon(self, avId)
 
     def enterOff(self):
@@ -268,6 +269,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
             toon = simbase.air.doId2do.get(toonId)
             if toon:
                 toon.__touchedCage = 0
+                toon.b_setHealthDisplay(2)
 
         self.waitForNextAttack(5)
         self.waitForNextStrafe(9)
@@ -312,6 +314,11 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         self.stopStrafes()
         taskName = self.uniqueName('CagedToonSaySomething')
         taskMgr.remove(taskName)
+        for toonId in self.involvedToons + self.looseToons:
+            toon = self.air.doId2do.get(toonId)
+            if not toon:
+                continue
+            toon.b_setHealthDisplay(0)
 
     def enterNearVictory(self):
         self.resetBattles()
@@ -360,7 +367,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
 
     def __makeDoobers(self):
         self.__resetDoobers()
-        for i in xrange(8):
+        for i in range(8):
             suit = DistributedSuitAI.DistributedSuitAI(self.air, None)
             level = random.randrange(len(SuitDNA.suitsPerLevel))
             suit.dna = SuitDNA.SuitDNA()
@@ -391,9 +398,6 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
             return
         self.b_setAttackCode(ToontownGlobals.BossCogRecoverDizzyAttack)
 
-    def enterReward(self):
-        DistributedBossCogAI.DistributedBossCogAI.enterReward(self)
-
 @magicWord(category=CATEGORY_SYSADMIN)
 def skipVP():
     """
@@ -414,19 +418,19 @@ def skipVP():
     boss.b_setState('PrepareBattleThree')
     return 'Skipping the first round...'
 
-@magicWord(category=CATEGORY_SYSADMIN)
-def killVP():
-    """
-    Kills the VP.
-    """
-    invoker = spellbook.getInvoker()
-    boss = None
-    for do in simbase.air.doId2do.values():
-        if isinstance(do, DistributedSellbotBossAI):
-            if invoker.doId in do.involvedToons:
-                boss = do
-                break
-    if not boss:
-        return "You aren't in a VP!"
-    boss.b_setState('Victory')
-    return 'Killed VP.'
+@magicWord(category=CATEGORY_SYSADMIN, types=[])
+def endvp():
+    toon = spellbook.getTarget()
+    if toon:
+        z = toon.zoneId
+        for obj in simbase.air.doId2do.values():
+            zone = getattr(obj, "zoneId", -1)
+            if zone == z:
+                if obj.__class__.__name__ == "DistributedSellbotBossAI":
+                    obj.b_setState('Victory')
+                    return "VP defeated!"
+    
+        return "VP not found!"
+        
+    return "Error!"
+

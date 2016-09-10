@@ -551,13 +551,13 @@ PieCodeColors = {PieCodeBossCog: None,
                      0.8,
                      1),
  PieCodeToon: None}
-BossCogRollSpeed = 7.5
-BossCogTurnSpeed = 20
+BossCogRollSpeed = 5
+BossCogTurnSpeed = 15
 BossCogTreadSpeed = 3.5
 BossCogDizzy = 0
-BossCogElectricFence = 1
-BossCogSwatLeft = 2
-BossCogSwatRight = 3
+BossCogElectricFence = 5
+BossCogSwatLeft = 5
+BossCogSwatRight = 7
 BossCogAreaAttack = 4
 BossCogFrontAttack = 5
 BossCogRecoverDizzyAttack = 6
@@ -589,13 +589,13 @@ BossCogAttackTimes = {BossCogElectricFence: 0,
  BossCogGolfAreaAttack: 7,
  BossCogGearDirectedAttack: 4.84,
  BossCogOvertimeAttack: 5}
-BossCogDamageLevels = {BossCogElectricFence: 1,
+BossCogDamageLevels = {BossCogElectricFence: 5,
  BossCogSwatLeft: 5,
  BossCogSwatRight: 5,
- BossCogAreaAttack: 10,
- BossCogFrontAttack: 3,
- BossCogRecoverDizzyAttack: 3,
- BossCogDirectedAttack: 3,
+ BossCogAreaAttack: 15,
+ BossCogFrontAttack: 5,
+ BossCogRecoverDizzyAttack: 5,
+ BossCogDirectedAttack: 10,
  BossCogStrafeAttack: 2,
  BossCogGoonZap: 5,
  BossCogSlowDirectedAttack: 10,
