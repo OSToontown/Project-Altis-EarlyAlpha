@@ -62,6 +62,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         shieldNodePath = self.pelvis.attachNewNode(shieldNode)
         self.heldObject = None
         self.bossDamage = 0
+        self.intermissionMusic = base.loadMusic('phase_9/audio/bgm/encntr_toon_winning.ogg')
         self.loadEnvironment()
         self.__makeResistanceToon()
         self.physicsMgr = PhysicsManager()
@@ -87,8 +88,9 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.__cleanupResistanceToon()
         self.fnp.removeNode()
         self.physicsMgr.clearLinearForces()
-        self.battleThreeMusic.stop()
-        self.epilogueMusic.stop()
+        self.intermissionMusic.stop()
+        self.CFOMusic.stop()
+        self.epilogueTwoMusic.stop()
         localAvatar.chatMgr.chatInputSpeedChat.removeCFOMenu()
         if OneBossCog == self:
             OneBossCog = None
@@ -405,6 +407,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         battleHpr = VBase3(ToontownGlobals.CashbotBossBattleThreePosHpr[3], ToontownGlobals.CashbotBossBattleThreePosHpr[4], ToontownGlobals.CashbotBossBattleThreePosHpr[5])
         finalHpr = VBase3(135, 0, 0)
         bossTrack = Sequence()
+        bossTrack.append(Func(base.playMusic, self.intermissionMusic, 1, 0.9))
         bossTrack.append(Func(self.reparentTo, render))
         bossTrack.append(Func(self.getGeomNode().setH, 180))
         bossTrack.append(Func(self.pelvis.setHpr, self.pelvisForwardHpr))
@@ -465,6 +468,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
                 rToon.posHprInterval(3, Point3(136, -212.9, 0), VBase3(-14, 0, 0), startPos=Point3(110.8, -292.7, 0), startHpr=VBase3(-14, 0, 0)),
                 goon.posHprInterval(3, Point3(125.2, -243.5, 0), VBase3(-14, 0, 0), startPos=Point3(104.8, -309.5, 0), startHpr=VBase3(-14, 0, 0))),
             Func(self.__hideFakeGoons),
+            Func(self.intermissionMusic.stop),
             Func(crane.request, 'Free'),
             Func(self.getGeomNode().setH, 0),
             self.moveToonsToBattleThreePos(self.involvedToons),
@@ -689,12 +693,12 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.evWalls.stash()
         self.midVault.unstash()
         self.__showResistanceToon(True)
-        base.playMusic(self.stingMusic, looping=1, volume=0.9)
+        base.playMusic(self.CFOMusic, looping=1, volume=0.9)
         DistributedBossCog.DistributedBossCog.enterIntroduction(self)
 
     def exitIntroduction(self):
         DistributedBossCog.DistributedBossCog.exitIntroduction(self)
-        self.stingMusic.stop()
+        self.CFOMusic.stop()
 
     def enterBattleOne(self):
         DistributedBossCog.DistributedBossCog.enterBattleOne(self)
@@ -762,7 +766,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         localAvatar.setCameraFov(ToontownGlobals.BossBattleCameraFov)
         self.generateHealthBar()
         self.updateHealthBar()
-        base.playMusic(self.battleThreeMusic, looping=1, volume=0.9)
+        base.playMusic(self.CFOMusic, looping=1, volume=0.9)
         taskMgr.add(self.__doPhysics, self.uniqueName('physics'), priority=25)
 
     def exitBattleThree(self):
@@ -775,7 +779,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.removeHealthBar()
         localAvatar.setCameraFov(ToontownGlobals.CogHQCameraFov)
         if self.newState != 'Victory':
-            self.battleThreeMusic.stop()
+            self.CFOMusic.stop()
         taskMgr.remove(self.uniqueName('physics'))
 
     def enterVictory(self):
@@ -801,7 +805,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         seq.start()
         self.storeInterval(seq, intervalName)
         if self.oldState != 'BattleThree':
-            base.playMusic(self.battleThreeMusic, looping=1, volume=0.9)
+            base.playMusic(self.CFOMusic, looping=1, volume=0.9)
 
     def __continueVictory(self):
         self.doneBarrier('Victory')
@@ -814,7 +818,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.__showToons()
         self.door3.setPos(0, 0, 0)
         if self.newState != 'Reward':
-            self.battleThreeMusic.stop()
+            self.CFOMusic.stop()
 
     def enterReward(self):
         self.cleanupIntervals()
@@ -838,7 +842,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         ival.start()
         self.storeInterval(ival, intervalName)
         if self.oldState != 'Victory':
-            base.playMusic(self.battleThreeMusic, looping=1, volume=0.9)
+            base.playMusic(self.CFOMusic, looping=1, volume=0.9)
 
     def __doneReward(self):
         self.doneBarrier('Reward')
@@ -852,7 +856,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.unstash()
         self.rewardPanel.destroy()
         del self.rewardPanel
-        self.battleThreeMusic.stop()
+        self.CFOMusic.stop()
 
     def enterEpilogue(self):
         self.cleanupIntervals()
@@ -893,7 +897,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.resistanceToon.setLocalPageChat(speech, 0)
         self.accept('nextChatPage', self.__epilogueChatNext)
         self.accept('doneChatPage', self.__epilogueChatDone)
-        base.playMusic(self.epilogueMusic, looping=1, volume=0.9)
+        base.playMusic(self.epilogueTwoMusic, looping=1, volume=0.9)
 
     def __epilogueChatNext(self, pageNumber, elapsed):
         if pageNumber == 1:
@@ -920,7 +924,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
     def exitEpilogue(self):
         self.clearInterval('EpilogueMovieToonAnim')
         self.unstash()
-        self.epilogueMusic.stop()
+        self.epilogueTwoMusic.stop()
 
     def enterFrolic(self):
         DistributedBossCog.DistributedBossCog.enterFrolic(self)

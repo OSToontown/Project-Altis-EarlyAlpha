@@ -105,17 +105,17 @@ GlobalStreetNames = {20000: ('to', 'on', 'Tutorial Terrace'),
  9100: ('to', 'on', 'Lullaby Lane'),
  9200: ('to', 'on', 'Pajama Place'),
  10000: ('to', 'in', 'Bossbot HQ Country Club'),
- 10100: ('to the', 'in the', 'Bossbot HQ Lobby'),
+ 10100: ('to the', 'in the', 'Bossbot HQ Clubhouse Lobby'),
  10200: ('to the', 'in the', 'The Clubhouse'),
  10500: ('to the', 'in the', 'The Front Three'),
  10600: ('to the', 'in the', 'The Middle Six'),
  10700: ('to the', 'in the', 'The Back Nine'),
- 11000: ('to the', 'in the', 'Sellbot HQ Courtyard'),
- 11100: ('to the', 'in the', 'Sellbot HQ Lobby'),
- 11200: ('to the', 'in the', 'Sellbot Factory'),
+ 11000: ('to the', 'in the', 'Sellbot HQ Junkyard'),
+ 11100: ('to the', 'in the', 'Sellbot HQ Towers Lobby'),
+ 11200: ('to the', 'in the', 'Sellbot Factory Exterior'),
  11500: ('to the', 'in the', 'Sellbot Factory'),
  12000: ('to', 'in', 'Cashbot Train Yard'),
- 12100: ('to the', 'in the', 'Cashbot HQ Lobby'),
+ 12100: ('to the', 'in the', 'Cashbot HQ Cashbot Vault Lobby'),
  12500: ('to the', 'in the', 'Cashbot Coin Mint'),
  12600: ('to the', 'in the', 'Cashbot Dollar Mint'),
  12700: ('to the', 'in the', 'Cashbot Bullion Mint'),
@@ -2360,14 +2360,14 @@ SuitMicromanagerS = 'a Micromanager'
 SuitDownsizerS = 'a Downsizer'
 SuitHeadHunterS = 'a Head Hunter'
 SuitCorporateRaiderS = 'a Corporate Raider'
-SuitTheBigCheeseS = 'a The Big Cheese'
+SuitTheBigCheeseS = 'a Big Cheese'
 SuitColdCallerS = 'a Cold Caller'
 SuitTelemarketerS = 'a Telemarketer'
 SuitNameDropperS = 'a Name Dropper'
 SuitGladHanderS = 'a Glad Hander'
 SuitMoverShakerS = 'a Mover & Shaker'
 SuitTwoFaceS = 'a Two-Face'
-SuitTheMinglerS = 'a The Mingler'
+SuitTheMinglerS = 'a Mingler'
 SuitMrHollywoodS = 'a Mr. Hollywood'
 SuitShortChangeS = 'a Short Change'
 SuitPennyPincherS = 'a Penny Pincher'
@@ -2392,14 +2392,14 @@ SuitMicromanagerP = 'Micromanagers'
 SuitDownsizerP = 'Downsizers'
 SuitHeadHunterP = 'Head Hunters'
 SuitCorporateRaiderP = 'Corporate Raiders'
-SuitTheBigCheeseP = 'The Big Cheeses'
+SuitTheBigCheeseP = 'Big Cheeses'
 SuitColdCallerP = 'Cold Callers'
 SuitTelemarketerP = 'Telemarketers'
 SuitNameDropperP = 'Name Droppers'
 SuitGladHanderP = 'Glad Handers'
 SuitMoverShakerP = 'Movers & Shakers'
 SuitTwoFaceP = 'Two-Faces'
-SuitTheMinglerP = 'The Minglers'
+SuitTheMinglerP = 'Minglers'
 SuitMrHollywoodP = 'Mr. Hollywoods'
 SuitShortChangeP = 'Short Changes'
 SuitPennyPincherP = 'Penny Pinchers'
@@ -2571,6 +2571,10 @@ SuitAttackTaunts = {'Audit': ["I believe your books don't balance.",
                 "It's tradition you know.",
                 'Another day another dollar.',
                 'I always have the occasional cigar.',
+                "Say 'NO' to smoking.",
+                'Even secondhand smoking is bad for you.',
+                'Watch it Toon, these fumes are toxic.', 
+                'Smoking is bad for you.',
                 'I need a good smoke.',
                 'Smoking is a dirty habit.'],
  'ClipOnTie': ['Better dress for our meeting.',
@@ -3035,7 +3039,6 @@ SuitAttackTaunts = {'Audit': ["I believe your books don't balance.",
                   'You know you love me, I know you care.',
                   "Just shout whenever, and I'll be there.",
                   "We're just friends - what are you saying?",
-                  'Baby, baby, baby, oh...',
                   "It's like dreaming with your feet.",
                   'Never miss a chance to dance!',
                   'When you feel sad, dance!',

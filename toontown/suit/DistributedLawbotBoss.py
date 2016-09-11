@@ -164,7 +164,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.stingMusic.stop()
         self.battleTwoMusic.stop()
         self.battleThreeMusic.stop()
-        self.epilogueMusic.stop()
+        self.epilogueTwoMusic.stop()
         if self.juryTimer:
             self.juryTimer.destroy()
             del self.juryTimer
@@ -710,7 +710,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.stopAnimate()
         self.__hideWitnessToon()
         DistributedBossCog.DistributedBossCog.enterIntroduction(self)
-        base.playMusic(self.promotionMusic, looping=1, volume=0.9)
+        base.playMusic(self.battleTwoMusic, looping=1, volume=0.9)
         if not self.mainDoor.isEmpty():
             self.mainDoor.stash()
         if not self.reflectedMainDoor.isEmpty():
@@ -719,7 +719,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
     def exitIntroduction(self):
         self.notify.debug('----- exitIntroduction')
         DistributedBossCog.DistributedBossCog.exitIntroduction(self)
-        self.promotionMusic.stop()
+        self.battleTwoMusic.stop()
         if not self.mainDoor.isEmpty():
             pass
         if not self.reflectedMainDoor.isEmpty():
@@ -842,7 +842,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         if not self.useCannons:
             self.toonsToBattlePosition(self.toonsA, self.battleANode)
             self.toonsToBattlePosition(self.toonsB, self.battleBNode)
-        base.playMusic(self.battleTwoMusic, looping=1, volume=0.9)
+        base.playMusic(self.promotionMusic, looping=1, volume=0.9)
         self.startJuryBoxMoving()
         for index in range(len(self.cannons)):
             cannon = self.cannons[index]
@@ -867,7 +867,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         intervalName = self.uniqueName('Drop')
         self.clearInterval(intervalName)
         self.cleanupBattles()
-        self.battleTwoMusic.stop()
+        self.promotionMusic.stop()
         localAvatar.inventory.setBattleCreditMultiplier(1)
         if self.juryTimer:
             self.juryTimer.destroy()
@@ -958,7 +958,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.stickBossToFloor()
         self.setPosHpr(*ToontownGlobals.LawbotBossBattleThreePosHpr)
         self.bossMaxDamage = ToontownGlobals.LawbotBossMaxDamage
-        base.playMusic(self.battleThreeMusic, looping=1, volume=0.9)
+        base.playMusic(self.battleTwoMusic, looping=1, volume=0.9)
         self.__showWitnessToon()
         diffSettings = ToontownGlobals.LawbotBossDifficultySettings[self.battleDifficulty]
         if diffSettings[4]:
@@ -994,7 +994,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         taskName = 'RecoverBossDamage'
         taskMgr.remove(taskName)
         self.battleThreeMusicTime = self.battleThreeMusic.getTime()
-        self.battleThreeMusic.stop()
+        self.battleTwoMusic.stop()
         return
 
     def enterNearVictory(self):
@@ -1013,7 +1013,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.forward = 1
         self.doAnimate()
         self.setDizzy(1)
-        base.playMusic(self.battleThreeMusic, looping=1, volume=0.9, time=self.battleThreeMusicTime)
+        base.playMusic(self.battleTwoMusic, looping=1, volume=0.9, time=self.battleTwoMusicTime)
 
     def exitNearVictory(self):
         self.notify.debug('----- exitNearVictory')
@@ -1024,8 +1024,8 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         taskMgr.remove(self.uniqueName('PieAdvice'))
         localAvatar.setCameraFov(ToontownGlobals.CogHQCameraFov)
         self.setDizzy(0)
-        self.battleThreeMusicTime = self.battleThreeMusic.getTime()
-        self.battleThreeMusic.stop()
+        self.battleTwoMusicTime = self.battleTwoMusic.getTime()
+        self.battleTwoMusic.stop()
 
     def enterVictory(self):
         self.notify.debug('----- enterVictory')
@@ -1057,8 +1057,8 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.stopAnimate()
         self.unstash()
         localAvatar.setCameraFov(ToontownGlobals.CogHQCameraFov)
-        self.battleThreeMusicTime = self.battleThreeMusic.getTime()
-        self.battleThreeMusic.stop()
+        self.battleTwoMusicTime = self.battleTwoMusic.getTime()
+        self.battleTwoMusic.stop()
 
     def enterDefeat(self):
         self.notify.debug('----- enterDefeat')
@@ -1074,7 +1074,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         seq = Sequence(self.makeDefeatMovie(), Func(self.__continueDefeat), name=intervalName)
         seq.start()
         self.storeInterval(seq, intervalName)
-        base.playMusic(self.battleThreeMusic, looping=1, volume=0.9, time=self.battleThreeMusicTime)
+        base.playMusic(self.battleTwoMusic, looping=1, volume=0.9, time=self.battleTwoMusicTime)
 
     def __continueDefeat(self):
         self.notify.debug('----- __continueDefeat')
@@ -1086,8 +1086,8 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.stopAnimate()
         self.unstash()
         localAvatar.setCameraFov(ToontownGlobals.CogHQCameraFov)
-        self.battleThreeMusicTime = self.battleThreeMusic.getTime()
-        self.battleThreeMusic.stop()
+        self.battleTwoMusicTime = self.battleTwoMusic.getTime()
+        self.battleTwoMusic.stop()
 
     def enterReward(self):
         self.cleanupIntervals()
@@ -1110,7 +1110,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         ival.delayDeletes = delayDeletes
         ival.start()
         self.storeInterval(ival, intervalName)
-        base.playMusic(self.battleThreeMusic, looping=1, volume=0.9, time=self.battleThreeMusicTime)
+        base.playMusic(self.battleTwoMusic, looping=1, volume=0.9, time=self.battleTwoMusicTime)
 
     def __doneReward(self):
         self.notify.debug('----- __doneReward')
@@ -1124,8 +1124,8 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.unstash()
         self.rewardPanel.destroy()
         del self.rewardPanel
-        self.battleThreeMusicTime = 0
-        self.battleThreeMusic.stop()
+        self.battleTwoMusicTime = 0
+        self.battleTwoMusic.stop()
 
     def enterEpilogue(self):
         self.cleanupIntervals()
@@ -1147,7 +1147,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         seq.start()
         self.storeInterval(seq, intervalName)
         self.accept('doneChatPage', self.__doneEpilogue)
-        base.playMusic(self.epilogueMusic, looping=1, volume=0.9)
+        base.playMusic(self.epilogueTwoMusic, looping=1, volume=0.9)
 
     def __doneEpilogue(self, elapsedTime = 0):
         self.notify.debug('----- __doneEpilogue')
@@ -1161,7 +1161,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.notify.debug('----- exitEpilogue')
         self.clearInterval('EpilogueMovieToonAnim')
         self.unstash()
-        self.epilogueMusic.stop()
+        self.epilogueTwoMusic.stop()
 
     def enterFrolic(self):
         self.notify.debug('----- enterFrolic')
