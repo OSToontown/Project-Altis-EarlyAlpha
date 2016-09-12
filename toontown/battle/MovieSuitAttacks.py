@@ -705,7 +705,7 @@ def throwPos(t, object, duration, target, values, gravity = -32.144):
     object.setPos(x, y, z)
 
 
-def getToonTakeDamageTrack(toon, attack, died, dmg, delay, damageAnimNames = None, splicedDamageAnims = None, showDamageExtraTime = 0.01):
+def getToonTakeDamageTrack(toon, died, dmg, delay, damageAnimNames = None, splicedDamageAnims = None, showDamageExtraTime = 0.01):
     toonTrack = Sequence()
     toonTrack.append(Wait(delay))
     if damageAnimNames:
