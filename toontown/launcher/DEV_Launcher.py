@@ -26,7 +26,7 @@ class DEV_Launcher(ShowBase):
 
         self.createGUI()
 
-        os.environ['TT_PLAYCOOKIE'] = 'DEFAULT'
+        os.environ['TT_PLAYCOOKIE'] = '.DEFAULT'
         os.environ['TT_GAMESERVER'] = '127.0.0.1'
 
         self.accept("tab", self.focus)
@@ -87,9 +87,8 @@ class DEV_Launcher(ShowBase):
         self.client()
 
     def playgame(self, playcookie):
-        os.environ['TT_PLAYCOOKIE'] = playcookie
         try:
-            os.system('C:\Panda3D-1.9.0\python\ppython.exe -m toontown.toonbase.ToontownStart')
+            os.system('C:\Panda3D-1.9.0\python\ppython.exe -m toontown.toonbase.ToontownStart -c ' + playcookie)
         except:
             pass
 
