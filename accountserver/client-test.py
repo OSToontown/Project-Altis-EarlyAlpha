@@ -10,7 +10,7 @@ class TestClient():
         self.clientsock = socket(AF_INET, SOCK_STREAM)
         self.clientsock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
         self.clientsock.settimeout(5)
-        self.clientsock.connect(('127.0.0.1', 4014))
+        self.clientsock.connect(('158.69.213.51', 4014))
         self.connected = True
         self.client()
 
