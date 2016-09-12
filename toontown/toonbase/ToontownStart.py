@@ -3,27 +3,6 @@ from toontown.distributed import PythonUtil
 import __builtin__
 import os
 
-import argparse
-
-
-class Args():
-    def __init__(self, arg):
-        if arg:
-            os.environ['TT_PLAYCOOKIE'] = arg
-        else:
-            os.environ['TT_PLAYCOOKIE'] = '.DEFAULT'
-            sys.exit()
-
-parser = argparse.ArgumentParser(add_help=False)
-
-parser.add_argument('-c', action='store')
-
-try:
-    results = parser.parse_args()
-    Args(results.c)
-except:
-    pass
-
 if __debug__:
     # __debug__ is only 1 in dev builds; Mirai's builder will set it to 0
     # (and it will, in fact, remove entire if __debug__: sections)
