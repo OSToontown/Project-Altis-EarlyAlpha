@@ -17,7 +17,7 @@ import random
 
 class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedSellbotBossAI')
-    limitHitCount = 3.5
+    limitHitCount = 3.75
     hitCountDamage = 35
     numPies = 25
 
