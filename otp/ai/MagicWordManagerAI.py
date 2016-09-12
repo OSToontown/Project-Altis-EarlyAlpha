@@ -3,6 +3,8 @@ from direct.distributed.DistributedObjectAI import DistributedObjectAI
 from otp.ai.MagicWordGlobal import *
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.MsgTypes import *
+import time
+import datetime
 
 class MagicWordManagerAI(DistributedObjectAI):
     notify = DirectNotifyGlobal.directNotify.newCategory("MagicWordManagerAI")
@@ -11,6 +13,7 @@ class MagicWordManagerAI(DistributedObjectAI):
         invokerId = self.air.getAvatarIdFromSender()
 
         invoker = self.air.doId2do.get(invokerId)
+        now = time.strftime("%c")
         if not invoker:
             self.sendUpdateToAvatarId(invokerId, 'sendMagicWordResponse', ['missing invoker'])
             return
@@ -43,3 +46,5 @@ class MagicWordManagerAI(DistributedObjectAI):
                                   invokerId=invokerId, invokerAccess=invoker.getAdminAccess(),
                                   targetId=targetId, targetAccess=targetAccess,
                                   word=word, response=response[0])
+        with open("backups/tools/magic-words.txt", "a") as text_file:
+            text_file.write("%s | %s : %s\n" % (now, invokerId, word))
