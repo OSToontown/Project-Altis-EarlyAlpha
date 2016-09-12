@@ -6,11 +6,16 @@ import base64
 
 class TestClient():
     def __init__(self):
+        self.ip = raw_input('Account Server IP (Default: 158.69.213.51): ')
+
+        if self.ip == '':
+            self.ip = '158.69.213.51'
+
         #  Create the socket and configure it
         self.clientsock = socket(AF_INET, SOCK_STREAM)
         self.clientsock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
         self.clientsock.settimeout(5)
-        self.clientsock.connect(('158.69.213.51', 4014))
+        self.clientsock.connect((self.ip, 4014))
         self.connected = True
         self.client()
 
@@ -59,7 +64,7 @@ class TestClient():
         if self.key == 'error':
             print self.key + ': ' + self.value
         elif self.key == 'playcookie':
-            print 'launching game!'
+            print 'Login was successful!'
         elif self.key == 'success':
             print self.value
 
