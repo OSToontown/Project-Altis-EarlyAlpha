@@ -17,6 +17,8 @@ from toontown.battle import DistributedBattleWaitersAI
 from toontown.battle import DistributedBattleDinersAI
 from toontown.battle import BattleExperienceAI
 from direct.distributed.ClockDelta import globalClockDelta
+from toontown.coghq.BanquetTableBase import *
+
 
 class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedBossbotBossAI')
@@ -105,11 +107,8 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
             if simbase.config.GetBool('bossbot-boss-cheat', 0):
                 listVersion[14] = weakenedValue
                 SuitBuildingGlobals.SuitBuildingInfo = tuple(listVersion)
-                
             retval = self.invokeSuitPlanner(16, 0)
-            
             return retval
-            
         else:
             suits = self.generateDinerSuits()
             return suits
@@ -270,7 +269,21 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         for belt in self.foodBelts:
             belt.goInactive()
 
+    def destroyDiners(self):
+        for table in self.tables:
+            for i in xrange(table.numDiners):
+                dinerStatus = table.dinerStatus[i]
+
+                if i in table.numFoodEaten.keys():
+                    table.b_setDinerStatus(i, BanquetTableBase.DEAD)
+                    continue
+
+                elif dinerStatus == BanquetTableBase.EATING:
+                    table.b_setDinerStatus(i, BanquetTableBase.DEAD)
+
+
     def __doneBattleTwo(self, avIds):
+        self.destroyDiners()
         self.b_setState('PrepareBattleThree')
 
     def requestGetFood(self, beltIndex, foodIndex, foodNum):
@@ -339,22 +352,23 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
 
     def generateDinerSuits(self):
         diners = []
-        for i in xrange(2 if simbase.config.GetBool('bossbot-boss-cheat', 0) else len(self.notDeadList)):
+        for i in xrange(len(self.notDeadList)):
             if simbase.config.GetBool('bossbot-boss-cheat', 0):
                 suit = self.__genSuitObject(self.zoneId, 2, 'c', 2, 0)
             else:
                 info = self.notDeadList[i]
                 suitType = info[2] - 4
                 suitLevel = info[2]
-                suit = self.__genSuitObject(self.zoneId, suitType, 'c', suitLevel, 1)
+                bldgTrack = info[3]
+                suit = self.__genSuitObject(self.zoneId, suitType, bldgTrack, suitLevel, 1)
             diners.append((suit, 100))
 
         active = []
         for i in xrange(2):
             if simbase.config.GetBool('bossbot-boss-cheat', 0):
-                suit = self.__genSuitObject(self.zoneId, 1, 'c', 1, 0)
+                suit = self.__genSuitObject(self.zoneId, 2, 'c', 2, 0)
             else:
-                suitType = 8
+                suitType =  8
                 suitLevel = 12
                 suit = self.__genSuitObject(self.zoneId, suitType, 'c', suitLevel, 1)
             active.append(suit)
@@ -576,8 +590,7 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
          'track': self.dna.dept,
          'isSkelecog': 0,
          'isForeman': 0,
-         'isVP': 1,
-         'isCFO': 0,
+         'isBoss': 1,
          'isSupervisor': 0,
          'isVirtual': 0,
          'activeToons': self.involvedToons[:]})
@@ -595,7 +608,6 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
                 toon.b_promote(self.deptIndex)
 
     def givePinkSlipReward(self, toon):
-        self.notify.debug('TODO give pink slip to %s' % toon)
         toon.addPinkSlips(self.battleDifficulty + 1)
 
     def getThreat(self, toonId):
@@ -663,8 +675,6 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         t = max(t0, t1)
         progVal = fromValue + (toValue - fromValue) * min(t, 1)
         self.notify.debug('progVal=%s' % progVal)
-        import pdb
-        pdb.set_trace()
         return progVal
 
     def __doDirectedAttack(self):
@@ -745,31 +755,21 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         return returnedToonId
 
     def getToonDifficulty(self):
-        highestCogSuitLevel = 0
-        totalCogSuitLevels = 0.0
-        totalNumToons = 0.0
+        totalCogSuitTier = 0
+        totalToons = 0
+
         for toonId in self.involvedToons:
             toon = simbase.air.doId2do.get(toonId)
             if toon:
-                toonLevel = toon.getNumPromotions(self.dept)
-                totalCogSuitLevels += toonLevel
-                totalNumToons += 1
-                if toon.cogLevels > highestCogSuitLevel:
-                    highestCogSuitLevel = toonLevel
+                totalToons += 1
+                totalCogSuitTier += toon.cogTypes[0]
 
-        if not totalNumToons:
-            totalNumToons = 1.0
-        averageLevel = totalCogSuitLevels / totalNumToons
-        self.notify.debug('toons average level = %f, highest level = %d' % (averageLevel, highestCogSuitLevel))
-        retval = min(averageLevel, self.maxToonLevels)
-        return retval
+        averageTier = math.floor(totalCogSuitTier / totalToons) + 1
+        return int(averageTier)
 
     def calcAndSetBattleDifficulty(self):
         self.toonLevels = self.getToonDifficulty()
-        numDifficultyLevels = len(ToontownGlobals.BossbotBossDifficultySettings)
-        battleDifficulty = int(self.toonLevels / self.maxToonLevels * numDifficultyLevels)
-        if battleDifficulty >= numDifficultyLevels:
-            battleDifficulty = numDifficultyLevels - 1
+        battleDifficulty = int(math.floor(self.toonLevels / 2))
         self.b_setBattleDifficulty(battleDifficulty)
 
     def b_setBattleDifficulty(self, batDiff):
@@ -855,9 +855,6 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
     def magicWordHit(self, damage, avId):
         self.hitBoss(damage)
 
-    def __doAreaAttack(self):
-        self.b_setAttackCode(ToontownGlobals.BossCogAreaAttack)
-
     def __doGolfAreaAttack(self):
         self.numGolfAreaAttacks += 1
         self.b_setAttackCode(ToontownGlobals.BossCogGolfAreaAttack)
@@ -926,7 +923,21 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
 
 from otp.ai.MagicWordGlobal import *
 from panda3d.core import *
+
+
+def getCEO(toon):
+    for object in simbase.air.doId2do.values():
+        if isinstance(object, DistributedBossbotBossAI):
+            if toon.doId in object.involvedToons:
+                return object
     
+    return None
+	
+    def alertDiners(self):
+        self.__doneBattleTwo(self.involvedToons)
+
+    boss.exitIntroduction()
+
 @magicWord(category=CATEGORY_SYSADMIN, types=[])
 def endceo():
     toon = spellbook.getTarget()
