@@ -117,7 +117,6 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
         self.bubbleB = self.rotateNode.attachNewNode(bubbleBNode)
         self.bubbleB.setTag('attackCode', str(ToontownGlobals.BossCogFrontAttack))
         self.bubbleB.stash()
-        self.bubbleB.show()
         bubbleF = CollisionSphere(0, -25, 0, 12)
         bubbleF.setTangible(0)
         bubbleFNode = CollisionNode('BossZap')
@@ -126,7 +125,6 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
         self.bubbleF = self.rotateNode.attachNewNode(bubbleFNode)
         self.bubbleF.setTag('attackCode', str(ToontownGlobals.BossCogFrontAttack))
         self.bubbleF.stash()
-        self.bubbleF.show()
         bubbleFL = CollisionSphere(-25, 0, 0, 12)
         bubbleFL.setTangible(0)
         bubbleFLNode = CollisionNode('BossZap')
@@ -135,7 +133,6 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
         self.bubbleFL = self.rotateNode.attachNewNode(bubbleFLNode)
         self.bubbleFL.setTag('attackCode', str(ToontownGlobals.BossCogFrontAttack))
         self.bubbleFL.stash()
-        self.bubbleFL.show()
         bubbleFR = CollisionSphere(25, 0, 0, 12)
         bubbleFR.setTangible(0)
         bubbleFRNode = CollisionNode('BossZap')
@@ -144,7 +141,6 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
         self.bubbleFR = self.rotateNode.attachNewNode(bubbleFRNode)
         self.bubbleFR.setTag('attackCode', str(ToontownGlobals.BossCogFrontAttack))
         self.bubbleFR.stash()
-        self.bubbleFR.show()
 
     def disable(self):
         DistributedAvatar.DistributedAvatar.disable(self)
