@@ -131,6 +131,15 @@ class BossCog(Avatar.Avatar):
         self.frontAttack = self.rotateNode.attachNewNode('frontAttack')
         self.frontAttack.setPos(0, -10, 10)
         self.frontAttack.setScale(2)
+        self.rightAttack = self.rotateNode.attachNewNode('frontAttack')
+        self.rightAttack.setPos(10, 0, 10)
+        self.rightAttack.setScale(2)
+        self.leftAttack = self.rotateNode.attachNewNode('frontAttack')
+        self.leftAttack.setPos(-10, 0, 10)
+        self.leftAttack.setScale(2)
+        self.backAttack = self.rotateNode.attachNewNode('frontAttack')
+        self.backAttack.setPos(0, 10, 10)
+        self.backAttack.setScale(2)
         self.setHeight(26)
         self.nametag3d.setScale(2)
         for partName in ('legs', 'torso', 'head'):
@@ -533,10 +542,16 @@ class BossCog(Avatar.Avatar):
         elif anim == 'frontAttack':
             self.doAnimate(None, raised=1, happy=0, queueNeutral=0)
             pe = BattleParticles.loadParticleFile('bossCogFrontAttack.ptf')
+            pe2 = BattleParticles.loadParticleFile('bossCogFrontAttack.ptf')
+            pe3 = BattleParticles.loadParticleFile('bossCogFrontAttack.ptf')
+            pe4 = BattleParticles.loadParticleFile('bossCogFrontAttack.ptf')
+            pe2.setH(180)
+            pe3.setH(90)
+            pe4.setH(270)
             ival = Sequence(Func(self.reverseHead), ActorInterval(self, 'Bb2Ff_spin'), Func(self.forwardHead))
             if self.forward:
                 ival = Sequence(Func(self.reverseBody), ParallelEndTogether(ival, self.pelvis.hprInterval(0.5, self.pelvisForwardHpr, blendType='easeInOut')))
-            ival = Sequence(Track((0, ival), (0, SoundInterval(self.spinSfx, node=self)), (0.9, Parallel(SoundInterval(self.rainGearsSfx, node=self), ParticleInterval(pe, self.frontAttack, worldRelative=0, duration=1.5, cleanup=True), duration=0)), (1.9, Func(self.bubbleF.unstash))), Func(self.bubbleF.stash))
+            ival = Sequence(Track((0, ival), (0, Sequence(SoundInterval(self.spinSfx, node=self))), (0.9, Parallel(SoundInterval(self.rainGearsSfx, node=self), ParticleInterval(pe4, self.leftAttack, worldRelative=0, duration=1.5, cleanup=True), ParticleInterval(pe3, self.rightAttack, worldRelative=0, duration=1.5, cleanup=True), ParticleInterval(pe2, self.backAttack, worldRelative=0, duration=1.5, cleanup=True), ParticleInterval(pe, self.frontAttack, worldRelative=0, duration=1.5, cleanup=True), duration=0)), (1.9, Func(self.bubbleF.unstash)), (1.9, Func(self.bubbleFL.unstash)), (1.9, Func(self.bubbleFR.unstash)), (1.9, Func(self.bubbleB.unstash))), Func(self.bubbleF.stash), Func(self.bubbleFL.stash), Func(self.bubbleFR.stash), Func(self.bubbleB.stash))
             self.forward = 1
             self.happy = 0
             self.raised = 1
