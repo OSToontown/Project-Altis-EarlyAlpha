@@ -649,7 +649,7 @@ class TalkAssistant(DirectObject.DirectObject):
 			base.cr.chatAgent.sendSFWhisperMessage(receiverAvId, message)
 			return None
 		else:
-			base.cr.ttrFriendsManager.sendUpdate('sendTalkWhisper', [receiverAvId, message])
+			base.cr.ttFriendsManager.sendUpdate('sendTalkWhisper', [receiverAvId, message])
 		return None
 
 
