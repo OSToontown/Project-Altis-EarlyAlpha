@@ -156,6 +156,26 @@ class ToonBase(OTPBase.OTPBase):
         self.oldY = max(1, base.win.getYSize())
         self.aspectRatio = float(self.oldX) / self.oldY
         self.localAvatarStyle = None
+
+        self.wantCustomControls = settings.get('want-Custom-Controls', False)
+
+        self.MOVE_UP = 'arrow_up'   
+        self.MOVE_DOWN = 'arrow_down'
+        self.MOVE_LEFT = 'arrow_left'      
+        self.MOVE_RIGHT = 'arrow_right'
+        self.JUMP = 'control'
+        self.ACTION_BUTTON = 'delete'
+        keymap = settings.get('keymap', {})
+        if self.wantCustomControls:
+            self.MOVE_UP = keymap.get('MOVE_UP', self.MOVE_UP)
+            self.MOVE_DOWN = keymap.get('MOVE_DOWN', self.MOVE_DOWN)
+            self.MOVE_LEFT = keymap.get('MOVE_LEFT', self.MOVE_LEFT)
+            self.MOVE_RIGHT = keymap.get('MOVE_RIGHT', self.MOVE_RIGHT)
+            self.JUMP = keymap.get('JUMP', self.JUMP)
+            self.ACTION_BUTTON = keymap.get('ACTION_BUTTON', self.ACTION_BUTTON)
+            ToontownGlobals.OptionsPageHotkey = keymap.get('OPTIONS-PAGE', ToontownGlobals.OptionsPageHotkey)
+        
+        self.CHAT_HOTKEY = keymap.get('CHAT_HOTKEY', 'r')
         return
 
     def openMainWindow(self, *args, **kw):
