@@ -435,7 +435,7 @@ class Suit(Avatar.Avatar):
             self.setHeight(5.0)
         elif dna.name == 'ym':
             self.scale = scale / aSize
-            self.handColor = VBase4(0.95, 0.95, 1.0, 1.0)
+            self.handColor = VBase4(0.95, 0.9, 0.875, 1.0)
             self.generateBody()
             self.headTexture = 'yes_man.jpg'
             self.generateHead('yesman')
@@ -500,7 +500,7 @@ class Suit(Avatar.Avatar):
             self.setHeight(6.39)
         elif dna.name == 'bs':
             self.scale = scale / aSize
-            self.handColor = VBase4(2.55, 0.5, 1.50, 1.0),
+            self.handColor = VBase4(2.55, 0.5, 1.50, 1.0)
             self.generateBody()
             self.generateHead('backstabber')
             self.setHeight(6.71)
@@ -514,7 +514,7 @@ class Suit(Avatar.Avatar):
             self.setHeight(7.9)
         elif dna.name == 'le':
             self.scale = scale / aSize
-            self.handColor = VBase4(2.55, 0.55, 0, 1.0),
+            self.handColor = VBase4(2.55, 0.55, 0, 1.0)
             self.generateBody()
             self.generateHead('legaleagle')
             self.setHeight(8.27)
@@ -568,7 +568,7 @@ class Suit(Avatar.Avatar):
             self.setHeight(8.58)
         elif dna.name == 'rb':
             self.scale = scale / aSize
-            self.handColor = VBase4(0.25, 0.25, 0.5, 1.0),
+            self.handColor = VBase4(0.25, 0.25, 0.5, 1.0)
             self.generateBody()
             self.headTexture = 'robber-baron.jpg'
             self.generateHead('yesman')
@@ -596,7 +596,7 @@ class Suit(Avatar.Avatar):
             self.setHeight(5.98)
         elif dna.name == 'gh':
             self.scale = scale / cSize
-            self.handColor = VBase4(0.95, 0.95, 1.0, 1.0),
+            self.handColor = VBase4(0.95, 0.9, 0.875, 1.0)
             self.generateBody()
             self.generateHead('gladhander')
             self.setHeight(6.4)
@@ -621,7 +621,7 @@ class Suit(Avatar.Avatar):
             self.setHeight(7.61)
         elif dna.name == 'mh':
             self.scale = scale / aSize
-            self.handColor = VBase4(0.95, 0.95, 1.0, 1.0),
+            self.handColor = VBase4(0.95, 0.9, 0.875, 1.0)
             self.generateBody()
             self.generateHead('yesman')
             self.generateHead('group')
