@@ -44,7 +44,8 @@ class ChatManager(DirectObject.DirectObject):
     def __init__(self, cr, localAvatar):
         self.cr = cr
         self.localAvatar = localAvatar
-        self.wantBackgroundFocus = 1
+        sself.wantBackgroundFocus = not base.wantCustomControls
+        self.chatHotkey = base.CHAT_HOTKEY
         self.__scObscured = 0
         self.__normalObscured = 0
         self.openChatWarning = None
@@ -214,10 +215,12 @@ class ChatManager(DirectObject.DirectObject):
 
     def enterMainMenu(self):
         self.checkObscurred()
-        if self.localAvatar.canChat() or self.cr.wantMagicWords:
+        if base.cr.wantTypedChat():
             if self.wantBackgroundFocus:
                 self.chatInputNormal.chatEntry['backgroundFocus'] = 1
             self.acceptOnce('enterNormalChat', self.fsm.request, ['normalChat'])
+            if not self.wantBackgroundFocus:
+                self.accept(self.chatHotkey, messenger.send, ['enterNormalChat'])
 
     def checkObscurred(self):
         if not self.__scObscured:
@@ -401,10 +404,14 @@ class ChatManager(DirectObject.DirectObject):
         self.chatInputSpeedChat.hide()
 
     def enterNormalChat(self):
+        if base.wantCustomControls:
+            base.localAvatar.controlManager.disableWASD()
         result = self.chatInputNormal.activateByData()
         return result
 
     def exitNormalChat(self):
+        if base.wantCustomControls:
+            base.localAvatar.controlManager.enableWASD()
         self.chatInputNormal.deactivate()
 
     def enterOpenChatWarning(self):
@@ -518,3 +525,15 @@ class ChatManager(DirectObject.DirectObject):
 
     def __privacyPolicyDone(self):
         self.fsm.request('activateChat')
+
+    def reloadWASD(self):
+        self.wantBackgroundFocus = not base.wantCustomControls
+        self.ignore(self.chatHotkey)
+        if self.wantBackgroundFocus:
+            self.chatInputNormal.chatEntry['backgroundFocus'] = 1
+        else:
+            self.chatHotkey = base.CHAT_HOTKEY
+            self.chatInputNormal.chatEntry['backgroundFocus'] = 0
+ 
+    def disableBackgroundFocus(self):
+        self.chatInputNormal.chatEntry['backgroundFocus'] = 0
