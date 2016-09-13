@@ -1222,7 +1222,7 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         gearRoot.setTag('attackCode', str(ToontownGlobals.BossCogStrafeAttack))
         gearModel = self.getGearFrisbee()
         gearModel.setScale(0.1)
-        t = self.getBossDamage() / 100.0
+        t = self.getBossDamage() / 150.0
         gearTrack = Parallel()
         numGears = int(4 + 6 * t + 0.5)
         time = 5.0 - 4.0 * t

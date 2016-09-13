@@ -17,7 +17,7 @@ import random
 
 class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedSellbotBossAI')
-    limitHitCount = 3.75
+    limitHitCount = 4.75
     hitCountDamage = 35
     numPies = 25
 
@@ -121,9 +121,9 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
     def __doAreaAttack(self):
         self.b_setAttackCode(ToontownGlobals.BossCogAreaAttack)
         if self.recoverRate:
-            newRecoverRate = min(200, self.recoverRate * 7.5)
+            newRecoverRate = min(200, self.recoverRate * 5.75)
         else:
-            newRecoverRate = 1.7
+            newRecoverRate = 2
         now = globalClock.getFrameTime()
         self.b_setBossDamage(self.getBossDamage(), newRecoverRate, now)
 
