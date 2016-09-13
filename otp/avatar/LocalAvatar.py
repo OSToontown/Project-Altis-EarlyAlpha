@@ -5,7 +5,7 @@ from direct.interval.IntervalGlobal import *
 from direct.showbase.InputStateGlobal import inputState
 from pandac.PandaModules import *
 import Avatar
-from direct.controls import ControlManager
+import ToontownControlManager
 import DistributedAvatar
 from direct.task import Task
 import PositionExaminer
@@ -52,7 +52,7 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
         base.pushCTrav(self.cTrav)
         self.cTrav.setRespectPrevTransform(1)
         self.avatarControlsEnabled = 0
-        self.controlManager = ControlManager.ControlManager(True, passMessagesThrough)
+        self.controlManager = ToontownControlManager.ToontownControlManager(True)
         self.initializeCollisions()
         self.initializeSmartCamera()
         self.cameraPositions = []

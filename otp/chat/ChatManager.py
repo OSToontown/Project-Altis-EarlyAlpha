@@ -44,7 +44,7 @@ class ChatManager(DirectObject.DirectObject):
     def __init__(self, cr, localAvatar):
         self.cr = cr
         self.localAvatar = localAvatar
-        sself.wantBackgroundFocus = not base.wantCustomControls
+        self.wantBackgroundFocus = not base.wantCustomControls
         self.chatHotkey = base.CHAT_HOTKEY
         self.__scObscured = 0
         self.__normalObscured = 0
