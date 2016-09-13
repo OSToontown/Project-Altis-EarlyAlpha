@@ -194,20 +194,12 @@
 ~collisionsOn()
 ##Re-enable collisions.
 
-~enableAFGravity()
-##Turn on Estate April Fools gravity.
+~gravity
 
-~setGravity(gravityValue, overrideWarning)
-##Set your gravity value!
+~xyz
 
-~normalGravity()
-##Turn off Estate April Fools gravity.
+~hpr
 
-~getPos()
-##Get current position of your toon.
-
-~setPos(toonX, toonY, toonZ)
-##Set position of your toon.
 
 ~chatmode(mode=)
 ##Set the chat mode of the current avatar.
