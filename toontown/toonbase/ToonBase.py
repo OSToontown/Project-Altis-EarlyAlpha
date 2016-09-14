@@ -157,14 +157,25 @@ class ToonBase(OTPBase.OTPBase):
         self.aspectRatio = float(self.oldX) / self.oldY
         self.localAvatarStyle = None
 
-        self.wantCustomControls = self.config.GetBool('want-Custom-Controls', False)
+        self.wantWASD = settings.get('want-WASD', False)
 
-        self.MOVE_UP = 'arrow_up'   
-        self.MOVE_DOWN = 'arrow_down'
-        self.MOVE_LEFT = 'arrow_left'      
-        self.MOVE_RIGHT = 'arrow_right'
+        self.Move_Up = 'arrow_up'
+        self.Move_Left = 'arrow_left'       
+        self.Move_Down = 'arrow_down'
+        self.Move_Right = 'arrow_right'
         self.JUMP = 'control'
-        self.ACTION_BUTTON = 'delete'
+        
+        if self.wantWASD:
+            self.Move_Up = 'w'
+            self.Move_Left = 'a'            
+            self.Move_Down = 's'
+            self.Move_Right = 'd'
+            self.JUMP = 'shift'
+
+    def openMainWindow(self, *args, **kw):
+        result = OTPBase.OTPBase.openMainWindow(self, *args, **kw)
+        self.setCursorAndIcon()
+        return result
 
     def openMainWindow(self, *args, **kw):
         result = OTPBase.OTPBase.openMainWindow(self, *args, **kw)
