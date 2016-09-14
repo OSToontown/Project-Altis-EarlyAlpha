@@ -696,13 +696,13 @@ PieCodeColors = {PieCodeBossCog: None,
                      1),
  PieCodeToon: None}
 BossCogRollSpeed = 7.5
-BossCogTurnSpeed = 15
+BossCogTurnSpeed = 20
 BossCogTreadSpeed = 3.5
 BossCogDizzy = 0
 BossCogElectricFence = 5
 BossCogSwatLeft = 2
 BossCogSwatRight = 3
-BossCogAreaAttack = 4.21
+BossCogAreaAttack = 4
 BossCogFrontAttack = 5
 BossCogRecoverDizzyAttack = 6
 BossCogDirectedAttack = 7
@@ -790,7 +790,7 @@ SellbotBossP3PosA = (-50, 40, 18)
 SellbotBossTopRampPosB = (80, -35, 18)
 SellbotBossTopRampTurnPosB = (80, 10, 18)
 SellbotBossP3PosB = (50, 60, 18)
-CashbotBossMaxDamage = 1000
+CashbotBossMaxDamage = 750
 CashbotBossOffstagePosHpr = (120,
  -195,
  0,
