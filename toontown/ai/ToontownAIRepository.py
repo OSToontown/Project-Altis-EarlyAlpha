@@ -19,7 +19,6 @@ from toontown.dna.DNASpawnerAI import DNASpawnerAI
 from direct.stdpy.file import open
 import time
 import random
-import thread
 
 # Friends!
 from otp.friends.FriendManagerAI import FriendManagerAI
@@ -166,119 +165,50 @@ class ToontownAIRepository(ToontownInternalRepository):
     def getAvatarExitEvent(self, avId):
         return 'distObjDelete-%d' % avId
 
-    def createDistrictStats(self):
+    def createGlobals(self):
+        """
+        Create "global" objects, e.g. TimeManager et al.
+        """
         self.districtStats = ToontownDistrictStatsAI(self)
         self.districtStats.settoontownDistrictId(self.districtId)
         self.districtStats.generateWithRequiredAndId(self.allocateChannel(),
                                                      self.getGameDoId(), 3)
         self.notify.info('Created district stats AI (%d).' % self.districtStats.doId)
-
-    def createTimeManager(self):
         self.timeManager = TimeManagerAI(self)
         self.timeManager.generateWithRequired(2)
 
-    def createNewsManager(self):
         self.newsManager = NewsManagerAI(self)
         self.newsManager.generateWithRequired(2)
 
-    def createMagicWordManager(self):
         self.magicWordManager = MagicWordManagerAI(self)
         self.magicWordManager.generateWithRequired(2)
 
-    def createFriendManager(self):
         self.friendManager = FriendManagerAI(self)
         self.friendManager.generateWithRequired(2)
 
-    def createPartyManager(self):
-        self.partyManager = DistributedPartyManagerAI(self)
-        self.partyManager.generateWithRequired(2)
+        if config.GetBool('want-parties', True):
+            self.partyManager = DistributedPartyManagerAI(self)
+            self.partyManager.generateWithRequired(2)
 
-        # setup our view of the global party manager ud
-        self.globalPartyMgr = self.generateGlobalObject(OTP_DO_ID_GLOBAL_PARTY_MANAGER, 'GlobalPartyManager')
+            # setup our view of the global party manager ud
+            self.globalPartyMgr = self.generateGlobalObject(OTP_DO_ID_GLOBAL_PARTY_MANAGER, 'GlobalPartyManager')
 
-    def createEstateManager(self):
         self.estateManager = EstateManagerAI(self)
         self.estateManager.generateWithRequired(2)
 
-    def createTrophyManager(self):
         self.trophyMgr = DistributedTrophyMgrAI(self)
         self.trophyMgr.generateWithRequired(2)
 
-    def createPetManager(self):
-        self.petMgr = PetManagerAI(self)
-
-    def createTutorialManager(self):
+        if config.GetBool('want-pets', True):
+            self.petMgr = PetManagerAI(self)
         self.tutorialManager = TutorialManagerAI(self)
         self.tutorialManager.generateWithRequired(2)
 
-    def createCatalogManager(self):
         self.catalogManager = CatalogManagerAI(self)
         self.catalogManager.generateWithRequired(2)
 
-    def createCodeRedemptionManager(self):
         self.codeRedemptionManager = TTCodeRedemptionMgrAI(self)
         self.codeRedemptionManager.generateWithRequired(2)
-
-    def createGlobals(self):
-        """
-        Create "global" objects, e.g. TimeManager et al.
-        """
-        thread.start_new_thread(self.createDistrictStats, ())
-        thread.start_new_thread(self.createTimeManager, ())
-        thread.start_new_thread(self.createNewsManager, ())
-        thread.start_new_thread(self.createMagicWordManager, ())
-        thread.start_new_thread(self.createFriendManager, ())
-        if config.GetBool('want-parties', True):
-            thread.start_new_thread(self.createPartyManager, ())
-        thread.start_new_thread(self.createEstateManager, ())
-        thread.start_new_thread(self.createTrophyManager, ())
-        if config.GetBool('want-pets', True):
-            thread.start_new_thread(self.createPetManager, ())
-        thread.start_new_thread(self.createTutorialManager, ())
-        thread.start_new_thread(self.createCatalogManager, ())
-        thread.start_new_thread(self.createCodeRedemptionManager, ())
-
-    def createTT(self):
-        self.hoods.append(TTHoodAI.TTHoodAI(self))
-
-    def createDD(self):
-        self.hoods.append(DDHoodAI.DDHoodAI(self))
-
-    def createDG(self):
-        self.hoods.append(DGHoodAI.DGHoodAI(self))
-
-    def createBR(self):
-        self.hoods.append(BRHoodAI.BRHoodAI(self))
-
-    def createMM(self):
-        self.hoods.append(MMHoodAI.MMHoodAI(self))
-
-    def createDL(self):
-        self.hoods.append(DLHoodAI.DLHoodAI(self))
-
-    def createGS(self):
-        self.hoods.append(GSHoodAI.GSHoodAI(self))
-
-    def createOZ(self):
-        self.hoods.append(OZHoodAI.OZHoodAI(self))
-
-    def createGZ(self):
-        self.hoods.append(GZHoodAI.GZHoodAI(self))
-
-    def createTF(self):
-        self.hoods.append(TFHoodAI.TFHoodAI(self))
-
-    def createSBHQ(self):
-        self.hoods.append(SellbotHQAI.SellbotHQAI(self))
-
-    def createCBHQ(self):
-        self.hoods.append(CashbotHQAI.CashbotHQAI(self))
-
-    def createLBHQ(self):
-        self.hoods.append(LawbotHQAI.LawbotHQAI(self))
-
-    def createBBHQ(self):
-        self.hoods.append(BossbotHQAI.BossbotHQAI(self))
 
     def createZones(self):
         """
@@ -290,41 +220,41 @@ class ToontownAIRepository(ToontownInternalRepository):
             while self.readerPollOnce():
                 pass
 
-        thread.start_new_thread(self.createTT, ())
+        self.hoods.append(TTHoodAI.TTHoodAI(self))
         clearQueue()
-        thread.start_new_thread(self.createDD, ())
+        self.hoods.append(DDHoodAI.DDHoodAI(self))
         clearQueue()
-        thread.start_new_thread(self.createDG, ())
+        self.hoods.append(DGHoodAI.DGHoodAI(self))
         clearQueue()
-        thread.start_new_thread(self.createBR, ())
+        self.hoods.append(BRHoodAI.BRHoodAI(self))
         clearQueue()
-        thread.start_new_thread(self.createMM, ())
+        self.hoods.append(MMHoodAI.MMHoodAI(self))
         clearQueue()
-        thread.start_new_thread(self.createDL, ())
+        self.hoods.append(DLHoodAI.DLHoodAI(self))
         clearQueue()
-        thread.start_new_thread(self.createGS, ())
+        self.hoods.append(GSHoodAI.GSHoodAI(self))
         clearQueue()
-        thread.start_new_thread(self.createOZ, ())
+        self.hoods.append(OZHoodAI.OZHoodAI(self))
         clearQueue()
-        thread.start_new_thread(self.createGZ, ())
+        self.hoods.append(GZHoodAI.GZHoodAI(self))
         clearQueue()
-        thread.start_new_thread(self.createTF, ())
+        self.hoods.append(TFHoodAI.TFHoodAI(self))
         clearQueue()
 
         if config.GetBool('want-sbhq', True):
-            thread.start_new_thread(self.createSBHQ, ())
+            self.hoods.append(SellbotHQAI.SellbotHQAI(self))
             clearQueue()
 
         if config.GetBool('want-cbhq', True):
-            thread.start_new_thread(self.createCBHQ, ())
+            self.hoods.append(CashbotHQAI.CashbotHQAI(self))
             clearQueue()
 
         if config.GetBool('want-lbhq', True):
-            thread.start_new_thread(self.createLBHQ, ())
+            self.hoods.append(LawbotHQAI.LawbotHQAI(self))
             clearQueue()
 
         if config.GetBool('want-bbhq', True):
-            thread.start_new_thread(self.createBBHQ, ())
+            self.hoods.append(BossbotHQAI.BossbotHQAI(self))
             clearQueue()
 
         for sp in self.suitPlanners.values():
