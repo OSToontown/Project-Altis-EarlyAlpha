@@ -857,7 +857,7 @@ def doSongAndDance(attack):
     battle = attack['battle']
     suitTrack = getSuitTrack(attack)
     toonTrack = getToonTrack(attack, suitTrack.getDuration() - 1.8, ['cringe'], suitTrack.getDuration() - 1.8, ['applause'])
-    soundTrack = getSoundTrack('SA_song_and_dance.ogg', node=suit)
+    soundTrack = getSoundTrack('AA_heal_happydance.ogg', node=suit)
     return Parallel(suitTrack, toonTrack, soundTrack)
 
 def doFillWithLead(attack):
