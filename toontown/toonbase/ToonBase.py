@@ -26,7 +26,6 @@ from toontown.launcher import ToontownDownloadWatcher
 from toontown.toontowngui import TTDialog
 from sys import platform
 from panda3d.core import TrueClock
-from DisplayOptions import DisplayOptions
 import otp.ai.DiagnosticMagicWords
 import time
 
@@ -34,10 +33,7 @@ class ToonBase(OTPBase.OTPBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('ToonBase')
 
     def __init__(self):
-        self.display = DisplayOptions()
         OTPBase.OTPBase.__init__(self)
-        base.enableMusic(self.display.settings.getBool('game', 'music', True))
-        base.enableSoundEffects(self.display.settings.getBool('game', 'sfx', True))
         self.disableShowbaseMouse()
         self.addCullBins()
         base.debugRunningMultiplier /= OTPGlobals.ToonSpeedFactor
@@ -159,17 +155,17 @@ class ToonBase(OTPBase.OTPBase):
 
         self.wantWASD = settings.get('want-WASD', False)
 
-        self.Move_Up = 'arrow_up'
-        self.Move_Left = 'arrow_left'       
-        self.Move_Down = 'arrow_down'
-        self.Move_Right = 'arrow_right'
+        self.MOVE_UP = 'arrow_up'   
+        self.MOVE_DOWN = 'arrow_down'
+        self.MOVE_LEFT = 'arrow_left'      
+        self.MOVE_RIGHT = 'arrow_right'
         self.JUMP = 'control'
         
         if self.wantWASD:
-            self.Move_Up = 'w'
-            self.Move_Left = 'a'            
-            self.Move_Down = 's'
-            self.Move_Right = 'd'
+            self.MOVE_UP = 'w'
+            self.MOVE_LEFT = 'a'            
+            self.MOVE_DOWN = 's'
+            self.MOVE_RIGHT = 'd'
             self.JUMP = 'shift'
 
     def openMainWindow(self, *args, **kw):
@@ -401,8 +397,6 @@ class ToonBase(OTPBase.OTPBase):
 
     def startShow(self, cr, launcherServer = None):
         self.cr = cr
-        if self.display.antialias:
-            render.setAntialias(AntialiasAttrib.MAuto)
         base.graphicsEngine.renderFrame()
         self.downloadWatcher = ToontownDownloadWatcher.ToontownDownloadWatcher(TTLocalizer.LauncherPhaseNames)
         if launcher.isDownloadComplete():

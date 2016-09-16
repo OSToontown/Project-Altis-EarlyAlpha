@@ -49,6 +49,41 @@ for file in glob.glob('resources/*.mf'):
             mf.removeSubfile(name)
     vfs.mount(mf, Filename('/'), 0)
 
+from direct.directnotify.DirectNotifyGlobal import directNotify
+from otp.otpbase.Settings import Settings
+from otp.otpbase import OTPGlobals
+
+
+notify = directNotify.newCategory('ToontownStart')
+notify.setInfo(True)
+
+settingsFilename = ConfigVariableString(
+    'preferences-filename',
+    'preferences.json'
+).getValue()
+
+notify.info('Reading %s...' % settingsFilename)
+
+__builtin__.settings = Settings(settingsFilename)
+if 'res' not in settings:
+    settings['res'] = (1280, 720)
+if 'fullscreen' not in settings:
+    settings['fullscreen'] = False
+if 'musicVol' not in settings:
+    settings['musicVol'] = 1.0
+if 'sfxVol' not in settings:
+    settings['sfxVol'] = 1.0
+if 'loadDisplay' not in settings:
+    settings['loadDisplay'] = 'pandagl'
+if 'toonChatSounds' not in settings:
+    settings['toonChatSounds'] = True
+
+loadPrcFileData('Settings: res', 'win-size %d %d' % tuple(settings['res']))
+loadPrcFileData('Settings: fullscreen', 'fullscreen %s' % settings['fullscreen'])
+loadPrcFileData('Settings: musicVol', 'audio-master-music-volume %s' % settings['musicVol'])
+loadPrcFileData('Settings: sfxVol', 'audio-master-sfx-volume %s' % settings['sfxVol'])
+loadPrcFileData('Settings: loadDisplay', 'load-display %s' % settings['loadDisplay'])
+
 class game:
     name = 'toontown'
     process = 'client'

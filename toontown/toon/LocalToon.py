@@ -246,17 +246,23 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
 
     def announceGenerate(self):
         self.startLookAround()
-        if base.wantNametags:
-            self.nametag.manage(base.marginManager)
         DistributedToon.DistributedToon.announceGenerate(self)
-        self.acceptingNewFriends = base.display.settings.getBool(str(self.getDoId()), 'accepting-new-friends', default=config.GetBool('accepting-new-friends-default', True))
-        self.acceptingNonFriendWhispers = base.display.settings.getBool(str(self.getDoId()), 'accepting-non-friend-whispers', default=config.GetBool('accepting-non-friend-whispers-default', True))
-        from otp.friends import FriendInfo
-        if self.adminAccess >= 300:
-            self.seeGhosts = 1
 
-        if config.GetBool('want-keep-alive', True):
-            taskMgr.doMethodLater(config.GetInt('keep-alive-delay', 30), self.keepAliveCheck, self.uniqueName('KeepAliveTimeout'), extraArgs=[])
+        acceptingNewFriends = settings.get('acceptingNewFriends', {})
+        acceptingNonFriendWhispers = settings.get('acceptingNonFriendWhispers', {})
+        acceptingTeleport = settings.get('acceptingTeleport', {})
+        if str(self.doId) not in acceptingNewFriends:
+            acceptingNewFriends[str(self.doId)] = True
+            settings['acceptingNewFriends'] = acceptingNewFriends
+        if str(self.doId) not in acceptingNonFriendWhispers:
+            acceptingNonFriendWhispers[str(self.doId)] = True
+            settings['acceptingNonFriendWhispers'] = acceptingNonFriendWhispers
+        if str(self.doId) not in acceptingTeleport:
+            acceptingTeleport[str(self.doId)] = True
+            settings['acceptingTeleport'] = acceptingTeleport
+        self.acceptingNewFriends = acceptingNewFriends[str(self.doId)]
+        self.acceptingNonFriendWhispers = acceptingNonFriendWhispers[str(self.doId)]
+        self.acceptingTeleport = acceptingTeleport[str(self.doId)]
 
     def disable(self):
         self.laffMeter.destroy()
@@ -1975,10 +1981,3 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
 
     def _stopZombieCheck(self):
         pass
-
-    # KeepAlive stuff
-    def keepAliveCheck(self):
-        self.notify.debug("Checking to make sure the avatar is still alive")
-        self.sendUpdate('keepAlive', [])
-        taskMgr.remove(self.uniqueName('KeepAliveTimeout'))
-        taskMgr.doMethodLater(config.GetInt('keep-alive-delay', 30), self.keepAliveCheck, self.uniqueName('KeepAliveTimeout'), extraArgs=[])

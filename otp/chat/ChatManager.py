@@ -45,7 +45,6 @@ class ChatManager(DirectObject.DirectObject):
         self.cr = cr
         self.localAvatar = localAvatar
         self.wantBackgroundFocus = not base.wantWASD
-        self.chatHotkey = base.CHAT_HOTKEY
         self.__scObscured = 0
         self.__normalObscured = 0
         self.openChatWarning = None
@@ -215,12 +214,12 @@ class ChatManager(DirectObject.DirectObject):
 
     def enterMainMenu(self):
         self.checkObscurred()
-        if base.cr.wantTypedChat():
+        if self.localAvatar.canChat():
             if self.wantBackgroundFocus:
                 self.chatInputNormal.chatEntry['backgroundFocus'] = 1
             self.acceptOnce('enterNormalChat', self.fsm.request, ['normalChat'])
             if not self.wantBackgroundFocus:
-                self.accept('r', messenger.send, ['enterNormalChat'])
+                self.accept('t', messenger.send, ['enterNormalChat'])
 
     def checkObscurred(self):
         if not self.__scObscured:
