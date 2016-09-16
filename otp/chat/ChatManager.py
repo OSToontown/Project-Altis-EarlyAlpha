@@ -44,7 +44,8 @@ class ChatManager(DirectObject.DirectObject):
     def __init__(self, cr, localAvatar):
         self.cr = cr
         self.localAvatar = localAvatar
-        self.wantBackgroundFocus = not base.wantWASD
+        self.wantBackgroundFocus = not base.wantCustomControls
+        self.chatHotkey = base.CHAT_HOTKEY
         self.__scObscured = 0
         self.__normalObscured = 0
         self.openChatWarning = None
@@ -403,13 +404,13 @@ class ChatManager(DirectObject.DirectObject):
         self.chatInputSpeedChat.hide()
 
     def enterNormalChat(self):
-        if base.wantWASD:
+        if base.wantCustomControls:
             base.localAvatar.controlManager.disableWASD()
         result = self.chatInputNormal.activateByData()
         return result
 
     def exitNormalChat(self):
-        if base.wantWASD:
+        if base.wantCustomControls:
             base.localAvatar.controlManager.enableWASD()
         self.chatInputNormal.deactivate()
 
@@ -526,8 +527,13 @@ class ChatManager(DirectObject.DirectObject):
         self.fsm.request('activateChat')
 
     def reloadWASD(self):
-        self.wantBackgroundFocus = not base.wantWASD
+        self.wantBackgroundFocus = not base.wantCustomControls
+        self.ignore(self.chatHotkey)
         if self.wantBackgroundFocus:
             self.chatInputNormal.chatEntry['backgroundFocus'] = 1
         else:
+            self.chatHotkey = base.CHAT_HOTKEY
             self.chatInputNormal.chatEntry['backgroundFocus'] = 0
+
+    def disableBackgroundFocus(self):
+        self.chatInputNormal.chatEntry['backgroundFocus'] = 0

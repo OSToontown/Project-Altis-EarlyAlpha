@@ -153,20 +153,25 @@ class ToonBase(OTPBase.OTPBase):
         self.aspectRatio = float(self.oldX) / self.oldY
         self.localAvatarStyle = None
 
-        self.wantWASD = settings.get('want-WASD', False)
+        self.wantCustomControls = settings.get('want-Custom-Controls', False)
 
         self.MOVE_UP = 'arrow_up'   
         self.MOVE_DOWN = 'arrow_down'
         self.MOVE_LEFT = 'arrow_left'      
         self.MOVE_RIGHT = 'arrow_right'
         self.JUMP = 'control'
+        self.ACTION_BUTTON = 'delete'
+        keymap = settings.get('keymap', {})
+        if self.wantCustomControls:
+            self.MOVE_UP = keymap.get('MOVE_UP', self.MOVE_UP)
+            self.MOVE_DOWN = keymap.get('MOVE_DOWN', self.MOVE_DOWN)
+            self.MOVE_LEFT = keymap.get('MOVE_LEFT', self.MOVE_LEFT)
+            self.MOVE_RIGHT = keymap.get('MOVE_RIGHT', self.MOVE_RIGHT)
+            self.JUMP = keymap.get('JUMP', self.JUMP)
+            self.ACTION_BUTTON = keymap.get('ACTION_BUTTON', self.ACTION_BUTTON)
+            ToontownGlobals.OptionsPageHotkey = keymap.get('OPTIONS-PAGE', ToontownGlobals.OptionsPageHotkey)
         
-        if self.wantWASD:
-            self.MOVE_UP = 'w'
-            self.MOVE_LEFT = 'a'            
-            self.MOVE_DOWN = 's'
-            self.MOVE_RIGHT = 'd'
-            self.JUMP = 'shift'
+        self.CHAT_HOTKEY = keymap.get('CHAT_HOTKEY', 'r')
 
     def openMainWindow(self, *args, **kw):
         result = OTPBase.OTPBase.openMainWindow(self, *args, **kw)
@@ -562,3 +567,22 @@ class ToonBase(OTPBase.OTPBase):
         wp = WindowProperties()
         wp.setMinimized(True)
         base.win.requestProperties(wp)
+
+    def reloadControls(self):
+        keymap = settings.get('keymap', {})
+        self.CHAT_HOTKEY = keymap.get('CHAT_HOTKEY', 'r')
+        if self.wantCustomControls:
+            self.MOVE_UP = keymap.get('MOVE_UP', self.MOVE_UP)
+            self.MOVE_DOWN = keymap.get('MOVE_DOWN', self.MOVE_DOWN)
+            self.MOVE_LEFT = keymap.get('MOVE_LEFT', self.MOVE_LEFT)
+            self.MOVE_RIGHT = keymap.get('MOVE_RIGHT', self.MOVE_RIGHT)
+            self.JUMP = keymap.get('JUMP', self.JUMP)
+            self.ACTION_BUTTON = keymap.get('ACTION_BUTTON', self.ACTION_BUTTON)
+            ToontownGlobals.OptionsPageHotkey = keymap.get('OPTIONS-PAGE', ToontownGlobals.OptionsPageHotkey)
+        else:
+            self.MOVE_UP = 'arrow_up'
+            self.MOVE_DOWN = 'arrow_down'
+            self.MOVE_LEFT = 'arrow_left'      
+            self.MOVE_RIGHT = 'arrow_right'
+            self.JUMP = 'control'
+            self.ACTION_BUTTON = 'delete'

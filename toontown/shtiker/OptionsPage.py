@@ -12,7 +12,7 @@ from otp.speedchat import SpeedChat
 from toontown.toonbase import TTLocalizer, ToontownGlobals
 from toontown.toon import Toon
 from toontown.toontowngui import TTDialog
-
+from toontown.shtiker import ControlRemapDialog
 
 speedChatStyles = (
     (
@@ -712,6 +712,7 @@ class SpecialOptionsTabPage(DirectFrame):
         
     def load(self):
         guiButton = loader.loadModel('phase_3/models/gui/quit_button')
+        circleModel = loader.loadModel('phase_3/models/gui/tt_m_gui_mat_nameShop')
         gui = loader.loadModel('phase_3.5/models/gui/friendslist_gui')
         titleHeight = 0.61
         textStartHeight = 0.45
@@ -726,54 +727,53 @@ class SpecialOptionsTabPage(DirectFrame):
         self.speed_chat_scale = 0.055    
         self.WASD_Label = DirectLabel(parent=self, relief=None, text='', text_align=TextNode.ALeft, text_scale=options_text_scale, text_wordwrap=16, pos=(leftMargin, 0, textStartHeight - textRowHeight))
         self.WASD_toggleButton = DirectButton(parent=self, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=button_image_scale, text='', text_scale=options_text_scale, text_pos=button_textpos, pos=(buttonbase_xcoord, 0.0, buttonbase_ycoord - textRowHeight), command=self.__doToggleWASD)
-        gui.removeNode()
+        self.keymapDialogButton = DirectButton(parent=self, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=button_image_scale, text='Configure Keymap', text_scale=(0.03, 0.05, 1), text_pos=button_textpos, pos=(buttonbase_xcoord + 0.0, 0.0, buttonbase_ycoord), command=self.__openKeyRemapDialog) 
+        self.keymapDialogButton.setScale(1.55, 1.0, 1.0)
         guiButton.removeNode()
-        
+        circleModel.removeNode()
+
     def enter(self):
         self.show()
         self.settingsChanged = 0
         self.__setWASDButton()
 
     def exit(self):
-        self.ignore('confirmDone')
+        self.ignoreAll()
         self.hide()
-        
+
     def unload(self):
         self.WASD_Label.destroy()
         del self.WASD_Label
         self.WASD_toggleButton.destroy()
         del self.WASD_toggleButton
+        self.keymapDialogButton.destroy()
+        del self.keymapDialogButton
 
     def __doToggleWASD(self):
         messenger.send('wakeup')
-        if base.wantWASD:
-            base.wantWASD = False
-            base.Move_Up = 'arrow_up'
-            base.Move_Down = 'arrow_down'
-            base.Move_Left = 'arrow_left'
-            base.Move_Right = 'arrow_right'
-            base.JUMP = 'control'
-            settings['want-WASD'] = False
-            base.localAvatar.controlManager.reload()
-            base.localAvatar.chatMgr.reloadWASD()
-            base.localAvatar.setSystemMessage(0, 'WASD controls disabled.')            
+        if base.wantCustomControls:
+            base.wantCustomControls = False
+            settings['want-Custom-Controls'] = False     
         else:
-            base.wantWASD = True
-            base.Move_Up = 'w'
-            base.Move_Down = 's'
-            base.Move_Left = 'a'
-            base.Move_Right = 'd'
-            base.JUMP = 'shift'
-            settings['want-WASD'] = True
-            base.localAvatar.controlManager.reload()
-            base.localAvatar.chatMgr.reloadWASD()            
-            base.localAvatar.setSystemMessage(0, 'WASD controls enabled.')
+            base.wantCustomControls = True
+            settings['want-Custom-Controls'] = True
+        base.reloadControls()
+        base.localAvatar.controlManager.reload()
+        base.localAvatar.chatMgr.reloadWASD()
+        base.localAvatar.controlManager.disable()
         self.settingsChanged = 1
         self.__setWASDButton()
 
     def __setWASDButton(self):
-        self.WASD_Label['text'] = 'WASD Support:'        
-        if base.wantWASD:
-            self.WASD_toggleButton['text'] = 'On'
+        if base.wantCustomControls:
+            self.WASD_Label['text'] = 'Custom Keymapping is on.'
+            self.WASD_toggleButton['text'] = TTLocalizer.OptionsPageToggleOff
+            self.keymapDialogButton.show()
         else:
-            self.WASD_toggleButton['text'] = 'Off'
+            self.WASD_Label['text'] = 'Custom Keymapping is off.'
+            self.WASD_toggleButton['text'] = TTLocalizer.OptionsPageToggleOn
+            self.keymapDialogButton.hide()
+     
+    def __openKeyRemapDialog(self):
+        if base.wantCustomControls:
+            self.controlDialog = ControlRemapDialog.ControlRemap()
