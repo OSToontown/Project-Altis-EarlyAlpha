@@ -36,39 +36,30 @@ class DEV_Launcher(ShowBase):
 
     def client(self):
         data = self.clientsock.recv(1024)
-
-        cipherkey = str(data)
-        print cipherkey
-
-        sendData = {str(self.encrypt(self.username, cipherkey)): str(self.encrypt(self.password, cipherkey))}
-        sendData = json.dumps(sendData)
-        self.clientsock.send(sendData)
-
-        data = self.clientsock.recv(1024)
-        self.handle(data, cipherkey)
+        self.handle(data)
 
         self.clientsock.close()
 
-    def handle(self, data, cipherkey):
+    def handle(self, data):
         data = json.loads(data)
         self.key = ''
         for key, value in data.iteritems():
             self.key = key
         self.value = data[self.key]
-        self.key = self.decrypt(self.key, cipherkey)
-        self.value = self.decrypt(self.value, cipherkey)
+        self.key = self.decrypt(self.key)
+        self.value = self.decrypt(self.value)
 
         if self.key == 'error':
             print self.key + ': ' + self.value
         elif self.key == 'playcookie':
             self.playgame(self.value)
 
-    def encrypt(self, plaintext, cipherkey):
-        cipher = XOR.new(cipherkey)
+    def encrypt(self, plaintext):
+        cipher = XOR.new('iplaypokemongoeveryday')
         return base64.b64encode(cipher.encrypt(plaintext))
 
-    def decrypt(self, ciphertext, cipherkey):
-        cipher = XOR.new(cipherkey)
+    def decrypt(self, ciphertext):
+        cipher = XOR.new('iplaypokemongoeveryday')
         return cipher.decrypt(base64.b64decode(ciphertext))
 
     def focus(self):
@@ -86,10 +77,13 @@ class DEV_Launcher(ShowBase):
         os.environ['ttPassword'] = self.password_entry.get()
         os.environ['TT_GAMESERVER'] = self.ip_entry.get()
 
-        self.username = str(self.username_entry.get())
-        self.password = str(self.password_entry.get())
-
         self.clientsock.connect((str(self.ip_entry.get()), 4014))
+        username = str(self.username_entry.get())
+        password = str(self.password_entry.get())
+
+        sendData = {str(self.encrypt(username)): str(self.encrypt(password))}
+        sendData = json.dumps(sendData)
+        self.clientsock.send(sendData)
         self.client()
 
     def playgame(self, playcookie):
