@@ -227,10 +227,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         from toontown.toon.DistributedNPCToonBaseAI import DistributedNPCToonBaseAI
         if not isinstance(self, DistributedNPCToonBaseAI):
             self.sendUpdate('setDefaultShard', [self.air.districtId])
-        if self.isPlayerControlled():
-            # Begin checking if clients are still alive
-            if config.GetBool('want-keep-alive', True):
-                self.keepAliveTask = taskMgr.doMethodLater(config.GetInt('keep-alive-timeout-delay', 300), self.__noKeepAlive, self.uniqueName('KeepAliveTimeout'))
 
             if self.getAdminAccess() < 500:
                 # Ensure they have the correct laff.
@@ -4593,29 +4589,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def getWebAccountId(self):
         return self.webAccountId
-
-    # Keep Alive
-    def keepAlive(self):
-        # We received the Keep Alive response
-        self.notify.debug("Received keep alive response from %s (%d)." % (self.getName(), self.getDoId()))
-
-        # Kill the current running task, if we have one
-        taskMgr.remove(self.uniqueName('KeepAliveTimeout'))
-        if self.keepAliveTask:
-            self.keepAliveTask.remove()
-            self.keepAliveTask = None
-
-        # Fire up the check again
-        self.keepAliveTask = taskMgr.doMethodLater(config.GetInt('keep-alive-timeout-delay', 300), self.__noKeepAlive, self.uniqueName('KeepAliveTimeout'))
-
-    def __noKeepAlive(self, task):
-        # Log everything just so we have a record of it
-        self.notify.warning("No keep alive response from %s (%d)." % (self.getName(), self.getDoId()))
-        self.air.writeServerEvent("keep-alive", avId=self.getDoId(), message="Avatar failed to respond to Keep Alive.")
-
-        # Kill it, kill it with fire!
-        self.notify.warning("Killing %s (%d)." % (self.getName(), self.getDoId()))
-        self.disconnect()
 
     def d_setLastSeen(self, timestamp):
         self.sendUpdate('setLastSeen', [int(timestamp)])

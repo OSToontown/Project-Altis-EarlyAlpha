@@ -1,78 +1,37 @@
+import collections
 import json
+import os
 
-class Settings:
-    """
-    This is the class that reads JSON formatted settings files, and
-    returns the values back to whatever requested them.
+class Settings(collections.MutableMapping):
+    def __init__(self, filename):
+        self.filename = filename
+        self.store = {}
+        self.read()
 
-    This class should be generated in the OTPBase, and then accessed
-    via base.settings
-    """
-
-    def __init__(self):
-        self.fileName = 'settings.json'
-        try:
-            with open(self.fileName, 'r') as file:
-                self.settings = json.load(file)
-        except:
-            self.settings = {}
-
-    def updateSetting(self, type, attribute, value):
-        """
-        Update the json file with the new data specified.
-        """
-        with open(self.fileName, 'w+') as file:
-            if not self.settings.get(type):
-                self.settings[type] = {}
-            self.settings[type][attribute] = value
-            json.dump(self.settings, file)
-
-    def getOption(self, type, attribute, default):
-        """
-        Generic method to fetch the saved configuration settings.
-        """
-        return self.settings.get(type, {}).get(attribute, default)
-
-    def getString(self, type, attribute, default=''):
-        """
-        Fetch a string type from the json file, but use default if it
-        returns the incorrect type or doesn't exist.
-        """
-        value = self.getOption(type, attribute, default)
-        if isinstance(value, basestring):
-            return value
+    def read(self):
+        if os.path.exists(self.filename):
+            with open(self.filename, 'r') as f:
+                self.store = json.load(f)
         else:
-            return default
+            self.write()
 
-    def getInt(self, type, attribute, default=0):
-        """
-        Fetch a integer type from the json file, but use default if it
-        returns the incorrect type or doesn't exist.
-        """
-        value = self.getOption(type, attribute, default)
-        if isinstance(value, (int, long)):
-            return int(value)
-        else:
-            return default
+    def write(self):
+        with open(self.filename, 'w') as f:
+            json.dump(self.store, f, sort_keys=True, indent=2, separators=(',', ': '))
 
-    def getBool(self, type, attribute, default=False):
-        """
-        Fetch a boolean type from the json file, but use default if it
-        returns the incorrect type or doesn't exist.
-        """
-        value = self.getOption(type, attribute, default)
-        if isinstance(value, bool):
-            return value
-        else:
-            return default
+    def __setitem__(self, key, value):
+        self.store[key] = value
+        self.write()
 
-    def getList(self, type, attribute, default=[], expectedLength=2):
-        """
-        Fetch a list type from the json file, but use default if it
-        returns the incorrect type or doesn't exist.
-        """
-        value = self.getOption(type, attribute, default)
-        if isinstance(value, list) and len(value) == expectedLength:
-            return value
-        else:
-            return default
+    def __delitem__(self, key):
+        del self.store[key]
+        self.write()
+
+    def __getitem__(self, key):
+        return self.store[key]
+
+    def __iter__(self):
+        return iter(self.store)
+
+    def __len__(self):
+        return len(self.store)

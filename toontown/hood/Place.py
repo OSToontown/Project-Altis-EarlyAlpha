@@ -269,7 +269,7 @@ class Place(StateData.StateData, FriendsListManager.FriendsListManager):
         base.localAvatar.laffMeter.stop()
         base.localAvatar.setTeleportAvailable(0)
         self.ignore('teleportQuery')
-        self.ignore('arrow_up')
+        self.ignore(base.MOVE_UP)
 
     def enterDrive(self):
         self.enterFLM()
