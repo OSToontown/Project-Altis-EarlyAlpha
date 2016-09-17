@@ -7,6 +7,7 @@ from direct.fsm import ClassicFSM, State
 from direct.fsm import State
 import LiftConstants
 import MovingPlatform
+import random
 
 class DistributedLift(BasicEntities.DistributedNodePathEntity):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedLift')
@@ -18,6 +19,7 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
         self.notify.debug('generateInit')
         BasicEntities.DistributedNodePathEntity.generateInit(self)
         self.moveSnd = base.loadSfx('phase_9/audio/sfx/CHQ_FACT_elevator_up_down.ogg')
+        self.windSnd = base.loadSfx('phase_9/audio/sfx/CHQ_FACT_whistling_wind.ogg')
         self.fsm = ClassicFSM.ClassicFSM('DistributedLift', [State.State('off', self.enterOff, self.exitOff, ['moving']), State.State('moving', self.enterMoving, self.exitMoving, ['waiting']), State.State('waiting', self.enterWaiting, self.exitWaiting, ['moving'])], 'off', 'off')
         self.fsm.enterInitialState()
 
@@ -54,6 +56,7 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
     def delete(self):
         self.notify.debug('delete')
         del self.moveSnd
+        del self.windSnd
         del self.fsm
         self.destroyPlatform()
         self.platform.removeNode()
@@ -171,6 +174,8 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
             boardColl.unstash()
             self.soundIval = SoundInterval(self.moveSnd, node=self.platform)
             self.soundIval.loop()
+            self.sound2Ival = SoundInterval(self.windSnd, node=self.platform, volume=0.6)
+            self.sound2Ival.loop()
             return
 
         def doneMoving(self = self, guard = endGuard, boardColl = endBoardColl, newState = toState):
@@ -178,6 +183,8 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
             if hasattr(self, 'soundIval'):
                 self.soundIval.pause()
                 del self.soundIval
+                self.sound2Ival.pause()
+                del self.sound2Ival
             if guard is not None and not guard.isEmpty():
                 guard.stash()
             boardColl.stash()
@@ -192,6 +199,8 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
         if hasattr(self, 'soundIval'):
             self.soundIval.pause()
             del self.soundIval
+            self.sound2Ival.pause()
+            del self.sound2Ival
         self.moveIval.pause()
         del self.moveIval
 
