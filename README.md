@@ -10,7 +10,7 @@ remake of Disney's Toontown Online
 * SkippsDev - Networking Assistant
 * Malverde - Game & Networking Developer
 * Old Geezer - Game Developer & 3D Modeler
-* Barks - [Awaiting Title]
+* Barks - Game Developer
 
 
 # Thanks
