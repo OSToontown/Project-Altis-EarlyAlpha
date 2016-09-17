@@ -1,11 +1,10 @@
 import random
-from pandac.PandaModules import *
+from panda3d.core import *
 from direct.directnotify.DirectNotifyGlobal import *
-from toontown.toonbase import TTLocalizer
+from toontown.toonbase import TTLocalizer, ToontownGlobals
 import random
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
-from otp.avatar import AvatarDNA
 notify = directNotify.newCategory('SuitDNA')
 suitHeadTypes = ['f',
  'p',
@@ -83,6 +82,14 @@ suitDeptFullnamesP = {'c': TTLocalizer.BossbotP,
  'l': TTLocalizer.LawbotP,
  'm': TTLocalizer.CashbotP,
  's': TTLocalizer.SellbotP}
+suitDeptModelPaths = {'c': '**/CorpIcon',
+ 0: '**/CorpIcon',
+ 'l': '**/LegalIcon',
+ 1: '**/LegalIcon',
+ 'm': '**/MoneyIcon',
+ 2: '**/MoneyIcon',
+ 's': '**/SalesIcon',
+ 3: '**/SalesIcon'}
 corpPolyColor = VBase4(0.95, 0.75, 0.75, 1.0)
 legalPolyColor = VBase4(0.75, 0.75, 0.95, 1.0)
 moneyPolyColor = VBase4(0.65, 0.95, 0.85, 1.0)
@@ -141,17 +148,20 @@ def getSuitType(name):
     index = suitHeadTypes.index(name)
     return index % suitsPerDept + 1
 
-
 def getRandomSuitType(level, rng = random):
-    return random.randint(max(level - 4, 1), min(level, 8))
+    try:
+        returnval = random.randint(max(level - 4, 1), min(level, 8))
+    except:
+        returnval = 8
+
+    return returnval
 
 
 def getRandomSuitByDept(dept):
     deptNumber = suitDepts.index(dept)
     return suitHeadTypes[suitsPerDept * deptNumber + random.randint(0, 7)]
 
-
-class SuitDNA(AvatarDNA.AvatarDNA):
+class SuitDNA:
 
     def __init__(self, str = None, type = None, dna = None, r = None, b = None, g = None):
         if str != None:
