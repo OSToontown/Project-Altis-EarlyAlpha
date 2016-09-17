@@ -97,7 +97,7 @@ class ConveyorBelt(BasicEntities.NodePathEntity):
         if hasattr(self, 'beltIval'):
             self.beltIval.pause()
             del self.beltIval
-            del self.soundIval
+           # del self.soundIval
         if ConveyorBelt.UseClipPlanes:
             self.headClipPath.removeNode()
             del self.headClipPath
