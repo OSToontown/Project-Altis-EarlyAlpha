@@ -1,3 +1,4 @@
+import random
 from direct.interval.IntervalGlobal import *
 from BattleBase import *
 from BattleProps import *
@@ -262,6 +263,7 @@ def createSuitReviveTrack(suit, toon, battle, npcs = []):
     suitTrack.append(Func(notify.debug, 'before removeDeathSuit'))
     suitTrack.append(Func(removeReviveSuit, suit, deathSuit, name='remove-death-suit'))
     suitTrack.append(Func(notify.debug, 'after removeDeathSuit'))
+    suitTrack.append(ActorInterval(suit, random.choice(['slip-backward', 'slip-forward'])))
     suitTrack.append(Func(suit.loop, 'neutral'))
     spinningSound = base.loadSfx('phase_3.5/audio/sfx/Cog_Death.ogg')
     deathSound = base.loadSfx('phase_3.5/audio/sfx/ENC_cogfall_apart.ogg')
