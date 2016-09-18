@@ -14,6 +14,7 @@ class CogSuitManagerAI:
         partsRecovered = [0,
          0,
          0,
+         0,
          0]
         part = av.giveGenericCogPart(factoryType, suitTrack)
         if part:

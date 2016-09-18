@@ -466,7 +466,9 @@ class Suit(Avatar.Avatar):
             self.scale = scale / bSize
             self.handColor = SuitDNA.boardPolyColor
             self.generateBody()
-            self.generateHead('downsizer', 'group', 'group1')
+            self.generateHead('downsizer')
+            self.generateHead('group')
+            self.generateHead('group1')
             self.setHeight(5.24)
         elif dna.name == 'sw':
             self.scale = scale / aSize

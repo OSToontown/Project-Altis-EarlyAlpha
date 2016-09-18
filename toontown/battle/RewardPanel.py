@@ -200,7 +200,7 @@ class RewardPanel(DirectFrame):
         if config.GetBool('want-skip-button', 0):
             self.skipButton['state'] = choice(noSkip, DGG.DISABLED, DGG.NORMAL)
 
-        for i in range(len(SuitDNA.suitDepts)):
+        for i in range(len(SuitDNA.suitDepts)-1):
             meritBar = self.meritBars[i]
             meritLabel = self.meritLabels[i]
             totalMerits = CogDisguiseGlobals.getTotalMerits(toon, i)
@@ -722,7 +722,7 @@ class RewardPanel(DirectFrame):
                     endTracks[trackIndex] = 1
                     trackEnded = 1
 
-        for dept in range(len(SuitDNA.suitDepts)):
+        for dept in range(len(SuitDNA.suitDepts)-1):
             if meritList[dept]:
                 track += self.getMeritIntervalList(toon, dept, origMeritList[dept], meritList[dept])
 

@@ -37,7 +37,7 @@ class CogPageManagerAI:
             if toon.getDoId() in cog['activeToons']:
                 deptIndex = SuitDNA.suitDepts.index(cog['track'])
                 
-                if toon.buildingRadar[deptIndex] == 1:
+                if toon.buildingRadar[deptIndex-1] == 1:
                     continue
                     
                 cogIndex = SuitDNA.suitHeadTypes.index(cog['type'])
@@ -60,7 +60,7 @@ class CogPageManagerAI:
         #time to recount radar
         newCogRadar = toon.cogRadar
         newBuildingRadar = toon.buildingRadar
-        for dept in range(len(SuitDNA.suitDepts)):
+        for dept in range(len(SuitDNA.suitDepts)-1):
             if newBuildingRadar[dept] == 1:
                 continue
             cogRadar = 1
