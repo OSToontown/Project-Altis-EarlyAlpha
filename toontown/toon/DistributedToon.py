@@ -98,10 +98,10 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         self.disguisePage = None
         self.sosPage = None
         self.gardenPage = None
-        self.cogTypes = [0 * 4]
-        self.cogLevels = [0 * 4]
-        self.cogParts = [0 * 4]
-        self.cogMerits = [0 * 4]
+        self.cogTypes = [0 * 5]
+        self.cogLevels = [0 * 5]
+        self.cogParts = [0 * 5]
+        self.cogMerits = [0 * 5]
         self.savedCheesyEffect = ToontownGlobals.CENormal
         self.savedCheesyHoodId = 0
         self.savedCheesyExpireTime = 0
