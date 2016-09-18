@@ -49,7 +49,7 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
         return
 
     def startSky(self):
-        self.sky = loader.loadModel('phase_12/models/bossbotHQ/BossTestSkyBox')
+        self.sky = loader.loadModel('phase_9/models/cogHQ/cog_sky')
         self.sky.reparentTo(camera)
         self.sky.setZ(0.0)
         self.sky.setHpr(0.0, 0.0, 0.0)
@@ -65,7 +65,7 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
         self.startSky()
         sky = self.sky
         sky.setH(150)
-        sky.setZ(-100)
+        sky.setZ(-150)
 
     def __cleanupHighSky(self):
         sky = self.sky
