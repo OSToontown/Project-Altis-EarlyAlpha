@@ -455,7 +455,60 @@ class Suit(Avatar.Avatar):
         self.isSkeleton = 0
         self.setBlend(frameBlend = True)
         scale = SuitBattleGlobals.SuitSizes[dna.name]
-        if dna.name == 'f':
+        if dna.name == 'ca':
+            self.scale = scale / cSize
+            self.handColor = SuitDNA.boardPolyColor
+            self.generateBody()
+            self.headTexture = 'conartist.jpg'
+            self.generateHead('flunky')
+            self.setHeight(4.88)
+        elif dna.name == 'cn':
+            self.scale = scale / bSize
+            self.handColor = SuitDNA.boardPolyColor
+            self.generateBody()
+            self.generateHead('downsizer', 'group', 'group1')
+            self.setHeight(5.24)
+        elif dna.name == 'sw':
+            self.scale = scale / aSize
+            self.handColor = SuitDNA.boardPolyColor
+            self.generateBody()
+            self.headTexture = 'swindler.jpg'
+            self.generateHead('pennypincher')
+            self.setHeight(6.5)
+        elif dna.name == 'mdm':
+            self.scale = scale / aSize
+            self.handColor = SuitDNA.boardPolyColor
+            self.generateBody()
+            self.headTexture = 'middleman.jpg'
+            self.generateHead('micromanager')
+            self.setHeight(6.7)
+        elif dna.name == 'txm':
+            self.scale = scale / aSize
+            self.handColor = VBase4(1, 1, .29, 1.0)
+            self.generateBody()
+            self.generateHead('toxicleader')
+            self.setHeight(7.2)
+        elif dna.name == 'mg':
+            self.scale = scale / aSize
+            self.handColor = SuitDNA.boardPolyColor
+            self.generateBody()
+            self.headTexture = 'magnate.jpg'
+            self.generateHead('legaleagle')
+            self.setHeight(7.26)
+        elif dna.name == 'bfh':
+            self.scale = scale / cSize
+            self.handColor = VBase4(1, .3, .3, 1.0)
+            self.generateBody()
+            self.generateHead('bigfish')
+            self.setHeight(10.0)
+        elif dna.name == 'hho':
+            self.scale = scale / aSize
+            self.handColor = SuitDNA.boardPolyColor
+            self.generateBody()
+            self.headTexture = 'head-honcho.jpg'
+            self.generateHead('headhoncho')
+            self.setHeight(8.23)
+        elif dna.name == 'f':
             self.scale = scale / cSize
             self.handColor = SuitDNA.corpPolyColor
             self.generateBody()
