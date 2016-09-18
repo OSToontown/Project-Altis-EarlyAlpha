@@ -172,10 +172,10 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
             if guard is not None and not guard.isEmpty():
                 guard.unstash()
             boardColl.unstash()
-            self.soundIval = SoundInterval(self.moveSnd, node=self.platform)
+            self.soundIval = SoundInterval(self.moveSnd, self.windSnd, node=self.platform)
             self.soundIval.loop()
-            self.sound2Ival = SoundInterval(self.windSnd, node=self.platform, volume=0.6)
-            self.sound2Ival.loop()
+            #self.sound2Ival = SoundInterval(self.windSnd, volume=0.6)
+            #self.sound2Ival.loop()
             return
 
         def doneMoving(self = self, guard = endGuard, boardColl = endBoardColl, newState = toState):
@@ -183,8 +183,8 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
             if hasattr(self, 'soundIval'):
                 self.soundIval.pause()
                 del self.soundIval
-                self.sound2Ival.pause()
-                del self.sound2Ival
+                #self.sound2Ival.pause()
+                #del self.sound2Ival
             if guard is not None and not guard.isEmpty():
                 guard.stash()
             boardColl.stash()
@@ -199,8 +199,8 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
         if hasattr(self, 'soundIval'):
             self.soundIval.pause()
             del self.soundIval
-            self.sound2Ival.pause()
-            del self.sound2Ival
+            #self.sound2Ival.pause()
+            #del self.sound2Ival
         self.moveIval.pause()
         del self.moveIval
 
