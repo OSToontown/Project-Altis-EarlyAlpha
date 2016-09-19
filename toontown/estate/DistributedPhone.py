@@ -185,10 +185,9 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
         self.sendUpdate('avatarEnter', [])
 
     def __handlePhoneDone(self):
-        self.sendUpdate('avatarExit', [])
+        self.sendUpdate('avatarExit')
         self.ignore(self.phoneGuiDoneEvent)
         self.phoneGui = None
-        return
 
     def freeAvatar(self):
         if self.hasLocalAvatar:
@@ -200,8 +199,8 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
             self.hasLocalAvatar = 0
         self.ignore(self.pickupMovieDoneEvent)
         self.accept(self.phoneSphereEnterEvent, self.__handleEnterSphere)
+        self.stopSmooth()
         self.lastTime = globalClock.getFrameTime()
-        return
 
     def setLimits(self, numHouseItems):
         self.numHouseItems = numHouseItems
