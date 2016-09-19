@@ -464,7 +464,7 @@ class Suit(Avatar.Avatar):
             self.setHeight(4.88)
         elif dna.name == 'cn':
             self.scale = scale / bSize
-            self.handColor = SuitDNA.boardPolyColor
+            self.handColor = VBase4(0.95, 0.95, 1.0, 1.0),
             self.generateBody()
             self.generateHead('downsizer')
             self.generateHead('group')
@@ -482,7 +482,7 @@ class Suit(Avatar.Avatar):
             self.handColor = SuitDNA.boardPolyColor
             self.generateBody()
             self.headTexture = 'middleman.jpg'
-            self.generateHead('micromanager')
+            self.generateHead('twoface')
             self.setHeight(6.7)
         elif dna.name == 'txm':
             self.scale = scale / aSize
@@ -499,7 +499,7 @@ class Suit(Avatar.Avatar):
             self.setHeight(7.26)
         elif dna.name == 'bfh':
             self.scale = scale / cSize
-            self.handColor = VBase4(1, .3, .3, 1.0)
+            self.handColor = VBase4(1, 0.3, 0.3, 1.0)
             self.generateBody()
             self.generateHead('bigfish')
             self.setHeight(10.0)
