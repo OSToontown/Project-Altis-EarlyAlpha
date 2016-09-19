@@ -352,6 +352,8 @@ class DistributedSuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
         dept = SuitDNA.getSuitDept(self.dna.name)
         if not self.SUIT_BUILDINGS:
             return
+        if dept == 'g':
+            return
         blockNumber = self.buildingDestination
         if not self.sp.buildingMgr.isSuitBlock(blockNumber):
             self.notify.debug('Suit %d taking over building %d in %d' % (self.getDoId(), blockNumber, self.zoneId))
