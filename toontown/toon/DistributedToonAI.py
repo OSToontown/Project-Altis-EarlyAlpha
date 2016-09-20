@@ -4635,12 +4635,9 @@ def setTrackAccess(toonup, trap, lure, sound, throw, squirt, drop):
     spellbook.getTarget().b_setTrackAccess([toonup, trap, lure, sound, throw, squirt, drop])
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[str])
-def maxToon(hasConfirmed='UNCONFIRMED'):
+def maxToon():
     """Max out the toons stats, for end-level gameplay. Should only be (and is restricted to) casting on Administrators only."""
     toon = spellbook.getInvoker()
-
-    if hasConfirmed != 'CONFIRM':
-        return 'Are you sure you want to max out %s? This process is irreversible. Use "~maxToon CONFIRM" to confirm.' % toon.getName()
 
     # Max out gag tracks (all 7 tracks)
     toon.b_setTrackAccess([1] * 7)
@@ -4704,7 +4701,7 @@ def maxToon(hasConfirmed='UNCONFIRMED'):
     toon.b_setMoney(toon.getMaxMoney())
     toon.b_setBankMoney(ToontownGlobals.DefaultMaxBankMoney)
 
-    return 'By the power invested in me, I, McQuack, max your toon.'
+    return 'By the power invested in me, I, Flippy, max your toon.'
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int])
 def setMaxMoney(moneyVal):
