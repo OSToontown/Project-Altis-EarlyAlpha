@@ -361,7 +361,6 @@ class Suit(Avatar.Avatar):
         self.isDisguised = 0
         self.isWaiter = 0
         self.isRental = 0
-        self.setBlend(frameBlend = True)
         return
 
     def delete(self):
@@ -418,7 +417,6 @@ class Suit(Avatar.Avatar):
         self.headTexture = None
         self.loseActor = None
         self.isSkeleton = 0
-        self.setBlend(frameBlend = True)
         scale = SuitBattleGlobals.SuitSizes[dna.name]
         if dna.name == 'f':
             self.scale = scale / cSize
@@ -959,7 +957,6 @@ class Suit(Avatar.Avatar):
         dropShadow.setScale(0.45)
         dropShadow.setColor(0.0, 0.0, 0.0, 0.5)
         dropShadow.reparentTo(shadowJoint)
-        self.setBlend(frameBlend = True)
         return self.loseActor
 
     def cleanupLoseActor(self):
@@ -985,6 +982,7 @@ class Suit(Avatar.Avatar):
         self.generateCorporateMedallion()
         self.generateCorporateTie()
         self.setHeight(self.height)
+        self.setBlend(frameBlend = True)
         parts = self.findAllMatches('**/pPlane*')
         for partNum in xrange(0, parts.getNumPaths()):
             bb = parts.getPath(partNum)
