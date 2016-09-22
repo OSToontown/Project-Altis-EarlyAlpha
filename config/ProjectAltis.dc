@@ -991,7 +991,7 @@ dclass DistributedToon : DistributedPlayer {
   setTunnelOut(int16 timestamp, int16/10 startX, int16/10 startY, int16/10 x, int16/10 y, int16/100 z, int32/100 h) ownsend broadcast;
   setAnimState(char animName[0-1024], int16/1000 animMultiplier, int16 timestamp) broadcast ram ownsend airecv;
   setEmoteState(int16 animIndex, int16/1000 animMultiplier, int16 timestamp) broadcast ram ownsend;
-  setEmoteAccess(uint8 bits[] = [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) required ownrecv db;
+  setEmoteAccess(uint8[] = [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) required ownrecv db;
   setCustomMessages(uint16 customMessages[] = []) required ownrecv db;
   setSleepAutoReply(uint32 fromId) broadcast clsend ownrecv;
   setResistanceMessages(pair16 resistanceMessages[] = []) required ownrecv db;
@@ -1478,6 +1478,7 @@ dclass DistributedButterfly : DistributedObject {
 
 dclass DistributedMMPiano : DistributedObject {
   requestSpeedUp() airecv clsend;
+  requestSlowDown() airecv clsend;
   requestChangeDirection() airecv clsend;
   setSpeed(int16/1000 rpm, uint16/100 offset, int16 timestamp) broadcast ram;
   playSpeedUp(uint32 avId) broadcast;
