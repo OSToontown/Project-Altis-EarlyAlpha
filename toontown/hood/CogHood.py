@@ -47,7 +47,13 @@ class CogHood(Hood.Hood):
         self.ignore(self.loaderDoneEvent)
         self.loader.exit()
         self.loader.unload()
+        self.setNoFog()
         del self.loader
+
+    def setNoFog(self):
+        if base.wantFog:
+            render.clearFog()
+            self.sky.clearFog()
 
     def handleCogHQLoaderDone(self):
         doneStatus = self.loader.getDoneStatus()
