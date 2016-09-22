@@ -408,7 +408,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
        0,
        0,
        100),
-      (5, 6, 7),
+      (4, 5, 6),
       []],
      [12000,
       10,

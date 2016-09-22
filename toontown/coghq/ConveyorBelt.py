@@ -16,7 +16,6 @@ class ConveyorBelt(BasicEntities.NodePathEntity):
 
     def initBelt(self):
         treadModel = loader.loadModel(self.treadModelPath)
-        self.moveSnd = base.loadSfx('phase_9/audio/sfx/CHQ_FACT_conveyor_belt.ogg')
         treadModel.setSx(self.widthScale)
         treadModel.flattenLight()
         self.numTreads = int(self.length / self.treadLength) + 3
@@ -40,15 +39,12 @@ class ConveyorBelt(BasicEntities.NodePathEntity):
             del tread.parentingNode
 
         del self.treads
-        del self.moveSnd
         self.beltNode.removeNode()
         del self.beltNode
 
     def start(self):
         startTime = self.level.startTime
         treadsIval = Parallel(name='treads')
-        self.soundIval = SoundInterval(self.moveSnd, node=self, volume=0.5)
-        self.soundIval.loop()
         treadPeriod = self.treadLength / abs(self.speed)
         startY = -self.treadLength
         for i in xrange(self.numTreads):
@@ -95,7 +91,6 @@ class ConveyorBelt(BasicEntities.NodePathEntity):
         if hasattr(self, 'beltIval'):
             self.beltIval.pause()
             del self.beltIval
-            del self.soundIval
         if ConveyorBelt.UseClipPlanes:
             self.headClipPath.removeNode()
             del self.headClipPath
