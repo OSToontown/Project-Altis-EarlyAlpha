@@ -1021,12 +1021,12 @@ dclass DistributedToon : DistributedPlayer {
   teleportResponseToAI(uint32 toAvId, int8 available, uint32 shardId, uint32 hoodId, uint32 zoneId, uint32 fromAvId) ownsend airecv;
   teleportGiveup(uint32 requesterId) ownrecv clsend;
   teleportGreeting(uint32 avId) broadcast ownsend;
-  setCogStatus(uint32 cogStatusList[] = [1 * 32]) required ownrecv db;
-  setCogCount(uint32 cogCountList[] = [0 * 32]) required ownrecv db;
-  setCogRadar(uint8 radar[] = [0 * 4]) required ownrecv db;
+  setCogStatus(uint32 cogStatusList[] = [1 * 40]) required ownrecv db;
+  setCogCount(uint32 cogCountList[] = [0 * 40]) required ownrecv db;
+  setCogRadar(uint8 radar[] = [0 * 5]) required ownrecv db;
   setBuildingRadar(uint8 radar[] = [0 * 4]) required ownrecv db;
-  setCogLevels(uint8 levels[] = [0 * 4]) required broadcast ownrecv db;
-  setCogTypes(uint8 types[] = [0 * 4]) required broadcast ownrecv db;
+  setCogLevels(uint8 levels[] = [0 * 5]) required broadcast ownrecv db;
+  setCogTypes(uint8 types[] = [0 * 5]) required broadcast ownrecv db;
   setCogParts(uint32 parts[] = [0 * 4]) required broadcast ownrecv db;
   setCogMerits(uint16 merits[] = [0 * 4]) required ownrecv db;
   setCogIndex(int8 index) broadcast ram;
@@ -1095,7 +1095,7 @@ dclass DistributedToon : DistributedPlayer {
   trickOrTreatTargetMet(uint32 beanAmount) ownrecv;
   trickOrTreatMilestoneMet() ownrecv;
   winterCarolingTargetMet(uint32 beanAmount) ownrecv;
-  setCogSummonsEarned(uint8 cogSummonsEarned[] = [0*32]) required ownrecv db;
+  setCogSummonsEarned(uint8 cogSummonsEarned[] = [0*40]) required ownrecv db;
   reqCogSummons(char type[0-256], uint32 suitIndex) ownsend airecv;
   cogSummonsResponse(string returnCode, uint32 suitIndex, uint32 doId) ownrecv;
   reqUseSpecial(int32 special) ownsend airecv;

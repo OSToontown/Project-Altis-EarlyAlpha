@@ -169,7 +169,7 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
             if guard is not None and not guard.isEmpty():
                 guard.unstash()
             boardColl.unstash()
-            self.soundIval = SoundInterval(self.moveSnd, node=self.platform)
+            self.soundIval = SoundInterval(self.moveSnd, self.windSnd, node=self.platform)
             self.soundIval.loop()
             return
 

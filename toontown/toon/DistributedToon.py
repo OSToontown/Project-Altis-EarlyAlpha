@@ -98,8 +98,8 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         self.disguisePage = None
         self.sosPage = None
         self.gardenPage = None
-        self.cogTypes = [0 * 4]
-        self.cogLevels = [0 * 4]
+        self.cogTypes = [0 * 5]
+        self.cogLevels = [0 * 5]
         self.cogParts = [0 * 4]
         self.cogMerits = [0 * 4]
         self.savedCheesyEffect = ToontownGlobals.CENormal
@@ -985,7 +985,7 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
                 self.takeOffSuit()
         else:
             parts = self.getCogParts()
-            if CogDisguiseGlobals.isPaidSuitComplete(self, parts, index):
+            if CogDisguiseGlobals.isSuitComplete(parts, index):
                 cogIndex = self.cogTypes[index] + SuitDNA.suitsPerDept * index
                 cog = SuitDNA.suitHeadTypes[cogIndex]
                 self.putOnSuit(cog)

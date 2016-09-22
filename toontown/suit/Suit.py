@@ -113,6 +113,40 @@ mh = (('magic1', 'magic1', 5),
  ('speak', 'speak', 5),
  ('golf-club-swing', 'golf-club-swing', 5),
  ('song-and-dance', 'song-and-dance', 8))
+ca = (('pickpocket', 'pickpocket', 5),
+ ('speak', 'speak', 5),
+ ('throw-paper', 'throw-paper', 3.5))
+cn = (('speak', 'speak', 5),
+ ('throw-paper', 'throw-paper', 5),
+ ('effort', 'effort', 5),     
+ ('magic3', 'magic3', 5),
+ ('finger-wag', 'finger-wag', 5))
+sw = (('phone', 'phone', 5),
+ ('pickpocket', 'pickpocket', 5),
+ ('throw-paper', 'throw-paper', 5),    
+ ('roll-o-dex', 'roll-o-dex', 5))
+mdm = (('smile', 'smile', 5),
+ ('roll-o-dex', 'roll-o-dex', 5),      
+ ('magic3', 'magic3', 5))
+txm = (('cigar-smoke', 'cigar-smoke', 8),
+ ('pen-squirt', 'fountain-pen', 7),
+ ('glower', 'glower', 5),
+ ('magic1', 'magic1', 5))
+mg = (('speak', 'speak', 5),
+ ('glower', 'glower', 5),     
+ ('throw-paper', 'throw-paper', 5),
+ ('throw-object', 'throw-object', 5),
+ ('magic1', 'magic1', 5),
+ ('finger-wag', 'finger-wag', 5))
+bfh = (('magic1', 'magic1', 5), ('throw-paper', 'throw-paper', 3.5), ('glower', 'glower', 5), ('watercooler', 'watercooler', 5), ('effort', 'effort', 5))
+hho = (('cigar-smoke', 'cigar-smoke', 8),
+ ('pen-squirt', 'fountain-pen', 7),
+ ('glower', 'glower', 5),
+ ('throw-paper', 'throw-paper', 5),
+ ('magic1', 'magic1', 5),
+ ('song-and-dance', 'song-and-dance', 8),
+ ('magic2', 'magic2', 5),
+ ('golf-club-swing', 'golf-club-swing', 5))
 sc = (('throw-paper', 'throw-paper', 3.5), ('watercooler', 'watercooler', 5), ('pickpocket', 'pickpocket', 5))
 pp = (('throw-paper', 'throw-paper', 5), ('glower', 'glower', 5), ('finger-wag', 'fingerwag', 5))
 tw = (('throw-paper', 'throw-paper', 3.5),
@@ -337,7 +371,8 @@ class Suit(Avatar.Avatar):
     medallionColors = {'c': Vec4(0.863, 0.776, 0.769, 1.0),
      's': Vec4(0.843, 0.745, 0.745, 1.0),
      'l': Vec4(0.749, 0.776, 0.824, 1.0),
-     'm': Vec4(0.749, 0.769, 0.749, 1.0)}
+     'm': Vec4(0.749, 0.769, 0.749, 1.0),
+     'g': Vec4(0.863, 0.776, 0.769, 1.0)}
 
     def __init__(self):
         try:
@@ -418,7 +453,62 @@ class Suit(Avatar.Avatar):
         self.loseActor = None
         self.isSkeleton = 0
         scale = SuitBattleGlobals.SuitSizes[dna.name]
-        if dna.name == 'f':
+        if dna.name == 'ca':
+            self.scale = scale / cSize
+            self.handColor = SuitDNA.boardPolyColor
+            self.generateBody()
+            self.headTexture = 'conartist.jpg'
+            self.generateHead('flunky')
+            self.setHeight(4.88)
+        elif dna.name == 'cn':
+            self.scale = scale / bSize
+            self.handColor = VBase4(0.95, 0.95, 1.0, 1.0),
+            self.generateBody()
+            self.generateHead('downsizer')
+            self.generateHead('group')
+            self.generateHead('group1')
+            self.setHeight(5.24)
+        elif dna.name == 'sw':
+            self.scale = scale / aSize
+            self.handColor = SuitDNA.boardPolyColor
+            self.generateBody()
+            self.headTexture = 'swindler.jpg'
+            self.generateHead('pennypincher')
+            self.setHeight(6.5)
+        elif dna.name == 'mdm':
+            self.scale = scale / aSize
+            self.handColor = SuitDNA.boardPolyColor
+            self.generateBody()
+            self.headTexture = 'middleman.jpg'
+            self.generateHead('twoface')
+            self.setHeight(6.7)
+        elif dna.name == 'txm':
+            self.scale = scale / aSize
+            self.handColor = VBase4(1, 1, .29, 1.0)
+            self.generateBody()
+            self.generateHead('toxicleader')
+            self.setHeight(7.2)
+        elif dna.name == 'mg':
+            self.scale = scale / aSize
+            self.handColor = SuitDNA.boardPolyColor
+            self.generateBody()
+            self.headTexture = 'magnate.jpg'
+            self.generateHead('legaleagle')
+            self.setHeight(7.26)
+        elif dna.name == 'bfh':
+            self.scale = scale / cSize
+            self.handColor = VBase4(1, 0.3, 0.3, 1.0)
+            self.generateBody()
+            self.generateHead('bigfish')
+            self.setHeight(10.0)
+        elif dna.name == 'hho':
+            self.scale = scale / aSize
+            self.handColor = SuitDNA.boardPolyColor
+            self.generateBody()
+            self.headTexture = 'head-honcho.jpg'
+            self.generateHead('headhoncho')
+            self.setHeight(8.23)
+        elif dna.name == 'f':
             self.scale = scale / cSize
             self.handColor = SuitDNA.corpPolyColor
             self.generateBody()
@@ -812,6 +902,8 @@ class Suit(Avatar.Avatar):
             tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_legal.jpg')
         elif dept == 'm':
             tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_money.jpg')
+        elif dept == 'g':
+            tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_board.jpg')
         tieTex.setMinfilter(Texture.FTLinearMipmapLinear)
         tieTex.setMagfilter(Texture.FTLinear)
         tie.setTexture(tieTex, 1)
@@ -833,6 +925,8 @@ class Suit(Avatar.Avatar):
             self.corpMedallion = icons.find('**/LegalIcon').copyTo(chestNull)
         elif dept == 'm':
             self.corpMedallion = icons.find('**/MoneyIcon').copyTo(chestNull)
+        elif dept == 'g':
+            self.corpMedallion = icons.find('**/HackerIcon').copyTo(chestNull)
         self.corpMedallion.setPosHprScale(0.02, 0.05, 0.04, 180.0, 0.0, 0.0, 0.51, 0.51, 0.51)
         self.corpMedallion.setColor(self.medallionColors[dept])
         icons.removeNode()

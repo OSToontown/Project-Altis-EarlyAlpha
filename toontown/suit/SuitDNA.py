@@ -37,7 +37,15 @@ suitHeadTypes = ['f',
  'ms',
  'tf',
  'm',
- 'mh']
+ 'mh',
+ 'ca',
+ 'cn',
+ 'sw',                 
+ 'mdm',
+ 'txm',
+ 'mg',
+ 'bfh',
+ 'hho']
 suitATypes = ['ym',
  'hh',
  'tbc',
@@ -51,16 +59,23 @@ suitATypes = ['ym',
  'nd',
  'tf',
  'm',
- 'mh']
+ 'mh',
+ 'sw',
+ 'mdm',            
+ 'txm',
+ 'mg',
+ 'hho']
 suitBTypes = ['p',
  'ds',
  'b',
  'ac',
  'sd',
  'bc',
+ 'br',
  'ls',
  'tm',
- 'ms']
+ 'ms',
+ 'cn']
 suitCTypes = ['f',
  'mm',
  'cr',
@@ -69,19 +84,24 @@ suitCTypes = ['f',
  'tw',
  'mb',
  'cc',
- 'gh']
+ 'gh',
+ 'ca',
+ 'bfh']
 suitDepts = ['c',
  'l',
  'm',
- 's']
+ 's',
+ 'g']
 suitDeptFullnames = {'c': TTLocalizer.Bossbot,
  'l': TTLocalizer.Lawbot,
  'm': TTLocalizer.Cashbot,
- 's': TTLocalizer.Sellbot}
+ 's': TTLocalizer.Sellbot,
+ 'g': TTLocalizer.Boardbot}
 suitDeptFullnamesP = {'c': TTLocalizer.BossbotP,
  'l': TTLocalizer.LawbotP,
  'm': TTLocalizer.CashbotP,
- 's': TTLocalizer.SellbotP}
+ 's': TTLocalizer.SellbotP,
+ 'g': TTLocalizer.BoardbotP}
 suitDeptModelPaths = {'c': '**/CorpIcon',
  0: '**/CorpIcon',
  'l': '**/LegalIcon',
@@ -89,11 +109,14 @@ suitDeptModelPaths = {'c': '**/CorpIcon',
  'm': '**/MoneyIcon',
  2: '**/MoneyIcon',
  's': '**/SalesIcon',
- 3: '**/SalesIcon'}
+ 3: '**/SalesIcon',
+ 'g': '**/HackerIcon',
+ 4: '**/HackerIcon'}
 corpPolyColor = VBase4(0.95, 0.75, 0.75, 1.0)
 legalPolyColor = VBase4(0.75, 0.75, 0.95, 1.0)
 moneyPolyColor = VBase4(0.65, 0.95, 0.85, 1.0)
 salesPolyColor = VBase4(0.95, 0.75, 0.95, 1.0)
+boardPolyColor = VBase4(.45, 0.45, .45, 1.0)
 suitsPerLevel = [1,
  1,
  1,
@@ -126,6 +149,8 @@ def getSuitDept(name):
         return suitDepts[2]
     elif index < suitsPerDept * 4:
         return suitDepts[3]
+    elif index < suitsPerDept * 5:
+        return suitDepts[4]
     else:
         print 'Unknown dept for suit name: ', name
         return None
