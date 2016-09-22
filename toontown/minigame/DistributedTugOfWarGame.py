@@ -362,13 +362,13 @@ class DistributedTugOfWarGame(DistributedMinigame):
         self.gameType = index
         self.suitLevel = suit
         if suit == 1:
-            self.suitType = random.choice(['f','p','bf','b','sc','pp','cc','tm'])
+            self.suitType = random.choice(['f','p','bf','b','sc','pp','cc','tm','ca','cn'])
         elif suit == 2:
-            self.suitType = random.choice(['ym','mm','dt','ac','tw','bc','nd','gh'])
+            self.suitType = random.choice(['ym','mm','dt','ac','tw','bc','nd','gh','sw','mdm'])
         elif suit == 3:
-            self.suitType = random.choice(['ds','hh','bs','sd','nc','mb','ms','tf'])
+            self.suitType = random.choice(['ds','hh','bs','sd','nc','mb','ms','tf','txm','mg'])
         elif suit == 4:
-            self.suitType = random.choice(['cr','tbc','le','bw','ls','rb','m','mh'])
+            self.suitType = random.choice(['cr','tbc','le','bw','ls','rb','m','mh','bfh','hho'])
         invSuit = base.cr.newsManager.getInvadingSuit()
         if invSuit:
             self.suitType = invSuit
