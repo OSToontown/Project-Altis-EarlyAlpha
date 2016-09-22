@@ -10,6 +10,7 @@ from toontown.coghq import BossbotHQExterior
 from toontown.coghq import BossbotHQBossBattle
 from toontown.coghq import BossbotOfficeExterior
 from toontown.coghq import CountryClubInterior
+from toontown.battle import BattleParticles
 from pandac.PandaModules import DecalEffect, TextEncoder
 import random
 aspectSF = 0.7227
@@ -28,11 +29,35 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
         self.cogHQExteriorModelPath = 'phase_12/models/bossbotHQ/CogGolfHub'
         self.cogHQLobbyModelPath = 'phase_12/models/bossbotHQ/CogGolfCourtyard'
         self.geom = None
+        self.rain = None
+        self.rainRender = None
+        self.rainSound = None
         return
 
     def load(self, zoneId):
         CogHQLoader.CogHQLoader.load(self, zoneId)
         Toon.loadBossbotHQAnims()
+
+    def startRain(self):
+        if not settings.GetBool('game', 'want-particle-effects', True):
+            return
+        elif self.geom is None:
+            return
+        else:
+            self.rain = BattleParticles.loadParticleFile('raindisk.ptf')
+            self.rain.setPos(0, 0, 20)
+            self.rainRender = self.geom.attachNewNode('rainRender')
+            self.rainRender.setDepthWrite(0)
+            self.rainRender.setBin('fixed', 1)
+            self.rain.start(camera, self.rainRender)
+            self.rainSound = base.loadSfx('phase_12/audio/sfx/CHQ_rain_ambient.ogg')
+            base.playSfx(self.rainSound, looping=1, volume=0.1)
+            return
+
+    def stopRain(self):
+        if self.rain:
+            self.rain.cleanup()
+            self.rainSound.stop()
 
     def unloadPlaceGeom(self):
         if self.geom:
@@ -79,15 +104,20 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
         makeSign('GateHouse', 'Sign_5', 10200)
 
     def unload(self):
+        del self.rain
+        del self.rainRender
+        del self.rainSound
         CogHQLoader.CogHQLoader.unload(self)
-        Toon.unloadSellbotHQAnims()
+        Toon.unloadBossbotHQAnims()
 
     def enterStageInterior(self, requestStatus):
         self.placeClass = StageInterior.StageInterior
         self.stageId = requestStatus['stageId']
         self.enterPlace(requestStatus)
+        self.startRain()
 
     def exitStageInterior(self):
+        self.stopRain()
         self.exitPlace()
         self.placeClass = None
         return
