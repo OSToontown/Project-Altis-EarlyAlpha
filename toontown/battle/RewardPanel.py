@@ -61,7 +61,7 @@ class RewardPanel(DirectFrame):
         self.meritLabels = []
         self.meritIncLabels = []
         self.meritBars = []
-        for i in range(len(SuitDNA.suitDepts)):
+        for i in range(len(SuitDNA.suitDepts)-1):
             deptName = TextEncoder.upper(SuitDNA.suitDeptFullnames[SuitDNA.suitDepts[i]])
             self.meritLabels.append(DirectLabel(parent=self.gagExpFrame, relief=None, text=deptName, text_scale=0.05, text_align=TextNode.ARight, pos=(TTLocalizer.RPmeritLabelPosX, 0, -0.09 * i - 0.125), text_pos=(0, -0.02)))
             self.meritIncLabels.append(DirectLabel(parent=self.gagExpFrame, relief=None, text='', text_scale=0.05, text_align=TextNode.ALeft, pos=(0.7, 0, -0.09 * i - 0.125), text_pos=(0, -0.02)))

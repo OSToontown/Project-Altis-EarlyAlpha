@@ -20,11 +20,9 @@ class PromotionManagerAI:
         meritsRecovered = [0,
          0,
          0,
-         0,
          0]
         if extraMerits is None:
             extraMerits = [0,
-             0,
              0,
              0,
              0]
@@ -57,10 +55,8 @@ class PromotionManagerAI:
         if meritsRecovered != [0,
          0,
          0,
-         0,
          0]:
             actualCounted = [0,
-             0,
              0,
              0,
              0]
