@@ -3,6 +3,7 @@ remake of Disney's Toontown Online
   
 # Current Team
  
+* Owen - Project Supervisor & Moderative Staff Director
 * Josh Zimmer - Game Developer & Project Manager
 * Dank Mickey - Game Developer, Project Manager, & Texture Artist
 * Swag Foreman - 3D Modeler & Animator
@@ -11,7 +12,7 @@ remake of Disney's Toontown Online
 * Malverde - Game & Networking Developer
 * Old Geezer - Game Developer & 3D Modeler
 * Barks - Game Developer
-
+* Mango Monkey - Storyline Writer & 3D Modeler
 
 # Thanks
 
