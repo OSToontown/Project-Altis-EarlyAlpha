@@ -1027,8 +1027,8 @@ dclass DistributedToon : DistributedPlayer {
   setBuildingRadar(uint8 radar[] = [0 * 4]) required ownrecv db;
   setCogLevels(uint8 levels[] = [0 * 5]) required broadcast ownrecv db;
   setCogTypes(uint8 types[] = [0 * 5]) required broadcast ownrecv db;
-  setCogParts(uint32 parts[] = [0 * 4]) required broadcast ownrecv db;
-  setCogMerits(uint16 merits[] = [0 * 4]) required ownrecv db;
+  setCogParts(uint32 parts[] = [0 * 5]) required broadcast ownrecv db;
+  setCogMerits(uint16 merits[] = [0 * 5]) required ownrecv db;
   setCogIndex(int8 index) broadcast ram;
   setDisguisePageFlag(int8 flag) ownrecv;
   setSosPageFlag(int8 flag) ownrecv;
