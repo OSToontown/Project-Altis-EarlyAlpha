@@ -4663,19 +4663,20 @@ def maxToon():
         CogDisguiseGlobals.PartsPerSuitBitmasks[0], # Bossbot
         CogDisguiseGlobals.PartsPerSuitBitmasks[1], # Lawbot
         CogDisguiseGlobals.PartsPerSuitBitmasks[2], # Cashbot
-        CogDisguiseGlobals.PartsPerSuitBitmasks[3]  # Sellbot
+        CogDisguiseGlobals.PartsPerSuitBitmasks[3],  # Sellbot
+        CogDisguiseGlobals.PartsPerSuitBitmasks[4]   # Boardbot
     ])
-    toon.b_setCogLevels([ToontownGlobals.MaxCogSuitLevel] * 4)
-    toon.b_setCogTypes([SuitDNA.suitsPerDept-1] * 4)
+    toon.b_setCogLevels([ToontownGlobals.MaxCogSuitLevel] * 5)
+    toon.b_setCogTypes([SuitDNA.suitsPerDept-1] * 5)
 
     # Full Cog Summons and Completed Cog Gallery
     cogCount = []
     from toontown.shtiker import CogPageGlobals
-    for deptIndex in xrange(4):
+    for deptIndex in xrange(5):
         for cogIndex in xrange(8):
             cogCount.append(CogPageGlobals.COG_QUOTAS[1][cogIndex])
     toon.b_setCogCount(cogCount)
-    toon.b_setCogStatus([CogPageGlobals.COG_COMPLETE2] * 32)
+    toon.b_setCogStatus([CogPageGlobals.COG_COMPLETE2] * 40)
     toon.restockAllCogSummons()
 
     # High racing tickets
