@@ -13,6 +13,8 @@ remake of Disney's Toontown Online
 * Old Geezer - Game Developer & 3D Modeler
 * Barks - Game Developer
 * Mango Monkey - Storyline Writer & 3D Modeler
+* Consonus - Music Composer
+* Drew - Game Developer
 
 # Thanks
 
