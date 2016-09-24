@@ -1,5 +1,5 @@
 # Project Altis
-remake of Disney's Toontown Online
+A vision of what Toontown Online could have been in 2016.
   
 # Current Team
  
@@ -20,3 +20,6 @@ remake of Disney's Toontown Online
 
 Thanks To Disney, Toontown Offline, Toontown Rewritten, Toontown Infinite, Toontown Fellowship, Toontown Stride, Toontown World Online, 
 and the Toontown community for making this game possible and to keep the Toontown spirit alive.
+
+# Inspirations
+1. Toontown Rewritten, for repowering the spirit of Toontown after Toontown Online closed on September 19, 2013
