@@ -66,7 +66,7 @@ class DistributedLaserFieldAI(BattleBlockerAI.BattleBlockerAI, NodePath, BasicEn
 
     def registerBlocker(self):
         BattleBlockerAI.BattleBlockerAI.registerBlocker(self)
-        taskMgr.doMethodLater(1, self.hideSuits, 'hide-suits')
+        taskMgr.doMethodLater(1, self.hideSuit, 'hide-suits')
 
     def delete(self):
         taskMgr.remove(self.detectName)

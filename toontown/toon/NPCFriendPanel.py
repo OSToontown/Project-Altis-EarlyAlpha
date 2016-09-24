@@ -19,7 +19,6 @@ class NPCFriendPanel(DirectFrame):
         self.updateLayout()
         self.initialiseoptions(NPCFriendPanel)
         self.accept(localAvatar.uniqueName('maxNPCFriendsChange'), self.updateLayout)
-        return None
 
     def update(self, friendDict, fCallable = 0):
         friendList = friendDict.keys()
@@ -33,8 +32,6 @@ class NPCFriendPanel(DirectFrame):
                 count = 0
 
             card.update(NPCID, count, fCallable)
-
-        return
 
     def updateLayout(self):
         for card in self.cardList:
@@ -112,6 +109,11 @@ class NPCFriendCard(DirectFrame):
             self.sosCountInfoScale = 0.4
             self.sosCountInfo2PosZ = -2.0
             self.sosCountInfo2Scale = 0.55
+        trashcanGui = loader.loadModel('phase_3/models/gui/trashcan_gui')
+        trashClosedButton = trashcanGui.find('**/TrashCan_CLSD')
+        trashOpenedButton = trashcanGui.find('**/TrashCan_OPEN')
+        trashRolloverButton = trashcanGui.find('**/TrashCan_RLVR')
+        self.sosDeleteButton = DirectButton(parent=self.front, relief=None, text=('', TTLocalizer.NPCFriendPageDelete, TTLocalizer.NPCFriendPageDelete, ''), text_fg=self.normalTextColor, text_scale=0.28, text_align=TextNode.ACenter, image=(trashClosedButton, trashOpenedButton, trashRolloverButton), image_pos=(Vec3(0, 0, 0.08)), pos=(1.25, 0, 0.6), scale=2, command=self.__handleDeleteNPCFriend)
         self.sosTypeInfo = DirectLabel(parent=self.front, relief=None, text='', text_font=ToontownGlobals.getMinnieFont(), text_fg=self.normalTextColor, text_scale=textScale, text_align=TextNode.ACenter, text_wordwrap=textWordWrap, pos=(0, 0, textPosZ))
         self.NPCHead = None
         self.NPCName = DirectLabel(parent=self.front, relief=None, text='', text_fg=self.normalTextColor, text_scale=nameScale, text_align=TextNode.ACenter, text_wordwrap=8.0, pos=(0, 0, namePosZ))
@@ -132,6 +134,7 @@ class NPCFriendCard(DirectFrame):
             label.hide()
             self.rarityStars.append(label)
 
+        self.confirmationDialog = None
         return
 
     def __chooseNPCFriend(self):
@@ -140,6 +143,38 @@ class NPCFriendCard(DirectFrame):
             doneStatus['mode'] = 'NPCFriend'
             doneStatus['friend'] = self['NPCID']
             messenger.send(self['doneEvent'], [doneStatus])
+
+    def __handleDeleteNPCFriend(self):
+        if self.confirmationDialog is not None:
+            self.confirmationDialog.destroy()
+            self.confirmationDialog = None
+        buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
+        okButton = (buttons.find('**/ChtBx_OKBtn_UP'), buttons.find('**/ChtBx_OKBtn_DN'), buttons.find('**/ChtBx_OKBtn_Rllvr'))
+        cancelButton = (buttons.find('**/CloseBtn_UP'), buttons.find('**/CloseBtn_DN'), buttons.find('**/CloseBtn_Rllvr'))
+        self.confirmationDialog = DirectFrame(parent=hidden, relief=None, state='normal', text=TTLocalizer.NPCFriendPageDeleteConfirmation, frameSize=(-1, 1, -1, 1), text_wordwrap=10, geom=DGG.getDefaultDialogGeom(), geom_color=ToontownGlobals.GlobalDialogColor, geom_scale=(0.88, 1, 0.55), geom_pos=(0, 0, -.08), text_scale=0.08, text_pos=(0, 0.08))
+        DirectButton(self.confirmationDialog, image=okButton, relief=None, text=TTLocalizer.lOK, text_scale=0.05, text_pos=(0.0, -0.1), textMayChange=0, pos=(-0.1, 0.0, -0.21), command=self.__deleteNPCFriend)
+        DirectButton(self.confirmationDialog, image=cancelButton, relief=None, text=TTLocalizer.lCancel, text_scale=0.05, text_pos=(0.0, -0.1), textMayChange=0, pos=(0.1, 0.0, -0.21), command=self.__closeConfirmationDialog)
+        buttons.removeNode()
+        self.confirmationDialog.reparentTo(aspect2d)
+ 
+    def __deleteNPCFriend(self):
+        self.__closeConfirmationDialog()
+        npcId = self['NPCID']
+        text = self.sosCountInfo['text']
+        npcCount = int(text.split(' ')[0])
+        base.localAvatar.sendUpdate('attemptSubtractNPCFriend', [npcId])
+        if npcCount > 1:
+            npcCount -= 1
+        else:
+            self.front.hide()
+            self.back.show()
+        text = str(npcCount) + ' ' + text.split(' ')[1]
+        self.sosCountInfo['text'] = text
+ 
+    def __closeConfirmationDialog(self):
+        if self.confirmationDialog is not None:
+            self.confirmationDialog.destroy()
+            self.confirmationDialog = None
 
     def destroy(self):
         if self.NPCHead:
