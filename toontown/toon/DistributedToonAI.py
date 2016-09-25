@@ -4610,7 +4610,7 @@ def cheesyEffect(value, hood=0, expire=0):
         if value not in OTPGlobals.CEName2Id:
             return 'Invalid cheesy effect value: %s' % value
         value = OTPGlobals.CEName2Id[value]
-    elif not 0 <= value <= 36:
+    elif not 0 <= value <= 37:
         return 'Invalid cheesy effect value: %d' % value
     if (hood != 0) and (not 1000 <= hood < ToontownGlobals.DynamicZonesBegin):
         return 'Invalid hood ID: %d' % hood
@@ -5027,7 +5027,7 @@ def setGM(gmId):
     return 'You have set %s to GM type %s' % (spellbook.getTarget().getName(), gmId)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int])
-def setTickets(tixVal):
+def Tickets(tixVal):
     """Set the target's racing ticket's value."""
     if not 0 <= tixVal <= 99999:
         return 'Ticket value out of range (0-99999)'
@@ -5035,7 +5035,7 @@ def setTickets(tixVal):
     return "%s's tickets were set to %s." % (spellbook.getTarget().getName(), tixVal)
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
-def setCogIndex(indexVal):
+def CogIndex(indexVal):
     """Transform into a cog/suit. THIS SHOULD ONLY BE USED WHERE NEEDED, E.G. ELECTIONS"""
     if not -1 <= indexVal <= 4:
         return 'CogIndex value %s is invalid.' % str(indexVal)
@@ -5158,14 +5158,14 @@ def dna(part, value):
     return "Completed DNA change successfully."
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
-def setTrophyScore(value):
+def TrophyScore(value):
     """Set the trophy score of target"""
     if value < 0:
         return "Cannot have a trophy score below 0."
     spellbook.getTarget().d_setTrophyScore(value)
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int, int])
-def givePies(pieType, numPies=0):
+def Pies(pieType, numPies=0):
     """Give target Y number of X pies."""
     av = spellbook.getTarget()
     if pieType == -1:
@@ -5188,7 +5188,7 @@ def givePies(pieType, numPies=0):
 
 # TODO: Set minimum access for this MW back to 400, after fishing supports quests.
 @magicWord(category=CATEGORY_OVERRIDE, types=[int, int])
-def setQP(questId=0, progress=0):
+def QP(questId=0, progress=0):
     """
     Get current questId in progress via ~setQP.
     Set questId progress via ~setQP questId value.
@@ -5305,22 +5305,6 @@ def summons():
     av.restockAllCogSummons()
     return 'Restocked all cog summons successfully!'
 
-@magicWord(category=CATEGORY_OVERRIDE, types=[str])
-def spawnBuilding(suitName):
-    """ Spawns a Cog Building with the given suit index """
-    av = spellbook.getInvoker()
-    try:
-        suitIndex = SuitDNA.suitHeadTypes.index(suitName)
-    except:
-        return "Invalid suit type: '{0}'.".format(suitName)
-    if suitIndex >= 32:
-        # you nigger stop with the hackerbots
-        return "Couldn't spawn building with Cog '{0}'.".format(suitName)
-    returnCode = av.doBuildingTakeover(suitIndex)
-    if returnCode[0] == 'success':
-        return "Successfully spawned building with Cog '{0}'!".format(suitName)
-    return "Couldn't spawn building with Cog '{0}'.".format(suitName)
-
 @magicWord(category=CATEGORY_OVERRIDE, types=[str, int])
 def spawnFO(track, difficulty=0):
     """ Spawns a Field Office with the given type and difficulty """
@@ -5396,7 +5380,7 @@ def exp(track, amt):
 def disguise(corp, type, level=0):
     """ Set disguise type and level. """
     # Idk if this is defined anywhere, but laziness got the best of me.
-    corps = ['bossbot', 'lawbot', 'cashbot', 'sellbot']
+    corps = ['c', 'l', 'm', 's', 'g']
     if corp not in corps:
         return "Invalid cog corp. specified."
     corpIndex = corps.index(corp)
