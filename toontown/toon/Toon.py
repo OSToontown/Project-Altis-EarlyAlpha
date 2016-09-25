@@ -3525,6 +3525,8 @@ class Toon(Avatar.Avatar, ToonHead):
                 suitType = 'bf'
             elif SuitDNA.suitDepts[deptIndex] == 'c':
                 suitType = 'f'
+            elif SuitDNA.suitDepts[deptIndex] == 'g':
+                suitType = 'ca'
             else:
                 self.notify.warning('Suspicious: Incorrect rental suit department requested')
                 suitType = 'cc'
