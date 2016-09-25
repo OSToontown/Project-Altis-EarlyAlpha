@@ -14,8 +14,7 @@ RESISTANCE_MONEY = 2
 RESISTANCE_TICKETS = 3
 RESISTANCE_MERITS = 4
 RESISTANCE_DANCE = 5
-RESISTANCE_CHEESY = 6
-resistanceMenu = [RESISTANCE_TOONUP, RESISTANCE_RESTOCK, RESISTANCE_MONEY, RESISTANCE_TICKETS, RESISTANCE_MERITS, RESISTANCE_DANCE, RESISTANCE_CHEESY]
+resistanceMenu = [RESISTANCE_TOONUP, RESISTANCE_RESTOCK, RESISTANCE_MONEY, RESISTANCE_TICKETS, RESISTANCE_MERITS, RESISTANCE_DANCE]
 resistanceDict = {
     RESISTANCE_TOONUP: {
         'menuName': TTLocalizer.ResistanceToonupMenu,
@@ -79,57 +78,6 @@ resistanceDict = {
         'values': ['Dance'],
         'items': [0]
     },
-	RESISTANCE_CHEESY: {'menuName': TTL.ResistanceCheesyMenu,
-                      'itemText': TTL.ResistanceCheesyItem,
-                      'chatText': TTL.ResistanceCheesyChat,
-                      'values': [TTG.CENormal,
-                                 TTG.CEBigHead,
-                                 TTG.CESmallHead,
-                                 TTG.CEBigLegs,
-                                 TTG.CESmallLegs,
-                                 TTG.CEBigToon,
-                                 TTG.CESmallToon,
-                                 TTG.CEFlatPortrait,
-                                 TTG.CEFlatProfile,
-                                 TTG.CETransparent,
-                                 TTG.CENoColor,
-                                 TTG.CEInvisible,
-                                 TTG.CEPumpkin,
-                                 TTG.CEBigWhite,
-                                 TTG.CESnowMan,
-                                 TTG.CEGreenToon],
-                      'extra': [TTL.CheesyEffectDescriptions[0][0],
-                                TTL.CheesyEffectDescriptions[1][0],
-                                TTL.CheesyEffectDescriptions[2][0],
-                                TTL.CheesyEffectDescriptions[3][0],
-                                TTL.CheesyEffectDescriptions[4][0],
-                                TTL.CheesyEffectDescriptions[5][0],
-                                TTL.CheesyEffectDescriptions[6][0],
-                                TTL.CheesyEffectDescriptions[7][0],
-                                TTL.CheesyEffectDescriptions[8][0],
-                                TTL.CheesyEffectDescriptions[9][0],
-                                TTL.CheesyEffectDescriptions[10][0],
-                                TTL.CheesyEffectDescriptions[11][0],
-                                TTL.CheesyEffectDescriptions[12][0],
-                                TTL.CheesyEffectDescriptions[13][0],
-                                TTL.CheesyEffectDescriptions[14][0],
-                                TTL.CheesyEffectDescriptions[15][0]],
-                      'items': [0,
-                                1,
-                                2,
-                                3,
-                                4,
-                                5,
-                                6,
-                                7,
-                                8,
-                                9,
-                                10,
-                                11,
-                                12,
-                                13,
-                                14,
-                                15]}
 }
 
 def encodeId(menuIndex, itemIndex):
@@ -168,12 +116,10 @@ def getItemText(textId):
     menuIndex, itemIndex = decodeId(textId)
     value = resistanceDict[menuIndex]['values'][itemIndex]
     text = resistanceDict[menuIndex]['itemText']
-    if menuIndex is RESISTANCE_TOONUP:
+    if menuIndex == RESISTANCE_TOONUP:
         if value is -1:
             value = TTL.ResistanceToonupItemMax
-    elif menuIndex is RESISTANCE_RESTOCK:
-        value = resistanceDict[menuIndex]['extra'][itemIndex]
-	elif menuIndex is RESISTANCE_CHEESY:
+    elif menuIndex == RESISTANCE_RESTOCK:
         value = resistanceDict[menuIndex]['extra'][itemIndex]
     return text % str(value)
 
@@ -272,34 +218,19 @@ def doEffect(textId, speakingToon, nearbyToons):
         model = loader.loadModel('phase_6/models/karting/tickets')
         model.flattenLight()
         iconDict = {'particles-1': model}
-
         for name, icon in iconDict.items():
             p = effect.getParticlesNamed(name)
             p.renderer.setFromNode(icon)
-
         fadeColor = VBase4(1, 1, 0, 1)
-	elif menuIndex == RESISTANCE_DANCE:
+		
+    elif menuIndex == RESISTANCE_DANCE:
         effect = BattleParticles.loadParticleFile('resistanceEffectSparkle.ptf')
         fadeColor = VBase4(1, 0.5, 1, 1)
         for toonId in nearbyToons:
             toon = base.cr.doId2do.get(toonId)
             if toon and (not toon.ghostMode):
                 toon.setAnimState('victory')
-	elif menuIndex == RESISTANCE_CHEESY:
-        effect = BattleParticles.loadParticleFile('resistanceEffectSparkle.ptf')
-        fadeColor = VBase4(1, 0.5, 1, 1)			
-    else:
-        return
-    recolorToons = Parallel()
-    for toonId in nearbyToons:
-        toon = base.cr.doId2do.get(toonId)
-        if toon and (not toon.ghostMode):
-            i = Sequence(
-                toon.doToonColorScale(fadeColor, 0.3),
-                toon.doToonColorScale(toon.defaultColorScale, 0.3),
-                Func(toon.restoreDefaultColorScale)
-            )
-            recolorToons.append(i)
+				
     i = Parallel(
         ParticleInterval(effect, speakingToon, worldRelative=0, duration=3, cleanup=True),
         Sequence(Wait(0.2), recolorToons),
