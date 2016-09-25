@@ -37,7 +37,7 @@ from toontown.friends import FriendsListPanel
 from toontown.friends import ToontownFriendSecret
 from toontown.uberdog import TTSpeedchatRelay
 from toontown.login import DateObject
-from toontown.login import AvatarChooser
+from toontown.pickatoon import PickAToon
 from toontown.makeatoon import MakeAToon
 from toontown.pets import DistributedPet, PetDetail, PetHandle
 from toontown.toonbase import TTLocalizer
@@ -223,8 +223,8 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         base.playMusic(self.music, looping=1, volume=0.9, interrupt=None)
         self.handler = self.handleMessageType
         self.avChoiceDoneEvent = 'avatarChooserDone'
-        self.avChoice = AvatarChooser.AvatarChooser(avList, self.loginFSM, self.avChoiceDoneEvent)
-        self.avChoice.load(self.isPaid())
+        self.avChoice = PickAToon.PickAToon(avList, self.loginFSM, self.avChoiceDoneEvent)
+        self.avChoice.load()
         self.avChoice.enter()
         self.accept(self.avChoiceDoneEvent, self.__handleAvatarChooserDone, [avList])
         if config.GetBool('want-gib-loader', 1):

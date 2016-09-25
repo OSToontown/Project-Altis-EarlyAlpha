@@ -71,7 +71,7 @@ class AltisLauncherApp(QtGui.QMainWindow, AltisLauncher.Ui_AltisLauncher):
 
     def playgame(self, playcookie):
         try:
-            os.system('C:\Panda3D-1.9.0\python\ppython.exe -m toontown.toonbase.ToontownStart -c ' + playcookie)
+            os.system('Panda3D-1.9.0\python\ppython.exe -m toontown.toonbase.ToontownStart -c ' + playcookie)
         except:
             pass
 
