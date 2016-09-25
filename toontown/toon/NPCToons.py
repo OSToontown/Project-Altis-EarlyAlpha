@@ -2491,7 +2491,7 @@ NPCToonDict = {
          5),
         'm',
         0,
-	NPC_REGULAR),
+    NPC_REGULAR),
  1101: (1627,
         lnames[1101],
         ('fll',
