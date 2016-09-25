@@ -81,7 +81,7 @@ estate-day-night #t
 want-instant-parties #t
 show-total-population #f
 
-want-whitelist #t
+want-whitelist #f
 force-avatar-understandable #t
 force-player-understandable #t
 
