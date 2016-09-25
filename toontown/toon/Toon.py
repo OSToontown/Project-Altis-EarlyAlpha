@@ -3354,6 +3354,86 @@ class Toon(Avatar.Avatar, ToonHead):
         track.append(barneyTrack)
         return track
 
+    def __doPete(self, lerpTime, toPete):
+        track = Sequence()
+        peteTrack = Parallel()
+
+        def getDustCloudIval():
+            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=1)
+            dustCloud.setBillboardAxis(2.0)
+            dustCloud.setZ(3)
+            dustCloud.setScale(0.4)
+            dustCloud.createTrack()
+            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
+
+        if lerpTime > 0.0:
+            dust = getDustCloudIval()
+            track.append(Func(dust.start))
+            track.append(Wait(0.5))
+            
+        if toPete:
+            self.oldStyle = self.style.clone()
+            self.oldHat = self.hat
+            dna = ToonDNA.ToonDNA()
+            dna.newToonFromProperties('cll', 'ms', 'l', 'm', 18, 0, 18, 18, 0, 4, 0, 4, 1, 15)
+            peteTrack.append(Func(self.updateToonDNA, dna, True))
+            if hasattr(self, 'animFSM'):
+                state = self.animFSM.getCurrentState()
+                peteTrack.append(Func(self.animFSM.request, 'off'))
+                peteTrack.append(Func(self.animFSM.request, state))
+            peteTrack.append(Func(self.nametag.setDisplayName, 'Professor Pete'))
+        else:
+            peteTrack.append(Func(self.updateToonDNA, self.oldStyle))
+            if hasattr(self, 'animFSM'):
+                state = self.animFSM.getCurrentState()
+                peteTrack.append(Func(self.animFSM.request, 'off'))
+                peteTrack.append(Func(self.animFSM.request, state))
+            peteTrack.append(Func(self.nametag.setDisplayName, self.nametag.name))
+            peteTrack.append(Func(self.setHat, self.oldHat[0], self.oldHat[1], self.oldHat[2]))
+            peteTrack.append(Func(self.generateToonAccessories))
+        track.append(peteTrack)
+        return track
+
+    def __doLouis(self, lerpTime, toLouis):
+        track = Sequence()
+        louisTrack = Parallel()
+
+        def getDustCloudIval():
+            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=1)
+            dustCloud.setBillboardAxis(2.0)
+            dustCloud.setZ(3)
+            dustCloud.setScale(0.4)
+            dustCloud.createTrack()
+            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
+
+        if lerpTime > 0.0:
+            dust = getDustCloudIval()
+            track.append(Func(dust.start))
+            track.append(Wait(0.5))
+            
+        if toLouis:
+            self.oldStyle = self.style.clone()
+            self.oldHat = self.hat
+            dna = ToonDNA.ToonDNA()
+            dna.newToonFromProperties('fss', 'ss', 'l', 'm', 12, 0, 12, 12, 1, 5, 1, 5, 1, 12)
+            louisTrack.append(Func(self.updateToonDNA, dna, True))
+            if hasattr(self, 'animFSM'):
+                state = self.animFSM.getCurrentState()
+                louisTrack.append(Func(self.animFSM.request, 'off'))
+                louisTrack.append(Func(self.animFSM.request, state))
+            louisTrack.append(Func(self.nametag.setDisplayName, 'Loony Louis'))
+        else:
+            louisTrack.append(Func(self.updateToonDNA, self.oldStyle))
+            if hasattr(self, 'animFSM'):
+                state = self.animFSM.getCurrentState()
+                louisTrack.append(Func(self.animFSM.request, 'off'))
+                louisTrack.append(Func(self.animFSM.request, state))
+            louisTrack.append(Func(self.nametag.setDisplayName, self.nametag.name))
+            louisTrack.append(Func(self.setHat, self.oldHat[0], self.oldHat[1], self.oldHat[2]))
+            louisTrack.append(Func(self.generateToonAccessories))
+        track.append(louisTrack)
+        return track
+
     def __doCheesyEffect(self, effect, lerpTime):
         if effect == ToontownGlobals.CEBigHead:
             return self.__doHeadScale(2.5, lerpTime)
@@ -3423,6 +3503,10 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doFurball(lerpTime, toFurball=True)
         elif effect == ToontownGlobals.CEBarney:
             return self.__doBarney(lerpTime, toBarney=True)
+        elif effect == ToontownGlobals.CEPete:
+            return self.__doPete(lerpTime, toPete=True)
+        elif effect == ToontownGlobals.CELouis:
+            return self.__doLouis(lerpTime, toLouis=True)
         elif effect == ToontownGlobals.CEVirtual:
             return self.__doVirtual()
         elif effect == ToontownGlobals.CEGhost:
@@ -3501,6 +3585,10 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doFurball(lerpTime, toFurball=False)
         elif effect == ToontownGlobals.CEBarney:
             return self.__doBarney(lerpTime, toBarney=False)
+        elif effect == ToontownGlobals.CEPete:
+            return self.__doPete(lerpTime, toPete=False)
+        elif effect == ToontownGlobals.CELouis:
+            return self.__doLouis(lerpTime, toLouis=False)
         elif effect == ToontownGlobals.CEVirtual:
             return self.__doUnVirtual()
         elif effect == ToontownGlobals.CEGhost:
