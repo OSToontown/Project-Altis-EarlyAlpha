@@ -1,7 +1,6 @@
 from toontown.toonbase import ToontownGlobals
 from SZHoodAI import SZHoodAI
 from toontown.toon import NPCToons
-from toontown.classicchars import DistributedDonaldAI
 
 class DLHoodAI(SZHoodAI):
     notify = directNotify.newCategory('SZHoodAI')
@@ -10,17 +9,6 @@ class DLHoodAI(SZHoodAI):
 
     def createZone(self):
         self.notify.info("Creating zone... Donald's Dreamland")
-        self.classicChar = None
 
         SZHoodAI.createZone(self)
-
-        if simbase.config.GetBool('want-classic-chars', True):
-            if simbase.config.GetBool('want-donald-dreamland', True):
-                self.createClassicChar()
-
         self.spawnObjects()
-
-    def createClassicChar(self):
-        self.classicChar = DistributedDonaldAI.DistributedDonaldAI(self.air)
-        self.classicChar.generateWithRequired(self.safezone)
-        self.classicChar.start()

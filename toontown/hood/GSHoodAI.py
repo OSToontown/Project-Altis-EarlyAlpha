@@ -1,7 +1,6 @@
 from toontown.toonbase import ToontownGlobals
 from toontown.hood import HoodAI
 from toontown.building.DistributedBuildingMgrAI import DistributedBuildingMgrAI
-from toontown.classicchars import DistributedGoofySpeedwayAI
 
 class GSHoodAI(HoodAI.HoodAI):
     notify = directNotify.newCategory('HoodAI')
@@ -11,11 +10,6 @@ class GSHoodAI(HoodAI.HoodAI):
     def __init__(self, air):
         HoodAI.HoodAI.__init__(self, air)
         self.notify.info("Creating zone... Goofy Speedway")
-        self.classicChar = None
-
-        if simbase.config.GetBool('want-classic-chars', True):
-            if simbase.config.GetBool('want-goofy', True):
-                self.createClassicChar()
 
         self.createZone()
         self.spawnObjects()
@@ -29,8 +23,3 @@ class GSHoodAI(HoodAI.HoodAI):
         HoodAI.HoodAI.spawnObjects(self)
         filename = self.air.genDNAFileName(self.HOOD)
         self.air.dnaSpawner.spawnObjects(filename, self.HOOD)
-
-    def createClassicChar(self):
-        self.classicChar = DistributedGoofySpeedwayAI.DistributedGoofySpeedwayAI(self.air)
-        self.classicChar.generateWithRequired(self.HOOD)
-        self.classicChar.start()
