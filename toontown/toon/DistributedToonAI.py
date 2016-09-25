@@ -1264,7 +1264,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             # Iterate through the above list, and check if we're above or equal to the level.
             # If we are, we get 1 boost per level that we've passed.
             for level in levels:
-                if self.getCogLevels()[x] >= level - 1: # 0-49, pfft.
+                if self.getCogLevels()[x] >= level - 1: # 0-12, pfft.
                     gained_suit += 1
 
         # Calculate the total hp from the "gained" counters.
@@ -4669,6 +4669,75 @@ def maxToon():
     toon.b_setCogLevels([ToontownGlobals.MaxCogSuitLevel] * 5)
     toon.b_setCogTypes([SuitDNA.suitsPerDept-1] * 5)
 
+    # Unlock all of the emotes:
+    emotes = list(target.getEmoteAccess())
+    for emoteId in OTPLocalizer.EmoteFuncDict.values():
+        if emoteId >= len(emotes):
+            continue
+        # The following emotions are ignored because they are unable to be
+        # obtained:
+        if emoteId in (17, 18, 19):
+            continue
+        emotes[emoteId] = 1
+    target.b_setEmoteAccess(emotes)
+
+@magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int])
+def hat(hatIndex, hatTex=0):
+    """
+    Modify the target's hat.
+    """
+    if not 0 <= hatIndex < len(ToonDNA.HatModels):
+        return 'Invalid hat index.'
+    if not 0 <= hatTex < len(ToonDNA.HatTextures):
+        return 'Invalid hat texture.'
+    target = spellbook.getTarget()
+    target.b_setHat(hatIndex, hatTex, 0)
+    return "Set %s's hat to %d, %d!" % (target.getName(), hatIndex, hatTex)
+
+@magicWord(category=CATEGORY_SYSADMIN, types=[int])
+def resistance():
+    """
+    Applies the Resistance Ranger Clothes
+    """
+    invoker = spellbook.getTarget()
+
+    dna = ToonDNA.ToonDNA()
+    dna.makeFromNetString(invoker.getDNAString())
+
+    dna.topTex = 111
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.topTexColor = 26
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.sleeveTex = 98
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.sleeveTexColor = 26
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.botTex = 41
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.botTexColor = 26
+    invoker.b_setDNAString(dna.makeNetString())
+
+    target = spellbook.getTarget()
+    target.b_setNametagStyle(6)
+
+@magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int])
+def glasses(glassesIndex, glassesTex=0):
+    """
+    Modify the target's glasses.
+    """
+    if not 0 <= glassesIndex < len(ToonDNA.GlassesModels):
+        return 'Invalid glasses index.'
+    if not 0 <= glassesTex < len(ToonDNA.GlassesTextures):
+        return 'Invalid glasses texture.'
+    target = spellbook.getTarget()
+    target.b_setGlasses(glassesIndex, glassesTex, 0)
+    return "Set %s's glasses to %d, %d!" % (target.getName(), glassesIndex, glassesTex)
+
     # Full Cog Summons and Completed Cog Gallery
     cogCount = []
     from toontown.shtiker import CogPageGlobals
@@ -4717,6 +4786,56 @@ def setMaxMoney(moneyVal):
     spellbook.getTarget().b_setMoney(moneyVal)
     return 'maxMoney set to %s' % moneyVal
 
+
+@magicWord(category=CATEGORY_CHARACTERSTATS, types=[str, int, int])
+def inventory(a, b=None, c=None):
+    target = spellbook.getTarget()
+    inventory = target.inventory
+    if a == 'reset':
+        maxLevelIndex = b or 5
+        if not 0 <= maxLevelIndex < len(ToontownBattleGlobals.Levels[0]):
+            return 'Invalid max level index: ' + str(maxLevelIndex)
+        targetTrack = -1 or c
+        if not -1 <= targetTrack < len(ToontownBattleGlobals.Tracks):
+            return 'Invalid target track index: ' + str(targetTrack)
+        for track in xrange(0, len(ToontownBattleGlobals.Tracks)):
+            if (targetTrack == -1) or (track == targetTrack):
+                inventory.inventory[track][:maxLevelIndex + 1] = [0] * (maxLevelIndex+1)
+        target.b_setInventory(inventory.makeNetString())
+        if targetTrack == -1:
+            return 'Inventory reset.'
+        else:
+            return 'Inventory reset for target track index: ' + str(targetTrack)
+    elif a == 'restock':
+        maxLevelIndex = b or 5
+        if not 0 <= maxLevelIndex < len(ToontownBattleGlobals.Levels[0]):
+            return 'Invalid max level index: ' + str(maxLevelIndex)
+        targetTrack = -1 or c
+        if not -1 <= targetTrack < len(ToontownBattleGlobals.Tracks):
+            return 'Invalid target track index: ' + str(targetTrack)
+        if (targetTrack != -1) and (not target.hasTrackAccess(targetTrack)):
+            return "You don't have target track index: " + str(targetTrack)
+        inventory.NPCMaxOutInv(targetTrack=targetTrack, maxLevelIndex=maxLevelIndex)
+        target.b_setInventory(inventory.makeNetString())
+        if targetTrack == -1:
+            return 'Inventory restocked.'
+        else:
+            return 'Inventory restocked for target track index: ' + str(targetTrack)
+    else:
+        try:
+            targetTrack = int(a)
+        except:
+            return 'Invalid first argument.'
+        if not target.hasTrackAccess(targetTrack):
+            return "You don't have target track index: " + str(targetTrack)
+        maxLevelIndex = b or 6
+        if not 0 <= maxLevelIndex < len(ToontownBattleGlobals.Levels[0]):
+            return 'Invalid max level index: ' + str(maxLevelIndex)
+        for _ in xrange(c):
+            inventory.addItem(targetTrack, maxLevelIndex)
+        target.b_setInventory(inventory.makeNetString())
+        return 'Restored %d Gags to: %d, %d' % (c, targetTrack, maxLevelIndex)
+    
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int])
 def setFishingRod(rodVal):
     """Set target's fishing rod value."""
@@ -5221,10 +5340,28 @@ def spawnFO(track, difficulty=0):
     return 'Successfully spawned "%s" Field Office with difficulty %d!' % (track, difficulty)
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
-def pinkslips(amt=255):
+def fires(amt=255):
     """ Restock (to 255) CEO pink slips. """
     spellbook.getTarget().b_setPinkSlips(amt)
     return 'Restocked {0} pink slips successfully!'.format(amt)
+
+@magicWord(category=CATEGORY_SYSADMIN, types=[str, str])
+def suit(command, suitName = 'f'):
+    invoker = spellbook.getInvoker()
+    if suitName not in SuitDNA.suitHeadTypes:
+        return 'Invalid suit name: ' + suitName
+    suitFullName = SuitBattleGlobals.SuitAttributes[suitName]['name']
+    command = command.lower()
+    if command == 'spawn':
+        returnCode = invoker.doSummonSingleCog(SuitDNA.suitHeadTypes.index(suitName))
+        if returnCode[0] == 'success':
+            return 'Successfully spawned: ' + suitFullName
+        return "Couldn't spawn: " + suitFullName
+    elif command == 'building':
+        returnCode = invoker.doBuildingTakeover(SuitDNA.suitHeadTypes.index(suitName))
+        if returnCode[0] == 'success':
+            return 'Successfully spawned a Cog building with: ' + suitFullName
+        return "Couldn't spawn a Cog building with: " + suitFullName
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
 def questTier(tier):
@@ -5292,7 +5429,7 @@ def disguise(corp, type, level=0):
 
     # Make sure they gave a level that is in range.
     if typeIndex == 7:
-        # The final suit can go up to Level 50.
+        # The final suit can go up to Level 12.
         levelRange = range(8, 51) # Last digit is exclusive.
     else:
         levelRange = range((typeIndex+1), (typeIndex+6))

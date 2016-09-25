@@ -55,7 +55,7 @@ MeritsPerLevel = ((100, #Flunky
   3770,
   4660,
   5550,
-  5550,
+  23300,
   0),
  (60, #Bottom Feeder
   80,
@@ -190,22 +190,22 @@ MeritsPerLevel = ((100, #Flunky
   420,
   500,
   2100), 
- (420, #Magnate
+ (420, #The Swindler
   550,
   680,
   810,
   3400), 
- (680, #Proprietor
+ (680, #Middleman
   890,
   1100,
   1310,
   5550),
- (1100, #Big Shot
+ (1100, #Toxic Manager
   1440,
   1780,
   2120,
   8900),
- (1780, #Toxic Leader
+ (1780, #Magnate
   2330,
   2880,
   3430,
@@ -219,7 +219,7 @@ MeritsPerLevel = ((100, #Flunky
   8900,
   14400,
   23300,
-  5550,
+  33300,
   0)))             
 leftLegUpper = 1
 leftLegLower = 2
