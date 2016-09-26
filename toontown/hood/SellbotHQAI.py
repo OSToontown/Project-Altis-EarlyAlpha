@@ -9,7 +9,6 @@ from toontown.toonbase import ToontownGlobals
 
 
 class SellbotHQAI(CogHQAI.CogHQAI):
-    HOOD = ToontownGlobals.SellbotHQ
     def __init__(self, air):
         CogHQAI.CogHQAI.__init__(
             self, air, ToontownGlobals.SellbotHQ, ToontownGlobals.SellbotLobby,
@@ -39,7 +38,7 @@ class SellbotHQAI(CogHQAI.CogHQAI):
 
         # Our suit planner needs the Cog HQ doors as well:
         for sp in self.suitPlanners:
-            if sp.zoneId == self.HOOD:
+            if sp.zoneId == self.zoneId:
                 sp.cogHQDoors = self.cogHQDoors
 
     def createFactoryElevators(self):
