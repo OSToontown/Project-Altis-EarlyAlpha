@@ -29,7 +29,7 @@ class SellbotHQBossBattle(CogHQBossBattle.CogHQBossBattle):
         self.loader.hood.startSky()
         sky = self.loader.hood.sky
         sky.setH(150)
-        sky.setZ(-100)
+        sky.setZ(-300)
 
     def __cleanupHighSky(self):
         self.loader.hood.stopSky()
