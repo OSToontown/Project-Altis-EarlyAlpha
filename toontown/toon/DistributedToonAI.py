@@ -4639,15 +4639,31 @@ def setTrackAccess(toonup, trap, lure, sound, throw, squirt, drop):
     spellbook.getTarget().b_setTrackAccess([toonup, trap, lure, sound, throw, squirt, drop])
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[str])
-def maxToon():
+def maxToon(missingTrack=None):
     """Max out the toons stats, for end-level gameplay. Should only be (and is restricted to) casting on Administrators only."""
     toon = spellbook.getInvoker()
 
-    # Max out gag tracks (all 7 tracks)
-    toon.b_setTrackAccess([1] * 7)
-    toon.b_setMaxCarry(MaxCarryLimit + 15) # Compensate for the extra gag track.
-    toon.experience.maxOutExp() # Completely max out the toons experience.
-    toon.b_setExperience(toon.experience.makeNetString())
+    # Max out gag tracks (all 7 tracks, unless a missing track is specified.)
+    gagTracks = [1, 1, 1, 1, 1, 1, 1]
+    if missingTrack is not None:
+        try:
+            index = ('toonup', 'trap', 'lure', 'sound', 'throw',
+                     'squirt', 'drop').index(missingTrack)
+        except:
+            return 'Missing Gag track is invalid!'
+        if index in (4, 5):
+            return 'You are required to have Throw and Squirt.'
+        gagTracks[index] = 0
+    toon.b_setTrackAccess(gagTracks)
+    toon.b_setMaxCarry(ToontownGlobals.MaxCarryLimit)
+
+    # Next, max out their experience for the tracks they have:
+    experience = Experience.Experience(toon.getExperience(), toon)
+    for i, track in enumerate(toon.getTrackAccess()):
+        if track:
+            experience.experience[i] = (
+                Experience.MaxSkill - Experience.UberSkill)
+    toon.b_setExperience(experience.makeNetString())
 
     # Restock all gags.
     toon.inventory.zeroInv()
@@ -4658,7 +4674,11 @@ def maxToon():
     toon.b_setMaxHp(ToontownGlobals.MaxHpLimit)
     toon.toonUp(toon.getMaxHp() - toon.getHp())
 
-    # Max out cog suits (ORDER: Bossbot, Lawbot, Cashbot, Sellbot)
+    # Teleport access everywhere (Including CogHQ)
+    toon.b_setHoodsVisited(ToontownGlobals.Hoods)
+    toon.b_setTeleportAccess(ToontownGlobals.HoodsForTeleportAll)
+
+    # Max out cog suits (ORDER: Bossbot, Lawbot, Cashbot, Sellbot, Boardbot)
     toon.b_setCogParts([
         CogDisguiseGlobals.PartsPerSuitBitmasks[0], # Bossbot
         CogDisguiseGlobals.PartsPerSuitBitmasks[1], # Lawbot
@@ -4669,16 +4689,22 @@ def maxToon():
     toon.b_setCogLevels([ToontownGlobals.MaxCogSuitLevel] * 5)
     toon.b_setCogTypes([SuitDNA.suitsPerDept-1] * 5)
 
-    # Teleport access everywhere (Including CogHQ, excluding Funny Farm.)
+    # Full Cog Summons and Completed Cog Gallery
+    cogCount = []
+    from toontown.shtiker import CogPageGlobals
+    for deptIndex in xrange(5):
+        for cogIndex in xrange(8):
+            cogCount.append(CogPageGlobals.COG_QUOTAS[1][cogIndex])
+    toon.b_setCogCount(cogCount)
+    toon.b_setCogStatus([CogPageGlobals.COG_COMPLETE2] * 40)
+    toon.restockAllCogSummons()
+
+    # High racing tickets
+    toon.b_setTickets(99999)
+
+    # Teleport access everywhere (Including CogHQ)
     toon.b_setHoodsVisited(ToontownGlobals.Hoods)
     toon.b_setTeleportAccess(ToontownGlobals.HoodsForTeleportAll)
-
-    # General end game settings
-    toon.b_setQuestCarryLimit(ToontownGlobals.MaxQuestCarryLimit)
-    toon.b_setRewardHistory(Quests.ELDER_TIER, [])
-    toon.b_setMaxMoney(250)
-    toon.b_setMoney(toon.getMaxMoney())
-    toon.b_setBankMoney(ToontownGlobals.DefaultMaxBankMoney)
 
     # Unlock all of the emotes:
     emotes = list(toon.getEmoteAccess())
@@ -4691,6 +4717,15 @@ def maxToon():
             continue
         emotes[emoteId] = 1
     toon.b_setEmoteAccess(emotes)
+
+    # General end game settings
+    toon.b_setQuests([])
+    toon.b_setQuestCarryLimit(4)
+    toon.b_setRewardHistory(Quests.ELDER_TIER, [])
+    toon.b_setMaxMoney(250)
+    toon.b_setMoney(toon.getMaxMoney())
+    toon.b_setBankMoney(ToontownGlobals.DefaultMaxBankMoney)
+    return 'Your Toon is now maxed.'
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int])
 def hat(hatIndex, hatTex=0):
@@ -4748,45 +4783,6 @@ def glasses(glassesIndex, glassesTex=0):
     target = spellbook.getTarget()
     target.b_setGlasses(glassesIndex, glassesTex, 0)
     return "Set %s's glasses to %d, %d!" % (target.getName(), glassesIndex, glassesTex)
-
-    # Full Cog Summons and Completed Cog Gallery
-    cogCount = []
-    from toontown.shtiker import CogPageGlobals
-    for deptIndex in xrange(5):
-        for cogIndex in xrange(8):
-            cogCount.append(CogPageGlobals.COG_QUOTAS[1][cogIndex])
-    toon.b_setCogCount(cogCount)
-    toon.b_setCogStatus([CogPageGlobals.COG_COMPLETE2] * 40)
-    toon.restockAllCogSummons()
-
-    # High racing tickets
-    toon.b_setTickets(99999)
-
-    # Teleport access everywhere (Including CogHQ, excluding Funny Farm.)
-    toon.b_setHoodsVisited(ToontownGlobals.Hoods)
-    toon.b_setTeleportAccess(ToontownGlobals.HoodsForTeleportAll)
-
-    # Unlock all of the emotes:
-    emotes = list(toon.getEmoteAccess())
-    for emoteId in OTPLocalizer.EmoteFuncDict.values():
-        if emoteId >= len(emotes):
-            continue
-        # The following emotions are ignored because they are unable to be
-        # obtained:
-        if emoteId in (17, 18, 19):
-            continue
-        emotes[emoteId] = 1
-    toon.b_setEmoteAccess(emotes)
-
-    # General end game settings
-    toon.b_setQuests([])
-    toon.b_setQuestCarryLimit(4)
-    toon.b_setRewardHistory(Quests.ELDER_TIER, [])
-    toon.b_setMaxMoney(250)
-    toon.b_setMoney(toon.getMaxMoney())
-    toon.b_setBankMoney(ToontownGlobals.DefaultMaxBankMoney)
-
-    return 'By the power invested in me, I, Flippy, max your toon.'
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int])
 def setMaxMoney(moneyVal):
