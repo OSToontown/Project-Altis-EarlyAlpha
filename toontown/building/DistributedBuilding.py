@@ -334,6 +334,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
                 corpIcon = cogIcons.find('**/LegalIcon').copyTo(self.cab)
             elif dept == 'm':
                 corpIcon = cogIcons.find('**/MoneyIcon').copyTo(self.cab)
+            elif dept == 'g':
+                corpIcon = cogIcons.find('**/HackerIcon').copyTo(self.cab)
             corpIcon.setPos(0, 6.79, 6.8)
             corpIcon.setScale(3)
             from toontown.suit import Suit
@@ -394,8 +396,6 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         self.stopTransition()
         if self.mode != 'toon':
             self.setToToon()
-        if self.track == 'g':
-            return
         self.loadAnimToSuitSfx()
         sideBldgNodes = self.getNodePaths()
         nodePath = hidden.find(self.getSbSearchString())
@@ -447,12 +447,10 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         return
 
     def setupSuitBuilding(self, nodePath):
-        if self.track == 'g':
-            return None 
         dnaData = base.cr.playGame.dnaData
         dnaStore = self.cr.playGame.dnaStore
         level = int(self.difficulty / 2) + 1
-        suitNP = dnaStore.findNode('suit_landmark_' + chr(self.track) + str(level))
+        suitNP = dnaStore.findNode('suit_landmark_' + chr(self.track) + str(level)) # For future reference, we will put this in the phase_5/dna/storage_town.xml :)
         zoneId = dnaData.getBlock(self.block).zone
         zoneId = ZoneUtil.getTrueZoneId(zoneId, self.interiorZoneId)
         newParentNP = base.cr.playGame.hood.loader.zoneDict[zoneId]
@@ -856,8 +854,6 @@ class DistributedBuilding(DistributedObject.DistributedObject):
     def setToSuit(self):
         self.stopTransition()
         if self.mode == 'suit':
-            return
-        if self.track == 'g':
             return
         self.mode = 'suit'
         nodes = self.getNodePaths()

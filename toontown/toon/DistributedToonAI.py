@@ -1264,7 +1264,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             # Iterate through the above list, and check if we're above or equal to the level.
             # If we are, we get 1 boost per level that we've passed.
             for level in levels:
-                if self.getCogLevels()[x] >= level - 1: # 0-12, pfft.
+                if self.getCogLevels()[x] >= level - 1: # 0-49, pfft.
                     gained_suit += 1
 
         # Calculate the total hp from the "gained" counters.
@@ -4610,7 +4610,7 @@ def cheesyEffect(value, hood=0, expire=0):
         if value not in OTPGlobals.CEName2Id:
             return 'Invalid cheesy effect value: %s' % value
         value = OTPGlobals.CEName2Id[value]
-    elif not 0 <= value <= 37:
+    elif not 0 <= value <= 36:
         return 'Invalid cheesy effect value: %d' % value
     if (hood != 0) and (not 1000 <= hood < ToontownGlobals.DynamicZonesBegin):
         return 'Invalid hood ID: %d' % hood
@@ -4639,31 +4639,15 @@ def setTrackAccess(toonup, trap, lure, sound, throw, squirt, drop):
     spellbook.getTarget().b_setTrackAccess([toonup, trap, lure, sound, throw, squirt, drop])
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[str])
-def maxToon(missingTrack=None):
+def maxToon():
     """Max out the toons stats, for end-level gameplay. Should only be (and is restricted to) casting on Administrators only."""
     toon = spellbook.getInvoker()
 
-    # Max out gag tracks (all 7 tracks, unless a missing track is specified.)
-    gagTracks = [1, 1, 1, 1, 1, 1, 1]
-    if missingTrack is not None:
-        try:
-            index = ('toonup', 'trap', 'lure', 'sound', 'throw',
-                     'squirt', 'drop').index(missingTrack)
-        except:
-            return 'Missing Gag track is invalid!'
-        if index in (4, 5):
-            return 'You are required to have Throw and Squirt.'
-        gagTracks[index] = 0
-    toon.b_setTrackAccess(gagTracks)
-    toon.b_setMaxCarry(ToontownGlobals.MaxCarryLimit)
-
-    # Next, max out their experience for the tracks they have:
-    experience = Experience.Experience(toon.getExperience(), toon)
-    for i, track in enumerate(toon.getTrackAccess()):
-        if track:
-            experience.experience[i] = (
-                Experience.MaxSkill - Experience.UberSkill)
-    toon.b_setExperience(experience.makeNetString())
+    # Max out gag tracks (all 7 tracks)
+    toon.b_setTrackAccess([1] * 7)
+    toon.b_setMaxCarry(MaxCarryLimit + 15) # Compensate for the extra gag track.
+    toon.experience.maxOutExp() # Completely max out the toons experience.
+    toon.b_setExperience(toon.experience.makeNetString())
 
     # Restock all gags.
     toon.inventory.zeroInv()
@@ -4674,11 +4658,7 @@ def maxToon(missingTrack=None):
     toon.b_setMaxHp(ToontownGlobals.MaxHpLimit)
     toon.toonUp(toon.getMaxHp() - toon.getHp())
 
-    # Teleport access everywhere (Including CogHQ)
-    toon.b_setHoodsVisited(ToontownGlobals.Hoods)
-    toon.b_setTeleportAccess(ToontownGlobals.HoodsForTeleportAll)
-
-    # Max out cog suits (ORDER: Bossbot, Lawbot, Cashbot, Sellbot, Boardbot)
+    # Max out cog suits (ORDER: Bossbot, Lawbot, Cashbot, Sellbot)
     toon.b_setCogParts([
         CogDisguiseGlobals.PartsPerSuitBitmasks[0], # Bossbot
         CogDisguiseGlobals.PartsPerSuitBitmasks[1], # Lawbot
@@ -4702,7 +4682,7 @@ def maxToon(missingTrack=None):
     # High racing tickets
     toon.b_setTickets(99999)
 
-    # Teleport access everywhere (Including CogHQ)
+    # Teleport access everywhere (Including CogHQ, excluding Funny Farm.)
     toon.b_setHoodsVisited(ToontownGlobals.Hoods)
     toon.b_setTeleportAccess(ToontownGlobals.HoodsForTeleportAll)
 
@@ -4725,64 +4705,8 @@ def maxToon(missingTrack=None):
     toon.b_setMaxMoney(250)
     toon.b_setMoney(toon.getMaxMoney())
     toon.b_setBankMoney(ToontownGlobals.DefaultMaxBankMoney)
-    return 'Your Toon is now maxed.'
 
-@magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int])
-def hat(hatIndex, hatTex=0):
-    """
-    Modify the target's hat.
-    """
-    if not 0 <= hatIndex < len(ToonDNA.HatModels):
-        return 'Invalid hat index.'
-    if not 0 <= hatTex < len(ToonDNA.HatTextures):
-        return 'Invalid hat texture.'
-    target = spellbook.getTarget()
-    target.b_setHat(hatIndex, hatTex, 0)
-    return "Set %s's hat to %d, %d!" % (target.getName(), hatIndex, hatTex)
-
-@magicWord(category=CATEGORY_SYSADMIN, types=[int])
-def resistance():
-    """
-    Applies the Resistance Ranger Clothes
-    """
-    invoker = spellbook.getTarget()
-
-    dna = ToonDNA.ToonDNA()
-    dna.makeFromNetString(invoker.getDNAString())
-
-    dna.topTex = 111
-    invoker.b_setDNAString(dna.makeNetString())
-
-    dna.topTexColor = 26
-    invoker.b_setDNAString(dna.makeNetString())
-
-    dna.sleeveTex = 98
-    invoker.b_setDNAString(dna.makeNetString())
-
-    dna.sleeveTexColor = 26
-    invoker.b_setDNAString(dna.makeNetString())
-
-    dna.botTex = 41
-    invoker.b_setDNAString(dna.makeNetString())
-
-    dna.botTexColor = 26
-    invoker.b_setDNAString(dna.makeNetString())
-
-    target = spellbook.getTarget()
-    target.b_setNametagStyle(6)
-
-@magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int])
-def glasses(glassesIndex, glassesTex=0):
-    """
-    Modify the target's glasses.
-    """
-    if not 0 <= glassesIndex < len(ToonDNA.GlassesModels):
-        return 'Invalid glasses index.'
-    if not 0 <= glassesTex < len(ToonDNA.GlassesTextures):
-        return 'Invalid glasses texture.'
-    target = spellbook.getTarget()
-    target.b_setGlasses(glassesIndex, glassesTex, 0)
-    return "Set %s's glasses to %d, %d!" % (target.getName(), glassesIndex, glassesTex)
+    return 'By the power invested in me, I, Flippy, max your toon.'
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int])
 def setMaxMoney(moneyVal):
@@ -4792,7 +4716,7 @@ def setMaxMoney(moneyVal):
     spellbook.getTarget().b_setMaxMoney(moneyVal)
     spellbook.getTarget().b_setMoney(moneyVal)
     return 'maxMoney set to %s' % moneyVal
-    
+
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int])
 def setFishingRod(rodVal):
     """Set target's fishing rod value."""
@@ -4984,7 +4908,7 @@ def setGM(gmId):
     return 'You have set %s to GM type %s' % (spellbook.getTarget().getName(), gmId)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int])
-def Tickets(tixVal):
+def setTickets(tixVal):
     """Set the target's racing ticket's value."""
     if not 0 <= tixVal <= 99999:
         return 'Ticket value out of range (0-99999)'
@@ -4992,7 +4916,7 @@ def Tickets(tixVal):
     return "%s's tickets were set to %s." % (spellbook.getTarget().getName(), tixVal)
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
-def CogIndex(indexVal):
+def setCogIndex(indexVal):
     """Transform into a cog/suit. THIS SHOULD ONLY BE USED WHERE NEEDED, E.G. ELECTIONS"""
     if not -1 <= indexVal <= 4:
         return 'CogIndex value %s is invalid.' % str(indexVal)
@@ -5115,14 +5039,14 @@ def dna(part, value):
     return "Completed DNA change successfully."
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
-def TrophyScore(value):
+def setTrophyScore(value):
     """Set the trophy score of target"""
     if value < 0:
         return "Cannot have a trophy score below 0."
     spellbook.getTarget().d_setTrophyScore(value)
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int, int])
-def Pies(pieType, numPies=0):
+def givePies(pieType, numPies=0):
     """Give target Y number of X pies."""
     av = spellbook.getTarget()
     if pieType == -1:
@@ -5145,7 +5069,7 @@ def Pies(pieType, numPies=0):
 
 # TODO: Set minimum access for this MW back to 400, after fishing supports quests.
 @magicWord(category=CATEGORY_OVERRIDE, types=[int, int])
-def QP(questId=0, progress=0):
+def setQP(questId=0, progress=0):
     """
     Get current questId in progress via ~setQP.
     Set questId progress via ~setQP questId value.
@@ -5262,6 +5186,19 @@ def summons():
     av.restockAllCogSummons()
     return 'Restocked all cog summons successfully!'
 
+@magicWord(category=CATEGORY_OVERRIDE, types=[str])
+def spawnBuilding(suitName):
+    """ Spawns a Cog Building with the given suit index """
+    av = spellbook.getInvoker()
+    try:
+        suitIndex = SuitDNA.suitHeadTypes.index(suitName)
+    except:
+        return "Invalid suit type: '{0}'.".format(suitName)
+    returnCode = av.doBuildingTakeover(suitIndex)
+    if returnCode[0] == 'success':
+        return "Successfully spawned building with Cog '{0}'!".format(suitName)
+    return "Couldn't spawn building with Cog '{0}'.".format(suitName)
+
 @magicWord(category=CATEGORY_OVERRIDE, types=[str, int])
 def spawnFO(track, difficulty=0):
     """ Spawns a Field Office with the given type and difficulty """
@@ -5281,28 +5218,10 @@ def spawnFO(track, difficulty=0):
     return 'Successfully spawned "%s" Field Office with difficulty %d!' % (track, difficulty)
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
-def fires(amt=255):
+def pinkslips(amt=255):
     """ Restock (to 255) CEO pink slips. """
     spellbook.getTarget().b_setPinkSlips(amt)
     return 'Restocked {0} pink slips successfully!'.format(amt)
-
-@magicWord(category=CATEGORY_SYSADMIN, types=[str, str])
-def suit(command, suitName = 'f'):
-    invoker = spellbook.getInvoker()
-    if suitName not in SuitDNA.suitHeadTypes:
-        return 'Invalid suit name: ' + suitName
-    suitFullName = SuitBattleGlobals.SuitAttributes[suitName]['name']
-    command = command.lower()
-    if command == 'spawn':
-        returnCode = invoker.doSummonSingleCog(SuitDNA.suitHeadTypes.index(suitName))
-        if returnCode[0] == 'success':
-            return 'Successfully spawned: ' + suitFullName
-        return "Couldn't spawn: " + suitFullName
-    elif command == 'building':
-        returnCode = invoker.doBuildingTakeover(SuitDNA.suitHeadTypes.index(suitName))
-        if returnCode[0] == 'success':
-            return 'Successfully spawned a Cog building with: ' + suitFullName
-        return "Couldn't spawn a Cog building with: " + suitFullName
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
 def questTier(tier):
@@ -5332,6 +5251,101 @@ def exp(track, amt):
     av.experience.setExp(trackIndex, amt)
     av.b_setExperience(av.experience.makeNetString())
     return "Set %s exp to %d successfully." % (track, amt)
+
+@magicWord(category=CATEGORY_CHARACTERSTATS, types=[str, str, int])
+def disguise(corp, type, level=0):
+    """ Set disguise type and level. """
+    # Idk if this is defined anywhere, but laziness got the best of me.
+    corps = ['bossbot', 'lawbot', 'cashbot', 'sellbot']
+    if corp not in corps:
+        return "Invalid cog corp. specified."
+    corpIndex = corps.index(corp)
+    toon = spellbook.getTarget()
+
+    if type == "nosuit":
+        # They want to reset their suit entirely.
+        parts = toon.getCogParts()
+        parts[corpIndex] = 0
+        toon.b_setCogParts(parts)
+        types = toon.getCogTypes()
+        types[corpIndex] = 0
+        toon.b_setCogTypes(types)
+        levels = toon.getCogLevels()
+        levels[corpIndex] = 0
+        toon.b_setCogLevels(levels)
+        merits = toon.getCogMerits()
+        merits[corpIndex] = 0
+        toon.b_setCogMerits(merits)
+        return "Reset %s disguise and removed all earned parts." % corp.capitalize()
+
+    if level == 0:
+        return "You must specify a level!"
+
+    # Get the cog type from the specified short-hand value.
+    types = SuitDNA.suitHeadTypes[8*corpIndex:(8*corpIndex)+8]
+    if type not in types:
+        return "Invalid cog type specified. Note that this uses the short-hand, such as 'rb' or 'tbc'."
+    typeIndex = types.index(type)
+
+    # Make sure they gave a level that is in range.
+    if typeIndex == 7:
+        # The final suit can go up to Level 50.
+        levelRange = range(8, 51) # Last digit is exclusive.
+    else:
+        levelRange = range((typeIndex+1), (typeIndex+6))
+    if level not in levelRange:
+        return "Invalid level specified for %s disguise %s." % (corp.capitalize(), SuitBattleGlobals.SuitAttributes[type]['name'])
+
+    # Reset their merits to 0.
+    merits = toon.getCogMerits()
+    merits[corpIndex] = 0
+    toon.b_setCogMerits(merits)
+
+    # Ensure they have all the parts.
+    # TODO: Allow them to set the parts they have. This will probably be another MW: ~parts leftleg 1
+    parts = toon.getCogParts()
+    parts[corpIndex] = CogDisguiseGlobals.PartsPerSuitBitmasks[corpIndex]
+    toon.b_setCogParts(parts)
+
+    # Find out if they need laff boosts or laff points removed.
+    for levelBoost in [14, 19, 29, 39, 49]:
+        if level <= levelBoost and not levelBoost > toon.getCogLevels()[corpIndex]:
+            if toon.getMaxHp() <= 15:
+                continue
+            toon.b_setMaxHp(toon.getMaxHp()-1)
+        elif level > levelBoost and not levelBoost <= toon.getCogLevels()[corpIndex]:
+            if toon.getMaxHp() >= 137:
+                continue
+            toon.b_setMaxHp(toon.getMaxHp()+1)
+    # Lets be nice and give them a toonup or make them suffer.
+    if toon.getHp() > toon.getMaxHp():
+        toon.takeDamage(toon.getHp() - toon.getMaxHp())
+    else:
+        toon.toonUp(toon.getMaxHp() - toon.getHp())
+
+    # Set their type and level that they specified.
+    types = toon.getCogTypes()
+    types[corpIndex] = typeIndex
+    toon.b_setCogTypes(types)
+    levels = toon.getCogLevels()
+    levels[corpIndex] = level-1 # -1 because it starts at 0
+    toon.b_setCogLevels(levels)
+
+    return "Set %s disguise to %s Level %d." % (corp.capitalize(), SuitBattleGlobals.SuitAttributes[type]['name'], level)
+
+@magicWord(category=CATEGORY_OVERRIDE, types=[str, int])
+def merits(corp, amount):
+    """ Set the target's merits to the value specified. """
+    corps = ['bossbot', 'lawbot', 'cashbot', 'sellbot']
+    if corp not in corps:
+        return "Invalid cog corp. specified."
+    corpIndex = corps.index(corp)
+    toon = spellbook.getTarget()
+
+    # Correct me if I'm wrong, but I don't think we need a sanity check for the amount.
+    merits = toon.getCogMerits()
+    merits[corpIndex] = amount
+    toon.b_setCogMerits(merits)
 
 @magicWord(category=CATEGORY_OVERRIDE)
 def fanfare():

@@ -57,6 +57,14 @@
 		<store_node root="suit_landmark" code="suit_landmark_m4" node="" />
 		<store_node root="suit_landmark" code="suit_landmark_m5" node="" />
 	</model>
+    <!-- Temporarily using the sellbot building cuz nothing else works :( -->
+	<model path="phase_4/models/modules/suit_landmark_sales" scope="hood"> 
+		<store_node root="suit_landmark" code="suit_landmark_g1" node="" />
+		<store_node root="suit_landmark" code="suit_landmark_g2" node="" />
+		<store_node root="suit_landmark" code="suit_landmark_g3" node="" />
+		<store_node root="suit_landmark" code="suit_landmark_g4" node="" />
+		<store_node root="suit_landmark" code="suit_landmark_g5" node="" />
+	</model>
 
 	<model path="phase_4/models/modules/elevator" scope="hood">
 		<store_node root="elevator" code="elevator" node="" />

@@ -470,3 +470,18 @@
 09/24/16 00:54:50 | 100000001 : invasion start cn
 09/24/16 00:57:05 | 100000001 : invasion stop
 09/24/16 00:57:09 | 100000001 : invasion start sw
+09/26/16 18:44:17 | 100000001 : maxToon
+09/26/16 18:44:20 | 100000001 : summons
+09/26/16 18:44:58 | 100000001 : suit building
+09/26/16 18:45:00 | 100000001 : suit
+09/26/16 18:45:01 | 100000001 : building
+09/26/16 18:45:17 | 100000001 : suit building
+09/26/16 18:45:35 | 100000001 : spawn building
+09/26/16 18:46:38 | 100000001 : spawnbuilding g
+09/26/16 18:48:41 | 100000001 : spawnbuilding bfh
+09/26/16 18:52:33 | 100000001 : suit spawn bfg
+09/26/16 18:52:37 | 100000001 : spawnbuilding bfg
+09/26/16 18:52:42 | 100000001 : spawnbuilding bfh
+09/26/16 18:55:26 | 100000001 : suit spawn bhf
+09/26/16 18:55:29 | 100000001 : spawnbuilding bhf
+09/26/16 18:55:33 | 100000001 : spawnbuilding bfh
