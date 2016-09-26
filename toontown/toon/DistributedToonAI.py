@@ -4669,6 +4669,17 @@ def maxToon():
     toon.b_setCogLevels([ToontownGlobals.MaxCogSuitLevel] * 5)
     toon.b_setCogTypes([SuitDNA.suitsPerDept-1] * 5)
 
+    # Teleport access everywhere (Including CogHQ, excluding Funny Farm.)
+    toon.b_setHoodsVisited(ToontownGlobals.Hoods)
+    toon.b_setTeleportAccess(ToontownGlobals.HoodsForTeleportAll)
+
+    # General end game settings
+    toon.b_setQuestCarryLimit(ToontownGlobals.MaxQuestCarryLimit)
+    toon.b_setRewardHistory(Quests.ELDER_TIER, [])
+    toon.b_setMaxMoney(250)
+    toon.b_setMoney(toon.getMaxMoney())
+    toon.b_setBankMoney(ToontownGlobals.DefaultMaxBankMoney)
+
     # Unlock all of the emotes:
     emotes = list(toon.getEmoteAccess())
     for emoteId in OTPLocalizer.EmoteFuncDict.values():
