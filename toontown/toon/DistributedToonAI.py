@@ -4670,7 +4670,7 @@ def maxToon():
     toon.b_setCogTypes([SuitDNA.suitsPerDept-1] * 5)
 
     # Unlock all of the emotes:
-    emotes = list(target.getEmoteAccess())
+    emotes = list(toon.getEmoteAccess())
     for emoteId in OTPLocalizer.EmoteFuncDict.values():
         if emoteId >= len(emotes):
             continue
@@ -4679,7 +4679,7 @@ def maxToon():
         if emoteId in (17, 18, 19):
             continue
         emotes[emoteId] = 1
-    target.b_setEmoteAccess(emotes)
+    toon.b_setEmoteAccess(emotes)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int])
 def hat(hatIndex, hatTex=0):
