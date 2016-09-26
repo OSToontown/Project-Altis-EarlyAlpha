@@ -135,7 +135,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         state = self.loginFSM.getStateNamed('playingGame')
         state.addTransition('credits')
 
-        self.wantCogdominiums = config.GetBool('want-cogdominiums', 0)
+        self.wantCogdominiums = config.GetBool('want-cogdominiums', 1)
         self.wantEmblems = config.GetBool('want-emblems', 0)
         if config.GetBool('tt-node-check', 0):
             for species in ToonDNA.toonSpeciesTypes:
