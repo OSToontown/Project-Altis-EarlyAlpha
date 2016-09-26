@@ -255,9 +255,6 @@
 ##Request that the credits sequence play back.
 ##This will disconnect you.
 
-~fireworks(showName)
-##Start fireworks.
-
 ~houseType(type)
 ##Set target house type (must be spawned!).
 ##Default (if left blank) is 0 (normal house).

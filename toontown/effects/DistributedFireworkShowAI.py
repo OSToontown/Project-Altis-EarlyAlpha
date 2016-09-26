@@ -35,24 +35,3 @@ class DistributedFireworkShowAI(DistributedObjectAI):
 
     def shootFirework(self, todo0, todo1, todo2, todo3, todo4, todo5):
         pass
-
-
-@magicWord(category=CATEGORY_OVERRIDE, types=[str])
-def fireworks(showName='july4'):
-    if showName == 'july4':
-        showType = ToontownGlobals.JULY4_FIREWORKS
-    elif showName == 'newyears':
-        showType = ToontownGlobals.NEWYEARS_FIREWORKS
-    elif showName == 'summer':
-        showType = PartyGlobals.FireworkShows.Summer
-    else:
-        return 'Invalid firework show type!'
-    numShows = len(FireworkShows.shows.get(showType, []))
-    showIndex = random.randint(0, numShows - 1)
-    for hood in simbase.air.hoods:
-        if hood.HOOD == ToontownGlobals.GolfZone:
-            continue
-        fireworksShow = DistributedFireworkShowAI(simbase.air)
-        fireworksShow.generateWithRequired(hood.HOOD)
-        fireworksShow.b_startShow(showType, showIndex, globalClockDelta.getRealNetworkTime())
-    return 'Started fireworks in all playgrounds!'
