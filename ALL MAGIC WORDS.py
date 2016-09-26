@@ -131,12 +131,6 @@
 ~exp(track, amt)
 ##Set your experience to the amount specified for a single track.
 
-~disguise(corp, type, level)
-##Set disguise type and level.
-
-~merits(corp, amount)
-##Set the target's merits to the value specified.
-
 ~fanfare()
 ##Give target toon a fanfare.
 
