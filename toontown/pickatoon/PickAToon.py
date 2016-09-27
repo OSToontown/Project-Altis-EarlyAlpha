@@ -104,32 +104,32 @@ class PickAToon:
         
         self.toon1 = DirectButton(text = ' ', relief = None, command=self.selectToon, extraArgs = [0], image = self.buttonBgs[0])
         self.toon1.reparentTo(self.patNode2d)
-        self.toon1.setPos(-1, 0, -.6)
+        self.toon1.setPos(-1, 0, 0.5)
         self.toon1.setScale(.5)
         
         self.toon2 = DirectButton(text = ' ', relief = None, command=self.selectToon, extraArgs = [1], image = self.buttonBgs[1])
         self.toon2.reparentTo(self.patNode2d)
-        self.toon2.setPos(-.6, 0, -.6)
+        self.toon2.setPos(-.6, 0, 0.5)
         self.toon2.setScale(.5)
         
         self.toon3 = DirectButton(text = ' ', relief = None, command=self.selectToon, extraArgs = [2], image = self.buttonBgs[2])
         self.toon3.reparentTo(self.patNode2d)
-        self.toon3.setPos(-.2, 0, -.6)
+        self.toon3.setPos(-.2, 0, 0.5)
         self.toon3.setScale(.5)
         
         self.toon4 = DirectButton(text = ' ', relief = None, command=self.selectToon, extraArgs = [3], image = self.buttonBgs[3])
         self.toon4.reparentTo(self.patNode2d)
-        self.toon4.setPos(.2, 0, -.6)
+        self.toon4.setPos(.2, 0, 0.5)
         self.toon4.setScale(.5)
         
         self.toon5 = DirectButton(text = ' ', relief = None, command=self.selectToon, extraArgs = [4], image = self.buttonBgs[4])
         self.toon5.reparentTo(self.patNode2d)
-        self.toon5.setPos(.6, 0, -.6)
+        self.toon5.setPos(.6, 0, 0.5)
         self.toon5.setScale(.5)
         
         self.toon6 = DirectButton(text = ' ', relief = None, command=self.selectToon, extraArgs = [5], image = self.buttonBgs[5])
         self.toon6.reparentTo(self.patNode2d)
-        self.toon6.setPos(1, 0, -.6)
+        self.toon6.setPos(1, 0, 0.5)
         self.toon6.setScale(.5)
 
     def selectToon(self, slot):
