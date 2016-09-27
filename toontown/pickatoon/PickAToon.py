@@ -79,8 +79,8 @@ class PickAToon:
         quitHover = gui.find('**/QuitBtn_RLVR')
         self.quitHover = quitHover
         self.quitButton = DirectButton(image=(quitHover, quitHover, quitHover), relief=None, text=TTLocalizer.AvatarChooserQuit, text_font=ToontownGlobals.getSignFont(), text_fg=(0.977, 0.816, 0.133, 1), text_pos=TTLocalizer.ACquitButtonPos, text_scale=TTLocalizer.ACquitButton, image_scale=1, image1_scale=1.05, image2_scale=1.05, scale=1.05, pos=(1.08, 0, -0.907), command=self.__handleQuit)
-        self.quitButton.reparentTo(base.a2dTopRight)
-        self.quitButton.setPos(-0.5, 0, -0.07)
+        self.quitButton.reparentTo(base.a2dBottomLeft)
+        self.quitButton.setPos(0.25, 0, 0.075)
         
         gui.removeNode()
         gui2.removeNode()
