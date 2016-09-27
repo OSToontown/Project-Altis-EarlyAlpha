@@ -120,7 +120,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         self.cogIndex = -1
         self.disguisePageFlag = 0
         self.sosPageFlag = 0
-        self.buildingRadar = [0 * 4]
+        self.buildingRadar = [0 * 5]
         self.fishingRod = 0
         self.fishingTrophies = []
         self.trackArray = []
@@ -1419,8 +1419,9 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def setBuildingRadar(self, radar):
         if not radar:
-            self.notify.warning('buildingRadar set to bad value: %s. Resetting to [0,0,0,0]' % radar)
+            self.notify.warning('buildingRadar set to bad value: %s. Resetting to [0,0,0,0,0]' % radar)
             self.buildingRadar = [0,
+             0,
              0,
              0,
              0]
