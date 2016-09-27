@@ -211,7 +211,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
        5,
        5,
        5),
-      (7, 8, 9),
+      (7, 8, 9, 10),
       []],
      [4100, #Alto Avenue
       1,
