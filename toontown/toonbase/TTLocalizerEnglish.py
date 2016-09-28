@@ -896,7 +896,7 @@ QuestDialogDict = {160: {GREETING: '',
         COMPLETE: 'I knew you could do it! Ok, the memo says....\x07"Attn Sellbots:"\x07"I was having lunch with Mr. Hollywood yesterday."\x07"He reports that the V.P. is very busy these days."\x07"He will only be taking appointments from Cogs that deserve a promotion."\x07"Forgot to mention, Gladhander is golfing with me on Sunday."\x07"Signed, Name Dropper"\x07Well... _avName_, this has been very helpful.\x07Here is your reward.'},
  3262: {QUEST: "_toNpcName_  has a emergency!\x07Go see what his emergency is._where_"},
  3263: {GREETING: 'Hi buddy!',
-        QUEST: "I\'m Coach Zucchini, but you can just call me Coach Z.\x07I put the "squash" in squash and stretch, if you know what I mean.\x07Listen, I have gotten pretty hungry from watching these Cogs, why don't you deliver me a whole cream pie to satisfy my taste buds."
+        QUEST: "I\'m Coach Zucchini, but you can just call me Coach Z.\x07Listen, I have gotten pretty hungry from watching these Cogs, why don't you deliver me a whole cream pie to satisfy my taste buds.",
         LEAVING: 'See ya buddy!',
         COMPLETE: 'Hey buddy, nice work on that yummy cream pie!\x07 My taste buds have been satisified, thanks for the help!'},
  4001: {GREETING: '',
