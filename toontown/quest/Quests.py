@@ -7269,7 +7269,7 @@ QuestDict = {
         (DeliverGagQuest,
          1,
          ToontownBattleGlobals.SQUIRT_TRACK,
-         5),
+         4),
         Same,
         Same,
         NA,
