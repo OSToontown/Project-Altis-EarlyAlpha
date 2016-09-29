@@ -109,10 +109,10 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
         self.placeClass = StageInterior.StageInterior
         self.stageId = requestStatus['stageId']
         self.enterPlace(requestStatus)
-        self.startRain()
+        #self.startRain()
 
     def exitStageInterior(self):
-        self.stopRain()
+       # self.stopRain()
         self.exitPlace()
         self.placeClass = None
         return
@@ -126,12 +126,12 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
         return BossbotHQBossBattle.BossbotHQBossBattle
 
     def enterFactoryExterior(self, requestStatus):
-        self.startRain()
+        #self.startRain()
         self.placeClass = BossbotOfficeExterior.BossbotOfficeExterior
         self.enterPlace(requestStatus)
 
     def exitFactoryExterior(self):
-        self.stopRain()
+        #self.stopRain()
         taskMgr.remove('titleText')
         self.hood.hideTitleText()
         self.exitPlace()
