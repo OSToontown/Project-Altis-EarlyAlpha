@@ -7,13 +7,11 @@ A vision of what Toontown Online could have been in 2016.
 * Owen - Project Supervisor & Moderative Staff Director
 * Dank Mickey - Game Developer, Project Manager, & Texture Artist
 * Swag Foreman - 3D Modeler & Animator
-* InvisibleMario - Game Developer
 * SkippsDev - Networking Assistant
 * Malverde - Game & Networking Developer
 * Old Geezer - Game Developer & 3D Modeler
 * Barks - Game Developer
 * Mango Monkey - Storyline Writer & 3D Modeler
-* Consonus - Music Composer
 * Drew - Game Developer
 
 # Thanks
