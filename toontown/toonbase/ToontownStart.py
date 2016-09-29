@@ -2,7 +2,6 @@ from pandac.PandaModules import *
 from toontown.distributed import PythonUtil
 import __builtin__
 import os
-
 import argparse
 
 
@@ -136,7 +135,9 @@ DirectGuiGlobals.setDefaultClickSound(base.loadSfx('phase_3/audio/sfx/GUI_create
 DirectGuiGlobals.setDefaultDialogGeom(loader.loadModel('phase_3/models/gui/dialog_box_gui'))
 import TTLocalizer
 if base.musicManagerIsValid:
-    music = base.loadMusic('phase_3/audio/bgm/tt_theme.ogg')
+    import random
+    themes = ('phase_3/audio/bgm/tt_theme.ogg', 'phase_3/audio/bgm/tt_theme_2.ogg' )
+    music = base.loadMusic(random.choice(themes))
     if music:
         music.setLoop(1)
         music.play()

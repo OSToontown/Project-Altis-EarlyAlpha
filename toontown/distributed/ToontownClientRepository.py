@@ -54,6 +54,7 @@ import HoodMgr
 import PlayGame
 from toontown.toontowngui import ToontownLoadingBlocker
 from toontown.hood import StreetSign
+import random
 
 class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
     SupportTutorial = 1
@@ -215,7 +216,8 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         self.sendSetAvatarIdMsg(0)
         self.clearFriendState()
         if self.music == None and base.musicManagerIsValid:
-            self.music = base.musicManager.getSound('phase_3/audio/bgm/tt_theme.ogg')
+            themes = ('phase_3/audio/bgm/tt_theme.ogg', 'phase_3/audio/bgm/tt_theme_2.ogg' )
+            self.music = base.musicManager.getSound(random.choice(themes))
             if self.music:
                 self.music.setLoop(1)
                 self.music.setVolume(0.9)
