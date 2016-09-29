@@ -147,6 +147,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         del self.rolloverButton
         del self.flatButton
         del self.invFrame
+        del self.levelsButton
         del self.battleFrame
         del self.purchaseFrame
         del self.storePurchaseFrame
@@ -203,6 +204,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.rolloverButton = self.buttonModels.find('**/InventoryButtonRollover')
         self.flatButton = self.buttonModels.find('**/InventoryButtonFlat')
         self.invFrame = DirectFrame(relief=None, parent=self)
+        self.levelsButton = None
         self.battleFrame = None
         self.purchaseFrame = None
         self.storePurchaseFrame = None
@@ -284,6 +286,15 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
 
     def __handlePass(self):
         messenger.send('inventory-pass')
+
+    def __handleLevels(self):
+        if settings.get('show-cog-levels', True):
+            settings['show-cog-levels'] = False
+            self.levelsButton['text'] = TTLocalizer.InventoryLevelsShow
+        else:
+            settings['show-cog-levels'] = True
+            self.levelsButton['text'] = TTLocalizer.InventoryLevelsHide
+        messenger.send('inventory-levels')
 
     def __handleBackToPlayground(self):
         messenger.send('inventory-back-to-playground')
@@ -904,22 +915,29 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
             self.runButton.hide()
             self.sosButton.show()
             self.passButton.show()
+            self.levelsButton.show()
         elif self.tutorialFlag == 1:
             self.runButton.hide()
             self.sosButton.hide()
             self.passButton.hide()
             self.fireButton.hide()
+            self.levelsButton.hide()
         else:
             self.runButton.show()
             self.sosButton.show()
             self.passButton.show()
             self.fireButton.show()
+            self.levelsButton.show()
             if localAvatar.getPinkSlips() > 0:
                 self.fireButton['state'] = DGG.NORMAL
                 self.fireButton['image_color'] = Vec4(0, 0.6, 1, 1)
             else:
                 self.fireButton['state'] = DGG.DISABLED
                 self.fireButton['image_color'] = Vec4(0.4, 0.4, 0.4, 1)
+        if settings.get('show-cog-levels', True):
+            self.levelsButton['text'] = TTLocalizer.InventoryLevelsHide
+        else:
+            self.levelsButton['text'] = TTLocalizer.InventoryLevelsShow
         for track in range(len(Tracks)):
             if self.toon.hasTrackAccess(track):
                 self.showTrack(track)
@@ -947,6 +965,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
 
     def battleDeactivateButtons(self):
         self.invFrame.reparentTo(self)
+        self.levelsButton.hide()
         self.battleFrame.hide()
         self.stopAndClearPropBonusIval()
 
@@ -968,6 +987,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.deleteExitButton.hide()
         self.runButton.hide()
         self.sosButton.hide()
+        self.levelsButton.hide()
         self.passButton['text'] = TTLocalizer.lCancel
         self.passButton.show()
         for track in range(len(Tracks)):
@@ -992,6 +1012,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
     def plantTreeDeactivateButtons(self):
         self.passButton['text'] = TTLocalizer.InventoryPass
         self.invFrame.reparentTo(self)
+        self.levelsButton.hide()
         self.battleFrame.hide()
 
     def itemIsUsable(self, track, level):
@@ -1201,6 +1222,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
 
     def loadBattleFrame(self):
         battleModels = loader.loadModel('phase_3.5/models/gui/battle_gui')
+        self.levelsButton = DirectButton(self, relief=None, pos=(0.75, -0.05, 0.33), text='', text_scale=TTLocalizer.INlevelsButton, text_pos=(0.03, 0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=1, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=(3.0, 1.0, 1.5), image_color=(1, 0.6, 0, 1), command=self.__handleLevels)
         self.battleFrame = DirectFrame(relief=None, image=battleModels.find('**/BATTLE_Menu'), image_scale=0.8, parent=self)
         self.runButton = DirectButton(parent=self.battleFrame, relief=None, pos=(0.73, 0, -0.398), text=TTLocalizer.InventoryRun, text_scale=TTLocalizer.INrunButton, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=1.05, image_color=(0, 0.6, 1, 1), command=self.__handleRun)
         self.sosButton = DirectButton(parent=self.battleFrame, relief=None, pos=(0.96, 0, -0.398), text=TTLocalizer.InventorySOS, text_scale=0.05, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=1.05, image_color=(0, 0.6, 1, 1), command=self.__handleSOS)
@@ -1210,6 +1232,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.tutText.hide()
         self.tutArrows = BlinkingArrows.BlinkingArrows(parent=self.battleFrame)
         battleModels.removeNode()
+        self.levelsButton.hide()
         self.battleFrame.hide()
         return
 
