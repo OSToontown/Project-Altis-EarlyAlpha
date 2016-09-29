@@ -36,30 +36,32 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
 
     def load(self, zoneId):
         CogHQLoader.CogHQLoader.load(self, zoneId)
+       # self.startRain()
         Toon.loadBossbotHQAnims()
-
+        
     def startRain(self):
-        if not settings.GetBool('game', 'want-particle-effects', True):
-            return
-        elif self.geom is None:
-            return
-        else:
-            self.rain = BattleParticles.loadParticleFile('raindisk.ptf')
-            self.rain.setPos(0, 0, 20)
-            self.rainRender = self.geom.attachNewNode('rainRender')
-            self.rainRender.setDepthWrite(0)
-            self.rainRender.setBin('fixed', 1)
-            self.rain.start(camera, self.rainRender)
-            self.rainSound = base.loadSfx('phase_12/audio/sfx/CHQ_rain_ambient.ogg')
-            base.playSfx(self.rainSound, looping=1, volume=0.1)
-            return
+        #if not config.GetBool('want-particle-effects', True):
+           # return
+        #if self.geom is None:
+            #return
+        self.rain = BattleParticles.loadParticleFile('raindisk.ptf')
+        self.rain.setPos(0, 0, 20)
+        self.rainRender = render.attachNewNode('rainRender')
+        self.rainRender.setDepthWrite(0)
+        self.rainRender.setBin('fixed', 1)
+        self.rain.start(camera, self.rainRender)
+        self.rainSound = base.loadSfx('phase_12/audio/sfx/CHQ_rain_ambient.ogg')
+        base.playSfx(self.rainSound, looping=1, volume=0.1)
 
     def stopRain(self):
         if self.rain:
             self.rain.cleanup()
             self.rainSound.stop()
-
+            
     def unloadPlaceGeom(self):
+        del self.rain
+        del self.rainRender
+        del self.rainSound
         if self.geom:
             self.geom.removeNode()
             self.geom = None
@@ -103,13 +105,6 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
         makeSign('Gate_4', 'Sign_4', 10500)
         makeSign('GateHouse', 'Sign_5', 10200)
 
-    def unload(self):
-        del self.rain
-        del self.rainRender
-        del self.rainSound
-        CogHQLoader.CogHQLoader.unload(self)
-        Toon.unloadBossbotHQAnims()
-
     def enterStageInterior(self, requestStatus):
         self.placeClass = StageInterior.StageInterior
         self.stageId = requestStatus['stageId']
@@ -131,10 +126,12 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
         return BossbotHQBossBattle.BossbotHQBossBattle
 
     def enterFactoryExterior(self, requestStatus):
+        self.startRain()
         self.placeClass = BossbotOfficeExterior.BossbotOfficeExterior
         self.enterPlace(requestStatus)
 
     def exitFactoryExterior(self):
+        self.stopRain()
         taskMgr.remove('titleText')
         self.hood.hideTitleText()
         self.exitPlace()
