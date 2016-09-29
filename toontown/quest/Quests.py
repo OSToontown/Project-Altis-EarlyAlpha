@@ -7427,6 +7427,7 @@ QuestDict = {
         5313,
         5313,
         NA,
+        4500,
         TTLocalizer.QuestDialogDict[4225]),
  4500: (MM_TIER + 1,
         Start,
