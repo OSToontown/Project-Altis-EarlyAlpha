@@ -46,6 +46,7 @@ class PickAToon:
         base.disableMouse()
         self.title.reparentTo(aspect2d)
         self.quitButton.show()
+        self.deleteButton.show()
         self.patNode.unstash()
 
         self.checkPlayButton()
@@ -56,6 +57,7 @@ class PickAToon:
         base.cam.iPosHpr()
         self.title.reparentTo(hidden)
         self.quitButton.hide()
+        self.deleteButton.hide()
         return None
 
     def load(self):
@@ -132,6 +134,18 @@ class PickAToon:
         self.toon6.setPos(1, 0, 0.5)
         self.toon6.setScale(.5)
 
+#deleteButton
+        trashcanGui = loader.loadModel('phase_3/models/gui/trashcan_gui.bam')
+        self.deleteButton = DirectButton(parent=base.a2dBottomRight,
+                                         geom=(trashcanGui.find('**/TrashCan_CLSD'),
+                                               trashcanGui.find('**/TrashCan_OPEN'),
+                                               trashcanGui.find('**/TrashCan_RLVR')),
+                                         text=('', TTLocalizer.AvatarChoiceDelete,
+                                                   TTLocalizer.AvatarChoiceDelete, ''),
+                                         text_fg=(1, 1, 1, 1), text_shadow=(0, 0, 0, 1),
+                                         text_scale=0.15, text_pos=(0, -0.1), relief=None,
+                                         scale=.5, command=self.__handleDelete, pos=(-.2, 0, .2))
+
     def selectToon(self, slot):
         self.selectedToon = slot
         self.updateFunc()
@@ -142,9 +156,10 @@ class PickAToon:
             self.jumpIn.finish()
         if haveToon:
             self.showToon()
-            # TODO: self.deleteButton.show()
+            self.deleteButton.show()
         else:
             self.toon.hide()
+            self.deleteButton.hide()
         self.checkPlayButton()
             
     def showToon(self):
@@ -274,7 +289,7 @@ class PickAToon:
         return self.selectedToon
 
     def __handleDelete(self):
-        messenger.send(self.doneEvent, [self.doneStatus])
+        messenger.send(self.doneEvent, [{'mode': 'delete'}])
 
     def __handleQuit(self):
         cleanupDialog('globalDialog')
