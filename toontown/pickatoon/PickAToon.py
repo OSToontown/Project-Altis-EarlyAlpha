@@ -22,7 +22,7 @@ from toontown.toonbase import ToontownGlobals
 from toontown.toontowngui import TTDialog
 from toontown.toontowngui.TTGui import btnDn, btnRlvr, btnUp
 
-MAIN_POS = (-60, 1, 10)
+MAIN_POS = (-60, 1, 11)
 MAIN_HPR = (-90, 5, 0)
 
 chooser_notify = DirectNotifyGlobal.directNotify.newCategory('PickAToon')
@@ -87,10 +87,10 @@ class PickAToon:
         newGui.removeNode()
 
         # DMENU Pat Screen Stuff
-        self.play = DirectButton(relief = None, image = (btnUp, btnDn, btnRlvr), text = 'PLAY THIS TOON', text_scale = .050, scale=1.3, pos=(0, 0, .65), image_color = (1, 1, 1, 1), image1_color = (0.8, 0.8, 0, 1), image2_color = (0.15, 0.82, 1.0, 1), command=self.playGame, parent=self.patNode2d)
+        self.play = DirectButton(relief = None, image = (btnUp, btnDn, btnRlvr), text = 'PLAY THIS TOON', text_scale = .050, scale=1.2, pos=(0, 0, -0.93), image_color = (1, 1, 1, 1), image1_color = (0.8, 0.8, 0, 1), image2_color = (0.15, 0.82, 1.0, 1), command=self.playGame, parent=self.patNode2d)
         
         self.toon = Toon.Toon()
-        self.toon.setPosHpr(-40, 1, 10, 90, 0, 0)
+        self.toon.setPosHpr(-46, 1, 8.1, 90, 0, 0)
         self.toon.reparentTo(self.patNode)
         
         self.pickAToonGui = loader.loadModel('phase_3/models/gui/tt_m_gui_pat_mainGui')
