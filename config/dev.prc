@@ -44,10 +44,10 @@ want-pets #t
 want-news-tab #f
 want-news-page #f
 want-accessories #t
-want-parties #t
+want-parties #f
 want-gardening #f
 want-gifting #f
-want-cogdominiums #f
+want-cogdominiums #t
 want-boarding-groups #t
 want-cheesy-expirations #t
 want-toontorial #t
@@ -78,7 +78,7 @@ want-bossbot-hq #t
 
 # Misc. Modifications
 estate-day-night #t
-want-instant-parties #t
+want-instant-parties #f
 show-total-population #f
 
 want-whitelist #t

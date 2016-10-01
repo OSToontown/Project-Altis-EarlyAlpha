@@ -287,6 +287,7 @@ def loadSuitAnims(suit, flag = 1):
 
 def loadDialog(level):
     global SuitDialogArray
+    questions = ['COG_VO_question_1', 'COG_VO_question_2', 'COG_VO_question_3']
     if len(SuitDialogArray) > 0:
         return
     else:
@@ -294,7 +295,7 @@ def loadDialog(level):
         SuitDialogFiles = ['COG_VO_statement',
          'COG_VO_murmur',
          'COG_VO_statement',
-         'COG_VO_question']
+         'COG_VO_question_1']
         for file in SuitDialogFiles:
             SuitDialogArray.append(base.loadSfx(loadPath + file + '.ogg'))
 
