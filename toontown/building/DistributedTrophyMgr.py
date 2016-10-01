@@ -28,3 +28,8 @@ class DistributedTrophyMgr(DistributedObject.DistributedObject):
 
     def d_requestTrophyScore(self):
         self.sendUpdate('requestTrophyScore', [])
+
+    def announceTrophiesLost(self):
+        if base.localAvatar is not None:
+            base.localAvatar.setSystemMessage(0, TTLocalizer.RemoveTrophy)
+        return
