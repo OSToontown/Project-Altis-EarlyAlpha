@@ -12,6 +12,7 @@ A vision of what Toontown Online could have been in 2016.
 * Barks - Game Developer
 * Mango Monkey - Storyline Writer & 3D Modeler
 * Drew - Game Developer
+* James Midnight - Texture Artist
 
 # Thanks
 
