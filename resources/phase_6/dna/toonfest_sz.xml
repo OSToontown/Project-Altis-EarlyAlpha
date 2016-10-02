@@ -146,7 +146,7 @@
 			<group name="buildings">
 				<!-- Tunnel to Acorn Acres -->
         <prop name="linktunnel_oz_6000_DNARoot" code="prop_outdoor_zone_entrance">
-					<pos x="-83.9" y="-303.4" z="18.3" />
+					<pos x="83.9" y="303.4" z="18.3" />
 					<nhpr h="82.5" p="0" r="0" />
 					<sign code="DD_sign2">
 						<pos x="0" y="0" z="0" />
@@ -155,13 +155,13 @@
 						<baseline code="TT_Comedy" wiggle="3" stomp="0.0367716">
 							<color r="0.439216" g="0.247059" b="0.184314" a="1" />
 							<scale x="1.5" y="1" z="1.4" />
-							<text>Chip n' Dale's</text>
+							<text>Congrats on finding</text>
 						</baseline>
 						<baseline code="TT_Comedy" wiggle="3" stomp="0.0367716">
 							<color r="0.439216" g="0.247059" b="0.184314" a="1" />
 							<pos x="0" y="0" z="-1.2" />
 							<scale x="1.5" y="1" z="1.4" />
-							<text>Acorn Acres</text>
+							<text>the Easter Egg</text>
 						</baseline>
 					</sign>
 				</prop>

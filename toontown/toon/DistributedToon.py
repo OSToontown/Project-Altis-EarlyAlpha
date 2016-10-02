@@ -2718,5 +2718,5 @@ def gardenGame():
     base.localAvatar.game = GardenDropGame.GardenDropGame()
 
 @magicWord(category=CATEGORY_MODERATION)
-def toonfest():
+def cogfest():
     spellbook.getInvoker().magicTeleportInitiate(7000, 7000)
