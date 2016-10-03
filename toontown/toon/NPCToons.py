@@ -212,7 +212,7 @@ NPCToonDict = {
  # Tutorial Tom, the toontorial host
  20000: (-1,
          lnames[20000],
-         ('dss',
+         ('dls',
           'ms',
           'm',
           'm',
