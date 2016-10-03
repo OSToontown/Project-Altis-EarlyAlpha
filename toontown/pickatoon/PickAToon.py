@@ -17,14 +17,14 @@ import random
 from toontown.hood import SkyUtil
 from toontown.launcher import DownloadForceAcknowledge
 from toontown.toon import ToonDNA, Toon, ToonHead
-from toontown.toonbase import TTLocalizer
-from toontown.toonbase import ToontownGlobals
+from toontown.toonbase import TTLocalizer, ToontownGlobals
 from toontown.toontowngui import TTDialog
 from toontown.toontowngui.TTGui import btnDn, btnRlvr, btnUp
+from toontown.toontowngui.TTDialog import *
 
 MAIN_POS = (-60, 1, 11)
 MAIN_HPR = (-90, 5, 0)
-
+DEL = TTLocalizer.PhotoPageDelete + ' %s?'
 chooser_notify = DirectNotifyGlobal.directNotify.newCategory('PickAToon')
 
 MAX_AVATARS = 6
@@ -289,7 +289,19 @@ class PickAToon:
         return self.selectedToon
 
     def __handleDelete(self):
-        messenger.send(self.doneEvent, [{'mode': 'delete'}])
+        av = [x for x in self.avatarList if x.position == self.selectedToon][0]
+
+        def diagDone():
+            mode = delDialog.doneStatus
+            delDialog.cleanup()
+            base.transitions.noFade()
+            if mode == 'ok':
+                messenger.send(self.doneEvent, [{'mode': 'delete'}])
+        
+        base.acceptOnce('pat-del-diag-done', diagDone)
+        delDialog = TTGlobalDialog(message=DEL % av.name, style=YesNo,
+                                   doneEvent='pat-del-diag-done')
+        base.transitions.fadeScreen(.5)
 
     def __handleQuit(self):
         cleanupDialog('globalDialog')
