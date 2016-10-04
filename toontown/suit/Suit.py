@@ -115,6 +115,7 @@ mh = (('magic1', 'magic1', 5),
  ('song-and-dance', 'song-and-dance', 8))
 ca = (('pickpocket', 'pickpocket', 5),
  ('speak', 'speak', 5),
+ ('throw-paper', 'throw-paper', 3.5),     
  ('pen-squirt', 'fountain-pen', 5))
 cn = (('speak', 'speak', 5),
  ('throw-paper', 'throw-paper', 5),
@@ -614,6 +615,7 @@ class Suit(Avatar.Avatar):
             self.setHeight(8.69)
         elif dna.name == 'sc':
             self.scale = scale / cSize
+            self.headTexture = 'short_change.jpg'
             self.handColor = SuitDNA.moneyPolyColor
             self.generateBody()
             self.generateHead('coldcaller')

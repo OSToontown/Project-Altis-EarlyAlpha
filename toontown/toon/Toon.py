@@ -2975,7 +2975,7 @@ class Toon(Avatar.Avatar, ToonHead):
             self.oldStyle = self.style.clone()
             self.oldHat = self.hat
             dna = ToonDNA.ToonDNA()
-            dna.newToonFromProperties('dss', 'ms', 'm', 'm', 7, 0, 7, 7, 2, 6, 2, 6, 2, 16)
+            dna.newToonFromProperties('dls', 'ms', 'm', 'm', 7, 0, 7, 7, 2, 6, 2, 6, 2, 16)
             tomTrack.append(Func(self.updateToonDNA, dna, True))
             if hasattr(self, 'animFSM'):
                 state = self.animFSM.getCurrentState()
