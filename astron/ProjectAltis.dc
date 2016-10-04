@@ -1477,6 +1477,7 @@ dclass DistributedButterfly : DistributedObject {
   avatarEnter() airecv clsend;
 };
 
+
 dclass DistributedMMPiano : DistributedObject {
   requestSpeedUp() airecv clsend;
   requestSlowDown() airecv clsend;
@@ -3778,6 +3779,9 @@ struct PotentialToon {
   string avDNA;
   uint8 avPosition;
   uint8 aname;
+  uint16 hp;
+  uint16 maxHp;
+  uint32 lastHood;
 };
 
 dclass ClientServicesManager : DistributedObjectGlobal {

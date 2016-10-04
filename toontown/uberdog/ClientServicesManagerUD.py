@@ -464,7 +464,8 @@ class GetAvatarsFSM(AvatarOperationFSM):
                 nameState = 0
 
             potentialAvs.append([avId, name, fields['setDNAString'][0],
-                                 index, nameState])
+                                 index, nameState, max(0, fields['setHp'][0]),
+                                 fields['setMaxHp'][0], fields['setLastHood'][0]])
 
         self.csm.sendUpdateToAccountId(self.target, 'setAvatars', [potentialAvs])
         self.demand('Off')

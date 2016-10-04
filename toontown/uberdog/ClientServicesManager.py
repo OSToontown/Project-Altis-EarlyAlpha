@@ -29,7 +29,7 @@ class ClientServicesManager(DistributedObjectGlobal):
 
     def setAvatars(self, avatars):
         avList = []
-        for avNum, avName, avDNA, avPosition, nameState in avatars:
+        for avNum, avName, avDNA, avPosition, nameState, hp, maxHp, lastHood in avatars:
             nameOpen = int(nameState == 1)
             names = [avName, '', '', '']
             if nameState == 2: # PENDING
@@ -38,8 +38,11 @@ class ClientServicesManager(DistributedObjectGlobal):
                 names[2] = avName
             elif nameState == 4: # REJECTED
                 names[3] = avName
-            avList.append(PotentialAvatar(avNum, names, avDNA, avPosition, nameOpen))
-
+            av = PotentialAvatar(avNum, names, avDNA, avPosition, nameOpen)
+            av.hp = maxHp
+            av.maxHp = maxHp
+            av.lastHood = lastHood
+            avList.append(av)
         self.cr.handleAvatarsList(avList)
 
     # --- AVATAR CREATION/DELETION ---
