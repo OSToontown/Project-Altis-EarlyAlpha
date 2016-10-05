@@ -524,60 +524,13 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def setDNAString(self, string):
         self.dna.makeFromNetString(string)
-        if config.GetBool('adjust-dna', True) and self.verifyDNA() == False:
-            logStr = 'AvatarHackWarning! invalid dna colors for %s old: %s new: %s' % (self.doId, str(ToonDNA.ToonDNA(string).asTuple()), str(self.dna.asTuple()))
-            self.notify.warning(logStr)
-            self.air.writeServerEvent('suspicious', avId=self.doId, issue=logStr)
+        if not self.verifyDNA():
+            self.notify.warning('Avatar %d has an invalid DNA string.' % self.doId)
+            self.air.writeServerEvent(
+                'suspicious', self.doId, 'Invalid DNA string.')
 
     def verifyDNA(self):
-        changed = False
-        if self.isPlayerControlled():
-            allowedColors = []
-            if self.dna.gender == 'm':
-                allowedColors = ToonDNA.defaultBoyColorList
-            else:
-                allowedColors = ToonDNA.defaultGirlColorList
-
-            # No idea why this wasn't done by disney, but add sanity checks for black (and now white) toons.
-            if self.dna.getAnimal() == 'bear':
-                allowedColors = allowedColors + [0]
-            if self.dna.getAnimal() == 'cat':
-                allowedColors = allowedColors + [26]
-
-            if 26 in [self.dna.legColor, self.dna.armColor, self.dna.headColor]: # Disney ALSO didn't do this. Verify that a toon is fully black/white.
-                if self.dna.legColor != 26:
-                    self.dna.legColor = 26
-                    changed = True
-                if self.dna.armColor != 26:
-                    self.dna.armColor = 26
-                    changed = True
-                if self.dna.headColor != 26:
-                    self.dna.headColor = 26
-                    changed = True
-
-            elif 0 in [self.dna.legColor, self.dna.armColor, self.dna.headColor]:
-                if self.dna.legColor != 0:
-                    self.dna.legColor = 0
-                    changed = True
-                if self.dna.armColor != 0:
-                    self.dna.armColor = 0
-                    changed = True
-                if self.dna.headColor != 0:
-                    self.dna.headColor = 0
-                    changed = True
-
-            if self.dna.legColor not in allowedColors:
-                self.dna.legColor = allowedColors[0]
-                changed = True
-            if self.dna.armColor not in allowedColors:
-                self.dna.armColor = allowedColors[0]
-                changed = True
-            if self.dna.headColor not in allowedColors:
-                self.dna.headColor = allowedColors[0]
-                changed = True
-            if changed:
-                self.d_setDNAString(self.dna.makeNetString())
-        return not changed
+        return True
 
     def getDNAString(self):
         return self.dna.makeNetString()
@@ -4987,10 +4940,6 @@ def dna(part, value):
         species = ['dog', 'cat', 'horse', 'mouse', 'rabbit', 'duck', 'monkey', 'bear', 'pig']
         if value not in species:
             return "DNA: Invalid head type specified."
-        if dna.headColor == 0x1a and value != 'cat':
-            return "DNA: Cannot have a black toon (non-cat)!"
-        if dna.headColor == 0 and value != 'bear':
-            return "DNA: Cannot have a white toon (non-bear)!"
         species = dict(map(None, species, ToonDNA.toonSpeciesTypes))
         headSize = dna.head[1:3]
         dna.head = (species.get(value) + headSize)
