@@ -2,7 +2,7 @@ from NametagConstants import *
 import NametagGlobals
 from otp.margins.ClickablePopup import ClickablePopup
 from otp.otpbase import OTPGlobals
-from pandac.PandaModules import *
+from panda3d.core import *
 from direct.interval.IntervalGlobal import *
 
 class Nametag(ClickablePopup):
@@ -111,8 +111,9 @@ class Nametag(ClickablePopup):
                                           reversed=reversed)
         balloon.setScale(0)
         balloon.reparentTo(self.innerNP)
-        scaleLerp = Sequence(Wait(0.10), LerpScaleInterval(balloon, 0.2, VBase3(1, 1, 1), VBase3(0, 0, 0), blendType='easeInOut'))
-        scaleLerp.start()
+        Sequence(
+            balloon.scaleInterval(.2, VBase3(1.1, 1.1, 1.1), blendType = 'easeInOut'),
+            balloon.scaleInterval(.09, VBase3(1, 1, 1), blendType = 'easeInOut')).start()
         self.frame = frame
 
     def showThought(self):
