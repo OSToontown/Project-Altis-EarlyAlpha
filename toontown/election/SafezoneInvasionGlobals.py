@@ -15,7 +15,7 @@ FinaleSuitDestinations = [
 
 # Lets give the Finale suit a special name
 # This one is surprisingly fitting, because of the election -- http://en.wikipedia.org/wiki/Ambush_marketing
-FinaleSuitName = 'Director of\nAmbush Marketing\nSupervisor\nLevel 50'
+FinaleSuitName = 'Director of\nAmbush Marketing\nBoardbot\nLevel 50'
 
 # Add a few phrases for the cog to say
 FinaleSuitPhrases = [
@@ -110,10 +110,19 @@ bossbotSuits = [
     'cr',
     'tbc'
 ]
-
+boardbotSuits = [
+    'ca',
+    'cn',
+    'sw',
+    'mdm',
+    'txm',
+    'mg',
+    'bfh',
+    'hho'
+]
 
 def generateSuits(numberOfSuits, suitLevelRange=[0, 0], suitRange=[0, 0], wantExtraShakers=False):
-    suits = [sellbotSuits, cashbotSuits, lawbotSuitTypes, bossbotSuits] # Suit arrays
+    suits = [sellbotSuits, cashbotSuits, lawbotSuitTypes, bossbotSuits, boardbotSuits] # Suit arrays
     wave = []
     if wantExtraShakers:
         wave = [(random.choice(suits)[random.randint(suitRange[0], suitRange[1])], 
