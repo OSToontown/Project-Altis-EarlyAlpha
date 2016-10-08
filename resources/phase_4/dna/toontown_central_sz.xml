@@ -271,27 +271,27 @@
 
 
 			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
-				<pos x="-79.7819" y="79.5309" z="0" />
+				<pos x="-163.422" y="33.0334" z="0" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
-				<pos x="-127.003" y="30.3763" z="0" />
+				<pos x="-136.61" y="36.6986" z="0" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
-				<pos x="-128.16" y="-24.0245" z="0.000663757" />
+				<pos x="119.996" y="164.78" z="3.00066" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_gazebo_DNARoot" code="prop_gazebo">
-				<pos x="-60.94" y="-8.8" z="-2" />
-				<nhpr h="-178" p="0" r="0" />
+				<pos x="-60.228" y="-10.9224" z="-1.99998" />
+				<nhpr h="-180" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_small_ur_DNARoot" code="prop_tree_small_ur">
-				<pos x="119.621" y="-127.865" z="2.49998" />
+				<pos x="139.621" y="-97.865" z="2.49998" />
 				<nhpr h="-15" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_small_ur_DNARoot" code="prop_tree_small_ur">
-				<pos x="127.424" y="-59.0748" z="2.5" />
+				<pos x="130.959" y="-62.61" z="2.5" />
 				<nhpr h="-15" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_small_ur_DNARoot" code="prop_tree_small_ur">
@@ -299,39 +299,39 @@
 				<nhpr h="-15" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_small_ur_DNARoot" code="prop_tree_small_ur">
-				<pos x="96.8622" y="-146.373" z="2.52" />
+				<pos x="136.862" y="-111.373" z="2.52" />
 				<nhpr h="-15" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_small_ur_DNARoot" code="prop_tree_small_ur">
-				<pos x="114.056" y="-57.3443" z="2.5" />
+				<pos x="140.922" y="-80.478" z="2.5" />
 				<nhpr h="-15" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_DG">
-				<pos x="21.3941" y="-144.665" z="2.99998" />
-				<nhpr h="-30" p="0" r="0" />
+				<pos x="-145" y="15" z="0" />
+				<nhpr h="-120" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_DG">
-				<pos x="44.1038" y="-157.906" z="2.99998" />
-				<nhpr h="148" p="0" r="0" />
+				<pos x="-145" y="-7" z="0" />
+				<nhpr h="120" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_MM">
-				<pos x="-143.503" y="-8.9528" z="0.499987" />
-				<nhpr h="90" p="0" r="0" />
+				<pos x="85" y="-14" z="4" />
+				<nhpr h="60" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_MM">
-				<pos x="-143.242" y="16.9541" z="0.499977" />
-				<nhpr h="-90" p="0" r="0" />
+				<pos x="85" y="10" z="4" />
+				<nhpr h="-60" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_DD">
-				<pos x="-59.1768" y="92.9836" z="0.499824" />
-				<nhpr h="-9" p="0" r="0" />
+				<pos x="22" y="-149" z="3" />
+				<nhpr h="-45" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_DD">
-				<pos x="-33.749" y="88.9499" z="0.499825" />
-				<nhpr h="170" p="0" r="0" />
+				<pos x="39" y="-160" z="3" />
+				<nhpr h="165" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_fat_ur_DNARoot" code="prop_tree_fat_ur">
-				<pos x="142.717" y="108.674" z="2.49998" />
+				<pos x="162.717" y="78.6741" z="2.49998" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_fat_ur_DNARoot" code="prop_tree_fat_ur">
