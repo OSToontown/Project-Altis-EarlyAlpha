@@ -134,8 +134,8 @@
 			</group>
 			<node name="buildings">
 				<prop name="prop_trolley_station_DNARoot" code="prop_trolley_station">
-					<pos x="-120.945" y="-77.5626" z="0.525" />
-					<nhpr h="128" p="0" r="0" />
+					<pos x="12.2929" y="147.626" z="2.95" />
+					<nhpr h="30" p="0" r="-0" />
 					<sign>
 						<color r="1" g="0.88" b="0.56" a="1" />
 						<baseline code="mickey" kern="-0.09181" width="10.9993" height="10.9993">
@@ -154,8 +154,8 @@
 				</prop>
 				<landmark_building id="sz18:toon_landmark_TT_library_DNARoot" code="toon_landmark_TT_library">
 					<title>Toontown Library</title>
-					<pos x="91.4475" y="-44.9255" z="4" />
-					<nhpr h="180" p="0" r="0" />
+					<pos x="143.224" y="-118.103" z="1.99999" />
+					<nhpr h="-132" p="0" r="0" />
 					<door code="door_double_round_ur">
 						<color r="0.88" g="0.45" b="0.38" a="1" />
 					</door>
@@ -178,8 +178,8 @@
 				</landmark_building>
 				<landmark_building id="sz14:toon_landmark_TT_bank_DNARoot" code="toon_landmark_TT_bank">
 					<title>Toontown Bank</title>
-					<pos x="57.1796" y="38.6656" z="4" />
-					<nhpr h="0" p="0" r="0" />
+					<pos x="-74.82" y="-100.335" z="0" />
+					<nhpr h="166" p="0" r="0" />
 					<door code="door_double_round_ur">
 						<color r="0.88" g="0.45" b="0.38" a="1" />
 					</door>
@@ -221,8 +221,8 @@
 				</landmark_building>
 				<landmark_building id="sz21:toon_landmark_TT_clothes_shop_DNARoot" code="toon_landmark_TT_clothes_shop" type="clotheshop">
 					<title>Clothing Shop</title>
-					<pos x="106.265" y="160.831" z="3" />
-					<nhpr h="-30" p="0" r="0" />
+					<pos x="88.0427" y="-34.339" z="3.99999" />
+					<nhpr h="-97" p="0" r="0" />
 					<door code="door_double_clothesshop_ur">
 						<color r="0.88" g="0.45" b="0.38" a="1" />
 					</door>
