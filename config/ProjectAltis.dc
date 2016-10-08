@@ -812,7 +812,8 @@ from toontown.cogdominium import DistCogdoCraneMoneyBag/AI
 from toontown.cogdominium import DistCogdoCraneCog/AI
 from toontown.parties.GlobalPartyManager/AI/UD import GlobalPartyManager/AI/UD
 from toontown.uberdog.ARGManager/AI/UD import ARGManager/AI/UD
-from toontown.environment import DayTimeManager/AI
+from toontown.environment import DistributedDayTimeManager/AI
+from toontown.environment import DistributedWeatherMGR/AI
 
 struct GiftItem {
   blob Item;
@@ -3926,8 +3927,11 @@ dclass DistributedSillyMeterMgr : DistributedPhaseEventMgr {
 dclass ARGManager : DistributedObjectGlobal {
 };
 
-dclass DayTimeManager: DistributedObject {
-  requestServerTime() airecv clsend;
-  setServerTime(uint32 ts);
-  setDawnTime(uint32 ts) required broadcast ram;
+dclass DistributedWeatherMGR : DistributedObject {
+  start() broadcast ram;
+  setState(string, int32) broadcast ram;
+};
+
+dclass DistributedDayTimeManager : DistributedWeatherMGR {
+
 };
