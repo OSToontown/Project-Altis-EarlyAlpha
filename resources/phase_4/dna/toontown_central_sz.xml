@@ -197,8 +197,8 @@
 				</landmark_building>
 				<landmark_building id="sz16:toon_landmark_TT_school_house_DNARoot" code="toon_landmark_TT_school_house">
 					<title>Toontown School House</title>
-					<pos x="129.919" y="-138.445" z="2.4997" />
-					<nhpr h="-140" p="0" r="0" />
+					<pos x="78.6468" y="164.701" z="2.4997" />
+					<nhpr h="-19" p="0" r="0" />
 					<door code="door_double_square_ur">
 						<color r="0.88" g="0.45" b="0.38" a="1" />
 					</door>
@@ -241,8 +241,8 @@
 				</prop> -->
 				<landmark_building id="sz13:toon_landmark_TT_toonhall_DNARoot" code="toon_landmark_TT_toonhall">
 					<title>Toon Hall</title>
-					<pos x="116.66" y="24.29" z="4" />
-					<nhpr h="-90" p="0" r="-0" />
+					<pos x="-118.34" y="-82.71" z="0" />
+					<nhpr h="122" p="0" r="-0" />
 					<door code="door_double_round_ur">
 						<color r="0.88" g="0.45" b="0.38" a="1" />
 					</door>
@@ -265,16 +265,10 @@
 				</landmark_building>
 			</node>
 			<prop name="toontown_central_DNARoot" code="toontown_central">
-				<pos x="9.15527e-005" y="-1.90735e-006" z="2.6226e-006" />
+				<pos x="0.00012207" y="-1.52588e-005" z="2.6226e-006" />
 				<nhpr h="-90" p="0" r="-0" />
 			</prop>
 
-			<!-- Large Christmas Tree -->
-			<prop name="prop_christmas_tree_DNARoot" code="prop_christmas_tree">
-				<pos x="57.413" y="-0.9" z="4.025" />
-				<nhpr h="-270" p="0" r="0" />
-				<scale x="1.2" y="1.2" z="1.4" />
-			</prop>
 
 			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
 				<pos x="-79.7819" y="79.5309" z="0" />
