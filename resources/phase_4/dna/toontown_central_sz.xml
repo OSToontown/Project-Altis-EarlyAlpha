@@ -113,7 +113,7 @@
 				</prop>
 				<prop name="linktunnel_gs_8000_DNARoot" code="prop_GS_tunnel">
 					<pos x="-47.079" y="107.683" z="0.4" />
-					<nhpr h="173" p="-0" r="0" />
+					<nhpr h="173" p="-0.083787" r="0.0101321" />
 					<sign>
 						<baseline code="mickey" width="38.5314" height="38.5314" flags="b">
 							<color r="0.00392157" g="0.403922" b="0.803922" a="1" />
