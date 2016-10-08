@@ -66,7 +66,7 @@ class Nametag(ClickablePopup):
         pass # Does nothing by default.
 
     def clickStateChanged(self):
-        self.update()
+        self.update(False)
 
     def getButton(self):
         cs = self.getClickState()
@@ -77,7 +77,7 @@ class Nametag(ClickablePopup):
         else:
             return self.buttons.get(0)
 
-    def update(self):
+    def update(self, scale=True):
         if self.colorCode in NAMETAG_COLORS:
             cc = self.colorCode
         else:
@@ -87,11 +87,20 @@ class Nametag(ClickablePopup):
 
         self.innerNP.node().removeAllChildren()
         if self.contents & self.CThought and self.chatFlags & CFThought:
-            self.showThought()
+            balloon = self.showBalloon(self.getThoughtBalloon(), self.chatString)
         elif self.contents & self.CSpeech and self.chatFlags&CFSpeech:
-            self.showSpeech()
+            balloon = self.showBalloon(self.getSpeechBalloon(), self.chatString)
         elif self.contents & self.CName and self.displayName:
             self.showName()
+            return
+        else:
+            return
+
+        if scale and self.IS_3D: # Still only allows it to do it the first time in the cutscene since ttr's nametags are aids. TTI's are much better IMO
+            balloon.setScale(0)
+            Sequence(
+                balloon.scaleInterval(.2, VBase3(1.1, 1.1, 1.1), blendType = 'easeInOut'),
+                balloon.scaleInterval(.09, VBase3(1, 1, 1), blendType = 'easeInOut')).start()
 
     def showBalloon(self, balloon, text):
         if not self.speechFont:
@@ -109,18 +118,9 @@ class Nametag(ClickablePopup):
                                             self.DEFAULT_CHAT_WORDWRAP,
                                           button=self.getButton(),
                                           reversed=reversed)
-        balloon.setScale(0)
         balloon.reparentTo(self.innerNP)
-        Sequence(
-            balloon.scaleInterval(.2, VBase3(1.1, 1.1, 1.1), blendType = 'easeInOut'),
-            balloon.scaleInterval(.09, VBase3(1, 1, 1), blendType = 'easeInOut')).start()
         self.frame = frame
-
-    def showThought(self):
-        self.showBalloon(self.getThoughtBalloon(), self.chatString)
-
-    def showSpeech(self):
-        self.showBalloon(self.getSpeechBalloon(), self.chatString)
+        return balloon
 
     def showName(self):
         if not self.font:
@@ -134,7 +134,7 @@ class Nametag(ClickablePopup):
         t.node().setAlign(TextNode.ACenter)
         t.node().setWordwrap(self.wordWrap)
         t.node().setText(self.displayName)
-        t.setColor(self.nameFg)
+        t.node().setTextColor(self.nameFg)
         t.setTransparency(self.nameFg[3] < 1.0)
 
         width, height = t.node().getWidth(), t.node().getHeight()

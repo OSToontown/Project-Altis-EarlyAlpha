@@ -1,12 +1,13 @@
 from toontown.suit.DistributedSuitPlannerAI import DistributedSuitPlannerAI
 from toontown.building.DistributedBuildingMgrAI import DistributedBuildingMgrAI
+from toontown.environment import DistributedDayTimeManagerAI
 
 class StreetAI:
     """
     AI-side representation of everything in a single street.
 
     One subclass of this class exists for every neighborhood in the game.
-    StreetAIs are responsible for spawning all SuitPlanners,ponds, and other
+    StreetAIs are responsible for spawning all SuitPlanners, ponds, and other
     street objects, etc.
     """
     
@@ -16,6 +17,7 @@ class StreetAI:
         
         self.air.dnaStoreMap[self.zoneId] = self.air.loadDNA(self.air.genDNAFileName(self.zoneId)).generateData()
         self.spawnObjects()
+        self.createTime()
 
     def spawnObjects(self):
         filename = self.air.genDNAFileName(self.zoneId)
@@ -25,3 +27,9 @@ class StreetAI:
         self.sp.generateWithRequired(self.zoneId)
         self.sp.d_setZoneId(self.zoneId)
         self.sp.initTasks()
+        
+    def createTime(self):
+        if self.zoneId not in [9100, 9200]:
+            self.dayTimeMgr = DistributedDayTimeManagerAI.DistributedDayTimeManagerAI(self.air)
+            self.dayTimeMgr.generateWithRequired(self.zoneId)  
+            self.dayTimeMgr.start()
