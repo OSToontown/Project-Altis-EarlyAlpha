@@ -412,7 +412,7 @@
 			</flat_building>
 			<flat_building id="sz0:random_DNARoot" width="15">
 				<pos x="38.1853" y="162.569" z="2.82" />
-				<nhpr h="150" p="0" r="0" />
+				<nhpr h="0" p="0" r="0" />
 				<wall height="10" code="wall_md_dental_ur">
 					<color r="0.99" g="0.89" b="0.49" a="1" />
 					<windows code="window_md_curved_ur" count="1">
@@ -477,7 +477,7 @@
 			</flat_building>
 			<flat_building id="tb0:random_DNARoot" width="20">
 				<pos x="-18.6636" y="123.469" z="0" />
-				<nhpr h="10" p="0" r="0" />
+				<nhpr h="45" p="0" r="0" />
 				<wall height="10" code="wall_md_dental_ur">
 					<color r="0.99" g="0.89" b="0.49" a="1" />
 					<windows code="window_md_curved_ur" count="1">
@@ -597,9 +597,25 @@
 					</windows>
 				</wall>
 			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="20">
+				<pos x="120.995" y="-22.171" z="-1" />
+				<nhpr h="30" p="0" r="0" />
+				<wall height="10" code="wall_sm_cement_ur">
+					<color r="1" g="0.42" b="0.27" a="1" />
+					<windows code="window_porthole_ur" count="0">
+						<color r="0.31" g="0.63" b="0.37" a="1" />
+					</windows>
+				</wall>
+				<wall height="10" code="wall_sm_cement_ur">
+					<color r="1" g="0.9" b="0.33" a="1" />
+					<windows code="window_sm_round_ur" count="2">
+						<color r="0.59" g="1" b="0.49" a="1" />
+					</windows>
+				</wall>
+			</flat_building>
 			<prop name="prop_toontown_central_fountain_DNARoot" code="prop_toontown_central_fountain">
 				<pos x="7" y="100" z="3" />
-				<nhpr h="168" p="81" r="-0" />
+				<nhpr h="15" p="0" r="-0" />
 			</prop>
 			<prop name="prop_mickey_on_horse_DNARoot" code="prop_mickey_on_horse">
 				<pos x="117.578" y="-89.5697" z="1.49995" />
