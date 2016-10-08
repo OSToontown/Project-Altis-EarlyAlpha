@@ -178,7 +178,7 @@
 				</landmark_building>
 				<landmark_building id="sz14:toon_landmark_TT_bank_DNARoot" code="toon_landmark_TT_bank">
 					<title>Toontown Bank</title>
-					<pos x="-74.82" y="-100.335" z="0" />
+					<pos x="-74.82" y="-101.335" z="0.5" />
 					<nhpr h="166" p="0" r="0" />
 					<door code="door_double_round_ur">
 						<color r="0.88" g="0.45" b="0.38" a="1" />
@@ -307,11 +307,10 @@
 				<nhpr h="-15" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_DG">
-				<pos x="-145" y="15" z="0" />
+				<pos x="-145" y="15" z="0.5" />
 				<nhpr h="-120" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_DG">
-				<pos x="-145" y="-7" z="0" />
 				<nhpr h="120" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_MM">
