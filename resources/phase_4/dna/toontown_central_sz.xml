@@ -335,44 +335,44 @@
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_fat_ur_DNARoot" code="prop_tree_fat_ur">
-				<pos x="6.33804" y="100.879" z="2.5" />
+				<pos x="-9.60309" y="113.82" z="2.5" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_small_ul_DNARoot" code="prop_tree_large_ul">
-				<pos x="-23.998" y="74.1829" z="0" />
+				<pos x="-129.467" y="93.6005" z="0" />
 				<nhpr h="180" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_fat_ur_DNARoot" code="prop_tree_fat_ur">
-				<pos x="103.397" y="79.4494" z="2.5" />
+				<pos x="163.397" y="64.4495" z="2.5" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_fat_ur_DNARoot" code="prop_tree_fat_ur">
-				<pos x="116.09" y="54.81" z="2.5" />
+				<pos x="166.09" y="4.81043" z="2.5" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_big_planter_DNARoot" code="prop_big_planter">
-				<pos x="18.9496" y="-48.977" z="4.95856" />
+				<pos x="20.9496" y="-50.977" z="4.95856" />
 				<nhpr h="-135" p="0" r="0" />
 			</prop>
 			<prop name="prop_big_planter_DNARoot" code="prop_big_planter">
-				<pos x="19.2327" y="52.5553" z="4.95837" />
+				<pos x="21.2328" y="49.5553" z="4.95837" />
 				<nhpr h="-135" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_fat_ul_DNARoot" code="prop_tree_fat_ul">
-				<pos x="6.51316" y="-96.6973" z="2.49997" />
+				<pos x="-12.4868" y="-111.697" z="0.49997" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<landmark_building id="sz19:toon_landmark_TT_gag_shop_DNARoot" code="toon_landmark_TT_gag_shop" type="gagshop">
 				<title>Gag Shop</title>
-				<pos x="-86.6848" y="-90.5693" z="0.500015" />
-				<nhpr h="-15" p="0" r="0" />
+				<pos x="-49.685" y="-93.5691" z="0.500015" />
+				<nhpr h="9" p="0" r="0" />
 				<door code="door_double_square_ur">
 					<color r="1" g="0.63" b="0.38" a="1" />
 				</door>
 			</landmark_building>
 			<flat_building id="sz0:random_DNARoot" width="15">
-				<pos x="-107.954" y="-85.0626" z="-0.18" />
-				<nhpr h="150" p="0" r="0" />
+				<pos x="53.1395" y="162.556" z="2.82" />
+				<nhpr h="29" p="0" r="0" />
 				<wall height="10" code="wall_lg_brick_ur">
 					<color r="1" g="0.9" b="0.33" a="1" />
 					<windows code="window_porthole_ur" count="0">
@@ -387,7 +387,7 @@
 				</wall>
 			</flat_building>
 			<flat_building id="sz0:random_DNARoot" width="15">
-				<pos x="-94.9639" y="-92.5626" z="-0.18" />
+				<pos x="38.1853" y="162.569" z="2.82" />
 				<nhpr h="150" p="0" r="0" />
 				<wall height="10" code="wall_md_dental_ur">
 					<color r="0.99" g="0.89" b="0.49" a="1" />
@@ -402,36 +402,17 @@
 					</windows>
 				</wall>
 			</flat_building>
-			<flat_building id="sz0:random_DNARoot" width="15">
-				<pos x="-139.693" y="-54.0363" z="-0.18" />
-				<nhpr h="110" p="0" r="0" />
-				<wall height="10" code="wall_md_pillars_ur">
-					<color r="1" g="1" b="0.59" a="1" />
-					<windows code="window_sm_pointed_ul" count="2">
-						<color r="1" g="0.63" b="0.38" a="1" />
-					</windows>
-				</wall>
-				<wall height="10" code="wall_md_dental_ur">
-					<color r="0.91" g="0.63" b="0.44" a="1" />
-					<windows code="window_sm_round_ur" count="1">
-						<color r="0.6" g="0.66" b="0.27" a="1" />
-					</windows>
-					<cornice code="cornice_dental_ur">
-						<color r="1" g="0.84" b="0.59" a="1" />
-					</cornice>
-				</wall>
-			</flat_building>
 			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
-				<pos x="-53.7466" y="-73.3194" z="0.00999998" />
+				<pos x="6.38759" y="-98.736" z="2.01001" />
 				<nhpr h="105" p="0" r="0" />
 			</prop>
 			<landmark_building id="sz20:toon_landmark_hqTT_DNARoot" code="toon_landmark_hqTT" type="hq">
 				<title>Toon HQ</title>
-				<pos x="23.6425" y="24.8587" z="4.00001" />
-				<nhpr h="135" p="0" r="0" />
+				<pos x="46" y="-47" z="4.00001" />
+				<nhpr h="45" p="0" r="0" />
 				<prop name="animated_prop_HQTelescopeAnimatedProp_DNARoot" code="animated_prop_HQTelescopeAnimatedProp">
-					<pos x="7.003" y="0" z="13.191" />
-					<nhpr h="168" p="81" r="0" />
+					<pos x="7.17" y="-7.67" z="19.07" />
+					<nhpr h="110" p="0" r="0" />
 					<scale x="4" y="4" z="4" />
 				</prop>
 			</landmark_building>
