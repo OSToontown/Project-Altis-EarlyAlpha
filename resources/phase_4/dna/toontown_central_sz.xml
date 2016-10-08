@@ -30,8 +30,8 @@
 			</group>
 			<group name="props">
 				<prop name="linktunnel_tt_2226_DNARoot" code="prop_safe_zone_tunnel">
-					<pos x="-239.67" y="64.08" z="-6.18" />
-					<nhpr h="-90" p="0" r="0" />
+					<pos x="182.043" y="-62.2241" z="-2.65" />
+					<nhpr h="90" p="0" r="-0" />
 					<sign code="tunnel_sign_orange">
 						<scale x="1.5" y="1" z="1.5" />
 						<baseline code="mickey" width="33.3333" height="33.3333">
@@ -56,8 +56,8 @@
 					</sign>
 				</prop>
 				<prop name="linktunnel_tt_2132_DNARoot" code="prop_safe_zone_tunnel">
-					<pos x="-68.38" y="-202.64" z="-3.58" />
-					<nhpr h="-31" p="0" r="0" />
+					<pos x="-241.204" y="63.921" z="-6.2" />
+					<nhpr h="-90" p="0" r="0" />
 					<sign code="tunnel_sign_orange">
 						<scale x="1.5" y="1" z="1.5" />
 						<baseline code="mickey" width="33.3333" height="33.3333">
