@@ -428,7 +428,7 @@
 			</flat_building>
 			<flat_building id="tb0:random_DNARoot" width="15">
 				<pos x="-143.054" y="-29.2411" z="-4.18" />
-				<nhpr h="105" p="0" r="0" />
+				<nhpr h="105" p="0" r="-0" />
 				<wall height="10" code="wall_fence_wood_ur">
 					<color r="1" g="1" b="1" a="1" />
 				</wall>
@@ -442,14 +442,14 @@
 			</flat_building>
 			<flat_building id="tb0:random_DNARoot" width="15">
 				<pos x="101" y="25.0001" z="-1" />
-				<nhpr h="150" p="0" r="0" />
+				<nhpr h="-150" p="0" r="0" />
 				<wall height="10" code="wall_fence_wood_ur">
 					<color r="1" g="1" b="1" a="1" />
 				</wall>
 			</flat_building>
 			<flat_building id="tb0:random_DNARoot" width="20">
 				<pos x="120" y="30.0001" z="-1" />
-				<nhpr h="165" p="0" r="0" />
+				<nhpr h="-165" p="0" r="0" />
 				<wall height="10" code="wall_fence_wood_ur">
 					<color r="1" g="1" b="1" a="1" />
 				</wall>
@@ -551,6 +551,48 @@
 				<wall height="10" code="wall_md_blank_ur">
 					<color r="1" g="0.9" b="0.33" a="1" />
 					<windows code="window_sm_shuttered_ur" count="2">
+						<color r="0.59" g="1" b="0.49" a="1" />
+					</windows>
+				</wall>
+			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="25">
+				<pos x="151.305" y="-4.67145" z="-1" />
+				<nhpr h="30" p="0" r="0" />
+				<wall height="20" code="wall_md_pillars_ur">
+					<color r="1" g="1" b="0.59" a="1" />
+					<windows code="window_sm_round_ur" count="0">
+						<color r="0.31" g="0.63" b="0.37" a="1" />
+					</windows>
+				</wall>
+			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="25">
+				<pos x="145.161" y="11.3026" z="4" />
+				<nhpr h="165" p="0" r="0" />
+				<wall height="10" code="wall_md_blank_ur">
+					<color r="1" g="0.42" b="0.27" a="1" />
+					<windows code="door_single_round_ur" count="0">
+						<color r="0.31" g="0.63" b="0.37" a="1" />
+					</windows>
+				</wall>
+				<wall height="10" code="wall_md_blank_ur">
+					<color r="1" g="0.9" b="0.33" a="1" />
+					<windows code="window_sm_round_ur" count="2">
+						<color r="0.59" g="1" b="0.49" a="1" />
+					</windows>
+				</wall>
+			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="15">
+				<pos x="152.661" y="-1.69656" z="4" />
+				<nhpr h="120" p="0" r="0" />
+				<wall height="10" code="wall_lg_brick_ur">
+					<color r="1" g="0.42" b="0.27" a="1" />
+					<windows code="window_sm_curved_ur" count="0">
+						<color r="0.31" g="0.63" b="0.37" a="1" />
+					</windows>
+				</wall>
+				<wall height="10" code="wall_lg_brick_ur">
+					<color r="1" g="0.9" b="0.33" a="1" />
+					<windows code="window_sm_shuttered_ul" count="2">
 						<color r="0.59" g="1" b="0.49" a="1" />
 					</windows>
 				</wall>
