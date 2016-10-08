@@ -1,3 +1,5 @@
+# TODO: Make the sky texture change
+
 from panda3d.core import *
 from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
@@ -31,7 +33,6 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         
     def enterT0(self, timestamp):
         render.setColorScale(Vec4(0.2, 0.2, 0.4, 1))
-        print('midnight time ooooo')
         
     def exitT0(self):
         pass
@@ -43,19 +44,19 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         pass
         
     def enterT2(self, timestamp):
-        render.setColorScale(Vec4(0.3, 0.3, 0.5, 1))
+        render.setColorScale(Vec4(0.4, 0.3, 0.5, 1))
         
     def exitT2(self):
         pass
         
     def enterT3(self, timestamp):
-        render.setColorScale(Vec4(0.35, 0.35, 0.55, 1))
+        render.setColorScale(Vec4(0.45, 0.35, 0.55, 1))
         
     def exitT3(self):
         pass
         
     def enterT4(self, timestamp):
-        render.setColorScale(Vec4(0.40, 0.40, 0.6, 1))
+        render.setColorScale(Vec4(0.45, 0.40, 0.6, 1))
         
     def exitT4(self):
         pass
