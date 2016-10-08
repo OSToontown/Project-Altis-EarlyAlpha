@@ -81,7 +81,7 @@
 				</prop>
 				<prop name="linktunnel_tt_2301_DNARoot" code="prop_safe_zone_tunnel">
 					<pos x="-68.2113" y="-207.643" z="-3.7" />
-					<nhpr h="171" p="0" r="0" />
+					<nhpr h="-30" p="0" r="0" />
 					<sign code="tunnel_sign_orange">
 						<pos x="0" y="0" z="-0.18" />
 						<scale x="1.5" y="1" z="1.5" />
