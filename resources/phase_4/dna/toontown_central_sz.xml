@@ -80,7 +80,7 @@
 					</sign>
 				</prop>
 				<prop name="linktunnel_tt_2301_DNARoot" code="prop_safe_zone_tunnel">
-					<pos x="27.6402" y="176.475" z="-6.18" />
+					<pos x="-68.2113" y="-207.643" z="-3.7" />
 					<nhpr h="171" p="0" r="0" />
 					<sign code="tunnel_sign_orange">
 						<pos x="0" y="0" z="-0.18" />
@@ -112,8 +112,8 @@
 					</sign>
 				</prop>
 				<prop name="linktunnel_gs_8000_DNARoot" code="prop_GS_tunnel">
-					<pos x="20.9205" y="172.683" z="3.24925" />
-					<nhpr h="-150" p="-0.083787" r="0.0101321" />
+					<pos x="-47.079" y="107.683" z="0.4" />
+					<nhpr h="173" p="-0" r="0" />
 					<sign>
 						<baseline code="mickey" width="38.5314" height="38.5314" flags="b">
 							<color r="0.00392157" g="0.403922" b="0.803922" a="1" />
