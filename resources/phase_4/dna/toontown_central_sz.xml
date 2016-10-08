@@ -311,6 +311,7 @@
 				<nhpr h="-120" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_DG">
+				<pos x="-145" y="-7" z="0.5" />
 				<nhpr h="120" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_MM">
