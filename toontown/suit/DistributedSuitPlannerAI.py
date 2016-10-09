@@ -1465,17 +1465,19 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
 
         self.sendUpdateToAvatarId(self.air.getAvatarIdFromSender(), 'buildingListResponse', [buildingList])
 
-    def pickLevelTypeAndTrack(self, level = None, type = None, track = None):
-        if level == None:
+    def pickLevelTypeAndTrack(self, level=None, type=None, track=None):
+        if level is None:
             level = random.choice(self.SuitHoodInfo[self.hoodInfoIdx][self.SUIT_HOOD_INFO_LVL])
-        if type == None:
+        if type is None:
             typeChoices = range(max(level - 4, 1), min(level, self.MAX_SUIT_TYPES) + 1)
             type = random.choice(typeChoices)
+        if level > 12:
+            pass 
         else:
             level = min(max(level, type), type + 4)
-        if track == None:
+        if track is None:
             track = SuitDNA.suitDepts[SuitBattleGlobals.pickFromFreqList(self.SuitHoodInfo[self.hoodInfoIdx][self.SUIT_HOOD_INFO_TRACK])]
-        self.notify.debug('pickLevelTypeAndTrack: %d %d %s' % (level, type, track))
+        self.notify.debug('pickLevelTypeAndTrack: %s %s %s' % (level, type, track))
         return (level, type, track)
 
 @magicWord(types=[str, int, int], category=CATEGORY_OVERRIDE)

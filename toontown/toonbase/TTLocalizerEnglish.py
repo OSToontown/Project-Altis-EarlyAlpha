@@ -7147,7 +7147,6 @@ NPCToonNames = {20000: 'Tutorial Tom',
  2023: 'Slappy',
  2024: 'Roger Dog',
  2025: 'Kion',
- 2026: 'Doctor Surlee',
  2101: 'Dentist Daniel',
  2102: 'Sheriff Sherry',
  2103: 'Sneezy Kitty',
@@ -8540,7 +8539,7 @@ TipDict = {TIP_NONE: ('',),
                'Enter Goofy Speedway through the tire-shaped tunnel in Toontown Central Playground.',
                'Earn Laff points at Goofy Speedway.',
                'Goofy Speedway has six different race tracks. '),
- TIP_STREET: ('There are four types of Cogs: Lawbots, Cashbots, Sellbots, and Bossbots.',
+ TIP_STREET: ('There are five types of Cogs: Lawbots, Cashbots, Sellbots, Bossbots, and Boardbots.',
               'Each Gag Track has different amounts of accuracy and damage.',
               'Sound gags will affect all Cogs but will wake up any lured Cogs.',
               'Defeating Cogs in strategic order can greatly increase your chances of winning battles.',
@@ -9975,4 +9974,4 @@ PlayingCardUnknown = 'Card Name is unknown'
 RemapPrompt = 'Choose the keys you wish to remap.'
 RemapPopup = 'Press the button you wish to remap this control to.'
 Controls = ['Move Up:', 'Move Left:', 'Move Down:', 'Move Right:',
-            'Jump:', 'Action Key:', 'Options Hotkey:', 'Chatbox Hotkey:']
+            'Jump:', 'Action Key:', 'Options Hotkey:', 'Chatbox Hotkey:', 'Screenshot Key:']

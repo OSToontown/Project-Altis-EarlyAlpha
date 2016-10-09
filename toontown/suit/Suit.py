@@ -115,6 +115,7 @@ mh = (('magic1', 'magic1', 5),
  ('song-and-dance', 'song-and-dance', 8))
 ca = (('pickpocket', 'pickpocket', 5),
  ('speak', 'speak', 5),
+ ('throw-paper', 'throw-paper', 3.5),     
  ('pen-squirt', 'fountain-pen', 5))
 cn = (('speak', 'speak', 5),
  ('throw-paper', 'throw-paper', 5),
@@ -711,8 +712,9 @@ class Suit(Avatar.Avatar):
             self.scale = scale / aSize
             self.handColor = SuitDNA.salesPolyColor
             self.generateBody()
+            self.headTexture = 'yes_man.jpg'
             self.generateHead('yesman')
-            self.generateHead('group')
+            #self.generateHead('group')
             self.setHeight(8.95)
         self.setName(SuitBattleGlobals.SuitAttributes[dna.name]['name'])
         self.getGeomNode().setScale(self.scale)

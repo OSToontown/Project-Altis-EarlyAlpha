@@ -812,6 +812,8 @@ from toontown.cogdominium import DistCogdoCraneMoneyBag/AI
 from toontown.cogdominium import DistCogdoCraneCog/AI
 from toontown.parties.GlobalPartyManager/AI/UD import GlobalPartyManager/AI/UD
 from toontown.uberdog.ARGManager/AI/UD import ARGManager/AI/UD
+from toontown.environment import DistributedDayTimeManager/AI
+from toontown.environment import DistributedWeatherMGR/AI
 
 struct GiftItem {
   blob Item;
@@ -1024,7 +1026,7 @@ dclass DistributedToon : DistributedPlayer {
   setCogStatus(uint32 cogStatusList[] = [1 * 40]) required ownrecv db;
   setCogCount(uint32 cogCountList[] = [0 * 40]) required ownrecv db;
   setCogRadar(uint8 radar[] = [0 * 5]) required ownrecv db;
-  setBuildingRadar(uint8 radar[] = [0 * 4]) required ownrecv db;
+  setBuildingRadar(uint8 radar[] = [0 * 5]) required ownrecv db;
   setCogLevels(uint8 levels[] = [0 * 5]) required broadcast ownrecv db;
   setCogTypes(uint8 types[] = [0 * 5]) required broadcast ownrecv db;
   setCogParts(uint32 parts[] = [0 * 5]) required broadcast ownrecv db;
@@ -1476,6 +1478,7 @@ dclass DistributedButterfly : DistributedObject {
   setState(int8 stateIndex, uint8 curIndex, uint8 destIndex, uint16/10 time, int16 timestamp) required broadcast ram;
   avatarEnter() airecv clsend;
 };
+
 
 dclass DistributedMMPiano : DistributedObject {
   requestSpeedUp() airecv clsend;
@@ -3778,6 +3781,9 @@ struct PotentialToon {
   string avDNA;
   uint8 avPosition;
   uint8 aname;
+  uint16 hp;
+  uint16 maxHp;
+  uint32 lastHood;
 };
 
 dclass ClientServicesManager : DistributedObjectGlobal {
@@ -3919,4 +3925,13 @@ dclass DistributedSillyMeterMgr : DistributedPhaseEventMgr {
 };
 
 dclass ARGManager : DistributedObjectGlobal {
+};
+
+dclass DistributedWeatherMGR : DistributedObject {
+  start() broadcast ram;
+  setState(string, int32) broadcast ram;
+};
+
+dclass DistributedDayTimeManager : DistributedWeatherMGR {
+
 };

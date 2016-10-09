@@ -8,6 +8,7 @@ from toontown.safezone import TreasureGlobals
 from toontown.town.StreetAI import StreetAI
 from toontown.safezone.SZTreasurePlannerAI import SZTreasurePlannerAI
 from toontown.toon import NPCToons
+from toontown.environment import DistributedDayTimeManagerAI
 
 class SZHoodAI(HoodAI):
     """
@@ -30,6 +31,7 @@ class SZHoodAI(HoodAI):
 
         self.createZone()
         self.createStreets()
+        self.createTime()
 
     def createZone(self, genTrolley = True):
         HoodAI.createZone(self)
@@ -58,3 +60,10 @@ class SZHoodAI(HoodAI):
     def spawnObjects(self):
         filename = self.air.genDNAFileName(self.safezone)
         self.air.dnaSpawner.spawnObjects(filename, self.safezone)
+        
+    def createTime(self):
+        if self.HOOD != 9000:
+            self.dayTimeMgr = DistributedDayTimeManagerAI.DistributedDayTimeManagerAI(self.air)
+            self.dayTimeMgr.generateWithRequired(self.HOOD)  
+            self.dayTimeMgr.start()
+            self.notify.info('Day Time Manager turned on for zone ' + str(self.HOOD))

@@ -17,14 +17,19 @@ import random
 from toontown.hood import SkyUtil
 from toontown.launcher import DownloadForceAcknowledge
 from toontown.toon import ToonDNA, Toon, ToonHead
-from toontown.toonbase import TTLocalizer
-from toontown.toonbase import ToontownGlobals
+from toontown.toonbase import TTLocalizer, ToontownGlobals
 from toontown.toontowngui import TTDialog
 from toontown.toontowngui.TTGui import btnDn, btnRlvr, btnUp
-
+from toontown.toontowngui.TTDialog import *
+COLORS = (Vec4(0.917, 0.164, 0.164, 1),
+ Vec4(0.152, 0.75, 0.258, 1),
+ Vec4(0.598, 0.402, 0.875, 1),
+ Vec4(0.133, 0.59, 0.977, 1),
+ Vec4(0.895, 0.348, 0.602, 1),
+ Vec4(0.977, 0.816, 0.133, 1))
 MAIN_POS = (-60, 1, 11)
 MAIN_HPR = (-90, 5, 0)
-
+DEL = TTLocalizer.PhotoPageDelete + ' %s?'
 chooser_notify = DirectNotifyGlobal.directNotify.newCategory('PickAToon')
 
 MAX_AVATARS = 6
@@ -87,6 +92,10 @@ class PickAToon:
         gui.removeNode()
         gui2.removeNode()
         newGui.removeNode()
+
+		#Area toon is in
+        self.area = OnscreenText(parent=self.patNode2d, font=ToontownGlobals.getToonFont(),
+                                 pos=(-.1, -.1), scale=.075, text='', shadow=(0,0,0,1), fg=COLORS[self.selectedToon])
 
         # DMENU Pat Screen Stuff
         self.play = DirectButton(relief = None, image = (btnUp, btnDn, btnRlvr), text = 'PLAY THIS TOON', text_scale = .050, scale=1.2, pos=(0, 0, -0.93), image_color = (1, 1, 1, 1), image1_color = (0.8, 0.8, 0, 1), image2_color = (0.15, 0.82, 1.0, 1), command=self.playGame, parent=self.patNode2d)
@@ -152,6 +161,7 @@ class PickAToon:
         
     def updateFunc(self):
         haveToon = self.toonList[self.selectedToon]
+        self.area['fg'] = COLORS[self.selectedToon]
         if self.jumpIn:
             self.jumpIn.finish()
         if haveToon:
@@ -161,6 +171,7 @@ class PickAToon:
             self.toon.hide()
             self.deleteButton.hide()
         self.checkPlayButton()
+        self.area['text'] = ''
             
     def showToon(self):
         av = [x for x in self.avatarList if x.position == self.selectedToon][0]
@@ -175,7 +186,9 @@ class PickAToon:
         self.toon.animFSM.request('neutral')
         self.toon.setName(av.name)
         self.toon.show()
-        
+        lastAreaName = ToontownGlobals.hoodNameMap.get(av.lastHood, [''])[-1]
+        self.area.setText(lastAreaName)
+
     def checkPlayButton(self):
         if self.toonList[self.selectedToon]:
             self.play['text'] = 'PLAY THIS TOON'
@@ -289,7 +302,19 @@ class PickAToon:
         return self.selectedToon
 
     def __handleDelete(self):
-        messenger.send(self.doneEvent, [{'mode': 'delete'}])
+        av = [x for x in self.avatarList if x.position == self.selectedToon][0]
+
+        def diagDone():
+            mode = delDialog.doneStatus
+            delDialog.cleanup()
+            base.transitions.noFade()
+            if mode == 'ok':
+                messenger.send(self.doneEvent, [{'mode': 'delete'}])
+        
+        base.acceptOnce('pat-del-diag-done', diagDone)
+        delDialog = TTGlobalDialog(message=DEL % av.name, style=YesNo,
+                                   doneEvent='pat-del-diag-done')
+        base.transitions.fadeScreen(.5)
 
     def __handleQuit(self):
         cleanupDialog('globalDialog')

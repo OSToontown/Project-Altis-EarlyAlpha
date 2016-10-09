@@ -77,6 +77,7 @@ class DistributedButterfly(DistributedObject.DistributedObject):
         self.butterfly.loop('flutter')
         self.butterfly.loop('land')
         self.butterfly.loop('glide')
+        self.butterfly.setBlend(frameBlend = True)
         rng = RandomNumGen.RandomNumGen(self.doId)
         playRate = 0.6 + 0.8 * rng.random()
         self.butterfly.setPlayRate(playRate, 'flutter')
