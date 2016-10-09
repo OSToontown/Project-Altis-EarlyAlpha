@@ -89,42 +89,15 @@ class DistributedFurnitureManagerAI(DistributedObjectAI):
         self.interior.b_setWindows(self.windows.getBlob())
 
     def setItems(self, items):
-        # Decode the blob:
         items = CatalogItemList(items, store=CatalogItem.Customization|CatalogItem.Location)
 
-        # Throw out our old items:
         for item in self.items:
             item.destroy()
+
         self.items = []
 
         for item in items:
-            if item.getFlags() & FLCloset:
-                if self.house.gender is 0:
-                    # If they have a male closet, we need to make it a female closet.
-                    if item.furnitureType - 500 < 10:
-                        item.furnitureType += 10
-                elif item.furnitureType - 500 > 10:
-                    # If they have a female closet, we need to make it a male closet.
-                    item.furnitureType -= 10
-                do = DistributedClosetAI(self.air, self, item)
-            elif item.getFlags() & FLBank:
-                do = DistributedBankAI(self.air, self, item)
-            elif item.getFlags() & FLPhone:
-                do = DistributedPhoneAI(self.air, self, item)
-            elif item.getFlags() & FLTrunk:
-                if self.house.gender is 0:
-                    if item.furnitureType - 500 > 10:
-                        item.furnitureType += 10
-                elif item.furnitureType - 500 > 10:
-                    item.furnitureType -=10
-                do = DistributedTrunkAI(self.air, self, item)
-            else:
-                do = DistributedFurnitureItemAI(self.air, self, item)
-
-
-            if self.isGenerated():
-                do.generateWithRequired(self.zoneId)
-            self.items.append(do)
+            self.generateItem(item)
 
     def getItems(self):
         items = CatalogItemList(store=CatalogItem.Customization|CatalogItem.Location)
@@ -258,6 +231,24 @@ class DistributedFurnitureManagerAI(DistributedObjectAI):
 
 
     # Furniture-manipulation:
+    def generateItem(self, item):
+        if item.getFlags() & FLTrunk:
+            do = DistributedTrunkAI(self.air, self, item)
+        elif item.getFlags() & FLCloset:
+            do = DistributedClosetAI(self.air, self, item)
+        elif item.getFlags() & FLBank:
+            do = DistributedBankAI(self.air, self, item)
+        elif item.getFlags() & FLPhone:
+            do = DistributedPhoneAI(self.air, self, item)
+        else:
+            do = DistributedFurnitureItemAI(self.air, self, item)
+        
+        if self.isGenerated():
+            do.generateWithRequired(self.zoneId)
+
+        self.items.append(do)
+        return do
+
     def moveItemToAttic(self, doId):
         item = self.getItemObject(doId)
 
@@ -276,37 +267,9 @@ class DistributedFurnitureManagerAI(DistributedObjectAI):
         self.d_setAtticItems(self.getAtticItems())
 
         item.posHpr = (x, y, z, h, p, r)
+        object = self.generateItem(item)
 
-        # TODO: Add DistributedTrunkAI when accessories are enabled
-        # TODO2: Is there any point in repeating this? Perhaps we should unify this (and the above)
-        # into a single self.__getDOFromItem(item)?
-        if item.getFlags() & FLCloset:
-            if self.house.gender is 0:
-                # If they have a male closet, we need to make it a female closet.
-                if item.furnitureType - 500 < 10:
-                    item.furnitureType += 10
-            elif item.furnitureType - 500 > 10:
-                # If they have a female closet, we need to make it a male closet.
-                item.furnitureType -= 10
-            do = DistributedClosetAI(self.air, self, item)
-        elif item.getFlags() & FLBank:
-            do = DistributedBankAI(self.air, self, item)
-        elif item.getFlags() & FLPhone:
-            do = DistributedPhoneAI(self.air, self, item)
-        elif item.getFlags() & FLTrunk:
-            if self.house.gender is 0:
-                if item.furnitureType - 500 > 10:
-                    item.furnitureType += 10
-                elif item.furnitureType - 500 > 10:
-                    item.furnitureType -=10
-                do = DistributedTrunkAI(self.air, self, item)
-        else:
-            do = DistributedFurnitureItemAI(self.air, self, item)
-
-        do.generateWithRequired(self.zoneId)
-        self.items.append(do)
-
-        return (ToontownGlobals.FM_MovedItem, do.doId)
+        return (ToontownGlobals.FM_MovedItem, object.doId)
 
     def deleteItemFromAttic(self, blob, index):
         item = self.getAtticFurniture(self.atticItems, index)
