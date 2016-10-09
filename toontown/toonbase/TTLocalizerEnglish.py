@@ -9974,4 +9974,4 @@ PlayingCardUnknown = 'Card Name is unknown'
 RemapPrompt = 'Choose the keys you wish to remap.'
 RemapPopup = 'Press the button you wish to remap this control to.'
 Controls = ['Move Up:', 'Move Left:', 'Move Down:', 'Move Right:',
-            'Jump:', 'Action Key:', 'Options Hotkey:', 'Chatbox Hotkey:']
+            'Jump:', 'Action Key:', 'Options Hotkey:', 'Chatbox Hotkey:', 'Screenshot Key:']

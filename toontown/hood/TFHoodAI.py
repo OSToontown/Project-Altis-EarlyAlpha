@@ -5,6 +5,8 @@ from toontown.safezone.DistributedPicnicBasketAI import DistributedPicnicBasketA
 from toontown.safezone.DistributedPicnicTableAI import DistributedPicnicTableAI
 
 class TFHoodAI(SZHoodAI):
+    notify = directNotify.newCategory('SZHoodAI')
+    notify.setInfo(True)
     HOOD = ToontownGlobals.FunnyFarm
     
     def createZone(self):
