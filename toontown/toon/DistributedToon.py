@@ -2720,3 +2720,7 @@ def gardenGame():
 @magicWord(category=CATEGORY_MODERATION)
 def cogfest():
     spellbook.getInvoker().magicTeleportInitiate(7000, 7000)
+    
+@magicWord(category=CATEGORY_MODERATION)
+def loopysballs():
+    spellbook.getInvoker().magicTeleportInitiate(2602, 2602)
