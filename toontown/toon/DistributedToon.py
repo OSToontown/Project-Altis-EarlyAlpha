@@ -2724,3 +2724,12 @@ def cogfest():
 @magicWord(category=CATEGORY_MODERATION)
 def loopysballs():
     spellbook.getInvoker().magicTeleportInitiate(2602, 2602)
+    
+@magicWord(category=CATEGORY_MODERATION)
+def tutorial():
+    spellbook.getInvoker().magicTeleportInitiate(15000, 15000)
+    
+@magicWord(category=CATEGORY_MODERATION)
+def party():
+    spellbook.getInvoker().magicTeleportInitiate(18000, 18000)
+    
