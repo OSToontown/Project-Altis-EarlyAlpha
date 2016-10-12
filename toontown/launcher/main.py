@@ -25,7 +25,7 @@ class AltisLauncherApp(QtGui.QMainWindow, AltisLauncher.Ui_AltisLauncher):
         self.clientsock.settimeout(5)
 
         os.environ['TT_PLAYCOOKIE'] = '.DEFAULT'
-        os.environ['TT_GAMESERVER'] = '127.0.0.1'
+        os.environ['TT_GAMESERVER'] = '127.0.0.1' #'158.69.213.51' for Owen's server.
 
     def client(self):
         data = self.clientsock.recv(1024)
@@ -62,7 +62,7 @@ class AltisLauncherApp(QtGui.QMainWindow, AltisLauncher.Ui_AltisLauncher):
         os.environ['ttUsername'] = self.username
         os.environ['ttPassword'] = self.password
 
-        self.clientsock.connect(('127.0.0.1', 4014))
+        self.clientsock.connect(('127.0.0.1', 4014))#'158.69.213.51', 4014)) for Owen's server.
 
         sendData = {str(self.encrypt(self.username)): str(self.encrypt(self.password))}
         sendData = json.dumps(sendData)
