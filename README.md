@@ -16,7 +16,7 @@ A vision of what Toontown Online could have been in 2016.
 
 # Thanks
 
-Thanks To Disney, Toontown Offline, Toontown Rewritten, Toontown Infinite, Toontown Fellowship, Toontown Stride, Toontown World Online, 
+Thanks To Disney, Toontown Offline, Toontown Rewritten, Toontown Infinite, Toontown Fellowship, Toontown House, Toontown Stride, Toontown World Online, 
 and the Toontown community for making this game possible and to keep the Toontown spirit alive.
 
 # Inspirations
