@@ -102,7 +102,7 @@ SuitBuildingInfo = (((1, 1),
    1,
    1)),
  ((1, 1),
-  (5, 13), #CFO Cogs 
+  (5, 14), #CFO Cogs 
   (12, 12),
   (150, 150),
   (1,
@@ -111,7 +111,7 @@ SuitBuildingInfo = (((1, 1),
    1,
    1)),
  ((1, 1),
-  (8, 13), #CFO Skelecogs 
+  (8, 14), #CFO Skelecogs 
   (12, 12),
   (200, 200),
   (1,
@@ -120,7 +120,7 @@ SuitBuildingInfo = (((1, 1),
    1,
    1)),
  ((1, 1),
-  (5, 14), #CJ Cogs 
+  (5, 16), #CJ Cogs 
   (12, 12),
   (300, 300),
   (1,
@@ -129,7 +129,7 @@ SuitBuildingInfo = (((1, 1),
    1,
    1)),
  ((1, 1),
-  (5, 15), #CEO Waiters 
+  (5, 18), #CEO Waiters 
   (12, 12),
   (275, 275),
   (1,
