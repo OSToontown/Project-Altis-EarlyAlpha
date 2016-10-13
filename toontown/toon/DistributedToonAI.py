@@ -4660,8 +4660,6 @@ def maxToon():
     toon.b_setMoney(toon.getMaxMoney())
     toon.b_setBankMoney(ToontownGlobals.DefaultMaxBankMoney)
 
-    return 'By the power invested in me, I, Flippy, max your toon.'
-
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int])
 def setMaxMoney(moneyVal):
     """Set target's money and maxMoney values."""

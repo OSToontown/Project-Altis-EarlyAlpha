@@ -26,6 +26,7 @@ class BossbotHQ(CogHood.CogHood):
         self.parentFSM.getStateNamed('BossbotHQ').removeChild(self.fsm)
         del self.cogHQLoaderClass
         CogHood.CogHood.unload(self)
+        self.fog = None
 
     def enter(self, *args):
         CogHood.CogHood.enter(self, *args)
@@ -53,4 +54,3 @@ class BossbotHQ(CogHood.CogHood):
             render.setFog(self.fog)
             self.sky.clearFog()
             self.sky.setFog(self.fog)
-            
