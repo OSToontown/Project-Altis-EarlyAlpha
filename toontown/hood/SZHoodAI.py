@@ -9,6 +9,7 @@ from toontown.town.StreetAI import StreetAI
 from toontown.safezone.SZTreasurePlannerAI import SZTreasurePlannerAI
 from toontown.toon import NPCToons
 from toontown.environment import DistributedDayTimeManagerAI
+from toontown.environment import DistributedRainManagerAI
 
 class SZHoodAI(HoodAI):
     """
@@ -32,6 +33,7 @@ class SZHoodAI(HoodAI):
         self.createZone()
         self.createStreets()
         self.createTime()
+        self.createRain()
 
     def createZone(self, genTrolley = True):
         HoodAI.createZone(self)
@@ -67,3 +69,9 @@ class SZHoodAI(HoodAI):
             self.dayTimeMgr.generateWithRequired(self.HOOD)  
             self.dayTimeMgr.start()
             self.notify.info('Day Time Manager turned on for zone ' + str(self.HOOD))
+            
+    def createRain(self):
+        self.rainMgr = DistributedRainManagerAI.DistributedRainManagerAI(self.air)
+        self.rainMgr.generateWithRequired(self.HOOD)  
+        self.rainMgr.start()
+        self.notify.info('Rain Manager turned on for zone ' + str(self.HOOD))

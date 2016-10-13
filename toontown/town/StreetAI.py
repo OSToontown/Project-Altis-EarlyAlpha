@@ -1,6 +1,7 @@
 from toontown.suit.DistributedSuitPlannerAI import DistributedSuitPlannerAI
 from toontown.building.DistributedBuildingMgrAI import DistributedBuildingMgrAI
 from toontown.environment import DistributedDayTimeManagerAI
+from toontown.environment import DistributedRainManagerAI
 
 class StreetAI:
     """
@@ -18,6 +19,7 @@ class StreetAI:
         self.air.dnaStoreMap[self.zoneId] = self.air.loadDNA(self.air.genDNAFileName(self.zoneId)).generateData()
         self.spawnObjects()
         self.createTime()
+        self.createRain()
 
     def spawnObjects(self):
         filename = self.air.genDNAFileName(self.zoneId)
@@ -33,3 +35,8 @@ class StreetAI:
             self.dayTimeMgr = DistributedDayTimeManagerAI.DistributedDayTimeManagerAI(self.air)
             self.dayTimeMgr.generateWithRequired(self.zoneId)  
             self.dayTimeMgr.start()
+
+    def createRain(self):
+        self.rainMgr = DistributedRainManagerAI.DistributedRainManagerAI(self.air)
+        self.rainMgr.generateWithRequired(self.zoneId)  
+        self.rainMgr.start()
