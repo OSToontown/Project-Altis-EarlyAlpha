@@ -51,7 +51,7 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
             self.rainRender.setBin('fixed', 1)
             self.rain.start(camera, self.rainRender)
             self.rainSound = base.loadSfx('phase_12/audio/sfx/CHQ_rain_ambient.ogg')
-            base.playSfx(self.rainSound, looping=1, volume=0.1)
+            base.playSfx(self.rainSound, looping=1, volume=0.25)
             return
 
     def stopRain(self):
