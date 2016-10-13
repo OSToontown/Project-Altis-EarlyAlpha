@@ -19,15 +19,20 @@ class DistributedRainManagerAI(DistributedWeatherMGRAI):
     def __init__(self, air):
         DistributedWeatherMGRAI.__init__(self, air)
 
-    def start(self):
+
+    def start(self, alwaysRain = False):
         DistributedWeatherMGRAI.start(self)
                 
-        Sequence(
-            Func(self.b_setState, 'Sunny'),
-            Wait(600),
-            Func(self.b_setState, 'Rain'),
-            Wait(600)).loop()
-            
+
+        if alwaysRain:
+            self.b_setState('Rain')
+        else:
+            Sequence(
+                Func(self.b_setState, 'Sunny'),
+                Wait(600),
+                Func(self.b_setState, 'Rain'),
+                Wait(600)).loop()
+
     def enterRain(self):
         pass
         

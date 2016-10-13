@@ -39,4 +39,7 @@ class StreetAI:
     def createRain(self):
         self.rainMgr = DistributedRainManagerAI.DistributedRainManagerAI(self.air)
         self.rainMgr.generateWithRequired(self.zoneId)  
-        self.rainMgr.start()
+        if zoneId in [1100, 1200, 1300]
+            self.rainMgr.start(True) # We want it to always rain in donalds dock
+        else:
+            self.rainMgr.start(False)

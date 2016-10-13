@@ -73,5 +73,8 @@ class SZHoodAI(HoodAI):
     def createRain(self):
         self.rainMgr = DistributedRainManagerAI.DistributedRainManagerAI(self.air)
         self.rainMgr.generateWithRequired(self.HOOD)  
-        self.rainMgr.start()
+        if self.HOOD == 1000:
+            self.rainMgr.start(True) # We want it to always rain in donalds dock
+        else:
+            self.rainMgr.start(False)
         self.notify.info('Rain Manager turned on for zone ' + str(self.HOOD))
