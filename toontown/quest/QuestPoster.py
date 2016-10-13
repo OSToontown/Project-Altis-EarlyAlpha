@@ -392,6 +392,8 @@ class QuestPoster(DirectFrame):
                             icon = cogIcons.find('**/LegalIcon')
                         elif holder == 'm':
                             icon = cogIcons.find('**/MoneyIcon')
+                        elif holder == 'g':
+                            icon = cogIcons.find('**/HackerIcon')
                         rIconGeom = icon.copyTo(hidden)
                         rIconGeom.setColor(Suit.Suit.medallionColors[holder])
                         rIconGeomScale = 0.12
@@ -793,6 +795,8 @@ class QuestPoster(DirectFrame):
                     icon = cogIcons.find('**/LegalIcon')
                 elif dept == 'm':
                     icon = cogIcons.find('**/MoneyIcon')
+                elif dept == 'g':
+                    icon = cogIcons.find('**/HackerIcon')
                 lIconGeom = icon.copyTo(hidden)
                 lIconGeom.setColor(Suit.Suit.medallionColors[dept])
                 cogIcons.removeNode()
@@ -845,6 +849,8 @@ class QuestPoster(DirectFrame):
                     icon = cogIcons.find('**/LegalIcon')
                 elif dept == 'm':
                     icon = cogIcons.find('**/MoneyIcon')
+                elif dept == 'g':
+                    icon = cogIcons.find('**/HackerIcon')
                 lIconGeom = icon.copyTo(hidden)
                 lIconGeom.setColor(Suit.Suit.medallionColors[dept])
                 cogIcons.removeNode()
