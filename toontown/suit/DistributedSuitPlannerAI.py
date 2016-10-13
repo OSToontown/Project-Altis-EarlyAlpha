@@ -343,8 +343,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
        5),
       (4,
        5,
-       6,
-       7),
+       6),
       []],
      [9100, #Lullaby Lane
       1,
