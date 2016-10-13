@@ -30,7 +30,7 @@ class SuitPlannerBase:
        20,
        20,
        20),
-      (1, 2, 3),
+      (1, 2, 3, 4),
       []],
      [2200, #Loopy Lane
       3,
@@ -50,7 +50,7 @@ class SuitPlannerBase:
        10,
        10,
        10),
-      (1, 2, 3),
+      (1, 2, 3, 4),
       []],
      [2300, #Punchline Place
       3,
@@ -70,7 +70,7 @@ class SuitPlannerBase:
        30,
        40,
        10),
-      (1, 2, 3),
+      (1, 2, 3, 4),
       []],
      [1100, #Barnacle Boulevard 
       1,
@@ -90,7 +90,7 @@ class SuitPlannerBase:
        0,
        0,
        10),
-      (2, 3, 4),
+      (2, 3, 4, 5),
       []],
      [1200, #Seaweed Street
       1,
@@ -196,7 +196,7 @@ class SuitPlannerBase:
        5,
        5,
        5),
-      (7, 8, 9, 10),
+      (8, 9, 10),
       []],
      [4100, #Alto Avenue
       1,
@@ -216,7 +216,7 @@ class SuitPlannerBase:
        50,
        50,
        0),
-      (2, 3, 4),
+      (4, 5, 6, 7),
       []],
      [4200, #Baritone Boulevard
       1,
@@ -282,7 +282,7 @@ class SuitPlannerBase:
        10,
        60,
        10),
-      (2, 3, 4),
+      (3, 4, 5, 6),
       []],
      [5200, #Maple Street
       1,
@@ -326,10 +326,10 @@ class SuitPlannerBase:
        5,
        80,
        5),
-      (3,
-       4,
+      (4,
        5,
-       6),
+       6,
+       7),
       []],
      [9100, #Lullaby Lane
       1,
@@ -372,8 +372,7 @@ class SuitPlannerBase:
        80,
        5,
        5),
-      (6,
-       7,
+      (7,
        8,
        9),
       []],
@@ -415,7 +414,7 @@ class SuitPlannerBase:
        0,
        100,
        0),
-      (4, 5, 6),
+      (5, 6, 7),
       []],
      [12000, #Cashbot Trainyard
       10,

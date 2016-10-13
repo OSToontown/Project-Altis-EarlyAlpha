@@ -1,13 +1,12 @@
 from SpecImports import *
 from toontown.toonbase import ToontownGlobals
-import random 
 CogParent = 110400
 BattleCellId = 0
 BattleCells = {BattleCellId: {'parentEntId': CogParent,
                 'pos': Point3(0, 0, 0)}}
 CogData = [{'parentEntId': CogParent,
   'boss': 1,
-  'level': random.choice([11, 12]),
+  'level': 14,
   'battleCell': BattleCellId,
   'pos': Point3(-6, 0, 0),
   'h': 180,
@@ -17,7 +16,7 @@ CogData = [{'parentEntId': CogParent,
   'revives': 1},
  {'parentEntId': CogParent,
   'boss': 0,
-  'level': 11,
+  'level': 13,
   'battleCell': BattleCellId,
   'pos': Point3(-2, 0, 0),
   'h': 180,
@@ -27,7 +26,7 @@ CogData = [{'parentEntId': CogParent,
   'revives': 1},
  {'parentEntId': CogParent,
   'boss': 0,
-  'level': 11,
+  'level': 12,
   'battleCell': BattleCellId,
   'pos': Point3(2, 0, 0),
   'h': 180,
