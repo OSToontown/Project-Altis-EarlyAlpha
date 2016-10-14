@@ -18,6 +18,9 @@ class SellbotHQBossBattle(CogHQBossBattle.CogHQBossBattle):
         CogHQBossBattle.CogHQBossBattle.load(self)
 
     def unload(self):
+        del self.rain
+        del self.rainRender
+        del self.rainSound
         CogHQBossBattle.CogHQBossBattle.unload(self)
         self.fog = None
 
