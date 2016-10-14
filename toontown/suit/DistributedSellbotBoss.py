@@ -372,6 +372,7 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
                 ActorInterval(self, 'turn2Fb'))),
             (34, Sequence(
                 Func(self.clearChat),
+                Func(self.startRain),
                 self.loseCogSuits(self.toonsA, self.battleANode, (0, 18, 5, -180, 0, 0)),
                 self.loseCogSuits(self.toonsB, self.battleBNode, (0, 18, 5, -180, 0, 0)))),
             (37, Sequence(
@@ -586,9 +587,7 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.geom.removeNode()
         del self.geom
         del self.cage
-        del self.rain
-        del self.rainRender
-        del self.rainSound
+        self.stopRain()
         self.rampA.requestFinalState()
         self.rampB.requestFinalState()
         self.rampC.requestFinalState()
@@ -735,7 +734,6 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.rampC.request('retracted')
         self.setCageIndex(0)
         Sequence(SoundInterval(self.promotionMusic, volume=0.9), SoundInterval(self.toonsDiscovered, volume=0.9)).start()
-        self.startRain()
 
     def exitIntroduction(self):
         DistributedBossCog.DistributedBossCog.exitIntroduction(self)
