@@ -171,8 +171,8 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
             toonMopath.destroy()
             self.toonMopathInterval.remove(toonMopath)
             
-        self.rain:
-            self.stopRain()
+        if self.rain:
+           self.stopRain()
 
         if OneBossCog == self:
             OneBossCog = None
