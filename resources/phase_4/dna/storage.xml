@@ -354,8 +354,31 @@
 	</model>
 
 	<model path="phase_4/models/props/construction_sign">
-		<store_node root="prop" code="prop_construction_sign" />
+		<store_node root="prop" code="prop_construction_sign" node="" />
 	</model>
+	<model path="phase_3.5/models/props/mailbox_TT">
+		<store_node root="prop" code="prop_mailbox_TT" node="" />
+	</model>
+	<model path="phase_5/models/props/trashcan_TT">
+		<store_node root="prop" code="prop_trashcan_TT" node="" />
+	</model>
+	<model path="phase_6/models/karting/KartArea_Tires">
+		<store_node root="prop" code="gs_tires" node="" />
+	</model>
+	<model path="phase_5.5/models/estate/houseB">
+		<store_node root="prop" code="houseB" node="" />
+	</model>
+	<model path="phase_6/models/golf/outdoor_zone_entrance">
+		<store_node root="prop" code="outdoor_zone_entrance" node="" />
+	</model>
+	<model path="phase_5/models/char/tt_r_ara_ttc_trashcan">
+		<store_node root="anim_prop" code="animated_prop_generic_phase_5_models_char__ttc_trashcan" node="" />
+	</model>
+	<model path="phase_5/models/char/tt_r_ara_ttc_trashcan">
+		<store_node root="interactive_prop" code="interactive_prop_phase_5_models_char__ttc_trashcan" node="" />
+	</model>
+
+
 
 
 	<!--  This font is no longer used. -->

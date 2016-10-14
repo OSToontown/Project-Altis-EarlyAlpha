@@ -30,8 +30,8 @@
 			</group>
 			<group name="props">
 				<prop name="linktunnel_tt_2226_DNARoot" code="prop_safe_zone_tunnel">
-					<pos x="-239.67" y="64.08" z="-6.18" />
-					<nhpr h="-90" p="0" r="0" />
+					<pos x="182.043" y="-62.2241" z="-2.65" />
+					<nhpr h="90" p="0" r="-0" />
 					<sign code="tunnel_sign_orange">
 						<scale x="1.5" y="1" z="1.5" />
 						<baseline code="mickey" width="33.3333" height="33.3333">
@@ -56,8 +56,8 @@
 					</sign>
 				</prop>
 				<prop name="linktunnel_tt_2132_DNARoot" code="prop_safe_zone_tunnel">
-					<pos x="-68.38" y="-202.64" z="-3.58" />
-					<nhpr h="-31" p="0" r="0" />
+					<pos x="-241.204" y="63.921" z="-6.2" />
+					<nhpr h="-90" p="0" r="0" />
 					<sign code="tunnel_sign_orange">
 						<scale x="1.5" y="1" z="1.5" />
 						<baseline code="mickey" width="33.3333" height="33.3333">
@@ -80,8 +80,8 @@
 					</sign>
 				</prop>
 				<prop name="linktunnel_tt_2301_DNARoot" code="prop_safe_zone_tunnel">
-					<pos x="27.6402" y="176.475" z="-6.18" />
-					<nhpr h="171" p="0" r="0" />
+					<pos x="-68.2113" y="-207.643" z="-3.7" />
+					<nhpr h="-30" p="0" r="0" />
 					<sign code="tunnel_sign_orange">
 						<pos x="0" y="0" z="-0.18" />
 						<scale x="1.5" y="1" z="1.5" />
@@ -112,8 +112,8 @@
 					</sign>
 				</prop>
 				<prop name="linktunnel_gs_8000_DNARoot" code="prop_GS_tunnel">
-					<pos x="20.9205" y="172.683" z="3.24925" />
-					<nhpr h="-150" p="-0.083787" r="0.0101321" />
+					<pos x="-47.079" y="107.683" z="0.4" />
+					<nhpr h="173" p="-0.083787" r="0.0101321" />
 					<sign>
 						<baseline code="mickey" width="38.5314" height="38.5314" flags="b">
 							<color r="0.00392157" g="0.403922" b="0.803922" a="1" />
@@ -134,8 +134,8 @@
 			</group>
 			<node name="buildings">
 				<prop name="prop_trolley_station_DNARoot" code="prop_trolley_station">
-					<pos x="-120.945" y="-77.5626" z="0.525" />
-					<nhpr h="128" p="0" r="0" />
+					<pos x="12.2929" y="147.626" z="2.95" />
+					<nhpr h="30" p="0" r="-0" />
 					<sign>
 						<color r="1" g="0.88" b="0.56" a="1" />
 						<baseline code="mickey" kern="-0.09181" width="10.9993" height="10.9993">
@@ -154,8 +154,8 @@
 				</prop>
 				<landmark_building id="sz18:toon_landmark_TT_library_DNARoot" code="toon_landmark_TT_library">
 					<title>Toontown Library</title>
-					<pos x="91.4475" y="-44.9255" z="4" />
-					<nhpr h="180" p="0" r="0" />
+					<pos x="143.224" y="-118.103" z="1.99999" />
+					<nhpr h="-132" p="0" r="0" />
 					<door code="door_double_round_ur">
 						<color r="0.88" g="0.45" b="0.38" a="1" />
 					</door>
@@ -178,8 +178,8 @@
 				</landmark_building>
 				<landmark_building id="sz14:toon_landmark_TT_bank_DNARoot" code="toon_landmark_TT_bank">
 					<title>Toontown Bank</title>
-					<pos x="57.1796" y="38.6656" z="4" />
-					<nhpr h="0" p="0" r="0" />
+					<pos x="-74.82" y="-101.335" z="0.5" />
+					<nhpr h="166" p="0" r="0" />
 					<door code="door_double_round_ur">
 						<color r="0.88" g="0.45" b="0.38" a="1" />
 					</door>
@@ -197,8 +197,8 @@
 				</landmark_building>
 				<landmark_building id="sz16:toon_landmark_TT_school_house_DNARoot" code="toon_landmark_TT_school_house">
 					<title>Toontown School House</title>
-					<pos x="129.919" y="-138.445" z="2.4997" />
-					<nhpr h="-140" p="0" r="0" />
+					<pos x="78.6468" y="164.701" z="2.4997" />
+					<nhpr h="-19" p="0" r="0" />
 					<door code="door_double_square_ur">
 						<color r="0.88" g="0.45" b="0.38" a="1" />
 					</door>
@@ -221,8 +221,8 @@
 				</landmark_building>
 				<landmark_building id="sz21:toon_landmark_TT_clothes_shop_DNARoot" code="toon_landmark_TT_clothes_shop" type="clotheshop">
 					<title>Clothing Shop</title>
-					<pos x="106.265" y="160.831" z="3" />
-					<nhpr h="-30" p="0" r="0" />
+					<pos x="88.0427" y="-34.339" z="3.99999" />
+					<nhpr h="-97" p="0" r="0" />
 					<door code="door_double_clothesshop_ur">
 						<color r="0.88" g="0.45" b="0.38" a="1" />
 					</door>
@@ -241,8 +241,8 @@
 				</prop> -->
 				<landmark_building id="sz13:toon_landmark_TT_toonhall_DNARoot" code="toon_landmark_TT_toonhall">
 					<title>Toon Hall</title>
-					<pos x="116.66" y="24.29" z="4" />
-					<nhpr h="-90" p="0" r="-0" />
+					<pos x="-118.34" y="-82.71" z="0" />
+					<nhpr h="122" p="0" r="-0" />
 					<door code="door_double_round_ur">
 						<color r="0.88" g="0.45" b="0.38" a="1" />
 					</door>
@@ -265,39 +265,33 @@
 				</landmark_building>
 			</node>
 			<prop name="toontown_central_DNARoot" code="toontown_central">
-				<pos x="9.15527e-005" y="-1.90735e-006" z="2.6226e-006" />
+				<pos x="0.00012207" y="-1.52588e-005" z="2.6226e-006" />
 				<nhpr h="-90" p="0" r="-0" />
 			</prop>
 
-			<!-- Large Christmas Tree -->
-			<prop name="prop_christmas_tree_DNARoot" code="prop_christmas_tree">
-				<pos x="57.413" y="-0.9" z="4.025" />
-				<nhpr h="-270" p="0" r="0" />
-				<scale x="1.2" y="1.2" z="1.4" />
-			</prop>
 
 			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
-				<pos x="-79.7819" y="79.5309" z="0" />
+				<pos x="-163.422" y="33.0334" z="0" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
-				<pos x="-127.003" y="30.3763" z="0" />
+				<pos x="-136.61" y="36.6986" z="0" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
-				<pos x="-128.16" y="-24.0245" z="0.000663757" />
+				<pos x="119.996" y="164.78" z="3.00066" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_gazebo_DNARoot" code="prop_gazebo">
-				<pos x="-60.94" y="-8.8" z="-2" />
-				<nhpr h="-178" p="0" r="0" />
+				<pos x="-60.228" y="-10.9224" z="-1.99998" />
+				<nhpr h="-180" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_small_ur_DNARoot" code="prop_tree_small_ur">
-				<pos x="119.621" y="-127.865" z="2.49998" />
+				<pos x="139.621" y="-97.865" z="2.49998" />
 				<nhpr h="-15" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_small_ur_DNARoot" code="prop_tree_small_ur">
-				<pos x="127.424" y="-59.0748" z="2.5" />
+				<pos x="130.959" y="-62.61" z="2.5" />
 				<nhpr h="-15" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_small_ur_DNARoot" code="prop_tree_small_ur">
@@ -305,80 +299,104 @@
 				<nhpr h="-15" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_small_ur_DNARoot" code="prop_tree_small_ur">
-				<pos x="96.8622" y="-146.373" z="2.52" />
+				<pos x="136.862" y="-111.373" z="2.52" />
 				<nhpr h="-15" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_small_ur_DNARoot" code="prop_tree_small_ur">
-				<pos x="114.056" y="-57.3443" z="2.5" />
+				<pos x="140.922" y="-80.478" z="2.5" />
 				<nhpr h="-15" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_DG">
-				<pos x="21.3941" y="-144.665" z="2.99998" />
-				<nhpr h="-30" p="0" r="0" />
+				<pos x="-145" y="15" z="0.5" />
+				<nhpr h="-120" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_DG">
-				<pos x="44.1038" y="-157.906" z="2.99998" />
-				<nhpr h="148" p="0" r="0" />
+				<pos x="-145" y="-7" z="0.5" />
+				<nhpr h="120" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_MM">
-				<pos x="-143.503" y="-8.9528" z="0.499987" />
-				<nhpr h="90" p="0" r="0" />
+				<pos x="85" y="-14" z="4" />
+				<nhpr h="60" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_MM">
-				<pos x="-143.242" y="16.9541" z="0.499977" />
-				<nhpr h="-90" p="0" r="0" />
+				<pos x="85" y="10" z="4" />
+				<nhpr h="-60" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_DD">
-				<pos x="-59.1768" y="92.9836" z="0.499824" />
-				<nhpr h="-9" p="0" r="0" />
+				<pos x="22" y="-149" z="3" />
+				<nhpr h="-45" p="0" r="0" />
 			</prop>
 			<prop name="neighborhood_sign_MM_DNARoot" code="neighborhood_sign_DD">
-				<pos x="-33.749" y="88.9499" z="0.499825" />
-				<nhpr h="170" p="0" r="0" />
+				<pos x="39" y="-160" z="3" />
+				<nhpr h="165" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_fat_ur_DNARoot" code="prop_tree_fat_ur">
-				<pos x="142.717" y="108.674" z="2.49998" />
+				<pos x="162.717" y="78.6741" z="2.49998" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_fat_ur_DNARoot" code="prop_tree_fat_ur">
-				<pos x="6.33804" y="100.879" z="2.5" />
+				<pos x="-9.60309" y="113.82" z="2.5" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_small_ul_DNARoot" code="prop_tree_large_ul">
-				<pos x="-23.998" y="74.1829" z="0" />
+				<pos x="-129.467" y="93.6005" z="0" />
 				<nhpr h="180" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_fat_ur_DNARoot" code="prop_tree_fat_ur">
-				<pos x="103.397" y="79.4494" z="2.5" />
+				<pos x="163.397" y="64.4495" z="2.5" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_fat_ur_DNARoot" code="prop_tree_fat_ur">
-				<pos x="116.09" y="54.81" z="2.5" />
+				<pos x="166.09" y="4.81043" z="2.5" />
 				<nhpr h="135" p="0" r="0" />
 			</prop>
 			<prop name="prop_big_planter_DNARoot" code="prop_big_planter">
-				<pos x="18.9496" y="-48.977" z="4.95856" />
+				<pos x="20.9496" y="-50.977" z="4.95856" />
 				<nhpr h="-135" p="0" r="0" />
 			</prop>
 			<prop name="prop_big_planter_DNARoot" code="prop_big_planter">
-				<pos x="19.2327" y="52.5553" z="4.95837" />
+				<pos x="21.2328" y="49.5553" z="4.95837" />
 				<nhpr h="-135" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_fat_ul_DNARoot" code="prop_tree_fat_ul">
-				<pos x="6.51316" y="-96.6973" z="2.49997" />
+				<pos x="-12.4868" y="-111.697" z="0.49997" />
 				<nhpr h="135" p="0" r="0" />
+			</prop>
+			<prop name="gs_tires_DNARoot" code="gs_tires">
+				<pos x="-21.6309" y="84.9314" z="0" />
+				<nhpr h="-105" p="0" r="0" />
+			</prop>
+			<prop name="gs_tires_DNARoot" code="gs_tires">
+				<pos x="-28.6259" y="86.3513" z="-3" />
+				<nhpr h="-90" p="0" r="0" />
+			</prop>
+			<prop name="gs_tires_DNARoot" code="gs_tires">
+				<pos x="-17.1761" y="85.6816" z="-1" />
+				<nhpr h="30" p="0" r="0" />
+			</prop>
+			<prop name="interactive_prop_phase_5_models_char__ttc_trashcan_DNARoot" code="interactive_prop_phase_5_models_char__ttc_trashcan">
+				<pos x="90" y="20" z="4" />
+				<nhpr h="-75" p="0" r="0" />
+			</prop>
+			<prop name="houseB_DNARoot" code="houseB">
+				<pos x="149.227" y="38.4068" z=" 1.24925" />
+				<nhpr h="-104" p="0" r="0" />
+			</prop>
+			<prop name="houseB_DNARoot" code="houseB">
+				<pos x="-101.6" y="110.104" z=" 2" />
+				<nhpr h="15" p="0" r="0" />
 			</prop>
 			<landmark_building id="sz19:toon_landmark_TT_gag_shop_DNARoot" code="toon_landmark_TT_gag_shop" type="gagshop">
 				<title>Gag Shop</title>
-				<pos x="-86.6848" y="-90.5693" z="0.500015" />
-				<nhpr h="-15" p="0" r="0" />
+				<pos x="-49.685" y="-93.5691" z="0.500015" />
+				<nhpr h="9" p="0" r="0" />
 				<door code="door_double_square_ur">
 					<color r="1" g="0.63" b="0.38" a="1" />
 				</door>
 			</landmark_building>
 			<flat_building id="sz0:random_DNARoot" width="15">
-				<pos x="-107.954" y="-85.0626" z="-0.18" />
-				<nhpr h="150" p="0" r="0" />
+				<pos x="53.1395" y="162.556" z="2.82" />
+				<nhpr h="29" p="0" r="0" />
 				<wall height="10" code="wall_lg_brick_ur">
 					<color r="1" g="0.9" b="0.33" a="1" />
 					<windows code="window_porthole_ur" count="0">
@@ -393,8 +411,8 @@
 				</wall>
 			</flat_building>
 			<flat_building id="sz0:random_DNARoot" width="15">
-				<pos x="-94.9639" y="-92.5626" z="-0.18" />
-				<nhpr h="150" p="0" r="0" />
+				<pos x="38.1853" y="162.569" z="2.82" />
+				<nhpr h="0" p="0" r="0" />
 				<wall height="10" code="wall_md_dental_ur">
 					<color r="0.99" g="0.89" b="0.49" a="1" />
 					<windows code="window_md_curved_ur" count="1">
@@ -408,152 +426,251 @@
 					</windows>
 				</wall>
 			</flat_building>
-			<flat_building id="sz0:random_DNARoot" width="15">
-				<pos x="-139.693" y="-54.0363" z="-0.18" />
-				<nhpr h="110" p="0" r="0" />
-				<wall height="10" code="wall_md_pillars_ur">
-					<color r="1" g="1" b="0.59" a="1" />
-					<windows code="window_sm_pointed_ul" count="2">
-						<color r="1" g="0.63" b="0.38" a="1" />
+			<flat_building id="tb0:random_DNARoot" width="15">
+				<pos x="-143.054" y="-29.2411" z="-4.18" />
+				<nhpr h="105" p="0" r="-0" />
+				<wall height="10" code="wall_fence_wood_ur">
+					<color r="1" g="1" b="1" a="1" />
+				</wall>
+			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="15">
+				<pos x="-141" y="-44" z="-4" />
+				<nhpr h="98" p="0" r="0" />
+				<wall height="10" code="wall_fence_wood_ur">
+					<color r="1" g="1" b="1" a="1" />
+				</wall>
+			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="15">
+				<pos x="101" y="25.0001" z="-1" />
+				<nhpr h="-150" p="0" r="0" />
+				<wall height="10" code="wall_fence_wood_ur">
+					<color r="1" g="1" b="1" a="1" />
+				</wall>
+			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="20">
+				<pos x="120" y="30.0001" z="-1" />
+				<nhpr h="-165" p="0" r="0" />
+				<wall height="10" code="wall_fence_wood_ur">
+					<color r="1" g="1" b="1" a="1" />
+				</wall>
+			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="10">
+				<pos x="119.899" y="30.8283" z="-1" />
+				<nhpr h="-90" p="0" r="0" />
+				<wall height="10" code="wall_fence_wood_ur">
+					<color r="1" g="1" b="1" a="1" />
+				</wall>
+			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="15">
+				<pos x="119.66" y="21.784" z="-1" />
+				<nhpr h="-90" p="0" r="0" />
+				<wall height="10" code="wall_fence_wood_ur">
+					<color r="1" g="1" b="1" a="1" />
+				</wall>
+			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="15">
+				<pos x="-111" y="-90" z="-4" />
+				<nhpr h="127" p="0" r="0" />
+				<wall height="10" code="wall_fence_wood_ur">
+					<color r="1" g="1" b="1" a="1" />
+				</wall>
+			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="20">
+				<pos x="-18.6636" y="123.469" z="0" />
+				<nhpr h="45" p="0" r="0" />
+				<wall height="10" code="wall_md_dental_ur">
+					<color r="0.99" g="0.89" b="0.49" a="1" />
+					<windows code="window_md_curved_ur" count="1">
+						<color r="0.93" g="0.83" b="0.33" a="1" />
 					</windows>
 				</wall>
 				<wall height="10" code="wall_md_dental_ur">
-					<color r="0.91" g="0.63" b="0.44" a="1" />
-					<windows code="window_sm_round_ur" count="1">
-						<color r="0.6" g="0.66" b="0.27" a="1" />
+					<color r="1" g="0.89" b="0.49" a="1" />
+					<windows code="window_md_curved_ur" count="1">
+						<color r="1" g="0.87" b="0.38" a="1" />
 					</windows>
-					<cornice code="cornice_dental_ur">
-						<color r="1" g="0.84" b="0.59" a="1" />
-					</cornice>
+				</wall>
+			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="20">
+				<pos x="-4.93923" y="137.416" z="0" />
+				<nhpr h="31" p="0" r="0" />
+				<wall height="20" code="wall_md_blank_ur">
+					<color r="0.99" g="0.89" b="0.49" a="1" />
+					<windows code="window_sm_pointed_ul" count="4">
+						<color r="0.93" g="0.83" b="0.33" a="1" />
+					</windows>
 				</wall>
 			</flat_building>
 			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
-				<pos x="-53.7466" y="-73.3194" z="0.00999998" />
+				<pos x="6.38759" y="-98.736" z="2.01001" />
 				<nhpr h="105" p="0" r="0" />
+			</prop>
+			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
+				<pos x="135.053" y="163.431" z="0" />
+				<nhpr h="-60" p="0" r="0" />
+			</prop>
+			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
+				<pos x="135.053" y="148.431" z="0" />
+				<nhpr h="-60" p="0" r="0" />
+			</prop>
+			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
+				<pos x="135.053" y="136.431" z="0" />
+				<nhpr h="-60" p="0" r="0" />
+			</prop>
+			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
+				<pos x="151.053" y="136.431" z="0" />
+				<nhpr h="-60" p="0" r="0" />
+			</prop>
+			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
+				<pos x="156.053" y="121.431" z="0" />
+				<nhpr h="-60" p="0" r="0" />
+			</prop>
+			<prop name="prop_tree_large_ur_DNARoot" code="prop_tree_large_ur">
+				<pos x="161.053" y="101.431" z="0" />
+				<nhpr h="-60" p="0" r="0" />
 			</prop>
 			<landmark_building id="sz20:toon_landmark_hqTT_DNARoot" code="toon_landmark_hqTT" type="hq">
 				<title>Toon HQ</title>
-				<pos x="23.6425" y="24.8587" z="4.00001" />
-				<nhpr h="135" p="0" r="0" />
+				<pos x="46" y="-47" z="4.00001" />
+				<nhpr h="45" p="0" r="0" />
 				<prop name="animated_prop_HQTelescopeAnimatedProp_DNARoot" code="animated_prop_HQTelescopeAnimatedProp">
-					<pos x="7.003" y="0" z="13.191" />
-					<nhpr h="168" p="81" r="0" />
+					<pos x="7.17" y="-7.67" z="19.07" />
+					<nhpr h="110" p="0" r="0" />
 					<scale x="4" y="4" z="4" />
 				</prop>
 			</landmark_building>
-			<flat_building id="sz0:random_DNARoot" width="10">
-				<pos x="-148.706" y="-25.452" z="-0.18" />
-				<nhpr h="90" p="0" r="0" />
-				<wall height="10" code="wall_md_blank_ul">
-					<color r="0.9" g="0.56" b="0.34" a="1" />
-					<windows code="window_sm_curved_ur" count="1">
-						<color r="1" g="0.87" b="0.38" a="1" />
+			<flat_building id="tb0:random_DNARoot" width="15">
+				<pos x="138.315" y="-12.1712" z="-1" />
+				<nhpr h="30" p="0" r="0" />
+				<wall height="10" code="wall_lg_brick_ur">
+					<color r="1" g="0.9" b="0.33" a="1" />
+					<windows code="window_porthole_ur" count="0">
+						<color r="0.31" g="0.63" b="0.37" a="1" />
 					</windows>
 				</wall>
-				<wall height="10" code="wall_md_blank_dl">
-					<color r="0.9" g="0.56" b="0.34" a="1" />
-					<windows code="window_sm_curved_ur" count="1">
-						<color r="1" g="0.87" b="0.38" a="1" />
+				<wall height="10" code="wall_md_blank_ur">
+					<color r="1" g="0.9" b="0.33" a="1" />
+					<windows code="window_sm_shuttered_ur" count="2">
+						<color r="0.59" g="1" b="0.49" a="1" />
 					</windows>
-					<cornice code="cornice_marble_ur">
-						<color r="1" g="1" b="0.52" a="1" />
-					</cornice>
 				</wall>
 			</flat_building>
-			<flat_building id="sz0:random_DNARoot" width="15">
-				<pos x="-144.824" y="-39.9409" z="-0.18" />
-				<nhpr h="105" p="0" r="0" />
-				<wall height="10" code="wall_md_dental_ur">
-					<color r="0.99" g="0.89" b="0.49" a="1" />
-					<windows code="window_md_curved_ur" count="1">
-						<color r="0.93" g="0.83" b="0.33" a="1" />
+			<flat_building id="tb0:random_DNARoot" width="25">
+				<pos x="151.305" y="-4.67145" z="-1" />
+				<nhpr h="30" p="0" r="0" />
+				<wall height="20" code="wall_md_pillars_ur">
+					<color r="1" g="1" b="0.59" a="1" />
+					<windows code="window_sm_round_ur" count="0">
+						<color r="0.31" g="0.63" b="0.37" a="1" />
 					</windows>
 				</wall>
-				<wall height="10" code="wall_md_dental_ur">
-					<color r="1" g="0.89" b="0.49" a="1" />
-					<windows code="window_md_curved_ur" count="1">
-						<color r="1" g="0.87" b="0.38" a="1" />
+			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="25">
+				<pos x="145.161" y="11.3026" z="4" />
+				<nhpr h="165" p="0" r="0" />
+				<wall height="10" code="wall_md_blank_ur">
+					<color r="1" g="0.42" b="0.27" a="1" />
+					<windows code="door_single_round_ur" count="0">
+						<color r="0.31" g="0.63" b="0.37" a="1" />
+					</windows>
+				</wall>
+				<wall height="10" code="wall_md_blank_ur">
+					<color r="1" g="0.9" b="0.33" a="1" />
+					<windows code="window_sm_round_ur" count="2">
+						<color r="0.59" g="1" b="0.49" a="1" />
+					</windows>
+				</wall>
+			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="15">
+				<pos x="152.661" y="-1.69656" z="4" />
+				<nhpr h="120" p="0" r="0" />
+				<wall height="10" code="wall_lg_brick_ur">
+					<color r="1" g="0.42" b="0.27" a="1" />
+					<windows code="window_sm_curved_ur" count="0">
+						<color r="0.31" g="0.63" b="0.37" a="1" />
+					</windows>
+				</wall>
+				<wall height="10" code="wall_lg_brick_ur">
+					<color r="1" g="0.9" b="0.33" a="1" />
+					<windows code="window_sm_shuttered_ul" count="2">
+						<color r="0.59" g="1" b="0.49" a="1" />
+					</windows>
+				</wall>
+			</flat_building>
+			<flat_building id="tb0:random_DNARoot" width="20">
+				<pos x="120.995" y="-22.171" z="-1" />
+				<nhpr h="30" p="0" r="0" />
+				<wall height="10" code="wall_sm_cement_ur">
+					<color r="1" g="0.42" b="0.27" a="1" />
+					<windows code="window_porthole_ur" count="0">
+						<color r="0.31" g="0.63" b="0.37" a="1" />
+					</windows>
+				</wall>
+				<wall height="10" code="wall_sm_cement_ur">
+					<color r="1" g="0.9" b="0.33" a="1" />
+					<windows code="window_sm_round_ur" count="2">
+						<color r="0.59" g="1" b="0.49" a="1" />
 					</windows>
 				</wall>
 			</flat_building>
 			<prop name="prop_toontown_central_fountain_DNARoot" code="prop_toontown_central_fountain">
-				<pos x="93.2057" y="-106.482" z="2.50002" />
-				<nhpr h="0" p="0" r="0" />
+				<pos x="7" y="100" z="3" />
+				<nhpr h="15" p="0" r="-0" />
 			</prop>
 			<prop name="prop_mickey_on_horse_DNARoot" code="prop_mickey_on_horse">
-				<pos x="73.6829" y="121.026" z="2.49996" />
+				<pos x="117.578" y="-89.5697" z="1.49995" />
 				<nhpr h="0" p="0" r="0" />
 			</prop>
 			<prop name="prop_post_one_light_DNARoot" code="prop_post_one_light">
-				<pos x="3.84337" y="118.504" z="3" />
+				<pos x="3.84338" y="118.504" z="3" />
 				<nhpr h="-110" p="0" r="0" />
 			</prop>
 			<prop name="prop_post_one_light_DNARoot" code="prop_post_one_light">
-				<pos x="116.979" y="146.926" z="3" />
-				<nhpr h="145" p="0" r="0" />
+				<pos x="104.879" y="154.026" z="3" />
+				<nhpr h="150" p="0" r="0" />
 			</prop>
 			<prop name="prop_post_one_light_DNARoot" code="prop_post_one_light">
-				<pos x="86.808" y="164.831" z="3" />
+				<pos x="74.3876" y="164.831" z="3" />
 				<nhpr h="-95" p="0" r="0" />
 			</prop>
 			<prop name="prop_tree_fat_ul_DNARoot" code="prop_tree_fat_ul">
-				<pos x="55.4077" y="154.679" z="2.49996" />
+				<pos x="151.37" y="148.717" z="2.49996" />
 				<nhpr h="-33" p="0" r="0" />
 			</prop>
 			<prop name="prop_post_three_light_DNARoot" code="prop_post_three_light">
-				<pos x="43.7488" y="-86.2016" z="3.00007" />
+				<pos x="105.609" y="-49.8199" z="4.00008" />
 				<nhpr h="-2" p="0" r="0" />
 			</prop>
 			<prop name="prop_post_three_light_DNARoot" code="prop_post_three_light">
-				<pos x="77.3059" y="-86.4255" z="2.99998" />
+				<pos x="88.761" y="-59.8981" z="3.99998" />
 				<nhpr h="-2" p="0" r="0" />
 			</prop>
 			<prop name="prop_mailbox_TT_DNARoot" code="prop_mailbox_TT">
-				<pos x="-95" y="87" z="0.5" />
+				<pos x="-82.071" y="87.757" z="0.5" />
 				<nhpr h="-75" p="4.55705" r="0" />
 			</prop>
 			<prop name="prop_mailbox_TT_DNARoot" code="prop_mailbox_TT">
-				<pos x="-60.8037" y="-84.8026" z="0.5" />
-				<nhpr h="105" p="0" r="0" />
-			</prop>
-			<prop name="prop_mailbox_TT_DNARoot" code="prop_mailbox_TT">
-				<pos x="57.0769" y="-159.55" z="3" />
+				<pos x="-60.8037" y="-87.8026" z="0.5" />
 				<nhpr h="90" p="0" r="0" />
 			</prop>
 			<prop name="prop_mailbox_TT_DNARoot" code="prop_mailbox_TT">
-				<pos x="52.2826" y="165.787" z="3" />
-				<nhpr h="-76" p="0" r="0" />
+				<pos x="51.0769" y="-162.55" z="3" />
+				<nhpr h="90" p="0" r="0" />
 			</prop>
-			<prop name="prop_hydrant_DNARoot" code="prop_hydrant">
-				<pos x="133.82" y="124.946" z="3" />
-				<nhpr h="120" p="0" r="0" />
-			</prop>
-			<prop name="prop_hydrant_DNARoot" code="prop_hydrant">
-				<pos x="135.748" y="-119.711" z="3" />
-				<nhpr h="-120" p="0" r="0" />
-			</prop>
-			<prop name="prop_trashcan_metal_DNARoot" code="prop_trashcan_metal">
-				<pos x="105.911" y="-153.71" z="3" />
-				<nhpr h="-120" p="0" r="0" />
-			</prop>
-			<prop name="prop_hydrant_DNARoot" code="prop_hydrant">
-				<pos x="16.1492" y="-89.1852" z="3" />
-				<nhpr h="-45" p="0" r="0" />
-			</prop>
-			<prop name="prop_post_three_light_DNARoot" code="prop_post_three_light">
-				<pos x="58.8052" y="93.6999" z="3" />
+			<prop name="prop_mailbox_TT_DNARoot" code="prop_mailbox_TT">
+				<pos x="38.1405" y="158.645" z="3" />
 				<nhpr h="-90" p="0" r="0" />
 			</prop>
 			<prop name="prop_post_three_light_DNARoot" code="prop_post_three_light">
-				<pos x="92.8051" y="93.6997" z="3" />
+				<pos x="60.0052" y="91.2999" z="3" />
 				<nhpr h="-90" p="0" r="0" />
 			</prop>
-			<prop name="prop_trashcan_metal_DNARoot" code="prop_trashcan_metal">
-				<pos x="117.805" y="151.699" z="3" />
+			<prop name="prop_post_three_light_DNARoot" code="prop_post_three_light">
+				<pos x="93.7051" y="91.2997" z="3" />
 				<nhpr h="-90" p="0" r="0" />
 			</prop>
 			<prop name="prop_post_one_light_DNARoot" code="prop_post_one_light">
-				<pos x="132.882" y="-122.532" z="3" />
+				<pos x="72.882" y="-162.532" z="3" />
 				<nhpr h="-130" p="0" r="0" />
 			</prop>
 			<prop name="prop_post_one_light_DNARoot" code="prop_post_one_light">
@@ -561,49 +678,37 @@
 				<nhpr h="-155" p="0" r="0" />
 			</prop>
 			<prop name="prop_post_three_light_DNARoot" code="prop_post_three_light">
-				<pos x="108.962" y="-28.0532" z="4" />
-				<nhpr h="-180" p="0" r="-0" />
+				<pos x="66.214" y="31.7961" z="4" />
+				<nhpr h="180" p="0" r="-0" />
 			</prop>
 			<prop name="prop_post_three_light_DNARoot" code="prop_post_three_light">
-				<pos x="108.205" y="32.0659" z="4" />
+				<pos x="85.456" y="13.3882" z="4" />
+				<nhpr h="180" p="0" r="0" />
+			</prop>
+			<prop name="prop_post_three_light_DNARoot" code="prop_post_three_light">
+				<pos x="43.9609" y="42.9462" z="4" />
 				<nhpr h="-180" p="0" r="0" />
 			</prop>
 			<prop name="prop_post_three_light_DNARoot" code="prop_post_three_light">
-				<pos x="32.9609" y="61.9462" z="4" />
-				<nhpr h="180" p="0" r="0" />
-			</prop>
-			<prop name="prop_post_three_light_DNARoot" code="prop_post_three_light">
 				<pos x="28.9617" y="-57.0532" z="4" />
-				<nhpr h="180" p="0" r="0" />
+				<nhpr h="-180" p="0" r="0" />
 			</prop>
 			<prop name="prop_post_three_light_DNARoot" code="prop_post_three_light">
-				<pos x="-101.98" y="-70.4832" z="0.5" />
+				<pos x="-112.98" y="-76.4832" z="0.5" />
 				<nhpr h="175" p="0" r="0" />
 			</prop>
 			<prop name="prop_post_three_light_DNARoot" code="prop_post_three_light">
-				<pos x="-129.889" y="-39.5582" z="0.5" />
-				<nhpr h="175" p="0" r="0" />
-			</prop>
-			<prop name="prop_trashcan_metal_DNARoot" code="prop_trashcan_metal">
-				<pos x="-145.168" y="-19.1499" z="0.5" />
-				<nhpr h="175" p="0" r="0" />
-			</prop>
-			<prop name="prop_hydrant_DNARoot" code="prop_hydrant">
-				<pos x="-19.1686" y="83.5834" z="0.5" />
-				<nhpr h="175" p="0" r="0" />
-			</prop>
-			<prop name="prop_trashcan_metal_DNARoot" code="prop_trashcan_metal">
-				<pos x="-69.2756" y="95.9983" z="0.5" />
+				<pos x="-134.989" y="-39.5582" z="0.5" />
 				<nhpr h="175" p="0" r="0" />
 			</prop>
 			<prop name="prop_post_one_light_DNARoot" code="prop_post_one_light">
-				<pos x="-125" y="60" z="0" />
-				<nhpr h="150" p="0" r="0" />
+				<pos x="-9.99995" y="90" z="1" />
+				<nhpr h="-180" p="0" r="0" />
 			</prop>
 			<landmark_building id="sz22:toon_landmark_TT_pet_shop_DNARoot" code="toon_landmark_TT_pet_shop" type="petshop">
 				<title>Pet Shop</title>
-				<pos x="-124.375" y="74.3749" z="0.5" />
-				<nhpr h="49" p="0" r="0" />
+				<pos x="59" y="45" z="4" />
+				<nhpr h="-30" p="0" r="0" />
 				<door code="door_double_round_ur">
 					<color r="1" g="0.87" b="0.38" a="1" />
 				</door>
@@ -626,8 +731,8 @@
 				<scale x="1.18418" y="1.18418" z="1.18418" />
 			</prop>
 			<prop name="prop_party_gate_DNARoot" code="prop_party_gate">
-				<pos x="77.935" y="-159.939" z="2.60141" />
-				<nhpr h="195" p="0" r="0" />
+				<pos x="-125.457" y="65.8109" z="0.1" />
+				<nhpr h="57" p="0" r="0" />
 			</prop>
 			<!-- Winter Snowball Piles -->
 			<node name="winter_snowpile_0">
