@@ -170,6 +170,9 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
             toonMopath.finish()
             toonMopath.destroy()
             self.toonMopathInterval.remove(toonMopath)
+            
+        self.rain:
+            self.stopRain()
 
         if OneBossCog == self:
             OneBossCog = None
@@ -587,7 +590,6 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.geom.removeNode()
         del self.geom
         del self.cage
-        self.stopRain()
         self.rampA.requestFinalState()
         self.rampB.requestFinalState()
         self.rampC.requestFinalState()
