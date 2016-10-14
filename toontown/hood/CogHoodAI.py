@@ -11,7 +11,7 @@ class CogHoodAI(HoodAI):
     This class is an AI-sided representation of a single cog
     neighborhood in Toontown.
 
-    A sub-class of this class exists for each of the 4 types
+    A sub-class of this class exists for each of the 5 types
     of cog neighborhoods. CogHoodAIs are responsible for
     spawning the Cog Elevators, Cog Doors and the SuitPlanners.
     """
