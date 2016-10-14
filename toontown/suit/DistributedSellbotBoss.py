@@ -19,6 +19,7 @@ from toontown.battle import BattleBase
 from direct.directutil import Mopath
 from direct.showutil import Rope
 from toontown.distributed import DelayDelete
+from toontown.battle import BattleParticles
 from toontown.battle import MovieToonVictory
 from toontown.building import ElevatorUtils
 from toontown.battle import RewardPanel
@@ -70,6 +71,25 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.localToonPromoted = True
         self.resetMaxDamage()
         return
+
+    def startRain(self):
+        if not settings.get('want-particle-effects', True):
+            return
+        else:
+            self.rain = BattleParticles.loadParticleFile('raindisk.ptf')
+            self.rain.setPos(0, 0, 20)
+            self.rainRender = render.attachNewNode('rainRender')
+            self.rainRender.setDepthWrite(0)
+            self.rainRender.setBin('fixed', 1)
+            self.rain.start(camera, self.rainRender)
+            self.rainSound = base.loadSfx('phase_12/audio/sfx/CHQ_rain_ambient.ogg')
+            base.playSfx(self.rainSound, looping=1, volume=0.25)
+            return
+
+    def stopRain(self):
+        if self.rain:
+            self.rain.cleanup()
+            self.rainSound.stop()
 
     def announceGenerate(self):
         global OneBossCog
@@ -566,6 +586,9 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.geom.removeNode()
         del self.geom
         del self.cage
+        del self.rain
+        del self.rainRender
+        del self.rainSound
         self.rampA.requestFinalState()
         self.rampB.requestFinalState()
         self.rampC.requestFinalState()
@@ -712,6 +735,7 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.rampC.request('retracted')
         self.setCageIndex(0)
         Sequence(SoundInterval(self.promotionMusic, volume=0.9), SoundInterval(self.toonsDiscovered, volume=0.9)).start()
+        self.startRain()
 
     def exitIntroduction(self):
         DistributedBossCog.DistributedBossCog.exitIntroduction(self)
@@ -965,6 +989,7 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.battleThreeMusic.stop()
 
     def enterVictory(self):
+        self.stopRain()
         self.cleanupIntervals()
         localAvatar.setCameraFov(ToontownGlobals.BossBattleCameraFov)
         self.reparentTo(render)
