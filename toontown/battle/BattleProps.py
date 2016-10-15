@@ -59,6 +59,7 @@ Props = ((5, 'partyBall', 'partyBall'),
  (5, 'fog_horn', 'fog_horn'),
  (5, 'whistle', 'whistle'),
  (5, 'singing', 'singing'),
+ (3.5, 'tart', 'cupcake'),
  (3.5, 'creampie', 'tart'),
  (5, 'fruitpie-slice', 'fruit-pie-slice'),
  (5, 'creampie-slice', 'cream-pie-slice'),
@@ -256,7 +257,7 @@ class PropPool:
                 self.propStrings[propName] = (propPath,)
 
         propName = 'tart'
-        self.propStrings[propName] = (self.getPath(3.5, 'tart'),)
+        self.propStrings[propName] = (self.getPath(3.5, 'cupcake'),)
         self.propTypes[propName] = 'model'
         propName = 'fruitpie'
         self.propStrings[propName] = (self.getPath(3.5, 'tart'),)
@@ -305,9 +306,7 @@ class PropPool:
         return 'phase_%s/models/props/%s' % (phase, model)
 
     def makeVariant(self, name):
-        if name == 'tart':
-            self.props[name].setScale(0.5)
-        elif name == 'fruitpie':
+        if name == 'fruitpie':
             self.props[name].setScale(0.75)
             self.props[name].setColor(FruittartColor)
         elif name == 'double-windsor':
