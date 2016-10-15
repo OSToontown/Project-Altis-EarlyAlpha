@@ -19,6 +19,7 @@ from toontown.toon import TTEmote
 from otp.avatar import Emote
 from toontown.hood import ZoneUtil
 from direct.task import Task
+import sys
 FO_DICT = {'s': 'tt_m_ara_cbe_fieldOfficeMoverShaker',
  'l': 'tt_m_ara_cbe_fieldOfficeLegalEagle',
  'm': 'tt_m_ara_cbe_fieldOfficeMoverShaker',
@@ -450,9 +451,11 @@ class DistributedBuilding(DistributedObject.DistributedObject):
 
     def setupSuitBuilding(self, nodePath):
         dnaData = base.cr.playGame.dnaData
+        if nodePath.isEmpty():
+            return
         dnaStore = self.cr.playGame.dnaStore
         level = int(self.difficulty / 2) + 1
-        suitNP = dnaStore.findNode('suit_landmark_' + chr(self.track) + str(level)) # For future reference, we will put this in the phase_5/dna/storage_town.xml :)
+        suitNP = dnaStore.findNode('suit_landmark_' + chr(self.track) + str(level))
         zoneId = dnaData.getBlock(self.block).zone
         zoneId = ZoneUtil.getTrueZoneId(zoneId, self.interiorZoneId)
         newParentNP = base.cr.playGame.hood.loader.zoneDict[zoneId]
@@ -478,9 +481,10 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         signTextNodePath = backgroundNP.attachNewNode(textNode.generate())
         signTextNodePath.setPosHprScale(0.0, 0.0, -0.21 + textHeight * 0.1 / zScale, 0.0, 0.0, 0.0, 0.1, 0.1, 0.1 / zScale)
         signTextNodePath.setColor(1.0, 1.0, 1.0, 1.0)
-        signTextNodePath.setAttrib(DepthOffsetAttrib.make(1))
         frontNP = suitBuildingNP.find('**/*_front/+GeomNode;+s')
         backgroundNP.wrtReparentTo(frontNP)
+        frontNP.node().setEffect(DecalEffect.make())
+        signTextNodePath.setAttrib(DepthOffsetAttrib.make(1))
         if chr(self.track) == 's':
             frontNP.node().setEffect(DecalEffect.make())
         suitBuildingNP.setName('sb' + str(self.block) + ':_landmark__DNARoot')
@@ -553,6 +557,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
 
     def setupCogdo(self, nodePath):
         dnaData = base.cr.playGame.dnaData
+        if nodePath.isEmpty():
+            return
         dnaStore = self.cr.playGame.dnaStore
         level = int(self.difficulty / 2) + 1
         suitNP = dnaStore.findNode(FO_DICT[chr(self.track)])
@@ -572,20 +578,20 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         textNode.setFont(ToontownGlobals.getSuitFont())
         textNode.setAlign(TextNode.ACenter)
         textNode.setWordwrap(12.0)
-        textNode.setText(buildingTitle)
+        textNode.setText(buildingTitle.decode(sys.getdefaultencoding()))
         textHeight = textNode.getHeight()
         zScale = (textHeight + 2) / 3.0
         signOrigin = suitBuildingNP.find('**/sign_origin;+s')
         backgroundNP = loader.loadModel('phase_5/models/cogdominium/field_office_sign')
         backgroundNP.reparentTo(signOrigin)
         backgroundNP.setPosHprScale(0.0, 0.0, -1.2 + textHeight * 0.8 / zScale, 0.0, 0.0, 0.0, 20.0, 8.0, 8.0 * zScale)
+        backgroundNP.setDepthOffset(10)
         signTextNodePath = backgroundNP.attachNewNode(textNode.generate())
-        signTextNodePath.setPosHprScale(0.0, 0.0, -0.13 + textHeight * 0.1 / zScale, 0.0, 0.0, 0.0, 0.8 / 20.0, 0.1, 0.1 / zScale)
+        signTextNodePath.setPosHprScale(0.0, 0.0, -0.13 + textHeight * 0.1 / zScale, 0.0, 0.0, 0.0, 0.1 * 8.0 / 20.0, 0.1, 0.1 / zScale)
         signTextNodePath.setColor(1.0, 1.0, 1.0, 1.0)
-        signTextNodePath.setAttrib(DepthOffsetAttrib.make(1))
         frontNP = suitBuildingNP.find('**/*_front')
         backgroundNP.wrtReparentTo(frontNP)
-        signTextNodePath.setAttrib(DepthOffsetAttrib.make(1))
+        frontNP.node().setEffect(DecalEffect.make())
 
         suitBuildingNP.setName('cb' + str(self.block) + ':_landmark__DNARoot')
         suitBuildingNP.setPosHprScale(nodePath, 15.463, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0)
