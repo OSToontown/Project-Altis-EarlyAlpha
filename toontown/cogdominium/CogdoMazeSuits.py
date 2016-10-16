@@ -139,7 +139,7 @@ class CogdoMazeSlowMinionSuit(CogdoMazeSuit):
     def __init__(self, serialNum, maze, randomNumGen, difficulty, startTile = None):
         slowSuit = base.cr.newsManager.getInvadingSuit()
         if not slowSuit:
-            slowSuit = 'cc'
+            slowSuit = 'gh'
         CogdoMazeSuit.__init__(self, serialNum, maze, randomNumGen, difficulty, startTile, slowSuit, Globals.SuitTypes.SlowMinion)
         self.defaultTransitions = {'Off': ['Normal'],
          'Normal': ['Attack', 'Off'],
@@ -176,7 +176,7 @@ class CogdoMazeFastMinionSuit(CogdoMazeSuit):
     def __init__(self, serialNum, maze, randomNumGen, difficulty, startTile = None):
         fastSuit = base.cr.newsManager.getInvadingSuit()
         if not fastSuit:
-            fastSuit = 'nd'
+            fastSuit = 'tf'
         CogdoMazeSuit.__init__(self, serialNum, maze, randomNumGen, difficulty, startTile, fastSuit, Globals.SuitTypes.FastMinion)
 
 
