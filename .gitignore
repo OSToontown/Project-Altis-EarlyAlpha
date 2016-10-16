@@ -12,3 +12,4 @@ accountserver/.idea/modules.xml
 accountserver/.idea/misc.xml
 accountserver/.idea/accountserver.iml
 backups/tools/magic-words.txt
+*.txt
