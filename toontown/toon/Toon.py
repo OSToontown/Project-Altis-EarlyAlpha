@@ -3434,46 +3434,6 @@ class Toon(Avatar.Avatar, ToonHead):
         track.append(louisTrack)
         return track
 
-    def __doLoopy(self, lerpTime, toLoopy):
-        track = Sequence()
-        loopyTrack = Parallel()
-
-        def getDustCloudIval():
-            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=1)
-            dustCloud.setBillboardAxis(2.0)
-            dustCloud.setZ(3)
-            dustCloud.setScale(0.4)
-            dustCloud.createTrack()
-            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
-
-        if lerpTime > 0.0:
-            dust = getDustCloudIval()
-            track.append(Func(dust.start))
-            track.append(Wait(0.5))
-            
-        if toLoopy:
-            self.oldStyle = self.style.clone()
-            self.oldHat = self.hat
-            dna = ToonDNA.ToonDNA()
-            dna.newToonFromProperties('cls', 'ms', 'l', 'm', 17, 0, 17, 17, 0, 5, 0, 5, 0, 5)
-            loopyTrack.append(Func(self.updateToonDNA, dna, True))
-            if hasattr(self, 'animFSM'):
-                state = self.animFSM.getCurrentState()
-                loopyTrack.append(Func(self.animFSM.request, 'off'))
-                loopyTrack.append(Func(self.animFSM.request, state))
-            loopyTrack.append(Func(self.nametag.setDisplayName, 'Loopy Goopy Googlenerd'))
-        else:
-            loopyTrack.append(Func(self.updateToonDNA, self.oldStyle))
-            if hasattr(self, 'animFSM'):
-                state = self.animFSM.getCurrentState()
-                loopyTrack.append(Func(self.animFSM.request, 'off'))
-                loopyTrack.append(Func(self.animFSM.request, state))
-            loopyTrack.append(Func(self.nametag.setDisplayName, self.nametag.name))
-            loopyTrack.append(Func(self.setHat, self.oldHat[0], self.oldHat[1], self.oldHat[2]))
-            loopyTrack.append(Func(self.generateToonAccessories))
-        track.append(loopyTrack)
-        return track
-
     def __doCheesyEffect(self, effect, lerpTime):
         if effect == ToontownGlobals.CEBigHead:
             return self.__doHeadScale(2.5, lerpTime)
@@ -3547,8 +3507,6 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doPete(lerpTime, toPete=True)
         elif effect == ToontownGlobals.CELouis:
             return self.__doLouis(lerpTime, toLouis=True)
-        elif effect == ToontownGlobals.CELoopy:
-            return self.__doLoopy(lerpTime, toLoopy=True)
         elif effect == ToontownGlobals.CEVirtual:
             return self.__doVirtual()
         elif effect == ToontownGlobals.CEGhost:
@@ -3631,8 +3589,6 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doPete(lerpTime, toPete=False)
         elif effect == ToontownGlobals.CELouis:
             return self.__doLouis(lerpTime, toLouis=False)
-        elif effect == ToontownGlobals.CELoopy:
-            return self.__doLoopy(lerpTime, toLoopy=False)
         elif effect == ToontownGlobals.CEVirtual:
             return self.__doUnVirtual()
         elif effect == ToontownGlobals.CEGhost:
