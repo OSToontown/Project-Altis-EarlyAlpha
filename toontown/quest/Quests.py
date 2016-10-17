@@ -553,17 +553,17 @@ class CogTrackQuest(CogQuest):
      'l',
      'm',
      's',
-	 'g']
+     'g']
     trackNamesS = [TTLocalizer.BossbotS,
      TTLocalizer.LawbotS,
      TTLocalizer.CashbotS,
      TTLocalizer.SellbotS,
-	 TTLocalizer.BoardbotS]
+     TTLocalizer.BoardbotS]
     trackNamesP = [TTLocalizer.BossbotP,
      TTLocalizer.LawbotP,
      TTLocalizer.CashbotP,
      TTLocalizer.SellbotP,
-	 TTLocalizer.BoardbotP]
+     TTLocalizer.BoardbotP]
 
     def __init__(self, id, quest):
         CogQuest.__init__(self, id, quest)
@@ -728,11 +728,13 @@ class SkelecogTrackQuest(CogTrackQuest, SkelecogQBase):
     trackNamesS = [TTLocalizer.BossbotSkelS,
      TTLocalizer.LawbotSkelS,
      TTLocalizer.CashbotSkelS,
-     TTLocalizer.SellbotSkelS]
+     TTLocalizer.SellbotSkelS,
+     TTLocalizer.BoardbotSkelS]
     trackNamesP = [TTLocalizer.BossbotSkelP,
      TTLocalizer.LawbotSkelP,
      TTLocalizer.CashbotSkelP,
-     TTLocalizer.SellbotSkelP]
+     TTLocalizer.SellbotSkelP,
+     TTLocalizer.BoardbotSkelP]
 
     def __init__(self, id, quest):
         CogTrackQuest.__init__(self, id, quest)
@@ -1007,11 +1009,13 @@ class BuildingQuest(CogQuest):
     trackCodes = ['c',
      'l',
      'm',
-     's']
+     's',
+     'g']
     trackNames = [TTLocalizer.Bossbot,
      TTLocalizer.Lawbot,
      TTLocalizer.Cashbot,
-     TTLocalizer.Sellbot]
+     TTLocalizer.Sellbot,
+     TTLocalizer.Boardbot]
 
     def __init__(self, id, quest):
         CogQuest.__init__(self, id, quest)
@@ -1629,6 +1633,8 @@ class RecoverItemQuest(LocationBasedQuest):
                 holderName = TTLocalizer.CashbotP
             elif holder == 'l':
                 holderName = TTLocalizer.LawbotP
+            elif holder == 'g':
+                holderName = TTLocalizer.BoardbotP
         item = self.getItem()
         num = self.getNumItems()
         if num == 1:
@@ -1688,6 +1694,8 @@ class RecoverItemQuest(LocationBasedQuest):
                 holderName = TTLocalizer.CashbotP
             elif holder == 'l':
                 holderName = TTLocalizer.LawbotP
+            elif holder == 'g':
+                holderName = TTLocalizer.BoardbotP
         if num == 1:
             itemName = ItemDict[item][2] + ItemDict[item][0]
         else:
@@ -3409,6 +3417,92 @@ QuestDict = {
         Any,
         NA,
         DefaultDialog),
+ 1300: (DD_TIER,
+		Start,
+		(VisitQuest,),
+		Any,
+		1116,
+		NA,
+		1301,
+		TTLocalizer.QuestDialogDict[1300]),
+ 1301: (DD_TIER,
+		Start,
+		(CogTrackQuest,
+		1100,
+		6,
+		'c'),
+		1116,
+		Same,
+		NA,
+		1302,
+		TTLocalizer.QuestDialogDict[1301]),
+ 1302: (DD_TIER,
+		Cont,
+		(CogTrackQuest,
+		1200,
+		7,
+		'm'),
+		Same,
+		Same,
+		NA,
+		(1303, 1304),
+		TTLocalizer.QuestDialogDict[1302]),
+ 1303: (DD_TIER,
+		Cont,
+		(CogTrackQuest,
+		1300,
+		8,
+		'g'),
+		Same,
+		Same,
+		NA,
+		1305,
+		TTLocalizer.QuestDialogDict[1303]),
+ 1304: (DD_TIER,
+		Cont,
+		(CogTrackQuest,
+		1300,
+		8,
+		'l'),
+		Same,
+		Same,
+		NA,
+		1305,
+		TTLocalizer.QuestDialogDict[1304]),
+ 1305: (DD_TIER,
+		Cont,
+        (BuildingQuest,
+         ToontownGlobals.DonaldsDock,
+         1,
+         Any,
+         3),
+		Same,
+		Same,
+		NA,
+		(1306, 1307),
+		TTLocalizer.QuestDialogDict[1305]),
+ 1306: (DD_TIER,
+		Cont,
+		(DeliverGagQuest,
+		1,
+		ToontownBattleGlobals.SQUIRT_TRACK,
+		2),
+		Same,
+		Same,
+		NA,
+		401,
+		TTLocalizer.QuestDialogDict[1306]),
+ 1307: (DD_TIER,
+		Cont,
+		(DeliverGagQuest,
+		1,
+		ToontownBattleGlobals.THROW_TRACK,
+		2),
+		Same,
+		Same,
+		NA,
+		401,
+		TTLocalizer.QuestDialogDict[1307]),
  401: (DD_TIER,
        Start,
        (TrackChoiceQuest, ToontownBattleGlobals.DROP_TRACK, ToontownBattleGlobals.LURE_TRACK),
