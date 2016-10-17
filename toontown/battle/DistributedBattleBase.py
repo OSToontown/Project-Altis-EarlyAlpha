@@ -221,7 +221,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
 
     def removeTrap(self, suit, removeTrainTrack = False):
         self.notify.debug('removeTrap() from suit: %d, removeTrainTrack=%s' % (suit.doId, removeTrainTrack))
-        if suit.battleTrapProp == None:
+        if suit.battleTrapProp is None or suit.battleTrapProp.isEmpty():
             self.notify.debug('suit.battleTrapProp == None, suit.battleTrap=%s setting to NO_TRAP, returning' % suit.battleTrap)
             suit.battleTrap = NO_TRAP
             return
