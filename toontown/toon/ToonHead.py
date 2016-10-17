@@ -463,6 +463,26 @@ class ToonHead(Actor.Actor):
         else:
             ToonHead.notify.debug('phase_4 not loaded yet.')
 
+    def loadYesMan(self):
+        if hasattr(base, 'launcher') and (not base.launcher or base.launcher and base.launcher.getPhaseComplete(4)):
+            if not hasattr(self, 'yesMan'):
+                self.yesMan = NodePathCollection()
+            model = loader.loadModel ('phase_4/models/char/suitA-heads.bam').find('**/yesman')
+            texture = loader.loadTexture ('phase_4/maps/yes_man.jpg')
+            model.setTexture(texture, 1)
+            if model:
+                model.setZ(-0.25)
+                model.setScale(1.025)
+                model.reparentTo(self.find('**/__Actor_head'))
+                self.yesMan.addPath(model)
+                model.stash()
+                return True
+            else:
+                del self.yesMan
+                return False
+        else:
+            ToonHead.notify.debug('phase_4 not loaded yet.')
+
     def __fixPumpkin(self, style, lodName = None, copy = 1):
         if lodName == None:
             searchRoot = self
@@ -532,6 +552,26 @@ class ToonHead(Actor.Actor):
                     if self.__eyelashClosed:
                         self.__eyelashClosed.unstash()
                 self.snowMen.stash()
+        return
+
+    def enableYesMan(self, enable):
+        if not hasattr(self, 'yesMan'):
+            self.loadYesMan()
+
+        if hasattr(self, 'yesMan'):
+            if enable:
+                if self.__eyelashOpen:
+                    self.__eyelashOpen.stash()
+                if self.__eyelashClosed:
+                    self.__eyelashClosed.stash()
+                self.yesMan.unstash()
+            else:
+                if not self.__eyelashesHiddenByGlasses:
+                    if self.__eyelashOpen:
+                        self.__eyelashOpen.unstash()
+                    if self.__eyelashClosed:
+                        self.__eyelashClosed.unstash()
+                self.yesMan.stash()
         return
 
     def hideEars(self):

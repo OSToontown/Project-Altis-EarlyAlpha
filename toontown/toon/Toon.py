@@ -2481,6 +2481,66 @@ class Toon(Avatar.Avatar, ToonHead):
             track.append(Func(self.startBlink))
         return track
 
+    def __doYesMan(self, lerpTime, toYesMan):
+        node = self.getGeomNode()
+
+        def getDustCloudIval():
+            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=0)
+            dustCloud.setBillboardAxis(2.0)
+            dustCloud.setZ(3)
+            dustCloud.setScale(0.4)
+            dustCloud.createTrack()
+            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
+
+        dust = getDustCloudIval()
+        track = Sequence()
+        if toYesMan:
+            track.append(Func(self.stopBlink))
+            track.append(Func(self.closeEyes))
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            def hideParts():
+                self.notify.debug('HidePaths')
+                for hi in range(self.headParts.getNumPaths()):
+                    head = self.headParts[hi]
+                    parts = head.getChildren()
+                    for pi in range(parts.getNumPaths()):
+                        p = parts[pi]
+                        if not p.isHidden():
+                            p.hide()
+                            p.setTag('yesman', 'enabled')
+
+            track.append(Func(hideParts))
+            track.append(Func(self.enableYesMan, True))
+            self.putOnSuit('ym')
+        else:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            def showHiddenParts():
+                self.notify.debug('ShowHiddenPaths')
+                for hi in range(self.headParts.getNumPaths()):
+                    head = self.headParts[hi]
+                    parts = head.getChildren()
+                    for pi in range(parts.getNumPaths()):
+                        p = parts[pi]
+                        if not self.snowMen.hasPath(p) and p.getTag('yesman') == 'enabled':
+                            p.show()
+                            p.setTag('yesman', 'disabled')
+
+            track.append(Func(showHiddenParts))
+            track.append(Func(self.enableYesMan, False))
+            track.append(Func(self.startBlink))
+            self.setCogIndex(-1)
+        return track
+
     def __doGreenToon(self, lerpTime, toGreen):
         track = Sequence()
         greenTrack = Parallel()
@@ -3469,6 +3529,8 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doBigAndWhite(VBase4(1, 1, 1, 1), ToontownGlobals.BigToonScale, lerpTime)
         elif effect == ToontownGlobals.CESnowMan:
             return self.__doSnowManHeadSwitch(lerpTime, toSnowMan=True)
+        elif effect == ToontownGlobals.CEYesMan:
+			return self.__doYesMan(lerpTime, toYesMan=True)
         elif effect == ToontownGlobals.CEGreenToon:
             return self.__doGreenToon(lerpTime, toGreen=True)
         elif effect == ToontownGlobals.CERogerDog:
@@ -3551,6 +3613,8 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doBigAndWhite(None, None, lerpTime)
         elif effect == ToontownGlobals.CESnowMan:
             return self.__doSnowManHeadSwitch(lerpTime, toSnowMan=False)
+        elif effect == ToontownGlobals.CEYesMan:
+			return self.__doYesMan(lerpTime, toYesMan=False)
         elif effect == ToontownGlobals.CEGreenToon:
             return self.__doGreenToon(lerpTime, toGreen=False)
         elif effect == ToontownGlobals.CERogerDog:
