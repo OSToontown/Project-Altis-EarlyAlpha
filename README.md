@@ -20,4 +20,4 @@ Thanks To Disney, Toontown Offline, Toontown Rewritten, Toontown Infinite, Toont
 and the Toontown community for making this game possible and to keep the Toontown spirit alive.
 
 # Inspirations
-1. Toontown Rewritten, for repowering the spirit of Toontown after Toontown Online closed on September 19, 2013
+* Toontown Rewritten, for repowering the spirit of Toontown after Toontown Online closed on September 19, 2013
