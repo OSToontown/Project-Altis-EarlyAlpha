@@ -109,7 +109,7 @@ CEName2Id = {
  'yesman': CEYesMan,
  'downsizer': CEDownsizer,
  'movershaker': CEMoverShaker,
- 'bigfish': CEBigCheese
+ 'bigcheese': CEBigCheese
 }
 BeanToonScale = 2.9
 GiantToonScale = 2.1
