@@ -958,7 +958,7 @@ class Suit(Avatar.Avatar):
         self.healthBar.hide()
         self.healthCondition = 0
 
-    def reseatHealthBarForSkele(self):
+    def resetHealthBarForSkele(self):
         self.currHP = self.maxHP
         self.healthBar.setPos(0.0, 0.1, 0.0)
         self.updateHealthBar(0, forceUpdate=1)
