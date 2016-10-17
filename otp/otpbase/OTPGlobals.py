@@ -65,6 +65,8 @@ CEPete = 35
 CELouis = 36
 CEYesMan = 37
 CEDownsizer = 38
+CEMoverShaker = 39
+CEBigCheese = 40
 CEGhost = 'g'
 CEName2Id = {
  'normal': CENormal,
@@ -105,7 +107,9 @@ CEName2Id = {
  'pete': CEPete,
  'louis': CELouis,
  'yesman': CEYesMan,
- 'downsizer': CEDownsizer
+ 'downsizer': CEDownsizer,
+ 'movershaker': CEMoverShaker,
+ 'bigfish': CEBigCheese
 }
 BeanToonScale = 2.9
 GiantToonScale = 2.1
