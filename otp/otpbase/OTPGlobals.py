@@ -64,6 +64,7 @@ CEBarney = 34
 CEPete = 35
 CELouis = 36
 CEYesMan = 37
+CEDownsizer = 38
 CEGhost = 'g'
 CEName2Id = {
  'normal': CENormal,
@@ -103,7 +104,8 @@ CEName2Id = {
  'barney': CEBarney,
  'pete': CEPete,
  'louis': CELouis,
- 'yesman': CEYesMan
+ 'yesman': CEYesMan,
+ 'downsizer': CEDownsizer
 }
 BeanToonScale = 2.9
 GiantToonScale = 2.1

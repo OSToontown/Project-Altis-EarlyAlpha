@@ -472,13 +472,31 @@ class ToonHead(Actor.Actor):
             model.setTexture(texture, 1)
             if model:
                 model.setZ(-0.25)
-                model.setScale(1.025)
+                model.setScale(1.05)
                 model.reparentTo(self.find('**/__Actor_head'))
                 self.yesMan.addPath(model)
                 model.stash()
                 return True
             else:
                 del self.yesMan
+                return False
+        else:
+            ToonHead.notify.debug('phase_4 not loaded yet.')
+
+    def loadDownsizer(self):
+        if hasattr(base, 'launcher') and (not base.launcher or base.launcher and base.launcher.getPhaseComplete(4)):
+            if not hasattr(self, 'downsizer'):
+                self.downsizer = NodePathCollection()
+            model = loader.loadModel ('phase_4/models/char/suitB-heads.bam').find('**/beancounter')
+            if model:
+                model.setZ(-0.25)
+                model.setScale(1.3)
+                model.reparentTo(self.find('**/__Actor_head'))
+                self.downsizer.addPath(model)
+                model.stash()
+                return True
+            else:
+                del self.downsizer
                 return False
         else:
             ToonHead.notify.debug('phase_4 not loaded yet.')
@@ -572,6 +590,26 @@ class ToonHead(Actor.Actor):
                     if self.__eyelashClosed:
                         self.__eyelashClosed.unstash()
                 self.yesMan.stash()
+        return
+
+    def enableDownsizer(self, enable):
+        if not hasattr(self, 'downsizer'):
+            self.loadDownsizer()
+
+        if hasattr(self, 'downsizer'):
+            if enable:
+                if self.__eyelashOpen:
+                    self.__eyelashOpen.stash()
+                if self.__eyelashClosed:
+                    self.__eyelashClosed.stash()
+                self.downsizer.unstash()
+            else:
+                if not self.__eyelashesHiddenByGlasses:
+                    if self.__eyelashOpen:
+                        self.__eyelashOpen.unstash()
+                    if self.__eyelashClosed:
+                        self.__eyelashClosed.unstash()
+                self.downsizer.stash()
         return
 
     def hideEars(self):
