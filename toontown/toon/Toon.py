@@ -2495,27 +2495,12 @@ class Toon(Avatar.Avatar, ToonHead):
         dust = getDustCloudIval()
         track = Sequence()
         if toYesMan:
-            track.append(Func(self.stopBlink))
-            track.append(Func(self.closeEyes))
             if lerpTime > 0.0:
                 track.append(Func(dust.start))
                 track.append(Wait(0.5))
             else:
                 dust.finish()
 
-            def hideParts():
-                self.notify.debug('HidePaths')
-                for hi in range(self.headParts.getNumPaths()):
-                    head = self.headParts[hi]
-                    parts = head.getChildren()
-                    for pi in range(parts.getNumPaths()):
-                        p = parts[pi]
-                        if not p.isHidden():
-                            p.hide()
-                            p.setTag('yesman', 'enabled')
-
-            track.append(Func(hideParts))
-            track.append(Func(self.enableYesMan, True))
             self.putOnSuit('ym')
         else:
             if lerpTime > 0.0:
@@ -2524,20 +2509,6 @@ class Toon(Avatar.Avatar, ToonHead):
             else:
                 dust.finish()
 
-            def showHiddenParts():
-                self.notify.debug('ShowHiddenPaths')
-                for hi in range(self.headParts.getNumPaths()):
-                    head = self.headParts[hi]
-                    parts = head.getChildren()
-                    for pi in range(parts.getNumPaths()):
-                        p = parts[pi]
-                        if not self.yesMan.hasPath(p) and p.getTag('yesman') == 'enabled':
-                            p.show()
-                            p.setTag('yesman', 'disabled')
-
-            track.append(Func(showHiddenParts))
-            track.append(Func(self.enableYesMan, False))
-            track.append(Func(self.startBlink))
             self.takeOffSuit()
         return track
 
@@ -2555,27 +2526,12 @@ class Toon(Avatar.Avatar, ToonHead):
         dust = getDustCloudIval()
         track = Sequence()
         if toDownsizer:
-            track.append(Func(self.stopBlink))
-            track.append(Func(self.closeEyes))
             if lerpTime > 0.0:
                 track.append(Func(dust.start))
                 track.append(Wait(0.5))
             else:
                 dust.finish()
 
-            def hideParts():
-                self.notify.debug('HidePaths')
-                for hi in range(self.headParts.getNumPaths()):
-                    head = self.headParts[hi]
-                    parts = head.getChildren()
-                    for pi in range(parts.getNumPaths()):
-                        p = parts[pi]
-                        if not p.isHidden():
-                            p.hide()
-                            p.setTag('downsizer', 'enabled')
-
-            track.append(Func(hideParts))
-            track.append(Func(self.enableDownsizer, True))
             self.putOnSuit('ds')
         else:
             if lerpTime > 0.0:
@@ -2584,20 +2540,6 @@ class Toon(Avatar.Avatar, ToonHead):
             else:
                 dust.finish()
 
-            def showHiddenParts():
-                self.notify.debug('ShowHiddenPaths')
-                for hi in range(self.headParts.getNumPaths()):
-                    head = self.headParts[hi]
-                    parts = head.getChildren()
-                    for pi in range(parts.getNumPaths()):
-                        p = parts[pi]
-                        if not self.downsizer.hasPath(p) and p.getTag('downsizer') == 'enabled':
-                            p.show()
-                            p.setTag('downsizer', 'disabled')
-
-            track.append(Func(showHiddenParts))
-            track.append(Func(self.enableDownsizer, False))
-            track.append(Func(self.startBlink))
             self.takeOffSuit()
         return track
 
@@ -2615,27 +2557,12 @@ class Toon(Avatar.Avatar, ToonHead):
         dust = getDustCloudIval()
         track = Sequence()
         if toMoverShaker:
-            track.append(Func(self.stopBlink))
-            track.append(Func(self.closeEyes))
             if lerpTime > 0.0:
                 track.append(Func(dust.start))
                 track.append(Wait(0.5))
             else:
                 dust.finish()
 
-            def hideParts():
-                self.notify.debug('HidePaths')
-                for hi in range(self.headParts.getNumPaths()):
-                    head = self.headParts[hi]
-                    parts = head.getChildren()
-                    for pi in range(parts.getNumPaths()):
-                        p = parts[pi]
-                        if not p.isHidden():
-                            p.hide()
-                            p.setTag('movershaker', 'enabled')
-
-            track.append(Func(hideParts))
-            track.append(Func(self.enableMoverShaker, True))
             self.putOnSuit('ms')
         else:
             if lerpTime > 0.0:
@@ -2644,20 +2571,6 @@ class Toon(Avatar.Avatar, ToonHead):
             else:
                 dust.finish()
 
-            def showHiddenParts():
-                self.notify.debug('ShowHiddenPaths')
-                for hi in range(self.headParts.getNumPaths()):
-                    head = self.headParts[hi]
-                    parts = head.getChildren()
-                    for pi in range(parts.getNumPaths()):
-                        p = parts[pi]
-                        if not self.moverShaker.hasPath(p) and p.getTag('movershaker') == 'enabled':
-                            p.show()
-                            p.setTag('movershaker', 'disabled')
-
-            track.append(Func(showHiddenParts))
-            track.append(Func(self.enableMoverShaker, False))
-            track.append(Func(self.startBlink))
             self.takeOffSuit()
         return track
 
@@ -2675,27 +2588,12 @@ class Toon(Avatar.Avatar, ToonHead):
         dust = getDustCloudIval()
         track = Sequence()
         if toBigCheese:
-            track.append(Func(self.stopBlink))
-            track.append(Func(self.closeEyes))
             if lerpTime > 0.0:
                 track.append(Func(dust.start))
                 track.append(Wait(0.5))
             else:
                 dust.finish()
 
-            def hideParts():
-                self.notify.debug('HidePaths')
-                for hi in range(self.headParts.getNumPaths()):
-                    head = self.headParts[hi]
-                    parts = head.getChildren()
-                    for pi in range(parts.getNumPaths()):
-                        p = parts[pi]
-                        if not p.isHidden():
-                            p.hide()
-                            p.setTag('bigcheese', 'enabled')
-
-            track.append(Func(hideParts))
-            track.append(Func(self.enableBigCheese, True))
             self.putOnSuit('tbc')
         else:
             if lerpTime > 0.0:
@@ -2704,20 +2602,6 @@ class Toon(Avatar.Avatar, ToonHead):
             else:
                 dust.finish()
 
-            def showHiddenParts():
-                self.notify.debug('ShowHiddenPaths')
-                for hi in range(self.headParts.getNumPaths()):
-                    head = self.headParts[hi]
-                    parts = head.getChildren()
-                    for pi in range(parts.getNumPaths()):
-                        p = parts[pi]
-                        if not self.bigCheese.hasPath(p) and p.getTag('bigcheese') == 'enabled':
-                            p.show()
-                            p.setTag('bigcheese', 'disabled')
-
-            track.append(Func(showHiddenParts))
-            track.append(Func(self.enableBigCheese, False))
-            track.append(Func(self.startBlink))
             self.takeOffSuit()
         return track
 
@@ -2735,27 +2619,12 @@ class Toon(Avatar.Avatar, ToonHead):
         dust = getDustCloudIval()
         track = Sequence()
         if toGladHander:
-            track.append(Func(self.stopBlink))
-            track.append(Func(self.closeEyes))
             if lerpTime > 0.0:
                 track.append(Func(dust.start))
                 track.append(Wait(0.5))
             else:
                 dust.finish()
 
-            def hideParts():
-                self.notify.debug('HidePaths')
-                for hi in range(self.headParts.getNumPaths()):
-                    head = self.headParts[hi]
-                    parts = head.getChildren()
-                    for pi in range(parts.getNumPaths()):
-                        p = parts[pi]
-                        if not p.isHidden():
-                            p.hide()
-                            p.setTag('gladhander', 'enabled')
-
-            track.append(Func(hideParts))
-            track.append(Func(self.enableGladHander, True))
             self.putOnSuit('gh')
         else:
             if lerpTime > 0.0:
@@ -2764,20 +2633,6 @@ class Toon(Avatar.Avatar, ToonHead):
             else:
                 dust.finish()
 
-            def showHiddenParts():
-                self.notify.debug('ShowHiddenPaths')
-                for hi in range(self.headParts.getNumPaths()):
-                    head = self.headParts[hi]
-                    parts = head.getChildren()
-                    for pi in range(parts.getNumPaths()):
-                        p = parts[pi]
-                        if not self.gladHander.hasPath(p) and p.getTag('gladhander') == 'enabled':
-                            p.show()
-                            p.setTag('gladhander', 'disabled')
-
-            track.append(Func(showHiddenParts))
-            track.append(Func(self.enableGladHander, False))
-            track.append(Func(self.startBlink))
             self.takeOffSuit()
         return track
 
@@ -3943,21 +3798,21 @@ class Toon(Avatar.Avatar, ToonHead):
         suit.initializeDropShadow()
         suit.setPos(self.getPos())
         suit.setHpr(self.getHpr())
-        for part in suit.getHeadParts():
-            part.hide()
+        #for part in suit.getHeadParts():
+        #    part.hide()
 
-        suitHeadNull = suit.find('**/joint_head')
-        toonHead = self.getPart('head', '1000')
+        #suitHeadNull = suit.find('**/joint_head')
+        #toonHead = self.getPart('head', '1000')
         Emote.globalEmote.disableAll(self)
         toonGeom = self.getGeomNode()
-        toonGeom.hide()
-        worldScale = toonHead.getScale(render)
-        self.headOrigScale = toonHead.getScale()
-        headPosNode = hidden.attachNewNode('headPos')
-        toonHead.reparentTo(headPosNode)
-        toonHead.setPos(0, 0, 0.2)
-        headPosNode.reparentTo(suitHeadNull)
-        headPosNode.setScale(render, worldScale)
+        toonGeom.stash()
+        #worldScale = toonHead.getScale(render)
+        #self.headOrigScale = toonHead.getScale()
+        #headPosNode = hidden.attachNewNode('headPos')
+        #toonHead.reparentTo(headPosNode)
+        #toonHead.setPos(0, 0, 0.2)
+        #headPosNode.reparentTo(suitHeadNull)
+        #headPosNode.setScale(render, worldScale)
         suitGeom = suit.getGeomNode()
         suitGeom.reparentTo(self)
         if rental == True:
@@ -3969,12 +3824,6 @@ class Toon(Avatar.Avatar, ToonHead):
         if self.isLocal():
             if hasattr(self, 'book'):
                 self.book.obscureButton(1)
-            self.oldForward = ToontownGlobals.ToonForwardSpeed
-            self.oldReverse = ToontownGlobals.ToonReverseSpeed
-            self.oldRotate = ToontownGlobals.ToonRotateSpeed
-            ToontownGlobals.ToonForwardSpeed = ToontownGlobals.SuitWalkSpeed
-            ToontownGlobals.ToonReverseSpeed = ToontownGlobals.SuitWalkSpeed
-            ToontownGlobals.ToonRotateSpeed = ToontownGlobals.ToonRotateSlowSpeed
             if self.hasTrackAnimToSpeed():
                 self.stopTrackAnimToSpeed()
                 self.startTrackAnimToSpeed()
@@ -4003,20 +3852,20 @@ class Toon(Avatar.Avatar, ToonHead):
         if not self.isDisguised:
             return
         suitType = self.suit.style.name
-        toonHeadNull = self.find('**/1000/**/def_head')
-        if not toonHeadNull:
-            toonHeadNull = self.find('**/1000/**/joint_head')
-        toonHead = self.getPart('head', '1000')
-        toonHead.reparentTo(toonHeadNull)
-        toonHead.setScale(self.headOrigScale)
-        toonHead.setPos(0, 0, 0)
-        headPosNode = self.suitGeom.find('**/headPos')
-        headPosNode.removeNode()
+        #toonHeadNull = self.find('**/1000/**/def_head')
+        #if not toonHeadNull:
+        #    toonHeadNull = self.find('**/1000/**/joint_head')
+        #toonHead = self.getPart('head', '1000')
+        #toonHead.reparentTo(toonHeadNull)
+        #toonHead.setScale(self.headOrigScale)
+        #toonHead.setPos(0, 0, 0)
+        #headPosNode = self.suitGeom.find('**/headPos')
+        #headPosNode.removeNode()
         self.suitGeom.reparentTo(self.suit)
         self.resetHeight()
         self.nametag3d.setPos(0, 0, self.height + 0.5)
         toonGeom = self.getGeomNode()
-        toonGeom.show()
+        toonGeom.unstash()
         Emote.globalEmote.releaseAll(self)
         self.isDisguised = 0
         self.setFont(ToontownGlobals.getToonFont())
@@ -4030,15 +3879,9 @@ class Toon(Avatar.Avatar, ToonHead):
         if self.isLocal():
             if hasattr(self, 'book'):
                 self.book.obscureButton(0)
-            ToontownGlobals.ToonForwardSpeed = self.oldForward
-            ToontownGlobals.ToonReverseSpeed = self.oldReverse
-            ToontownGlobals.ToonRotateSpeed = self.oldRotate
             if self.hasTrackAnimToSpeed():
                 self.stopTrackAnimToSpeed()
                 self.startTrackAnimToSpeed()
-            del self.oldForward
-            del self.oldReverse
-            del self.oldRotate
             self.controlManager.enableAvatarJump()
             self.chatMgr.chatInputSpeedChat.removeCogMenu()
         self.suit.delete()
