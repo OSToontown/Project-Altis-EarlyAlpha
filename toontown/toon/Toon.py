@@ -3798,6 +3798,7 @@ class Toon(Avatar.Avatar, ToonHead):
         suit.initializeDropShadow()
         suit.setPos(self.getPos())
         suit.setHpr(self.getHpr())
+        suit.generateAnimDict()
         #for part in suit.getHeadParts():
         #    part.hide()
 
@@ -3827,7 +3828,7 @@ class Toon(Avatar.Avatar, ToonHead):
             if self.hasTrackAnimToSpeed():
                 self.stopTrackAnimToSpeed()
                 self.startTrackAnimToSpeed()
-            self.controlManager.disableAvatarJump()
+            #self.controlManager.disableAvatarJump()
             indices = range(OTPLocalizer.SCMenuCommonCogIndices[0], OTPLocalizer.SCMenuCommonCogIndices[1] + 1)
             customIndices = OTPLocalizer.SCMenuCustomCogIndices[suitType]
             indices += range(customIndices[0], customIndices[1] + 1)
@@ -3882,7 +3883,7 @@ class Toon(Avatar.Avatar, ToonHead):
             if self.hasTrackAnimToSpeed():
                 self.stopTrackAnimToSpeed()
                 self.startTrackAnimToSpeed()
-            self.controlManager.enableAvatarJump()
+            #self.controlManager.enableAvatarJump()
             self.chatMgr.chatInputSpeedChat.removeCogMenu()
         self.suit.delete()
         del self.suit
