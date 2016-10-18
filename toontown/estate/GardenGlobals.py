@@ -18,16 +18,16 @@ WATERING_CAN_LARGE = 2
 WATERING_CAN_HUGE = 3
 MAX_WATERING_CANS = 4
 WateringCanAttributes = {0: {'numBoxes': 2,
-     'skillPts': 100,
+     'skillPts': 50,
      'name': TTLocalizer.WateringCanSmall},
  1: {'numBoxes': 2,
-     'skillPts': 200,
+     'skillPts': 100,
      'name': TTLocalizer.WateringCanMedium},
  2: {'numBoxes': 2,
-     'skillPts': 400,
+     'skillPts': 150,
      'name': TTLocalizer.WateringCanLarge},
  3: {'numBoxes': 2,
-     'skillPts': 1000,
+     'skillPts': 200,
      'name': TTLocalizer.WateringCanHuge}}
 WateringMult = 2
 
@@ -480,16 +480,16 @@ SHOVEL_SILVER = 2
 SHOVEL_GOLD = 3
 MAX_SHOVELS = 4
 ShovelAttributes = {0: {'numBoxes': 2,
-     'skillPts': 80,
+     'skillPts': 40,
      'name': TTLocalizer.ShovelTin},
  1: {'numBoxes': 2,
-     'skillPts': 160,
+     'skillPts': 80,
      'name': TTLocalizer.ShovelSteel},
  2: {'numBoxes': 2,
-     'skillPts': 320,
+     'skillPts': 160,
      'name': TTLocalizer.ShovelSilver},
  3: {'numBoxes': 2,
-     'skillPts': 640,
+     'skillPts': 240,
      'name': TTLocalizer.ShovelGold}}
 
 def getShovelPower(shovel, shovelSkill):
