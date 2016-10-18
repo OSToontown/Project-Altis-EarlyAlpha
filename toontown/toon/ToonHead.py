@@ -490,7 +490,7 @@ class ToonHead(Actor.Actor):
             model = loader.loadModel ('phase_4/models/char/suitB-heads.bam').find('**/beancounter')
             if model:
                 model.setZ(-0.25)
-                model.setScale(1.3)
+                model.setScale(1.35)
                 model.reparentTo(self.find('**/__Actor_head'))
                 self.downsizer.addPath(model)
                 model.stash()
@@ -508,7 +508,7 @@ class ToonHead(Actor.Actor):
             model = loader.loadModel ('phase_4/models/char/suitB-heads.bam').find('**/movershaker')
             if model:
                 model.setZ(-0.25)
-                model.setScale(1.375)
+                model.setScale(1.425)
                 model.reparentTo(self.find('**/__Actor_head'))
                 self.moverShaker.addPath(model)
                 model.stash()
@@ -526,7 +526,7 @@ class ToonHead(Actor.Actor):
             model = loader.loadModel ('phase_4/models/char/suitA-heads.bam').find('**/bigcheese')
             if model:
                 model.setZ(-0.25)
-                model.setScale(1.75)
+                model.setScale(1.8)
                 model.reparentTo(self.find('**/__Actor_head'))
                 self.bigCheese.addPath(model)
                 model.stash()
@@ -536,6 +536,24 @@ class ToonHead(Actor.Actor):
                 return False
         else:
             ToonHead.notify.debug('phase_4 not loaded yet.')
+
+    def loadGladHander(self):
+        if hasattr(base, 'launcher') and (not base.launcher or base.launcher and base.launcher.getPhaseComplete(4)):
+            if not hasattr(self, 'gladHander'):
+                self.gladHander = NodePathCollection()
+            model = loader.loadModel ('phase_3.5/models/char/suitC-heads.bam').find('**/gladhander')
+            if model:
+                model.setZ(-0.25)
+                model.setScale(1.8)
+                model.reparentTo(self.find('**/__Actor_head'))
+                self.gladHander.addPath(model)
+                model.stash()
+                return True
+            else:
+                del self.gladHander
+                return False
+        else:
+            ToonHead.notify.debug('phase_3.5 not loaded yet.')
 
     def __fixPumpkin(self, style, lodName = None, copy = 1):
         if lodName == None:
@@ -686,6 +704,26 @@ class ToonHead(Actor.Actor):
                     if self.__eyelashClosed:
                         self.__eyelashClosed.unstash()
                 self.bigCheese.stash()
+        return
+
+    def enableGladHander(self, enable):
+        if not hasattr(self, 'gladHander'):
+            self.loadGladHander()
+
+        if hasattr(self, 'gladHander'):
+            if enable:
+                if self.__eyelashOpen:
+                    self.__eyelashOpen.stash()
+                if self.__eyelashClosed:
+                    self.__eyelashClosed.stash()
+                self.gladHander.unstash()
+            else:
+                if not self.__eyelashesHiddenByGlasses:
+                    if self.__eyelashOpen:
+                        self.__eyelashOpen.unstash()
+                    if self.__eyelashClosed:
+                        self.__eyelashClosed.unstash()
+                self.gladHander.stash()
         return
 
     def hideEars(self):

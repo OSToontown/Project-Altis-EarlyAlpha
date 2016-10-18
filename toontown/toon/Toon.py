@@ -2538,7 +2538,7 @@ class Toon(Avatar.Avatar, ToonHead):
             track.append(Func(showHiddenParts))
             track.append(Func(self.enableYesMan, False))
             track.append(Func(self.startBlink))
-            self.setCogIndex(-1)
+            self.takeOffSuit()
         return track
 
     def __doDownsizer(self, lerpTime, toDownsizer):
@@ -2598,7 +2598,7 @@ class Toon(Avatar.Avatar, ToonHead):
             track.append(Func(showHiddenParts))
             track.append(Func(self.enableDownsizer, False))
             track.append(Func(self.startBlink))
-            self.setCogIndex(-1)
+            self.takeOffSuit()
         return track
 
     def __doMoverShaker(self, lerpTime, toMoverShaker):
@@ -2632,7 +2632,7 @@ class Toon(Avatar.Avatar, ToonHead):
                         p = parts[pi]
                         if not p.isHidden():
                             p.hide()
-                            p.setTag('moverShaker', 'enabled')
+                            p.setTag('movershaker', 'enabled')
 
             track.append(Func(hideParts))
             track.append(Func(self.enableMoverShaker, True))
@@ -2651,14 +2651,14 @@ class Toon(Avatar.Avatar, ToonHead):
                     parts = head.getChildren()
                     for pi in range(parts.getNumPaths()):
                         p = parts[pi]
-                        if not self.moverShaker.hasPath(p) and p.getTag('moverShaker') == 'enabled':
+                        if not self.moverShaker.hasPath(p) and p.getTag('movershaker') == 'enabled':
                             p.show()
-                            p.setTag('moverShaker', 'disabled')
+                            p.setTag('movershaker', 'disabled')
 
             track.append(Func(showHiddenParts))
             track.append(Func(self.enableMoverShaker, False))
             track.append(Func(self.startBlink))
-            self.setCogIndex(-1)
+            self.takeOffSuit()
         return track
 
     def __doBigCheese(self, lerpTime, toBigCheese):
@@ -2692,7 +2692,7 @@ class Toon(Avatar.Avatar, ToonHead):
                         p = parts[pi]
                         if not p.isHidden():
                             p.hide()
-                            p.setTag('bigCheese', 'enabled')
+                            p.setTag('bigcheese', 'enabled')
 
             track.append(Func(hideParts))
             track.append(Func(self.enableBigCheese, True))
@@ -2711,14 +2711,74 @@ class Toon(Avatar.Avatar, ToonHead):
                     parts = head.getChildren()
                     for pi in range(parts.getNumPaths()):
                         p = parts[pi]
-                        if not self.bigCheese.hasPath(p) and p.getTag('bigCheese') == 'enabled':
+                        if not self.bigCheese.hasPath(p) and p.getTag('bigcheese') == 'enabled':
                             p.show()
-                            p.setTag('bigCheese', 'disabled')
+                            p.setTag('bigcheese', 'disabled')
 
             track.append(Func(showHiddenParts))
             track.append(Func(self.enableBigCheese, False))
             track.append(Func(self.startBlink))
-            self.setCogIndex(-1)
+            self.takeOffSuit()
+        return track
+
+    def __doGladHander(self, lerpTime, toGladHander):
+        node = self.getGeomNode()
+
+        def getDustCloudIval():
+            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=0)
+            dustCloud.setBillboardAxis(2.0)
+            dustCloud.setZ(3)
+            dustCloud.setScale(0.4)
+            dustCloud.createTrack()
+            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
+
+        dust = getDustCloudIval()
+        track = Sequence()
+        if toGladHander:
+            track.append(Func(self.stopBlink))
+            track.append(Func(self.closeEyes))
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            def hideParts():
+                self.notify.debug('HidePaths')
+                for hi in range(self.headParts.getNumPaths()):
+                    head = self.headParts[hi]
+                    parts = head.getChildren()
+                    for pi in range(parts.getNumPaths()):
+                        p = parts[pi]
+                        if not p.isHidden():
+                            p.hide()
+                            p.setTag('gladhander', 'enabled')
+
+            track.append(Func(hideParts))
+            track.append(Func(self.enableGladHander, True))
+            self.putOnSuit('gh')
+        else:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            def showHiddenParts():
+                self.notify.debug('ShowHiddenPaths')
+                for hi in range(self.headParts.getNumPaths()):
+                    head = self.headParts[hi]
+                    parts = head.getChildren()
+                    for pi in range(parts.getNumPaths()):
+                        p = parts[pi]
+                        if not self.gladHander.hasPath(p) and p.getTag('gladhander') == 'enabled':
+                            p.show()
+                            p.setTag('gladhander', 'disabled')
+
+            track.append(Func(showHiddenParts))
+            track.append(Func(self.enableGladHander, False))
+            track.append(Func(self.startBlink))
+            self.takeOffSuit()
         return track
 
     def __doGreenToon(self, lerpTime, toGreen):
@@ -3717,6 +3777,8 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doMoverShaker(lerpTime, toMoverShaker=True)
         elif effect == ToontownGlobals.CEBigCheese:
             return self.__doBigCheese(lerpTime, toBigCheese=True)
+        elif effect == ToontownGlobals.CEGladHander:
+			return self.__doGladHander(lerpTime, toGladHander=True)
         elif effect == ToontownGlobals.CEGreenToon:
             return self.__doGreenToon(lerpTime, toGreen=True)
         elif effect == ToontownGlobals.CERogerDog:
@@ -3807,6 +3869,8 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doMoverShaker(lerpTime, toMoverShaker=False)
         elif effect == ToontownGlobals.CEBigCheese:
             return self.__doBigCheese(lerpTime, toBigCheese=False)
+        elif effect == ToontownGlobals.CEGladHander:
+			return self.__doGladHander(lerpTime, toGladHander=False)
         elif effect == ToontownGlobals.CEGreenToon:
             return self.__doGreenToon(lerpTime, toGreen=False)
         elif effect == ToontownGlobals.CERogerDog:
