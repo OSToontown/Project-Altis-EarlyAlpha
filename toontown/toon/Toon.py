@@ -2636,6 +2636,99 @@ class Toon(Avatar.Avatar, ToonHead):
             self.takeOffSuit()
         return track
 
+    def __doMingler(self, lerpTime, toMingler):
+        node = self.getGeomNode()
+
+        def getDustCloudIval():
+            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=0)
+            dustCloud.setBillboardAxis(2.0)
+            dustCloud.setZ(3)
+            dustCloud.setScale(0.4)
+            dustCloud.createTrack()
+            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
+
+        dust = getDustCloudIval()
+        track = Sequence()
+        if toMingler:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.putOnSuit('m')
+        else:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.takeOffSuit()
+        return track
+
+    def __doFlunky(self, lerpTime, toFlunky):
+        node = self.getGeomNode()
+
+        def getDustCloudIval():
+            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=0)
+            dustCloud.setBillboardAxis(2.0)
+            dustCloud.setZ(3)
+            dustCloud.setScale(0.4)
+            dustCloud.createTrack()
+            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
+
+        dust = getDustCloudIval()
+        track = Sequence()
+        if toFlunky:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.putOnSuit('f')
+        else:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.takeOffSuit()
+        return track
+
+    def __doTelemarketer(self, lerpTime, toTelemarketer):
+        node = self.getGeomNode()
+
+        def getDustCloudIval():
+            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=0)
+            dustCloud.setBillboardAxis(2.0)
+            dustCloud.setZ(3)
+            dustCloud.setScale(0.4)
+            dustCloud.createTrack()
+            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
+
+        dust = getDustCloudIval()
+        track = Sequence()
+        if toTelemarketer:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.putOnSuit('tm')
+        else:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.takeOffSuit()
+        return track
+
     def __doGreenToon(self, lerpTime, toGreen):
         track = Sequence()
         greenTrack = Parallel()
@@ -3633,7 +3726,13 @@ class Toon(Avatar.Avatar, ToonHead):
         elif effect == ToontownGlobals.CEBigCheese:
             return self.__doBigCheese(lerpTime, toBigCheese=True)
         elif effect == ToontownGlobals.CEGladHander:
-			return self.__doGladHander(lerpTime, toGladHander=True)
+            return self.__doGladHander(lerpTime, toGladHander=True)
+        elif effect == ToontownGlobals.CEMingler:
+            return self.__doMingler(lerpTime, toMingler=True)
+        elif effect == ToontownGlobals.CEFlunky:
+            return self.__doFlunky(lerpTime, toFlunky=True)
+        elif effect == ToontownGlobals.CETelemarketer:
+            return self.__doTelemarketer(lerpTime, toTelemarketer=True)
         elif effect == ToontownGlobals.CEGreenToon:
             return self.__doGreenToon(lerpTime, toGreen=True)
         elif effect == ToontownGlobals.CERogerDog:
@@ -3725,7 +3824,13 @@ class Toon(Avatar.Avatar, ToonHead):
         elif effect == ToontownGlobals.CEBigCheese:
             return self.__doBigCheese(lerpTime, toBigCheese=False)
         elif effect == ToontownGlobals.CEGladHander:
-			return self.__doGladHander(lerpTime, toGladHander=False)
+            return self.__doGladHander(lerpTime, toGladHander=False)
+        elif effect == ToontownGlobals.CEMingler:
+            return self.__doMingler(lerpTime, toMingler=False)
+        elif effect == ToontownGlobals.CEFlunky:
+            return self.__doFlunky(lerpTime, toFlunky=False)
+        elif effect == ToontownGlobals.CETelemarketer:
+            return self.__doTelemarketer(lerpTime, toTelemarketer=False)
         elif effect == ToontownGlobals.CEGreenToon:
             return self.__doGreenToon(lerpTime, toGreen=False)
         elif effect == ToontownGlobals.CERogerDog:
