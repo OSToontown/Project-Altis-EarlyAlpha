@@ -3798,7 +3798,6 @@ class Toon(Avatar.Avatar, ToonHead):
         suit.initializeDropShadow()
         suit.setPos(self.getPos())
         suit.setHpr(self.getHpr())
-        suit.generateAnimDict()
         #for part in suit.getHeadParts():
         #    part.hide()
 
@@ -3806,7 +3805,7 @@ class Toon(Avatar.Avatar, ToonHead):
         #toonHead = self.getPart('head', '1000')
         Emote.globalEmote.disableAll(self)
         toonGeom = self.getGeomNode()
-        toonGeom.stash()
+        toonGeom.hide()
         #worldScale = toonHead.getScale(render)
         #self.headOrigScale = toonHead.getScale()
         #headPosNode = hidden.attachNewNode('headPos')
@@ -3866,7 +3865,7 @@ class Toon(Avatar.Avatar, ToonHead):
         self.resetHeight()
         self.nametag3d.setPos(0, 0, self.height + 0.5)
         toonGeom = self.getGeomNode()
-        toonGeom.unstash()
+        toonGeom.show()
         Emote.globalEmote.releaseAll(self)
         self.isDisguised = 0
         self.setFont(ToontownGlobals.getToonFont())
