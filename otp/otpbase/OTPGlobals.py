@@ -63,6 +63,11 @@ CEFurball = 33
 CEBarney = 34
 CEPete = 35
 CELouis = 36
+CEYesMan = 37
+CEDownsizer = 38
+CEMoverShaker = 39
+CEBigCheese = 40
+CEGladHander = 41
 CEGhost = 'g'
 CEName2Id = {
  'normal': CENormal,
@@ -101,7 +106,12 @@ CEName2Id = {
  'furball': CEFurball,
  'barney': CEBarney,
  'pete': CEPete,
- 'louis': CELouis
+ 'louis': CELouis,
+ 'yesman': CEYesMan,
+ 'downsizer': CEDownsizer,
+ 'movershaker': CEMoverShaker,
+ 'bigcheese': CEBigCheese,
+ 'gladhander': CEGladHander
 }
 BeanToonScale = 2.9
 GiantToonScale = 2.1

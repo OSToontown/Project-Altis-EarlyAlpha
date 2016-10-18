@@ -19,7 +19,7 @@ cSize = 4.14
 
 SuitDialogArray = []
 SkelSuitDialogArray = []
-AllSuits = (('walk', 'walk'), ('run', 'walk'), ('neutral', 'neutral'))
+AllSuits = (('walk', 'walk'), ('run', 'walk'), ('neutral', 'neutral'), ('jump', 'landing', 5))
 AllSuitsMinigame = (('victory', 'victory'),
  ('flail', 'flailing'),
  ('tug-o-war', 'tug-o-war'),
@@ -958,8 +958,10 @@ class Suit(Avatar.Avatar):
         self.healthBar.hide()
         self.healthCondition = 0
 
-    def reseatHealthBarForSkele(self):
+    def resetHealthBarForSkele(self):
+        self.currHP = self.maxHP
         self.healthBar.setPos(0.0, 0.1, 0.0)
+        self.updateHealthBar(0, forceUpdate=1)
 
     def updateHealthBar(self, hp, forceUpdate = 0):
         if hp > self.currHP:

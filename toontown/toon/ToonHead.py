@@ -463,6 +463,98 @@ class ToonHead(Actor.Actor):
         else:
             ToonHead.notify.debug('phase_4 not loaded yet.')
 
+    def loadYesMan(self):
+        if hasattr(base, 'launcher') and (not base.launcher or base.launcher and base.launcher.getPhaseComplete(4)):
+            if not hasattr(self, 'yesMan'):
+                self.yesMan = NodePathCollection()
+            model = loader.loadModel ('phase_4/models/char/suitA-heads.bam').find('**/yesman')
+            texture = loader.loadTexture ('phase_4/maps/yes_man.jpg')
+            model.setTexture(texture, 1)
+            if model:
+                model.setZ(-0.25)
+                model.setScale(1.05)
+                model.reparentTo(self.find('**/__Actor_head'))
+                self.yesMan.addPath(model)
+                model.stash()
+                return True
+            else:
+                del self.yesMan
+                return False
+        else:
+            ToonHead.notify.debug('phase_4 not loaded yet.')
+
+    def loadDownsizer(self):
+        if hasattr(base, 'launcher') and (not base.launcher or base.launcher and base.launcher.getPhaseComplete(4)):
+            if not hasattr(self, 'downsizer'):
+                self.downsizer = NodePathCollection()
+            model = loader.loadModel ('phase_4/models/char/suitB-heads.bam').find('**/beancounter')
+            if model:
+                model.setZ(-0.25)
+                model.setScale(1.35)
+                model.reparentTo(self.find('**/__Actor_head'))
+                self.downsizer.addPath(model)
+                model.stash()
+                return True
+            else:
+                del self.downsizer
+                return False
+        else:
+            ToonHead.notify.debug('phase_4 not loaded yet.')
+
+    def loadMoverShaker(self):
+        if hasattr(base, 'launcher') and (not base.launcher or base.launcher and base.launcher.getPhaseComplete(4)):
+            if not hasattr(self, 'moverShaker'):
+                self.moverShaker = NodePathCollection()
+            model = loader.loadModel ('phase_4/models/char/suitB-heads.bam').find('**/movershaker')
+            if model:
+                model.setZ(-0.25)
+                model.setScale(1.425)
+                model.reparentTo(self.find('**/__Actor_head'))
+                self.moverShaker.addPath(model)
+                model.stash()
+                return True
+            else:
+                del self.moverShaker
+                return False
+        else:
+            ToonHead.notify.debug('phase_4 not loaded yet.')
+
+    def loadBigCheese(self):
+        if hasattr(base, 'launcher') and (not base.launcher or base.launcher and base.launcher.getPhaseComplete(4)):
+            if not hasattr(self, 'bigCheese'):
+                self.bigCheese = NodePathCollection()
+            model = loader.loadModel ('phase_4/models/char/suitA-heads.bam').find('**/bigcheese')
+            if model:
+                model.setZ(-0.25)
+                model.setScale(1.8)
+                model.reparentTo(self.find('**/__Actor_head'))
+                self.bigCheese.addPath(model)
+                model.stash()
+                return True
+            else:
+                del self.bigCheese
+                return False
+        else:
+            ToonHead.notify.debug('phase_4 not loaded yet.')
+
+    def loadGladHander(self):
+        if hasattr(base, 'launcher') and (not base.launcher or base.launcher and base.launcher.getPhaseComplete(4)):
+            if not hasattr(self, 'gladHander'):
+                self.gladHander = NodePathCollection()
+            model = loader.loadModel ('phase_3.5/models/char/suitC-heads.bam').find('**/gladhander')
+            if model:
+                model.setZ(-0.25)
+                model.setScale(1.8)
+                model.reparentTo(self.find('**/__Actor_head'))
+                self.gladHander.addPath(model)
+                model.stash()
+                return True
+            else:
+                del self.gladHander
+                return False
+        else:
+            ToonHead.notify.debug('phase_3.5 not loaded yet.')
+
     def __fixPumpkin(self, style, lodName = None, copy = 1):
         if lodName == None:
             searchRoot = self
@@ -532,6 +624,106 @@ class ToonHead(Actor.Actor):
                     if self.__eyelashClosed:
                         self.__eyelashClosed.unstash()
                 self.snowMen.stash()
+        return
+
+    def enableYesMan(self, enable):
+        if not hasattr(self, 'yesMan'):
+            self.loadYesMan()
+
+        if hasattr(self, 'yesMan'):
+            if enable:
+                if self.__eyelashOpen:
+                    self.__eyelashOpen.stash()
+                if self.__eyelashClosed:
+                    self.__eyelashClosed.stash()
+                self.yesMan.unstash()
+            else:
+                if not self.__eyelashesHiddenByGlasses:
+                    if self.__eyelashOpen:
+                        self.__eyelashOpen.unstash()
+                    if self.__eyelashClosed:
+                        self.__eyelashClosed.unstash()
+                self.yesMan.stash()
+        return
+
+    def enableDownsizer(self, enable):
+        if not hasattr(self, 'downsizer'):
+            self.loadDownsizer()
+
+        if hasattr(self, 'downsizer'):
+            if enable:
+                if self.__eyelashOpen:
+                    self.__eyelashOpen.stash()
+                if self.__eyelashClosed:
+                    self.__eyelashClosed.stash()
+                self.downsizer.unstash()
+            else:
+                if not self.__eyelashesHiddenByGlasses:
+                    if self.__eyelashOpen:
+                        self.__eyelashOpen.unstash()
+                    if self.__eyelashClosed:
+                        self.__eyelashClosed.unstash()
+                self.downsizer.stash()
+        return
+
+    def enableMoverShaker(self, enable):
+        if not hasattr(self, 'moverShaker'):
+            self.loadMoverShaker()
+
+        if hasattr(self, 'moverShaker'):
+            if enable:
+                if self.__eyelashOpen:
+                    self.__eyelashOpen.stash()
+                if self.__eyelashClosed:
+                    self.__eyelashClosed.stash()
+                self.moverShaker.unstash()
+            else:
+                if not self.__eyelashesHiddenByGlasses:
+                    if self.__eyelashOpen:
+                        self.__eyelashOpen.unstash()
+                    if self.__eyelashClosed:
+                        self.__eyelashClosed.unstash()
+                self.moverShaker.stash()
+        return
+
+    def enableBigCheese(self, enable):
+        if not hasattr(self, 'bigCheese'):
+            self.loadBigCheese()
+
+        if hasattr(self, 'bigCheese'):
+            if enable:
+                if self.__eyelashOpen:
+                    self.__eyelashOpen.stash()
+                if self.__eyelashClosed:
+                    self.__eyelashClosed.stash()
+                self.bigCheese.unstash()
+            else:
+                if not self.__eyelashesHiddenByGlasses:
+                    if self.__eyelashOpen:
+                        self.__eyelashOpen.unstash()
+                    if self.__eyelashClosed:
+                        self.__eyelashClosed.unstash()
+                self.bigCheese.stash()
+        return
+
+    def enableGladHander(self, enable):
+        if not hasattr(self, 'gladHander'):
+            self.loadGladHander()
+
+        if hasattr(self, 'gladHander'):
+            if enable:
+                if self.__eyelashOpen:
+                    self.__eyelashOpen.stash()
+                if self.__eyelashClosed:
+                    self.__eyelashClosed.stash()
+                self.gladHander.unstash()
+            else:
+                if not self.__eyelashesHiddenByGlasses:
+                    if self.__eyelashOpen:
+                        self.__eyelashOpen.unstash()
+                    if self.__eyelashClosed:
+                        self.__eyelashClosed.unstash()
+                self.gladHander.stash()
         return
 
     def hideEars(self):

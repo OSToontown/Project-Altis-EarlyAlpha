@@ -2481,6 +2481,161 @@ class Toon(Avatar.Avatar, ToonHead):
             track.append(Func(self.startBlink))
         return track
 
+    def __doYesMan(self, lerpTime, toYesMan):
+        node = self.getGeomNode()
+
+        def getDustCloudIval():
+            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=0)
+            dustCloud.setBillboardAxis(2.0)
+            dustCloud.setZ(3)
+            dustCloud.setScale(0.4)
+            dustCloud.createTrack()
+            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
+
+        dust = getDustCloudIval()
+        track = Sequence()
+        if toYesMan:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.putOnSuit('ym')
+        else:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.takeOffSuit()
+        return track
+
+    def __doDownsizer(self, lerpTime, toDownsizer):
+        node = self.getGeomNode()
+
+        def getDustCloudIval():
+            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=0)
+            dustCloud.setBillboardAxis(2.0)
+            dustCloud.setZ(3)
+            dustCloud.setScale(0.4)
+            dustCloud.createTrack()
+            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
+
+        dust = getDustCloudIval()
+        track = Sequence()
+        if toDownsizer:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.putOnSuit('ds')
+        else:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.takeOffSuit()
+        return track
+
+    def __doMoverShaker(self, lerpTime, toMoverShaker):
+        node = self.getGeomNode()
+
+        def getDustCloudIval():
+            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=0)
+            dustCloud.setBillboardAxis(2.0)
+            dustCloud.setZ(3)
+            dustCloud.setScale(0.4)
+            dustCloud.createTrack()
+            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
+
+        dust = getDustCloudIval()
+        track = Sequence()
+        if toMoverShaker:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.putOnSuit('ms')
+        else:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.takeOffSuit()
+        return track
+
+    def __doBigCheese(self, lerpTime, toBigCheese):
+        node = self.getGeomNode()
+
+        def getDustCloudIval():
+            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=0)
+            dustCloud.setBillboardAxis(2.0)
+            dustCloud.setZ(3)
+            dustCloud.setScale(0.4)
+            dustCloud.createTrack()
+            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
+
+        dust = getDustCloudIval()
+        track = Sequence()
+        if toBigCheese:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.putOnSuit('tbc')
+        else:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.takeOffSuit()
+        return track
+
+    def __doGladHander(self, lerpTime, toGladHander):
+        node = self.getGeomNode()
+
+        def getDustCloudIval():
+            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=0)
+            dustCloud.setBillboardAxis(2.0)
+            dustCloud.setZ(3)
+            dustCloud.setScale(0.4)
+            dustCloud.createTrack()
+            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
+
+        dust = getDustCloudIval()
+        track = Sequence()
+        if toGladHander:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.putOnSuit('gh')
+        else:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            self.takeOffSuit()
+        return track
+
     def __doGreenToon(self, lerpTime, toGreen):
         track = Sequence()
         greenTrack = Parallel()
@@ -3469,6 +3624,16 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doBigAndWhite(VBase4(1, 1, 1, 1), ToontownGlobals.BigToonScale, lerpTime)
         elif effect == ToontownGlobals.CESnowMan:
             return self.__doSnowManHeadSwitch(lerpTime, toSnowMan=True)
+        elif effect == ToontownGlobals.CEYesMan:
+            return self.__doYesMan(lerpTime, toYesMan=True)
+        elif effect == ToontownGlobals.CEDownsizer:
+            return self.__doDownsizer(lerpTime, toDownsizer=True)
+        elif effect == ToontownGlobals.CEMoverShaker:
+            return self.__doMoverShaker(lerpTime, toMoverShaker=True)
+        elif effect == ToontownGlobals.CEBigCheese:
+            return self.__doBigCheese(lerpTime, toBigCheese=True)
+        elif effect == ToontownGlobals.CEGladHander:
+			return self.__doGladHander(lerpTime, toGladHander=True)
         elif effect == ToontownGlobals.CEGreenToon:
             return self.__doGreenToon(lerpTime, toGreen=True)
         elif effect == ToontownGlobals.CERogerDog:
@@ -3551,6 +3716,16 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doBigAndWhite(None, None, lerpTime)
         elif effect == ToontownGlobals.CESnowMan:
             return self.__doSnowManHeadSwitch(lerpTime, toSnowMan=False)
+        elif effect == ToontownGlobals.CEYesMan:
+            return self.__doYesMan(lerpTime, toYesMan=False)
+        elif effect == ToontownGlobals.CEDownsizer:
+            return self.__doDownsizer(lerpTime, toDownsizer=False)
+        elif effect == ToontownGlobals.CEMoverShaker:
+            return self.__doMoverShaker(lerpTime, toMoverShaker=False)
+        elif effect == ToontownGlobals.CEBigCheese:
+            return self.__doBigCheese(lerpTime, toBigCheese=False)
+        elif effect == ToontownGlobals.CEGladHander:
+			return self.__doGladHander(lerpTime, toGladHander=False)
         elif effect == ToontownGlobals.CEGreenToon:
             return self.__doGreenToon(lerpTime, toGreen=False)
         elif effect == ToontownGlobals.CERogerDog:
@@ -3623,21 +3798,22 @@ class Toon(Avatar.Avatar, ToonHead):
         suit.initializeDropShadow()
         suit.setPos(self.getPos())
         suit.setHpr(self.getHpr())
-        for part in suit.getHeadParts():
-            part.hide()
+        suit.generateAnimDict()
+        #for part in suit.getHeadParts():
+        #    part.hide()
 
-        suitHeadNull = suit.find('**/joint_head')
-        toonHead = self.getPart('head', '1000')
+        #suitHeadNull = suit.find('**/joint_head')
+        #toonHead = self.getPart('head', '1000')
         Emote.globalEmote.disableAll(self)
         toonGeom = self.getGeomNode()
-        toonGeom.hide()
-        worldScale = toonHead.getScale(render)
-        self.headOrigScale = toonHead.getScale()
-        headPosNode = hidden.attachNewNode('headPos')
-        toonHead.reparentTo(headPosNode)
-        toonHead.setPos(0, 0, 0.2)
-        headPosNode.reparentTo(suitHeadNull)
-        headPosNode.setScale(render, worldScale)
+        toonGeom.stash()
+        #worldScale = toonHead.getScale(render)
+        #self.headOrigScale = toonHead.getScale()
+        #headPosNode = hidden.attachNewNode('headPos')
+        #toonHead.reparentTo(headPosNode)
+        #toonHead.setPos(0, 0, 0.2)
+        #headPosNode.reparentTo(suitHeadNull)
+        #headPosNode.setScale(render, worldScale)
         suitGeom = suit.getGeomNode()
         suitGeom.reparentTo(self)
         if rental == True:
@@ -3649,16 +3825,10 @@ class Toon(Avatar.Avatar, ToonHead):
         if self.isLocal():
             if hasattr(self, 'book'):
                 self.book.obscureButton(1)
-            self.oldForward = ToontownGlobals.ToonForwardSpeed
-            self.oldReverse = ToontownGlobals.ToonReverseSpeed
-            self.oldRotate = ToontownGlobals.ToonRotateSpeed
-            ToontownGlobals.ToonForwardSpeed = ToontownGlobals.SuitWalkSpeed
-            ToontownGlobals.ToonReverseSpeed = ToontownGlobals.SuitWalkSpeed
-            ToontownGlobals.ToonRotateSpeed = ToontownGlobals.ToonRotateSlowSpeed
             if self.hasTrackAnimToSpeed():
                 self.stopTrackAnimToSpeed()
                 self.startTrackAnimToSpeed()
-            self.controlManager.disableAvatarJump()
+            #self.controlManager.disableAvatarJump()
             indices = range(OTPLocalizer.SCMenuCommonCogIndices[0], OTPLocalizer.SCMenuCommonCogIndices[1] + 1)
             customIndices = OTPLocalizer.SCMenuCustomCogIndices[suitType]
             indices += range(customIndices[0], customIndices[1] + 1)
@@ -3683,20 +3853,20 @@ class Toon(Avatar.Avatar, ToonHead):
         if not self.isDisguised:
             return
         suitType = self.suit.style.name
-        toonHeadNull = self.find('**/1000/**/def_head')
-        if not toonHeadNull:
-            toonHeadNull = self.find('**/1000/**/joint_head')
-        toonHead = self.getPart('head', '1000')
-        toonHead.reparentTo(toonHeadNull)
-        toonHead.setScale(self.headOrigScale)
-        toonHead.setPos(0, 0, 0)
-        headPosNode = self.suitGeom.find('**/headPos')
-        headPosNode.removeNode()
+        #toonHeadNull = self.find('**/1000/**/def_head')
+        #if not toonHeadNull:
+        #    toonHeadNull = self.find('**/1000/**/joint_head')
+        #toonHead = self.getPart('head', '1000')
+        #toonHead.reparentTo(toonHeadNull)
+        #toonHead.setScale(self.headOrigScale)
+        #toonHead.setPos(0, 0, 0)
+        #headPosNode = self.suitGeom.find('**/headPos')
+        #headPosNode.removeNode()
         self.suitGeom.reparentTo(self.suit)
         self.resetHeight()
         self.nametag3d.setPos(0, 0, self.height + 0.5)
         toonGeom = self.getGeomNode()
-        toonGeom.show()
+        toonGeom.unstash()
         Emote.globalEmote.releaseAll(self)
         self.isDisguised = 0
         self.setFont(ToontownGlobals.getToonFont())
@@ -3710,16 +3880,10 @@ class Toon(Avatar.Avatar, ToonHead):
         if self.isLocal():
             if hasattr(self, 'book'):
                 self.book.obscureButton(0)
-            ToontownGlobals.ToonForwardSpeed = self.oldForward
-            ToontownGlobals.ToonReverseSpeed = self.oldReverse
-            ToontownGlobals.ToonRotateSpeed = self.oldRotate
             if self.hasTrackAnimToSpeed():
                 self.stopTrackAnimToSpeed()
                 self.startTrackAnimToSpeed()
-            del self.oldForward
-            del self.oldReverse
-            del self.oldRotate
-            self.controlManager.enableAvatarJump()
+            #self.controlManager.enableAvatarJump()
             self.chatMgr.chatInputSpeedChat.removeCogMenu()
         self.suit.delete()
         del self.suit
