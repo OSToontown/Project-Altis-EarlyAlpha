@@ -19,7 +19,7 @@ cSize = 4.14
 
 SuitDialogArray = []
 SkelSuitDialogArray = []
-AllSuits = (('walk', 'walk'), ('run', 'walk'), ('neutral', 'neutral'), ('jump', 'landing', 5))
+AllSuits = (('walk', 'walk'), ('run', 'walk'), ('sad-walk', 'walk'), ('neutral', 'neutral'))
 AllSuitsMinigame = (('victory', 'victory'),
  ('flail', 'flailing'),
  ('tug-o-war', 'tug-o-war'),
@@ -36,6 +36,16 @@ AllSuitsBattle = (('drop-react', 'anvil-drop'),
  ('rake-react', 'rake'),
  ('hypnotized', 'hypnotize'),
  ('lured', 'lured'),
+ ('sad-neutral', 'lured'),
+ ('jump', 'landing'),
+ ('running-jump', 'landing'),
+ ('jump-idle', 'landing'),
+ ('running-jump-idle', 'landing'),
+ ('jump-squat', 'walknreach'),
+ ('running-jump-squat', 'walknreach'),
+ ('jump-land', 'drop'),
+ ('running-jump-land', 'drop'),
+ ('throw', 'throw-object'),
  ('soak', 'soak'))
 SuitsCEOBattle = (('sit', 'sit'),
  ('sit-eat-in', 'sit-eat-in'),
@@ -48,6 +58,7 @@ SuitsCEOBattle = (('sit', 'sit'),
  ('tray-walk', 'tray-walk'),
  ('tray-neutral', 'tray-neutral'),
  ('sit-lose', 'sit-lose'))
+SuitAttacksC = (('throw', 'throw-paper')) 
 f = (('throw-paper', 'throw-paper', 3.5), ('phone', 'phone', 3.5), ('shredder', 'shredder', 3.5))
 p = (('pencil-sharpener', 'pencil-sharpener', 5),
  ('pen-squirt', 'pen-squirt', 5),
@@ -751,6 +762,9 @@ class Suit(Avatar.Avatar):
 
         for anim in AllSuitsBattle:
             animDict[anim[0]] = 'phase_5' + filePrefix + anim[1]
+
+        for anim in SuitAttacksC:
+			animDict[anim[0]] = 'phase_3.5' + filePrefix + anim[1]
 
         if not config.GetBool('want-new-cogs', 0):
             if self.style.body == 'a':

@@ -4564,7 +4564,7 @@ def cheesyEffect(value, hood=0, expire=0):
         if value not in OTPGlobals.CEName2Id:
             return 'Invalid cheesy effect value: %s' % value
         value = OTPGlobals.CEName2Id[value]
-    elif not 0 <= value <= 41:
+    elif not 0 <= value <= 76:
         return 'Invalid cheesy effect value: %d' % value
     if (hood != 0) and (not 1000 <= hood < ToontownGlobals.DynamicZonesBegin):
         return 'Invalid hood ID: %d' % hood
@@ -4870,7 +4870,7 @@ def setTickets(tixVal):
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
 def setCogIndex(indexVal):
     """Transform into a cog/suit. THIS SHOULD ONLY BE USED WHERE NEEDED, E.G. ELECTIONS"""
-    if not -1 <= indexVal <= 3:
+    if not -1 <= indexVal <= 4:
         return 'CogIndex value %s is invalid.' % str(indexVal)
     spellbook.getTarget().b_setCogIndex(indexVal)
 
