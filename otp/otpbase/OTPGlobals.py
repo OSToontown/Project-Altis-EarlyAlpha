@@ -87,6 +87,16 @@ CEToxicManager = 57
 CEMagnate = 58
 CELegalEagle = 59
 CERobberBaron = 60
+CEColdCaller = 61
+CEShortChange = 62
+CEBloodsucker = 63
+CENameDropper = 64
+CEHeadHunter = 65
+CEHollywood = 66
+CEPencilPusher = 67
+CEMoneyBags = 68
+CESpinDoctor = 69
+CEAmbulanceChaser = 70
 CEGhost = 'g'
 CEName2Id = {
  'normal': CENormal,
@@ -149,7 +159,17 @@ CEName2Id = {
  'toxicmanager': CEToxicManager,
  'magnate': CEMagnate,
  'legaleagle': CELegalEagle,
- 'robberbaron': CERobberBaron
+ 'robberbaron': CERobberBaron,
+ 'coldcaller': CEColdCaller,
+ 'shortchange': CEShortChange,
+ 'bloodsucker': CEBloodsucker,
+ 'namedropper': CENameDropper,
+ 'headhunter': CEHeadHunter,
+ 'hollywood': CEHollywood,
+ 'pencilpusher': CEPencilPusher,
+ 'moneybags': CEMoneyBags,
+ 'spindoctor': CESpinDoctor,
+ 'ambulancechaser': CEAmbulanceChaser
 }
 BeanToonScale = 2.9
 GiantToonScale = 2.1
