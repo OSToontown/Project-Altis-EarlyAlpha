@@ -184,7 +184,7 @@ class Quest:
      'l',
      'm',
      's',
-	 'g']
+     'g']
     _factoryTypes = [Any,
      FT_FullSuit,
      FT_Leg,
