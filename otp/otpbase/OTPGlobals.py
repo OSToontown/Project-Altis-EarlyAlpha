@@ -77,6 +77,16 @@ CEMicroManager = 47
 CEBigFish = 48
 CECorporateRaider = 49
 CEHeadHoncho = 50
+CEDoubleTalker = 51
+CETwoFace = 52
+CEConArtist = 53
+CEConnoisseur = 54
+CESwindler = 55
+CEMiddleman = 56
+CEToxicManager = 57
+CEMagnate = 58
+CELegalEagle = 59
+CERobberBaron = 60
 CEGhost = 'g'
 CEName2Id = {
  'normal': CENormal,
@@ -129,7 +139,17 @@ CEName2Id = {
  'micromanager': CEMicroManager,
  'bigfish': CEBigFish,
  'corporateraider': CECorporateRaider,
- 'headhoncho': CEHeadHoncho
+ 'headhoncho': CEHeadHoncho,
+ 'doubletalker': CEDoubleTalker,
+ 'twoface': CETwoFace,
+ 'conartist': CEConArtist,
+ 'connoisseur': CEConnoisseur,
+ 'swindler': CESwindler,
+ 'middleman': CEMiddleman,
+ 'toxicmanager': CEToxicManager,
+ 'magnate': CEMagnate,
+ 'legaleagle': CELegalEagle,
+ 'robberbaron': CERobberBaron
 }
 BeanToonScale = 2.9
 GiantToonScale = 2.1
