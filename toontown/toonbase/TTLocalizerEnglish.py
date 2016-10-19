@@ -805,15 +805,12 @@ QuestDialogDict = {160: {GREETING: '',
  2202: {QUEST: "Hi, _avName_. Thank goodness you're here. A mean looking Penny Pincher was just in here and he made off with an inner tube.\x07I fear they may use it for their vile purposes.\x07Please see if you can find him and bring it back.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Any luck finding my inner tube?',
-<<<<<<< HEAD
         COMPLETE: 'Awesome! Here you go.'},
  2203: {QUEST: "Hmm.\x07_toNpcName_ has been acting suspicious._where_"},
  2204: {QUEST: "Eurekra!\x07I've finally completed my research on a battery that can never die!\x07Hey, could you do me a huge favor while you're here?\x07For my battery to work, I'll need a couple samples of Toxic Waste from the Toxic Managers.",
-=======
         COMPLETE: 'You found my inner tube! You ARE good. Here, take your reward...'},
  2203: {QUEST: TheCogs + ' are wreaking havoc over at the bank.\x07Go see Captain Carl and see what you can do._where_'},
  2204: {QUEST: "Welcome aboard, matey.\x07Argh! Those rapscallion Cogs smashed my monocle and I can't sort me change without it.\x07Be a good landlubber and take this prescription to _toNpcName_ and fetch me a new one._where_",
->>>>>>> origin/master
         GREETING: '',
         LEAVING: ''},
  2205: {QUEST: "Thanks for recovering that acid.\x07My friend, _toNpcName_ has also been working on this with me.\x07Could you take the waste to her place?_where_",
