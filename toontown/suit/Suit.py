@@ -19,7 +19,7 @@ cSize = 4.14
 
 SuitDialogArray = []
 SkelSuitDialogArray = []
-AllSuits = (('walk', 'walk'), ('run', 'walk'), ('neutral', 'neutral'))
+AllSuits = (('walk', 'walk'), ('run', 'walk'), ('sad-walk', 'walk'), ('neutral', 'neutral'))
 AllSuitsMinigame = (('victory', 'victory'),
  ('flail', 'flailing'),
  ('tug-o-war', 'tug-o-war'),
@@ -36,8 +36,15 @@ AllSuitsBattle = (('drop-react', 'anvil-drop'),
  ('rake-react', 'rake'),
  ('hypnotized', 'hypnotize'),
  ('lured', 'lured'),
+ ('sad-neutral', 'lured'),
+ ('jump', 'landing'),
+ ('running-jump', 'landing'),
  ('jump-idle', 'landing'),
  ('running-jump-idle', 'landing'),
+ ('jump-squat', 'walknreach'),
+ ('running-jump-squat', 'walknreach'),
+ ('jump-land', 'drop'),
+ ('running-jump-land', 'drop'),
  ('throw', 'throw-object'),
  ('soak', 'soak'))
 SuitsCEOBattle = (('sit', 'sit'),
