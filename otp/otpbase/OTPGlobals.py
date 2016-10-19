@@ -71,6 +71,12 @@ CEGladHander = 41
 CEMingler = 42
 CEFlunky = 43
 CETelemarketer = 44
+CELoanShark = 45
+CEBigWig = 46
+CEMicroManager = 47
+CEBigFish = 48
+CECorporateRaider = 49
+CEHeadHoncho = 50
 CEGhost = 'g'
 CEName2Id = {
  'normal': CENormal,
@@ -118,6 +124,12 @@ CEName2Id = {
  'mingler': CEMingler,
  'flunky': CEFlunky,
  'telemarketer': CETelemarketer,
+ 'loanshark': CELoanShark,
+ 'bigwig': CEBigWig,
+ 'micromanager': CEMicroManager,
+ 'bigfish': CEBigFish,
+ 'corporateraider': CECorporateRaider,
+ 'headhoncho': CEHeadHoncho
 }
 BeanToonScale = 2.9
 GiantToonScale = 2.1
