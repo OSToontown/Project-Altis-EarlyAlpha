@@ -47,14 +47,16 @@ class DisplaySettingsDialog(DirectFrame, StateData.StateData):
 
         self.screenSizes = ((640, 480),
          (800, 600),
-         (1024, 768),
          (1280, 720),
-         (1280, 1024),
+         (1024, 768),
+         (1366, 768),
          (1440, 900),
          (1600, 900),
-         (1600, 1200),
+         (1280, 1024),
          (1920, 1080),
-         (2560, 1440))
+         (1600, 1200),
+         (2560, 1440),
+         (3840, 2160))
 
         guiButton = loader.loadModel('phase_3/models/gui/quit_button.bam')
         gui = loader.loadModel('phase_3.5/models/gui/friendslist_gui.bam')
