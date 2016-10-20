@@ -19,4 +19,3 @@ class MMSafeZoneLoader(SafeZoneLoader.SafeZoneLoader):
 
     def unload(self):
         SafeZoneLoader.SafeZoneLoader.unload(self)
-        del self.piano
