@@ -5047,9 +5047,9 @@ class Toon(Avatar.Avatar, ToonHead):
             customIndices = OTPLocalizer.SCMenuCustomCogIndices[suitType]
             indices += range(customIndices[0], customIndices[1] + 1)
             self.chatMgr.chatInputSpeedChat.addCogMenu(indices)
+            self.setHealthDisplay(1)
         self.suit.loop('neutral')
         self.isDisguised = 1
-        self.setHealthDisplay(1)
         self.setFont(ToontownGlobals.getSuitFont())
         self.setSpeechFont(ToontownGlobals.getSuitFont())
         if setDisplayName:
@@ -5075,7 +5075,6 @@ class Toon(Avatar.Avatar, ToonHead):
         toonGeom.show()
         Emote.globalEmote.releaseAll(self)
         self.isDisguised = 0
-        self.setHealthDisplay(0)
         self.setFont(ToontownGlobals.getToonFont())
         self.setSpeechFont(ToontownGlobals.getToonFont())
         self.nametag.setWordwrap(None)
@@ -5091,6 +5090,7 @@ class Toon(Avatar.Avatar, ToonHead):
                 self.stopTrackAnimToSpeed()
                 self.startTrackAnimToSpeed()
             self.chatMgr.chatInputSpeedChat.removeCogMenu()
+            self.setHealthDisplay(0)
         self.suit.delete()
         del self.suit
         del self.suitGeom
