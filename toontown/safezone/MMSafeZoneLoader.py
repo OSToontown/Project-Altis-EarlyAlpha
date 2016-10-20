@@ -16,12 +16,6 @@ class MMSafeZoneLoader(SafeZoneLoader.SafeZoneLoader):
     def load(self):
         print 'loading MM safezone'
         SafeZoneLoader.SafeZoneLoader.load(self)
-        self.piano = self.geom.find('**/center_icon')
-        if self.piano.isEmpty():
-            self.notify.error('Piano not found')
-        else:
-            hq = self.geom.find('**/*toon_landmark_hqMM_DNARoot')
-            hq.wrtReparentTo(self.piano)
 
     def unload(self):
         SafeZoneLoader.SafeZoneLoader.unload(self)
