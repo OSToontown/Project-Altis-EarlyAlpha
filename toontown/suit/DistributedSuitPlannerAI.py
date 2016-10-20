@@ -1312,6 +1312,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         return random.choice(choices)
 
     def initTasks(self):
+        if self.air.wantCogbuildings:
+            self.assignInitialSuitBuildings()
         self.__waitForNextUpkeep()
         self.__waitForNextAdjust()
 
