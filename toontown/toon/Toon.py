@@ -47,7 +47,7 @@ PigDialogueArray = []
 LegsAnimDict = {}
 TorsoAnimDict = {}
 HeadAnimDict = {}
-Preloaded = []
+Preloaded = {}
 Phase3AnimList = (('neutral', 'neutral'), ('run', 'run'))
 Phase3_5AnimList = (('walk', 'walk'),
  ('teleport', 'teleport'),
@@ -163,80 +163,50 @@ Phase6AnimList = (('headdown-putt', 'headdown-putt'),
 Phase9AnimList = (('push', 'push'),)
 Phase10AnimList = (('leverReach', 'leverReach'), ('leverPull', 'leverPull'), ('leverNeutral', 'leverNeutral'))
 Phase12AnimList = ()
-if not config.GetBool('want-new-anims', 1):
-    LegDict = {'s': '/models/char/dogSS_Shorts-legs-',
-     'm': '/models/char/dogMM_Shorts-legs-',
-     'l': '/models/char/dogLL_Shorts-legs-'}
-    TorsoDict = {'s': '/models/char/dogSS_Naked-torso-',
-     'm': '/models/char/dogMM_Naked-torso-',
-     'l': '/models/char/dogLL_Naked-torso-',
-     'ss': '/models/char/dogSS_Shorts-torso-',
-     'ms': '/models/char/dogMM_Shorts-torso-',
-     'ls': '/models/char/dogLL_Shorts-torso-',
-     'sd': '/models/char/dogSS_Skirt-torso-',
-     'md': '/models/char/dogMM_Skirt-torso-',
-     'ld': '/models/char/dogLL_Skirt-torso-'}
-else:
-    LegDict = {'s': '/models/char/tt_a_chr_dgs_shorts_legs_',
-     'm': '/models/char/tt_a_chr_dgm_shorts_legs_',
-     'l': '/models/char/tt_a_chr_dgl_shorts_legs_'}
-    TorsoDict = {'ss': '/models/char/tt_a_chr_dgs_shorts_torso_',
-     'ms': '/models/char/tt_a_chr_dgm_shorts_torso_',
-     'ls': '/models/char/tt_a_chr_dgl_shorts_torso_',
-     'sd': '/models/char/tt_a_chr_dgs_skirt_torso_',
-     'md': '/models/char/tt_a_chr_dgm_skirt_torso_',
-     'ld': '/models/char/tt_a_chr_dgl_skirt_torso_'}
+LegDict = {'s': '/models/char/tt_a_chr_dgs_shorts_legs_',
+           'm': '/models/char/tt_a_chr_dgm_shorts_legs_',
+           'l': '/models/char/tt_a_chr_dgl_shorts_legs_'}
+TorsoDict = {
+    'ss': '/models/char/tt_a_chr_dgs_shorts_torso_',
+    'ms': '/models/char/tt_a_chr_dgm_shorts_torso_',
+    'ls': '/models/char/tt_a_chr_dgl_shorts_torso_',
+    'sd': '/models/char/tt_a_chr_dgs_skirt_torso_',
+    'md': '/models/char/tt_a_chr_dgm_skirt_torso_',
+    'ld': '/models/char/tt_a_chr_dgl_skirt_torso_'}
+
 
 def loadModels():
     global Preloaded
-    preloadAvatars = config.GetBool('preload-avatars', 0)
-    if preloadAvatars:
+    if not Preloaded:
+        print 'Preloading avatars...'
 
-        def loadTex(path):
-            tex = loader.loadTexture('/' + path)
-            tex.setMinfilter(Texture.FTLinearMipmapLinear)
-            tex.setMagfilter(Texture.FTLinear)
-            Preloaded.append(tex)
-
-        for shirt in ToonDNA.Shirts:
-            loadTex(shirt)
-
-        for sleeve in ToonDNA.Sleeves:
-            loadTex(sleeve)
-
-        for short in ToonDNA.BoyShorts:
-            loadTex(short)
-
-        for bottom in ToonDNA.GirlBottoms:
-            loadTex(bottom[0])
 
         for key in LegDict.keys():
             fileRoot = LegDict[key]
-            model = loader.loadModel('/phase_3' + fileRoot + '1000')
-            Preloaded.append(model)
-            model = loader.loadModel('/phase_3' + fileRoot + '500')
-            Preloaded.append(model)
-            model = loader.loadModel('/phase_3' + fileRoot + '250')
-            Preloaded.append(model)
+            
+            Preloaded[fileRoot+'-1000'] = loader.loadModel('phase_3' + fileRoot + '1000')
+            Preloaded[fileRoot+'-1000'].flattenMedium()
+            
+            Preloaded[fileRoot+'-500'] = loader.loadModel('phase_3' + fileRoot + '500')
+            Preloaded[fileRoot+'-500'].flattenMedium()
+            
+            Preloaded[fileRoot+'-250'] = loader.loadModel('phase_3' + fileRoot + '250')
+            Preloaded[fileRoot+'-250'].flattenMedium()
 
         for key in TorsoDict.keys():
             fileRoot = TorsoDict[key]
-            model = loader.loadModel('/phase_3' + fileRoot + '1000')
-            Preloaded.append(model)
+            
+            Preloaded[fileRoot+'-1000'] = loader.loadModel('phase_3' + fileRoot + '1000')
+            Preloaded[fileRoot+'-1000'].flattenMedium()
             if len(key) > 1:
-                model = loader.loadModel('/phase_3' + fileRoot + '500')
-                Preloaded.append(model)
-                model = loader.loadModel('/phase_3' + fileRoot + '250')
-                Preloaded.append(model)
+                Preloaded[fileRoot+'-500'] = loader.loadModel('phase_3' + fileRoot + '500')
+                Preloaded[fileRoot+'-500'].flattenMedium()
 
-        for key in HeadDict.keys():
-            fileRoot = HeadDict[key]
-            model = loader.loadModel('/phase_3' + fileRoot + '1000')
-            Preloaded.append(model)
-            model = loader.loadModel('/phase_3' + fileRoot + '500')
-            Preloaded.append(model)
-            model = loader.loadModel('/phase_3' + fileRoot + '250')
-            Preloaded.append(model)
+                Preloaded[fileRoot+'-250'] = loader.loadModel('phase_3' + fileRoot + '250')
+                Preloaded[fileRoot+'-250'].flattenMedium()
+        print 'Done preloading avatars.'
+    else:
+        print 'Already preloaded avatars..'
 
 
 def loadBasicAnims():
@@ -796,13 +766,14 @@ class Toon(Avatar.Avatar, ToonHead):
             self.setHeight(height)
 
     def generateToonLegs(self, copy = 1):
+        global Preloaded
         legStyle = self.style.legs
         filePrefix = LegDict.get(legStyle)
         if filePrefix is None:
             self.notify.error('unknown leg style: %s' % legStyle)
-        self.loadModel('phase_3' + filePrefix + '1000', 'legs', '1000', copy)
-        self.loadModel('phase_3' + filePrefix + '500', 'legs', '500', copy)
-        self.loadModel('phase_3' + filePrefix + '250', 'legs', '250', copy)
+        self.loadModel(Preloaded[filePrefix+'-1000'], 'legs', '1000', True)
+        self.loadModel(Preloaded[filePrefix+'-500'], 'legs', '500', True)
+        self.loadModel(Preloaded[filePrefix+'-250'], 'legs', '250', True)
         if not copy:
             self.showPart('legs', '1000')
             self.showPart('legs', '500')
@@ -834,17 +805,18 @@ class Toon(Avatar.Avatar, ToonHead):
         self.initializeNametag3d()
 
     def generateToonTorso(self, copy = 1, genClothes = 1):
+        global Preloaded
         torsoStyle = self.style.torso
         filePrefix = TorsoDict.get(torsoStyle)
         if filePrefix is None:
             self.notify.error('unknown torso style: %s' % torsoStyle)
-        self.loadModel('phase_3' + filePrefix + '1000', 'torso', '1000', copy)
+        self.loadModel(Preloaded[filePrefix+'-1000'], 'torso', '1000', True)
         if len(torsoStyle) == 1:
-            self.loadModel('phase_3' + filePrefix + '1000', 'torso', '500', copy)
-            self.loadModel('phase_3' + filePrefix + '1000', 'torso', '250', copy)
+            self.loadModel(Preloaded[filePrefix+'-1000'], 'torso', '500', True)
+            self.loadModel(Preloaded[filePrefix+'-1000'], 'torso', '250', True)
         else:
-            self.loadModel('phase_3' + filePrefix + '500', 'torso', '500', copy)
-            self.loadModel('phase_3' + filePrefix + '250', 'torso', '250', copy)
+            self.loadModel(Preloaded[filePrefix+'-500'], 'torso', '500', True)
+            self.loadModel(Preloaded[filePrefix+'-250'], 'torso', '250', True)
         if not copy:
             self.showPart('torso', '1000')
             self.showPart('torso', '500')

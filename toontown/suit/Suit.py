@@ -220,7 +220,16 @@ else:
 HeadModelDict = {'a': ('/models/char/suitA-', 4),
  'b': ('/models/char/suitB-', 4),
  'c': ('/models/char/suitC-', 3.5)}
-
+Preloaded = {}
+def loadModels():
+    global Preloaded
+    if not Preloaded:
+        print 'Preloading suits...'
+        for x, y in enumerate(SuitParts):
+            Preloaded[SuitParts[x]] = NodePath(SuitParts[x])
+            body = loader.loadModel(y)
+            body.flattenMedium()
+            body.instanceTo(Preloaded[SuitParts[x]])
 def loadTutorialSuit():
     loader.loadModel('phase_3.5/models/char/suitC-mod')
     loadDialog(1)
@@ -247,18 +256,22 @@ def loadSuitModelsAndAnims(level, flag = 0):
             if config.GetBool('want-new-cogs', 0):
                 filepath = 'phase_3.5' + model + 'zero'
                 if cogExists(model + 'zero'):
-                    loader.loadModel(filepath)
+                    Preloaded[filepath] = loader.loadModel(filepath)
             else:
-                loader.loadModel('phase_3.5' + model + 'mod')
-            loader.loadModel('phase_' + str(headPhase) + headModel + 'heads')
+                filepath = 'phase_3.5' + model + 'mod'
+                Preloaded[filepath] = loader.loadModel(filepath)
+            filepath = 'phase_' + str(headPhase) + headModel + 'heads'
+            Preloaded[filepath] = loader.loadModel(filepath)
         else:
             if config.GetBool('want-new-cogs', 0):
                 filepath = 'phase_3.5' + model + 'zero'
                 if cogExists(model + 'zero'):
-                    loader.unloadModel(filepath)
+                    loader.unloadModel(Preloaded[filepath])
             else:
-                loader.unloadModel('phase_3.5' + model + 'mod')
-            loader.unloadModel('phase_' + str(headPhase) + headModel + 'heads')
+                filepath = 'phase_3.5' + model + 'mod'
+                loader.unloadModel(Preloaded[filepath])
+            filepath = 'phase_' + str(headPhase) + headModel + 'heads'
+            loader.unloadModel(Preloaded[filepath])
 
 
 def cogExists(filePrefix):
@@ -734,15 +747,11 @@ class Suit(Avatar.Avatar):
         return
 
     def generateBody(self):
+        global Preloaded
         animDict = self.generateAnimDict()
         filePrefix, bodyPhase = ModelDict[self.style.body]
-        if config.GetBool('want-new-cogs', 0):
-            if cogExists(filePrefix + 'zero'):
-                self.loadModel('phase_3.5' + filePrefix + 'zero')
-            else:
-                self.loadModel('phase_3.5' + filePrefix + 'mod')
-        else:
-            self.loadModel('phase_3.5' + filePrefix + 'mod')
+        filepath = 'phase_3.5' + filePrefix + 'mod'
+        self.loadModel(Preloaded[filepath], copy = True)
         self.loadAnims(animDict)
         self.setSuitClothes()
         self.setBlend(frameBlend = True)
@@ -766,21 +775,18 @@ class Suit(Avatar.Avatar):
         for anim in SuitAttacksC:
 			animDict[anim[0]] = 'phase_3.5' + filePrefix + anim[1]
 
-        if not config.GetBool('want-new-cogs', 0):
-            if self.style.body == 'a':
-                animDict['neutral'] = 'phase_4/models/char/suitA-neutral'
-                for anim in SuitsCEOBattle:
-                    animDict[anim[0]] = 'phase_12/models/char/suitA-' + anim[1]
-
-            elif self.style.body == 'b':
-                animDict['neutral'] = 'phase_4/models/char/suitB-neutral'
-                for anim in SuitsCEOBattle:
-                    animDict[anim[0]] = 'phase_12/models/char/suitB-' + anim[1]
-
-            elif self.style.body == 'c':
-                animDict['neutral'] = 'phase_3.5/models/char/suitC-neutral'
-                for anim in SuitsCEOBattle:
-                    animDict[anim[0]] = 'phase_12/models/char/suitC-' + anim[1]
+        if self.style.body == 'a':
+            animDict['neutral'] = 'phase_4/models/char/suitA-neutral'
+            for anim in SuitsCEOBattle:
+                animDict[anim[0]] = 'phase_12/models/char/suitA-' + anim[1]
+        elif self.style.body == 'b':
+            animDict['neutral'] = 'phase_4/models/char/suitB-neutral'
+            for anim in SuitsCEOBattle:
+                animDict[anim[0]] = 'phase_12/models/char/suitB-' + anim[1]
+        elif self.style.body == 'c':
+            animDict['neutral'] = 'phase_3.5/models/char/suitC-neutral'
+            for anim in SuitsCEOBattle:
+                animDict[anim[0]] = 'phase_12/models/char/suitC-' + anim[1]
 
         try:
             animList = globals()[self.style.name]
@@ -804,47 +810,23 @@ class Suit(Avatar.Avatar):
         dept = self.style.dept
         phase = 3.5
 
-        def __doItTheOldWay__():
-            torsoTex = loader.loadTexture('phase_%s/maps/%s_blazer.jpg' % (phase, dept))
-            torsoTex.setMinfilter(Texture.FTLinearMipmapLinear)
-            torsoTex.setMagfilter(Texture.FTLinear)
-            legTex = loader.loadTexture('phase_%s/maps/%s_leg.jpg' % (phase, dept))
-            legTex.setMinfilter(Texture.FTLinearMipmapLinear)
-            legTex.setMagfilter(Texture.FTLinear)
-            armTex = loader.loadTexture('phase_%s/maps/%s_sleeve.jpg' % (phase, dept))
-            armTex.setMinfilter(Texture.FTLinearMipmapLinear)
-            armTex.setMagfilter(Texture.FTLinear)
-            modelRoot.find('**/torso').setTexture(torsoTex, 1)
-            modelRoot.find('**/arms').setTexture(armTex, 1)
-            modelRoot.find('**/legs').setTexture(legTex, 1)
-            modelRoot.find('**/hands').setColor(self.handColor)
-            self.leftHand = self.find('**/joint_Lhold')
-            self.rightHand = self.find('**/joint_Rhold')
-            self.shadowJoint = self.find('**/joint_shadow')
-            self.nametagJoint = self.find('**/joint_nameTag')
-
-        if config.GetBool('want-new-cogs', 0):
-            if dept == 'c':
-                texType = 'bossbot'
-            elif dept == 'm':
-                texType = 'cashbot'
-            elif dept == 'l':
-                texType = 'lawbot'
-            elif dept == 's':
-                texType = 'sellbot'
-            if self.find('**/body').isEmpty():
-                __doItTheOldWay__()
-            else:
-                filepath = 'phase_3.5/maps/tt_t_ene_' + texType + '.jpg'
-                if cogExists('/maps/tt_t_ene_' + texType + '.jpg'):
-                    bodyTex = loader.loadTexture(filepath)
-                    self.find('**/body').setTexture(bodyTex, 1)
-                self.leftHand = self.find('**/def_joint_left_hold')
-                self.rightHand = self.find('**/def_joint_right_hold')
-                self.shadowJoint = self.find('**/def_shadow')
-                self.nametagJoint = self.find('**/def_nameTag')
-        else:
-            __doItTheOldWay__()
+        torsoTex = loader.loadTexture('phase_%s/maps/%s_blazer.jpg' % (phase, dept))
+        torsoTex.setMinfilter(Texture.FTLinearMipmapLinear)
+        torsoTex.setMagfilter(Texture.FTLinear)
+        legTex = loader.loadTexture('phase_%s/maps/%s_leg.jpg' % (phase, dept))
+        legTex.setMinfilter(Texture.FTLinearMipmapLinear)
+        legTex.setMagfilter(Texture.FTLinear)
+        armTex = loader.loadTexture('phase_%s/maps/%s_sleeve.jpg' % (phase, dept))
+        armTex.setMinfilter(Texture.FTLinearMipmapLinear)
+        armTex.setMagfilter(Texture.FTLinear)
+        modelRoot.find('**/torso').setTexture(torsoTex, 1)
+        modelRoot.find('**/arms').setTexture(armTex, 1)
+        modelRoot.find('**/legs').setTexture(legTex, 1)
+        modelRoot.find('**/hands').setColor(self.handColor)
+        self.leftHand = self.find('**/joint_Lhold')
+        self.rightHand = self.find('**/joint_Rhold')
+        self.shadowJoint = self.find('**/joint_shadow')
+        self.nametagJoint = self.find('**/joint_nameTag')
 
     def makeWaiter(self, modelRoot = None):
         if not modelRoot:
@@ -881,16 +863,13 @@ class Suit(Avatar.Avatar):
         modelRoot.find('**/hands').setTexture(handTex, 1)
 
     def generateHead(self, headType):
-        if config.GetBool('want-new-cogs', 0):
-            filePrefix, phase = HeadModelDict[self.style.body]
-        else:
-            filePrefix, phase = ModelDict[self.style.body]
-        headModel = loader.loadModel('phase_' + str(phase) + filePrefix + 'heads')
+        filePrefix, phase = ModelDict[self.style.body]
+        filepath = 'phase_' + str(phase) + filePrefix + 'heads'
+        headModel = NodePath('cog_head')
+        Preloaded[filepath].copyTo(headModel) #loader.loadModel('phase_' + str(phase) + filePrefix + 'heads')
         headReferences = headModel.findAllMatches('**/' + headType)
         for i in xrange(0, headReferences.getNumPaths()):
-            headPart = self.instance(headReferences.getPath(i), 'modelRoot', 'to_head')
-            if not headPart:
-                headPart = self.instance(headReferences.getPath(i), 'modelRoot', 'joint_head')
+            headPart = self.instance(headReferences.getPath(i), 'modelRoot', 'joint_head')
             if self.headTexture:
                 headTex = loader.loadTexture('phase_' + str(phase) + '/maps/' + self.headTexture)
                 headTex.setMinfilter(Texture.FTLinearMipmapLinear)
@@ -951,15 +930,11 @@ class Suit(Avatar.Avatar):
         self.removeHealthBar()
         model = loader.loadModel('phase_3.5/models/gui/matching_game_gui')
         button = model.find('**/minnieCircle')
+        model.removeNode()
         button.setScale(3.0)
         button.setH(180.0)
         button.setColor(self.healthColors[0])
-        if config.GetBool('want-new-cogs', 0):
-            chestNull = self.find('**/def_joint_attachMeter')
-            if chestNull.isEmpty():
-                chestNull = self.find('**/joint_attachMeter')
-        else:
-            chestNull = self.find('**/joint_attachMeter')
+        chestNull = self.find('**/joint_attachMeter')
         button.reparentTo(chestNull)
         self.healthBar = button
         glow = BattleProps.globalPropPool.getProp('glow')
@@ -1034,9 +1009,6 @@ class Suit(Avatar.Avatar):
         return
 
     def getLoseActor(self):
-        if config.GetBool('want-new-cogs', 0):
-            if self.find('**/body'):
-                return self
         if self.loseActor == None:
             if not self.isSkeleton:
                 filePrefix, phase = TutorialModelDict[self.style.body]

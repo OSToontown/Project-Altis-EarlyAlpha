@@ -10,6 +10,24 @@ icon-filename phase_3/etc/icon.ico
 audio-library-name p3fmod_audio
 default-directnotify-level info
 smooth-lag 0.4
+support-stencil #f
+framebuffer-stencil #f
+textures-power-2 none
+gl-finish #f
+gl-force-no-error #t
+gl-check-errors #f
+gl-force-no-flush #t
+gl-force-no-scissor #t
+texture-magfilter linear
+texture-minfilter linear
+lock-to-one-cpu #f
+support-threads #t
+gl-immutable-texture-storage #f
+gl-dump-compiled-shaders #f
+show-buffers #f
+garbage-collect-states #f
+framebuffer-multisample #f
+multisamples 0
 # Pretty sure you're gonna want membership...
 want-membership #t
 want-speedhack-fix #t
