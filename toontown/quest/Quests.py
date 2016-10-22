@@ -4484,7 +4484,7 @@ QuestDict = {
 		 ToontownGlobals.DonaldsDock,
 		 3,
 		 'mdm'),
-        1214,
+        1224,
         Same,
         201,
         NA,
