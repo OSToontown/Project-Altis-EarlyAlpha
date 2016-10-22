@@ -545,6 +545,7 @@ class Place(StateData.StateData, FriendsListManager.FriendsListManager):
         NametagGlobals.setMasterArrowsOn(0)
         door = base.cr.doId2do.get(requestStatus['doorDoId'])
         if not door is None:
+         if not door is None:
             door.readyToExit()
         base.localAvatar.obscureMoveFurnitureButton(1)
         base.localAvatar.startQuestMap()
