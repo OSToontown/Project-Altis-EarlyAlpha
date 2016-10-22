@@ -1518,14 +1518,13 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.getDuration('running-jump', 'legs')
 
     def enterJump(self, animMultiplier = 1, ts = 0, callback = None, extraArgs = []):
-        if not self.isDisguised:
-            if self.playingAnim == 'neutral':
-                anim = 'jump'
-            else:
-                anim = 'running-jump'
-            self.playingAnim = anim
-            self.setPlayRate(animMultiplier, anim)
-            self.play(anim)
+        if self.playingAnim == 'neutral':
+            anim = 'jump'
+        else:
+            anim = 'running-jump'
+        self.playingAnim = anim
+        self.setPlayRate(animMultiplier, anim)
+        self.play(anim)
         self.setActiveShadow(1)
 
     def exitJump(self):
@@ -1533,14 +1532,13 @@ class Toon(Avatar.Avatar, ToonHead):
         self.playingAnim = 'neutral'
 
     def enterJumpSquat(self, animMultiplier = 1, ts = 0, callback = None, extraArgs = []):
-        if not self.isDisguised:
-            if self.playingAnim == 'neutral':
-                anim = 'jump-squat'
-            else:
-                anim = 'running-jump-squat'
-            self.playingAnim = anim
-            self.setPlayRate(animMultiplier, anim)
-            self.play(anim)
+        if self.playingAnim == 'neutral':
+            anim = 'jump-squat'
+        else:
+            anim = 'running-jump-squat'
+        self.playingAnim = anim
+        self.setPlayRate(animMultiplier, anim)
+        self.play(anim)
         self.setActiveShadow(1)
 
     def exitJumpSquat(self):
@@ -1548,14 +1546,13 @@ class Toon(Avatar.Avatar, ToonHead):
         self.playingAnim = 'neutral'
 
     def enterJumpAirborne(self, animMultiplier = 1, ts = 0, callback = None, extraArgs = []):
-        if not self.isDisguised:
-            if self.playingAnim == 'neutral' or self.forceJumpIdle:
-                anim = 'jump-idle'
-            else:
-                anim = 'running-jump-idle'
-            self.playingAnim = anim
-            self.setPlayRate(animMultiplier, anim)
-            self.loop(anim)
+        if self.playingAnim == 'neutral' or self.forceJumpIdle:
+            anim = 'jump-idle'
+        else:
+            anim = 'running-jump-idle'
+        self.playingAnim = anim
+        self.setPlayRate(animMultiplier, anim)
+        self.loop(anim)
         self.setActiveShadow(1)
 
     def exitJumpAirborne(self):
@@ -1563,16 +1560,15 @@ class Toon(Avatar.Avatar, ToonHead):
         self.playingAnim = 'neutral'
 
     def enterJumpLand(self, animMultiplier = 1, ts = 0, callback = None, extraArgs = []):
-        if not self.isDisguised:
-            if self.playingAnim == 'running-jump-idle':
-                anim = 'running-jump-land'
-                skipStart = 0.2
-            else:
-                anim = 'jump-land'
-                skipStart = 0.0
-            self.playingAnim = anim
-            self.setPlayRate(animMultiplier, anim)
-            self.play(anim)
+        if self.playingAnim == 'running-jump-idle':
+            anim = 'running-jump-land'
+            skipStart = 0.2
+        else:
+            anim = 'jump-land'
+            skipStart = 0.0
+        self.playingAnim = anim
+        self.setPlayRate(animMultiplier, anim)
+        self.play(anim)
         self.setActiveShadow(1)
 
     def exitJumpLand(self):

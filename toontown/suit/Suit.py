@@ -25,7 +25,7 @@ AllSuitsMinigame = (('victory', 'victory'),
  ('tug-o-war', 'tug-o-war'),
  ('slip-backward', 'slip-backward'),
  ('slip-forward', 'slip-forward'))
-AllSuitsTutorialBattle = (('lose', 'lose'), ('pie-small-react', 'pie-small'), ('squirt-small-react', 'squirt-small'))
+AllSuitsTutorialBattle = (('lose', 'lose'), ('pie-small-react', 'pie-small'), ('conked', 'pie-small'), ('squirt-small-react', 'squirt-small'), ('cringe', 'squirt-small'))
 AllSuitsBattle = (('drop-react', 'anvil-drop'),
  ('flatten', 'drop'),
  ('sidestep-left', 'sidestep-left'),
