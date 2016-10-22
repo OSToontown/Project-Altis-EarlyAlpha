@@ -1288,7 +1288,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
 
     def allowHardLand(self):
         retval = LocalAvatar.LocalAvatar.allowHardLand(self)
-        return retval and not self.isDisguised
+        return retval
 
     def setShovelGuiLevel(self, level = 0):
         pass
