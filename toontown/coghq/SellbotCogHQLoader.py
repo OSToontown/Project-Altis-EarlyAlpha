@@ -38,6 +38,11 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
         self.factoryExteriorModelPath = 'phase_9/models/cogHQ/SellbotFactoryExterior'
         self.geom = None
         self.spot1Sequence = None
+        self.spot2Sequence = None
+        self.spot3Sequence = None
+        self.spot4Sequence = None
+        self.spot5Sequence = None
+        self.spot6Sequence = None
 
     def load(self, zoneId):
         CogHQLoader.CogHQLoader.load(self, zoneId)
@@ -103,9 +108,18 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
             self.oldFactoryPOV.setScale(0.2)
 
             self.spotLights = self.geom.find('**/SpotLights')
-            self.spot1Sequence = LerpHprInterval(self.spotLights.find('**/Spot1'), 5, Vec3(0, 0, -180), Vec3(0, 0, 180))
+            self.spot1Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot1'), 7, Vec3(0, 1, 10)), Wait(7), LerpHprInterval(self.spotLights.find('**/Spot1'), 7, Vec3(0, 1, -5)), Wait(7))
             self.spot1Sequence.loop()
-
+            self.spot2Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot2'), 7, Vec3(0, 1, 5)), Wait(7), LerpHprInterval(self.spotLights.find('**/Spot2'), 7, Vec3(0, 1, -5)), Wait(7))
+            self.spot2Sequence.loop()
+            self.spot3Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot3'), 7, Vec3(0, 1, 10)), Wait(7), LerpHprInterval(self.spotLights.find('**/Spot3'), 7, Vec3(0, 1, 0)), Wait(7))
+            self.spot3Sequence.loop()
+            self.spot4Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot4'), 7, Vec3(0, 1, 10)), Wait(7), LerpHprInterval(self.spotLights.find('**/Spot4'), 7, Vec3(0, 1, -5)), Wait(7))
+            self.spot4Sequence.loop()
+            self.spot5Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot5'), 7, Vec3(0, 1, 10)), Wait(7), LerpHprInterval(self.spotLights.find('**/Spot5'), 7, Vec3(0, 1, -5)), Wait(7))
+            self.spot5Sequence.loop()
+            self.spot6Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot6'), 7, Vec3(0, 1, 10)), Wait(7), LerpHprInterval(self.spotLights.find('**/Spot6'), 7, Vec3(0, 1, -5)), Wait(7))
+            self.spot6Sequence.loop()
 		
         elif zoneId == ToontownGlobals.SellbotFactoryExt:
             self.geom = loader.loadModel(self.factoryExteriorModelPath)
@@ -167,6 +181,12 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
     def unload(self):
         CogHQLoader.CogHQLoader.unload(self)
         Toon.unloadSellbotHQAnims()
+        self.spot1Sequence.finish()
+        self.spot2Sequence.finish()
+        self.spot3Sequence.finish()
+        self.spot4Sequence.finish()
+        self.spot5Sequence.finish()
+        self.spot6Sequence.finish()
 
     def enterFactoryExterior(self, requestStatus):
         self.placeClass = FactoryExterior.FactoryExterior
