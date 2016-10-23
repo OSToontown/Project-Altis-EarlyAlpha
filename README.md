@@ -13,11 +13,11 @@ A vision of what Toontown Online could have been in 2016.
 * Mango Monkey - Storyline Writer & 3D Modeler
 * Drew - Game Developer
 * James Midnight - Texture Artist
+* Sir Tubby Cheesyfish- Game Developer
 
 # Thanks
 
-Thanks To Disney, Toontown Offline, Toontown Rewritten, Toontown Infinite, Toontown Fellowship, Toontown House, Toontown Stride, Toontown World Online, 
-and the Toontown community for making this game possible and to keep the Toontown spirit alive.
+Thanks To Disney, Toontown Offline, Toontown Rewritten, Toontown Infinite, Toontown Fellowship, Toontown House, Toontown Stride, Toontown World Online, and the Toontown community for making this game possible and to keep the Toontown spirit alive.
 
 # Inspirations
 * Toontown Rewritten, for repowering the spirit of Toontown after Toontown Online closed on September 19, 2013
