@@ -19,7 +19,6 @@ class DistributedRainManagerAI(DistributedWeatherMGRAI):
     def __init__(self, air):
         DistributedWeatherMGRAI.__init__(self, air)
 
-
     def start(self, alwaysRain = False):
         DistributedWeatherMGRAI.start(self)
                 

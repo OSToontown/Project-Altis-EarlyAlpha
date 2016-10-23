@@ -10,6 +10,8 @@ class DistributedWeatherMGRAI(DistributedObjectAI, FSM):
     def __init__(self, air):
         DistributedObjectAI.__init__(self, air)
         FSM.__init__(self, self.__class__.__name__)
+        self.currSeq = None
+        self.currTime = 0
 
         self.participants = []
 
@@ -21,6 +23,9 @@ class DistributedWeatherMGRAI(DistributedObjectAI, FSM):
 
     def d_setState(self, state):
         self.sendUpdate('setState', [state, globalClockDelta.getRealNetworkTime(bits=32)])
+        if state is not 'Rain' or state is not 'Sunny':
+            self.currTime = int(self.getCurrTime())
+            # TODO: Send an update containing current time of the playing sequence
         
     def b_setState(self, state):
         self.setState(state)
@@ -28,6 +33,12 @@ class DistributedWeatherMGRAI(DistributedObjectAI, FSM):
         
     def getState(self):
         return self.state
+
+    def getCurrTime(self):
+        if self.currSeq != None:
+            return self.currSeq.getT()
+        else:
+            return 0
         
 @magicWord(category=CATEGORY_SYSADMIN, types=[str])
 def dayTime(state):

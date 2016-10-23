@@ -21,134 +21,247 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
 
     def start(self):
         DistributedWeatherMGRAI.start(self)
+        self.interval = 10
                 
         Sequence(
             Func(self.b_setState, 'T0'),
-            Wait(20),
+            Wait(self.interval),
             Func(self.b_setState, 'T1'),
-            Wait(20),
+            Wait(self.interval),
             Func(self.b_setState, 'T2'),
-            Wait(20),
+            Wait(self.interval),
             Func(self.b_setState, 'T3'),
-            Wait(20),
+            Wait(self.interval),
             Func(self.b_setState, 'T4'),
-            Wait(20),
+            Wait(self.interval),
             Func(self.b_setState, 'T5'),
-            Wait(20),
+            Wait(self.interval),
             Func(self.b_setState, 'T6'),
-            Wait(20),
+            Wait(self.interval),
             Func(self.b_setState, 'T7'),
-            Wait(20),
+            Wait(self.interval),
             Func(self.b_setState, 'T8'),
-            Wait(20),
+            Wait(self.interval),
             Func(self.b_setState, 'T9'),
-            Wait(20),
+            Wait(self.interval),
             Func(self.b_setState, 'T10'),
-            Wait(20),
+            Wait(self.interval),
             Func(self.b_setState, 'T11'),
-            Wait(20),
+            Wait(self.interval),
             Func(self.b_setState, 'T12'),
-            Wait(20),
-            Func(self.b_setState, 'T11'),
-            Wait(20),
-            Func(self.b_setState, 'T10'),
-            Wait(20),
-            Func(self.b_setState, 'T9'),
-            Wait(20),
-            Func(self.b_setState, 'T8'),
-            Wait(20),
-            Func(self.b_setState, 'T7'),
-            Wait(20),
-            Func(self.b_setState, 'T6'),
-            Wait(20),
-            Func(self.b_setState, 'T5'),
-            Wait(20),
-            Func(self.b_setState, 'T4'),
-            Wait(20),
-            Func(self.b_setState, 'T3'),
-            Wait(20),
-            Func(self.b_setState, 'T2'),
-            Wait(20),
-            Func(self.b_setState, 'T1'),      
-            Wait(20)).loop()
+            Wait(self.interval),
+            Func(self.b_setState, 'T13'),
+            Wait(self.interval),
+            Func(self.b_setState, 'T14'),
+            Wait(self.interval),
+            Func(self.b_setState, 'T15'),
+            Wait(self.interval),
+            Func(self.b_setState, 'T16'),
+            Wait(self.interval),
+            Func(self.b_setState, 'T17'),
+            Wait(self.interval),
+            Func(self.b_setState, 'T18'),
+            Wait(self.interval),
+            Func(self.b_setState, 'T19'),
+            Wait(self.interval),
+            Func(self.b_setState, 'T20'),
+            Wait(self.interval),
+            Func(self.b_setState, 'T21'),
+            Wait(self.interval),
+            Func(self.b_setState, 'T22'),
+            Wait(self.interval),
+            Func(self.b_setState, 'T23'),
+            Wait(self.interval)).loop()
             
             
     def enterT0(self):
-        pass
+        self.currSeq = Sequence(Wait(self.interval)).start()
         
     def exitT0(self):
-        pass
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
         
     def enterT1(self):
-        pass
+        self.currSeq = Sequence(Wait(self.interval)).start()
         
     def exitT1(self):
-        pass
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
         
     def enterT2(self):
-        pass
+        self.currSeq = Sequence(Wait(self.interval)).start()
         
     def exitT2(self):
-        pass
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
         
     def enterT3(self):
-        pass
+        self.currSeq = Sequence(Wait(self.interval)).start()
         
     def exitT3(self):
-        pass
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
         
     def enterT4(self):
-        pass
+        self.currSeq = Sequence(Wait(self.interval)).start()
         
     def exitT4(self):
-        pass
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
         
     def enterT5(self):
-        pass
+        self.currSeq = Sequence(Wait(self.interval)).start()
         
     def exitT5(self):
-        pass
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
         
     def enterT6(self):
-        pass
+        self.currSeq = Sequence(Wait(self.interval)).start()
         
     def exitT6(self):
-        pass
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
         
     def enterT7(self):
-        pass
+        self.currSeq = Sequence(Wait(self.interval)).start()
         
     def exitT7(self):
-        pass
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
         
     def enterT8(self):
-        pass
+        self.currSeq = Sequence(Wait(self.interval)).start()
         
     def exitT8(self):
-        pass
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
         
     def enterT9(self):
-        pass
+        self.currSeq = Sequence(Wait(self.interval)).start()
         
     def exitT9(self):
-        pass
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
         
     def enterT10(self):
-        pass
+        self.currSeq = Sequence(Wait(self.interval)).start()
         
     def exitT10(self):
-        pass
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
         
     def enterT11(self):
-        pass
+        self.currSeq = Sequence(Wait(self.interval)).start()
         
     def exitT11(self):
-        pass
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
         
     def enterT12(self):
-        pass
+        self.currSeq = Sequence(Wait(self.interval)).start()
         
     def exitT12(self):
-        pass
-        
-    # TODO: Add the next 12 hours, for now im just going to use this in reverse to go to night
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
+
+    def enterT13(self):
+        self.currSeq = Sequence(Wait(self.interval)).start()
+
+    def exitT13(self):
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
+
+    def enterT14(self):
+        self.currSeq = Sequence(Wait(self.interval)).start()
+
+    def exitT14(self):
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
+
+    def enterT15(self):
+        self.currSeq = Sequence(Wait(self.interval)).start()
+
+    def exitT15(self):
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
+
+    def enterT16(self):
+        self.currSeq = Sequence(Wait(self.interval)).start()
+
+    def exitT16(self):
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
+
+    def enterT17(self):
+        self.currSeq = Sequence(Wait(self.interval)).start()
+
+    def exitT17(self):
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
+
+    def enterT18(self):
+        self.currSeq = Sequence(Wait(self.interval)).start()
+
+    def exitT18(self):
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
+
+    def enterT19(self):
+        self.currSeq = Sequence(Wait(self.interval)).start()
+
+    def exitT19(self):
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
+
+    def enterT20(self):
+        self.currSeq = Sequence(Wait(self.interval)).start()
+
+    def exitT20(self):
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
+
+    def enterT21(self):
+        self.currSeq = Sequence(Wait(self.interval)).start()
+
+    def exitT21(self):
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
+
+    def enterT22(self):
+        self.currSeq = Sequence(Wait(self.interval)).start()
+
+    def exitT22(self):
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
+
+    def enterT23(self):
+        self.currSeq = Sequence(Wait(self.interval)).start()
+
+    def exitT23(self):
+        if self.currSeq is not None:
+            self.currSeq.finish()
+            self.currSeq = None
