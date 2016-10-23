@@ -8,8 +8,9 @@ from direct.gui.DirectGui import *
 class CatalogNametagItem(CatalogItem.CatalogItem):
     sequenceNumber = 0
 
-    def makeNewItem(self, nametagStyle):
+    def makeNewItem(self, nametagStyle, isSpecial = False):
         self.nametagStyle = nametagStyle
+        self.isSpecial = isSpecial
         CatalogItem.CatalogItem.makeNewItem(self)
 
     def getPurchaseLimit(self):
@@ -90,10 +91,12 @@ class CatalogNametagItem(CatalogItem.CatalogItem):
     def decodeDatagram(self, di, versionNumber, store):
         CatalogItem.CatalogItem.decodeDatagram(self, di, versionNumber, store)
         self.nametagStyle = di.getUint16()
+        self.isSpecial = di.getBool()
 
     def encodeDatagram(self, dg, store):
         CatalogItem.CatalogItem.encodeDatagram(self, dg, store)
         dg.addUint16(self.nametagStyle)
+        dg.addBool(self.isSpecial)
 
     def isGift(self):
         return 0

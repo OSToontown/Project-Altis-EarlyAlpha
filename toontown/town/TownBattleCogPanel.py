@@ -16,13 +16,11 @@ class TownBattleCogPanel(DirectFrame):
     healthColors = (Vec4(0, 1, 0, 1),
      Vec4(1, 1, 0, 1),
      Vec4(1, 0.5, 0, 1),
-     Vec4(1, 0, 0, 1),
-     Vec4(0.3, 0.3, 0.3, 1))
+     Vec4(1, 0, 0, 1))
     healthGlowColors = (Vec4(0.25, 1, 0.25, 0.5),
      Vec4(1, 1, 0.25, 0.5),
      Vec4(1, 0.5, 0.25, 0.5),
-     Vec4(1, 0.25, 0.25, 0.5),
-     Vec4(0.3, 0.3, 0.3, 0))
+     Vec4(1, 0.25, 0.25, 0.5))
 
     def __init__(self, id):
         gui = loader.loadModel('phase_3.5/models/gui/battle_gui')
@@ -83,10 +81,7 @@ class TownBattleCogPanel(DirectFrame):
     def updateHealthBar(self):
         condition = self.cog.healthCondition
         if condition == 4:
-            self.blinkTask = Task.loop(Task(self.__blinkRed), Task.pause(0.75), Task(self.__blinkGray), Task.pause(0.1))
-            taskMgr.add(self.blinkTask, self.uniqueName('blink-task'))
-        elif condition == 5:
-            self.blinkTask = Task.loop(Task(self.__blinkRed), Task.pause(0.25), Task(self.__blinkGray), Task.pause(0.1))
+            self.blinkTask = Task.loop(Task(self.__blinkRed), Task.pause(0.75), Task.pause(0.1))
             taskMgr.add(self.blinkTask, self.uniqueName('blink-task'))
         else:
             taskMgr.remove(self.uniqueName('blink-task'))
@@ -112,11 +107,6 @@ class TownBattleCogPanel(DirectFrame):
     def __blinkRed(self, task):
         self.button.setColor(self.healthColors[3], 1)
         self.glow.setColor(self.healthGlowColors[3], 1)
-        return Task.done
-
-    def __blinkGray(self, task):
-        self.button.setColor(self.healthColors[4], 1)
-        self.glow.setColor(self.healthGlowColors[4], 1)
         return Task.done
 
     def hide(self):
