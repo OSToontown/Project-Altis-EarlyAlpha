@@ -12,6 +12,7 @@ from toontown.coghq import LawbotOfficeGearRoom_Battle00_Cogs
 
 # Explicit room imports...
 from toontown.coghq import LawbotOfficeEntrance_Action00
+from toontown.coghq import LawbotOfficeEntrance_Action00_Cogs
 from toontown.coghq import LawbotOfficeOilRoom_Battle00
 from toontown.coghq import LawbotOfficeOilRoom_Battle01
 from toontown.coghq import LawbotOfficeBoilerRoom_Security00
@@ -72,7 +73,8 @@ CashbotStageSpecModules = {}
 for roomName, roomId in CashbotStageRoomName2RoomId.items():
     CashbotStageSpecModules[roomId] = locals()[roomName]
 
-CogSpecModules = {'LawbotOfficeOilRoom_Battle00': LawbotOfficeOilRoom_Battle00_Cogs,
+CogSpecModules = {'LawbotOfficeEntrance_Action00': LawbotOfficeEntrance_Action00_Cogs,
+ 'LawbotOfficeOilRoom_Battle00': LawbotOfficeOilRoom_Battle00_Cogs,
  'LawbotOfficeOilRoom_Battle01': LawbotOfficeOilRoom_Battle01_Cogs,
  'LawbotOfficeBoilerRoom_Battle00': LawbotOfficeBoilerRoom_Battle00_Cogs,
  'LawbotOfficeBoilerRoom_Trap00': LawbotOfficeBoilerRoom_Trap00_Cogs,
