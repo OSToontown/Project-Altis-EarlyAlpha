@@ -12,6 +12,9 @@ import FactoryInterior
 import SellbotHQExterior
 import SellbotHQBossBattle
 from pandac.PandaModules import DecalEffect, NodePath
+from direct.interval.IntervalGlobal import *
+from direct.interval.LerpInterval import LerpHprInterval
+from panda3d.core import Vec3
 aspectSF = 0.7227
 
 class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
@@ -34,6 +37,7 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
         self.cogHQLobbyModelPath = 'phase_9/models/cogHQ/SellbotHQLobby'
         self.factoryExteriorModelPath = 'phase_9/models/cogHQ/SellbotFactoryExterior'
         self.geom = None
+        self.spot1Sequence = None
 
     def load(self, zoneId):
         CogHQLoader.CogHQLoader.load(self, zoneId)
@@ -97,6 +101,10 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
             self.oldFactoryPOV.reparentTo(self.geom)
             self.oldFactoryPOV.setPos(-525,-150,17)
             self.oldFactoryPOV.setScale(0.2)
+
+            self.spotLights = self.geom.find('**/SpotLights')
+            self.spot1Sequence = LerpHprInterval(self.spotLights.find('**/Spot1'), 5, Vec3(0, 0, -180), Vec3(0, 0, 180))
+            self.spot1Sequence.loop()
 
 		
         elif zoneId == ToontownGlobals.SellbotFactoryExt:
