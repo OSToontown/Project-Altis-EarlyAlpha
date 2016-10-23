@@ -59,7 +59,7 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
         zoneId = zoneId - zoneId % 100
         if zoneId == ToontownGlobals.SellbotHQ:
             self.geom = loader.loadModel(self.cogHQExteriorModelPath)
-            factoryExteriorPOV = loader.loadModel('phase_9/models/cogHQ/SellbotFactoryPov')
+            factoryExteriorPOV = loader.loadModel('phase_9/models/cogHQ/SellbotFactoryExterior')
             factoryExteriorPOV.reparentTo(self.geom)
             factoryExteriorPOV.setPosHpr(400.62, -139.52, 15.22, 272.73, 0, 0)
             factoryExteriorPOV.setScale(0.5)
@@ -95,7 +95,7 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
                 doorTrigger.setY(doorTrigger.getY() - 1.5)  # Fixes the misplaced door trigger.
                 doorFrame.node().setEffect(DecalEffect.make())
             self.botcam1 = Actor("phase_9/models/char/BotCam-zero.bam",{"botcamneutral":"phase_9/models/char/BotCam-neutral.bam"})
-            self.bossroom = Actor("phase_9/models/cogHQ/BossRoomHQ.bam")
+            self.bossroom = Actor("phase_9/models/cogHQ/BossRoomPOV.bam")
             self.botcam1.reparentTo(self.geom)
             self.botcam1.setPos(-0.01,-39.3,24)
             self.botcam1.loop('botcamneutral')
