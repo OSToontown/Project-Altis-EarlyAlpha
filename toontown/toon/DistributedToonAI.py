@@ -261,10 +261,10 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
                     if hood == ToontownGlobals.LawbotHQ:
                         self.air.writeServerEvent("arg-complete", avId=self.getDoId(), message="%s has unlocked LBHQ!" % self.getName())
 
-                if zoneId == ToontownGlobals.GoofySpeedway:
+                if zoneId == ToontownGlobals.GoofySpeedway or zoneId == ToontownGlobals.OutdoorZone:
                     tpAccess = self.getTeleportAccess()
-                    if not ToontownGlobals.GoofySpeedway in tpAccess:
-                        tpAccess.append(ToontownGlobals.GoofySpeedway)
+                    if zoneId not in tpAccess:
+                        tpAccess.append(zoneId)
                         self.b_setTeleportAccess(tpAccess)
 
     def _renewDoLater(self, renew = True):
