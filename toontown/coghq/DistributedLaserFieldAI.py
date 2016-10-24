@@ -177,7 +177,7 @@ class DistributedLaserFieldAI(BattleBlockerAI.BattleBlockerAI, NodePath, BasicEn
                 av = self.air.doId2do.get(avId)
                 if av:
                     av.toonUp(reward)
-
+                    continue
             stage.increasePuzzelReward()
         self.healReady = 0
         if not self.playedSound:
