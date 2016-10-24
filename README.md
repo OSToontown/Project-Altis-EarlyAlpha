@@ -14,6 +14,7 @@ A vision of what Toontown Online could have been in 2016.
 * Drew - Game Developer
 * James Midnight - Texture Artist
 * Sir Tubby Cheesyfish- Game Developer
+* Junior- Game Developer
 
 # Thanks
 
