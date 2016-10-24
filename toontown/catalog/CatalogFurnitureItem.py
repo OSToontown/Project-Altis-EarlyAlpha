@@ -18,6 +18,7 @@ FLIsTable = 32
 FLPhone = 64
 FLBillboard = 128
 FLTrunk = 256
+FLChair = 512
 FLBoysOnly = 512
 FLGirlsOnly = 1024
 furnitureColors = [
@@ -70,12 +71,29 @@ for closetId, maxClothes in ClosetToClothes.items():
 
 MaxClosetIds = (508, 518)
 MaxTrunkIds = (4000, 4010)
+
+ChairToPosHpr = {
+ 100: ((0, -3.9, 0.88), (180, 0, 0), (0, -4.9, 0), -3.0),
+ 105: ((0, -3.9, 0.88), (180, 0, 0), (0, -4.9, 0), -3.0),
+ 110: ((0, -1.6, 0.5), (180, 0, 0), (0, -2.6, 0), 0.0),
+ 120: ((0, -1.6, 0.5), (180, 0, 0), (0, -2.6, 0), 0.0),
+ 130: ((0, -2.8, 0.5), (180, 0, 0), (0, -3.8, 0), -2.0),
+ 140: ((0, -1.6, 0.5), (180, 0, 0), (0, -2.6, 0), 0.0),
+ 145: ((0, -2.1, 0.2), (180, 0, 0), (0, -3.1, 0), 0.0),
+ 160: ((-1.7, 0, 0.9), (90, 0, 0), (-2.7, 0, 0), 0.0),
+ 170: ((0, 1.8, 0.4), (0, 0, 0), (0, 2.8, 0), 0.0),
+ 700: ((0, -1.2, 0.5), (180, 0, 0), (0, -2.2, 0), 0.0),
+ 705: ((0, -1.2, 0.5), (180, 0, 0), (0, -2.2, 0), 0.0),
+ 710: ((0, -1.1, 0.4), (180, 0, 0), (0, -2.1, 0), 0.0),
+ 715: ((0, -1.1, 0.4), (180, 0, 0), (0, -2.1, 0), 0.0),
+ 720: ((0, -2.7, 0.2), (180, 0, 0), (0, -3.7, 0), -3.0)
+}
 FurnitureTypes = {
  100: ('phase_5.5/models/estate/chairA',  # Model
        None,                              # Color
        None,                              # Color Options
-       80),                               # Base Price
-                                          # Flags
+       80,                                # Base Price
+       FLChair),                          # Flags
                                           # Scale
  105: ('phase_5.5/models/estate/chairAdesat',
        None,
@@ -85,27 +103,33 @@ FurnitureTypes = {
         3: (('**/cushion*', furnitureColors[3]), ('**/arm*', furnitureColors[3])),
         4: (('**/cushion*', furnitureColors[4]), ('**/arm*', furnitureColors[4])),
         5: (('**/cushion*', furnitureColors[5]), ('**/arm*', furnitureColors[5]))},
-       160),
+       160,
+       FLChair),
  110: ('phase_3.5/models/modules/chair',
        None,
        None,
-       40),
+       40,
+       FLChair),
  120: ('phase_5.5/models/estate/deskChair',
        None,
        None,
-       60),
+       60,
+       FLChair),
  130: ('phase_5.5/models/estate/BugRoomChair',
        None,
        None,
-       160),
+       160,
+       FLChair),
  140: ('phase_5.5/models/estate/UWlobsterChair',
        None,
        None,
-       200),
+       200,
+       FLChair),
  145: ('phase_5.5/models/estate/UWlifeSaverChair',
        None,
        None,
-       200),
+       200,
+       FLChair),
  150: ('phase_5.5/models/estate/West_saddleStool2',
        None,
        None,
@@ -113,11 +137,13 @@ FurnitureTypes = {
  160: ('phase_5.5/models/estate/West_nativeChair',
        None,
        None,
-       160),
+       160,
+       FLChair),
  170: ('phase_5.5/models/estate/cupcakeChair',
        None,
        None,
-       240),
+       240,
+       FLChair),
  200: ('phase_5.5/models/estate/regular_bed',
        None,
        None,
@@ -417,10 +443,26 @@ FurnitureTypes = {
         4: (('**/*couch', furnitureColors[4]),),
         5: (('**/*couch', furnitureColors[5]),)},
        460),
+ 700: ('phase_3.5/models/modules/couch_1person',
+       None,
+       None,
+       230,
+       FLChair),
+ 705: ('phase_5.5/models/estate/couch_1personDesat',
+       None,
+       {0: (('**/*couch', furnitureColors[0]),),
+        1: (('**/*couch', furnitureColors[1]),),
+        2: (('**/*couch', furnitureColors[2]),),
+        3: (('**/*couch', furnitureColors[3]),),
+        4: (('**/*couch', furnitureColors[4]),),
+        5: (('**/*couch', furnitureColors[5]),)},
+       460,
+       FLChair),
  710: ('phase_3.5/models/modules/couch_2person',
        None,
        None,
-       230),
+       230,
+       FLChair),
  715: ('phase_5.5/models/estate/couch_2personDesat',
        None,
        {0: (('**/*couch', furnitureColors[0]),),
@@ -429,11 +471,13 @@ FurnitureTypes = {
         3: (('**/*couch', furnitureColors[3]),),
         4: (('**/*couch', furnitureColors[4]),),
         5: (('**/*couch', furnitureColors[5]),)},
-       460),
+       460,
+       FLChair),
  720: ('phase_5.5/models/estate/West_HayCouch',
        None,
        None,
-       420),
+       420,
+       FLChair),
  730: ('phase_5.5/models/estate/twinkieCouch',
        None,
        None,

@@ -72,6 +72,7 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
         self.sleepFlag = 0
         self.isDisguised = 0
         self.movingFlag = 0
+        self.preventCameraDisable = False
         self.swimmingFlag = 0
         self.lastNeedH = None
         self.accept('friendOnline', self.__friendOnline)
@@ -89,6 +90,9 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
         self.setPickable(0)
         self.neverSleep = False
         return
+
+    def setPreventCameraDisable(self, prevent):
+        self.preventCameraDisable = prevent
 
     def useSwimControls(self):
         self.controlManager.use('swim', self)
@@ -437,7 +441,7 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
         self.controlManager.setSpeeds(OTPGlobals.ToonForwardSlowSpeed, OTPGlobals.ToonJumpSlowForce, OTPGlobals.ToonReverseSlowSpeed, OTPGlobals.ToonRotateSlowSpeed)
 
     def pageUp(self):
-        if not self.avatarControlsEnabled:
+        if not (self.avatarControlsEnabled or self.preventCameraDisable):
             return
         self.wakeUp()
         if not self.isPageUp:
@@ -449,7 +453,7 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
             self.clearPageUpDown()
 
     def pageDown(self):
-        if not self.avatarControlsEnabled:
+        if not (self.avatarControlsEnabled and self.preventCameraDisable):
             return
         self.wakeUp()
         if not self.isPageDown:
@@ -468,7 +472,7 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
             self.setCameraPositionByIndex(self.cameraIndex)
 
     def nextCameraPos(self, forward):
-        if not self.avatarControlsEnabled:
+        if not (self.avatarControlsEnabled or self.preventCameraDisable):
             return
         self.wakeUp()
         self.__cameraHasBeenMoved = 1

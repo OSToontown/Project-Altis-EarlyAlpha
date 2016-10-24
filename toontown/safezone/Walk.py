@@ -41,7 +41,9 @@ class Walk(StateData.StateData):
         self.fsm.request('off')
         self.ignore(base.JUMP)
         base.localAvatar.disableAvatarControls()
-        base.localAvatar.stopUpdateSmartCamera()
+        if not base.localAvatar.preventCameraDisable:
+            base.localAvatar.stopUpdateSmartCamera()
+            base.localAvatar.detachCamera()
         base.localAvatar.stopPosHprBroadcast()
         base.localAvatar.stopBlink()
         base.localAvatar.detachCamera()
