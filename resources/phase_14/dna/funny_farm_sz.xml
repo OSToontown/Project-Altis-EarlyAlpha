@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scene zone="7000">
+	<group name="funnyFarm">
+		<visgroup zone="7000:safe_zone" vis="7000:safe_zone">
+			<group name="props">
+				<prop name="funny_farm_DNARoot" code="funny_farm">
+					<pos x="0" y="0" z="0" />
+					<nhpr h="0" p="0" r="0" />
+				</prop>
+				<flat_building id="sz0:random_20"" width="20">
+					<pos x="92" y="-67.50" z="0" />
+					<nhpr h="-135" p="0" r="0" />
+					<wall height="20" code="wall_md_dental_ur">
+						<color r="1.0" g="0.89" b="0.49" a="1" />
+					</wall>
+				</flat_building>
+				<flat_building id="sz0:random_21"" width="20">
+					<pos x="48" y="-75.50" z="0" />
+					<nhpr h="193" p="0" r="0" />
+					<wall height="20" code="wall_md_dental_ur">
+						<color r="1.0" g="0.89" b="0.49" a="1" />
+					</wall>
+				</flat_building>
+				<landmark_building id="sz1:toon_landmark_FF_clothes_shop_DNARoot" code="toon_landmark_FF_clothes_shop" type="clotheshop">
+					<title>Clothing Shop</title>
+					<pos x="-82" y="-64" z="0" />
+					<nhpr h="145" p="0" r="0" />
+					<door code="door_double_clothesshop_ur">
+						<color r="0.88" g="0.45" b="0.38" a="1" />
+					</door>
+					<sign>
+						<baseline code="mickey">
+							<color r="0.501961" g="1" b="1" a="1" />
+							<pos x="0" y="0" z="-0.5" />
+							<scale x="1.7" y="1" z="1.7" />
+							<text>Clothing Store</text>
+						</baseline>
+					</sign>
+				</landmark_building>
+						<landmark_building id="sz2:toon_landmark_FF_gag_shop_DNARoot" code="toon_landmark_FF_gag_shop" type="gagshop">
+					<title>Gag Shop</title>
+					<pos x="92.5647" y="-58.6906" z="0" />
+					<nhpr h="70" p="0" r="0" />
+					<door code="door_double_square_ur">
+						<color r="1" g="0.63" b="0.38" a="1" />
+					</door>
+				</landmark_building>
+					<landmark_building id="sz3:toon_landmark_FF_hq_DNARoot" code="toon_landmark_hqFF" type="hq">
+					<title>Toon HQ</title>
+					<pos x="-64" y="36" z="0" />
+				</landmark_building>
+			<landmark_building id="sz4:toon_landmark_FF_pet_shop_DNARoot" code="toon_landmark_FF_pet_shop" type="petshop">
+				<title />
+				<pos x="11" y="120" z="0" />
+				<nhpr h="-4" p="0" r="0" />
+				<door code="door_double_round_ur">
+					<color r="1" g="0.87" b="0.38" a="1" />
+				</door>
+				<prop name="animated_prop_PetShopFishAnimatedProp_DNARoot" code="animated_prop_PetShopFishAnimatedProp">
+					<pos x="0" y="0" z="0" />
+					<nhpr h="0" p="0" r="0" />
+				</prop>
+				<sign>
+					<baseline code="mickey" width="14.2363" height="14.2363">
+						<color r="-0.0715486" g="0" b="0" a="0.575594" />
+						<pos x="0" y="0" z="0.0852519" />
+						<scale x="1.58014" y="1" z="2.42354" />
+						<text>Pet Shop</text>
+					</baseline>
+				</sign>
+			</landmark_building>
+				<prop name="prop_trolley_station_DNARoot" code="prop_trolley_station">
+					<pos x="78.1727" y="-81.7804" z="0.1" />
+					<nhpr h="167" p="0" r="0" />
+					<sign>
+						<color r="1" g="0.88" b="0.56" a="1" />
+						<baseline code="mickey" kern="-0.09" width="10.9993" height="10.9993">
+							<color r="0" g="0.909804" b="0.909804" a="1" />
+							<pos x="0.5" y="0" z="1.33" />
+							<scale x="1.4" y="1" z="1.4" />
+							<text>TROLLEY</text>
+						</baseline>
+						<baseline code="mickey" kern="-0.22">
+							<color r="0" g="0.603922" b="0.870588" a="1" />
+							<pos x="0.29" y="0" z="-1.9" />
+							<scale x="2.7" y="1" z="2.7" />
+							<text>GAMES</text>
+						</baseline>
+					</sign>
+				</prop>
+			<group name="props">
+				<prop name="prop_facade_a_FF_DNARoot" code="prop_facade_a_FF">
+					<pos x="121" y="6" z="0" />
+					<nhpr h="234" p="0" r="-0" />
+				</prop>
+				<prop name="prop_gavel_FF_DNARoot" code="prop_gavel_FF">
+					<pos x="0" y="-1" z="5" />
+					<nhpr h="180" p="0" r="0" />
+					<scale x="3" y="3" z="3" />
+				</prop>
+				<prop name="prop_teeth_FF_DNARoot" code="prop_teeth_FF">
+					<pos x="-2.5" y="-1" z="4" />
+					<nhpr h="180" p="0" r="-0" />
+					<scale x="4" y="4" z="4" />
+				</prop>
+				<prop name="prop_shed_FF_DNARoot" code="prop_shed_FF">
+					<pos x="-78" y="107" z="-0.5" />
+					<nhpr h="-61.5" p="0" r="0" />
+				</prop>
+				<prop name="prop_statue_FF_DNARoot" code="prop_statue_FF">
+					<pos x="5" y="25" z="0" />
+				</prop>
+				<prop name="prop_gazebo_FF_DNARoot" code="prop_gazebo_FF">
+					<pos x="56" y="-6" z="0" />
+				</prop>
+				<prop name="prop_tree_FF_DNARoot" code=""prop_tree_fat_ul">
+					<pos x="0" y="66" z="0" />
+				</prop>
+				<prop name="prop_tree_FF_DNARoot" code=""prop_tree_fat_ul">
+					<pos x="16" y="1" z="0" />
+				</prop>
+				<prop name="prop_tree_FF_DNARoot" code=""prop_tree_fat_ul">
+					<pos x="-57" y="-57" z="0" />
+				</prop>
+				<prop name="prop_tree_FF_DNARoot" code=""prop_tree_fat_ul">
+					<pos x="99" y="37" z="0" />
+				</prop>
+				<prop name="prop_tree_FF_DNARoot" code=""prop_tree_fat_ul">
+					<pos x="98" y="91" z="0" />
+				</prop>
+				<prop name="prop_tree_FF_DNARoot" code=""prop_tree_fat_ul">
+					<pos x="-41" y="102" z="0" />
+				</prop>
+				<prop name="prop_fence_FF_DNARoot" code="prop_fence_FF">
+					<pos x="119.5" y="101" z="0" />
+					<nhpr h="-50" p="0" r="-0" />
+				</prop>
+				<prop name="prop_fence_FF_DNARoot" code="prop_fence_FF">
+					<pos x="77.5" y="133" z="0" />
+					<nhpr h="-10" p="0" r="-0" />
+				</prop>
+			<node name="game_table_1">
+				<prop name="prop_game_table_FF_DNARoot" code="prop_game_table_FF">
+					<pos x="56" y="61" z="0" />
+					<nhpr h="9" p="0" r="0" />
+				</prop>
+			</node>
+			<node name="game_table_2">
+				<prop name="prop_game_table_FF_DNARoot" code="prop_game_table_FF">
+					<pos x="14" y="-39" z="0" />
+					<nhpr h="90" p="0" r="0" />
+				</prop>
+			</node>
+			<node name="game_table_3">
+				<prop name="prop_game_table_FF_DNARoot" code="prop_game_table_FF">
+					<pos x="-31" y="34" z="0" />
+					<nhpr h="-45" p="0" r="0" />
+				</prop>
+			</node>
+			<node name="game_table_4">
+				<prop name="prop_game_table_FF_DNARoot" code="prop_game_table_FF">
+					<pos x="90" y="0" z="0" />
+					<nhpr h="60" p="0" r="0" />
+				</prop>
+			</node>
+				<prop name="linktunnel_ff_7101_DNARoot" code="prop_outdoor_zone_entrance">
+					<pos x="110.5" y="124" z="0.01" />
+					<nhpr h="312" p="124" r="0.01" />
+					<sign code="DD_sign2">
+						<pos x="0" y="0" z="0" />
+						<nhpr h="0" p="0" r="-3.0" />
+						<scale x="1.85" y="1" z="1.35" />
+						<baseline code="TT_Comedy" wiggle="7" stumble="0.1">
+							<color r="0.439216" g="0.247059" b="0.184314" a="1" />
+							<pos x="0" y="0" z="-0.2" />
+							<scale x="1.1" y="1" z="1.7" />
+							<text>RIVERS's BOULEVARD</text>
+						</baseline>
+						<baseline code="TT_Comedy" wiggle="3" stomp="0.0367716">
+							<color r="0.439216" g="0.247059" b="0.184314" a="1" />
+							<pos x="0" y="0" z="-1.4" />
+							<scale x="1.2" y="1" z="1.2" />
+							<text>FUNNY FARM</text>
+						</baseline>
+					</sign>
+				</prop>
+				<prop name="link__disabled__tunnel_ff_7201_DNARoot" code="prop_safe_zone_tunnel">
+					<pos x="-237" y="41.33" z="-6.6" />
+					<nhpr h="284" p="0" r="0" />
+					<sign code="tunnel_sign_orange">
+						<scale x="1.5" y="1" z="1.5" />
+						<baseline code="mickey" width="30" height="33.3333">
+							<color r="0" g="0.501961" b="0.752941" a="1" />
+							<pos x="0" y="0" z="-0.76" />
+							<scale x="1.5" y="1" z="1.5" />
+							<text>FLOWERS AVENUE</text>
+						</baseline>
+						<baseline code="mickey" width="44.0567" height="44.0567">
+							<color r="0" g="0.501961" b="0.752941" a="1" />
+							<pos x="-0.08" y="0" z="-2" />
+							<scale x="0.8" y="1" z="0.8" />
+							<text>FUNNY FARM</text>
+						</baseline>
+						<baseline>
+							<pos x="0" y="0" z="1.78" />
+							<scale x="2.5" y="1" z="2.5" />
+							<graphic code="plutoSZ" />
+						</baseline>
+					</sign>
+				</prop>
+				<prop name="linkt__disabled__unnel_ff_7301_DNARoot" code="prop_safe_zone_tunnel">
+					<pos x="-51" y="-175" z="-6.6" />
+					<nhpr h="0" p="0" r="0" />
+					<sign code="tunnel_sign_orange">
+						<scale x="1.5" y="1" z="1.5" />
+						<baseline code="mickey" width="30" height="30">
+							<color r="0" g="0.501961" b="0.752941" a="1" />
+							<pos x="0" y="0" z="-0.75" />
+							<scale x="1.5" y="1" z="1.5" />
+							<text>DOODLE STREET</text>
+						</baseline>
+						<baseline code="mickey" width="44.0567" height="44.0567">
+							<color r="0" g="0.501961" b="0.752941" a="1" />
+							<pos x="-0.08" y="0" z="-2" />
+							<scale x="0.8" y="1" z="0.8" />
+							<text>FUNNY FARM</text>
+						</baseline>
+						<baseline>
+							<pos x="0" y="0" z="1.78" />
+							<scale x="2.5" y="1" z="2.5" />
+							<graphic code="plutoSZ" />
+						</baseline>
+					</sign>
+				</prop>
+				<prop name="prop_golf_construction_sign_DNARoot" code=""prop_golf_construction_sign">
+					<pos x="-133" y="6" z="0" />
+					<nhpr h="15" p="0" r="0" />
+				</prop>
+				<prop name="prop_golf_construction_sign_DNARoot" code=""prop_golf_construction_sign">
+					<pos x="8" y="-82" z="0" />
+				</prop>
+		</visgroup>
+	</group>
+</scene>
