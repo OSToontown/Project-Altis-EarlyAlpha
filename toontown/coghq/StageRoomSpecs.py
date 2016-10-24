@@ -25,6 +25,7 @@ from toontown.coghq import LawbotOfficeDiamondRoom_Trap00
 from toontown.coghq import LawbotOfficeGearRoom_Platform00
 from toontown.coghq import LawbotOfficeLobby_Lights00
 from toontown.coghq import LawbotOfficeBoilerRoom_Action01
+from toontown.coghq import LawbotOfficeBoilerRoom_Action01_Cogs
 from toontown.coghq import LawbotOfficeDiamondRoom_Action00
 from toontown.coghq import LawbotOfficeDiamondRoom_Action01
 from toontown.coghq import LawbotOfficeLobby_Action01
@@ -73,6 +74,7 @@ for roomName, roomId in CashbotStageRoomName2RoomId.items():
     CashbotStageSpecModules[roomId] = locals()[roomName]
 
 CogSpecModules = {'LawbotOfficeOilRoom_Battle00': LawbotOfficeOilRoom_Battle00_Cogs,
+ 'LawbotOfficeBoilerRoom_Action01': LawbotOfficeBoilerRoom_Action01_Cogs,
  'LawbotOfficeOilRoom_Battle01': LawbotOfficeOilRoom_Battle01_Cogs,
  'LawbotOfficeBoilerRoom_Battle00': LawbotOfficeBoilerRoom_Battle00_Cogs,
  'LawbotOfficeBoilerRoom_Trap00': LawbotOfficeBoilerRoom_Trap00_Cogs,
