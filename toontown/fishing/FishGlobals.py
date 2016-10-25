@@ -32,7 +32,7 @@ Rod2JellybeanDict = {0: 10,
 HealAmount = 1
 JellybeanFishingHolidayScoreMultiplier = 2
 MAX_RARITY = 10
-GlobalRarityDialBase = 4.3
+GlobalRarityDialBase = 3.5
 FishingAngleMax = 50.0
 OVERALL_VALUE_SCALE = 15
 RARITY_VALUE_SCALE = 0.2
@@ -51,10 +51,10 @@ RodPriceDict = {0: 0,
  3: 1200,
  4: 2000}
 RodRarityFactor = {0: 1.0 / (GlobalRarityDialBase * 1),
- 1: 1.0 / (GlobalRarityDialBase * 0.975),
- 2: 1.0 / (GlobalRarityDialBase * 0.95),
- 3: 1.0 / (GlobalRarityDialBase * 0.9),
- 4: 1.0 / (GlobalRarityDialBase * 0.85)}
+ 1: 1.0 / (GlobalRarityDialBase * 0.9),
+ 2: 1.0 / (GlobalRarityDialBase * 0.85),
+ 3: 1.0 / (GlobalRarityDialBase * 0.8),
+ 4: 1.0 / (GlobalRarityDialBase * 0.75)}
 MaxRodId = 4
 FishAudioFileDict = {-1: ('Clownfish.ogg',
       1,

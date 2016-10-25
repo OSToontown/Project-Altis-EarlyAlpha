@@ -158,6 +158,7 @@ class DistributedBuildingMgrAI:
                 building.track = backup.get('track', 'c')
                 building.difficulty = backup.get('difficulty', 1)
                 building.numFloors = backup.get('numFloors', 1)
+                building.numFloors = max(1, min(7, building.numFloors))
                 building.updateSavedBy(backup.get('savedBy'))
                 building.becameSuitTime = backup.get('becameSuitTime', time.mktime(time.gmtime()))
                 if ['state'] == 'suit':
@@ -180,6 +181,7 @@ class DistributedBuildingMgrAI:
             building.track = blockData.get('track', 'c')
             building.difficulty = int(blockData.get('difficulty', 1))
             building.numFloors = int(blockData.get('numFloors', 1))
+            building.numFloors = max(1, min(7, building.numFloors))
             if not ZoneUtil.isWelcomeValley(building.zoneId):
                 building.updateSavedBy(blockData.get('savedBy'))
             else:

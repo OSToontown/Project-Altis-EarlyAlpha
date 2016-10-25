@@ -93,6 +93,8 @@ import time
 import sys
 import random
 import __builtin__
+import os
+import platform
 try:
     launcher
 except:
@@ -101,6 +103,16 @@ except:
     __builtin__.launcher = launcher
 
 pollingDelay = 0.5
+
+
+ping_str = "-n 1" if  platform.system().lower()=="windows" else "-c 1"
+AuthServerLive = os.system("ping " + ping_str + " " + "188.165.250.225") == 0
+if AuthServerLive == False:
+    print("The Dubrari Authentication Server was not found, or has moved. Please try again later.")
+    raise SystemExit
+else:
+    print("Auth Server Online")
+
 
 print('Starting the game...')
 tempLoader = Loader()
