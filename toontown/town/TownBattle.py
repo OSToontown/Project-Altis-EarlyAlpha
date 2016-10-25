@@ -597,12 +597,16 @@ class TownBattle(StateData.StateData):
     def enterSOS(self):
         canHeal, canTrap, canLure = self.checkHealTrapLure()
         self.SOSPanel.enter(canLure, canTrap)
+        for panel in self.toonPanels:
+            panel.stash()
         self.accept(self.SOSPanelDoneEvent, self.__handleSOSPanelDone)
         return None
 
     def exitSOS(self):
         self.ignore(self.SOSPanelDoneEvent)
         self.SOSPanel.exit()
+        for panel in self.toonPanels:
+            panel.unstash()
         return None
 
     def __handleSOSPanelDone(self, doneStatus):
