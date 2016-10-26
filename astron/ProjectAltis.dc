@@ -47,6 +47,7 @@ dclass Account {
   string LAST_LOGIN db;
   string ACCOUNT_ID db;
   uint16 ADMIN_ACCESS db;
+  uint8 BETA_KEY_QUEST db;
 };
 
 struct BarrierData {
@@ -947,6 +948,7 @@ dclass DistributedAnimatedProp : DistributedObject {
 typedef int16 pair16[2];
 
 dclass DistributedToon : DistributedPlayer {
+  setWantBetaKeyQuest(uint8 = 0) required db airecv;
   setWebAccountId(uint32 webId = 0) required airecv;
   setDNAString(blob dnaString) required broadcast ownrecv db;
   setGM(uint8 type = 0) required broadcast ownrecv db;
