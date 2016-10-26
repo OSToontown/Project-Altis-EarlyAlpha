@@ -46,6 +46,10 @@ class OTPTimer(DirectFrame):
         self.reparentTo(base.a2dBottomRight)
         self.setPos(-0.173, 0, 0.37)
 
+    def posAboveMapButton(self):
+        self.reparentTo(base.a2dBottomRight)
+        self.setPos(-0.173, 0, 0.65)
+
     def setTime(self, time):
         time = bound(time, 0, 999)
         if time == self.currentTime:
