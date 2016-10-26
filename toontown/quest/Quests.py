@@ -18760,51 +18760,12 @@ class CogSuitPartReward(Reward):
         return TTLocalizer.QuestsCogSuitPartRewardPoster % {'cogTrack': self.getCogTrackName(),
          'part': self.getCogPartName()}
 
-class BetaKeyReward(Reward):
-    def sendRewardAI(self, av):
-        # Tell the web server that we completed the quest successfully!
-        simbase.air.writeServerEvent('bkq-complete', avId=av.getDoId(), message='Avatar successfully completed beta key quest!')
-        simbase.air.rpc.call('gibBetaKey', webAccId=av.getWebAccountId())
-
-    def getString(self):
-        return TTLocalizer.QuestsBetaKeyReward
-
-    def getPosterString(self):
-        return TTLocalizer.QuestsBetaKeyRewardPoster
-
-
-def getRewardClass(id):
-    reward = RewardDict.get(id)
-    if reward:
-        return reward[0]
-    else:
-        return None
-    return None
-
-
-def getReward(id):
-    reward = RewardDict.get(id)
-    if reward:
-        rewardClass = reward[0]
-        return rewardClass(id, reward[1:])
-    else:
-        notify.warning('getReward(): id %s not found.' % id)
-        return None
-    return None
-
 
 def getNextRewards(numChoices, tier, av):
     rewardTier = list(getRewardsInTier(tier))
     optRewards = list(getOptionalRewardsInTier(tier))
     if av.getGameAccess() == OTPGlobals.AccessFull and tier == TT_TIER + 3:
         optRewards = []
-    if av.getWantBetaKeyQuest():
-        if tier >= DG_TIER or config.GetBool('want-bkq-pre-dg', False):
-            # Offer them the beta key quest.
-            optRewards = [5000]
-        else:
-            # They aren't eligible for the quest. Bye bye!
-            simbase.air.questManager.removeBetaQuest(av, 'avatarExit')
     if isLoopingFinalTier(tier):
         rewardHistory = map(lambda questDesc: questDesc[3], av.quests)
         if notify.getDebug():
@@ -19408,8 +19369,7 @@ RewardDict = {100: (MaxHpReward, 1),
  4213: (CogSuitPartReward, 'c', CogDisguiseGlobals.leftArmHand),
  4214: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightArmUpper),
  4215: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightArmLower),
- 4216: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightArmHand),
- 5000: (BetaKeyReward, None)}
+ 4216: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightArmHand)}
 
 def getNumTiers():
     return len(RequiredRewardTrackDict) - 1
