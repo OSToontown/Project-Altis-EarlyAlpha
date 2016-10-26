@@ -21,14 +21,27 @@ from toontown.toonbase import TTLocalizer, ToontownGlobals
 from toontown.toontowngui import TTDialog
 from toontown.toontowngui.TTGui import btnDn, btnRlvr, btnUp
 from toontown.toontowngui.TTDialog import *
+import PickAToonOptions
+
 COLORS = (Vec4(0.917, 0.164, 0.164, 1),
  Vec4(0.152, 0.75, 0.258, 1),
  Vec4(0.598, 0.402, 0.875, 1),
  Vec4(0.133, 0.59, 0.977, 1),
  Vec4(0.895, 0.348, 0.602, 1),
  Vec4(0.977, 0.816, 0.133, 1))
+ 
+# The main position
 MAIN_POS = (-60, 1, 11)
 MAIN_HPR = (-90, 5, 0)
+
+# To be used when entering PAT
+TOON_HALL_POS = (110, 1, 8)
+TOON_HALL_HPR = (-90, 0, 0)
+
+# To be used when going to menu
+HQ_POS = (14, 16, 8)
+HQ_HPR = (-48, 0, 0)
+
 DEL = TTLocalizer.PhotoPageDelete + ' %s?'
 chooser_notify = DirectNotifyGlobal.directNotify.newCategory('PickAToon')
 
@@ -42,6 +55,7 @@ class PickAToon:
         self.selectedToon = 0
         self.doneEvent = doneEvent
         self.jumpIn = None
+        self.optionsMgr = PickAToonOptions.PickAToonOptions()
         return
 
     def skyTrack(self, task):
@@ -89,16 +103,21 @@ class PickAToon:
         self.quitButton.reparentTo(base.a2dBottomLeft)
         self.quitButton.setPos(0.25, 0, 0.075)
         
+        # Options Button
+        self.optionsButton = DirectButton(image=(quitHover, quitHover, quitHover), relief=None, text="Options", text_font=ToontownGlobals.getSignFont(), text_fg=(0.977, 0.816, 0.133, 1), text_pos=TTLocalizer.ACquitButtonPos, text_scale=TTLocalizer.ACquitButton, image_scale=1, image1_scale=1.05, image2_scale=1.05, scale=1.05, pos=(1.08, 0, -0.907), command=self.openOptions)
+        self.optionsButton.reparentTo(base.a2dBottomRight)
+        self.optionsButton.setPos(-0.25, 0, 0.075)
+        
         gui.removeNode()
         gui2.removeNode()
         newGui.removeNode()
 
-		#Area toon is in
+		# Area toon is in
         self.area = OnscreenText(parent=self.patNode2d, font=ToontownGlobals.getToonFont(),
-                                 pos=(-.1, -.1), scale=.075, text='', shadow=(0,0,0,1), fg=COLORS[self.selectedToon])
+                                 pos=(-.1, -.1), scale=.075, text='', shadow=(0, 0, 0, 1), fg=COLORS[self.selectedToon])
 
         # DMENU Pat Screen Stuff
-        self.play = DirectButton(relief = None, image = (btnUp, btnDn, btnRlvr), text = 'PLAY THIS TOON', text_scale = .050, scale=1.2, pos=(0, 0, -0.93), image_color = (1, 1, 1, 1), image1_color = (0.8, 0.8, 0, 1), image2_color = (0.15, 0.82, 1.0, 1), command=self.playGame, parent=self.patNode2d)
+        self.play = DirectButton(relief = None, image = (quitHover, quitHover, quitHover), text = 'PLAY THIS TOON', text_font=ToontownGlobals.getSignFont(), text_fg=(0.977, 0.816, 0.133, 1), text_pos=(0, -.016), text_scale = 0.045, image_scale=1, image1_scale=1.05, image2_scale=1.05, scale=1.4, pos=(0, 0, -0.90), command=self.playGame, parent=self.patNode2d)
         
         self.toon = Toon.Toon()
         self.toon.setPosHpr(-46, 1, 8.1, 90, 0, 0)
@@ -143,7 +162,7 @@ class PickAToon:
         self.toon6.setPos(1, 0, 0.5)
         self.toon6.setScale(.5)
 
-#deleteButton
+        # Delete Toon button
         trashcanGui = loader.loadModel('phase_3/models/gui/trashcan_gui.bam')
         self.deleteButton = DirectButton(parent=base.a2dBottomRight,
                                          geom=(trashcanGui.find('**/TrashCan_CLSD'),
@@ -153,18 +172,18 @@ class PickAToon:
                                                    TTLocalizer.AvatarChoiceDelete, ''),
                                          text_fg=(1, 1, 1, 1), text_shadow=(0, 0, 0, 1),
                                          text_scale=0.15, text_pos=(0, -0.1), relief=None,
-                                         scale=.5, command=self.__handleDelete, pos=(-.2, 0, .2))
+                                         scale=.5, command=self.__handleDelete, pos=(-.2, 0, .25))
 
     def selectToon(self, slot):
         self.selectedToon = slot
         self.updateFunc()
         
     def updateFunc(self):
-        haveToon = self.toonList[self.selectedToon]
+        self.haveToon = self.toonList[self.selectedToon]
         self.area['fg'] = COLORS[self.selectedToon]
         if self.jumpIn:
             self.jumpIn.finish()
-        if haveToon:
+        if self.haveToon:
             self.showToon()
             self.deleteButton.show()
         else:
@@ -198,7 +217,6 @@ class PickAToon:
             self.play['command'] = self.makeToon
             
     def playGame(self):
-        # TODO: Add some nice animation of the toon teleporting out or stuff
         if self.jumpIn:
             self.jumpIn.finish()
         doneStatus = {"mode": "chose", "choice": self.selectedToon}
@@ -283,6 +301,8 @@ class PickAToon:
         del self.title
         self.quitButton.destroy()
         del self.quitButton
+        self.optionsButton.destroy()
+        del self.optionsButton
         del self.avatarList
         self.toon.removeNode()
         del self.toon
@@ -320,3 +340,23 @@ class PickAToon:
         cleanupDialog('globalDialog')
         self.doneStatus = {'mode': 'exit'}
         messenger.send(self.doneEvent, [self.doneStatus])
+
+    def openOptions(self):
+        #base.camera.posHprInterval(0.5, Point3(HQ_POS), VBase3(HQ_HPR), blendType = 'easeInOut').start() # ALTIS: This crashes the game for some reason, it worked on my game though
+        self.optionsMgr.showOptions()
+        self.optionsButton["text"] = "Back"
+        self.optionsButton["command"] = self.hideOptions
+        self.patNode2d.hide()
+        self.patNode.hide()
+        if self.haveToon:
+            self.deleteButton.hide()
+
+    def hideOptions(self):
+        #base.camera.posHprInterval(0.5, Point3(MAIN_POS), VBase3(MAIN_HPR), blendType = 'easeInOut').start() # ALTIS: This crashes the game for some reason, it worked on my game though
+        self.optionsMgr.hideOptions()
+        self.optionsButton["text"] = "Options"
+        self.optionsButton["command"] = self.openOptions
+        self.patNode2d.show()
+        self.patNode.show()
+        if self.haveToon:
+            self.deleteButton.show()
