@@ -221,7 +221,7 @@ class TownBattle(StateData.StateData):
         self.notify.debug('enterPanels() num: %d localNum: %d' % (num, localNum))
         for toonPanel in self.toonPanels:
             toonPanel.hide()
-            toonPanel.setPos(0, 0, 0.3)
+            toonPanel.setPos(0, 0, -0.3)
 
         if num == 1:
             self.toonPanels[0].setX(self.oddPos[1])

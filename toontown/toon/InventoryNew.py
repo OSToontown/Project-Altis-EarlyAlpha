@@ -82,7 +82,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
 
     def show(self):
         if self.tutorialFlag:
-            self.tutArrows.arrowsOn(-0.43, -0.12, 180, -0.43, -0.24, 180, onTime=1.0, offTime=0.2)
+            self.tutArrows.arrowsOn(-0.4, -0.62, 90, -0.4, -0.62, 90, onTime=1.0, offTime=0.2)
             if self.numItem(THROW_TRACK, 0) == 0:
                 self.tutArrows.arrow1.reparentTo(hidden)
             else:
@@ -319,7 +319,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.accept("control-6", self.__handleSelection, extraArgs=[self.activeTab, 5, True])
         self.accept("control-7", self.__handleSelection, extraArgs=[self.activeTab, 6, True])
 
-    def __handleSelection(self, track, level):
+    def __handleSelection(self, track, level, viaKeyboard=False):
         if self.activateMode == 'purchaseDelete' or self.activateMode == 'bookDelete' or self.activateMode == 'storePurchaseDelete':
             if self.numItem(track, level):
                 self.useItem(track, level)
@@ -327,12 +327,12 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
                 messenger.send('inventory-deletion', [track, level])
                 self.showDetail(track, level)
         elif self.activateMode == 'purchase' or self.activateMode == 'storePurchase':
-            messenger.send('inventory-selection', [track, level])
+            messenger.send('inventory-selection', [track, level, viaKeyboard])
             self.showDetail(track, level)
         elif self.gagTutMode:
             pass
         else:
-            messenger.send('inventory-selection', [track, level])
+            messenger.send('inventory-selection', [track, level, viaKeyboard])
 
     def __handleRun(self):
         messenger.send('inventory-run')
@@ -1288,7 +1288,6 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.sosButton = DirectButton(parent=self.battleFrame, relief=None, pos=(1.45, 0, -0.7), text=TTLocalizer.InventorySOS, text_scale=0.05, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=(2, 1.05, 1), image_color=(0, 0.6, 1, 1), command=self.__handleSOS)
         self.passButton = DirectButton(parent=self.battleFrame, relief=None, pos=(1.45, 0, -0.6), text=TTLocalizer.InventoryPass, text_scale=TTLocalizer.INpassButton, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=1, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=(2, 1.05, 1), image_color=(0, 0.6, 1, 1), command=self.__handlePass)
         self.fireButton = DirectButton(parent=self.battleFrame, relief=None, pos=(1.4, 0, -0.8), text=TTLocalizer.InventoryFire, text_scale=TTLocalizer.INfireButton, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=(2, 1.05, 1), image_color=(0, 0.6, 1, 1), command=self.__handleFire)
-        self.tutText = DirectFrame(parent=self.battleFrame, relief=None, pos=(0.05, 0, -0.1133), scale=0.143, image=DGG.getDefaultDialogGeom(), image_scale=5.125, image_pos=(0, 0, -0.65), image_color=ToontownGlobals.GlobalDialogColor, text_scale=TTLocalizer.INclickToAttack, text=TTLocalizer.InventoryClickToAttack, textMayChange=0)
         self.tutText.hide()
         self.tutArrows = BlinkingArrows.BlinkingArrows(parent=self.battleFrame)
         battleModels.removeNode()
@@ -1297,18 +1296,14 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         return
 
     def loadPurchaseFrame(self):
-        purchaseModels = loader.loadModel('phase_4/models/gui/purchase_gui')
-        self.purchaseFrame = DirectFrame(relief=None, image=purchaseModels.find('**/PurchasePanel'), image_pos=(-0.21, 0, 0.08), parent=self)
+        self.purchaseFrame = DirectFrame(relief=None, parent=self)
         self.purchaseFrame.setX(-.06)
         self.purchaseFrame.hide()
-        purchaseModels.removeNode()
         return
 
     def loadStorePurchaseFrame(self):
-        storePurchaseModels = loader.loadModel('phase_4/models/gui/gag_shop_purchase_gui')
-        self.storePurchaseFrame = DirectFrame(relief=None, image=storePurchaseModels.find('**/gagShopPanel'), image_pos=(-0.21, 0, 0.18), parent=self)
+        self.storePurchaseFrame = DirectFrame(relief=None, parent=self)
         self.storePurchaseFrame.hide()
-        storePurchaseModels.removeNode()
         return
 
     def buttonLookup(self, track, level):
