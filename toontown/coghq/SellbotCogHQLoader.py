@@ -108,17 +108,17 @@ class SellbotCogHQLoader(CogHQLoader.CogHQLoader):
             self.oldFactoryPOV.setScale(0.2)
 
             self.spotLights = self.geom.find('**/SpotLights')
-            self.spot1Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot1'), 7, Vec3(0, 1, 10)), Wait(7), LerpHprInterval(self.spotLights.find('**/Spot1'), 7, Vec3(0, 1, -5)), Wait(7))
+            self.spot1Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot1'), 7, Vec3(0, 1, 10), startHpr=Vec3(0, 1, -5)), LerpHprInterval(self.spotLights.find('**/Spot1'), 7, Vec3(0, 1, -5), startHpr=Vec3(0, 1, 10)))
+            self.spot2Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot2'), 7, Vec3(0, 1, 10), startHpr=Vec3(0, 1, -5)), LerpHprInterval(self.spotLights.find('**/Spot2'), 7, Vec3(0, 1, -5), startHpr=Vec3(0, 1, 10)))
+            self.spot3Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot3'), 7, Vec3(0, 1, 10), startHpr=Vec3(0, 1, -5)), LerpHprInterval(self.spotLights.find('**/Spot3'), 7, Vec3(0, 1, -5), startHpr=Vec3(0, 1, 10)))
+            self.spot4Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot4'), 7, Vec3(0, 1, 10), startHpr=Vec3(0, 1, -5)), LerpHprInterval(self.spotLights.find('**/Spot4'), 7, Vec3(0, 1, -5), startHpr=Vec3(0, 1, 10)))
+            self.spot5Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot5'), 7, Vec3(0, 1, 10), startHpr=Vec3(0, 1, -5)), LerpHprInterval(self.spotLights.find('**/Spot5'), 7, Vec3(0, 1, -5), startHpr=Vec3(0, 1, 10)))
+            self.spot6Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot6'), 7, Vec3(0, 1, 10), startHpr=Vec3(0, 1, -5)), LerpHprInterval(self.spotLights.find('**/Spot6'), 7, Vec3(0, 1, -5), startHpr=Vec3(0, 1, 10)))
             self.spot1Sequence.loop()
-            self.spot2Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot2'), 7, Vec3(0, 1, 5)), Wait(7), LerpHprInterval(self.spotLights.find('**/Spot2'), 7, Vec3(0, 1, -5)), Wait(7))
             self.spot2Sequence.loop()
-            self.spot3Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot3'), 7, Vec3(0, 1, 10)), Wait(7), LerpHprInterval(self.spotLights.find('**/Spot3'), 7, Vec3(0, 1, 0)), Wait(7))
             self.spot3Sequence.loop()
-            self.spot4Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot4'), 7, Vec3(0, 1, 10)), Wait(7), LerpHprInterval(self.spotLights.find('**/Spot4'), 7, Vec3(0, 1, -5)), Wait(7))
             self.spot4Sequence.loop()
-            self.spot5Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot5'), 7, Vec3(0, 1, 10)), Wait(7), LerpHprInterval(self.spotLights.find('**/Spot5'), 7, Vec3(0, 1, -5)), Wait(7))
             self.spot5Sequence.loop()
-            self.spot6Sequence = Sequence(LerpHprInterval(self.spotLights.find('**/Spot6'), 7, Vec3(0, 1, 10)), Wait(7), LerpHprInterval(self.spotLights.find('**/Spot6'), 7, Vec3(0, 1, -5)), Wait(7))
             self.spot6Sequence.loop()
 		
         elif zoneId == ToontownGlobals.SellbotFactoryExt:
