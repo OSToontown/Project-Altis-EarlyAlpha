@@ -17,7 +17,7 @@ class InventoryPage(ShtikerPage.ShtikerPage):
     def load(self):
         ShtikerPage.ShtikerPage.load(self)
         self.title = DirectLabel(parent=self, relief=None, text=TTLocalizer.InventoryPageTitle, text_scale=0.12, textMayChange=1, pos=(0, 0, 0.62))
-        self.gagFrame = DirectFrame(parent=self, relief=None, pos=(0.1, 0, -0.47), scale=(0.35, 0.35, 0.35), geom=DGG.getDefaultDialogGeom(), geom_color=ToontownGlobals.GlobalDialogColor)
+        self.gagFrame = DirectFrame(parent=self, relief=None, pos=(0.1, 0, -0.47), scale=(0.35, 0.35, 0.35))
         self.trackInfo = DirectFrame(parent=self, relief=None, pos=(-0.4, 0, -0.47), scale=(0.35, 0.35, 0.35), geom=DGG.getDefaultDialogGeom(), geom_scale=(1.4, 1, 1), geom_color=ToontownGlobals.GlobalDialogColor, text='', text_wordwrap=11, text_align=TextNode.ALeft, text_scale=0.12, text_pos=(-0.65, 0.3), text_fg=(0.05, 0.14, 0.4, 1))
         self.trackProgress = DirectWaitBar(parent=self.trackInfo, pos=(0, 0, -0.2), relief=DGG.SUNKEN, frameSize=(-0.6,
          0.6,
@@ -40,6 +40,7 @@ class InventoryPage(ShtikerPage.ShtikerPage):
         ShtikerPage.ShtikerPage.enter(self)
         base.localAvatar.inventory.setActivateMode('book')
         base.localAvatar.inventory.show()
+        base.localAvatar.inventory.setScale(0.85, 0.85, 0.85)
         base.localAvatar.inventory.reparentTo(self)
         self.moneyDisplay['text'] = str(base.localAvatar.getMoney())
         self.accept('enterBookDelete', self.enterDeleteMode)
@@ -51,6 +52,7 @@ class InventoryPage(ShtikerPage.ShtikerPage):
     def exit(self):
         ShtikerPage.ShtikerPage.exit(self)
         self.clearTrackInfo(self.currentTrackInfo)
+        base.localAvatar.inventory.setScale(1, 1, 1)
         self.ignore('enterBookDelete')
         self.ignore('exitBookDelete')
         self.ignore('enterTrackFrame')
