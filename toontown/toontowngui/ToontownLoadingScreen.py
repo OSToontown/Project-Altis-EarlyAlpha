@@ -1,72 +1,79 @@
-from pandac.PandaModules import *
+from panda3d.core import *
 from direct.gui.DirectGui import *
 from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import TTLocalizer
 from toontown.hood import ZoneUtil
 import random
-
+logoScale = (1, 1, 0.35)  # Scale for our logo.
 class ToontownLoadingScreen():
     __module__ = __name__
 
     def __init__(self):
         self.__expectedCount = 0
         self.__count = 0
-        self.gui = loader.loadModel('phase_3/models/gui/progress-background')
-        self.banner = loader.loadModel('phase_3/models/gui/toon_council').find('**/scroll')
-        self.banner.reparentTo(self.gui)
-        self.banner.setScale(0.4, 0.4, 0.4)
-        self.tip = DirectLabel(guiId='ToontownLoadingScreenTip', parent=self.banner, relief=None, text='', text_scale=TTLocalizer.TLStip, textMayChange=1, pos=(-1.2, 0.0, 0.1), text_fg=(0.4, 0.3, 0.2, 1), text_wordwrap=13, text_align=TextNode.ALeft)
-        self.title = DirectLabel(guiId='ToontownLoadingScreenTitle', parent=self.gui, relief=None, pos=(-1.06, 0, -0.77), text='', textMayChange=1, text_scale=0.08, text_fg=(0, 0, 0.5, 1), text_align=TextNode.ALeft)
-        self.waitBar = DirectWaitBar(guiId='ToontownLoadingScreenWaitBar', parent=self.gui, frameSize=(-1.06,
-         1.06,
-         -0.03,
-         0.03), pos=(0, 1, -0.85), text='')
-        logoScale = (1, 1, 0.35)  # Scale for our logo.
-        self.logo = OnscreenImage(
-            image='phase_3/maps/toontown-logo.png',
-            scale=logoScale)
-        self.logo.reparentTo(hidden)
-        self.logo.setTransparency(TransparencyAttrib.MAlpha)
-        scale = self.logo.getScale()
-        # self.logo.setPos(scale[0], 0, -scale[2])
-        self.logo.setPos(0, 0, 0.65)
+        self.loadingLabel = None
+        self.range = None
+        base.graphicsEngine.renderFrame()
         return
-
-    def destroy(self):
-        self.tip.destroy()
-        self.title.destroy()
-        self.waitBar.destroy()
-        self.banner.removeNode()
-        self.gui.removeNode()
-        self.logo.removeNode()
 
     def getTip(self, tipCategory):
         return TTLocalizer.TipTitle + '\n' + random.choice(TTLocalizer.TipDict.get(tipCategory))
 
     def begin(self, range, label, gui, tipCategory, zoneId):
-        self.waitBar['range'] = range
-        self.title['text'] = label
-        self.tip['text'] = self.getTip(tipCategory)
-        self.__count = 0
-        self.__expectedCount = range
-        if gui:
-            self.waitBar.reparentTo(self.gui)
-            self.title.reparentTo(self.gui)
-            self.logo.reparentTo(self.gui)
-            self.gui.reparentTo(aspect2d, NO_FADE_SORT_INDEX)
-        else:
-            self.waitBar.reparentTo(aspect2d, NO_FADE_SORT_INDEX)
-            self.title.reparentTo(aspect2d, NO_FADE_SORT_INDEX)
-            self.logo.reparentTo(hidden)
-            self.gui.reparentTo(hidden)
-        self.waitBar.update(self.__count)
+        self.logo = OnscreenImage(
+            image='phase_3/maps/toontown-logo.png',
+            scale=logoScale)
+        self.logo.reparentTo(aspect2d)
+        base.graphicsEngine.renderFrame()
+        self.logo.setTransparency(TransparencyAttrib.MAlpha)
+        base.graphicsEngine.renderFrame()
+        scale = self.logo.getScale()
+        base.graphicsEngine.renderFrame()
+        self.logo.setPos(0, 0, 0.65)
+        base.graphicsEngine.renderFrame()
+        self.loadingText = OnscreenText(text='Initializing Load...', align=TextNode.ACenter, scale=0.1, pos=(0, 0, 0))
+        base.graphicsEngine.renderFrame()
+        self.loadingCircle = OnscreenImage(image = 'phase_3/maps/dmenu/loading_circle.png')
+        self.loadingCircle.show()
+        base.graphicsEngine.renderFrame()
+        self.loadingCircle.setScale(0.1)
+        self.loadingCircle.setTransparency(TransparencyAttrib.MAlpha)
+        self.loadingCircle.reparentTo(base.a2dBottomRight)
+        base.graphicsEngine.renderFrame()
+        self.loadingCircle.setPos(-0.1, 0, 0.1)
+        base.graphicsEngine.renderFrame()
+        self.background = OnscreenImage(image = 'phase_3.5/maps/loading/toon.jpg', parent = aspect2d)
+        self.background.show()
+        base.graphicsEngine.renderFrame()
+        self.background.setBin('background', 1)
+        self.background.reparentTo(aspect2d)
+        base.graphicsEngine.renderFrame()
+        self.background.setScale(2, 1, 1)
+        base.graphicsEngine.renderFrame()
+        self.loadingText["text"] = label
+        base.graphicsEngine.renderFrame()
 
+
+    def destroy(self):
+        pass
+        
     def end(self):
-        self.waitBar.finish()
-        self.waitBar.reparentTo(self.gui)
-        self.title.reparentTo(self.gui)
-        self.gui.reparentTo(hidden)
-        self.logo.reparentTo(hidden)
+        if self.loadingText:
+            self.loadingText.destroy()
+            del self.loadingText
+            
+        if self.loadingCircle:
+            self.loadingCircle.destroy()
+            del self.loadingCircle
+            
+        if self.background:
+            self.background.destroy()
+            del self.background
+            
+        if self.logo:
+            self.logo.destroy()
+            del self.logo
+            
         return (self.__expectedCount, self.__count)
 
     def abort(self):
@@ -74,4 +81,6 @@ class ToontownLoadingScreen():
 
     def tick(self):
         self.__count = self.__count + 1
-        self.waitBar.update(self.__count)
+        base.graphicsEngine.renderFrame()
+        self.loadingCircle.setHpr(0, 0, self.__count * 15)
+        #self.waitBar.update(self.__count)
