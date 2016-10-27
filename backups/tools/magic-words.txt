@@ -908,3 +908,15 @@
 10/26/16 14:28:33 | 100000001 : run
 10/27/16 13:04:37 | 100000001 : name Brer Rabbit
 10/27/16 13:12:26 | 100000001 : maxToon
+10/27/16 16:12:28 | 100000001 : invasion start bfh
+10/27/16 16:13:59 | 100000001 : invasion end
+10/27/16 16:14:05 | 100000001 : invasion stop
+10/27/16 16:14:09 | 100000001 : invasion start cn
+10/27/16 16:28:02 | 100000001 : invasion start bfh
+10/27/16 16:36:10 | 100000001 : invasion start txm
+10/27/16 16:36:14 | 100000001 : invasion stop
+10/27/16 16:36:19 | 100000001 : invasion start txm
+10/27/16 16:57:23 | 100000001 : invasion start mg
+10/27/16 16:57:28 | 100000001 : maxToon
+10/27/16 16:59:17 | 100000001 : invasion stop
+10/27/16 16:59:20 | 100000001 : invasion start cn
