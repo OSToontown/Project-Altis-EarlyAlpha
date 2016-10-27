@@ -478,15 +478,13 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         backgroundNP = loader.loadModel('phase_5/models/modules/suit_sign')
         backgroundNP.reparentTo(signOrigin)
         backgroundNP.setPosHprScale(0.0, 0.0, textHeight * 0.8 / zScale, 0.0, 0.0, 0.0, 8.0, 8.0, 8.0 * zScale)
+        backgroundNP.node().setEffect(DecalEffect.make())
         signTextNodePath = backgroundNP.attachNewNode(textNode.generate())
         signTextNodePath.setPosHprScale(0.0, 0.0, -0.21 + textHeight * 0.1 / zScale, 0.0, 0.0, 0.0, 0.1, 0.1, 0.1 / zScale)
         signTextNodePath.setColor(1.0, 1.0, 1.0, 1.0)
         frontNP = suitBuildingNP.find('**/*_front/+GeomNode;+s')
         backgroundNP.wrtReparentTo(frontNP)
         frontNP.node().setEffect(DecalEffect.make())
-        signTextNodePath.setAttrib(DepthOffsetAttrib.make(1))
-        if chr(self.track) == 's':
-            frontNP.node().setEffect(DecalEffect.make())
         suitBuildingNP.setName('sb' + str(self.block) + ':_landmark__DNARoot')
         suitBuildingNP.setPosHprScale(nodePath, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0)
         suitBuildingNP.flattenMedium()
@@ -557,8 +555,6 @@ class DistributedBuilding(DistributedObject.DistributedObject):
 
     def setupCogdo(self, nodePath):
         dnaData = base.cr.playGame.dnaData
-        if nodePath.isEmpty():
-            return
         dnaStore = self.cr.playGame.dnaStore
         level = int(self.difficulty / 2) + 1
         suitNP = dnaStore.findNode(FO_DICT[chr(self.track)])
@@ -578,21 +574,23 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         textNode.setFont(ToontownGlobals.getSuitFont())
         textNode.setAlign(TextNode.ACenter)
         textNode.setWordwrap(12.0)
-        textNode.setText(buildingTitle.decode(sys.getdefaultencoding()))
+        textNode.setText(buildingTitle)
         textHeight = textNode.getHeight()
         zScale = (textHeight + 2) / 3.0
         signOrigin = suitBuildingNP.find('**/sign_origin;+s')
         backgroundNP = loader.loadModel('phase_5/models/cogdominium/field_office_sign')
         backgroundNP.reparentTo(signOrigin)
         backgroundNP.setPosHprScale(0.0, 0.0, -1.2 + textHeight * 0.8 / zScale, 0.0, 0.0, 0.0, 20.0, 8.0, 8.0 * zScale)
-        backgroundNP.setDepthOffset(10)
+        backgroundNP.node().setAttrib(DepthOffsetAttrib.make(1))
         signTextNodePath = backgroundNP.attachNewNode(textNode.generate())
-        signTextNodePath.setPosHprScale(0.0, 0.0, -0.13 + textHeight * 0.1 / zScale, 0.0, 0.0, 0.0, 0.1 * 8.0 / 20.0, 0.1, 0.1 / zScale)
+        signTextNodePath.setPosHprScale(0.0, 0.0, -0.13 + textHeight * 0.1 / zScale, 0.0, 0.0, 0.0, 0.8 / 20.0, 0.1, 0.1 / zScale)
         signTextNodePath.setColor(1.0, 1.0, 1.0, 1.0)
-        frontNP = suitBuildingNP.find('**/*_front')
+        if chr(self.track) == 'l':
+            frontNP = suitBuildingNP.find('**/*_front')
+        else:
+            frontNP = suitBuildingNP.find('**/*_front/+GeomNode;+s')
         backgroundNP.wrtReparentTo(frontNP)
-        frontNP.node().setEffect(DecalEffect.make())
-
+        signTextNodePath.setAttrib(DepthOffsetAttrib.make(1))
         suitBuildingNP.setName('cb' + str(self.block) + ':_landmark__DNARoot')
         suitBuildingNP.setPosHprScale(nodePath, 15.463, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0)
         if chr(self.track) == 's':
