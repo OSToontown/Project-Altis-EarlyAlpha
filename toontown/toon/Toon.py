@@ -5242,8 +5242,6 @@ class Toon(Avatar.Avatar, ToonHead):
 
     def enterScientistJealous(self, animMultiplier = 1, ts = 0, callback = None, extraArgs = []):
         self.loop('scientistJealous')
-        if hasattr(self, 'showScientistProp'):
-            self.showScientistProp()
 
     def exitScientistJealous(self):
         self.stop()
@@ -5268,8 +5266,6 @@ class Toon(Avatar.Avatar, ToonHead):
 
     def enterScientistPlay(self, animMultiplier = 1, ts = 0, callback = None, extraArgs = []):
         self.loop('scientistGame')
-        if hasattr(self, 'scientistPlay'):
-            self.scientistPlay()
 
     def exitScientistPlay(self):
         self.stop()

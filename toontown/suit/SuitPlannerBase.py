@@ -2,10 +2,8 @@ from pandac.PandaModules import *
 import random
 import string
 from direct.directnotify import DirectNotifyGlobal
-from toontown.hood import ZoneUtil
-from toontown.toonbase import ToontownGlobals
-from toontown.toonbase import ToontownBattleGlobals
-from toontown.hood import HoodUtil
+from toontown.toonbase import ToontownGlobals, ToontownBattleGlobals
+from toontown.hood import ZoneUtil, HoodUtil
 from toontown.building import SuitBuildingGlobals
 from toontown.dna import *
 from direct.stdpy.file import open
