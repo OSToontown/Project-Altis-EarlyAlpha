@@ -1628,22 +1628,6 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
                 animPropList = self.animPropDict.setdefault(i, [])
                 animPropList.append(animPropObj)
 
-            interactivePropNodes = i.findAllMatches('**/interactive_prop_*')
-            numInteractivePropNodes = interactivePropNodes.getNumPaths()
-            for j in range(numInteractivePropNodes):
-                interactivePropNode = interactivePropNodes.getPath(j)
-                className = 'GenericAnimatedProp'
-                symbols = {}
-                base.cr.importModule(symbols, 'toontown.hood', [className])
-                classObj = getattr(symbols[className], className)
-                interactivePropObj = classObj(interactivePropNode)
-                animPropList = self.animPropDict.get(i)
-                if animPropList is None:
-                    animPropList = self.animPropDict.setdefault(i, [])
-                animPropList.append(interactivePropObj)
-
-        return
-
     def deleteAnimatedProps(self):
         for animPropListKey in self.animPropDict:
             animPropList = self.animPropDict[animPropListKey]
