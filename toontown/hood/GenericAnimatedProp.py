@@ -41,11 +41,6 @@ class GenericAnimatedProp(AnimatedProp.AnimatedProp):
 
     def delete(self):
         AnimatedProp.AnimatedProp.delete(self)
-
-        if hasattr(self, 'soundNode'):
-            self.soundNode.removeNode()
-            del self.soundNode
-
         self.node.cleanup()
         del self.node
         del self.trashcan
@@ -100,10 +95,9 @@ class GenericAnimatedProp(AnimatedProp.AnimatedProp):
             self.origAnimNameToSound[origAnimName] = sound
 
         if sound:
-            if not hasattr(self, 'soundNode'):
-                self.soundNode = render.attachNewNode('Sound Node')
-                self.soundNode.setPos(self.trashcan.getBounds().getCenter())
+            soundDur = sound.length()
+            soundDur = maximumDuration
 
-            return SoundInterval(sound, node=self.soundNode, listenerNode=base.localAvatar, volume=1.0, cutOff=45, startTime=0, duration=min(sound.length(), maximumDuration))
-
-        return Sequence()
+            return SoundInterval(sound, node=self.node, listenerNode=base.localAvatar, volume=1.0, cutOff=45, startTime=0, duration=maximumDuration)
+        else:
+           return Sequence()
