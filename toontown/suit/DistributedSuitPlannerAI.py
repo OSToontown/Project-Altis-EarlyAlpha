@@ -482,6 +482,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     SUIT_HOOD_INFO_LVL = 9
     SUIT_HOOD_INFO_HEIGHTS = 10
     MAX_SUIT_TYPES = 6
+    MAX_SUIT_TYPES_HQ = 7
+    HQ_SKELE_CHANCE = 0.25
     POP_UPKEEP_DELAY = 10
     POP_ADJUST_DELAY = 300
     PATH_COLLISION_BUFFER = 5
@@ -761,6 +763,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         return pointList
 
     def createNewSuit(self, blockNumbers, streetPoints, toonBlockTakeover = None, cogdoTakeover = None, minPathLen = None, maxPathLen = None, buildingHeight = None, suitLevel = None, suitType = None, suitTrack = None, suitName = None, specialSuit = 0):
+        self.skeleChance = 0
         startPoint = None
         blockNumber = None
         if self.notify.getDebug():
@@ -817,6 +820,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         if suitLevel == None and buildingHeight != None:
             suitLevel = self.chooseSuitLevel(self.SuitHoodInfo[self.hoodInfoIdx][self.SUIT_HOOD_INFO_LVL], buildingHeight)
         suitLevel, suitType, suitTrack = self.pickLevelTypeAndTrack(suitLevel, suitType, suitTrack)
+        if self.skeleChance == 1:
+            newSuit.setSkelecog(1)
         newSuit.setupSuitDNA(suitLevel, suitType, suitTrack)
         newSuit.buildingHeight = buildingHeight
         gotDestination = self.chooseDestination(newSuit, startTime, toonBlockTakeover=toonBlockTakeover, cogdoTakeover=cogdoTakeover, minPathLen=minPathLen, maxPathLen=maxPathLen)
@@ -1467,8 +1472,14 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         if level is None:
             level = random.choice(self.SuitHoodInfo[self.hoodInfoIdx][self.SUIT_HOOD_INFO_LVL])
         if type is None:
-            typeChoices = range(max(level - 4, 1), min(level, self.MAX_SUIT_TYPES) + 1)
-            type = random.choice(typeChoices)
+            if ZoneUtil.isCogHQZone(self.zoneId):
+                typeChoices = range(max(level - 4, 1), min(level, self.MAX_SUIT_TYPES_HQ) + 1)
+                type = random.choice(typeChoices)
+                if random.random() < self.HQ_SKELE_CHANCE:
+                    self.skeleChance = 1
+            else:
+                typeChoices = range(max(level - 4, 1), min(level, self.MAX_SUIT_TYPES) + 1)
+                type = random.choice(typeChoices)
         if level > 12:
             pass 
         else:
