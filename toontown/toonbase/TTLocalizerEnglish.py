@@ -202,6 +202,12 @@ ACogVP = ACog + ' V.P.'
 Supervisor = 'Mint Supervisor'
 SupervisorP = 'Mint Supervisors'
 ASupervisor = 'a Mint Supervisor'
+President = 'Club President'
+PresidentP = 'Club Presidents'
+APresident = 'a Club President'
+DistrictAttorney = 'District Attorney'
+DistrictAttorneyP = 'District Attorneys'
+ADistrictAttorney = 'a District Attorney'
 CogCFO = Cog + ' C.F.O.'
 CogCFOs = "Cog C.F.O.'s"
 ACogCFO = ACog + ' C.F.O.'
@@ -436,6 +442,8 @@ TIPQuestsClothingTicketRewardPoster = 'Reward: TIP Clothing Ticket'
 QuestsCheesyEffectRewardPoster = 'Reward: %s'
 QuestsCogSuitPartReward = 'You now have a %(cogTrack)s %(part)s Cog Suit Part.'
 QuestsCogSuitPartRewardPoster = 'Reward: %(cogTrack)s %(part)s Part'
+QuestsBetaKeyRewardPoster = 'Reward: Project Altis Beta Key'
+QuestsBetaKeyReward = 'You may now invite a friend to play TTR! To view this key, visit the "Account" section of the website.'
 QuestsStreetLocationThisPlayground = 'in this playground'
 QuestsStreetLocationThisStreet = 'on this street'
 QuestsStreetLocationNamedPlayground = 'in the %s playground'
@@ -484,9 +492,6 @@ QuestsItemDict = {1: ['Pair of Glasses', 'Pairs of Glasses', 'a '],
  29: ['Passport', 'Passports', 'a '],
  30: ['Gift', 'Gifts', 'a '],
  31: ['Salt Shaker', 'Salt Shakers', 'a '],
- 32: ['Goods', 'Goods', 'some '],
- 33: ['Cabbage', 'Cabbages', 'a '],
- 34: ['Barrel of Jellybeans', 'Barrels of Jellybeans', 'a '],
  110: ['TIP Clothing Ticket', 'Clothing Tickets', 'a '],
  1000: ['Clothing Ticket', 'Clothing Tickets', 'a '],
  2001: ['Inner Tube', 'Inner Tubes', 'an '],
@@ -911,21 +916,21 @@ QuestDialogDict = {160: {GREETING: '',
  2926: {QUEST: "Thanks so much! You are doing amazing!\x07May I just ask one more favor?\x07I don't want the guests to be intimidated by Cog Buildings around here.\x07Please defeat a few 2+ Story Buildings for me.\x07I will give you your reward afterwards.",
         INCOMPLETE_PROGRESS: 'Still no power. How about that building?',
         COMPLETE: 'Well, I guess a deal is a deal.'},
- 3200: {QUEST: "_toNpcName_ has some SHARP business._where_"},
- 3203: {QUEST: 'Oh, thanks for coming!\x07I need someone to take this new silk tie to _toNpcName_.\x07Would you be able to do that for me?_where_'},
- 3201: {QUEST: 'My store is called PETAL PUSHER Bicycles!\x07The Pencil Pushers seem to confuse that with their own name.\x07Can you defeat some Pencil Pushers here in Daisy\'s Garden? That may stop them from taking over my store.',
+ 3200: {QUEST: "I just got a call in from _toNpcName_.\x07He's having a hard day. Maybe you can help him out!\x07Drop by and see what he needs._where_"},
+ 3201: {QUEST: 'Oh, thanks for coming!\x07I need someone to take this new silk tie to _toNpcName_.\x07Would you be able to do that for me?_where_'},
+ 3203: {QUEST: 'Oh, this must be the tie I ordered! Thanks!\x07It matches a pinstripe suit I just finished, right over here.\x07Hey, what happened to that suit?\x07Oh no! The Cogs must have stolen my new suit!\x07Defeat Cogs until you find my suit, and bring it back to me.',
         LEAVING: '',
         INCOMPLETE_PROGRESS: "Have you found my suit yet? I'm sure the Cogs took it!",
-        COMPLETE: 'Thank you.\x07Here is your reward...'},
- 3204: {QUEST: "_toNpcName_ can't keep ahold of her cabbage._where_"},
- 3205: {QUEST: "A Name Dropper just stole my cabbage!\x07Please go get it for me!",
+        COMPLETE: 'Hooray! You found my new suit!\x07See, I told you the Cogs had it! Here is your reward...'},
+ 3204: {QUEST: "_toNpcName_ just called to report a theft.\x07Why don't you stop by and see if you can sort things out?_where_"},
+ 3205: {QUEST: "Hello, _avName_! Have you come to help me?\x07I just chased a Bloodsucker out of my shop. Whew! That was scary.\x07But now I can't find my scissors anywhere! I'm sure that Bloodsucker took them.\x07Find that Bloodsucker, and recover my scissors for me.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Are you still looking for my scissors?',
-        COMPLETE: 'My cabbage! Thank you so much! Here is your reward...'},
- 3206: {QUEST: 'It sounds like _toNpcName_ is having problems with some Cogs._where_'},
- 3207: {QUEST: 'Toons love this place to sell and buy used goods, but the Cogs always steal these used goods.\x07If you could recover some for me, that\'d be fantastic.',
+        COMPLETE: 'My scissors! Thank you so much! Here is your reward...'},
+ 3206: {QUEST: 'It sounds like _toNpcName_ is having problems with some Cogs.\x07Go see if you can help him out._where_'},
+ 3207: {QUEST: 'Hi, _avName_! Thanks for coming by!\x07A bunch of Double Talkers just broke in and stole a stack of postcards from my counter.\x07Please go out and defeat all those Double Talkers to get my postcards back!',
         INCOMPLETE_PROGRESS: "That's not enough postcards! Keep looking!",
-        COMPLETE: 'Now people\'s goods won\'t go to waste!\x07Thanks for you help.\x07Here is your reward...'},
+        COMPLETE: 'Oh, thank you! Now I can deliver the mail on time! Here is your reward...'},
  3208: {QUEST: "We've been getting complaints from the residents lately about all of the Cold Callers.\x07See if you can defeat 10 Cold Callers to help out your fellow Toons in " + lDaisyGardens + '.'},
  3209: {QUEST: 'Thanks for taking care of those Cold Callers!\x07But now the Telemarketers have gotten out of hand.\x07Defeat 10 Telemarketers in ' + lDaisyGardens + ' and come back here for your reward.'},
  3247: {QUEST: "We've been getting complaints from the residents lately about all of the Bloodsuckers.\x07See if you can defeat 20 Bloodsuckers to help out your fellow Toons in " + lDaisyGardens + '.'},
@@ -953,10 +958,10 @@ QuestDialogDict = {160: {GREETING: '',
  3246: {QUEST: 'Great! Now we need just one more sprocket.\x07This time, we need a sprocket from a Spin Doctor.\x07When you catch one, bring it back for your reward.'},
  3220: {QUEST: "I just heard that _toNpcName_ was asking around for you.\x07Why don't you drop by and see what she wants?_where_"},
  3221: {QUEST: 'Hi, _avName_! There you are!\x07I heard you were quite an expert in squirt attacks.\x07I need someone to set a good example for all the Toons in ' + lDaisyGardens + '.\x07Use your squirt attacks to defeat a bunch of Cogs.\x07Encourage your friends to use squirt too.\x07When you have defeated 20 Cogs, come back here for a reward!'},
- 3222: {QUEST: "_toNpcName_ is trying to help Donald Frump with his campaign._where_"},
- 3223: {QUEST: 'Hello, fellow toon.\x07I am trying to raise some beans and gain some support for Donald Frump.\x07Donald Frump is a mouse who spends his time on Polar Place, The Brrrgh.\x07I\'d love to contribute some jellybeans, but I\'m broke.\x07Maybe you could get some barrels of beans in the ponds where the rich trash their leftover beans?'},
- 3224: {QUEST: 'Thank you so much.\x07Donald Frump wants his fellow toon\'s buildings protected.\x07Why don\'t you take down some buildings? Maybe that\'d earn some support for him.\x07After that, I will give you your reward.',
-        COMPLETE: 'You seem to care for your fellow toons. Maybe you should run for President of Toontown?\x07Here is your reward...',
+ 3222: {QUEST: "It's time to demonstrate your Toonmanship.\x07If you successfully reclaim a number of Cog buildings, you'll earn the right to carry three quests.\x07First, defeat any two Cog buildings.\x07Feel free to call on your friends to help you out."},
+ 3223: {QUEST: 'Great job on those buildings!\x07Now, defeat two more buildings.\x07These buildings must be at least two stories high, or higher.'},
+ 3224: {QUEST: 'Fantastic!\x07Now just defeat two more buildings.\x07These buildings must be at least three stories high.\x07When you finish, come back for your reward!',
+        COMPLETE: 'You did it, _avName_!\x07You demonstrated your superior Toonmanship.',
         GREETING: ''},
  3225: {QUEST: "_toNpcName_ says she needs some help.\x07Why don't you go see what you can do to help out?_where_"},
  3235: {QUEST: "Oh, this is the salad I ordered!\x07Thank you for bringing it to me.\x07All those Cogs must have frightened away _toNpcName_'s regular delivery person again.\x07Why don't you do us a favor and defeat some of the Cogs out there?\x07Defeat 10 Cogs in " + lDaisyGardens + ' and then report back to _toNpcName_.',
@@ -2170,7 +2175,7 @@ CogdoBattleBldgBossTaunt = "I don't take meetings with Toons."
 FactoryBossTaunt = "I'm the Factory Foreman."
 FactoryBossBattleTaunt = 'Let me introduce you to the Factory Foreman.'
 MintBossTaunt = "I'm the Mint Supervisor."
-MintBossBattleTaunt = 'You need to talk to the MInt Supervisor.'
+MintBossBattleTaunt = 'You need to talk to the Mint Supervisor.'
 StageBossTaunt = "I'm the District Attorney."
 StageBossBattleTaunt = "You need to talk to the District Attorney."
 CountryClubBossTaunt = "I'm the Club President."
@@ -5099,8 +5104,8 @@ InventoryRun = 'RUN'
 InventorySOS = 'SOS'
 InventoryPass = 'PASS'
 InventoryFire = 'FIRE'
-InventoryLevelsShow = 'SHOW COG LEVELS'
-InventoryLevelsHide = 'HIDE COG LEVELS'
+InventoryLevelsShow = 'SHOW LEVELS'
+InventoryLevelsHide = 'HIDE LEVELS'
 InventoryClickToAttack = 'Click a\ngag to\nattack'
 InventoryDamageBonus = '(+%d)'
 NPCForceAcknowledgeMessage = "You must ride the trolley before leaving.\n\n\n\n\n\n\n\n\nYou can find the trolley next to Goofy's Gag Shop."
@@ -9946,7 +9951,6 @@ CogdoCraneGameInstructions = 'The COGS are using a coin-operated machine to dest
 CogdoMazeGameTitle = 'Mover & Shaker\nField Office'
 CogdoMazeGameInstructions = 'The big Mover & Shaker Cogs have the code to open the door. Defeat them with your water balloons in order to get it!'
 CogdoMazeIntroMovieDialogue = (("This is the Toon Resistance! The Movers & Shakers\nhave our Jokes, and they've locked the exit!",), ('Grab water balloons at coolers, and throw them at Cogs!\nSmall Cogs drop Jokes, BIG COGS open the exit.',), ('The more Jokes you rescue, the bigger your Toon-Up\nat the end. Good luck!',))
-CogdoMazeGameElevatorRewardLaff = 'Great job, Toons!\nYou get a Toon-Up from the jokes you saved!'
 CogdoMazeGameDoorOpens = 'THE EXIT IS OPEN FOR 60 SECONDS!\nGET THERE FAST FOR A BIGGER TOON-UP'
 CogdoMazeGameLocalToonFoundExit = "The exit will open when\nyou've busted all four BIG COGS!"
 CogdoMazeGameWaitingForToons = 'Please wait...'
