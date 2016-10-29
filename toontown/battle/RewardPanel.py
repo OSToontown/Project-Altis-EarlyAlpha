@@ -92,9 +92,14 @@ class RewardPanel(DirectFrame):
              1), text='0/0', text_scale=0.18, text_fg=(0, 0, 0, 1), text_align=TextNode.ACenter, text_pos=(0, -0.05), pos=(0.4, 0, -0.09 * i)))
 
         self._battleGui = loader.loadModel('phase_3.5/models/gui/battle_gui')
-        self.skipButton = DirectButton(parent = self, relief = None, image = (self._battleGui.find('**/tt_t_gui_gen_skipSectionUp'), 
-        self._battleGui.find('**/tt_t_gui_gen_skipSectionDown'), self._battleGui.find('**/tt_t_gui_gen_skipSectionRollOver'), self._battleGui.find('**/tt_t_gui_gen_skipSectionDisabled')), pos = (0.81499999999999995, 0, -0.39500000000000002), scale = (0.39000000000000001, 1.0, 0.39000000000000001), 
-        text = ('', TTLocalizer.RewardPanelSkip, TTLocalizer.RewardPanelSkip, ''), text_scale = TTLocalizer.RPskipScale, text_fg = Vec4(1, 1, 1, 1), text_shadow = Vec4(0, 0, 0, 1), text_pos = TTLocalizer.RPskipPos, textMayChange = 0, command = self._handleSkip)
+        if config.GetBool('want-skip-button', 0):
+            self.skipButton = DirectButton(parent=self, relief=None, image=(self._battleGui.find('**/tt_t_gui_gen_skipSectionUp'),
+             self._battleGui.find('**/tt_t_gui_gen_skipSectionDown'),
+             self._battleGui.find('**/tt_t_gui_gen_skipSectionRollOver'),
+             self._battleGui.find('**/tt_t_gui_gen_skipSectionDisabled')), pos=(0.815, 0, -0.395), scale=(0.39, 1.0, 0.39), text=('',
+             TTLocalizer.RewardPanelSkip,
+             TTLocalizer.RewardPanelSkip,
+             ''), text_scale=TTLocalizer.RPskipScale, text_fg=Vec4(1, 1, 1, 1), text_shadow=Vec4(0, 0, 0, 1), text_pos=TTLocalizer.RPskipPos, textMayChange=0, command=self._handleSkip)
         return
 
     def getNextExpValue(self, curSkill, trackIndex):
@@ -191,7 +196,8 @@ class RewardPanel(DirectFrame):
         self.cogPartFrame.hide()
         self.missedItemFrame.hide()
         trackBarOffset = 0
-        self.skipButton['state'] = choice(noSkip, DGG.DISABLED, DGG.NORMAL)
+        if config.GetBool('want-skip-button', 0):
+            self.skipButton['state'] = choice(noSkip, DGG.DISABLED, DGG.NORMAL)
         for i in range(len(SuitDNA.suitDepts)-1):
             meritBar = self.meritBars[i]
             meritLabel = self.meritLabels[i]
