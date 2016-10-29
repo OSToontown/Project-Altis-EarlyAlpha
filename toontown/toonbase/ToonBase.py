@@ -46,7 +46,7 @@ class ToonBase(OTPBase.OTPBase):
         self.camLens.setMinFov(ToontownGlobals.DefaultCameraFov/(4./3.))
         self.camLens.setNearFar(ToontownGlobals.DefaultCameraNear, ToontownGlobals.DefaultCameraFar)
         self.cam2d.node().setCameraMask(BitMask32.bit(1))
-        self.musicManager.setVolume(0.65)
+        self.musicManager.setVolume(settings.get("musicVol"))
         self.setBackgroundColor(ToontownGlobals.DefaultBackgroundColor)
         tpm = TextPropertiesManager.getGlobalPtr()
         candidateActive = TextProperties()
@@ -173,7 +173,27 @@ class ToonBase(OTPBase.OTPBase):
         
         self.CHAT_HOTKEY = keymap.get('CHAT_HOTKEY', 'r')
         
-        self.accept(self.SCREENSHOT_KEY, self.takeScreenShot)
+        self.accept(self.SCREENSHOT_KEY, self.takeScreenShot) # TODO: Make the game ignore this and then re-accept it on a new key if it is rebinded
+        
+        self.Widescreen = settings.get('Widescreen', True)
+        self.nowideratio = (4 / 3)
+        if self.Widescreen:
+            base.setAspectRatio(0)
+        else:
+            base.setAspectRatio(1.33)
+            
+    def updateAspectRatio(self):
+        fadeSequence = Sequence(
+            Func(base.transitions.fadeOut, .2),
+            Wait(.2),
+            Func(self.setRatio),
+            Func(base.transitions.fadeIn, .2)).start()
+
+    def setRatio(self):
+        if self.Widescreen:
+            base.setAspectRatio(0)
+        else:
+            base.setAspectRatio(1.33)
 
     def openMainWindow(self, *args, **kw):
         result = OTPBase.OTPBase.openMainWindow(self, *args, **kw)
