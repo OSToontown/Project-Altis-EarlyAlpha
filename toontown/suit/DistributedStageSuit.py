@@ -35,7 +35,7 @@ class DistributedStageSuit(DistributedFactorySuit.DistributedFactorySuit):
         if self.getSkeleRevives() > 0:
             nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': TTLocalizer.DistrictAttorney,
              'dept': self.getStyleDept(),
-             'level': '%s%s' % (self.getActualLevel(), TTLocalizer.SkeleRevivePostFix % (self.skeleRevives + 1))}
+             'level': '%s%s' % (self.getActualLevel(), TTLocalizer.SkeleRevivePostFix)}
             self.setName(TTLocalizer.DistrictAttorney)
             self.setDisplayName(nameInfo)
         else:
