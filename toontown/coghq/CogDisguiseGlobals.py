@@ -3,19 +3,137 @@ import types
 from toontown.toonbase import TTLocalizer
 from direct.showbase import PythonUtil
 from otp.otpbase import OTPGlobals
-PartsPerSuit = (17,
- 14,
- 12,
+PartsPerSuit = (10,
  10,
- 17)
-PartsPerSuitBitmasks = (131071,
- 130175,
- 56447,
+ 10,
+ 10)
+PartsPerSuitBitmasks = (56411,
  56411,
- 131071)
-AllBits = 131071
-MinPartLoss = 2
-MaxPartLoss = 4
+ 56411,
+ 56411)
+AllBits = 56411
+MinPartLoss = 1
+MaxPartLoss = 2
+leftLegUpper = 1
+leftLegLower = 2
+leftLegFoot = 4
+rightLegUpper = 8
+rightLegLower = 16
+rightLegFoot = 32
+torsoLeftShoulder = 64
+torsoRightShoulder = 128
+torsoChest = 256
+torsoHealthMeter = 512
+torsoPelvis = 1024
+leftArmUpper = 2048
+leftArmLower = 4096
+leftArmHand = 8192
+rightArmUpper = 16384
+rightArmLower = 32768
+rightArmHand = 65536
+upperTorso = torsoLeftShoulder
+leftLegIndex = 0
+rightLegIndex = 1
+torsoIndex = 2
+leftArmIndex = 3
+rightArmIndex = 4
+PartsQueryShifts = (leftLegUpper,
+ rightLegUpper,
+ torsoLeftShoulder,
+ leftArmUpper,
+ rightArmUpper)
+PartsQueryMasks = (leftLegFoot + leftLegLower + leftLegUpper,
+ rightLegFoot + rightLegLower + rightLegUpper,
+ torsoPelvis + torsoHealthMeter + torsoChest + torsoRightShoulder + torsoLeftShoulder,
+ leftArmHand + leftArmLower + leftArmUpper,
+ rightArmHand + rightArmLower + rightArmUpper)
+PartNameStrings = TTLocalizer.CogPartNames
+SimplePartNameStrings = TTLocalizer.CogPartNamesSimple
+PartsQueryNames = ({1: PartNameStrings[0],
+  2: PartNameStrings[1],
+  4: PartNameStrings[2],
+  8: PartNameStrings[3],
+  16: PartNameStrings[4],
+  32: PartNameStrings[5],
+  64: PartNameStrings[6],
+  128: PartNameStrings[7],
+  256: PartNameStrings[8],
+  512: PartNameStrings[9],
+  1024: PartNameStrings[10],
+  2048: PartNameStrings[11],
+  4096: PartNameStrings[12],
+  8192: PartNameStrings[13],
+  16384: PartNameStrings[14],
+  32768: PartNameStrings[15],
+  65536: PartNameStrings[16]},
+ {1: PartNameStrings[0],
+  2: PartNameStrings[1],
+  4: PartNameStrings[2],
+  8: PartNameStrings[3],
+  16: PartNameStrings[4],
+  32: PartNameStrings[5],
+  64: SimplePartNameStrings[0],
+  128: SimplePartNameStrings[0],
+  256: SimplePartNameStrings[0],
+  512: SimplePartNameStrings[0],
+  1024: PartNameStrings[10],
+  2048: PartNameStrings[11],
+  4096: PartNameStrings[12],
+  8192: PartNameStrings[13],
+  16384: PartNameStrings[14],
+  32768: PartNameStrings[15],
+  65536: PartNameStrings[16]},
+ {1: PartNameStrings[0],
+  2: PartNameStrings[1],
+  4: PartNameStrings[2],
+  8: PartNameStrings[3],
+  16: PartNameStrings[4],
+  32: PartNameStrings[5],
+  64: SimplePartNameStrings[0],
+  128: SimplePartNameStrings[0],
+  256: SimplePartNameStrings[0],
+  512: SimplePartNameStrings[0],
+  1024: PartNameStrings[10],
+  2048: PartNameStrings[11],
+  4096: PartNameStrings[12],
+  8192: PartNameStrings[12],
+  16384: PartNameStrings[14],
+  32768: PartNameStrings[15],
+  65536: PartNameStrings[15]},
+ {1: PartNameStrings[0],
+  2: PartNameStrings[1],
+  4: PartNameStrings[1],
+  8: PartNameStrings[3],
+  16: PartNameStrings[4],
+  32: PartNameStrings[4],
+  64: SimplePartNameStrings[0],
+  128: SimplePartNameStrings[0],
+  256: SimplePartNameStrings[0],
+  512: SimplePartNameStrings[0],
+  1024: PartNameStrings[10],
+  2048: PartNameStrings[11],
+  4096: PartNameStrings[12],
+  8192: PartNameStrings[12],
+  16384: PartNameStrings[14],
+  32768: PartNameStrings[15],
+  65536: PartNameStrings[15]},
+ {1: PartNameStrings[0],
+  2: PartNameStrings[1],
+  4: PartNameStrings[1],
+  8: PartNameStrings[3],
+  16: PartNameStrings[4],
+  32: PartNameStrings[4],
+  64: SimplePartNameStrings[0],
+  128: SimplePartNameStrings[0],
+  256: SimplePartNameStrings[0],
+  512: SimplePartNameStrings[0],
+  1024: PartNameStrings[10],
+  2048: PartNameStrings[11],
+  4096: PartNameStrings[12],
+  8192: PartNameStrings[12],
+  16384: PartNameStrings[14],
+  32768: PartNameStrings[15],
+  65536: PartNameStrings[15]})
 MeritsPerLevel = ((100, #Flunky
   130,
   160,
@@ -221,126 +339,6 @@ MeritsPerLevel = ((100, #Flunky
   23300,
   33300,
   0)))             
-leftLegUpper = 1
-leftLegLower = 2
-leftLegFoot = 4
-rightLegUpper = 8
-rightLegLower = 16
-rightLegFoot = 32
-torsoLeftShoulder = 64
-torsoRightShoulder = 128
-torsoChest = 256
-torsoHealthMeter = 512
-torsoPelvis = 1024
-leftArmUpper = 2048
-leftArmLower = 4096
-leftArmHand = 8192
-rightArmUpper = 16384
-rightArmLower = 32768
-rightArmHand = 65536
-upperTorso = torsoLeftShoulder
-leftLegIndex = 0
-rightLegIndex = 1
-torsoIndex = 2
-leftArmIndex = 3
-rightArmIndex = 4
-PartsQueryShifts = (leftLegUpper,
- rightLegUpper,
- torsoLeftShoulder,
- leftArmUpper,
- rightArmUpper)
-PartsQueryMasks = (leftLegFoot + leftLegLower + leftLegUpper,
- rightLegFoot + rightLegLower + rightLegUpper,
- torsoPelvis + torsoHealthMeter + torsoChest + torsoRightShoulder + torsoLeftShoulder,
- leftArmHand + leftArmLower + leftArmUpper,
- rightArmHand + rightArmLower + rightArmUpper)
-PartNameStrings = TTLocalizer.CogPartNames
-SimplePartNameStrings = TTLocalizer.CogPartNamesSimple
-PartsQueryNames = ({1: PartNameStrings[0],
-  2: PartNameStrings[1],
-  4: PartNameStrings[2],
-  8: PartNameStrings[3],
-  16: PartNameStrings[4],
-  32: PartNameStrings[5],
-  64: PartNameStrings[6],
-  128: PartNameStrings[7],
-  256: PartNameStrings[8],
-  512: PartNameStrings[9],
-  1024: PartNameStrings[10],
-  2048: PartNameStrings[11],
-  4096: PartNameStrings[12],
-  8192: PartNameStrings[13],
-  16384: PartNameStrings[14],
-  32768: PartNameStrings[15],
-  65536: PartNameStrings[16]},
- {1: PartNameStrings[0],
-  2: PartNameStrings[1],
-  4: PartNameStrings[2],
-  8: PartNameStrings[3],
-  16: PartNameStrings[4],
-  32: PartNameStrings[5],
-  64: SimplePartNameStrings[0],
-  128: SimplePartNameStrings[0],
-  256: SimplePartNameStrings[0],
-  512: SimplePartNameStrings[0],
-  1024: PartNameStrings[10],
-  2048: PartNameStrings[11],
-  4096: PartNameStrings[12],
-  8192: PartNameStrings[13],
-  16384: PartNameStrings[14],
-  32768: PartNameStrings[15],
-  65536: PartNameStrings[16]},
- {1: PartNameStrings[0],
-  2: PartNameStrings[1],
-  4: PartNameStrings[2],
-  8: PartNameStrings[3],
-  16: PartNameStrings[4],
-  32: PartNameStrings[5],
-  64: SimplePartNameStrings[0],
-  128: SimplePartNameStrings[0],
-  256: SimplePartNameStrings[0],
-  512: SimplePartNameStrings[0],
-  1024: PartNameStrings[10],
-  2048: PartNameStrings[11],
-  4096: PartNameStrings[12],
-  8192: PartNameStrings[12],
-  16384: PartNameStrings[14],
-  32768: PartNameStrings[15],
-  65536: PartNameStrings[15]},
- {1: PartNameStrings[0],
-  2: PartNameStrings[1],
-  4: PartNameStrings[1],
-  8: PartNameStrings[3],
-  16: PartNameStrings[4],
-  32: PartNameStrings[4],
-  64: SimplePartNameStrings[0],
-  128: SimplePartNameStrings[0],
-  256: SimplePartNameStrings[0],
-  512: SimplePartNameStrings[0],
-  1024: PartNameStrings[10],
-  2048: PartNameStrings[11],
-  4096: PartNameStrings[12],
-  8192: PartNameStrings[12],
-  16384: PartNameStrings[14],
-  32768: PartNameStrings[15],
-  65536: PartNameStrings[15]},
- {1: PartNameStrings[0],
-  2: PartNameStrings[1],
-  4: PartNameStrings[1],
-  8: PartNameStrings[3],
-  16: PartNameStrings[4],
-  32: PartNameStrings[4],
-  64: SimplePartNameStrings[0],
-  128: SimplePartNameStrings[0],
-  256: SimplePartNameStrings[0],
-  512: SimplePartNameStrings[0],
-  1024: PartNameStrings[10],
-  2048: PartNameStrings[11],
-  4096: PartNameStrings[12],
-  8192: PartNameStrings[12],
-  16384: PartNameStrings[14],
-  32768: PartNameStrings[15],
-  65536: PartNameStrings[15]})
 suitTypes = PythonUtil.Enum(('NoSuit', 'NoMerits', 'FullSuit'))
 
 def getNextPart(parts, partIndex, dept):
