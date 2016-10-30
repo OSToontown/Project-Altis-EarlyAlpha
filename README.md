@@ -23,5 +23,5 @@ A vision of what Toontown Online could have been in 2016.
 Thanks To Disney, Toontown Offline, Toontown Rewritten, Toontown Infinite, Toontown Fellowship, Toontown House, Toontown Stride, Toontown World Online, and the Toontown community for making this game possible and to keep the Toontown spirit alive.
 
 # Inspirations
-* Toontown Rewritten, for repowering the spirit of Toontown after Toontown Online closed on September 19, 2013
-* Toontown Infinite, for new Battle GUI, and increased difficulty for Project Altis
+* Toontown Rewritten, repowering the spirit of Toontown after Toontown Online closed on September 19, 2013
+* Toontown Infinite, increased difficulty for Project Altis
