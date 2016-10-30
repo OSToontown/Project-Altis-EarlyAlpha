@@ -4574,9 +4574,9 @@ def setMaxHp(hpVal):
     spellbook.getTarget().toonUp(hpVal)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int, int, int, int, int, int])
-def setTrackAccess(toonup, trap, lure, sound, throw, squirt, drop):
+def setTrackAccess(toonup, trap, lure, sound, throw, squirt, zap, drop):
     """Set target's gag track access."""
-    spellbook.getTarget().b_setTrackAccess([toonup, trap, lure, sound, throw, squirt, drop])
+    spellbook.getTarget().b_setTrackAccess([toonup, trap, lure, sound, throw, squirt, zap, drop])
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[str])
 def maxToon():
@@ -4584,8 +4584,8 @@ def maxToon():
     toon = spellbook.getInvoker()
 
     # Max out gag tracks (all 7 tracks)
-    toon.b_setTrackAccess([1] * 7)
-    toon.b_setMaxCarry(MaxCarryLimit + 15) # Compensate for the extra gag track.
+    toon.b_setTrackAccess([1] * 8)
+    toon.b_setMaxCarry(MaxCarryLimit + 30) # Compensate for the extra gag tracks.
     toon.experience.maxOutExp() # Completely max out the toons experience.
     toon.b_setExperience(toon.experience.makeNetString())
 

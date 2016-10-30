@@ -43,11 +43,12 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.__battleCreditMultiplier = 1
         self.__invasionCreditMultiplier = 1
         self.__respectInvasions = 1
-        self.interactivePropTrackBonus = -1
+        self._interactivePropTrackBonus = -1
         self.tutorialFlag = 0
         self.gagTutMode = 0
         self.showSuperGags = ShowSuperGags
         self.clickSuperGags = 1
+        self.activeTab = 4
         self.propAndOrganicBonusStack = config.GetBool('prop-and-organic-bonus-stack', 0)
         self.propBonusIval = Parallel()
         self.activateMode = 'book'
@@ -62,10 +63,10 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         return self.__battleCreditMultiplier
 
     def setInteractivePropTrackBonus(self, trackBonus):
-        self.interactivePropTrackBonus = trackBonus
+        self._interactivePropTrackBonus = trackBonus
 
     def getInteractivePropTrackBonus(self):
-        return self.interactivePropTrackBonus
+        return self._interactivePropTrackBonus
 
     def setInvasionCreditMultiplier(self, mult):
         self.__invasionCreditMultiplier = mult
@@ -81,7 +82,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
 
     def show(self):
         if self.tutorialFlag:
-            self.tutArrows.arrowsOn(-0.43, -0.12, 180, -0.43, -0.24, 180, onTime=1.0, offTime=0.2)
+            self.tutArrows.arrowsOn(-0.4, -0.62, 90, -0.4, -0.62, 90, onTime=1.0, offTime=0.2)
             if self.numItem(THROW_TRACK, 0) == 0:
                 self.tutArrows.arrow1.reparentTo(hidden)
             else:
@@ -162,6 +163,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         del self.detailAmountLabel
         del self.detailDataLabel
         del self.totalLabel
+        del self.activeTab
         self.cleanupDialog()
 
         for row in self.trackRows:
@@ -188,6 +190,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.notify.debug('Loading Inventory for %d' % self.toon.doId)
         invModel = loader.loadModel('phase_3.5/models/gui/inventory_icons')
         self.invModels = []
+        offset = 0.0
         for track in range(len(AvPropsNew)):
             itemList = []
             for item in range(len(AvPropsNew[track])):
@@ -198,6 +201,19 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         invModel.removeNode()
         del invModel
         self.buttonModels = loader.loadModel('phase_3.5/models/gui/inventory_gui')
+        self.battleGui = loader.loadModel('phase_3.5/models/gui/battle_gui')
+        self.healRow =  self.battleGui.find('**/healBar')
+        self.trapRow =  self.battleGui.find('**/trapBar')
+        self.lureRow =  self.battleGui.find('**/lureBar')
+        self.soundRow =  self.battleGui.find('**/soundBar')
+        self.throwRow =  self.battleGui.find('**/throwBar')
+        self.squirtRow =  self.battleGui.find('**/squirtBar')
+        self.zapRow =  self.battleGui.find('**/zapBar')
+        self.dropRow =  self.battleGui.find('**/dropBar')
+        bars = [self.healRow, self.trapRow, self.lureRow, self.soundRow, self.throwRow, self.squirtRow, self.zapRow, self.dropRow]
+        self.battleCircle =  self.battleGui.find('**/battleCircle')
+        self.tab = self.battleGui.find('**/whiteTab')
+        self.rowModel = self.buttonModels.find('**/InventoryRow')
         self.rowModel = self.buttonModels.find('**/InventoryRow')
         self.upButton = self.buttonModels.find('**/InventoryButtonUp')
         self.downButton = self.buttonModels.find('**/InventoryButtonDown')
@@ -216,26 +232,31 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.deleteHelpText = DirectLabel(parent=self.invFrame, relief=None, pos=(0.272, 0.3, -0.907), text=TTLocalizer.InventoryDeleteHelp, text_fg=(0, 0, 0, 1), text_scale=0.08, textMayChange=0)
         self.deleteHelpText.hide()
         self.detailFrame = DirectFrame(parent=self.invFrame, relief=None, pos=(1.05, 0, -0.08))
-        self.detailNameLabel = DirectLabel(parent=self.detailFrame, text='', text_scale=TTLocalizer.INdetailNameLabel, text_fg=(0.05, 0.14, 0.4, 1), scale=0.045, pos=(0, 0, 0), text_font=getInterfaceFont(), relief=None, image=self.invModels[0][0])
-        self.detailAmountLabel = DirectLabel(parent=self.detailFrame, text='', text_fg=(0.05, 0.14, 0.4, 1), scale=0.04, pos=(0.16, 0, -0.175), text_font=getInterfaceFont(), text_align=TextNode.ARight, relief=None)
-        self.detailDataLabel = DirectLabel(parent=self.detailFrame, text='', text_fg=(0.05, 0.14, 0.4, 1), scale=0.04, pos=(-0.22, 0, -0.24), text_font=getInterfaceFont(), text_align=TextNode.ALeft, relief=None)
-        self.detailCreditLabel = DirectLabel(parent=self.detailFrame, text=TTLocalizer.InventorySkillCreditNone, text_fg=(0.05, 0.14, 0.4, 1), scale=0.04, pos=(-0.22, 0, -0.365), text_font=getInterfaceFont(), text_align=TextNode.ALeft, relief=None)
+        self.circleFrame = DirectFrame(parent=self.detailFrame, relief=None, image=self.battleCircle, image_scale=0.25, pos=(0, 0, -0.25))
+        self.detailNameLabel = DirectLabel(parent=self.circleFrame, text='', text_scale=TTLocalizer.INdetailNameLabel, text_fg=(0.05, 0.14, 0.4, 1), scale=0.045, pos=(0, 0, 0.1), text_font=getInterfaceFont(), text_align=TextNode.ACenter, relief=None, image=self.invModels[0][0])
+        self.detailAmountLabel = DirectLabel(parent=self.circleFrame, text='', text_fg=(0.05, 0.14, 0.4, 1), scale=0.04, pos=(0, 0, -0.07), text_font=getInterfaceFont(), text_align=TextNode.ACenter, relief=None)
+        self.detailDataLabel = DirectLabel(parent=self.circleFrame, text='', text_fg=(0.05, 0.14, 0.4, 1), scale=0.03, pos=(0, 0, -0.1), text_font=getInterfaceFont(), text_align=TextNode.ACenter, relief=None)
+        self.detailCreditLabel = DirectLabel(parent=self.circleFrame, text=TTLocalizer.InventorySkillCreditNone, text_fg=(0.05, -0.14, -0.2, 1), scale=0.04, pos=(0, 0, 0.05), text_font=getInterfaceFont(), text_align=TextNode.ACenter, relief=None)
         self.detailCreditLabel.hide()
         self.totalLabel = DirectLabel(text='', parent=self.detailFrame, pos=(0, 0, -0.095), scale=0.05, text_fg=(0.05, 0.14, 0.4, 1), text_font=getInterfaceFont(), relief=None)
         self.dialog = None
         self.updateTotalPropsText()
         self.trackRows = []
+        self.trackTabs = []
         self.trackNameLabels = []
         self.trackBars = []
         self.buttons = []
         for track in range(0, len(Tracks)):
-            trackFrame = DirectFrame(parent=self.invFrame, image=self.rowModel, scale=(1.0, 1.0, 1.1), pos=(0, 0.3, self.TrackYOffset + track * self.TrackYSpacing), image_color=(TrackColors[track][0],
-             TrackColors[track][1],
-             TrackColors[track][2],
-             1), state=DGG.NORMAL, relief=None)
+            trackTab = DirectButton(parent=self.invFrame, text=TextEncoder.upper(Tracks[track]), relief=None, scale=(0.5, 0.5, 0.5), pos=(-0.7 + offset, 0, -0.54), geom=self.tab, geom_color=(TrackColors[track][0] * 0.6,
+         TrackColors[track][1] * 0.6,
+         TrackColors[track][2] * 0.6,
+         1), text_font=ToontownGlobals.getInterfaceFont(), text_scale=TTLocalizer.INtrackNameLabels, text_pos=(0,0,0), text_align=TextNode.ACenter, command=self.doTab, extraArgs=[track], pressEffect=1)
+            offset += 0.2
+            trackFrame = DirectFrame(parent=self.invFrame, image=bars[track], scale=(1.0, 1.0, 1.0), pos=(0, 0, -0.7), state=DGG.NORMAL, relief=None)
             trackFrame.bind(DGG.WITHIN, self.enterTrackFrame, extraArgs=[track])
             trackFrame.bind(DGG.WITHOUT, self.exitTrackFrame, extraArgs=[track])
             self.trackRows.append(trackFrame)
+            self.trackTabs.append(trackTab)
             adjustLeft = -0.065
             self.trackNameLabels.append(DirectLabel(text=TextEncoder.upper(Tracks[track]), parent=self.trackRows[track], pos=(-0.72 + adjustLeft, -0.1, 0.01), scale=TTLocalizer.INtrackNameLabels, relief=None, text_fg=(0.2, 0.2, 0.2, 1), text_font=getInterfaceFont(), text_align=TextNode.ALeft, textMayChange=0))
             self.trackBars.append(DirectWaitBar(parent=self.trackRows[track], pos=(-0.58 + adjustLeft, -0.1, -0.025), relief=DGG.SUNKEN, frameSize=(-0.6,
@@ -257,10 +278,52 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
                 button.bind(DGG.ENTER, self.showDetail, extraArgs=[track, item])
                 button.bind(DGG.EXIT, self.hideDetail)
                 self.buttons[track].append(button)
+        for x in xrange(0, len(self.trackRows)):
+            self.hideTrack(x)
+        for x in xrange(0, len(self.trackTabs)):
+            self.trackTabs[x].hide()
+        for x in xrange(0, len(self.trackTabs)):
+            if self.toon.hasTrackAccess(x):
+                self.trackTabs[x].show()
+        self.doTab(self.activeTab)
+        self.accept("alt-1", self.doTab, extraArgs=[0])
+        self.accept("alt-2", self.doTab, extraArgs=[1])
+        self.accept("alt-3", self.doTab, extraArgs=[2])
+        self.accept("alt-4", self.doTab, extraArgs=[3])
+        self.accept("alt-5", self.doTab, extraArgs=[4])
+        self.accept("alt-6", self.doTab, extraArgs=[5])
+        self.accept("alt-7", self.doTab, extraArgs=[6])
+        self.accept("alt-8", self.doTab, extraArgs=[7])
 
         return
+		
+    def doTab(self, index):
+        if index > NUM_GAG_TRACKS:
+            index = 0
+        elif index < 0:
+            index = NUM_GAG_TRACKS
+        self.activeTab = index
+        for track in xrange(len(self.trackRows)):
+            self.hideTrack(track)
+            self.trackTabs[track]['geom_color']= Vec4(TrackColors[track][0] * 0.6, TrackColors[track][1] * 0.6, TrackColors[track][2] * 0.6, 1)
+        self.trackTabs[index]['geom_color']= Vec4(TrackColors[index][0], TrackColors[index][1], TrackColors[index][2], 1)
+        self.showTrack(index)
+        for track in range(0, len(Tracks)):
+            for level in xrange(len(Levels[track])):
+                button = self.buttons[track][level]
+                if self.itemIsUsable(track, level):
+                    button.show()
+                else:
+                    button.hide()
+        self.accept("control-1", self.__handleSelection, extraArgs=[self.activeTab, 0, True])
+        self.accept("control-2", self.__handleSelection, extraArgs=[self.activeTab, 1, True])
+        self.accept("control-3", self.__handleSelection, extraArgs=[self.activeTab, 2, True])
+        self.accept("control-4", self.__handleSelection, extraArgs=[self.activeTab, 3, True])
+        self.accept("control-5", self.__handleSelection, extraArgs=[self.activeTab, 4, True])
+        self.accept("control-6", self.__handleSelection, extraArgs=[self.activeTab, 5, True])
+        self.accept("control-7", self.__handleSelection, extraArgs=[self.activeTab, 6, True])
 
-    def __handleSelection(self, track, level):
+    def __handleSelection(self, track, level, viaKeyboard=False):
         if self.activateMode == 'purchaseDelete' or self.activateMode == 'bookDelete' or self.activateMode == 'storePurchaseDelete':
             if self.numItem(track, level):
                 self.useItem(track, level)
@@ -268,12 +331,12 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
                 messenger.send('inventory-deletion', [track, level])
                 self.showDetail(track, level)
         elif self.activateMode == 'purchase' or self.activateMode == 'storePurchase':
-            messenger.send('inventory-selection', [track, level])
+            messenger.send('inventory-selection', [track, level, viaKeyboard])
             self.showDetail(track, level)
         elif self.gagTutMode:
             pass
         else:
-            messenger.send('inventory-selection', [track, level])
+            messenger.send('inventory-selection', [track, level, viaKeyboard])
 
     def __handleRun(self):
         messenger.send('inventory-run')
@@ -475,6 +538,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
                 self.plantTreeActivateButtons()
             else:
                 self.notify.error('No such mode as %s' % self.activateMode)
+            self.doTab(self.activeTab)
         return None
 
     def bookActivateButtons(self):
@@ -904,9 +968,9 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.battleFrame.show()
         self.battleFrame.setScale(0.9)
         self.invFrame.reparentTo(self.battleFrame)
-        self.invFrame.setPos(-0.26, 0, 0.35)
+        self.invFrame.setPos(0, 0, -0.25)
         self.invFrame.setScale(1)
-        self.detailFrame.setPos(1.125, 0, -0.08)
+        self.detailFrame.setPos(1.125, 0, -0.15)
         self.detailFrame.setScale(1)
         self.deleteAllButton.hide()
         self.deleteEnterButton.hide()
@@ -1059,7 +1123,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         else:
             shadowColor = self.ShadowColor
         button.configure(image0_image=self.upButton, image2_image=self.rolloverButton, text_shadow=shadowColor, geom_color=self.PressableGeomColor, commandButtons=(DGG.LMB,))
-        if self.interactivePropTrackBonus == track:
+        if self._interactivePropTrackBonus == track:
             button.configure(image_color=self.PropBonusPressableImageColor)
             self.addToPropBonusIval(button)
         else:
@@ -1085,7 +1149,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         else:
             shadowColor = self.ShadowColor
         button.configure(image0_image=self.upButton, image2_image=self.rolloverButton, text_shadow=shadowColor, geom_color=self.PressableGeomColor, commandButtons=(DGG.LMB,))
-        if self.interactivePropTrackBonus == track:
+        if self._interactivePropTrackBonus == track:
             button.configure(image_color=self.PropBonusNoncreditPressableImageColor)
             self.addToPropBonusIval(button)
         else:
@@ -1125,22 +1189,21 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         button.configure(image0_color=self.BookUnpressableImage0Color, image2_color=self.BookUnpressableImage2Color)
 
     def hideTrack(self, trackIndex):
-        self.trackNameLabels[trackIndex].show()
+        self.trackNameLabels[trackIndex].hide()
         self.trackBars[trackIndex].hide()
-        for levelIndex in range(0, len(Levels[trackIndex])):
+        self.trackRows[trackIndex].hide()
+        for levelIndex in xrange(0, len(Levels[trackIndex])):
             self.buttons[trackIndex][levelIndex].hide()
 
     def showTrack(self, trackIndex):
         self.trackNameLabels[trackIndex].show()
         self.trackBars[trackIndex].show()
-        for levelIndex in range(0, len(Levels[trackIndex])):
+        self.trackRows[trackIndex].show()
+        for levelIndex in xrange(0, len(Levels[trackIndex])):
             self.buttons[trackIndex][levelIndex].show()
 
         curExp, nextExp = self.getCurAndNextExpValues(trackIndex)
-        if curExp >= UnpaidMaxSkills[trackIndex] and self.toon.getGameAccess() != OTPGlobals.AccessFull:
-            self.trackBars[trackIndex]['range'] = nextExp
-            self.trackBars[trackIndex]['text'] = TTLocalizer.InventoryGuestExp
-        elif curExp >= regMaxSkill:
+        if curExp >= regMaxSkill:
             self.trackBars[trackIndex]['range'] = UberSkill
             self.trackBars[trackIndex]['text'] = TTLocalizer.InventoryUberTrackExp % {'nextExp': MaxSkill - curExp}
         else:
@@ -1193,6 +1256,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
             self.updateButton(track, level)
         else:
             self.notify.error('Invalid use of updateGUI')
+        self.doTab(self.activeTab)
         self.__activateButtons()
         return
 
@@ -1222,13 +1286,13 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
 
     def loadBattleFrame(self):
         battleModels = loader.loadModel('phase_3.5/models/gui/battle_gui')
-        self.levelsButton = DirectButton(self, relief=None, pos=(0.75, -0.05, 0.33), text='', text_scale=TTLocalizer.INlevelsButton, text_pos=(0.03, 0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=1, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=(3.0, 1.0, 1.5), image_color=(1, 0.6, 0, 1), command=self.__handleLevels)
-        self.battleFrame = DirectFrame(relief=None, image=battleModels.find('**/BATTLE_Menu'), image_scale=0.8, parent=self)
-        self.runButton = DirectButton(parent=self.battleFrame, relief=None, pos=(0.73, 0, -0.398), text=TTLocalizer.InventoryRun, text_scale=TTLocalizer.INrunButton, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=1.05, image_color=(0, 0.6, 1, 1), command=self.__handleRun)
-        self.sosButton = DirectButton(parent=self.battleFrame, relief=None, pos=(0.96, 0, -0.398), text=TTLocalizer.InventorySOS, text_scale=0.05, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=1.05, image_color=(0, 0.6, 1, 1), command=self.__handleSOS)
-        self.passButton = DirectButton(parent=self.battleFrame, relief=None, pos=(0.96, 0, -0.242), text=TTLocalizer.InventoryPass, text_scale=TTLocalizer.INpassButton, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=1, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=1.05, image_color=(0, 0.6, 1, 1), command=self.__handlePass)
-        self.fireButton = DirectButton(parent=self.battleFrame, relief=None, pos=(0.73, 0, -0.242), text=TTLocalizer.InventoryFire, text_scale=TTLocalizer.INfireButton, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=1.05, image_color=(0, 0.6, 1, 1), command=self.__handleFire)
-        self.tutText = DirectFrame(parent=self.battleFrame, relief=None, pos=(0.05, 0, -0.1133), scale=0.143, image=DGG.getDefaultDialogGeom(), image_scale=5.125, image_pos=(0, 0, -0.65), image_color=ToontownGlobals.GlobalDialogColor, text_scale=TTLocalizer.INclickToAttack, text=TTLocalizer.InventoryClickToAttack, textMayChange=0)
+        self.levelsButton = DirectButton(self, relief=None, pos=(0.675, 0, -0.5), text='', text_scale=TTLocalizer.INlevelsButton, text_fg=Vec4(1, 1, 1, 1), textMayChange=1, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=(2.5, 1.05, 1), image_color=(1, 0.6, 0, 1), command=self.__handleLevels)
+        self.battleFrame = DirectFrame(relief=None, parent=self)
+        self.runButton = DirectButton(parent=self.battleFrame, relief=None, pos=(1.4, 0, -0.5), text=TTLocalizer.InventoryRun, text_scale=TTLocalizer.INrunButton, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=(2, 1.05, 1), image_color=(0, 0.6, 1, 1), command=self.__handleRun)
+        self.sosButton = DirectButton(parent=self.battleFrame, relief=None, pos=(1.45, 0, -0.7), text=TTLocalizer.InventorySOS, text_scale=0.05, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=(2, 1.05, 1), image_color=(0, 0.6, 1, 1), command=self.__handleSOS)
+        self.passButton = DirectButton(parent=self.battleFrame, relief=None, pos=(1.45, 0, -0.6), text=TTLocalizer.InventoryPass, text_scale=TTLocalizer.INpassButton, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=1, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=(2, 1.05, 1), image_color=(0, 0.6, 1, 1), command=self.__handlePass)
+        self.fireButton = DirectButton(parent=self.battleFrame, relief=None, pos=(1.4, 0, -0.8), text=TTLocalizer.InventoryFire, text_scale=TTLocalizer.INfireButton, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=(2, 1.05, 1), image_color=(0, 0.6, 1, 1), command=self.__handleFire)
+        self.tutText = DirectFrame(parent=self.battleFrame, relief=None, pos=(-1, 0, -0.1133), scale=0.143, image=DGG.getDefaultDialogGeom(), image_scale=5.125, image_pos=(0, 0, -0.65), image_color=ToontownGlobals.GlobalDialogColor, text_scale=TTLocalizer.INclickToAttack, text=TTLocalizer.InventoryClickToAttack, textMayChange=0)
         self.tutText.hide()
         self.tutArrows = BlinkingArrows.BlinkingArrows(parent=self.battleFrame)
         battleModels.removeNode()
@@ -1237,18 +1301,14 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         return
 
     def loadPurchaseFrame(self):
-        purchaseModels = loader.loadModel('phase_4/models/gui/purchase_gui')
-        self.purchaseFrame = DirectFrame(relief=None, image=purchaseModels.find('**/PurchasePanel'), image_pos=(-0.21, 0, 0.08), parent=self)
+        self.purchaseFrame = DirectFrame(relief=None, parent=self)
         self.purchaseFrame.setX(-.06)
         self.purchaseFrame.hide()
-        purchaseModels.removeNode()
         return
 
     def loadStorePurchaseFrame(self):
-        storePurchaseModels = loader.loadModel('phase_4/models/gui/gag_shop_purchase_gui')
-        self.storePurchaseFrame = DirectFrame(relief=None, image=storePurchaseModels.find('**/gagShopPanel'), image_pos=(-0.21, 0, 0.18), parent=self)
+        self.storePurchaseFrame = DirectFrame(relief=None, parent=self)
         self.storePurchaseFrame.hide()
-        storePurchaseModels.removeNode()
         return
 
     def buttonLookup(self, track, level):
@@ -1261,7 +1321,10 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         messenger.send('exitTrackFrame', [track])
 
     def checkPropBonus(self, track):
-        return track == self.interactivePropTrackBonus
+        result = False
+        if track == self._interactivePropTrackBonus:
+            result = True
+        return result
 
     def stopAndClearPropBonusIval(self):
         if self.propBonusIval and self.propBonusIval.isPlaying():

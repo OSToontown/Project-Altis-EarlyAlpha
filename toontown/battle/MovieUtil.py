@@ -452,6 +452,67 @@ def getSprayTrack(battle, color, origin, target, dScaleUp, dHold, dScaleDown, ho
     track.append(Func(hideSpray, spray, sprayScale, sprayRot, sprayProp, globalPropPool))
     track.append(Func(battle.movie.clearRenderProp, sprayProp))
     return track
+	
+def getZapTrack(battle, color, origin, target, dScaleUp, dHold, dScaleDown, horizScale = 1.0, vertScale = 1.0, parent = render):
+    track = Sequence()
+    sprayProp = globalPropPool.getProp('spray')
+    sprayScale = hidden.attachNewNode('spray-parent')
+    sprayRot = hidden.attachNewNode('spray-rotate')
+    spray = sprayRot
+    spray.setColor(color)
+    if color[3] < 1.0:
+        spray.setTransparency(1)
+
+    def showSpray(sprayScale, sprayRot, sprayProp, origin, target, parent):
+        if callable(origin):
+            origin = origin()
+        if callable(target):
+            target = target()
+        sprayRot.reparentTo(parent)
+        sprayRot.clearMat()
+        sprayScale.reparentTo(sprayRot)
+        sprayScale.clearMat()
+        sprayProp.reparentTo(sprayScale)
+        sprayProp.clearMat()
+        sprayRot.setPos(origin)
+        sprayRot.lookAt(Point3(target))
+
+    track.append(Func(battle.movie.needRestoreRenderProp, sprayProp))
+    track.append(Func(showSpray, sprayScale, sprayRot, sprayProp, origin, target, parent))
+
+    def calcTargetScale(target = target, origin = origin, horizScale = horizScale, vertScale = vertScale):
+        if callable(target):
+            target = target()
+        if callable(origin):
+            origin = origin()
+        distance = Vec3(target - origin).length()
+        yScale = distance / SPRAY_LEN
+        targetScale = Point3(yScale * horizScale, yScale, yScale * vertScale)
+        return targetScale
+
+    track.append(LerpScaleInterval(sprayScale, dScaleUp, calcTargetScale, startScale=PNT3_NEARZERO))
+    track.append(Wait(dHold))
+
+    def prepareToShrinkSpray(spray, sprayProp, origin, target):
+        if callable(target):
+            target = target()
+        if callable(origin):
+            origin = origin()
+        sprayProp.setPos(Point3(0.0, -SPRAY_LEN, 0.0))
+        spray.setPos(target)
+
+    track.append(Func(prepareToShrinkSpray, spray, sprayProp, origin, target))
+    track.append(LerpScaleInterval(sprayScale, dScaleDown, PNT3_NEARZERO))
+
+    def hideSpray(spray, sprayScale, sprayRot, sprayProp, propPool):
+        sprayProp.detachNode()
+        removeProp(sprayProp)
+        sprayRot.removeNode()
+        sprayScale.removeNode()
+
+    track.append(Func(hideSpray, spray, sprayScale, sprayRot, sprayProp, globalPropPool))
+    track.append(Func(battle.movie.clearRenderProp, sprayProp))
+    return track
 
 
 T_HOLE_LEAVES_HAND = 1.708
@@ -606,6 +667,16 @@ def createSuitStunInterval(suit, before, after):
     head = suit.getHeadParts()[0]
     head.calcTightBounds(p1, p2)
     return Sequence(Wait(before), Func(stars.reparentTo, head), Func(stars.setZ, max(0.0, p2[2] - 1.0)), Func(stars.loop, 'stun'), Wait(after), Func(stars.removeNode))
+	
+def zapCog(suit, before, after):
+    zapSfx = loader.loadSfx('phase_5/audio/sfx/AA_cog_shock.ogg')
+    p1 = Point3(0)
+    p2 = Point3(0)
+    head = suit.getHeadParts()[0]
+    head.calcTightBounds(p1, p2)
+    headLoop = head.hprInterval(0.5, Vec3(360, 0, 0))
+    headNormal = head.hprInterval(0, Vec3(0, 0, 0))
+    return Sequence(Wait(before), Func(base.playSfx, zapSfx), headLoop, headLoop, Wait(after), headNormal)
 
 
 def calcAvgSuitPos(throw):

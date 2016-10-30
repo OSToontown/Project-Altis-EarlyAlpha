@@ -2096,12 +2096,12 @@ ReportPanelCategoryHacking = 'Hacking'
 ReportPanelConfirmations = ('You are about to report that %s has used obscene, bigoted or sexually explicit language.',
  'You are about to report that %s is being unsafe by giving out or requesting a phone number, address, last name, email address, password or account name.',
  'You are about to report that %s is bullying, harassing, or using extreme behavior to disrupt the game.',
- "You are about to report that %s has created a name that does not follow the server's rules.",
+ "You are about to report that %s has created a name that does not follow the Project Altis rules.",
  'You are about to report that %s has hacked/tampered with the game or used third party software.')
 ReportPanelWarning = "We take reporting very seriously. Your report will be viewed by a Moderator who will take appropriate action for anyone breaking our rules. If your account is found to have participated in breaking the rules, or if you make false reports or abuse the 'Report a Player' system, a Moderator may take action against your account. Are you absolutely sure you want to report this player?"
 ReportPanelThanks = 'Thank you! Your report has been sent to a Moderator for review. There is no need to contact us again about the issue. The moderation team will take appropriate action for a player found breaking our rules.'
 ReportPanelRemovedFriend = 'We have automatically removed %s from your Toon Friends List.'
-ReportPanelRemovedPlayerFriend = 'We have automatically removed %s as a Player friend so as such you will not see them as your friend anymore.'
+ReportPanelRemovedPlayerFriend = 'We have automatically removed %s as a Player friend so as such you will not see them as your friend in any Project Altis product.'
 ReportPanelAlreadyReported = 'You have already reported %s during this session. A Moderator will review your previous report.'
 IgnorePanelTitle = 'Ignore A Player'
 IgnorePanelAddIgnore = 'Would you like to ignore %s for the rest of this session?'
@@ -2917,7 +2917,7 @@ SuitAttackTaunts = {'Audit': ["I believe your books don't balance.",
               "You aren't above the law!",
               'There should be a law against you.',
               "There's no ex post facto with me!",
-              "The opinions expressed in this attack are not those of Toontown.",
+              "The opinions expressed in this attack are not those of Project Altis.",
               'We cannot be held responsible for damages suffered in this attack.',
               'Your results for this attack may vary.',
               'This attack is void where prohibited.',
@@ -4161,7 +4161,30 @@ GPGoofySpeedwayChatter = (['Welcome to ' + lGoofySpeedway + '.',
   "I'm going to catch the next race in the Grand Prix!",
   'Gawrsh I think the next race is about to start!',
   'Gosh, I better go check on the new Leaderboard and make sure it is working right!'])
-
+SillyPhase1Chatter = ["If you haven't seen the Silly Meter, head to Toon Hall!",
+ 'Toontown is getting sillier by the day!',
+ "Cause silly surges in battle to boost Toontown's silly levels!",
+ 'Objects on the street are starting to animate!',
+ 'I saw a fire hydrant on Silly Street move!']
+SillyPhase2Chatter = ['Silly levels are still rising!',
+ 'The Silly Meter has climbed higher and gotten crazier!',
+ 'Someone saw a trash can moving on Maple Street!',
+ 'A lot of hydrants on Silly Street have come alive!',
+ 'A mailbox on Lighthouse Lane has gone nuts!',
+ 'Go see the Silly Meter in Toon Hall!',
+ 'Keep causing those silly surges!']
+SillyPhase3Chatter = ['The Cogs hate how silly Toontown is becoming!',
+ 'Keep a sharp eye out for Cog Invasions!',
+ 'Cog Invasions have caused the silly levels to drop!',
+ 'The Silly Meter went down after the Cog Invasions!',
+ 'Every street of Toontown has animated objects now!',
+ 'Toontown is sillier than ever!']
+SillyPhase4Chatter = ['Fire hydrants make your Squirt Gags squirtier!',
+ 'Mail Boxes give your Throw Gags a special delivery!',
+ 'Those crazy Trash Cans can help boost your Toon-up!',
+ 'Objects on the street can help you in battle!',
+ "I just know we'll get the Silly Meter back up soon!",
+ 'Enjoy the sillier Toontown!']
 for chatter in [MickeyChatter,
  DonaldChatter,
  MinnieChatter,
@@ -4170,45 +4193,82 @@ for chatter in [MickeyChatter,
     chatter[1].extend(SharedChatterComments)
     chatter[2].extend(SharedChatterGoodbyes)
 
-ScientistPhase1Dialogue = ['Fellow Toons, this is the Silly Meter!',
-                           "It is tracking Toontown's rising silly levels...",
-                           'Which are causing objects on the street to animate!',
-                           'And YOU can help push these levels higher!',
-                           'Battle Cogs to cause Silly Surges...',
-                           'Make Toontown sillier than ever...',
-                           "And let's watch the world come alive!",
-                           "Now I'll repeat what I said, but only once more."]
-ScientistPhase2Dialogue = ['Good Gag work, Toons!',
-                           "You're keeping those silly levels rising...",
-                           'And Toontown is getting sillier every day!',
-                           'Fire hydrants, trash cans, and mailboxes are springing to life...',
-                           'Making the world more animated than ever!',
-                           "You know the Cogs aren't happy about this...",
-                           'But Toons sure are!']
-ScientistPhase3Dialogue = ['Gadzooks! The Silly Meter is even crazier than expected!',
-                           'Your Silly Surges are working wonders...',
-                           'And Toontown is getting more animated every day!',
-                           'Keep up the good Gag work...',
-                           'And lets see how silly we can make Toontown!',
-                           "You know the Cogs aren't happy about what's going on...",
-                           'But Toons sure are!']
-ScientistPhase4Dialogue = ['YOU DID IT TOONS!',
-                           'You brought the streets of Toontown to life!',
-                           'You deserve a reward!']
-ScientistPhase5Dialogue = ['Attention all Toons!',
-                           'The Cog invasions have been an unhappy event.',
-                           'As a result, silly levels have rapidly fallen...',
-                           'And no new objects are coming to life.',
-                           'But those that have are very thankful...',
-                           'And are showing their appreciation by helping in battle!',
-                           'We may hold off the Cogs yet, so keep up the fight!']
-ScientistPhase6Dialogue = ['Congratulations Toons!',
-                          'You all succesfully held off the Cog Invasions...',
-                          'With a little help from our newly animated friends...',
-                          'And brought Toontown back to its usual silly self!',
-                          'We hope to get the Silly Meter rising again soon...',
-                          'So in the meantime, keep up the Cog fight...',
-                          'And enjoy the silliest place ever, Toontown!']
+BoringTopic = 'Boring'
+EmceeDialoguePhase1Topic = 'EmceeDialoguePhase1'
+EmceeDialoguePhase2Topic = 'EmceeDialoguePhase2'
+EmceeDialoguePhase3Topic = 'EmceeDialoguePhase3'
+EmceeDialoguePhase3_5Topic = 'EmceeDialoguePhase3.5'
+EmceeDialoguePhase4Topic = 'EmceeDialoguePhase4'
+EmceeDialoguePhase5Topic = 'EmceeDialoguePhase5'
+EmceeDialoguePhase6Topic = 'EmceeDialoguePhase6'
+AprilToonsPhasePreTopTopic = 'AprilToonsPhasePreTopTopic'
+AprilToonsPhaseTopTopic = 'AprilToonsPhaseTopTopic'
+AprilToonsExtPhaseTopTopic = 'AprilToonsExtPhaseTopTopic'
+AprilToonsPhasePostTopTopic = 'AprilToonsPhasePostTopTopic'
+toontownDialogues = {BoringTopic: {(1, 2018): ['Hello Albert', 'It looks like the sillyness levels are rising', 'Yes and dont forget April Toons!'],
+               (2, 2019): ['Hello Newton', 'Yes I wonder how much the parties are contributing to all this'],
+               (3, 2020): ['Why hello there Albert and Newton', 'Halloween was pretty silly too!']},
+ AprilToonsPhasePreTopTopic: {(1, 2020): ['Gadzooks! The Silly Meter has come back to life!',
+                                          "It's rising every day, and will reach the top soon!",
+                                          'When it does, something silly is sure to happen!',
+                                          'So get ready to get ridiculous!']},
+ AprilToonsPhaseTopTopic: {(1, 2020): ['The Silly Meter has hit the top!',
+                                       'Doodles are talking, Estates are bouncy!',
+                                       "There's only one thing to say\xe2\x80\xa6",
+                                       'HAPPY APRIL TOONS!']},
+ AprilToonsExtPhaseTopTopic: {(1, 2020): ['The Silly Meter has hit the top!', 'Doodles are talking, Estates are bouncy!']},
+ AprilToonsPhasePostTopTopic: {(1, 2020): ['April Toons is over!',
+                                           "It's time for us to return to our lab.",
+                                           'But when things get REALLY crazy again\xe2\x80\xa6',
+                                           'The Silly Meter will return!']},
+ EmceeDialoguePhase1Topic: {(1, 2020): ['Fellow Toons, this is the Silly Meter!',
+                                        "It is tracking Toontown's rising silly levels...",
+                                        'Which are causing objects on the street to animate!',
+                                        'And YOU can help push these levels higher!',
+                                        'Battle Cogs to cause Silly Surges...',
+                                        'Make Toontown sillier than ever...',
+                                        "And let's watch the world come alive!",
+                                        "Now I'll repeat what I said, but only once more."]},
+ EmceeDialoguePhase2Topic: {(1, 2020): ['Good Gag work, Toons!',
+                                        "You're keeping those silly levels rising...",
+                                        'And Toontown is getting sillier every day!',
+                                        'Fire hydrants, trash cans, and mailboxes are springing to life...',
+                                        'Making the world more animated than ever!',
+                                        "You know the Cogs aren't happy about this...",
+                                        'But Toons sure are!']},
+ EmceeDialoguePhase3Topic: {(1, 2020): ['Gadzooks! The Silly Meter is even crazier than expected!',
+                                        'Your Silly Surges are working wonders...',
+                                        'And Toontown is getting more animated every day!',
+                                        'Keep up the good Gag work...',
+                                        'And lets see how silly we can make Toontown!',
+                                        "You know the Cogs aren't happy about what's going on...",
+                                        'But Toons sure are!']},
+ EmceeDialoguePhase3_5Topic: {(1, 2020): ['YOU DID IT TOONS!',
+                                          'You brought the streets of Toontown to life!',
+                                          'You deserve a reward!',
+                                          'Enter the code SILLYMETER in your Shticker Book...',
+                                          '...to get a Silly Meter T-Shirt!']},
+ EmceeDialoguePhase4Topic: {(1, 2020): ['Attention all Toons!',
+                                        'The sudden Cog invasions have been an unhappy event.',
+                                        'As a result, silly levels have rapidly fallen...',
+                                        'And no new objects are coming to life.',
+                                        'But those that have are very thankful...',
+                                        "So perhaps they'll find a way to show their appreciation!",
+                                        'Stay Tooned!']},
+ EmceeDialoguePhase5Topic: {(1, 2020): ['Attention all Toons!',
+                                        'The Cog invasions have been an unhappy event.',
+                                        'As a result, silly levels have rapidly fallen...',
+                                        'And no new objects are coming to life.',
+                                        'But those that have are very thankful...',
+                                        'And are showing their appreciation by helping in battle!',
+                                        'We may hold off the Cogs yet, so keep up the fight!']},
+ EmceeDialoguePhase6Topic: {(1, 2020): ['Congratulations Toons!',
+                                        'You all succesfully held off the Cog Invasions...',
+                                        'With a little help from our newly animated friends...',
+                                        'And brought Toontown back to its usual silly self!',
+                                        'We hope to get the Silly Meter rising again soon...',
+                                        'So in the meantime, keep up the Cog fight...',
+                                        'And enjoy the silliest place ever, Toontown!']}}
 FriendsListPanelNewFriend = 'New Friend'
 FriendsListPanelSecrets = 'True Friend'
 FriendsListPanelOnlineFriends = 'ONLINE TOON\nFRIENDS'
@@ -4224,7 +4284,7 @@ FriendInviterPlayer = 'Player'
 FriendInviterThatPlayer = 'That player'
 FriendInviterBegin = 'What type of friend would you like to make?'
 FriendInviterToonFriendInfo = 'A friend only in Toontown'
-FriendInviterPlayerFriendInfo = 'A friend across the Toontown network'
+FriendInviterPlayerFriendInfo = 'A friend across the Project Altis network'
 FriendInviterToonTooMany = 'You have too many toon friends to add another one now. You will have to remove some toon friends if you want to make friends with %s. You could also try making player friends them.'
 FriendInviterPlayerTooMany = 'You have too many player friends to add another one now. You will have to remove some player friends if you want to make friends with %s. You could also try making toon friends with them.'
 FriendInviterToonAlready = '%s is already your toon friend.'
@@ -4289,7 +4349,7 @@ LauncherPhaseNames = {0: 'Initialization',
  12: Bossbot + ' HQ',
  13: 'Parties'}
 LauncherProgress = '%(name)s (%(current)s of %(total)s)'
-LauncherStartingMessage = "Starting Toontown... "
+LauncherStartingMessage = "Starting Project Altis... "
 LauncherDownloadFile = 'Downloading update for ' + LauncherProgress + '...'
 LauncherDownloadFileBytes = 'Downloading update for ' + LauncherProgress + ': %(bytes)s'
 LauncherDownloadFilePercent = 'Downloading update for ' + LauncherProgress + ': %(percent)s%%'
@@ -4299,16 +4359,16 @@ LauncherExtractingFile = 'Extracting update for ' + LauncherProgress + '...'
 LauncherExtractingPercent = 'Extracting update for ' + LauncherProgress + ': %(percent)s%%'
 LauncherPatchingFile = 'Applying update for ' + LauncherProgress + '...'
 LauncherPatchingPercent = 'Applying update for ' + LauncherProgress + ': %(percent)s%%'
-LauncherConnectProxyAttempt = 'Connecting to Toontown: %s (proxy: %s) attempt: %s'
-LauncherConnectAttempt = 'Connecting to Toontown: %s attempt %s'
-LauncherDownloadServerFileList = 'Updating Toontown...'
-LauncherCreatingDownloadDb = 'Updating Toontown...'
-LauncherDownloadClientFileList = 'Updating Toontown...'
-LauncherFinishedDownloadDb = 'Updating Toontown... '
-LauncherStartingGame = 'Starting Toontown...'
-LauncherRecoverFiles = 'Updating Toontown. Recovering files...'
+LauncherConnectProxyAttempt = 'Connecting to Project Altis: %s (proxy: %s) attempt: %s'
+LauncherConnectAttempt = 'Connecting to Project Altis: %s attempt %s'
+LauncherDownloadServerFileList = 'Updating Project Altis...'
+LauncherCreatingDownloadDb = 'Updating Project Altis...'
+LauncherDownloadClientFileList = 'Updating Project Altis...'
+LauncherFinishedDownloadDb = 'Updating Project Altis... '
+LauncherStartingGame = 'Starting Project Altis...'
+LauncherRecoverFiles = 'Updating Project Altis. Recovering files...'
 LauncherCheckUpdates = 'Checking for updates for ' + LauncherProgress
-LauncherVerifyPhase = 'Updating Toontown...'
+LauncherVerifyPhase = 'Updating Project Altis...'
 LoadingDownloadWatcherUpdate = 'Loading %s'
 AvatarChoiceMakeAToon = 'Make A\nToon'
 AvatarChoicePlayThisToon = 'Play\nThis Toon'
@@ -5129,6 +5189,7 @@ BattleGlobalTracks = ['toon-up',
  'sound',
  'throw',
  'squirt',
+ 'zap',
  'drop']
 BattleGlobalNPCTracks = ['restock', 'toons hit', 'cogs miss']
 BattleGlobalAvPropStrings = (('Feather',
@@ -5173,6 +5234,13 @@ BattleGlobalAvPropStrings = (('Feather',
   'Fire Hose',
   'Storm Cloud',
   'Geyser'),
+ ('Joybuzzer',
+  'Carpet',
+  'Balloon',
+  'Kart Battery',
+  'Tazer',
+  'Tesla Coil',
+  'Lightning'),
  ('Flower Pot',
   'Sandbag',
   'Anvil',
@@ -5222,6 +5290,13 @@ BattleGlobalAvPropStringsSingular = (('a Feather',
   'a Fire Hose',
   'a Storm Cloud',
   'a Geyser'),
+ ('a Joybuzzer',
+  'a Carpet',
+  'a Balloon',
+  'a Kart Battery',
+  'a Tazer',
+  'a Tesla Coil',
+  'Lightning'),
  ('a Flower Pot',
   'a Sandbag',
   'an Anvil',
@@ -5271,6 +5346,13 @@ BattleGlobalAvPropStringsPlural = (('Feathers',
   'Fire Hoses',
   'Storm Clouds',
   'Geysers'),
+ ('Squirting Flowers',
+  'Glasses of Water',
+  'Squirt Guns',
+  'Seltzer Bottles',
+  'Fire Hoses',
+  'Storm Clouds',
+  'Geysers'),
  ('Flower Pots',
   'Sandbags',
   'Anvils',
@@ -5284,6 +5366,7 @@ BattleGlobalAvTrackAccStrings = ('Medium',
  'High',
  'Medium',
  'High',
+ 'Medium',
  'Low')
 BattleGlobalLureAccLow = 'Low'
 BattleGlobalLureAccMedium = 'Medium'
@@ -5291,12 +5374,12 @@ AttackMissed = 'MISSED'
 NPCCallButtonLabel = 'CALL'
 LoaderLabel = 'Loading...'
 StarringIn = 'Starring In...'
-HeadingToHood = 'Loading %(hood)s...'
-HeadingToYourEstate = 'Loading The Estate...'
-HeadingToEstate = "Loading %s's Estate..."
-HeadingToFriend = "Loading %s's Friend's Estate..."
-HeadingToPlayground = 'Loading The Playground...'
-HeadingToStreet = 'Loading %(street)s...'
+HeadingToHood = '%(hood)s'
+HeadingToYourEstate = 'The Estate'
+HeadingToEstate = "%s's Estate"
+HeadingToFriend = "%s's Friend's Estate"
+HeadingToPlayground = 'The Playground'
+HeadingToStreet = '%(street)s'
 TownBattleRun = 'Run all the way back to the playground?'
 TownBattleChooseAvatarToonTitle = 'WHICH TOON?'
 TownBattleChooseAvatarCogTitle = 'WHICH ' + Cog.upper() + '?'
@@ -5781,10 +5864,10 @@ QuestScript101_8 = 'Oh! You also need a Laff meter!'
 QuestScript101_9 = "If your Laff meter gets too low, you'll be sad!"
 QuestScript101_10 = 'A happy Toon is a healthy Toon!'
 QuestScript101_11 = "OH NO! There's a Cog outside my shop!"
-QuestScript101_12 = 'HELP ME, PLEASE! Defeat the Cog!'
+QuestScript101_12 = 'HELP ME, PLEASE! Defeat that Cog!'
 QuestScript101_13 = 'Here is your first ToonTask!'
-QuestScript101_14 = 'Hurry up! Go defeat the Flunky!'
-QuestScript110_1 = 'Good work defeating the Flunky. Let me give you a Shticker Book...'
+QuestScript101_14 = 'Hurry up! Go defeat that Flunky!'
+QuestScript110_1 = 'Good work defeating that Flunky. Let me give you a Shticker Book...'
 QuestScript110_2 = 'The book is full of good stuff.'
 QuestScript110_3 = "Open it, and I'll show you."
 QuestScript110_4 = "The map shows where you've been."
@@ -8529,7 +8612,7 @@ TipDict = {TIP_NONE: ('',),
                'Open or close your Shticker Book by pressing the "F8" key.',
                'You can look up by pressing the "Page Up" key and look down by pressing the "Page Down" key.',
                'Press the "Control" key to jump.',
-               'Press the "F9" key to take a screenshot, which will be saved in your Toontown folder on your computer.',
+               'Press the "F9" key to take a screenshot, which will be saved in your Project Altis folder on your computer.',
                'You can change your screen resolution, adjust audio, and control other options on the Options Page in the Shticker Book.',
                "Try on your friend's clothing at the closet in their house.",
                'You can go to your house using the "Go Home" button on your map.',
@@ -9988,18 +10071,18 @@ CogdoExecutiveSuiteIntroMessage = "Oh no, they've got the shop keeper!\nDefeat t
 CogdoExecutiveSuiteToonThankYou = 'Thanks for the rescue!\nIf you need help in a fight, use this SOS card to call my friend %s.'
 CogdoLawbotExecutiveSuiteToonThankYou = "Thanks for the rescue!\nIt seems the Cogs didn't leave behind the key to the Sprocket Award case.\x07Instead, use these summons I found laying around. You can summon Cogs with them!"
 CogdoExecutiveSuiteToonBye = 'Bye!'
-SillySurgeTerms = ['Amusing Ascent!',
- 'Silly Surge!',
- 'Ridiculous Rise!',
- 'Giggle Growth!',
- 'Funny Fueling!',
- 'Batty Boost!',
- 'Crazy Climb!',
- 'Jolly Jump!',
- 'Loony Lift!',
- 'Hilarity Hike!',
- 'Insanity Increase!',
- 'Cracked-Uptick!']
+SillySurgeTerms = {1: 'Amusing Ascent!',
+ 2: 'Silly Surge!',
+ 3: 'Ridiculous Rise!',
+ 4: 'Giggle Growth!',
+ 5: 'Funny Fueling!',
+ 6: 'Batty Boost!',
+ 7: 'Crazy Climb!',
+ 8: 'Jolly Jump!',
+ 9: 'Loony Lift!',
+ 10: 'Hilarity Hike!',
+ 11: 'Insanity Increase!',
+ 12: 'Cracked-Uptick!'}
 InteractivePropTrackBonusTerms = {0: 'Super Toon-Up!',
  1: '',
  2: '',
