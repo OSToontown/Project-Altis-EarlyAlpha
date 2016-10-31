@@ -6,7 +6,8 @@ from direct.showbase import DirectObject
 from direct.fsm import StateData
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
-from toontown.town import TownBattle
+from toontown.town import TownBattleNEW
+from toontown.town import TownBattleOLD
 from toontown.suit import Suit
 import Elevator
 from direct.task.Task import Task
@@ -66,8 +67,12 @@ class SuitInterior(Place.Place):
     def load(self):
         Place.Place.load(self)
         self.parentFSM.getStateNamed('suitInterior').addChild(self.fsm)
-        self.townBattle = TownBattle.TownBattle('town-battle-done')
-        self.townBattle.load()
+        if settings['newGui'] == True:
+            self.townBattle = TownBattleNEW.TownBattleNEW('town-battle-done')
+            self.townBattle.load()
+        else:
+            self.townBattle = TownBattleOLD.TownBattleOLD('town-battle-done')
+            self.townBattle.load()
         for i in range(1, 3):
             Suit.loadSuits(i)
 

@@ -729,6 +729,15 @@ class SpecialOptionsTabPage(DirectFrame):
         self.WASD_toggleButton = DirectButton(parent=self, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=button_image_scale, text='', text_scale=options_text_scale, text_pos=button_textpos, pos=(buttonbase_xcoord, 0.0, buttonbase_ycoord - textRowHeight), command=self.__doToggleWASD)
         self.keymapDialogButton = DirectButton(parent=self, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=button_image_scale, text='Configure Keymap', text_scale=(0.03, 0.05, 1), text_pos=button_textpos, pos=(buttonbase_xcoord + 0.0, 0.0, buttonbase_ycoord), command=self.__openKeyRemapDialog) 
         self.keymapDialogButton.setScale(1.55, 1.0, 1.0)
+        self.newGui_Label = DirectLabel(parent=self, relief=None, text='', text_align=TextNode.ALeft,
+                                      text_scale=options_text_scale, text_wordwrap=16,
+                                      pos=(leftMargin, 0, textStartHeight - textRowHeight - 0.1))
+        self.newGui_toggleButton = DirectButton(parent=self, relief=None, image=(
+        guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')),
+                                              image_scale=button_image_scale, text='', text_scale=options_text_scale,
+                                              text_pos=button_textpos,
+                                              pos=(buttonbase_xcoord, 0.0, buttonbase_ycoord - textRowHeight - 0.1),
+                                              command=self.__doToggleNewGui)
         guiButton.removeNode()
         circleModel.removeNode()
 
@@ -736,6 +745,7 @@ class SpecialOptionsTabPage(DirectFrame):
         self.show()
         self.settingsChanged = 0
         self.__setWASDButton()
+        self.__setNewGuiButton()
 
     def exit(self):
         self.ignoreAll()
@@ -748,6 +758,22 @@ class SpecialOptionsTabPage(DirectFrame):
         del self.WASD_toggleButton
         self.keymapDialogButton.destroy()
         del self.keymapDialogButton
+
+    def __doToggleNewGui(self):
+        if settings['newGui'] == True:
+            settings['newGui'] = False
+        else:
+            settings['newGui'] = True
+        self.settingsChanged = 1
+        self.__setNewGuiButton()
+
+    def __setNewGuiButton(self):
+        if settings['newGui'] == True:
+            self.newGui_Label['text'] = 'Using the New Battle GUI.'
+            self.newGui_toggleButton['text'] = 'Change'
+        else:
+            self.newGui_Label['text'] = 'Using the Old Battle GUI.'
+            self.newGui_toggleButton['text'] = 'Change'
 
     def __doToggleWASD(self):
         messenger.send('wakeup')

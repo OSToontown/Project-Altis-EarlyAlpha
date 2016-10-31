@@ -26,8 +26,12 @@ from otp.nametag import NametagGlobals
 class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedBattleBase')
     id = 0
-    camPos = ToontownBattleGlobals.BattleCamDefaultPos
-    camHpr = ToontownBattleGlobals.BattleCamDefaultHpr
+    if settings['newGui'] == True:
+        camPos = ToontownBattleGlobals.BattleCamDefaultPosNEW
+        camHpr = ToontownBattleGlobals.BattleCamDefaultHprNEW
+    else:
+        camPos = ToontownBattleGlobals.BattleCamDefaultPosOLD
+        camHpr = ToontownBattleGlobals.BattleCamDefaultHprOLD
     camFov = ToontownBattleGlobals.BattleCamDefaultFov
     camMenuFov = ToontownBattleGlobals.BattleCamMenuFov
     camJoinPos = ToontownBattleGlobals.BattleCamJoinPos
