@@ -26,7 +26,6 @@ class DistributedNPCToonBase(DistributedToon.DistributedToon):
             self.__initCollisions()
             self.setPickable(0)
             self.setPlayerType(NametagGroup.CCNonPlayer)
-        self.setBlend(frameBlend=True)
 
     def disable(self):
         self.ignore('enter' + self.cSphereNode.getName())
@@ -46,7 +45,6 @@ class DistributedNPCToonBase(DistributedToon.DistributedToon):
         self.detectAvatars()
         self.setParent(ToontownGlobals.SPRender)
         self.startLookAround()
-        self.setBlend(frameBlend=True)
 
     def generateToon(self):
         self.setLODs()
@@ -65,11 +63,9 @@ class DistributedNPCToonBase(DistributedToon.DistributedToon):
         self.legsParts = []
         self.__bookActors = []
         self.__holeActors = []
-        self.setBlend(frameBlend=True)
 
     def announceGenerate(self):
         self.initToonState()
-        self.setBlend(frameBlend=True)
         DistributedToon.DistributedToon.announceGenerate(self)
 
     def initToonState(self):

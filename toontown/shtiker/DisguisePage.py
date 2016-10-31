@@ -11,7 +11,6 @@ DeptColors = (Vec4(0.647, 0.608, 0.596, 1.0),
  Vec4(0.588, 0.635, 0.671, 1.0),
  Vec4(0.596, 0.714, 0.659, 1.0),
  Vec4(0.761, 0.678, 0.69, 1.0))
-NumParts = max(CogDisguiseGlobals.PartsPerSuit)
 PartNames = ('lUpleg', 'lLowleg', 'lShoe', 'rUpleg', 'rLowleg', 'rShoe', 'lShoulder', 'rShoulder', 'chest', 'waist', 'hip', 'lUparm', 'lLowarm', 'lHand', 'rUparm', 'rLowarm', 'rHand')
 
 class DisguisePage(ShtikerPage.ShtikerPage):
@@ -70,11 +69,11 @@ class DisguisePage(ShtikerPage.ShtikerPage):
         self.cogLevel = DirectLabel(parent=self.frame, relief=None, text='', text_font=ToontownGlobals.getSuitFont(), text_scale=0.09, text_align=TextNode.ACenter, pos=(-0.91, 0, -1.02))
         self.partFrame = DirectFrame(parent=self.frame, relief=None)
         self.parts = []
-        for partNum in range(0, NumParts):
+        for partNum in range(0, 17):
             self.parts.append(DirectFrame(parent=self.partFrame, relief=None, geom=gui.find('**/robot/' + PartNames[partNum])))
 
         self.holes = []
-        for partNum in range(0, NumParts):
+        for partNum in range(0, 17):
             self.holes.append(DirectFrame(parent=self.partFrame, relief=None, geom=gui.find('**/robot_hole/' + PartNames[partNum])))
 
         self.cogPartRatio = DirectLabel(parent=self.frame, relief=None, text='', text_font=ToontownGlobals.getSuitFont(), text_scale=0.08, text_align=TextNode.ACenter, pos=(-0.91, 0, -0.82))
