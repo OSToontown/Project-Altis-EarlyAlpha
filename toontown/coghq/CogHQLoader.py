@@ -5,7 +5,8 @@ from direct.fsm import State
 import CogHQLobby
 from toontown.hood import QuietZoneState
 from toontown.hood import ZoneUtil
-from toontown.town import TownBattle
+from toontown.town import TownBattleOLD
+from toontown.town import TownBattleNEW
 from toontown.suit import Suit
 from pandac.PandaModules import *
 
@@ -30,8 +31,12 @@ class CogHQLoader(StateData.StateData):
         self.parentFSMState.addChild(self.fsm)
         self.music = base.loadMusic(self.musicFile)
         self.battleMusic = base.loadMusic('phase_9/audio/bgm/encntr_suit_winning.ogg')
-        self.townBattle = TownBattle.TownBattle(self.townBattleDoneEvent)
-        self.townBattle.load()
+        if settings['newGui'] == True:
+            self.townBattle = TownBattleNEW.TownBattleNEW(self.townBattleDoneEvent)
+            self.townBattle.load()
+        else:
+            self.townBattle = TownBattleOLD.TownBattleOLD(self.townBattleDoneEvent)
+            self.townBattle.load()
         Suit.loadSuits(3)
         self.loadPlaceGeom(zoneId)
 
