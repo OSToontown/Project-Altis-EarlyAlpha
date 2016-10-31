@@ -177,6 +177,9 @@ class ToonBase(OTPBase.OTPBase):
         
         self.Widescreen = settings.get('Widescreen', True)
         self.nowideratio = (4 / 3)
+        
+        self.currentScale = settings.get('texture-scale', 1.0)
+        self.setTextureScale()
         if self.Widescreen:
             base.setAspectRatio(0)
         else:
@@ -194,6 +197,9 @@ class ToonBase(OTPBase.OTPBase):
             base.setAspectRatio(0)
         else:
             base.setAspectRatio(1.33)
+            
+    def setTextureScale(self):
+        scale = settings.get('texture-scale')
 
     def openMainWindow(self, *args, **kw):
         result = OTPBase.OTPBase.openMainWindow(self, *args, **kw)

@@ -13,6 +13,7 @@ from toontown.toonbase import TTLocalizer
 from toontown.toonbase import ToontownGlobals
 from toontown.toontowngui.TTGui import btnDn, btnRlvr, btnUp
 from toontown.toontowngui import TTDialog
+#from toontown.options.GraphicsOptions import GraphicsOptions
 
 resolution_table = [
     (800, 600),
