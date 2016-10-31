@@ -762,8 +762,10 @@ class SpecialOptionsTabPage(DirectFrame):
     def __doToggleNewGui(self):
         if settings['newGui'] == True:
             settings['newGui'] = False
+            base.localAvatar.setSystemMessage(0, 'Old Battle GUI is toggled for activation, log back in to see effects.')
         else:
             settings['newGui'] = True
+            base.localAvatar.setSystemMessage(0, 'New Battle GUI is toggled for activation, log back in to see effects.')
         self.settingsChanged = 1
         self.__setNewGuiButton()
 

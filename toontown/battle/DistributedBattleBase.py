@@ -27,11 +27,11 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedBattleBase')
     id = 0
     if settings['newGui'] == True:
-        camPos = ToontownBattleGlobals.BattleCamDefaultPosNEW
-        camHpr = ToontownBattleGlobals.BattleCamDefaultHprNEW
+        camPos = ToontownBattleGlobals.BattleCamDefaultPos
+        camHpr = ToontownBattleGlobals.BattleCamDefaultHpr
     else:
-        camPos = ToontownBattleGlobals.BattleCamDefaultPosOLD
-        camHpr = ToontownBattleGlobals.BattleCamDefaultHprOLD
+        camPos = ToontownBattleGlobals.BattleCamDefaultPos2
+        camHpr = ToontownBattleGlobals.BattleCamDefaultHpr2
     camFov = ToontownBattleGlobals.BattleCamDefaultFov
     camMenuFov = ToontownBattleGlobals.BattleCamMenuFov
     camJoinPos = ToontownBattleGlobals.BattleCamJoinPos
