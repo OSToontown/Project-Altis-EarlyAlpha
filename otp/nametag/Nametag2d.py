@@ -4,7 +4,7 @@ from pandac.PandaModules import *
 import math
 
 class Nametag2d(Nametag, MarginPopup):
-    SCALE_2D = 0.3
+    SCALE_2D = 0.25
     CHAT_ALPHA = 0.5
     ARROW_OFFSET = -1.0
     ARROW_SCALE = 1.5

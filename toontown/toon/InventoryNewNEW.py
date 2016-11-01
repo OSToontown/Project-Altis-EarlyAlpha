@@ -10,7 +10,7 @@ from toontown.toonbase import ToontownGlobals
 from otp.otpbase import OTPGlobals
 from toontown.toontowngui import TTDialog
 
-class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
+class InventoryNewNEW(InventoryBase.InventoryBase, DirectFrame):
     notify = DirectNotifyGlobal.directNotify.newCategory('InventoryNew')
     PressableTextColor = Vec4(1, 1, 1, 1)
     PressableGeomColor = Vec4(1, 1, 1, 1)
@@ -37,7 +37,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
     def __init__(self, toon, invStr = None, ShowSuperGags = 1):
         InventoryBase.InventoryBase.__init__(self, toon, invStr)
         DirectFrame.__init__(self, relief=None)
-        self.initialiseoptions(InventoryNew)
+        self.initialiseoptions(InventoryNewNEW)
         self.battleCreditLevel = None
         self.detailCredit = None
         self.__battleCreditMultiplier = 1
@@ -201,7 +201,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         invModel.removeNode()
         del invModel
         self.buttonModels = loader.loadModel('phase_3.5/models/gui/inventory_gui')
-        self.battleGui = loader.loadModel('phase_3.5/models/gui/battle_gui')
+        self.battleGui = loader.loadModel('phase_3.5/models/gui/battle_gui_new')
         self.healRow =  self.battleGui.find('**/healBar')
         self.trapRow =  self.battleGui.find('**/trapBar')
         self.lureRow =  self.battleGui.find('**/lureBar')
@@ -298,10 +298,6 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         return
 		
     def doTab(self, index):
-        if index > NUM_GAG_TRACKS:
-            index = 0
-        elif index < 0:
-            index = NUM_GAG_TRACKS
         self.activeTab = index
         for track in xrange(len(self.trackRows)):
             self.hideTrack(track)
@@ -952,7 +948,6 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.deleteExitButton.hide()
         self.deleteEnterButton.hide()
         self.deleteAllButton.hide()
-        self.updateUseableButtons()
 
     def gagTutDisabledDeactivateButtons(self):
         self.invFrame.reparentTo(self)
@@ -1285,7 +1280,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
             self.updateGUI(track, level)
 
     def loadBattleFrame(self):
-        battleModels = loader.loadModel('phase_3.5/models/gui/battle_gui')
+        battleModels = loader.loadModel('phase_3.5/models/gui/battle_gui_new')
         self.levelsButton = DirectButton(self, relief=None, pos=(0.675, 0, -0.5), text='', text_scale=TTLocalizer.INlevelsButton, text_fg=Vec4(1, 1, 1, 1), textMayChange=1, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=(2.5, 1.05, 1), image_color=(1, 0.6, 0, 1), command=self.__handleLevels)
         self.battleFrame = DirectFrame(relief=None, parent=self)
         self.runButton = DirectButton(parent=self.battleFrame, relief=None, pos=(1.4, 0, -0.5), text=TTLocalizer.InventoryRun, text_scale=TTLocalizer.INrunButton, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=(2, 1.05, 1), image_color=(0, 0.6, 1, 1), command=self.__handleRun)

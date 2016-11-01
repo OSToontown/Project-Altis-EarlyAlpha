@@ -91,7 +91,10 @@ class RewardPanel(DirectFrame):
              ToontownBattleGlobals.TrackColors[i][2],
              1), text='0/0', text_scale=0.18, text_fg=(0, 0, 0, 1), text_align=TextNode.ACenter, text_pos=(0, -0.05), pos=(0.4, 0, -0.09 * i)))
 
-        self._battleGui = loader.loadModel('phase_3.5/models/gui/battle_gui')
+        if settings['newGui'] == True:
+            self._battleGui = loader.loadModel('phase_3.5/models/gui/battle_gui_new')
+        else:
+            self._battleGui = loader.loadModel('phase_3.5/models/gui/battle_gui_old')
         if config.GetBool('want-skip-button', 0):
             self.skipButton = DirectButton(parent=self, relief=None, image=(self._battleGui.find('**/tt_t_gui_gen_skipSectionUp'),
              self._battleGui.find('**/tt_t_gui_gen_skipSectionDown'),

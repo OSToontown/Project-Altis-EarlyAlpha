@@ -5093,7 +5093,10 @@ class Toon(Avatar.Avatar, ToonHead):
         if pieType == 'actor':
             animPie = ActorInterval(pie, pieName, startFrame=0, endFrame=31)
             pingpongPie = Func(pie.pingpong, pieName, fromFrame=32, toFrame=47)
-        track = Sequence(Func(self.setPosHpr, x, y, z, h, 0, 0), Func(pie.reparentTo, self.rightHand), Func(pie.setPosHpr, 0, 0, 0, 0, 0, 0), Parallel(pie.scaleInterval(1, self.pieScale, startScale=MovieUtil.PNT3_NEARZERO), ActorInterval(self, 'throw', startFrame=0, endFrame=31), animPie), Func(self.pingpong, 'throw', fromFrame=32, toFrame=47), pingpongPie)
+        partName = None
+        if self.playingAnim != 'neutral':
+            partName = 'torso'
+        track = Sequence(Func(self.setPosHpr, x, y, z, h, 0, 0), Func(pie.reparentTo, self.rightHand), Func(pie.setPosHpr, 0, 0, 0, 0, 0, 0), Parallel(pie.scaleInterval(1, self.pieScale, startScale=MovieUtil.PNT3_NEARZERO), ActorInterval(self, 'throw', startFrame=0, endFrame=31, partName=partName), animPie), Func(self.pingpong, 'throw', fromFrame=32, toFrame=45, partName=partName), pingpongPie)
         return track
 
     def getTossPieInterval(self, x, y, z, h, power, throwType, beginFlyIval = Sequence()):

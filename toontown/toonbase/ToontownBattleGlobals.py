@@ -3,8 +3,10 @@ import math
 import TTLocalizer
 BattleCamFaceOffFov = 30.0
 BattleCamFaceOffPos = Point3(0, -10, 4)
-BattleCamDefaultPos = Point3(0, -16, 3)
-BattleCamDefaultHpr = Vec3(0, 0, 0)
+BattleCamDefaultPos1 = Point3(0, -16, 3)
+BattleCamDefaultHpr1 = Vec3(0, 0, 0)
+BattleCamDefaultPos2 = Point3(0, -8.6, 16.5)
+BattleCamDefaultHpr2 = Vec3(0, -61, 0)
 BattleCamDefaultFov = 80.0
 BattleCamMenuFov = 65.0
 BattleCamJoinPos = Point3(0, -12, 13)
@@ -19,7 +21,6 @@ TrackColors = ((211 / 255.0, 148 / 255.0, 255 / 255.0),
  (93 / 255.0, 108 / 255.0, 239 / 255.0),
  (255 / 255.0, 145 / 255.0, 66 / 255.0),
  (255 / 255.0, 65 / 255.0, 199 / 255.0),
- (255 / 255.0, 255 / 255.0, 255 / 255.0),
  (67 / 255.0, 243 / 255.0, 255 / 255.0))
 HEAL_TRACK = 0
 TRAP_TRACK = 1
@@ -27,19 +28,18 @@ LURE_TRACK = 2
 SOUND_TRACK = 3
 THROW_TRACK = 4
 SQUIRT_TRACK = 5
-ZAP_TRACK = 6
-DROP_TRACK = 7
-NPC_RESTOCK_GAGS = 8
-NPC_TOONS_HIT = 9
-NPC_COGS_MISS = 10
+DROP_TRACK = 6
+NPC_RESTOCK_GAGS = 7
+NPC_TOONS_HIT = 8
+NPC_COGS_MISS = 9
 MIN_TRACK_INDEX = 0
-MAX_TRACK_INDEX = 7
+MAX_TRACK_INDEX = 6
 MIN_LEVEL_INDEX = 0
 MAX_LEVEL_INDEX = 6
 MAX_UNPAID_LEVEL_INDEX = 4
 LAST_REGULAR_GAG_LEVEL = 5
 UBER_GAG_LEVEL_INDEX = 6
-NUM_GAG_TRACKS = 8
+NUM_GAG_TRACKS = 7
 PropTypeToTrackBonus = {AnimPropTypes.Hydrant: SQUIRT_TRACK,
  AnimPropTypes.Mailbox: THROW_TRACK,
  AnimPropTypes.Trashcan: HEAL_TRACK}
@@ -50,7 +50,6 @@ Levels = [[0, 20, 200, 800, 2000, 6000, 10000], # Toon-Up
  [0, 40, 200, 1000, 2500, 7500, 10000], # Sound
  [0, 10, 50, 400, 2000, 6000, 10000],   # Throw
  [0, 10, 50, 400, 2000, 6000, 10000],   # Squirt
- [0, 20, 100, 800, 2000, 6000, 10000],   # Zap
  [0, 20, 100, 500, 2000, 6000, 10000]]  # Drop
 regMaxSkill = 10000
 UberSkill = 500
@@ -61,8 +60,7 @@ UnpaidMaxSkills = [Levels[0][1] - 1,
  Levels[3][1] - 1,
  Levels[4][4] - 1,
  Levels[5][4] - 1,
- Levels[6][1] - 1,
- Levels[7][1] - 1]
+ Levels[6][1] - 1]
 ExperienceCap = 300
 
 def gagIsPaidOnly(track, level):
@@ -128,15 +126,6 @@ CarryLimits = (
     (30, 25, 20, 15, 7, 3, 1)
   ),
   ( # Squirt
-    (10, 0, 0, 0, 0, 0, 0),
-    (10, 5, 0, 0, 0, 0, 0),
-    (15, 10, 5, 0, 0, 0, 0),
-    (20, 15, 10, 5, 0, 0, 0),
-    (25, 20, 15, 10, 3, 0, 0),
-    (30, 25, 20, 15, 7, 3, 0),
-    (30, 25, 20, 15, 7, 3, 1)
-  ),
-  ( # Zap
     (10, 0, 0, 0, 0, 0, 0),
     (10, 5, 0, 0, 0, 0, 0),
     (15, 10, 5, 0, 0, 0, 0),
@@ -213,13 +202,6 @@ AvProps = (('feather',
   'firehose',
   'stormcloud',
   'stormcloud'),
- ('flower',#Zap placeholders, shouldn't get used
-  'waterglass',
-  'waterballoon',
-  'bottle',
-  'firehose',
-  'stormcloud',
-  'stormcloud'),
  ('flowerpot',
   'sandbag',
   'anvil',
@@ -269,13 +251,6 @@ AvPropsNew = (('inventory_feather',
   'inventory_firehose',
   'inventory_storm_cloud',
   'inventory_geyser'),
- ('inventory_squirt_flower',
-  'inventory_glass_of_water',
-  'inventory_water_gun',
-  'inventory_seltzer_bottle',
-  'inventory_firehose',
-  'inventory_storm_cloud',
-  'inventory_geyser'),
  ('inventory_flower_pot',
   'inventory_sandbag',
   'inventory_anvil',
@@ -293,7 +268,6 @@ AvPropAccuracy = (
   (95, 95, 95, 95, 95, 95, 95),
   (75, 75, 75, 75, 75, 75, 75),
   (95, 95, 95, 95, 95, 95, 95),
-  (75, 75, 75, 75, 75, 75, 75),
   (50, 50, 50, 50, 50, 50, 50)
 )
 AvLureBonusAccuracy = (60,
@@ -346,22 +320,13 @@ AvPropDamage = ((((8, 10), (Levels[0][0], Levels[0][1])),
   ((27, 30), (Levels[5][4], Levels[5][5])),
   ((36, 80), (Levels[5][5], Levels[5][6])),
   ((105, 105), (Levels[5][6], MaxSkill))),
- ( 
-  ((3, 4), (Levels[6][0], Levels[6][1])),
-  ((5, 7), (Levels[6][1], Levels[6][2])),
-  ((9, 11), (Levels[6][2], Levels[6][3])),
-  ((16, 18), (Levels[6][3], Levels[6][4])),
-  ((24, 30), (Levels[6][4], Levels[6][5])),
-  ((35, 65), (Levels[6][5], Levels[6][6])),
-  ((95, 95), (Levels[6][6], MaxSkill))
- ),
- (((10, 10), (Levels[7][0], Levels[7][1])),
-  ((18, 18), (Levels[7][1], Levels[7][2])),
-  ((30, 30), (Levels[7][2], Levels[7][3])),
-  ((45, 45), (Levels[7][3], Levels[7][4])),
-  ((60, 60), (Levels[7][4], Levels[7][5])),
-  ((85, 170), (Levels[7][5], Levels[7][6])),
-  ((180, 180), (Levels[7][6], MaxSkill))))
+ (((10, 10), (Levels[6][0], Levels[6][1])),
+  ((18, 18), (Levels[6][1], Levels[6][2])),
+  ((30, 30), (Levels[6][2], Levels[6][3])),
+  ((45, 45), (Levels[6][3], Levels[6][4])),
+  ((60, 60), (Levels[6][4], Levels[6][5])),
+  ((85, 170), (Levels[6][5], Levels[6][6])),
+  ((180, 180), (Levels[6][6], MaxSkill))))
 ATK_SINGLE_TARGET = 0
 ATK_GROUP_TARGET = 1
 AvPropTargetCat = ((ATK_SINGLE_TARGET,
@@ -398,7 +363,6 @@ AvPropTarget = (0,
  2,
  3,
  3,
- 3,
  3)
 NumRoundsLured = [2,
  2,
@@ -407,7 +371,6 @@ NumRoundsLured = [2,
  4,
  4,
  15]
-InstaKillChance = [2, 5, 8, 12, 15, 20, 65]
 def getAvPropDamage(attackTrack, attackLevel, exp, organicBonus = False, propBonus = False, propAndOrganicBonusStack = False):
     if attackTrack == LURE_TRACK:
         return NumRoundsLured[attackLevel]

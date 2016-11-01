@@ -881,6 +881,7 @@ def doFillWithLead(attack):
     sprayTrack = getPartTrack(sprayEffect, 2.5, 1.9, [sprayEffect, suit, 0])
     pencilPosPoints = [Point3(-0.29, -0.33, -0.13), VBase3(160.565, -11.653, -169.244)]
     pencilPropTrack = getPropTrack(pencil, suit.getRightHand(), pencilPosPoints, 0.7, 3.2, scaleUpTime=0.2)
+    soundTrack = getSoundTrack('SA_fill_with_lead.ogg', delay=2.2, duration=2.4, node=suit)
     sharpenerPosPoints = [Point3(0.0, 0.0, -0.03), MovieUtil.PNT3_ZERO]
     sharpenerPropTrack = getPropTrack(sharpener, suit.getLeftHand(), sharpenerPosPoints, 1.3, 2.3, scaleUpPoint=MovieUtil.PNT3_ONE)
     damageAnims = []
@@ -949,7 +950,6 @@ def doFillWithLead(attack):
         colorTrack.append(resetParts(torsoParts))
         colorTrack.append(resetParts(legsParts))
         colorTrack.append(Func(battle.movie.clearRestoreColor))
-        soundTrack = getSoundTrack('SA_fill_with_lead.ogg', delay=2.2, duration=2.4, node=suit)
         return Parallel(suitTrack, pencilPropTrack, soundTrack, sharpenerPropTrack, sprayTrack, headTrack, torsoTrack, legsTrack, colorTrack, toonTrack)
     else:
         return Parallel(suitTrack, pencilPropTrack, soundTrack, sharpenerPropTrack, sprayTrack, toonTrack)

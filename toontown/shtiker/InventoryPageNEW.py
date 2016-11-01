@@ -5,7 +5,7 @@ from pandac.PandaModules import *
 from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import TTLocalizer
 
-class InventoryPage(ShtikerPage.ShtikerPage):
+class InventoryPageNEW(ShtikerPage.ShtikerPage):
 
     def __init__(self):
         ShtikerPage.ShtikerPage.__init__(self)

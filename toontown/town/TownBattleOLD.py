@@ -3,10 +3,12 @@ import types
 from direct.fsm import StateData
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
-import TownBattleAttackPanel
+import TownBattleAttackPanelNEW
+import TownBattleAttackPanelOLD
 import TownBattleWaitPanel
 import TownBattleChooseAvatarPanel
-import TownBattleSOSPanel
+import TownBattleSOSPanelOLD
+import TownBattleSOSPanelNEW
 import TownBattleSOSPetSearchPanel
 import TownBattleSOSPetInfoPanel
 import TownBattleToonPanel
@@ -21,7 +23,7 @@ from toontown.pets import PetConstants
 from direct.gui.DirectGui import DGG
 from toontown.battle import FireCogPanel
 
-class TownBattle(StateData.StateData):
+class TownBattleOLD(StateData.StateData):
     notify = DirectNotifyGlobal.directNotify.newCategory('TownBattle')
     evenPos = (0.75,
      0.25,
@@ -69,7 +71,10 @@ class TownBattle(StateData.StateData):
         self.runPanel = TTDialog.TTDialog(dialogName='TownBattleRunPanel', text=TTLocalizer.TownBattleRun, style=TTDialog.TwoChoice, command=self.__handleRunPanelDone)
         self.runPanel.hide()
         self.attackPanelDoneEvent = 'attack-panel-done'
-        self.attackPanel = TownBattleAttackPanel.TownBattleAttackPanel(self.attackPanelDoneEvent)
+        if settings['newGui'] == True:
+            self.attackPanel = TownBattleAttackPanelNEW.TownBattleAttackPanelNEW(self.attackPanelDoneEvent)
+        else:
+            self.attackPanel = TownBattleAttackPanelOLD.TownBattleAttackPanelOLD(self.attackPanelDoneEvent)
         self.waitPanelDoneEvent = 'wait-panel-done'
         self.waitPanel = TownBattleWaitPanel.TownBattleWaitPanel(self.waitPanelDoneEvent)
         self.chooseCogPanelDoneEvent = 'choose-cog-panel-done'
@@ -77,7 +82,10 @@ class TownBattle(StateData.StateData):
         self.chooseToonPanelDoneEvent = 'choose-toon-panel-done'
         self.chooseToonPanel = TownBattleChooseAvatarPanel.TownBattleChooseAvatarPanel(self.chooseToonPanelDoneEvent, 1)
         self.SOSPanelDoneEvent = 'SOS-panel-done'
-        self.SOSPanel = TownBattleSOSPanel.TownBattleSOSPanel(self.SOSPanelDoneEvent)
+        if settings['newGui'] == True:
+            self.SOSPanel = TownBattleSOSPanelNEW.TownBattleSOSPanelNEW(self.SOSPanelDoneEvent)
+        else:
+            self.SOSPanel = TownBattleSOSPanelOLD.TownBattleSOSPanelOLD(self.SOSPanelDoneEvent)
         self.SOSPetSearchPanelDoneEvent = 'SOSPetSearch-panel-done'
         self.SOSPetSearchPanel = TownBattleSOSPetSearchPanel.TownBattleSOSPetSearchPanel(self.SOSPetSearchPanelDoneEvent)
         self.SOSPetInfoPanelDoneEvent = 'SOSPetInfo-panel-done'

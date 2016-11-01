@@ -491,8 +491,8 @@ class Suit(Avatar.Avatar):
             self.scale = scale / aSize
             self.handColor = SuitDNA.boardPolyColor
             self.generateBody()
-            self.headTexture = 'middleman.jpg'
-            self.generateHead('yesman')
+            self.generateHead('middleman')
+            self.generateHead('downsizerHat')
             self.setHeight(6.7)
         elif dna.name == 'txm':
             self.scale = scale / aSize
@@ -723,9 +723,9 @@ class Suit(Avatar.Avatar):
             self.scale = scale / aSize
             self.handColor = SuitDNA.salesPolyColor
             self.generateBody()
-            self.headTexture = 'yes_man.jpg'
+            #self.headTexture = 'yes_man.jpg'
             self.generateHead('yesman')
-            #self.generateHead('group')
+            self.generateHead('group')
             self.setHeight(8.95)
         self.setName(SuitBattleGlobals.SuitAttributes[dna.name]['name'])
         self.getGeomNode().setScale(self.scale)

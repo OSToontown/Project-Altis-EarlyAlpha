@@ -12,7 +12,7 @@ def hideAttackPanel(flag):
     messenger.send('hide-attack-panel')
 
 
-class TownBattleAttackPanel(StateData.StateData):
+class TownBattleAttackPanelNEW(StateData.StateData):
     notify = DirectNotifyGlobal.directNotify.newCategory('TownBattleAttackPanel')
 
     def __init__(self, doneEvent):
