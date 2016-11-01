@@ -91,6 +91,7 @@ class ToontownLoader(Loader.Loader):
 
     def loadTexture(self, texturePath, alphaPath = None, okMissing = False):
         ret = Loader.Loader.loadTexture(self, texturePath, alphaPath, okMissing=okMissing)
+       # ret.setMinfilter(SamplerState.FT_linear_mipmap_linear)
         self.tick()
         if alphaPath:
             self.tick()

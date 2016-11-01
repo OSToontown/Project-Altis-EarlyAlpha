@@ -486,14 +486,14 @@ class Suit(Avatar.Avatar):
             self.generateBody()
             self.headTexture = 'swindler.jpg'
             self.generateHead('pennypincher')
-            self.setHeight(6.5)
+            self.setHeight(6.3)
         elif dna.name == 'mdm':
             self.scale = scale / aSize
             self.handColor = SuitDNA.boardPolyColor
             self.generateBody()
             self.generateHead('middleman')
             self.generateHead('downsizerHat')
-            self.setHeight(6.7)
+            self.setHeight(6.25)
         elif dna.name == 'txm':
             self.scale = scale / aSize
             self.handColor = VBase4(1, 1, .29, 1.0)
