@@ -24,7 +24,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         DistributedWeatherMGR.__init__(self, cr)
         self.cr = cr
         self.currentTime = None
-        self.interval = 250
+        self.interval = 150
         
     def announceGenerate(self):
         DistributedWeatherMGR.announceGenerate(self)
