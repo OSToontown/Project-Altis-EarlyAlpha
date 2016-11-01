@@ -10,7 +10,7 @@ from toontown.toonbase import ToontownGlobals
 from otp.otpbase import OTPGlobals
 from toontown.toontowngui import TTDialog
 
-class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
+class InventoryNewOLD(InventoryBase.InventoryBase, DirectFrame):
     notify = DirectNotifyGlobal.directNotify.newCategory('InventoryNew')
     PressableTextColor = Vec4(1, 1, 1, 1)
     PressableGeomColor = Vec4(1, 1, 1, 1)
@@ -37,7 +37,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
     def __init__(self, toon, invStr = None, ShowSuperGags = 1):
         InventoryBase.InventoryBase.__init__(self, toon, invStr)
         DirectFrame.__init__(self, relief=None)
-        self.initialiseoptions(InventoryNew)
+        self.initialiseoptions(InventoryNewOLD)
         self.battleCreditLevel = None
         self.detailCredit = None
         self.__battleCreditMultiplier = 1
@@ -888,7 +888,6 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.deleteExitButton.hide()
         self.deleteEnterButton.hide()
         self.deleteAllButton.hide()
-        self.updateUseableButtons()
 
     def gagTutDisabledDeactivateButtons(self):
         self.invFrame.reparentTo(self)
@@ -1221,7 +1220,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
             self.updateGUI(track, level)
 
     def loadBattleFrame(self):
-        battleModels = loader.loadModel('phase_3.5/models/gui/battle_gui')
+        battleModels = loader.loadModel('phase_3.5/models/gui/battle_gui_old')
         self.levelsButton = DirectButton(self, relief=None, pos=(0.75, -0.05, 0.33), text='', text_scale=TTLocalizer.INlevelsButton, text_pos=(0.03, 0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=1, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=(3.0, 1.0, 1.5), image_color=(1, 0.6, 0, 1), command=self.__handleLevels)
         self.battleFrame = DirectFrame(relief=None, image=battleModels.find('**/BATTLE_Menu'), image_scale=0.8, parent=self)
         self.runButton = DirectButton(parent=self.battleFrame, relief=None, pos=(0.73, 0, -0.398), text=TTLocalizer.InventoryRun, text_scale=TTLocalizer.INrunButton, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=1.05, image_color=(0, 0.6, 1, 1), command=self.__handleRun)

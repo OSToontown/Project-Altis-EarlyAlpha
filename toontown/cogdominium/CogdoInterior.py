@@ -4,7 +4,8 @@ from direct.directnotify import DirectNotifyGlobal
 from direct.fsm import ClassicFSM, State
 from toontown.hood import Place
 from toontown.toonbase.ToonBaseGlobal import *
-from toontown.town import TownBattle
+from toontown.town import TownBattleOLD
+from toontown.town import TownBattleNEW
 from toontown.suit import Suit
 from toontown.building import Elevator
 from toontown.toonbase import ToontownGlobals
@@ -74,8 +75,12 @@ class CogdoInterior(Place.Place):
     def load(self):
         Place.Place.load(self)
         self.parentFSM.getStateNamed('cogdoInterior').addChild(self.fsm)
-        self.townBattle = TownBattle.TownBattle('town-battle-done')
-        self.townBattle.load()
+        if settings['newGui'] == True:
+            self.townBattle = TownBattleNEW.TownBattleNEW('town-battle-done')
+            self.townBattle.load()
+        else:
+            self.townBattle = TownBattleOLD.TownBattleOLD('town-battle-done')
+            self.townBattle.load()
         for i in range(1, 3):
             Suit.loadSuits(i)
 

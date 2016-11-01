@@ -23,7 +23,10 @@ class TownBattleCogPanel(DirectFrame):
      Vec4(1, 0.25, 0.25, 0.5))
 
     def __init__(self, id):
-        gui = loader.loadModel('phase_3.5/models/gui/battle_gui')
+        if settings['newGui'] == True:
+            gui = loader.loadModel('phase_3.5/models/gui/battle_gui_new')
+        else:
+            gui = loader.loadModel('phase_3.5/models/gui/battle_gui_old')
         DirectFrame.__init__(self, relief=None, image=gui.find('**/ToonBtl_Status_BG'), image_color=Vec4(0.7, 0.7, 0.7, 0.8))
         self.setScale(0.8)
         self.initialiseoptions(TownBattleCogPanel)

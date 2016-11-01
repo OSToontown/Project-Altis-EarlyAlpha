@@ -29,7 +29,9 @@ from toontown.suit import SuitDNA
 from toontown.coghq import CogDisguiseGlobals
 from toontown.toonbase import TTLocalizer
 import Experience
-import InventoryNew
+import InventoryNewNEW
+import InventoryNewOLD
+import InventoryBase
 from LaffMeter import LaffMeter
 from toontown.speedchat import TTSCDecoders
 from toontown.chat import ToonChatGarbler
@@ -317,7 +319,10 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
 
     def setInventory(self, inventoryNetString):
         if not self.inventory:
-            self.inventory = InventoryNew.InventoryNew(self, inventoryNetString)
+            if settings['newGui'] == True:
+                self.inventory = InventoryNewNEW.InventoryNewNEW(self, inventoryNetString)
+            else:
+                self.inventory = InventoryNewOLD.InventoryNewOLD(self, inventoryNetString)
         self.inventory.updateInvString(inventoryNetString)
 
     def setLastHood(self, lastHood):
