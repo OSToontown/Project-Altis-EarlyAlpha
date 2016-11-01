@@ -13,14 +13,19 @@ resolution_table = [
 
 AspectRatios = [
              0, # Adaptive
-             (4/3), # 4:3
-             (5/3), # 5:3
-             (16/9), # 16:9
-             (21/9) ] # 21:9
+             (1.33333), # 4:3
+             (1.25), # 5:4
+             (1.77777), # 16:9
+             (2.33333) ] # 21:9
 
+AspectRatioLabels = [
+             "Adaptive",
+             "4:3",
+             "5:3",
+             "16:9",
+             "21:9"]
 class GraphicsOptions:
         
-    def setTextureScale(self, level):
-        settings['texture-scale'] = level
-        base.setTextureScale()
+    def setTextureScale(self):
+        pass # TODO
         
