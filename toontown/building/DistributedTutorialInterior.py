@@ -42,8 +42,8 @@ class DistributedTutorialInterior(DistributedObject.DistributedObject):
         del self.suitWalkTrack
         self.suit.delete()
         del self.suit
-        self.dimm.delete()
-        del self.dimm
+        self.surlee.delete()
+        del self.surlee
         self.ignore('enterTutorialInterior')
         DistributedObject.DistributedObject.disable(self)
 
@@ -107,17 +107,17 @@ class DistributedTutorialInterior(DistributedObject.DistributedObject):
         self.sky.setBin('background', 100)
         self.sky.find('**/Sky').reparentTo(self.sky, -1)
 
-        # Doctor Dimm, who is going to introduce our new citizen!
-        self.dimm = NPCToons.createLocalNPC(2019)
-        self.dimm.useLOD(1000)
-        self.dimm.setPosHpr(10, 24, 0, -10, 0, 0)
-        self.dimm.setH(110)
-        self.dimm.head = self.dimm.find('**/__Actor_head')
-        self.dimm.initializeBodyCollisions('toon')
-        self.dimm.reparentTo(render)
-        self.dimm.show()
-        self.dimm.addActive()
-        self.dimm.startBlink()
+        # Doctor Surlee, who is going to introduce our new citizen!
+        self.surlee = NPCToons.createLocalNPC(2019)
+        self.surlee.useLOD(1000)
+        self.surlee.setPosHpr(10, 24, 0, -10, 0, 0)
+        self.surlee.setH(110)
+        self.surlee.head = self.surlee.find('**/__Actor_head')
+        self.surlee.initializeBodyCollisions('toon')
+        self.surlee.reparentTo(render)
+        self.surlee.show()
+        self.surlee.addActive()
+        self.surlee.startBlink()
 
         hoodId = ZoneUtil.getCanonicalHoodId(self.zoneId)
         self.colors = ToonInteriorColors.colors[hoodId]
@@ -152,30 +152,30 @@ class DistributedTutorialInterior(DistributedObject.DistributedObject):
                 self.notify.info('Tutorial movie: place state=%s' % place.fsm.getCurrentState().getName())
             self.acceptOnce('enterTutorialInterior')
 
-        # And here's Doctor dimm's sequence.
-        self.dimmIntroInterval = Sequence(
-            Func(self.dimm.setChatAbsolute, 'Tom, nobody else can know about this. It\'s extremely important that you--', CFSpeech|CFTimeout),
+        # And here's Doctor Surlee's sequence.
+        self.surleeIntroInterval = Sequence(
+            Func(self.surlee.setChatAbsolute, 'Tom, nobody else can know about this. It\'s extremely important that you--', CFSpeech|CFTimeout),
             Wait(7),
-            Func(self.dimm.loop, 'walk'),
-            Func(self.dimm.setChatAbsolute, 'Oh, hello there! Looks like we have a new Toon in town.', CFSpeech|CFTimeout),
-            self.dimm.posHprInterval(1, (10, 24, 0), (150, 0, 0)),
-            Func(self.dimm.loop, 'neutral'),
+            Func(self.surlee.loop, 'walk'),
+            Func(self.surlee.setChatAbsolute, 'Oh, hello there! Looks like we have a new Toon in town.', CFSpeech|CFTimeout),
+            self.surlee.posHprInterval(1, (10, 24, 0), (150, 0, 0)),
+            Func(self.surlee.loop, 'neutral'),
             Wait(6),
-            Func(self.dimm.setChatAbsolute, 'Hey, who let you in here anyways?', CFSpeech|CFTimeout),
+            Func(self.surlee.setChatAbsolute, 'Hey, who let you in here anyways?', CFSpeech|CFTimeout),
             Wait(5),
-            Func(self.dimm.setChatAbsolute, 'Well no matter. Welcome to Toontown!', CFSpeech|CFTimeout),
+            Func(self.surlee.setChatAbsolute, 'Well no matter. Welcome to Toontown!', CFSpeech|CFTimeout),
             Wait(6),
-            Func(self.dimm.setChatAbsolute, 'Hey Tom, how about you introduce this fine Toon to our town.', CFSpeech|CFTimeout),
+            Func(self.surlee.setChatAbsolute, 'Hey Tom, how about you introduce this fine Toon to our town.', CFSpeech|CFTimeout),
             Wait(6),
-            Func(self.dimm.setChatAbsolute, 'Go talk to Tutorial Tom! Use the arrow keys to move.', CFSpeech|CFTimeout),
+            Func(self.surlee.setChatAbsolute, 'Go talk to Tutorial Tom! Use the arrow keys to move.', CFSpeech|CFTimeout),
             Wait(6),
-            Func(self.dimm.setChatAbsolute, 'While you do that, I\'ll be observing Tom\'s performance. Don\'t mind me!', CFSpeech|CFTimeout),
+            Func(self.surlee.setChatAbsolute, 'While you do that, I\'ll be observing Tom\'s performance. Don\'t mind me!', CFSpeech|CFTimeout),
             Wait(2),
-            Func(self.dimm.loop, 'walk'),
-            self.dimm.posHprInterval(1, (10, 24, 0), (95, 0, 0)),
-            Func(self.dimm.loop, 'neutral'),
+            Func(self.surlee.loop, 'walk'),
+            self.surlee.posHprInterval(1, (10, 24, 0), (95, 0, 0)),
+            Func(self.surlee.loop, 'neutral'),
         )
-        self.dimmIntroInterval.start()
+        self.surleeIntroInterval.start()
 
     def createSuit(self):
         self.suit = Suit.Suit()

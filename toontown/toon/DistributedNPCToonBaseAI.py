@@ -1,5 +1,5 @@
 from otp.ai.AIBaseGlobal import *
-from pandac.PandaModules import *
+from panda3d.core import *
 import DistributedToonAI
 from direct.fsm import ClassicFSM
 from direct.fsm import State
@@ -61,3 +61,6 @@ class DistributedNPCToonBaseAI(DistributedToonAI.DistributedToonAI):
 
     def getPositionIndex(self):
         return self.posIndex
+    
+    def getStartAnimState(self):
+        return 'neutral'

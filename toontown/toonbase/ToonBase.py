@@ -28,6 +28,7 @@ from sys import platform
 from panda3d.core import TrueClock
 import otp.ai.DiagnosticMagicWords
 import time
+from toontown.options import GraphicsOptions
 
 class ToonBase(OTPBase.OTPBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('ToonBase')
@@ -175,12 +176,11 @@ class ToonBase(OTPBase.OTPBase):
         
         self.accept(self.SCREENSHOT_KEY, self.takeScreenShot) # TODO: Make the game ignore this and then re-accept it on a new key if it is rebinded
         
-        self.Widescreen = settings.get('Widescreen', True)
-        self.nowideratio = (4 / 3)
-        if self.Widescreen:
-            base.setAspectRatio(0)
-        else:
-            base.setAspectRatio(1.33)
+        self.Widescreen = settings.get('Widescreen', 0)
+        
+        self.currentScale = settings.get('texture-scale', 1.0)
+        self.setTextureScale()
+        self.setRatio()
             
     def updateAspectRatio(self):
         fadeSequence = Sequence(
@@ -189,16 +189,12 @@ class ToonBase(OTPBase.OTPBase):
             Func(self.setRatio),
             Func(base.transitions.fadeIn, .2)).start()
 
-    def setRatio(self):
-        if self.Widescreen:
-            base.setAspectRatio(0)
-        else:
-            base.setAspectRatio(1.33)
-
-    def openMainWindow(self, *args, **kw):
-        result = OTPBase.OTPBase.openMainWindow(self, *args, **kw)
-        self.setCursorAndIcon()
-        return result
+    def setRatio(self): # Set the aspect ratio
+        print(GraphicsOptions.AspectRatios[self.Widescreen])
+        base.setAspectRatio(GraphicsOptions.AspectRatios[self.Widescreen])
+            
+    def setTextureScale(self): # Set the global texture scale (TODO)
+        scale = settings.get('texture-scale')
 
     def openMainWindow(self, *args, **kw):
         result = OTPBase.OTPBase.openMainWindow(self, *args, **kw)
