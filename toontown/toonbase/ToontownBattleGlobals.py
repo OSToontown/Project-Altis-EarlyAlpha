@@ -21,6 +21,7 @@ TrackColors = ((211 / 255.0, 148 / 255.0, 255 / 255.0),
  (93 / 255.0, 108 / 255.0, 239 / 255.0),
  (255 / 255.0, 145 / 255.0, 66 / 255.0),
  (255 / 255.0, 65 / 255.0, 199 / 255.0),
+ (255 / 255.0, 255 / 255.0, 255 / 255.0),
  (67 / 255.0, 243 / 255.0, 255 / 255.0))
 HEAL_TRACK = 0
 TRAP_TRACK = 1
@@ -347,19 +348,21 @@ AvPropDamage = ((((8, 10), (Levels[0][0], Levels[0][1])),
   ((27, 30), (Levels[5][4], Levels[5][5])),
   ((36, 80), (Levels[5][5], Levels[5][6])),
   ((105, 105), (Levels[5][6], MaxSkill))),
- (((3, 4), (Levels[6][0], Levels[8][1])),
-  ((5, 7), (Levels[6][1], Levels[8][2])),
-  ((9, 11), (Levels[6][2], Levels[8][3])),
-  ((16, 18), (Levels[6][3], Levels[8][4])),
-  ((24, 30), (Levels[6][4], Levels[8][5])),
-  ((35, 65), (Levels[6][5], Levels[8][6])),
-  ((95, 95), (Levels[6][6], MaxSkill))),
- (((10, 10), (Levels[7][0], Levels[6][1])),
-  ((18, 18), (Levels[7][1], Levels[6][2])),
-  ((30, 30), (Levels[7][2], Levels[6][3])),
-  ((45, 45), (Levels[7][3], Levels[6][4])),
-  ((60, 60), (Levels[7][4], Levels[6][5])),
-  ((85, 170), (Levels[7][5], Levels[6][6])),
+ ( # Zap
+  ((3, 4), (Levels[6][0], Levels[6][1])),
+  ((5, 7), (Levels[6][1], Levels[6][2])),
+  ((9, 11), (Levels[6][2], Levels[6][3])),
+  ((16, 18), (Levels[6][3], Levels[6][4])),
+  ((24, 30), (Levels[6][4], Levels[6][5])),
+  ((35, 65), (Levels[6][5], Levels[6][6])),
+  ((95, 95), (Levels[6][6], MaxSkill))
+ ),
+ (((10, 10), (Levels[7][0], Levels[7][1])),
+  ((18, 18), (Levels[7][1], Levels[7][2])),
+  ((30, 30), (Levels[7][2], Levels[7][3])),
+  ((45, 45), (Levels[7][3], Levels[7][4])),
+  ((60, 60), (Levels[7][4], Levels[7][5])),
+  ((85, 170), (Levels[7][5], Levels[7][6])),
   ((180, 180), (Levels[7][6], MaxSkill))))
 ATK_SINGLE_TARGET = 0
 ATK_GROUP_TARGET = 1
