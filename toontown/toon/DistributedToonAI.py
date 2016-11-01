@@ -4573,7 +4573,7 @@ def setMaxHp(hpVal):
     spellbook.getTarget().b_setMaxHp(hpVal)
     spellbook.getTarget().toonUp(hpVal)
 
-@magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int, int, int, int, int, int])
+@magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int, int, int, int, int, int, int])
 def setTrackAccess(toonup, trap, lure, sound, throw, squirt, zap, drop):
     """Set target's gag track access."""
     spellbook.getTarget().b_setTrackAccess([toonup, trap, lure, sound, throw, squirt, zap, drop])

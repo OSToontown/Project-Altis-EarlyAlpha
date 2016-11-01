@@ -78,8 +78,8 @@ class RewardPanel(DirectFrame):
 
         for i in range(len(ToontownBattleGlobals.Tracks)):
             trackName = TextEncoder.upper(ToontownBattleGlobals.Tracks[i])
-            self.trackLabels.append(DirectLabel(parent=self.gagExpFrame, relief=None, text=trackName, text_scale=TTLocalizer.RPtrackLabels, text_align=TextNode.ARight, pos=(0.13, 0, -0.09 * i), text_pos=(0, -0.02)))
-            self.trackIncLabels.append(DirectLabel(parent=self.gagExpFrame, relief=None, text='', text_scale=0.05, text_align=TextNode.ALeft, pos=(0.65, 0, -0.09 * i), text_pos=(0, -0.02)))
+            self.trackLabels.append(DirectLabel(parent=self.gagExpFrame, relief=None, text=trackName, text_scale=TTLocalizer.RPtrackLabels, text_align=TextNode.ARight, pos=(0.13, 0, -0.07 * i), text_pos=(0, -0.02)))
+            self.trackIncLabels.append(DirectLabel(parent=self.gagExpFrame, relief=None, text='', text_scale=0.05, text_align=TextNode.ALeft, pos=(0.65, 0, -0.07 * i), text_pos=(0, -0.02)))
             self.trackBars.append(DirectWaitBar(parent=self.gagExpFrame, relief=DGG.SUNKEN, frameSize=(-1,
              1,
              -0.15,
@@ -89,7 +89,7 @@ class RewardPanel(DirectFrame):
              1), barColor=(ToontownBattleGlobals.TrackColors[i][0],
              ToontownBattleGlobals.TrackColors[i][1],
              ToontownBattleGlobals.TrackColors[i][2],
-             1), text='0/0', text_scale=0.18, text_fg=(0, 0, 0, 1), text_align=TextNode.ACenter, text_pos=(0, -0.05), pos=(0.4, 0, -0.09 * i)))
+             1), text='0/0', text_scale=0.18, text_fg=(0, 0, 0, 1), text_align=TextNode.ACenter, text_pos=(0, -0.05), pos=(0.4, 0, -0.07 * i)))
 
         if settings['newGui'] == True:
             self._battleGui = loader.loadModel('phase_3.5/models/gui/battle_gui_new')

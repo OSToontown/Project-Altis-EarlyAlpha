@@ -298,6 +298,8 @@ class InventoryNewNEW(InventoryBase.InventoryBase, DirectFrame):
         return
 		
     def doTab(self, index):
+        if trackAccess[index] == 0:
+            return
         self.activeTab = index
         for track in xrange(len(self.trackRows)):
             self.hideTrack(track)
