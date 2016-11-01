@@ -273,8 +273,6 @@ SCMenuResistance = 'UNITE!'
 SCMenuPets = 'PETS'
 SCMenuPetTricks = 'TRICKS'
 SCMenuCog = 'COG SPEAK'
-SCMenuTesting = 'TESTING'
-SCMenuBugs = 'BUGS'
 SCMenuHello = 'HELLO'
 SCMenuBye = 'GOODBYE'
 SCMenuConvo = 'CHIT CHAT'
@@ -1559,19 +1557,6 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  5320: 'These fireworks are beautiful!',
  5321: 'Nice decorations.',
  5322: 'I wish I could eat this cake!',
- 5400: "Welcome to Project Altis!",
- 5401: "I'm glad Toontown is back.",
- 5401: "Found any bugs yet?",
- 5402: "How many times have you crashed?",
- 5403: "Are you excited for the next update?",
- 5404: "Smile!",
- 5405: "I'm stuck.",
- 5406: "I think I found a bug.",
- 5407: "I found a bug over here.",
- 5408: "Be careful! That's buggy.",
- 5409: "Sorry, my game crashed.",
- 5410: "Send in a bug report.",
- 5411: "I hope they fix that soon!",
  5500: ":)",
  5501: ":(",
  5502: ":D",

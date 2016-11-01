@@ -20,7 +20,8 @@ from otp.avatar import DistributedPlayer
 from otp.nametag.NametagConstants import *
 from otp.margins.WhisperPopup import *
 from toontown.shtiker import ShtikerBook
-from toontown.shtiker import InventoryPage
+from toontown.shtiker import InventoryPageOLD
+from toontown.shtiker import InventoryPageNEW
 from toontown.shtiker import MapPage
 from toontown.shtiker import OptionsPage
 from toontown.shtiker import ShardPage
@@ -357,8 +358,12 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         self.mapPage = MapPage.MapPage()
         self.mapPage.load()
         self.book.addPage(self.mapPage, pageName=TTLocalizer.MapPageTitle)
-        self.invPage = InventoryPage.InventoryPage()
-        self.invPage.load()
+        if settings['newGui'] == True:
+            self.invPage = InventoryPageNEW.InventoryPageNEW()
+            self.invPage.load()
+        else:
+            self.invPage = InventoryPageOLD.InventoryPageOLD()
+            self.invPage.load()
         self.book.addPage(self.invPage, pageName=TTLocalizer.InventoryPageTitle)
         self.questPage = QuestPage.QuestPage()
         self.questPage.load()

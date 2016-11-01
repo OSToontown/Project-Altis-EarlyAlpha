@@ -21,7 +21,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
 
     def start(self):
         DistributedWeatherMGRAI.start(self)
-        self.interval = 10
+        self.interval = 150
                 
         Sequence(
             Func(self.b_setState, 'T0'),

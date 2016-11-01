@@ -12,7 +12,7 @@ def hideAttackPanel(flag):
     messenger.send('hide-attack-panel')
 
 
-class TownBattleAttackPanel(StateData.StateData):
+class TownBattleAttackPanelOLD(StateData.StateData):
     notify = DirectNotifyGlobal.directNotify.newCategory('TownBattleAttackPanel')
 
     def __init__(self, doneEvent):
@@ -66,7 +66,7 @@ class TownBattleAttackPanel(StateData.StateData):
         doneStatus = {'mode': 'Fire'}
         messenger.send(self.doneEvent, [doneStatus])
 
-    def __handleInventory(self, track, level, viaKeyboard=False):
+    def __handleInventory(self, track, level):
         if not base.cr.isPaid() and gagIsPaidOnly(track, level):
             self._teaserPanel = TeaserPanel(pageName='useGags')
             return
@@ -76,8 +76,6 @@ class TownBattleAttackPanel(StateData.StateData):
             doneStatus['track'] = track
             doneStatus['level'] = level
             messenger.send(self.doneEvent, [doneStatus])
-        elif viaKeyboard is True:
-            pass
         else:
             self.notify.error("An item we don't have: track %s level %s was selected." % [track, level])
 

@@ -1,4 +1,4 @@
-from pandac.PandaModules import *
+from panda3d.core import *
 from toontown.toonbase.ToontownGlobals import *
 from direct.gui.DirectGui import *
 from direct.showbase import DirectObject
@@ -11,12 +11,12 @@ from toontown.toon import NPCToons
 from toontown.toon import NPCFriendPanel
 from toontown.toonbase import ToontownBattleGlobals
 
-class TownBattleSOSPanel(DirectFrame, StateData.StateData):
+class TownBattleSOSPanelNEW(DirectFrame, StateData.StateData):
     notify = DirectNotifyGlobal.directNotify.newCategory('TownBattleSOSPanel')
 
     def __init__(self, doneEvent):
         DirectFrame.__init__(self, relief=None)
-        self.initialiseoptions(TownBattleSOSPanel)
+        self.initialiseoptions(TownBattleSOSPanelNEW)
         StateData.StateData.__init__(self, doneEvent)
         self.friends = {}
         self.NPCFriends = {}
@@ -34,7 +34,7 @@ class TownBattleSOSPanel(DirectFrame, StateData.StateData):
         bgd = loader.loadModel('phase_3.5/models/gui/frame')
         gui = loader.loadModel('phase_3.5/models/gui/frame4names')
         scrollGui = loader.loadModel('phase_3.5/models/gui/friendslist_gui')
-        backGui = loader.loadModel('phase_3.5/models/gui/battle_gui')
+        backGui = loader.loadModel('phase_3.5/models/gui/battle_gui_new')
         self['image'] = bgd
         self['image_pos'] = (0.0, 0.1, -0.08)
         self.setScale(0.3)

@@ -13,6 +13,10 @@ class ToontownLoadingScreen():
         self.__count = 0
         self.loadingLabel = None
         self.range = None
+        self.loadingText = None
+        self.loadingCircle = None
+        self.background = None
+        self.logo = None
         base.graphicsEngine.renderFrame()
         return
 
@@ -82,5 +86,8 @@ class ToontownLoadingScreen():
     def tick(self):
         self.__count = self.__count + 1
         base.graphicsEngine.renderFrame()
-        self.loadingCircle.setHpr(0, 0, self.__count * 15)
-        #self.waitBar.update(self.__count)
+        try:
+            if self.loadingCircle:
+                self.loadingCircle.setHpr(0, 0, self.__count * 15)
+        except:
+            pass

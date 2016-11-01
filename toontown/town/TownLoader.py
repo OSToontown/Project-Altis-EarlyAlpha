@@ -12,7 +12,8 @@ from direct.fsm import StateData
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
 from direct.task import Task
-import TownBattle
+import TownBattleOLD
+import TownBattleNEW
 from toontown.toon import Toon
 from toontown.toon import NPCToons
 from otp.nametag.NametagConstants import *
@@ -64,8 +65,12 @@ class TownLoader(StateData.StateData):
         self.music = base.loadMusic(self.musicFile)
         self.activityMusic = base.loadMusic(self.activityMusicFile)
         self.battleMusic = base.loadMusic(self.zone2music.get(ZoneUtil.getHoodId(zoneId), 'phase_9/audio/bgm/encntr_suit_ttc.ogg'))#'phase_3.5/audio/bgm/encntr_general_bg.ogg'))
-        self.townBattle = TownBattle.TownBattle(self.townBattleDoneEvent)
-        self.townBattle.load()
+        if settings['newGui'] == True:
+            self.townBattle = TownBattleNEW.TownBattleNEW(self.townBattleDoneEvent)
+            self.townBattle.load()
+        else:
+            self.townBattle = TownBattleOLD.TownBattleOLD(self.townBattleDoneEvent)
+            self.townBattle.load()
 
         if config.GetBool('want-april-toons', 0):
             self.npc = NPCToons.createLocalNPC(91915)
