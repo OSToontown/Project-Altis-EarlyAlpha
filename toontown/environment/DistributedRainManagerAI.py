@@ -28,7 +28,7 @@ class DistributedRainManagerAI(DistributedWeatherMGRAI):
         else:
             Sequence(
                 Func(self.b_setState, 'Sunny'),
-                Wait(3600),
+                Wait(1800),
                 Func(self.b_setState, 'Rain'),
                 Wait(900)).loop()
 
