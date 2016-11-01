@@ -294,10 +294,10 @@ class InventoryNewNEW(InventoryBase.InventoryBase, DirectFrame):
         self.accept("alt-6", self.doTab, extraArgs=[5])
         self.accept("alt-7", self.doTab, extraArgs=[6])
         self.accept("alt-8", self.doTab, extraArgs=[7])
-
         return
 		
     def doTab(self, index):
+        trackAccess = base.localAvatar.getTrackAccess()
         if trackAccess[index] == 0:
             return
         self.activeTab = index
