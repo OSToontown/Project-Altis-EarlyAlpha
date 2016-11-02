@@ -75,10 +75,13 @@ class DistributedNPCToonBase(DistributedToon.DistributedToon):
 
     def initToonState(self):
         self.setAnimState('neutral', 0.9, None, None)
-        npcOrigin = render.find('**/npc_origin_' + str(self.posIndex))
+        npcOrigin = render.find('**/npc_origin_' + `(self.posIndex)`)
         if not npcOrigin.isEmpty():
             self.reparentTo(npcOrigin)
             self.initPos()
+        else:
+            self.notify.warning('announceGenerate: Could not find npc_origin_' + str(self.posIndex))
+        return
 
     def initPos(self):
         self.clearMat()

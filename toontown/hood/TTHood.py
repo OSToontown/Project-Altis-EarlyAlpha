@@ -88,3 +88,8 @@ def spooky():
     spookySfx = base.loadSfx('phase_4/audio/sfx/spooky.ogg')
     spookySfx.play()
     return 'Activating the spooky effect...'
+
+@magicWord(category=CATEGORY_OVERRIDE)
+def sky(sky):
+    hood = base.cr.playGame.hood
+    hood.skyTransition(str(sky))
