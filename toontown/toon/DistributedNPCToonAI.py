@@ -93,12 +93,11 @@ class DistributedNPCToonAI(DistributedNPCToonBaseAI):
             self.cancelChoseTrack(avId)
             return
         for track in self.pendingTracks:
-            if trackId == track:
-                self.air.questManager.avatarChoseTrack(avId, self, self.pendingTrackQuest, trackId)
-                self.pendingAvId = None
-                self.pendingTracks = None
-                self.pendingTrackQuest = None
-                return
+            self.air.questManager.avatarChoseTrack(avId, self, self.pendingTrackQuest, trackId)
+            self.pendingAvId = None
+            self.pendingTracks = None
+            self.pendingTrackQuest = None
+            return
 
         self.notify.warning('chooseTrack: avatar: %s chose a track not offered: %s' % (avId, trackId))
         self.pendingAvId = None
