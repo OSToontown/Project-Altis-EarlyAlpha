@@ -24,14 +24,10 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         DistributedWeatherMGR.__init__(self, cr)
         self.cr = cr
         self.currentTime = None
-<<<<<<< HEAD
         self.interval = 100
         self.hood = base.cr.playGame.hood
-
-=======
         self.interval = 150
         
->>>>>>> origin/master
     def announceGenerate(self):
         DistributedWeatherMGR.announceGenerate(self)
         
