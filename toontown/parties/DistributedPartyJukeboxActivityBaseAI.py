@@ -13,6 +13,9 @@ class DistributedPartyJukeboxActivityBaseAI(DistributedPartyActivityAI):
         self.owners = []
         self.currentToon = 0
         self.playing = False
+        self.paused = False
+        self.accept('fireworksStarted%i' % self.getPartyDoId(), self.handleFireworksStart)
+        self.accept('fireworksFinished%i' % self.getPartyDoId(), self.handleFireworksEnd)
 
     def delete(self):
         taskMgr.remove('playSong%d' % self.doId)
@@ -36,16 +39,22 @@ class DistributedPartyJukeboxActivityBaseAI(DistributedPartyActivityAI):
             self.owners.append(avId)
         for toon in self.toonsPlaying:
             self.sendUpdateToAvatarId(toon, 'setSongInQueue', [song])
+        if self.paused:
+            return
         if not self.playing:
             # Stop default party music...
             self.d_setSongPlaying([0, ''], 0)
+            taskMgr.remove('playSong%d' % self.doId)
             self.__startPlaying()
 
     def __startPlaying(self):
+        if self.paused:
+            return
         if len(self.queue) == 0:
             # Start default party music!
             self.d_setSongPlaying([13, 'party_original_theme.ogg'], 0)
             self.playing = False
+            taskMgr.doMethodLater(56, self.__pause, 'playSong%d' % self.doId, extraArgs=[])
             return
         self.playing = True
 
@@ -127,3 +136,12 @@ class DistributedPartyJukeboxActivityBaseAI(DistributedPartyActivityAI):
 
         for toon in self.toonsPlaying:
             self.sendUpdateToAvatarId(toon, 'moveHostSongToTop', [])
+
+    def handleFireworksStart(self):
+        taskMgr.remove('playSong%d' % self.doId)
+        self.paused = True
+        self.d_setSongPlaying([0, ''], 0)
+
+    def handleFireworksEnd(self):
+        self.paused = False
+        self.__startPlaying()

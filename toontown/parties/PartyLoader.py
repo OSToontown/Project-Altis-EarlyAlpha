@@ -182,7 +182,6 @@ class PartyLoader(SafeZoneLoader.SafeZoneLoader):
         return
 
     def startCloudPlatforms(self):
-        return
         if len(self.clouds):
             self.cloudTrack = self.__cloudTrack()
             self.cloudTrack.loop()
@@ -192,7 +191,6 @@ class PartyLoader(SafeZoneLoader.SafeZoneLoader):
             self.cloudTrack.pause()
             del self.cloudTrack
             self.cloudTrack = None
-        return
 
     def __cloudTrack(self):
         track = Parallel()

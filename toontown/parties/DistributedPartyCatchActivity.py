@@ -169,7 +169,7 @@ class DistributedPartyCatchActivity(DistributedPartyActivity, DistributedPartyCa
         self._avatarNodePathParentToken = 3
         base.cr.parentMgr.registerParent(self._avatarNodePathParentToken, self.avatarNodePath)
         self.toonSDs = {}
-        self.dropShadow = loader.loadModelOnce('phase_3/models/props/drop_shadow')
+        self.dropShadow = loader.loadModel('phase_3/models/props/drop_shadow')
         self.dropObjModels = {}
         if loadModels:
             self.__loadDropModels()

@@ -30,23 +30,21 @@ class DistributedPartyActivityAI(DistributedObjectAI):
         self.sendUpdate('setToonsPlaying', [self.toonsPlaying])
 
     def toonJoinRequest(self):
-        self.notify.info('Toon join request')
         avId = self.air.getAvatarIdFromSender()
         # Should probably FSM here.
         self.toonsPlaying.append(avId)
         self.updateToonsPlaying()
 
     def toonExitRequest(self):
-        self.notify.info('Toon exit request')
+        pass
 
     def toonExitDemand(self):
-        self.notify.info('Toon exit demand')
         avId = self.air.getAvatarIdFromSender()
         self.toonsPlaying.remove(avId)
         self.updateToonsPlaying()
 
     def toonReady(self):
-        self.notify.info('Toon is ready')
+        pass
 
     def joinRequestDenied(self, todo0):
         pass
