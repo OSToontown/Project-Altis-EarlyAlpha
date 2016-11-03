@@ -32,9 +32,8 @@ class DistributedPartyCannonActivityAI(DistributedPartyActivityAI):
             return
         # TODO: Pass a msgId(?) to the client so the client can use whatever localizer it chooses.
         # Ideally, we shouldn't even be passing strings that *should* be localized.
-        if reward > 0:
-            self.sendUpdateToAvatarId(avId, 'showJellybeanReward', [reward, av.getMoney(), TTLocalizer.PartyCannonResults % (reward, self.cloudsHit[avId])])
-            av.addMoney(reward)
+        self.sendUpdateToAvatarId(avId, 'showJellybeanReward', [reward, av.getMoney(), TTLocalizer.PartyCannonResults % (reward, self.cloudsHit[avId])])
+        av.addMoney(reward)
         self.sendUpdate('setMovie', [PartyGlobals.CANNON_MOVIE_LANDED, avId])
         del self.cloudsHit[avId]
 
