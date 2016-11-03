@@ -1,22 +1,23 @@
-from pandac.PandaModules import *
-from otp.nametag.NametagGroup import NametagGroup
 from direct.directnotify import DirectNotifyGlobal
+from direct.distributed import ClockDelta
+from direct.distributed import DistributedObject
 from direct.fsm import ClassicFSM
 from direct.fsm import State
-from toontown.toonbase import ToontownGlobals
-import DistributedToon
-from direct.distributed import DistributedObject
-import NPCToons
-from toontown.quest import Quests
-from direct.distributed import ClockDelta
-from toontown.quest import QuestParser
-from toontown.quest import QuestChoiceGui
 from direct.interval.IntervalGlobal import *
+from panda3d.core import *
 import random
 
+import DistributedToon
+import NPCToons
+from otp.nametag.NametagGroup import NametagGroup
+from toontown.quest import QuestChoiceGui
+from toontown.quest import QuestParser
+from toontown.quest import Quests
+from toontown.toonbase import ToontownGlobals
+
+
 class DistributedNPCToonBase(DistributedToon.DistributedToon):
-    deferFor = 2
-    
+
     def __init__(self, cr):
         try:
             self.DistributedNPCToon_initialized
@@ -26,6 +27,7 @@ class DistributedNPCToonBase(DistributedToon.DistributedToon):
             self.__initCollisions()
             self.setPickable(0)
             self.setPlayerType(NametagGroup.CCNonPlayer)
+        self.setBlend(frameBlend=True)
 
     def disable(self):
         self.ignore('enter' + self.cSphereNode.getName())
@@ -45,6 +47,7 @@ class DistributedNPCToonBase(DistributedToon.DistributedToon):
         self.detectAvatars()
         self.setParent(ToontownGlobals.SPRender)
         self.startLookAround()
+        self.setBlend(frameBlend=True)
 
     def generateToon(self):
         self.setLODs()
@@ -63,9 +66,11 @@ class DistributedNPCToonBase(DistributedToon.DistributedToon):
         self.legsParts = []
         self.__bookActors = []
         self.__holeActors = []
+        self.setBlend(frameBlend=True)
 
     def announceGenerate(self):
         self.initToonState()
+        self.setBlend(frameBlend=True)
         DistributedToon.DistributedToon.announceGenerate(self)
 
     def initToonState(self):
@@ -113,6 +118,9 @@ class DistributedNPCToonBase(DistributedToon.DistributedToon):
 
     def setupAvatars(self, av):
         self.ignoreAvatars()
+        self.lookAtAvatar(av)
+    
+    def lookAtAvatar(self, av):
         av.headsUp(self, 0, 0, 0)
         self.headsUp(av, 0, 0, 0)
         av.stopLookAround()
@@ -134,9 +142,3 @@ class DistributedNPCToonBase(DistributedToon.DistributedToon):
 
     def setPositionIndex(self, posIndex):
         self.posIndex = posIndex
-
-    def _startZombieCheck(self):
-        pass
-
-    def _stopZombieCheck(self):
-        pass
