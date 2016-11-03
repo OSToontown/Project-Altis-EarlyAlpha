@@ -10792,13 +10792,13 @@
 					<sign>
 						<baseline code="suit">
 							<color r="0.752941" g="0.752941" b="0.752941" a="1" />
-							<pos x="0" y="0" z="-0.454734" />
+							<pos x="0" y="-0.5" z="-0.454734" />
 							<scale x="1.94135" y="1" z="1.34943" />
 							<text>CASHBOT</text>
 						</baseline>
 						<baseline code="suit">
 							<color r="0.752941" g="0.752941" b="0.752941" a="1" />
-							<pos x="-0.145453" y="0" z="-1.58779" />
+							<pos x="-0.145453" y="-0.5" z="-1.58779" />
 							<scale x="2.00652" y="1" z="1.22781" />
 							<text>COG HQ</text>
 						</baseline>
