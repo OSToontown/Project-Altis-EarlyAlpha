@@ -3742,13 +3742,13 @@
 					<sign>
 						<baseline code="suit">
 							<color r="0.733333" g="0.733333" b="0.733333" a="1" />
-							<pos x="0" y="0" z="-0.40119" />
+							<pos x="0" y="-0.5" z="-0.40119" />
 							<scale x="2.50633" y="1" z="1.23588" />
 							<text>SELLBOT</text>
 						</baseline>
 						<baseline code="suit">
 							<color r="0.733333" g="0.733333" b="0.733333" a="1" />
-							<pos x="0" y="0" z="-1.68829" />
+							<pos x="0" y="-0.5" z="-1.68829" />
 							<scale x="2.33314" y="1" z="1.43206" />
 							<text>COG HQ</text>
 						</baseline>
