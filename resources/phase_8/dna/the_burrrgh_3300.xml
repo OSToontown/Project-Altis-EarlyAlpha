@@ -4634,13 +4634,13 @@
 						<color r="0.752941" g="0.752941" b="0.752941" a="1" />
 						<baseline code="suit">
 							<color r="0.752941" g="0.752941" b="0.752941" a="1" />
-							<pos x="0" y="0" z="-0.649009" />
+							<pos x="0" y="-0.5" z="-0.649009" />
 							<scale x="2.08438" y="1" z="1.50901" />
 							<text>LAWBOT</text>
 						</baseline>
 						<baseline code="suit">
 							<color r="0.752941" g="0.752941" b="0.752941" a="1" />
-							<pos x="0" y="0" z="-1.81582" />
+							<pos x="0" y="-0.5" z="-1.81582" />
 							<scale x="2.35727" y="1" z="1.47138" />
 							<text>COG HQ</text>
 						</baseline>
