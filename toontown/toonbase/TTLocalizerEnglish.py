@@ -10089,7 +10089,8 @@ InteractivePropTrackBonusTerms = {0: 'Super Toon-Up!',
  3: '',
  4: 'Super Throw!',
  5: 'Super Squirt!',
- 6: ''}
+ 6: '',
+ 7: ''}
 PlayingCardUnknown = 'Card Name is unknown'
 RemapPrompt = 'Choose the keys you wish to remap.'
 RemapPopup = 'Press the button you wish to remap this control to.'
