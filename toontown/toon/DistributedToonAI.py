@@ -4559,14 +4559,14 @@ def cheesyEffect(value, hood=0, expire=0):
     return 'Set %s\'s cheesy effect to: %d' % (target.getName(), value)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int], targetClasses=[DistributedToonAI], aliases=['hp', 'toonHp', 'currHp'])
-def setHp(hpVal):
+def Hp(hpVal):
     """Set target's current laff"""
     if not -1 <= hpVal <= 137:
         return 'Laff must be between -1 and 137!'
     spellbook.getTarget().b_setHp(hpVal)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int])
-def setMaxHp(hpVal):
+def MaxHp(hpVal):
     """Set target's laff"""
     if not 15 <= hpVal <= 137:
         return 'Laff must be between 15 and 137!'
@@ -4574,7 +4574,7 @@ def setMaxHp(hpVal):
     spellbook.getTarget().toonUp(hpVal)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int, int, int, int, int, int, int])
-def setTrackAccess(toonup, trap, lure, sound, throw, squirt, zap, drop):
+def TrackAccess(toonup, trap, lure, sound, throw, squirt, drop, zap):
     """Set target's gag track access."""
     spellbook.getTarget().b_setTrackAccess([toonup, trap, lure, sound, throw, squirt, zap, drop])
 
@@ -4664,7 +4664,7 @@ def setFishingRod(rodVal):
     return 'Rod changed to ' + str(rodVal)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int])
-def setMaxFishTank(tankVal):
+def MaxFishTank(tankVal):
     """Set target's max fish tank value."""
     if not 20 <= tankVal <= 99:
         return 'Max fish tank value must be between 20 and 99'
@@ -4683,7 +4683,7 @@ def name(nameStr=''):
 
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int])
-def setHat(hatId, hatTex=0):
+def Hat(hatId, hatTex=0):
     """Set hat of target toon."""
     if not 0 <= hatId <= 56:
         return 'Invalid hat specified.'
@@ -4692,7 +4692,7 @@ def setHat(hatId, hatTex=0):
     spellbook.getTarget().b_setHat(hatId, hatTex, 0)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int])
-def setGlasses(glassesId, glassesTex=0):
+def Glasses(glassesId, glassesTex=0):
     """Set glasses of target toon."""
     if not 0 <= glassesId <= 21:
         return 'Invalid glasses specified.'
@@ -4701,7 +4701,7 @@ def setGlasses(glassesId, glassesTex=0):
     spellbook.getTarget().b_setGlasses(glassesId, glassesTex, 0)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int])
-def setBackpack(bpId, bpTex=0):
+def Backpack(bpId, bpTex=0):
     """Set backpack of target toon."""
     if not 0 <= bpId <= 24:
         return 'Invalid backpack specified.'
@@ -4710,13 +4710,44 @@ def setBackpack(bpId, bpTex=0):
     spellbook.getTarget().b_setBackpack(bpId, bpTex, 0)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int])
-def setShoes(shoesId, shoesTex=0):
+def Shoes(shoesId, shoesTex=0):
     """Set shoes of target toon."""
     if not 0 <= shoesId <= 3:
         return 'Invalid shoe type specified.'
     if not 0 <= shoesTex <= 48:
         return 'Invalid shoe specified.'
     spellbook.getTarget().b_setShoes(shoesId, shoesTex, 0)
+
+@magicWord(category=CATEGORY_CHARACTERSTATS, types=[int])
+def resistance():
+    """
+    Applies the Resistance Ranger Clothes
+    """
+    invoker = spellbook.getTarget()
+
+    dna = ToonDNA.ToonDNA()
+    dna.makeFromNetString(invoker.getDNAString())
+
+    dna.topTex = 111
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.topTexColor = 26
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.sleeveTex = 98
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.sleeveTexColor = 26
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.botTex = 41
+    invoker.b_setDNAString(dna.makeNetString())
+
+    dna.botTexColor = 26
+    invoker.b_setDNAString(dna.makeNetString())
+
+    target = spellbook.getTarget()
+    target.b_setNametagStyle(6)
 
 @magicWord(category=CATEGORY_MODERATION, types=[str])
 def kick(reason):
@@ -4818,7 +4849,7 @@ def ghost():
     """Set toon to invisible."""
     if spellbook.getInvoker().ghostMode == 0:
         spellbook.getInvoker().b_setGhostMode(2)
-        return 'Time to ninja!'
+        return 'Going Ghost!'
     else:
         spellbook.getInvoker().b_setGhostMode(0)
 
@@ -4834,7 +4865,7 @@ def badName():
     return "Revoked %s's name successfully. They have been renamed to %s." % (oldname, spellbook.getTarget().getName())
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int])
-def setGM(gmId):
+def GM(gmId):
     """Set the target's GM level (used for icon)."""
     if gmId == 1:
         return 'You cannot set a toon to TOON COUNCIL.'
@@ -4846,7 +4877,7 @@ def setGM(gmId):
     return 'You have set %s to GM type %s' % (spellbook.getTarget().getName(), gmId)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int])
-def setTickets(tixVal):
+def Tickets(tixVal):
     """Set the target's racing ticket's value."""
     if not 0 <= tixVal <= 99999:
         return 'Ticket value out of range (0-99999)'
@@ -4854,7 +4885,7 @@ def setTickets(tixVal):
     return "%s's tickets were set to %s." % (spellbook.getTarget().getName(), tixVal)
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
-def setCogIndex(indexVal):
+def CogIndex(indexVal):
     """Transform into a cog/suit. THIS SHOULD ONLY BE USED WHERE NEEDED, E.G. ELECTIONS"""
     if not -1 <= indexVal <= 4:
         return 'CogIndex value %s is invalid.' % str(indexVal)
@@ -4973,7 +5004,7 @@ def dna(part, value):
     return "Completed DNA change successfully."
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
-def setTrophyScore(value):
+def TrophyScore(value):
     """Set the trophy score of target"""
     if value < 0:
         return "Cannot have a trophy score below 0."
@@ -5152,7 +5183,7 @@ def spawnFO(track, difficulty=0):
     return 'Successfully spawned "%s" Field Office with difficulty %d!' % (track, difficulty)
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
-def pinkslips(amt=255):
+def fires(amt=255):
     """ Restock (to 255) CEO pink slips. """
     spellbook.getTarget().b_setPinkSlips(amt)
     return 'Restocked {0} pink slips successfully!'.format(amt)
@@ -5344,6 +5375,36 @@ def phrase(phraseStringOrId):
         av.d_setCustomMessages(av.customMessages)
         return "Added new phrase to %s's custom phrases." % av.getName()
 
+@magicWord(category=CATEGORY_OVERRIDE, types=[str, int, int, int, int, int])
+def suit(command, suitIndex, cogType=0, isSkelecog=0, isV2=0, isWaiter=0):
+    invoker = spellbook.getInvoker()
+    command = command.lower()
+    if command == 'spawn':
+        returnCode = invoker.doSummonSingleCog(int(suitIndex))
+        if returnCode[0] == 'success':
+            return 'Successfully spawned suit with index {0}!'.format(suitIndex)
+        return "Couldn't spawn suit with index {0}.".format(suitIndex)
+    elif command == 'building':
+        returnCode = invoker.doBuildingTakeover(suitIndex)
+        if returnCode[0] == 'success':
+            return 'Successfully spawned building with index {0}!'.format(suitIndex)
+        return "Couldn't spawn building with index {0}.".format(suitIndex)
+    elif command == 'do':
+        returnCode = invoker.doCogdoTakeOver(suitIndex, 1)
+        if returnCode[0] == 'success':
+            return 'Successfully spawned Cogdo with difficulty {0}!'.format(suitIndex)
+        return "Couldn't spawn Cogdo with difficulty {0}.".format(suitIndex)
+    elif command == 'invasion':
+        returnCode = invoker.doCogInvasion(suitIndex, cogType, isSkelecog, isV2)
+        return returnCode
+    elif command == 'invasionend':
+        returnCode = 'Ending Invasion..'
+        simbase.air.suitInvasionManager.cleanupTasks()
+        simbase.air.suitInvasionManager.cleanupInvasion()
+        return returnCode
+    else:
+        return 'Invalid command.'
+
 @magicWord(category=CATEGORY_SYSADMIN, types=[int, str])
 def sos(count, name):
     """
@@ -5365,4 +5426,53 @@ def sos(count, name):
         invoker.NPCFriendsDict[npcId] = count
     invoker.d_setNPCFriendsDict(invoker.NPCFriendsDict)
     return "You were given {0} {1} SOS cards.".format(count, name)
+
+@magicWord(category=CATEGORY_OVERRIDE, types=[str, int, int])
+def inventory(a, b=None, c=None):
+    invoker = spellbook.getInvoker()
+    inventory = invoker.inventory
+    if a == 'reset':
+        maxLevelIndex = b or 5
+        if not 0 <= maxLevelIndex < len(ToontownBattleGlobals.Levels[0]):
+            return 'Invalid max level index: {0}'.format(maxLevelIndex)
+        targetTrack = -1 or c
+        if not -1 <= targetTrack < len(ToontownBattleGlobals.Tracks):
+            return 'Invalid target track index: {0}'.format(targetTrack)
+        for track in xrange(0, len(ToontownBattleGlobals.Tracks)):
+            if (targetTrack == -1) or (track == targetTrack):
+                inventory.inventory[track][:maxLevelIndex + 1] = [0] * (maxLevelIndex+1)
+        invoker.b_setInventory(inventory.makeNetString())
+        if targetTrack == -1:
+            return 'Inventory reset.'
+        else:
+            return 'Inventory reset for target track index: {0}'.format(targetTrack)
+    elif a == 'restock':
+        maxLevelIndex = b or 5
+        if not 0 <= maxLevelIndex < len(ToontownBattleGlobals.Levels[0]):
+            return 'Invalid max level index: {0}'.format(maxLevelIndex)
+        targetTrack = -1 or c
+        if not -1 <= targetTrack < len(ToontownBattleGlobals.Tracks):
+            return 'Invalid target track index: {0}'.format(targetTrack)
+        if (targetTrack != -1) and (not invoker.hasTrackAccess(targetTrack)):
+            return "You don't have target track index: {0}".format(targetTrack)
+        inventory.NPCMaxOutInv(targetTrack=targetTrack, maxLevelIndex=maxLevelIndex)
+        invoker.b_setInventory(inventory.makeNetString())
+        if targetTrack == -1:
+            return 'Inventory restocked.'
+        else:
+            return 'Inventory restocked for target track index: {0}'.format(targetTrack)
+    else:
+        try:
+            targetTrack = int(a)
+        except:
+            return 'Invalid first argument.'
+        if not invoker.hasTrackAccess(targetTrack):
+            return "You don't have target track index: {0}".format(targetTrack)
+        maxLevelIndex = b or 6
+        if not 0 <= maxLevelIndex < len(ToontownBattleGlobals.Levels[0]):
+            return 'Invalid max level index: {0}'.format(maxLevelIndex)
+        for _ in xrange(c):
+            inventory.addItem(targetTrack, maxLevelIndex)
+        invoker.b_setInventory(inventory.makeNetString())
+        return 'Restored {0} Gags to: {1}, {2}'.format(c, targetTrack, maxLevelIndex)
 

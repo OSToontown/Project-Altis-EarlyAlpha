@@ -22,9 +22,6 @@ texture-magfilter linear
 texture-minfilter linear
 lock-to-one-cpu #f
 support-threads #t
-allow-incomplete-render #t
-preload-simple-textures #t
-allow-async-bind #t
 gl-immutable-texture-storage #f
 gl-dump-compiled-shaders #f
 show-buffers #f

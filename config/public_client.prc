@@ -8,7 +8,7 @@ server-version SERVER_VERSION_HERE
 audio-library-name p3openal_audio
 sync-video #f
 want-dev #f
-preload-avatars #f
+preload-avatars #t
 want-keep-alive #f
 texture-anisotropic-degree 16
 language LANGUAGE_HERE
@@ -16,8 +16,8 @@ language LANGUAGE_HERE
 
 # Resources settings
 model-path /
-model-cache-models #t
-model-cache-textures #t
+model-cache-models #f
+model-cache-textures #f
 vfs-mount phase_3.mf /
 vfs-mount phase_3.5.mf /
 vfs-mount phase_4.mf /

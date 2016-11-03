@@ -462,6 +462,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             return
         dnaStore = self.cr.playGame.dnaStore
         level = int(self.difficulty / 2) + 1
+        if level > 7:
+            self.notify.warning('Level is bigger than 7: %s' % level)
         suitNP = dnaStore.findNode('suit_landmark_' + chr(self.track) + str(level))
         zoneId = dnaData.getBlock(self.block).zone
         zoneId = ZoneUtil.getTrueZoneId(zoneId, self.interiorZoneId)
