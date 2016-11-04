@@ -190,9 +190,9 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
 
     def generateSuits(self, battleNumber):
         if battleNumber == 1:
-            return self.invokeSuitPlanner(11, 0)
+            return self.invokeSuitPlanner(10, 0)
         else:
-            return self.invokeSuitPlanner(12, 1)
+            return self.invokeSuitPlanner(11, 1)
 
     def removeToon(self, avId):
         toon = simbase.air.doId2do.get(avId)
