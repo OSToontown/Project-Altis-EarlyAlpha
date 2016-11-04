@@ -336,7 +336,6 @@ SCMenuWinter = 'WINTER'
 SCMenuSellbotInvasion = 'SELLBOT INVASION'
 SCMenuFieldOffice = 'FIELD OFFICES'
 SCMenuIdesOfMarch = 'GREEN'
-SCMenuRogerDog = 'roger dog'
 FriendSecretNeedsPasswordWarningTitle = 'Parental Controls'
 FriendSecretNeedsParentLoginWarning = 'To get or enter a True Friend Code, log in with the Parent Account.  You can disable this prompt by changing your True Friend options.'
 FriendSecretNeedsPasswordWarning = 'To get or enter a True Friend Code, you must enter the Parent Account Password.  You can disable this prompt by changing your True Friends options.'
@@ -1639,13 +1638,6 @@ SpeedChatStaticTextToontown = {100: 'Hi!',
  10103: "Don't be wacky - Vote for Slappy!",
  10104: "Jump for joy? Why not Jellybeans?",
  10105: "I'm loving the election decorations!",
- 11000: "hi im roger dog",
- 11001: "no im roger dog",
- 11002: "i might be roger dog",
- 11003: "im the real roger dog",
- 11004: "this is my friend roger dog",
- 11005: "have you seen my friend roger dog",
- 11006: "you can call me roger dog for short",
  20000: SuitBrushOffs[None][0],
  20001: SuitBrushOffs[None][1],
  20002: SuitBrushOffs[None][2],
