@@ -5,8 +5,6 @@ A vision of what Toontown Online could have been in 2016.
  
 * Josh Zimmer - Game Programmer & Project Manager
 * Owen - Project Supervisor & Moderative Staff Director
-* Dank Mickey - Game Programmer, Project Manager, & Texture Artist
-* Swag Foreman - 3D Modeler & Animator
 * Stormish - 3D Modeler & Animator
 * Malverde - Game & Networking Programmer
 * Old Geezer - Game Programmer & 3D Modeler
