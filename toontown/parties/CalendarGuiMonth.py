@@ -1,4 +1,3 @@
-#Embedded file name: toontown.parties.CalendarGuiMonth
 import calendar
 from datetime import timedelta, datetime
 from pandac.PandaModules import Vec4, TextNode
@@ -24,6 +23,7 @@ class CalendarGuiMonth(DirectFrame):
         self.createGuiObjects()
         self.lastSelectedDate = None
         self.accept('clickedOnDay', self.clickedOnDay)
+        return
 
     def createDummyLocators(self):
         self.monthLocator = self.attachNewNode('monthLocator')
@@ -134,8 +134,9 @@ class CalendarGuiMonth(DirectFrame):
          arrowUp), incButton_relief=None, incButton_pos=filterLocatorDownPos, incButton_image3_color=Vec4(1, 1, 1, 0.2), incButtonCallback=self.filterChanged, decButton_image=(arrowUp,
          arrowDown,
          arrowHover,
-         arrowUp), decButton_relief=None, decButton_pos=filterLocatorUpPos, decButton_scale=(1, 1, -1), decButton_image3_color=Vec4(1, 1, 1, 0.2), decButtonCallback=self.filterChanged, numItemsVisible=1, itemMakeFunction=makeLabel, items=[TTLocalizer.CalendarShowAll, TTLocalizer.CalendarShowOnlyHolidays, TTLocalizer.CalendarShowOnlyParties], itemFrame_frameSize=(-0.2, 0.2, -0.02, 0.05), itemFrame_frameColor=(0, 0, 0, 0))
+         arrowUp), decButton_relief=None, decButton_pos=filterLocatorUpPos, decButton_scale=(1, 1, -1), decButton_image3_color=Vec4(1, 1, 1, 0.2), decButtonCallback=self.filterChanged, numItemsVisible=1, itemMakeFunction=makeLabel, items=[TTLocalizer.CalendarShowAll, TTLocalizer.CalendarShowOnlyHolidays, TTLocalizer.CalendarShowOnlyParties], itemFrame_frameSize=(-.2, 0.2, -.02, 0.05), itemFrame_frameColor=(0, 0, 0, 0))
         gui.removeNode()
+        return
 
     def getTopLeftDate(self):
         firstOfTheMonth = self.curDate.replace(day=1)
@@ -205,6 +206,7 @@ class CalendarGuiMonth(DirectFrame):
 
         self.filterList.destroy()
         DirectFrame.destroy(self)
+        return
 
     def clickedOnDay(self, dayDate):
         self.lastSelectedDate = dayDate

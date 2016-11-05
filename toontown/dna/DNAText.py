@@ -1,4 +1,3 @@
-#Embedded file name: toontown.dna.DNAText
 from DNASceneElement import DNASceneElement
 from DNATypesetter import DNATypesetter
 from DNAParser import *
@@ -10,6 +9,7 @@ class DNAText(DNASceneElement):
 
     def __init__(self):
         DNASceneElement.__init__(self)
+
         self.text = ''
 
     def handleText(self, text):
@@ -17,10 +17,10 @@ class DNAText(DNASceneElement):
 
     def _makeNode(self, storage, parent):
         typesetter = DNATypesetter(self.parent, storage)
+
         np = typesetter.generate(self.text)
         if np:
             np.reparentTo(parent)
             return np
-
 
 registerElement(DNAText)

@@ -1,4 +1,3 @@
-#Embedded file name: toontown.dna.DNAStoreFont
 from DNAStorageElement import DNAStorageElement
 from DNAParser import *
 
@@ -8,6 +7,7 @@ class DNAStoreFont(DNAStorageElement):
 
     def __init__(self, root, code, path):
         DNAStorageElement.__init__(self)
+
         self.root = root
         self.code = code
         self.path = path
@@ -15,6 +15,5 @@ class DNAStoreFont(DNAStorageElement):
     def _store(self, storage):
         font = loader.loadFont(self.path)
         storage.storeFont(font, self.code, self.getScope())
-
 
 registerElement(DNAStoreFont)

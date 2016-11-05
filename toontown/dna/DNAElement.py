@@ -1,6 +1,3 @@
-#Embedded file name: toontown.dna.DNAElement
-
-
 class DNAElement:
     TAG = '*'
     PARENTS = []
@@ -12,7 +9,9 @@ class DNAElement:
     def reparentTo(self, parent):
         if self.parent:
             self.parent.children.remove(self)
+
         self.parent = parent
+
         if parent:
             self.parent.children.append(self)
 
@@ -20,4 +19,4 @@ class DNAElement:
         pass
 
     def findChildren(self, type):
-        return [ child for child in self.children if isinstance(child, type) ]
+        return [child for child in self.children if isinstance(child, type)]

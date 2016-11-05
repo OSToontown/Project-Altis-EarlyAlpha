@@ -6,9 +6,7 @@ from toontown.toon import NPCToons
 from toontown.election.DistributedElectionEventAI import DistributedElectionEventAI
 from direct.task import Task
 import time
-from toontown.ai import HolidayGlobals
-from toontown.ai import DistributedTrickOrTreatTargetAI
-from toontown.ai import DistributedWinterCarolingTargetAI
+
 class TTHoodAI(SZHoodAI):
     notify = directNotify.newCategory('SZHoodAI')
     notify.setInfo(True)
@@ -23,22 +21,6 @@ class TTHoodAI(SZHoodAI):
 
         if self.air.config.GetBool('want-doomsday', False):
             self.spawnElection()
-
-        if HolidayGlobals.WhatHolidayIsIt() == 'Winter':
-            self.WinterCarolingTargetManager = DistributedWinterCarolingTargetAI.DistributedWinterCarolingTargetAI(self.air)
-            self.WinterCarolingTargetManager.generateWithRequired(2659)
-
-
-            self.WinterCarolingTargetManager = DistributedWinterCarolingTargetAI.DistributedWinterCarolingTargetAI(self.air)
-            self.WinterCarolingTargetManager.generateWithRequired(2659)
-
-        if HolidayGlobals.WhatHolidayIsIt() == 'Halloween':
-            self.TrickOrTreatTargetManager = DistributedTrickOrTreatTargetAI.DistributedTrickOrTreatTargetAI(self.air)
-            self.TrickOrTreatTargetManager.generateWithRequired(2649)
-            
-
-            self.TrickOrTreatTargetManager = DistributedTrickOrTreatTargetAI.DistributedTrickOrTreatTargetAI(self.air)
-            self.TrickOrTreatTargetManager.generateWithRequired(2649)
 
     def spawnElection(self):
         election = self.air.doFind('ElectionEvent')

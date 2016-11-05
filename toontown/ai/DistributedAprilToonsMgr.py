@@ -3,7 +3,6 @@ from direct.directnotify import DirectNotifyGlobal
 from toontown.toonbase.AprilToonsGlobals import *
 from toontown.toonbase import ToontownGlobals
 
-
 class DistributedAprilToonsMgr(DistributedObject):
     notify = DirectNotifyGlobal.directNotify.newCategory('AprilToonsMgr')
 
@@ -15,11 +14,11 @@ class DistributedAprilToonsMgr(DistributedObject):
     def announceGenerate(self):
         DistributedObject.announceGenerate(self)
         self.d_requestEventsList()
-
+        
     def d_requestEventsList(self):
         self.notify.debug("Requesting events list from AI.")
         self.sendUpdate('requestEventsList', [])
-
+        
     def requestEventsListResp(self, eventIds):
         self.events = eventIds
         self.checkActiveEvents()
@@ -41,5 +40,4 @@ class DistributedAprilToonsMgr(DistributedObject):
 
     def checkActiveEvents(self):
         if self.isEventActive(EventGlobalGravity):
-            base.localAvatar.controlManager.currentControls.setGravity(
-                ToontownGlobals.GravityValue * 0.75)
+            base.localAvatar.controlManager.currentControls.setGravity(ToontownGlobals.GravityValue * 0.75)

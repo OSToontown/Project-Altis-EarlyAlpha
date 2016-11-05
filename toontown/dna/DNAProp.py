@@ -1,4 +1,3 @@
-#Embedded file name: toontown.dna.DNAProp
 from DNANode import DNANode
 from DNAParser import *
 from panda3d.core import *
@@ -8,6 +7,7 @@ class DNAProp(DNANode):
 
     def __init__(self, name, code):
         DNANode.__init__(self, name)
+
         self.name = name
         self.code = code
 
@@ -20,7 +20,7 @@ class DNAProp(DNANode):
 
     def getName(self):
         return self.name
-
+        
     def getCode(self):
         return self.code
 

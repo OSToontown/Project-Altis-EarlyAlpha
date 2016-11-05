@@ -3,20 +3,16 @@ from direct.distributed import DistributedObject
 from toontown.ai import DistributedPhaseEventMgr
 import time
 
-
-class DistributedSillyMeterMgr(
-        DistributedPhaseEventMgr.DistributedPhaseEventMgr):
+class DistributedSillyMeterMgr(DistributedPhaseEventMgr.DistributedPhaseEventMgr):
     neverDisable = 1
-    notify = DirectNotifyGlobal.directNotify.newCategory(
-        'DistributedSillyMeterMgr')
+    notify = DirectNotifyGlobal.directNotify.newCategory('DistributedSillyMeterMgr')
 
     def __init__(self, cr):
         DistributedPhaseEventMgr.DistributedPhaseEventMgr.__init__(self, cr)
         cr.SillyMeterMgr = self
 
     def announceGenerate(self):
-        DistributedPhaseEventMgr.DistributedPhaseEventMgr.announceGenerate(
-            self)
+        DistributedPhaseEventMgr.DistributedPhaseEventMgr.announceGenerate(self)
         messenger.send('SillyMeterIsRunning', [self.isRunning])
 
     def delete(self):
@@ -27,13 +23,11 @@ class DistributedSillyMeterMgr(
             del self.cr.SillyMeterMgr
 
     def setCurPhase(self, newPhase):
-        DistributedPhaseEventMgr.DistributedPhaseEventMgr.setCurPhase(
-            self, newPhase)
+        DistributedPhaseEventMgr.DistributedPhaseEventMgr.setCurPhase(self, newPhase)
         messenger.send('SillyMeterPhase', [newPhase])
 
     def setIsRunning(self, isRunning):
-        DistributedPhaseEventMgr.DistributedPhaseEventMgr.setIsRunning(
-            self, isRunning)
+        DistributedPhaseEventMgr.DistributedPhaseEventMgr.setIsRunning(self, isRunning)
         messenger.send('SillyMeterIsRunning', [isRunning])
 
     def getCurPhaseDuration(self):
@@ -48,9 +42,7 @@ class DistributedSillyMeterMgr(
             endHolidayTime = time.mktime(endHolidayDate.timetuple())
             holidayDuration = endHolidayTime - startHolidayTime
             if holidayDuration < 0:
-                self.notify.error(
-                    'Duration not set for phase %' %
-                    self.curPhase)
+                self.notify.error('Duration not set for phase %' % self.curPhase)
                 return -1
             else:
                 return holidayDuration

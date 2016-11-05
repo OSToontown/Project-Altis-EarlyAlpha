@@ -7,10 +7,12 @@ class HolidayDecorator:
     def __init__(self):
         self.dnaStore = base.cr.playGame.dnaStore
         self.swapIval = None
+        return
 
     def exit(self):
         if self.swapIval is not None and self.swapIval.isPlaying():
             self.swapIval.finish()
+        return
 
     def decorate(self):
         self.updateHoodDNAStore()
@@ -25,7 +27,8 @@ class HolidayDecorator:
             return
         storageFile = base.cr.playGame.hood.storageDNAFile
         if storageFile:
-            pass
+            pass # TODO: DNATODO
+            #loadDNAFile(self.dnaStore, storageFile, CSDefault)
         self.swapIval = self.getSwapVisibleIval()
         if self.swapIval:
             self.swapIval.start()
@@ -35,7 +38,8 @@ class HolidayDecorator:
         holidayIds = base.cr.newsManager.getDecorationHolidayId()
         for holiday in holidayIds:
             for storageFile in hood.holidayStorageDNADict.get(holiday, []):
-                pass
+                pass # TODO: DNATODO
+                #loadDNAFile(self.dnaStore, storageFile, CSDefault)
 
     def getSwapVisibleIval(self, wait = 5.0, tFadeOut = 3.0, tFadeIn = 3.0):
         loader = base.cr.playGame.hood.loader

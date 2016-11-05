@@ -1,4 +1,3 @@
-#Embedded file name: toontown.dna.DNAStoreTexture
 from DNAStorageElement import DNAStorageElement
 from DNAParser import *
 
@@ -8,6 +7,7 @@ class DNAStoreTexture(DNAStorageElement):
 
     def __init__(self, root, code, path):
         DNAStorageElement.__init__(self)
+
         self.root = root
         self.code = code
         self.path = path
@@ -16,6 +16,5 @@ class DNAStoreTexture(DNAStorageElement):
         texture = loader.loadTexture(self.path)
         storage.storeTexture(texture, self.code, self.getScope())
         storage.storeCatalogCode(self.root, self.code)
-
 
 registerElement(DNAStoreTexture)

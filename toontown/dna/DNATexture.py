@@ -1,4 +1,3 @@
-#Embedded file name: toontown.dna.DNATexture
 from DNASceneElement import DNASceneElement
 from DNAParser import *
 from panda3d.core import *
@@ -9,10 +8,10 @@ class DNATexture(DNASceneElement):
 
     def __init__(self):
         DNASceneElement.__init__(self)
+
         self.code = ''
 
     def handleText(self, text):
         self.code += text
-
 
 registerElement(DNATexture)
