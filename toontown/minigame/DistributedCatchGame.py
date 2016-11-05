@@ -112,7 +112,11 @@ class DistributedCatchGame(DistributedMinigame):
             for type in suitTypes:
                 suit = Suit.Suit()
                 d = SuitDNA.SuitDNA()
-                d.newSuit(type)
+                invSuit = base.cr.newsManager.getInvadingSuit()
+                if not invSuit:
+                    d.newSuit(type)
+                else:
+                    d.newSuit(invSuit)
                 suit.setDNA(d)
                 suit.pose('walk', 0)
                 self.suits.append(suit)

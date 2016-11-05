@@ -33,12 +33,16 @@ class CogdoFlyingGame(DirectObject):
         self.localPlayer = None
         self._hints = {'targettedByEagle': False,
          'invulnerable': False}
+        self.invSuit = False
 
     def _initLegalEagles(self):
         nestIndex = 1
         nests = self.level.root.findAllMatches('**/%s;+s' % Globals.Level.LegalEagleNestName)
+        self.invSuit = base.cr.newsManager.getInvadingSuit()
+        if not self.invSuit:
+            self.invSuit = 'le'
         for nest in nests:
-            legalEagle = CogdoFlyingLegalEagle(nest, nestIndex)
+            legalEagle = CogdoFlyingLegalEagle(nest, nestIndex, self.invSuit)
             self.legalEagles.append(legalEagle)
             self.index2LegalEagle[nestIndex] = legalEagle
             nestIndex += 1
@@ -357,7 +361,10 @@ class CogdoFlyingGame(DirectObject):
     def handleLocalPlayerRanOutOfTime(self):
         self.guiMgr.setMemoCount(0)
         self.distGame.d_sendRequestAction(Globals.AI.GameActions.RanOutOfTimePenalty, 0)
-        self.guiMgr.setMessage(TTLocalizer.CogdoFlyingGameTakingMemos)
+        if self.invSuit:
+            self.guiMgr.setMessage(TTLocalizer.CogdoFlyingGameTakingMemosInvasion % SuitBattleGlobals.SuitAttributes[self.invSuit]['pluralname'])
+        else:
+            self.guiMgr.setMessage(TTLocalizer.CogdoFlyingGameTakingMemos)
 
     def handleClearGuiMessage(self):
         if not self.localPlayer.isInvulnerable():
@@ -374,12 +381,18 @@ class CogdoFlyingGame(DirectObject):
 
     def handleLocalPlayerTargetedByEagle(self):
         if not self.localPlayer.isInvulnerable() and not self._hints['targettedByEagle']:
-            self.guiMgr.setMessage(TTLocalizer.CogdoFlyingGameLegalEagleTargeting)
+            if self.invSuit:
+                self.guiMgr.setMessage(TTLocalizer.CogdoFlyingGameInvasionTargeting % SuitBattleGlobals.SuitAttributes[self.invSuit]['name'])
+            else:
+                self.guiMgr.setMessage(TTLocalizer.CogdoFlyingGameLegalEagleTargeting)
             self._hints['targettedByEagle'] = True
 
     def handleLocalPlayerAttackedByEagle(self):
         if not self.localPlayer.isInvulnerable():
-            self.guiMgr.setMessage(TTLocalizer.CogdoFlyingGameLegalEagleAttacking)
+            if self.invSuit:
+                self.guiMgr.setMessage(TTLocalizer.CogdoFlyingGameInvasionAttacking % SuitBattleGlobals.SuitAttributes[self.invSuit]['name'])
+            else:
+                self.guiMgr.setMessage(TTLocalizer.CogdoFlyingGameLegalEagleAttacking)
 
     def handlePlayerBackpackAttacked(self, toonId):
         if toonId in self.toonId2Player:
