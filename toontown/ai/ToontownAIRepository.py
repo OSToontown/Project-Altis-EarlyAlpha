@@ -91,7 +91,9 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.doLiveUpdates = self.config.GetBool('want-live-updates', True)
 
         self.holidayManager = HolidayManagerAI(self)
-
+        self.wantHalloween = self.config.GetBool('want-halloween', False)
+	self.wantChristmas = self.config.GetBool('want-christmas', False)
+        self.holidayManager = HolidayManagerAI(self)
         self.fishManager = FishManagerAI()
         self.questManager = QuestManagerAI(self)
         self.cogPageManager = CogPageManagerAI()

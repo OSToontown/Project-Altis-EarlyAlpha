@@ -1,3 +1,4 @@
+#Embedded file name: toontown.dna.DNAStoreNode
 from DNAStorageElement import DNAStorageElement
 from DNAParser import *
 
@@ -5,9 +6,8 @@ class DNAStoreNode(DNAStorageElement):
     TAG = 'store_node'
     PARENTS = ['model']
 
-    def __init__(self, root, code, node=None):
+    def __init__(self, root, code, node = None):
         DNAStorageElement.__init__(self)
-
         self.root = root
         self.code = code
         if node is None:
@@ -17,13 +17,12 @@ class DNAStoreNode(DNAStorageElement):
 
     def _store(self, storage):
         model = self.parent.getModel()
-
-        if self.node == "":
+        if self.node == '':
             node = model
         else:
             node = model.find('**/' + self.node)
-
         storage.storeNode(node, self.code, self.getScope())
         storage.storeCatalogCode(self.root, self.code)
+
 
 registerElement(DNAStoreNode)

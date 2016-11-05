@@ -1,3 +1,4 @@
+#Embedded file name: toontown.dna.DNATitle
 from DNASceneElement import DNASceneElement
 from DNAParser import *
 from panda3d.core import *
@@ -8,14 +9,13 @@ class DNATitle(DNASceneElement):
 
     def __init__(self):
         DNASceneElement.__init__(self)
-
         self.title = ''
 
     def handleText(self, text):
         self.title += text
 
-
     def _makeNode(self, storage, parent):
-        pass # TODO
+        pass
+
 
 registerElement(DNATitle)

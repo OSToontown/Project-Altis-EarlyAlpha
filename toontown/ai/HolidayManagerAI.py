@@ -1,67 +1,78 @@
 from direct.directnotify.DirectNotifyGlobal import directNotify
 from direct.distributed.ClockDelta import *
 from direct.task import Task
-
 from toontown.toonbase import ToontownGlobals
 from toontown.parties import PartyGlobals
-
+# fireworks
 from toontown.effects.DistributedFireworkShowAI import DistributedFireworkShowAI
 from toontown.effects import FireworkShows
-
 import random
 import time
+from toontown.ai import HolidayGlobals
+
 
 class HolidayManagerAI:
-    # notify = directNotify.newCategory('HolidayManagerAI')
-    def __init__(self, air):
-        self.air = air
-        self.currentHolidays = []
+	notify = directNotify.newCategory('HolidayManagerAI')
 
-        # TODO: Properly create a holiday manager to run this.
-        if config.GetBool('want-hourly-fireworks', False):
-            self.__startFireworksTick()
+	def __init__(self, air):
+		self.air = air
+		self.currentHolidays = []
 
-    """
-    Fireworks Stuff
-    """
-    def __startFireworksTick(self):
-        # Check seconds until next hour.
-        ts = time.time()
-        nextHour = 3600 - (ts % 3600)
-        taskMgr.doMethodLater(nextHour, self.__fireworksTick, 'hourly-fireworks')
+		# TODO: Properly create a holiday manager to run this.
+		#if config.GetBool('want-hourly-fireworks', False):
+		 #   self.__startFireworksTick()
 
-    def __fireworksTick(self, task):
-        # The next tick will occur in exactly an hour.
-        task.delayTime = 3600
+	"""
+	Fireworks Stuff
+	"""
 
-        showName = config.GetString('hourly-fireworks-type', 'july4')
+	def startFireworksTick(self):
+		# Check seconds until next hour.
+		ts = time.time()
+		nextHour = 3600 - (ts % 3600)
+		taskMgr.doMethodLater(
+			nextHour,
+			self.fireworksTick,
+			'hourly-fireworks')
 
-        if showName == 'july4':
-            showType = ToontownGlobals.JULY4_FIREWORKS
+	def fireworksTick(self, task):
+		# The next tick will occur in exactly an hour.
+		task.delayTime = 3600
+		#showName = config.GetString('hourly-fireworks-type', 'july4')
 
-        elif showName == 'newyears':
-            showType = ToontownGlobals.NEWYEARS_FIREWORKS
+		#if showName == 'july4':
+		 #   showType = ToontownGlobals.JULY4_FIREWORKS
+		show = HolidayGlobals.IsItFireworks()
+		if show == 'Nyear':
+				showType = ToontownGlobals.NEWYEARS_FIREWORKS
+		elif show == 'Summer':
+			showType = PartyGlobals.FireworkShows.Summer
+		elif show == 'Release':
+			showType = ToontownGlobals.VICTORY_RELEASE_FIREWORKS
+		elif show == 'None':
+			return
+	#	elif showName == 'random':
+	#		shows = [
+	#			ToontownGlobals.JULY4_FIREWORKS,
+	#			ToontownGlobals.NEWYEARS_FIREWORKS,
+	#			PartyGlobals.FireworkShows.Summer,
+	#			ToontownGlobals.VICTORY_RELEASE_FIREWORKS]
+	#		showType = random.choice(shows)
 
-        elif showName == 'summer':
-            showType = PartyGlobals.FireworkShows.Summer
 
-        elif showName == 'random':
-            shows = [ToontownGlobals.JULY4_FIREWORKS, ToontownGlobals.NEWYEARS_FIREWORKS, PartyGlobals.FireworkShows.Summer]
-            showType = random.choice(shows)
-        else:
-            raise AttributeError('%s is an invalid firework type' % showName)
-            return
+		numShows = len(FireworkShows.shows.get(showType, []))
+		showIndex = random.randint(0, numShows - 1)
+		for hood in self.air.hoods:
+			if hood.HOOD == ToontownGlobals.GolfZone:
+				continue
+			fireworksShow = DistributedFireworkShowAI(self.air)
+			fireworksShow.generateWithRequired(hood.HOOD)
+			fireworksShow.b_startShow(
+				showType, showIndex, globalClockDelta.getRealNetworkTime())
+			self.notify.info(
+				'Oh! A fireworks show has started in this District - next one in exactly 1 hours time!')
+		return task.again
 
-        numShows = len(FireworkShows.shows.get(showType, []))
-        showIndex = random.randint(0, numShows - 1)
-        for hood in self.air.hoods:
-            if hood.HOOD == ToontownGlobals.GolfZone:
-                continue
-            fireworksShow = DistributedFireworkShowAI(self.air)
-            fireworksShow.generateWithRequired(hood.HOOD)
-            fireworksShow.b_startShow(showType, showIndex, globalClockDelta.getRealNetworkTime())
-        return task.again
-
-    def isHolidayRunning(self, *args):
-        return True
-        #TODO: this function needs to actually check holidays
+	def isHolidayRunning(self, *args):
+		return True
+		# TODO: this function needs to actually check holidays
