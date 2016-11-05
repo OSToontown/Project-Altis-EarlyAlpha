@@ -119,11 +119,7 @@ class DistributedLawbotChair(DistributedObject.DistributedObject, FSM.FSM):
         suitDepts = ['c', 'l', 'm', 's'] # no hackerbots
         dept = self.randomGenerator.choice(suitDepts)
         self.cogJuror.dna = SuitDNA.SuitDNA()
-        self.invCog = base.cr.newsManager.getInvadingSuit()
-        if self.invCog:
-            self.cogJuror.dna.newSuit(self.invCog)
-        else:
-            self.cogJuror.dna.newSuitRandom(level=level, dept=dept)
+        self.cogJuror.dna.newSuitRandom(level=level, dept=dept)
         self.cogJuror.setDNA(self.cogJuror.dna)
         self.cogJuror.pose('landing', 0)
         self.cogJuror.reparentTo(self.nodePath)
