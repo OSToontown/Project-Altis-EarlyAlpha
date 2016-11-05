@@ -1,4 +1,3 @@
-from PyQt4 import QtGui
 import sys
 import os
 from socket import *
@@ -9,15 +8,10 @@ import base64
 import AltisLauncher
 
 
-class AltisLauncherApp(QtGui.QMainWindow, AltisLauncher.Ui_AltisLauncher):
-    def __init__(self, parent=None):
-        super(self.__class__, self).__init__()
-        self.setupUi(self)
-
-        self.LoginButton.clicked.connect(self.login)
-        self.QuitButton.clicked.connect(sys.exit)
-        self.username = str(self.UsernameEntry.text())
-        self.password = str(self.PasswordEntry.text())
+class AltisLauncherApp():
+    def __init__(self):
+        self.username = None
+        self.password = None
 
         #  Create the socket and configure it
         self.clientsock = socket(AF_INET, SOCK_STREAM)
@@ -26,6 +20,7 @@ class AltisLauncherApp(QtGui.QMainWindow, AltisLauncher.Ui_AltisLauncher):
 
         os.environ['TT_PLAYCOOKIE'] = '.DEFAULT'
         os.environ['TT_GAMESERVER'] = '127.0.0.1' #'158.69.213.51' for Owen's server.
+        self.login()
 
     def client(self):
         data = self.clientsock.recv(1024)
@@ -56,11 +51,8 @@ class AltisLauncherApp(QtGui.QMainWindow, AltisLauncher.Ui_AltisLauncher):
         return cipher.decrypt(base64.b64decode(ciphertext))
 
     def login(self):
-        self.username = str(self.UsernameEntry.text())
-        self.password = str(self.PasswordEntry.text())
-
-        os.environ['ttUsername'] = self.username
-        os.environ['ttPassword'] = self.password
+        self.username = os.environ.get('TTUSERNAME', 'None')
+        self.password = os.environ.get('TTPASSWORD', 'None')
 
         self.clientsock.connect(('127.0.0.1', 4014))#'158.69.213.51', 4014)) for Owen's server.
 
@@ -68,6 +60,9 @@ class AltisLauncherApp(QtGui.QMainWindow, AltisLauncher.Ui_AltisLauncher):
         sendData = json.dumps(sendData)
         self.clientsock.send(sendData)
         self.client()
+        
+        os.environ['TTUSERNAME'] = 'None'
+        os.environ['TTPASSWORD'] = 'None'
 
     def playgame(self, playcookie):
         try:
@@ -76,12 +71,5 @@ class AltisLauncherApp(QtGui.QMainWindow, AltisLauncher.Ui_AltisLauncher):
             pass
 
         sys.exit(1)
-
-def main(self):
-    app = QtGui.QApplication(sys.argv)
-    form = AltisLauncherApp()
-    form.show()
-    app.exec_()
-
-if __name__ == '__main__':
-    main(QtGui.QMainWindow)
+        
+AltisLauncherApp()
