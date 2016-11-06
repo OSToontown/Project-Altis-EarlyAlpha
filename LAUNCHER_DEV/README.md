@@ -2,6 +2,8 @@
 
 ### These are all the files for the game launcher
 
-### The Project-Altis-Launcher.exe needs to be copied from the bin/release folder to the root game folder when you build
+### This is *NOT* a development launcher, it's a launcher for the compiled game, and links to a Live Account2Auth server to validate logins
 
-Initially designed and coded by Drew
+### *DO NOT USE THIS IN PRODUCTION. THERE IS NO TLS CERTIFICATE FOR PACKET EXCHANGE* ###
+
+Developed by Dubito
