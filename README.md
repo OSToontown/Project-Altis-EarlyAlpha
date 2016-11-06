@@ -3,7 +3,7 @@ A vision of what Toontown Online could have been in 2016.
   
 # Current Team
  
-* Josh Zimmer - Game Programmer & Project Manager
+* Josh Zimmer - Founder, Game Programmer & Project Manager
 * Owen - Project Supervisor & Moderative Staff Director
 * Dank Mickey/ KHDecoder - Game Programmer, Texture Editor, & Co-Founder
 * Stormish - 3D Modeler & Animator
