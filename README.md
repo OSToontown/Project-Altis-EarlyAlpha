@@ -17,6 +17,10 @@ A vision of what Toontown Online could have been in 2016.
 * Junior- Game Programmer
 * Dubito- Game Programmer & Security Manager
 
+Contributors
+1. Swag Foreman for occasional models.
+2. Loonatic xxx for occasional textures.
+
 # Thanks
 
 Thanks To Disney, Toontown Offline, Toontown Rewritten, Toontown Infinite, Toontown Fellowship, Toontown House, Toontown Stride, Toontown World Online, and the Toontown community for making this game possible and to keep the Toontown spirit alive.
