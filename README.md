@@ -18,8 +18,8 @@ A vision of what Toontown Online could have been in 2016.
 * Dubito- Game Programmer & Security Manager
 
 Contributors
-1. Swag Foreman for occasional models.
-2. Loonatic xxx for occasional textures.
+* Swag Foreman for occasional models.
+* Loonatic xxx for occasional textures.
 
 # Thanks
 
