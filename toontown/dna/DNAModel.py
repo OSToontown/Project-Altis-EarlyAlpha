@@ -15,7 +15,7 @@ class DNAModel(DNAStorageElement):
 
     def getModel(self):
         if not self.model:
-            self.model = loader.loadModel(self.path)
+            self.model = base.loader.loadModel(self.path)
 
         return self.model
 

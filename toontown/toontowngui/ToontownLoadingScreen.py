@@ -14,6 +14,7 @@ class ToontownLoadingScreen():
         self.loadingLabel = None
         self.range = None
         self.loadingText = None
+        self.loadingObj = None
         self.loadingCircle = None
         self.background = None
         self.logo = None
@@ -24,6 +25,10 @@ class ToontownLoadingScreen():
         return TTLocalizer.TipTitle + '\n' + random.choice(TTLocalizer.TipDict.get(tipCategory))
 
     def begin(self, range, label, gui, tipCategory, zoneId):
+        base.graphicsEngine.renderFrame()
+        self.loadingObj = OnscreenText(text='', align=TextNode.ACenter, scale=0.04, style = 3, fg = (1, 1, 1, 1))
+        self.loadingObj.setPos(0, -.8)
+        base.graphicsEngine.renderFrame()
         self.logo = OnscreenImage(
             image='phase_3/maps/toontown-logo.png',
             scale=logoScale)
@@ -57,7 +62,6 @@ class ToontownLoadingScreen():
         self.loadingText["text"] = label
         base.graphicsEngine.renderFrame()
 
-
     def destroy(self):
         pass
         
@@ -69,6 +73,10 @@ class ToontownLoadingScreen():
         if self.loadingCircle:
             self.loadingCircle.destroy()
             del self.loadingCircle
+            
+        if self.loadingObj:
+            self.loadingObj.destroy()
+            self.loadingObj = None
             
         if self.background:
             self.background.destroy()
@@ -82,7 +90,8 @@ class ToontownLoadingScreen():
 
     def abort(self):
         self.gui.reparentTo(hidden)
-
+        self.loadingObj = None
+        
     def tick(self):
         self.__count = self.__count + 1
         base.graphicsEngine.renderFrame()
