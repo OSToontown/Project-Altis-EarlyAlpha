@@ -146,7 +146,7 @@ SuitBuildingInfo = (((1, 1),
    1,
    1)), 
  ((1, 1),
-  (8, 18), #CEO Banquet 
+  (11, 12), #CEO Banquet 
   (18, 18),
   (220, 220),
   (1,
