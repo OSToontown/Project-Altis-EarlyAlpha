@@ -83,7 +83,9 @@
     <Compile Include="base2.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="base3.vb" />
+    <Compile Include="base3.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Client.vb" />
     <Compile Include="Keypair.vb" />
     <Compile Include="Login.vb">
