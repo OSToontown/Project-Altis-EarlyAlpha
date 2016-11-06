@@ -7,14 +7,13 @@ from direct.stdpy.file import open
 from direct.stdpy import threading
 
 class ToontownLoader(Loader.Loader):
-    TickPeriod = 0.2
+    TickPeriod = 0.02
 
     def __init__(self, base):
         Loader.Loader.__init__(self, base)
         self.inBulkBlock = None
         self.blockName = None
         self.loadingScreen = ToontownLoadingScreen.ToontownLoadingScreen()
-        base.graphicsEngine.renderFrame()
         return
 
     def destroy(self):
@@ -27,7 +26,6 @@ class ToontownLoader(Loader.Loader):
 
         if self.loadingScreen.loadingObj:
             self.loadingScreen.loadingObj['text'] = "Loading DNA:\n" + filename
-            base.graphicsEngine.renderFrame()
         print("Loading DNA: " + filename)
             
         with open(filename, 'r') as f:
@@ -73,7 +71,6 @@ class ToontownLoader(Loader.Loader):
         return
 
     def tick(self):
-        base.graphicsEngine.renderFrame()
         if self.inBulkBlock:
             now = globalClock.getRealTime()
             if now - self._lastTickT > self.TickPeriod:
@@ -87,9 +84,9 @@ class ToontownLoader(Loader.Loader):
     def loadModel(self, *args, **kw):
         print("Loading model: " + args[0])
         if self.loadingScreen.loadingObj:
-            base.graphicsEngine.renderFrame()
             self.loadingScreen.loadingObj['text'] = "Loading model:\n" + args[0]
         ret = Loader.Loader.loadModel(self, *args, **kw)
+        
         if ret:
             gsg = base.win.getGsg()
             if gsg:
@@ -100,7 +97,6 @@ class ToontownLoader(Loader.Loader):
     def loadFont(self, *args, **kw):
         print("Loading: " + args[0])
         if self.loadingScreen.loadingObj:
-            base.graphicsEngine.renderFrame()
             self.loadingScreen.loadingObj['text'] = "Loading font:\n" + args[0]
         ret = Loader.Loader.loadFont(self, *args, **kw)
         self.tick()
@@ -109,7 +105,6 @@ class ToontownLoader(Loader.Loader):
     def loadTexture(self, texturePath, alphaPath = None, okMissing = False):
         print("Loading texture: " + texturePath)
         if self.loadingScreen.loadingObj:
-            base.graphicsEngine.renderFrame()
             self.loadingScreen.loadingObj['text'] = "Loading texture:\n" + texturePath
         ret = Loader.Loader.loadTexture(self, texturePath, alphaPath, okMissing=okMissing)
        # ret.setMinfilter(SamplerState.FT_linear_mipmap_linear)
@@ -121,7 +116,6 @@ class ToontownLoader(Loader.Loader):
     def loadSfx(self, soundPath):
         print("Loading sound: " + soundPath)
         if self.loadingScreen.loadingObj:
-            base.graphicsEngine.renderFrame()
             self.loadingScreen.loadingObj['text'] = "Loading SFX:\n" + soundPath
         ret = Loader.Loader.loadSfx(self, soundPath)
         self.tick()
@@ -130,7 +124,6 @@ class ToontownLoader(Loader.Loader):
     def loadMusic(self, soundPath):
         print("Loading music: " + soundPath)
         if self.loadingScreen.loadingObj:
-            base.graphicsEngine.renderFrame()
             self.loadingScreen.loadingObj['text'] = "Loading music:\n " + soundPath
         ret = Loader.Loader.loadMusic(self, soundPath)
         self.tick()
