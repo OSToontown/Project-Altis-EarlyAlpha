@@ -1,6 +1,7 @@
 import Quests
 from direct.directnotify.DirectNotifyGlobal import directNotify
 from toontown.toonbase import ToontownBattleGlobals
+from otp.ai.MagicWordGlobal import *
 import random
 
 class QuestManagerAI:
@@ -297,12 +298,28 @@ class QuestManagerAI:
         This method is called by an NPCToon to tell the quest system that
         a toon has chosen a quest from the list supplied.
         """
+        # Get the avatar.
         toon = self.air.doId2do.get(toonId)
         if not toon:
-            # TODO: Flag suspicious. They shouldn't have got this far.
             return
-        self.notify.debug("toonId %d chose quest %d with rewardId %d to hand to npcId %d." % (toonId, questId, rewardId, toNpcId))
-        self.npcGiveQuest(npc, toon, questId, rewardId, toNpcId, storeReward=True)
+
+        # Get the npcIds
+        fromNpcId = npc.npcId if npc else 0
+        if toNpcId == 0:
+            toNpcId = Quests.getQuestToNpcId(questId)
+
+        # Add the quest to the avatars list.
+        transformedRewardId = Quests.transformReward(rewardId, toon)
+        toon.addQuest([questId, fromNpcId, toNpcId, rewardId, 0], transformedRewardId)
+
+        if not npc:
+            return
+
+        # Remove the tasks for timeout.
+        taskMgr.remove(npc.uniqueName('clearMovie'))
+
+        # Assign the quest.
+        npc.assignQuest(toonId, questId, rewardId, toNpcId)
 
     def avatarChoseTrack(self, toonId, npc, questId, trackId):
         """
@@ -381,3 +398,117 @@ class QuestManagerAI:
                 return True
 
         return False
+		
+@magicWord(category=CATEGORY_OVERRIDE, types=[str, int, int])
+def quests(command, arg0=0, arg1=0):
+    invoker = spellbook.getInvoker()
+    currQuests = invoker.getQuests()
+    currentQuestIds = []
+
+    for i in xrange(0, len(currQuests), 5):
+        currentQuestIds.append(currQuests[i])
+
+    pocketSize = invoker.getQuestCarryLimit()
+    carrying = len(currQuests) / 5
+    canCarry = False
+
+    if (carrying < pocketSize):
+        canCarry = True
+
+    if command == 'clear':
+        invoker.b_setQuests([])
+        return 'Cleared quests'
+    elif command == 'clearHistory':
+        invoker.d_setQuestHistory([])
+        return 'Cleared quests history'
+    elif command == 'add':
+        if arg0:
+            if canCarry:
+                if arg0 in Quests.QuestDict.keys():
+                    quest = Quests.QuestDict[arg0]
+
+                    simbase.air.questManager.avatarChoseQuest(invoker.doId, None, arg0, quest[5], quest[4])
+                    return 'Added QuestID %s'%(arg0)
+                else:
+                    return 'Invalid QuestID %s'%(arg0)
+            else:
+                return 'Cannot take anymore quests'
+        else:
+            return 'add needs 1 argument.'
+    elif command == 'remove':
+        if arg0:
+            if arg0 in currentQuestIds:
+                invoker.removeQuest(arg0)
+                return 'Removed QuestID %s'%(arg0)
+            elif arg0 < pocketSize and arg0 > 0:
+                if len(currentQuestIds) <= arg0:
+                    questIdToRemove = currentQuestIds[arg0 - 1]
+                    invoker.removeQuest(questIdToRemove)
+                    return 'Removed quest from slot %s'%(arg0)
+                else:
+                    return 'Invalid quest slot'
+            else:
+                return 'Cannot remove quest %s'%(arg0)
+        else:
+            return 'remove needs 1 argument.'
+    elif command == 'list':
+        if arg0:
+            if arg0 > 0 and arg0 <= pocketSize:
+                start = (arg0 -1) * 5
+                questDesc = currQuests[start : start + 5]
+                return 'QuestDesc in slot %s: %s.'%(arg0, questDesc)
+            else:
+                return 'Invalid quest slot %s.'%(arg0)
+        else:
+            return 'CurrentQuests: %s'%(currentQuestIds)
+    elif command == 'bagSize':
+        if arg0 > 0 and arg0 < 5:
+            invoker.b_setQuestCarryLimit(arg0)
+            return 'Set carry limit to %s'%(arg0)
+        else:
+            return 'Argument 0 must be between 1 and 4.'
+    elif command == 'progress':
+        if arg0 and arg1:
+            if arg0 > 0 and arg0 <= pocketSize:
+                questList = []
+                wantedQuestId = currentQuestIds[arg0 - 1]
+
+                for i in xrange(0, len(currQuests), 5):
+                    questDesc = currQuests[i : i + 5]
+
+                    if questDesc[0] == wantedQuestId:
+                        questDesc[4] = arg1
+
+                    questList.append(questDesc)
+
+                invoker.b_setQuests(questList)
+                return 'Set quest slot %s progress to %s'%(arg0, arg1)
+            elif arg0 in Quests.QuestDict.keys():
+                if arg0 in currentQuestIds:
+                    questList = []
+
+                    for i in xrange(0, len(currQuests), 5):
+                        questDesc = currQuests[i : i + 5]
+
+                        if questDesc[0] == arg0:
+                            questDesc[4] = arg1
+
+                        questList.append(questDesc)
+
+                    invoker.b_setQuests(questList)
+                    return 'Set QuestID %s progress to %s'%(arg0, arg1)
+                else:
+                    return 'Cannot progress QuestID: %s.'%(arg0)
+            else:
+                return 'Invalid quest or slot id'
+        else:
+            return 'progress needs 2 arguments.'
+    elif command == 'tier':
+        if arg0:
+            invoker.b_setRewardHistory(arg0, invoker.getRewardHistory()[1])
+            return 'Set tier to %s'%(arg0)
+        else:
+            return 'tier needs 1 argument.'
+    else:
+        return 'Invalid first argument.'
+

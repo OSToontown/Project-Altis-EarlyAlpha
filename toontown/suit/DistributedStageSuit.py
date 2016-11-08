@@ -32,17 +32,17 @@ class DistributedStageSuit(DistributedFactorySuit.DistributedFactorySuit):
             self.doReparent()
         if self.boss:
             self.renameBoss()
-			
+
     def renameBoss(self):
         if self.getSkeleRevives() > 0:
-            nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': TTLocalizer.DistrictAttorney,
+            nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': TTLocalizer.Clerk,
              'dept': self.getStyleDept(),
              'level': '%s%s' % (self.getActualLevel(), TTLocalizer.SkeleRevivePostFix)}
-            self.setName(TTLocalizer.DistrictAttorney)
+            self.setName(TTLocalizer.Clerk)
             self.setDisplayName(nameInfo)
         else:
-            nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': TTLocalizer.DistrictAttorney,
+            nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': TTLocalizer.Clerk,
              'dept': self.getStyleDept(),
              'level': self.getActualLevel()}
-            self.setName(TTLocalizer.DistrictAttorney)
+            self.setName(TTLocalizer.Clerk)
             self.setDisplayName(nameInfo)

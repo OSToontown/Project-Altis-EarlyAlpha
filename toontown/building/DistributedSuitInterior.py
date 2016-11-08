@@ -11,6 +11,8 @@ from direct.fsm import State
 from toontown.battle import BattleBase
 from toontown.hood import ZoneUtil
 
+SKY_COLORS = [Vec4(1,1,1,1), Vec4(1,1,1,1), Vec4(0.8,0.8,0.8,1), Vec4(0.6,0.6,0.6,1), Vec4(0.4,0.4,0.4,1), Vec4(0.2,0.2,0.2,1)]
+
 class DistributedSuitInterior(DistributedObject.DistributedObject):
     id = 0
 
@@ -28,6 +30,8 @@ class DistributedSuitInterior(DistributedObject.DistributedObject):
         self.numFloors = None
         self.elevatorName = self.__uniqueName('elevator')
         self.floorModel = None
+        self.skyModel = None
+        self.skyBoxLoop = None
         self.elevatorOutOpen = 0
         self.BottomFloor_SuitPositions = [Point3(0, 15, 0),
          Point3(10, 20, 0),
@@ -68,6 +72,15 @@ class DistributedSuitInterior(DistributedObject.DistributedObject):
     def __uniqueName(self, name):
         DistributedSuitInterior.id += 1
         return name + '%d' % DistributedSuitInterior.id
+		
+    def getSky(self):
+        if ZoneUtil.getHoodId(self.extZoneId) == ToontownGlobals.DonaldsDreamland:
+            skyModel = loader.loadModel('phase_8/models/props/DL_sky')
+        elif ZoneUtil.getHoodId(self.extZoneId) == ToontownGlobals.MinniesMelodyland:
+            skyModel = loader.loadModel('phase_6/models/props/MM_sky')
+        else:
+            skyModel = loader.loadModel('phase_3.5/models/props/BR_sky')
+        return skyModel
 
     def generate(self):
         DistributedObject.DistributedObject.generate(self)
@@ -123,6 +136,11 @@ class DistributedSuitInterior(DistributedObject.DistributedObject):
             self.elevatorModelOut.removeNode()
         if self.floorModel != None:
             self.floorModel.removeNode()
+        if self.skyModel != None:
+            self.skyModel.removeNode()
+        if self.skyBoxLoop:
+            self.skyBoxLoop.finish()
+            self.skyBoxLoop = None
         self.leftDoorIn = None
         self.rightDoorIn = None
         self.leftDoorOut = None
@@ -251,21 +269,35 @@ class DistributedSuitInterior(DistributedObject.DistributedObject):
         SuitPositions = []
         if self.floorModel:
             self.floorModel.removeNode()
+        if self.skyModel:
+            self.skyModel.removeNode()
         if self.currentFloor == 0:
             self.floorModel = loader.loadModel('phase_7/models/modules/suit_interior')
             SuitHs = self.BottomFloor_SuitHs
             SuitPositions = self.BottomFloor_SuitPositions
+        elif self.currentFloor == self.numFloors - 1 and self.numFloors == 6:
+            self.floorModel = loader.loadModel('phase_7/models/modules/suit_building_roof')
+            self.skyModel = self.getSky()
+            SuitHs = self.Cubicle_SuitHs
+            SuitPositions = self.Cubicle_SuitPositions
         elif self.currentFloor == self.numFloors - 1:
             self.floorModel = loader.loadModel('phase_7/models/modules/boss_suit_office')
             SuitHs = self.BossOffice_SuitHs
             SuitPositions = self.BossOffice_SuitPositions
         else:
             self.floorModel = loader.loadModel('phase_7/models/modules/cubicle_room')
+            self.skyModel = self.getSky()
             SuitHs = self.Cubicle_SuitHs
             SuitPositions = self.Cubicle_SuitPositions
         self.floorModel.reparentTo(render)
         elevIn = self.floorModel.find('**/elevator-in')
         elevOut = self.floorModel.find('**/elevator-out')
+        if self.skyModel:
+            self.skyModel.reparentTo(render)
+            self.skyModel.setColor(SKY_COLORS[self.currentFloor - 1])
+            self.skyModel.setZ(-100)
+            self.skyBoxLoop = self.skyModel.hprInterval(300, Vec3(360, 0, 0))
+            self.skyBoxLoop.loop()
         for index in range(len(self.suits)):
             self.suits[index].setPos(SuitPositions[index])
             if len(self.suits) > 2:

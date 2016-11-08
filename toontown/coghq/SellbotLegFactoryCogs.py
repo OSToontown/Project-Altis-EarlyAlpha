@@ -1,4 +1,5 @@
 from SpecImports import *
+import random
 LobbyParent = 10014
 BoilerParent = 10030
 PipeLeftParent = 10023
@@ -6,10 +7,6 @@ PipeRightParent = 10032
 OilParent = 10034
 ControlParent = 10037
 DuctParent = 10036
-PaintMixerStorageParent = 10660
-EastCatwalkParent = 10661
-WestCatwalkParent = 10662
-CenterSiloOutsideBattleCellParent = 10663
 CenterSiloBattleCellParent = 10064
 CenterSiloParent = 20095
 SigRoomParent = 20058
@@ -17,6 +14,7 @@ WestSiloParent = 20094
 WestSiloBattleCellParent = 10047
 EastSiloParent = 20096
 EastSiloBattleCellParent = 10068
+LavaFoyerParent = 7000
 LobbyCell = 0
 BoilerCell = 1
 PipeLeftCell = 2
@@ -28,6 +26,7 @@ CenterSiloCell = 7
 SigRoomCell = 8
 WestSiloCell = 9
 EastSiloCell = 10
+LavaFoyerCell = 11 
 BattleCells = {LobbyCell: {'parentEntId': LobbyParent,
              'pos': Point3(0, 0, 0)},
  BoilerCell: {'parentEntId': BoilerParent,
@@ -49,7 +48,9 @@ BattleCells = {LobbyCell: {'parentEntId': LobbyParent,
  WestSiloCell: {'parentEntId': WestSiloBattleCellParent,
                 'pos': Point3(0, 0, 0)},
  EastSiloCell: {'parentEntId': EastSiloBattleCellParent,
-                'pos': Point3(-20, -10, 0)}}
+                'pos': Point3(-20, -10, 0)},
+ LavaFoyerCell: {'parentEntId': LavaFoyerParent,
+                'pos': Point3(0, 0, 0)}}
 CogData = [{'type': 'cc',
   'parentEntId': LobbyParent,
   'boss': 0,
@@ -159,7 +160,7 @@ CogData = [{'type': 'cc',
   'h': 0,
   'behavior': 'chase',
   'path': 20104,
-  'skeleton': 0},
+  'skeleton': 1},
   {'type': 'tf',
   'parentEntId': OilParent,
   'boss': 0,
@@ -169,7 +170,7 @@ CogData = [{'type': 'cc',
   'h': 0,
   'behavior': 'chase',
   'path': 20105,
-  'skeleton': 0},
+  'skeleton': 1},
  {'type': 'gh',
   'parentEntId': ControlParent,
   'boss': 0,
@@ -409,6 +410,46 @@ CogData = [{'type': 'cc',
   'h': 0,
   'behavior': 'stand',
   'path': None,
+  'skeleton': 1},
+ {'type': 'tm',
+  'parentEntId': LavaFoyerParent,
+  'boss': 0,
+  'level': 5,
+  'battleCell': LavaFoyerCell,
+  'pos': Point3(-10, 0, 0),
+  'h': 0,
+  'behavior': 'chase',
+  'path': 20103,
+  'skeleton': 0},
+ {'type': 'cc',
+  'parentEntId': LavaFoyerParent,
+  'boss': 0,
+  'level': 6,
+  'battleCell': LavaFoyerCell,
+  'pos': Point3(0, 0, 0),
+  'h': 180,
+  'behavior': 'stand',
+  'path': None,
+  'skeleton': 1},
+ {'type': 'ms',
+  'parentEntId': LavaFoyerParent,
+  'boss': 0,
+  'level': 5,
+  'battleCell': LavaFoyerCell,
+  'pos': Point3(10, 0, 0),
+  'h': 0,
+  'behavior': 'chase',
+  'path': 20104,
+  'skeleton': 0},
+  {'type': 'tf',
+  'parentEntId': LavaFoyerParent,
+  'boss': 0,
+  'level': 6,
+  'battleCell': LavaFoyerCell,
+  'pos': Point3(10, 0, 0),
+  'h': 0,
+  'behavior': 'chase',
+  'path': 20105,
   'skeleton': 1},
  {'type': 'ms',
   'parentEntId': DuctParent,

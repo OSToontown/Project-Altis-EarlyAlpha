@@ -17,7 +17,7 @@ import random
 
 class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedSellbotBossAI')
-    limitHitCount = 4.75
+    limitHitCount = 6
     hitCountDamage = 35
     numPies = 50
 
@@ -121,7 +121,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
     def __doAreaAttack(self):
         self.b_setAttackCode(ToontownGlobals.BossCogAreaAttack)
         if self.recoverRate:
-            newRecoverRate = min(200, self.recoverRate * 2.5)
+            newRecoverRate = min(200, self.recoverRate * 2.0)
         else:
             newRecoverRate = 2
         now = globalClock.getFrameTime()
@@ -190,9 +190,9 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
 
     def generateSuits(self, battleNumber):
         if battleNumber == 1:
-            return self.invokeSuitPlanner(11, 0)
+            return self.invokeSuitPlanner(10, 0)
         else:
-            return self.invokeSuitPlanner(12, 1)
+            return self.invokeSuitPlanner(11, 1)
 
     def removeToon(self, avId):
         toon = simbase.air.doId2do.get(avId)

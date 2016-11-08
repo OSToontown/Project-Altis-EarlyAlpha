@@ -22,6 +22,9 @@ texture-magfilter linear
 texture-minfilter linear
 lock-to-one-cpu #f
 support-threads #t
+allow-incomplete-render #t
+preload-simple-textures #t
+allow-async-bind #t
 gl-immutable-texture-storage #f
 gl-dump-compiled-shaders #f
 show-buffers #f
@@ -49,6 +52,8 @@ vfs-mount resources/phase_12 /phase_12
 vfs-mount resources/phase_13 /phase_13
 model-path resources
 default-model-extension .bam
+model-cache-models #t
+model-cache-textures #t
 
 # Needed for running a local server...
 eventlog-host 127.0.0.1

@@ -278,9 +278,9 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
             if config.GetBool('lawbot-boss-cheat', 0):
                 listVersion[13] = weakenedValue
                 SuitBuildingGlobals.SuitBuildingInfo = tuple(listVersion)
-            return self.invokeSuitPlanner(15, 0)
+            return self.invokeSuitPlanner(14, 0)
         else:
-            return self.invokeSuitPlanner(15, 1)
+            return self.invokeSuitPlanner(14, 1)
 
     def removeToon(self, avId):
         toon = simbase.air.doId2do.get(avId)

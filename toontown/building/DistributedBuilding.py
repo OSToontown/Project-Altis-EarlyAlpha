@@ -309,13 +309,7 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         return nodePath
 
     def loadElevator(self, newNP, cogdo = False):
-        self.floorIndicator = [None,
-         None,
-         None,
-         None,
-         None,
-         None,
-         None]
+        self.floorIndicator = [None, None, None, None, None, None]
         self.elevatorNodePath = hidden.attachNewNode('elevatorNodePath')
         if cogdo:
             self.elevatorModel = loader.loadModel('phase_5/models/cogdominium/tt_m_ara_csa_elevatorB')
@@ -364,8 +358,6 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             self.suitDoorOrigin.reparentTo(self.suitDoorOrigin.getParent().getParent())
 
     def loadAnimToSuitSfx(self):
-        if config.GetBool('want-qa-regression', 0):
-            self.notify.info('QA-REGRESSION: COGBUILDING: Cog Take Over')
         if self.cogDropSound == None:
             self.cogDropSound = base.loadSfx(self.TAKEOVER_SFX_PREFIX + 'cogbldg_drop.ogg')
             self.cogLandSound = base.loadSfx(self.TAKEOVER_SFX_PREFIX + 'cogbldg_land.ogg')
@@ -374,8 +366,6 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         return
 
     def loadAnimToToonSfx(self):
-        if config.GetBool('want-qa-regression', 0):
-            self.notify.info('QA-REGRESSION: COGBUILDING: Toon Take Over')
         if self.cogWeakenSound == None:
             self.cogWeakenSound = base.loadSfx(self.TAKEOVER_SFX_PREFIX + 'cogbldg_weaken.ogg')
             self.toonGrowSound = base.loadSfx(self.TAKEOVER_SFX_PREFIX + 'toonbldg_grow.ogg')
@@ -462,8 +452,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             return
         dnaStore = self.cr.playGame.dnaStore
         level = int(self.difficulty / 2) + 1
-        if level > 7:
-            self.notify.warning('Level is bigger than 7: %s' % level)
+        if level > 6:
+            self.notify.warning('Level is bigger than 6: %s' % level)
         suitNP = dnaStore.findNode('suit_landmark_' + chr(self.track) + str(level))
         zoneId = dnaData.getBlock(self.block).zone
         zoneId = ZoneUtil.getTrueZoneId(zoneId, self.interiorZoneId)

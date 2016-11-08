@@ -15,6 +15,7 @@ from toontown.ai import DatabaseObject
 from toontown.toon import DistributedToonAI
 from toontown.toon import InventoryBase
 from toontown.toonbase import ToontownGlobals
+from otp.ai.MagicWordGlobal import *
 import random
 from toontown.toon import NPCToons
 
@@ -1847,3 +1848,13 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
         num = self.serialNum
         self.serialNum += 1
         return num
+		
+@magicWord(category=CATEGORY_MODERATION)
+def skipMovie():
+    invoker = spellbook.getInvoker()
+    battleId = invoker.getBattleId()
+    if not battleId:
+        return 'You are not currently in a battle!'
+    battle = simbase.air.doId2do.get(battleId)
+    battle._DistributedBattleBaseAI__movieDone()
+    return 'Battle movie skipped.'
