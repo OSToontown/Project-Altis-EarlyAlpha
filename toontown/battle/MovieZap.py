@@ -239,7 +239,7 @@ def __doJoybuzzer(zap, delay, fShowStun):
     hands = toon.getRightHands()
     toonTrack = Sequence(Func(MovieUtil.showProps, buttons, hands, Vec3((0.3, 0, 0)), Vec3((-10, -60 ,0))), Func(toon.headsUp, battle, suitPos), ActorInterval(toon, 'water-gun'), Func(MovieUtil.removeProps, buttons), Func(toon.loop, 'neutral'), Func(toon.setHpr, battle, origHpr))
     tracks.append(toonTrack)
-    tracks.append(__getSoundTrack(level, hitSuit, tTotalFlowerToonAnimationTime - 0.4, toon))
+    tracks.append(__getSoundTrack(level, hitSuit, tTotalFlowerToonAnimationTime, toon))
     targetPoint = lambda suit = suit: __suitTargetPoint(suit)
 
     def getSprayStartPos(toon = toon):
