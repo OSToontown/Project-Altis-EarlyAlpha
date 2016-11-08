@@ -376,54 +376,79 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
 
                     if config.GetBool('silly-surge-text', True) and random.randrange(0, 100) < config.GetInt('silly-surge-chance', 10):
                         self.sillySurgeText = True
-                        absNumber = int(abs(number) / 10)
-
-                        if len(TTLocalizer.SillySurgeTerms) > absNumber:
-                            self.HpTextGenerator.setText(str(number) + '\n' + TTLocalizer.SillySurgeTerms[absNumber])
+                        absNum = abs(number)
+                        if absNum > 0 and absNum <= 10:
+                            self.HpTextGenerator.setText(str(number) + '\n' + TTLocalizer.SillySurgeTerms[1])
+                        elif absNum > 10 and absNum <= 20:
+                            self.HpTextGenerator.setText(str(number) + '\n' + TTLocalizer.SillySurgeTerms[2])
+                        elif absNum > 20 and absNum <= 30:
+                            self.HpTextGenerator.setText(str(number) + '\n' + TTLocalizer.SillySurgeTerms[3])
+                        elif absNum > 30 and absNum <= 40:
+                            self.HpTextGenerator.setText(str(number) + '\n' + TTLocalizer.SillySurgeTerms[4])
+                        elif absNum > 40 and absNum <= 50:
+                            self.HpTextGenerator.setText(str(number) + '\n' + TTLocalizer.SillySurgeTerms[5])
+                        elif absNum > 50 and absNum <= 60:
+                            self.HpTextGenerator.setText(str(number) + '\n' + TTLocalizer.SillySurgeTerms[6])
+                        elif absNum > 60 and absNum <= 70:
+                            self.HpTextGenerator.setText(str(number) + '\n' + TTLocalizer.SillySurgeTerms[7])
+                        elif absNum > 70 and absNum <= 80:
+                            self.HpTextGenerator.setText(str(number) + '\n' + TTLocalizer.SillySurgeTerms[8])
+                        elif absNum > 80 and absNum <= 90:
+                            self.HpTextGenerator.setText(str(number) + '\n' + TTLocalizer.SillySurgeTerms[9])
+                        elif absNum > 90 and absNum <= 100:
+                            self.HpTextGenerator.setText(str(number) + '\n' + TTLocalizer.SillySurgeTerms[10])
+                        elif absNum > 100 and absNum <= 110:
+                            self.HpTextGenerator.setText(str(number) + '\n' + TTLocalizer.SillySurgeTerms[11])
                         else:
-                            self.HpTextGenerator.setText(str(number) + '\n' + random.choice(TTLocalizer.SillySurgeTerms))
-
+                            self.HpTextGenerator.setText(str(number) + '\n' + TTLocalizer.SillySurgeTerms[12])
                     if self.interactivePropTrackBonus > -1 and self.interactivePropTrackBonus == attackTrack:
                         self.sillySurgeText = True
-
                         if attackTrack in TTLocalizer.InteractivePropTrackBonusTerms:
                             self.HpTextGenerator.setText(str(number) + '\n' + TTLocalizer.InteractivePropTrackBonusTerms[attackTrack])
                 else:
                     self.HpTextGenerator.setText('+' + str(number))
-
                 self.HpTextGenerator.clearShadow()
                 self.HpTextGenerator.setAlign(TextNode.ACenter)
-
                 if bonus == 1:
-                    color = [1, 1, 0, 1]
+                    r = 1.0
+                    g = 1.0
+                    b = 0
+                    a = 1
                 elif bonus == 2:
-                    color = [1, 0.5, 0, 1]
+                    r = 1.0
+                    g = 0.5
+                    b = 0
+                    a = 1
                 elif number < 0:
-                    color = [0.9, 0, 0, 1]
-
+                    r = 0.9
+                    g = 0
+                    b = 0
+                    a = 1
                     if self.interactivePropTrackBonus > -1 and self.interactivePropTrackBonus == attackTrack:
-                        color = [0, 0, 1, 1]
+                        r = 0
+                        g = 0
+                        b = 1
+                        a = 1
                 else:
-                    color = [0, 0.9, 0, 1]
-
-                self.HpTextGenerator.setTextColor(*color)
+                    r = 0
+                    g = 0.9
+                    b = 0
+                    a = 1
+                self.HpTextGenerator.setTextColor(r, g, b, a)
                 self.hpTextNode = self.HpTextGenerator.generate()
                 self.hpText = self.attachNewNode(self.hpTextNode)
                 self.hpText.setScale(scale)
                 self.hpText.setBillboardPointEye()
                 self.hpText.setBin('fixed', 100)
-
                 if self.sillySurgeText:
                     self.nametag3d.setDepthTest(0)
                     self.nametag3d.setBin('fixed', 99)
-
                 self.hpText.setPos(0, 0, self.height / 2)
-                color[3] = 0
-                Sequence(self.hpText.posInterval(1.0, Point3(0, 0, self.height + 1.5), blendType='easeOut'), Wait(0.85), self.hpText.colorInterval(0.1, Vec4(*color), 0.1), Func(self.hideHpText)).start()
+                seq = Sequence(self.hpText.posInterval(1.0, Point3(0, 0, self.height + 1.5), blendType='easeOut'), Wait(0.85), self.hpText.colorInterval(0.1, Vec4(r, g, b, 0), 0.1), Func(self.hideHpText))
+                seq.start()
 
     def hideHpText(self):
         DistributedAvatar.DistributedAvatar.hideHpText(self)
-
         if self.sillySurgeText:
             self.nametag3d.clearDepthTest()
             self.nametag3d.clearBin()
