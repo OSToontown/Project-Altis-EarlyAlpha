@@ -45,7 +45,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
        20,
        20,
        20),
-      (1, 2, 3, 4),
+      (2, 3, 4),
       []],
      [2200, #Loopy Lane
       3,
@@ -65,7 +65,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
        10,
        10,
        10),
-      (1, 2, 3, 4),
+      (1, 2, 3),
       []],
      [2300, #Punchline Place
       3,
@@ -85,7 +85,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
        30,
        40,
        10),
-      (1, 2, 3, 4),
+      (1, 2, 3),
       []],
      [1100, #Barnacle Boulevard 
       1,
@@ -105,7 +105,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
        0,
        0,
        10),
-      (2, 3, 4, 5),
+      (2, 3, 4),
       []],
      [1200, #Seaweed Street
       1,
@@ -148,10 +148,10 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
        10,
        10,
        30),
-      (2,
-       3,
+      (3,
        4,
-       5),
+       5,
+       6),
       []],
      [3100, #Walrus Way
       1,
@@ -211,7 +211,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
        5,
        5,
        5),
-      (8, 9, 10),
+      (7, 8, 9),
       []],
      [4100, #Alto Avenue
       1,
@@ -231,7 +231,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
        50,
        50,
        0),
-      (4, 5, 6, 7),
+      (2, 3, 4),
       []],
      [4200, #Baritone Boulevard
       1,
@@ -274,10 +274,10 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
        0,
        0,
        75),
-      (4,
-       5,
+      (5,
        6,
-       7),
+       7,
+       8),
       []],
      [5100, #Elm Street
       1,
@@ -297,7 +297,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
        10,
        60,
        10),
-      (3, 4, 5, 6),
+      (2, 3, 4),
       []],
      [5200, #Maple Street
       1,
@@ -343,7 +343,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
        5),
       (4,
        5,
-       6),
+       6,
+       7),
       []],
      [9100, #Lullaby Lane
       1,
@@ -482,8 +483,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     SUIT_HOOD_INFO_LVL = 9
     SUIT_HOOD_INFO_HEIGHTS = 10
     MAX_SUIT_TYPES = 6
-    MAX_SUIT_TYPES_HQ = 7
-    HQ_SKELE_CHANCE = 0.25
+    MAX_SUIT_TYPES_HQ = 6
+    HQ_SKELE_CHANCE = 0.15
     POP_UPKEEP_DELAY = 10
     POP_ADJUST_DELAY = 300
     PATH_COLLISION_BUFFER = 5
