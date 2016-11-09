@@ -11,6 +11,7 @@ from direct.fsm import State
 from direct.fsm import StateData
 from direct.gui.DirectGui import *
 from direct.interval.IntervalGlobal import *
+from direct.task import Task
 from panda3d.core import *
 import random
 
@@ -122,6 +123,7 @@ class PickAToon:
         self.toon = Toon.Toon()
         self.toon.setPosHpr(-46, 1, 8.1, 90, 0, 0)
         self.toon.reparentTo(self.patNode)
+        self.toon.stopLookAround()
         
         self.pickAToonGui = loader.loadModel('phase_3/models/gui/tt_m_gui_pat_mainGui')
         self.buttonBgs = []
@@ -185,9 +187,11 @@ class PickAToon:
             self.jumpIn.finish()
         if self.haveToon:
             self.showToon()
+            taskMgr.add(self.turnHead, "turnHead")
             self.deleteButton.show()
         else:
             self.toon.hide()
+            taskMgr.remove("turnHead")
             self.deleteButton.hide()
         self.checkPlayButton()
         self.area['text'] = ''
@@ -208,6 +212,16 @@ class PickAToon:
         lastAreaName = ToontownGlobals.hoodNameMap.get(av.lastHood, [''])[-1]
         self.area.setText(lastAreaName)
 
+    def turnHead(self, task):
+        def clamprotation(i, mn = -1, mx = 1):
+            return min(max(i, mn), mx)
+        if base.mouseWatcherNode.hasMouse():
+            mpos = base.mouseWatcherNode.getMouse()
+            self.toon.getGeomNode().find('**/__Actor_head').setP(clamprotation(mpos.getY()) * 25)
+            self.toon.getGeomNode().find('**/__Actor_head').setH(clamprotation(mpos.getX()) * 40)
+
+        return Task.cont
+        
     def checkPlayButton(self):
         if self.toonList[self.selectedToon]:
             self.play['text'] = 'PLAY THIS TOON'
@@ -292,6 +306,7 @@ class PickAToon:
                 self.headModel6.reparentTo(self.head6)
 
     def unload(self):
+        taskMgr.remove("turnHead")
         cleanupDialog('globalDialog')
         self.patNode.removeNode()
         del self.patNode
