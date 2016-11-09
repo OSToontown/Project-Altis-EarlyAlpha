@@ -374,7 +374,7 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
                 if number < 0:
                     self.HpTextGenerator.setText(str(number))
 
-                    if config.GetBool('silly-surge-text', True) and random.randrange(0, 100) < config.GetInt('silly-surge-chance', 10):
+                    if config.GetBool('silly-surge-text', True) and random.randrange(0, 100):
                         self.sillySurgeText = True
                         absNum = abs(number)
                         if absNum > 0 and absNum <= 10:

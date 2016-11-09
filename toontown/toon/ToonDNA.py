@@ -2003,8 +2003,19 @@ allColorsList = [VBase4(1.0, 1.0, 1.0, 1.0),
  VBase4(0.726562, 0.472656, 0.859375, 1.0),
  VBase4(0.898438, 0.617188, 0.90625, 1.0),
  VBase4(0.7, 0.7, 0.8, 1.0),
- VBase4(0.3, 0.3, 0.35, 1.0)]
-defaultBoyColorList = [0,
+ VBase4(0.3, 0.3, 0.35, 1.0),
+ VBase4(0.891, 0.439, 0.698, 1.0),
+ VBase4(0.741, 0.873, 0.957, 1.0),
+ VBase4(0.641, 0.857, 0.673, 1.0),
+ VBase4(0.039, 0.862, 0.654, 1.0),
+ VBase4(0.196, 0.725, 0.714, 1.0),
+ VBase4(0.984, 0.537, 0.396, 1.0),
+ VBase4(0.968, 0.749, 0.349, 1.0),
+ VBase4(0.658, 0.175, 0.258, 1.0),
+ VBase4(0.411, 0.644, 0.282, 1.0),
+ VBase4(0.325, 0.407, 0.601, 1.0),
+ VBase4(0.235, 0.573, 0.984, 1.0)]
+defaultColorList = [0,
  1,
  2,
  3,
@@ -2030,36 +2041,19 @@ defaultBoyColorList = [0,
  23,
  24,
  25,
- 26]
-defaultGirlColorList = [0,
- 1,
- 2,
- 3,
- 4,
- 5,
- 6,
- 7,
- 8,
- 9,
- 10,
- 11,
- 12,
- 13,
- 14,
- 15,
- 16,
- 17,
- 18,
- 19,
- 20,
- 21,
- 22,
- 23,
- 24,
- 25,
- 26]
+ 26,
+ 27,
+ 28,
+ 29,
+ 30,
+ 31,
+ 32,
+ 33,
+ 34,
+ 35,
+ 36]
 allColorsListApproximations = map(lambda x: VBase4(round(x[0], 3), round(x[1], 3), round(x[2], 3), round(x[3], 3)), allColorsList)
-allowedColors = set(map(lambda x: allColorsListApproximations[x], set([0] + defaultBoyColorList + defaultGirlColorList + [26])))
+allowedColors = set(map(lambda x: allColorsListApproximations[x], set([0] + defaultColorList + [26] + [37])))
 HatModels = [None,
  'phase_4/models/accessories/tt_m_chr_avt_acc_hat_baseball',
  'phase_4/models/accessories/tt_m_chr_avt_acc_hat_safari',
@@ -2758,7 +2752,7 @@ class ToonDNA(AvatarDNA.AvatarDNA):
             self.sleeveTexColor = sleeveColor
             self.botTex = bottom
             self.botTexColor = bottomColor
-            self.getRandomColor(defaultBoyColorList, generator)
+            self.getRandomColor(defaultColorList, generator)
         else:
             self.torso = generator.choice(toonTorsoTypes[:6])
             self.topTex = top
@@ -2771,14 +2765,12 @@ class ToonDNA(AvatarDNA.AvatarDNA):
                 bottom, bottomColor = getRandomBottom(gender, generator=generator, girlBottomType=SHORTS)
             self.botTex = bottom
             self.botTexColor = bottomColor
-            self.getRandomColor(defaultGirlColorList, generator)
+            self.getRandomColor(defaultColorList, generator)
         self.gloveColor = 0
 
-    def getRandomColor(self, choices, generator=None):
+    def getRandomColor(self, choices, generator = None):
         if not generator:
             generator = random
-        # We want colors to shuffle all parts of the body sometimes, but we want some solid
-        # colors thrown in there as well. We'll increase the chances of that happening.
         if config.GetBool('want-shuffle-colors', 1) and random.random() <= 0.3:
             colorArm = generator.choice(choices)
             colorLeg = generator.choice(choices)
