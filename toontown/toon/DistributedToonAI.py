@@ -5233,7 +5233,7 @@ def questTier(tier):
     av.b_setRewardHistory(tier, [])
     return "Set %s's quest tier to %d." % (av.getName(), tier)
 
-@magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int, int, int, int, int, int])
+@magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int, int, int, int, int, int, int])
 def tracks(toonup, trap, lure, sound, throw, squirt, zap, drop):
     """ Set access for each of the 7 gag tracks. """
     spellbook.getTarget().b_setTrackAccess([toonup, trap, lure, sound, throw, squirt, zap, drop])
