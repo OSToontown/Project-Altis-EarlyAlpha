@@ -130,6 +130,9 @@ class DistCogdoMazeGameAI(DistCogdoGameAI):
         return task.done
 
     def __handleGameOver(self):
+        for toon in self.toons:
+            if not toon in self.toonsInDoor:
+                self.killToon(toon)
         self.removeAll()
         self.gameDone(failed=True)
 
