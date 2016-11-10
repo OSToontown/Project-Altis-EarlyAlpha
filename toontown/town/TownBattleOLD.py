@@ -25,8 +25,11 @@ from toontown.battle import FireCogPanel
 
 class TownBattleOLD(StateData.StateData):
     notify = DirectNotifyGlobal.directNotify.newCategory('TownBattle')
-    evenPos = (0.752, 0.252, -0.252, -0.752)
-    oddPos = (0.52, -0.02, -0.52)
+    evenPos = (0.75,
+     0.25,
+     -0.25,
+     -0.75)
+    oddPos = (0.5, 0, -0.5)
 
     def __init__(self, doneEvent):
         StateData.StateData.__init__(self, doneEvent)
@@ -226,7 +229,7 @@ class TownBattleOLD(StateData.StateData):
         self.notify.debug('enterPanels() num: %d localNum: %d' % (num, localNum))
         for toonPanel in self.toonPanels:
             toonPanel.hide()
-            toonPanel.setPos(0, 0, -0.9)
+            toonPanel.setPos(0, 0, -0.3)
 
         if num == 1:
             self.toonPanels[0].setX(self.oddPos[1])
@@ -600,12 +603,16 @@ class TownBattleOLD(StateData.StateData):
     def enterSOS(self):
         canHeal, canTrap, canLure = self.checkHealTrapLure()
         self.SOSPanel.enter(canLure, canTrap)
+        for panel in self.toonPanels:
+            panel.stash()
         self.accept(self.SOSPanelDoneEvent, self.__handleSOSPanelDone)
         return None
 
     def exitSOS(self):
         self.ignore(self.SOSPanelDoneEvent)
         self.SOSPanel.exit()
+        for panel in self.toonPanels:
+            panel.unstash()
         return None
 
     def __handleSOSPanelDone(self, doneStatus):

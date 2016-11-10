@@ -35,6 +35,7 @@ def getBattleExperience(numToons, activeToons, toonExp, toonSkillPtsGained, toon
              0,
              0,
              0,
+             0,
              0])
             p.append([])
             p.append([])

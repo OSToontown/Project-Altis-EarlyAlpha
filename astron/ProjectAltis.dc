@@ -959,12 +959,12 @@ dclass DistributedToon : DistributedPlayer {
   toonUp(uint16 hpGained) broadcast ownrecv;
   takeDamage(uint16 hpLost) broadcast ownrecv;
   setBattleId(uint32 battleId = 0) required broadcast ram;
-  setExperience(blob experience = [0*14]) required broadcast db;
+  setExperience(blob experience = [0*16]) required broadcast db;
   setMaxCarry(uint8 maxCarry = 20) required ownrecv db;
-  setTrackAccess(uint16 trackArray[] = [0,0,0,0,1,1,0]) required broadcast ownrecv db;
+  setTrackAccess(uint16 trackArray[] = [0,0,0,0,1,1,0,0]) required broadcast ownrecv db;
   setTrackProgress(int8 trackId = -1, uint32 progress = 0) required ownrecv db;
-  setTrackBonusLevel(int8 trackArray[] = [-1,-1,-1,-1,-1,-1,-1]) required broadcast ownrecv db;
-  setInventory(blob inventoryNetString = [0*7, 0*7, 0*7, 0*7, 1, 0*6, 1, 0*6, 0*7]) required broadcast db;
+  setTrackBonusLevel(int8 trackArray[] = [-1,-1,-1,-1,-1,-1,-1,-1]) required broadcast ownrecv db;
+  setInventory(blob inventoryNetString = [0*7, 0*7, 0*7, 0*7, 1, 0*6, 1, 0*6, 0*7, 0*7]) required broadcast db;
   setMaxNPCFriends(uint16 max = 16) required ownrecv db;
   setNPCFriendsDict(FriendEntry NPCFriendsList[] = []) required ownrecv db;
   setDefaultShard(uint32 shard = 0) required ownrecv broadcast db;
