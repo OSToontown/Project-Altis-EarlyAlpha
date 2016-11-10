@@ -5234,9 +5234,9 @@ def questTier(tier):
     return "Set %s's quest tier to %d." % (av.getName(), tier)
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[int, int, int, int, int, int, int])
-def tracks(toonup, trap, lure, sound, throw, squirt, drop):
+def tracks(toonup, trap, lure, sound, throw, squirt, zap, drop):
     """ Set access for each of the 7 gag tracks. """
-    spellbook.getTarget().b_setTrackAccess([toonup, trap, lure, sound, throw, squirt, drop])
+    spellbook.getTarget().b_setTrackAccess([toonup, trap, lure, sound, throw, squirt, zap, drop])
     return "Set track access accordingly."
 
 @magicWord(category=CATEGORY_CHARACTERSTATS, types=[str, int])
