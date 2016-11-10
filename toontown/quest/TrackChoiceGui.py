@@ -31,6 +31,8 @@ class TrackPoster(DirectFrame):
             help = TTLocalizer.TrackChoiceGuiTHROW
         elif trackId == ToontownBattleGlobals.SQUIRT_TRACK:
             help = TTLocalizer.TrackChoiceGuiSQUIRT
+        elif trackId == ToontownBattleGlobals.ZAP_TRACK:
+            help = TTLocalizer.TrackChoiceGuiZAP
         elif trackId == ToontownBattleGlobals.DROP_TRACK:
             help = TTLocalizer.TrackChoiceGuiDROP
         else:
