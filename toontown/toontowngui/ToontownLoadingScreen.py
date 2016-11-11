@@ -4,7 +4,7 @@ from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import TTLocalizer
 from toontown.hood import ZoneUtil
 import random
-logoScale = (1, 1, 0.35)  # Scale for our logo.
+logoScale = (0.5, 1.0, 0.25)  # Scale for our logo.
 class ToontownLoadingScreen():
     __module__ = __name__
 
