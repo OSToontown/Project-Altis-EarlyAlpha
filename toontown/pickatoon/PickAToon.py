@@ -123,7 +123,7 @@ class PickAToon:
         self.toon = Toon.Toon()
         self.toon.setPosHpr(-46, 1, 8.1, 90, 0, 0)
         self.toon.reparentTo(self.patNode)
-        self.toon.stopLookAround()
+        self.toon.stopLookAroundNow()
         
         self.pickAToonGui = loader.loadModel('phase_3/models/gui/tt_m_gui_pat_mainGui')
         self.buttonBgs = []
