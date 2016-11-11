@@ -23,10 +23,8 @@ Partial Class Login
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.ITalk_Button_21 = New Launcher.iTalk.iTalk_Button_2()
         Me.MonoFlat_NotificationBox3 = New Launcher.MonoFlat.MonoFlat_NotificationBox()
         Me.MonoFlat_NotificationBox2 = New Launcher.MonoFlat.MonoFlat_NotificationBox()
@@ -34,32 +32,15 @@ Partial Class Login
         Me.KnightButton1 = New Launcher.KnightButton()
         Me.ITalk_TextBox_Small2 = New Launcher.iTalk.iTalk_TextBox_Small()
         Me.ITalk_TextBox_Small1 = New Launcher.iTalk.iTalk_TextBox_Small()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PictureBox1.Image = Global.Launcher.My.Resources.Resources.background
-        Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(1059, 598)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox1.TabIndex = 0
-        Me.PictureBox1.TabStop = False
         '
         'BackgroundWorker1
         '
         Me.BackgroundWorker1.WorkerReportsProgress = True
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(329, 12)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(410, 151)
-        Me.Button1.TabIndex = 9
-        Me.Button1.Text = "Altis Logo"
-        Me.Button1.UseVisualStyleBackColor = True
         '
         'ITalk_Button_21
         '
@@ -162,12 +143,34 @@ Partial Class Login
         Me.ITalk_TextBox_Small1.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
         Me.ITalk_TextBox_Small1.UseSystemPasswordChar = False
         '
+        'PictureBox1
+        '
+        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PictureBox1.Image = Global.Launcher.My.Resources.Resources.background
+        Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(1059, 598)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox1.TabIndex = 0
+        Me.PictureBox1.TabStop = False
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox2.BackgroundImage = Global.Launcher.My.Resources.Resources.toontown_logo
+        Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.PictureBox2.Location = New System.Drawing.Point(395, 12)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(276, 136)
+        Me.PictureBox2.TabIndex = 9
+        Me.PictureBox2.TabStop = False
+        '
         'Login
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1059, 598)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.ITalk_Button_21)
         Me.Controls.Add(Me.MonoFlat_NotificationBox3)
         Me.Controls.Add(Me.MonoFlat_NotificationBox2)
@@ -183,6 +186,7 @@ Partial Class Login
     "                                                                                " &
     "      Project Altis"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -194,7 +198,7 @@ Partial Class Login
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents ITalk_Button_21 As Launcher.iTalk.iTalk_Button_2
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
-    Friend WithEvents Button1 As Button
     Friend WithEvents MonoFlat_NotificationBox3 As MonoFlat.MonoFlat_NotificationBox
     Friend WithEvents MonoFlat_NotificationBox2 As MonoFlat.MonoFlat_NotificationBox
+    Friend WithEvents PictureBox2 As PictureBox
 End Class

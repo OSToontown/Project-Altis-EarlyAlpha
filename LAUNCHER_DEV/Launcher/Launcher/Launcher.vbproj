@@ -83,9 +83,7 @@
     <Compile Include="base2.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="base3.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="base3.vb" />
     <Compile Include="Client.vb" />
     <Compile Include="Keypair.vb" />
     <Compile Include="Login.vb">
@@ -139,6 +137,9 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="Resources\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toontown-logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
