@@ -18148,6 +18148,7 @@ TrackTrainingQuotas = {ToontownBattleGlobals.HEAL_TRACK: 15,
  ToontownBattleGlobals.SOUND_TRACK: 15,
  ToontownBattleGlobals.THROW_TRACK: 15,
  ToontownBattleGlobals.SQUIRT_TRACK: 15,
+ ToontownBattleGlobals.ZAP_TRACK: 15,
  ToontownBattleGlobals.DROP_TRACK: 15}
 
 class TrackTrainingReward(Reward):
@@ -18628,7 +18629,8 @@ RewardDict = {100: (MaxHpReward, 1),
  904: (TrackCompleteReward, ToontownBattleGlobals.SOUND_TRACK),
  905: (TrackCompleteReward, ToontownBattleGlobals.THROW_TRACK),
  906: (TrackCompleteReward, ToontownBattleGlobals.SQUIRT_TRACK),
- 907: (TrackCompleteReward, ToontownBattleGlobals.DROP_TRACK),
+ 907: (TrackCompleteReward, ToontownBattleGlobals.ZAP_TRACK),
+ 908: (TrackCompleteReward, ToontownBattleGlobals.DROP_TRACK),
  2205: (CheesyEffectReward,
         ToontownGlobals.CEBigToon,
         2000,
