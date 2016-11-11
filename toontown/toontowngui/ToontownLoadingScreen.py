@@ -11,7 +11,7 @@ class ToontownLoadingScreen():
     def __init__(self):
         self.__expectedCount = 0
         self.__count = 0
-        self.loadingLabel = None
+        self.loadingGui = None
         self.range = None
         self.loadingText = None
         self.loadingObj = None
@@ -25,23 +25,24 @@ class ToontownLoadingScreen():
         return TTLocalizer.TipTitle + '\n' + random.choice(TTLocalizer.TipDict.get(tipCategory))
 
     def begin(self, range, label, gui, tipCategory, zoneId):
+        self.loadingGui = aspect2d.attachNewNode('loadingUI')
+        self.loadingGui.reparentTo(aspect2d, NO_FADE_SORT_INDEX)
         base.graphicsEngine.renderFrame()
-        self.loadingObj = OnscreenText(text='', align=TextNode.ACenter, scale=0.04, style = 3, fg = (1, 1, 1, 1))
-        self.loadingObj.setPos(0, -.8)
+        self.background = OnscreenImage(image = 'phase_3.5/maps/loading/toon.jpg', parent = aspect2d)
+        self.background.setScale(2, 1, 1)
+        self.background.show()
         base.graphicsEngine.renderFrame()
         self.logo = OnscreenImage(
             image='phase_3/maps/toontown-logo.png',
             scale=logoScale)
-        self.logo.reparentTo(aspect2d)
         base.graphicsEngine.renderFrame()
         self.logo.setTransparency(TransparencyAttrib.MAlpha)
         base.graphicsEngine.renderFrame()
         scale = self.logo.getScale()
         base.graphicsEngine.renderFrame()
         self.logo.setPos(0, 0, 0.65)
-        base.graphicsEngine.renderFrame()
-        self.loadingText = OnscreenText(text='Initializing Load...', align=TextNode.ACenter, scale=0.1, pos=(0, 0, 0))
-        base.graphicsEngine.renderFrame()
+        self.loadingObj = OnscreenText(text='', align=TextNode.ACenter, scale=0.04, style = 3, fg = (1, 1, 1, 1))
+        self.loadingObj.setPos(0, -.8)
         self.loadingCircle = OnscreenImage(image = 'phase_3/maps/dmenu/loading_circle.png')
         self.loadingCircle.show()
         base.graphicsEngine.renderFrame()
@@ -51,16 +52,16 @@ class ToontownLoadingScreen():
         base.graphicsEngine.renderFrame()
         self.loadingCircle.setPos(-0.1, 0, 0.1)
         base.graphicsEngine.renderFrame()
-        self.background = OnscreenImage(image = 'phase_3.5/maps/loading/toon.jpg', parent = aspect2d)
-        self.background.show()
-        base.graphicsEngine.renderFrame()
-        self.background.setBin('background', 1)
-        self.background.reparentTo(aspect2d)
-        base.graphicsEngine.renderFrame()
-        self.background.setScale(2, 1, 1)
+        self.loadingText = OnscreenText(text='Initializing Load...', align=TextNode.ACenter, scale=0.1, pos=(0, 0, 0))
+        self.loadingText.reparentTo(aspect2d)
         base.graphicsEngine.renderFrame()
         self.loadingText["text"] = label
         base.graphicsEngine.renderFrame()
+        self.background.wrtReparentTo(self.loadingGui)
+        self.loadingText.wrtReparentTo(self.loadingGui)
+        self.loadingObj.wrtReparentTo(self.loadingGui)
+        self.loadingCircle.wrtReparentTo(self.loadingGui)
+        self.logo.wrtReparentTo(self.loadingGui)
 
     def destroy(self):
         pass
