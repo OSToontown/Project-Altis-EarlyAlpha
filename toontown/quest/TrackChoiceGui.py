@@ -84,15 +84,19 @@ class TrackChoiceGui(DirectFrame):
 		
     def setPage(self, direction):
         self.index = self.index + direction
-        if self.index <= 0:
+        if len(self.trackChoicePosters) == 1:
             self.downArrow['state'] = DGG.DISABLED
-            self.upArrow['state'] = DGG.NORMAL
-        elif self.index >= len(self.trackChoicePosters)-1:
-            self.downArrow['state'] = DGG.NORMAL
             self.upArrow['state'] = DGG.DISABLED
         else:
-            self.downArrow['state'] = DGG.NORMAL
-            self.upArrow['state'] = DGG.NORMAL
+            if self.index <= 0:
+                self.downArrow['state'] = DGG.DISABLED
+                self.upArrow['state'] = DGG.NORMAL
+            elif self.index >= len(self.trackChoicePosters)-1:
+                self.downArrow['state'] = DGG.NORMAL
+                self.upArrow['state'] = DGG.DISABLED
+            else:
+                self.downArrow['state'] = DGG.NORMAL
+                self.upArrow['state'] = DGG.NORMAL
         for track in self.trackChoicePosters:
             track.hide()
         self.trackChoicePosters[self.index].show()
