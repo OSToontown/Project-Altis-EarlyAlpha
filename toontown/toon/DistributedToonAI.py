@@ -1925,7 +1925,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def fixTrackAccess(self):
         fixed = 0
-        healExp, trapExp, lureExp, soundExp, throwExp, squirtExp, dropExp = self.experience.experience
+        healExp, trapExp, lureExp, soundExp, throwExp, squirtExp, zapExp, dropExp = self.experience.experience
         numTracks = reduce(lambda a, b: a + b, self.trackArray)
         if self.rewardTier in [0,
          1,
