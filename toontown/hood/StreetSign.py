@@ -9,9 +9,10 @@ from toontown.toonbase import TTLocalizer
 
 class StreetSign(DistributedObject.DistributedObject):
     RedownloadTaskName = 'RedownloadStreetSign'
-    StreetSignFileName = config.GetString('street-sign-filename', 'texture.jpg')
-    StreetSignBaseDir = config.GetString('street-sign-base-dir', 'sign')
-    StreetSignUrl = config.GetString('street-sign-url', 'http://cdn.toontown.disney.go.com/toontown/en/street-signs/img/')
+    StreetSignFileName = ('texture.jpg')
+    StreetSignBaseDir = ('sign')
+    # SOMEONE MAKE THIS ONTHE WEBSITE K THX <3 - Drew
+    StreetSignUrl = ('http://cdn.toontown.disney.go.com/toontown/en/street-signs/img/')
     notify = DirectNotifyGlobal.directNotify.newCategory('StreetSign')
 
     def __init__(self):
@@ -20,7 +21,7 @@ class StreetSign(DistributedObject.DistributedObject):
         self.startDownload = datetime.datetime.now()
         self.endDownload = datetime.datetime.now()
         self.notify.info('Street sign url is %s' % self.StreetSignUrl)
-        #self.redownloadStreetSign()
+        self.redownloadStreetSign()
 
     def replaceTexture(self):
         searchPath = DSearchPath()

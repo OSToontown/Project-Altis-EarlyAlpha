@@ -26,7 +26,7 @@ class ToontownLoader(Loader.Loader):
 
         if self.loadingScreen.loadingObj:
             self.loadingScreen.loadingObj['text'] = "Loading DNA:\n" + filename
-        print("Loading DNA: " + filename)
+        print("Loading DNA: " + str(filename))
             
         with open(filename, 'r') as f:
             tree = DNAParser.parse(f)
@@ -82,7 +82,7 @@ class ToontownLoader(Loader.Loader):
                     pass
 
     def loadModel(self, *args, **kw):
-        print("Loading model: " + args[0])
+        print("Loading model: " + str(args[0]))
         if self.loadingScreen.loadingObj:
             self.loadingScreen.loadingObj['text'] = "Loading model:\n" + args[0]
         ret = Loader.Loader.loadModel(self, *args, **kw)
@@ -95,7 +95,7 @@ class ToontownLoader(Loader.Loader):
         return ret
 
     def loadFont(self, *args, **kw):
-        print("Loading: " + args[0])
+        print("Loading: " + str(args[0]))
         if self.loadingScreen.loadingObj:
             self.loadingScreen.loadingObj['text'] = "Loading font:\n" + args[0]
         ret = Loader.Loader.loadFont(self, *args, **kw)
@@ -103,7 +103,7 @@ class ToontownLoader(Loader.Loader):
         return ret
 
     def loadTexture(self, texturePath, alphaPath = None, okMissing = False):
-        print("Loading texture: " + texturePath)
+        print("Loading texture: " + str(texturePath))
         if self.loadingScreen.loadingObj:
             self.loadingScreen.loadingObj['text'] = "Loading texture:\n" + texturePath
         ret = Loader.Loader.loadTexture(self, texturePath, alphaPath, okMissing=okMissing)
@@ -114,7 +114,7 @@ class ToontownLoader(Loader.Loader):
         return ret
 
     def loadSfx(self, soundPath):
-        print("Loading sound: " + soundPath)
+        print("Loading sound: " + str(soundPath))
         if self.loadingScreen.loadingObj:
             self.loadingScreen.loadingObj['text'] = "Loading SFX:\n" + soundPath
         ret = Loader.Loader.loadSfx(self, soundPath)
@@ -122,7 +122,7 @@ class ToontownLoader(Loader.Loader):
         return ret
 
     def loadMusic(self, soundPath):
-        print("Loading music: " + soundPath)
+        print("Loading music: " + str(soundPath))
         if self.loadingScreen.loadingObj:
             self.loadingScreen.loadingObj['text'] = "Loading music:\n " + soundPath
         ret = Loader.Loader.loadMusic(self, soundPath)
