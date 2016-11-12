@@ -67,6 +67,10 @@ class ToontownLoadingScreen():
         pass
         
     def end(self):
+        if self.loadingGui:
+            self.loadingGui.removeNode()
+            del self.loadingGui
+            
         if self.loadingText:
             self.loadingText.destroy()
             del self.loadingText
