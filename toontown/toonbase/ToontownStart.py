@@ -2,7 +2,6 @@ from pandac.PandaModules import *
 from toontown.distributed import PythonUtil
 import __builtin__
 import os
-import argparse
 
 
 if __debug__:
