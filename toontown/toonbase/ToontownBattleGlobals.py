@@ -409,6 +409,7 @@ NumRoundsLured = [2,
  4,
  4,
  15]
+InstaKillChance = [2, 5, 8, 12, 15, 20, 65]
 def getAvPropDamage(attackTrack, attackLevel, exp, organicBonus = False, propBonus = False, propAndOrganicBonusStack = False):
     if attackTrack == LURE_TRACK:
         return NumRoundsLured[attackLevel]
