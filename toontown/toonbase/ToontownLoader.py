@@ -22,12 +22,7 @@ class ToontownLoader(Loader.Loader):
         Loader.Loader.destroy(self)
 
     def loadDNA(self, filename):
-        filename = '/' + filename
-
-        if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading DNA:\n" + filename
-        print("Loading DNA: " + str(filename))
-            
+        filename = '/' + filename            
         with open(filename, 'r') as f:
             tree = DNAParser.parse(f)
             
@@ -37,10 +32,6 @@ class ToontownLoader(Loader.Loader):
 
     def beginBulkLoad(self, name, label, range, gui, tipCategory, zoneId):
         self._loadStartT = globalClock.getRealTime()
-        Loader.Loader.notify.info("starting bulk load of block '%s'" % name)
-        if self.inBulkBlock:
-            Loader.Loader.notify.warning("Tried to start a block ('%s'), but am already in a block ('%s')" % (name, self.blockName))
-            return None
         self.inBulkBlock = 1
         self._lastTickT = globalClock.getRealTime()
         self.blockName = name
@@ -48,26 +39,14 @@ class ToontownLoader(Loader.Loader):
         return None
 
     def endBulkLoad(self, name):
-        if not self.inBulkBlock:
-            Loader.Loader.notify.warning("Tried to end a block ('%s'), but not in one" % name)
-            return None
-        if name != self.blockName:
-            Loader.Loader.notify.warning("Tried to end a block ('%s'), other then the current one ('%s')" % (name, self.blockName))
-            return None
         self.inBulkBlock = None
         expectedCount, loadedCount = self.loadingScreen.end()
         now = globalClock.getRealTime()
-        Loader.Loader.notify.info("At end of block '%s', expected %s, loaded %s, duration=%s" % (self.blockName,
-         expectedCount,
-         loadedCount,
-         now - self._loadStartT))
         return
 
     def abortBulkLoad(self):
-        if self.inBulkBlock:
-            Loader.Loader.notify.info("Aborting block ('%s')" % self.blockName)
-            self.inBulkBlock = None
-            self.loadingScreen.abort()
+        self.inBulkBlock = None
+        self.loadingScreen.abort()
         return
 
     def tick(self):
@@ -82,9 +61,6 @@ class ToontownLoader(Loader.Loader):
                     pass
 
     def loadModel(self, *args, **kw):
-        print("Loading model: " + str(args[0]))
-        if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading model:\n" + args[0]
         ret = Loader.Loader.loadModel(self, *args, **kw)
         
         if ret:
@@ -95,36 +71,23 @@ class ToontownLoader(Loader.Loader):
         return ret
 
     def loadFont(self, *args, **kw):
-        print("Loading: " + str(args[0]))
-        if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading font:\n" + args[0]
         ret = Loader.Loader.loadFont(self, *args, **kw)
         self.tick()
         return ret
 
     def loadTexture(self, texturePath, alphaPath = None, okMissing = False):
-        print("Loading texture: " + str(texturePath))
-        if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading texture:\n" + texturePath
         ret = Loader.Loader.loadTexture(self, texturePath, alphaPath, okMissing=okMissing)
-       # ret.setMinfilter(SamplerState.FT_linear_mipmap_linear)
         self.tick()
         if alphaPath:
             self.tick()
         return ret
 
     def loadSfx(self, soundPath):
-        print("Loading sound: " + str(soundPath))
-        if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading SFX:\n" + soundPath
         ret = Loader.Loader.loadSfx(self, soundPath)
         self.tick()
         return ret
 
     def loadMusic(self, soundPath):
-        print("Loading music: " + str(soundPath))
-        if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading music:\n " + soundPath
         ret = Loader.Loader.loadMusic(self, soundPath)
         self.tick()
         return ret
