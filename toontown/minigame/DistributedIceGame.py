@@ -482,8 +482,8 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame, DistributedIce
         lerpTrack = Parallel()
         lerpDur = 0.5
         tY = 0.6
-        bY = -.05
-        lX = -.5
+        bY = -0.05
+        lX = -0.5
         cX = 0
         rX = 0.5
         scorePanelLocs = (((cX, bY),),
@@ -581,7 +581,7 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame, DistributedIce
             return self.forceArrowDict[self.localAvId]
         else:
             return None
-        return None
+            return None
 
     def setChoices(self, input0, input1, input2, input3):
         pass
@@ -651,10 +651,11 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame, DistributedIce
     def setTimerStartTime(self, timestamp):
         if not self.hasLocalToon:
             return
-        self.timerStartTime = globalClockDelta.networkToLocalTime(timestamp)
-        if self.timer != None:
-            self.startTimer()
-        return
+        else:
+            self.timerStartTime = globalClockDelta.networkToLocalTime(timestamp)
+            if self.timer != None:
+                self.startTimer()
+            return
 
     def handleChoiceTimeout(self):
         self.sendUpdate('setAvatarChoice', [0, 0])
@@ -1049,8 +1050,6 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame, DistributedIce
                         self.tireSounds[tireIndex]['wallHit'].play()
                     elif c0 == self.obstacleCollideId:
                         self.tireSounds[tireIndex]['obstacleHit'].play()
-        else:
-            self.notify.error('Couldn\'t find any collisions!')
 
     def forceLocalToonToTire(self):
         toon = localAvatar
