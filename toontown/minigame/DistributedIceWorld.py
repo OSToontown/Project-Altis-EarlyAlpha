@@ -11,14 +11,14 @@ class DistributedIceWorld(DistributedMinigamePhysicsWorld.DistributedMinigamePhy
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedMinigamePhysicsWorld')
     floorCollideId = 1
     floorMask = BitMask32(floorCollideId)
-    wallCollideId = 1 << 1
+    wallCollideId = 2
     wallMask = BitMask32(wallCollideId)
-    obstacleCollideId = 1 << 2
+    obstacleCollideId = 4
     obstacleMask = BitMask32(obstacleCollideId)
-    tireCollideIds = [1 << 8,
-     1 << 9,
-     1 << 10,
-     1 << 11]
+    tireCollideIds = [256,
+     512,
+     1024,
+     2048]
     tire0Mask = BitMask32(tireCollideIds[0])
     tire1Mask = BitMask32(tireCollideIds[1])
     tire2Mask = BitMask32(tireCollideIds[2])
