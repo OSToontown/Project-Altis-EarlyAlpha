@@ -32,11 +32,11 @@ COLORS = (Vec4(0.917, 0.164, 0.164, 1),
  Vec4(0.977, 0.816, 0.133, 1))
  
 # The main position
-MAIN_POS = (-60, 1, 11)
-MAIN_HPR = (-90, 5, 0)
+MAIN_POS = (-60, 0, 11)
+MAIN_HPR = (-90, -2, 0)
 
 # To be used when entering PAT
-TOON_HALL_POS = (110, 1, 8)
+TOON_HALL_POS = (110, 0, 8)
 TOON_HALL_HPR = (-90, 0, 0)
 
 # To be used when going to menu
@@ -87,8 +87,9 @@ class PickAToon:
         gui2 = loader.loadModel('phase_3/models/gui/quit_button')
         newGui = loader.loadModel('phase_3/models/gui/tt_m_gui_pat_mainGui')
         
-        self.background = loader.loadModel('phase_4/models/neighborhoods/toontown_central_full')
+        self.background = loader.loadModel('phase_3.5/models/modules/gagShop_interior')
         self.background.reparentTo(render)
+        self.background.setPosHpr(-50, 0, 8.1, -90, 0, 0)
         for frame in render.findAllMatches('*/doorFrame*'):
             frame.removeNode()
         self.sky = loader.loadModel('phase_3.5/models/props/TT_sky')
@@ -121,7 +122,7 @@ class PickAToon:
         self.play = DirectButton(relief = None, image = (quitHover, quitHover, quitHover), text = 'PLAY THIS TOON', text_font=ToontownGlobals.getSignFont(), text_fg=(0.977, 0.816, 0.133, 1), text_pos=(0, -.016), text_scale = 0.045, image_scale=1, image1_scale=1.05, image2_scale=1.05, scale=1.4, pos=(0, 0, -0.90), command=self.playGame, parent=self.patNode2d)
         
         self.toon = Toon.Toon()
-        self.toon.setPosHpr(-46, 1, 8.1, 90, 0, 0)
+        self.toon.setPosHpr(-46, 0, 8.1, 90, 0, 0)
         self.toon.reparentTo(self.patNode)
         self.toon.stopLookAroundNow()
         

@@ -32,6 +32,7 @@ class ToontownLoadingScreen():
         self.background.setScale(2, 1, 1)
         self.background.setBin('background', 1)
         self.background.show()
+        self.background.wrtReparentTo(self.loadingGui)
         base.graphicsEngine.renderFrame()
         self.logo = OnscreenImage(
             image='phase_3/maps/toontown-logo.png',
@@ -58,11 +59,11 @@ class ToontownLoadingScreen():
         base.graphicsEngine.renderFrame()
         self.loadingText["text"] = label
         base.graphicsEngine.renderFrame()
-        self.background.wrtReparentTo(self.loadingGui)
         self.loadingText.wrtReparentTo(self.loadingGui)
         self.loadingObj.wrtReparentTo(self.loadingGui)
         self.loadingCircle.wrtReparentTo(self.loadingGui)
         self.logo.wrtReparentTo(self.loadingGui)
+        base.graphicsEngine.renderFrame()
 
     def destroy(self):
         pass
