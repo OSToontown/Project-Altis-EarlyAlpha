@@ -25,7 +25,7 @@ class ToontownLoader(Loader.Loader):
         filename = '/' + filename
 
         if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading DNA:\n" + filename
+            self.loadingScreen.loadingObj['text'] = "Loading DNA:\n" + str(filename)
         print("Loading DNA: " + str(filename))
             
         with open(filename, 'r') as f:
@@ -84,7 +84,7 @@ class ToontownLoader(Loader.Loader):
     def loadModel(self, *args, **kw):
         print("Loading model: " + str(args[0]))
         if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading model:\n" + args[0]
+            self.loadingScreen.loadingObj['text'] = "Loading model:\n" + str(args[0])
         ret = Loader.Loader.loadModel(self, *args, **kw)
         
         if ret:
@@ -97,7 +97,7 @@ class ToontownLoader(Loader.Loader):
     def loadFont(self, *args, **kw):
         print("Loading: " + str(args[0]))
         if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading font:\n" + args[0]
+            self.loadingScreen.loadingObj['text'] = "Loading font:\n" + str(args[0])
         ret = Loader.Loader.loadFont(self, *args, **kw)
         self.tick()
         return ret
@@ -105,7 +105,7 @@ class ToontownLoader(Loader.Loader):
     def loadTexture(self, texturePath, alphaPath = None, okMissing = False):
         print("Loading texture: " + str(texturePath))
         if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading texture:\n" + texturePath
+            self.loadingScreen.loadingObj['text'] = "Loading texture:\n" + str(texturePath)
         ret = Loader.Loader.loadTexture(self, texturePath, alphaPath, okMissing=okMissing)
         self.tick()
         if alphaPath:
@@ -115,7 +115,7 @@ class ToontownLoader(Loader.Loader):
     def loadSfx(self, soundPath):
         print("Loading sound: " + str(soundPath))
         if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading SFX:\n" + soundPath
+            self.loadingScreen.loadingObj['text'] = "Loading SFX:\n" + str(soundPath)
         ret = Loader.Loader.loadSfx(self, soundPath)
         self.tick()
         return ret
@@ -123,7 +123,7 @@ class ToontownLoader(Loader.Loader):
     def loadMusic(self, soundPath):
         print("Loading music: " + str(soundPath))
         if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading music:\n " + soundPath
+            self.loadingScreen.loadingObj['text'] = "Loading music:\n " + str(soundPath)
         ret = Loader.Loader.loadMusic(self, soundPath)
         self.tick()
         return ret
