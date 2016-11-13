@@ -53,16 +53,16 @@ class PopupDialog:
     def stop(self):
         if self.dialogText:
             self.dialogText.destroy()
-            del self.dialogText
+            self.dialogText = None
 
         if self.background:
             self.background.destroy()
-            del self.background
+            self.background = None
             
         if self.yesButton:
             self.yesButton.removeNode()
-            del self.yesButton
+            self.yesButton = None
             
         if self.noButton:
             self.noButton.removeNode()
-            del self.noButton
+            self.noButton = None

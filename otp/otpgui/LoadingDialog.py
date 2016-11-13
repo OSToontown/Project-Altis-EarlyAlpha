@@ -39,8 +39,8 @@ class LoadingDialog:
             
         if self.loadingCircle:
             self.loadingCircle.destroy()
-            del self.loadingCircle
+            self.loadingCircle = None
             
         if self.background:
             self.background.destroy()
-            del self.background
+            self.background = None
