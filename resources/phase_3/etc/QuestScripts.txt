@@ -452,12 +452,6 @@ ARROWS_OFF
 CLEAR_CHAT npc
 WAIT .5
 LOCAL_CHAT_CONFIRM npc QuestScriptGagShop_4
-# show advanced throw & squirt gags
-LOCAL_CHAT_PERSIST npc QuestScriptGagShop_5
-WAIT .5
-SHOW_THROW_SQUIRT_PREVIEW
-CLEAR_CHAT npc
-WAIT .5
 # show "Exit Back To Playground" button
 SET_BIN backToPlaygroundButton "gui-popup"
 LERP_POS backToPlaygroundButton -.12 0 .18 .5
