@@ -6,7 +6,7 @@ from toontown.catalog.CatalogInvalidItem import CatalogInvalidItem
 from toontown.catalog.CatalogItemList import CatalogItemList
 from direct.distributed.ClockDelta import *
 import time
-import PhoneGlobals
+from toontown.estate.PhoneGlobals import *
 
 class DistributedPhoneAI(DistributedFurnitureItemAI):
     notify = DirectNotifyGlobal.directNotify.newCategory("DistributedPhoneAI")
@@ -14,6 +14,27 @@ class DistributedPhoneAI(DistributedFurnitureItemAI):
     def __init__(self, air, furnitureMgr, item):
         DistributedFurnitureItemAI.__init__(self, air, furnitureMgr, item)
         self.avId = None
+        self.inUse = False
+        self.currAvId = 0
+
+    def calcHouseItems(self, avatar):
+        houseId = avatar.houseId
+        
+        if not houseId:
+            self.notify.warning('Avatar %s has no houseId associated.' % avatar.doId)
+            return 0
+            
+        house = simbase.air.doId2do.get(houseId)
+        if not house:
+            self.notify.warning('House %s (for avatar %s) not instantiated.' % (houseId, avatar.doId))
+            return 0
+            
+        mgr = house.interior.furnitureManager
+        attic = (mgr.atticItems, mgr.atticWallpaper, mgr.atticWindows)
+        numHouseItems = len(CatalogItemList(house.getInteriorItems(), store=CatalogItem.Customization | CatalogItem.Location))
+        numAtticItems = sum(len(x) for x in attic)
+        
+        return numHouseItems + numAtticItems
 
     def setInitialScale(self, sx, sy, sz):
         pass
@@ -21,90 +42,47 @@ class DistributedPhoneAI(DistributedFurnitureItemAI):
     def getInitialScale(self):
         return (0.8, 0.8, 0.8)
 
-    def setNewScale(self, sx, sy, sz):
-        if sx + sy + sz < 5:
-            return
-        self.sendUpdate('setInitialScale', [sx, sy, sz])
-
     def avatarEnter(self):
         avId = self.air.getAvatarIdFromSender()
-        if self.avId:
-            if self.avId == avId:
-                self.air.writeServerEvent('suspicious', avId=avId, issue='Tried to use a phone twice!')
-                return
-
-            self.sendUpdateToAvatarId(avId, 'freeAvatar', [])
+        if self.inUse:
+            self.ejectAvatar(avId)
             return
-
+            
         av = self.air.doId2do.get(avId)
-        if not av:
-            return
-
-        if not av.houseId:
-            # Let's not deal with toons that have no houses, pls.
-            self.sendUpdateToAvatarId(avId, 'freeAvatar', [])
-            return
-
-        if len(av.monthlyCatalog) == 0 and len(av.weeklyCatalog) == 0 and len(av.backCatalog) == 0:
-            self.d_setMovie(PhoneGlobals.PHONE_MOVIE_EMPTY, avId, globalClockDelta.getRealNetworkTime())
-            taskMgr.doMethodLater(1, self.__resetMovie, 'resetMovie-%d' % self.getDoId(), extraArgs=[])
-            self.notify.debug("No Catalogs")
-            return
-
-        self.air.questManager.toonCalledClarabelle(av)
-
-        self.notify.debug("Loading the catalog")
-        self.avId = avId
-        self.d_setMovie(PhoneGlobals.PHONE_MOVIE_PICKUP, avId, globalClockDelta.getRealNetworkTime())
-
-        house = self.air.doId2do.get(av.houseId)
-        if house:
-            numItems = len(house.interiorItems) + len(house.atticItems) + len(house.atticWallpaper) + len(house.atticWindows) + len (house.interiorWallpaper) + len(house.interiorWindows)
-            self.sendUpdateToAvatarId(avId, 'setLimits', [numItems])
-        else:
-            self.air.dbInterface.queryObject(self.air.dbId, av.houseId, self.__gotHouse)
-
-        av.b_setCatalogNotify(ToontownGlobals.NoItems, av.mailboxNotify)
-
-    def __gotHouse(self, dclass, fields):
-        if dclass != self.air.dclassesByName['DistributedHouseAI']:
-            return
-        numItems = len(CatalogItemList(fields['setInteriorItems'][0],
-                                       store=CatalogItem.Customization)) + len(CatalogItemList(fields['setAtticItems'][0],
-                                                                                               store=CatalogItem.Customization)) + len(CatalogItemList(fields['setAtticWallpaper'][0],
-                                                                                                                                                       store=CatalogItem.Customization)) + len(CatalogItemList(fields['setAtticWindows'][0],
-                                                                                                                                                                                                               store=CatalogItem.Customization)) + len(CatalogItemList(fields['setInteriorWallpaper'][0],
-                                                                                                                                                                                                                                                                       store=CatalogItem.Customization)) + len(CatalogItemList(fields['setInteriorWindows'][0],
-                                                                                                                                                                                                                                                                                                                               store=CatalogItem.Customization))
-        self.sendUpdateToAvatarId(
-            fields['setAvatarId'][0],
-            'setLimits',
-            [numItems])
-
+        if av:
+            self.setInUse(avId)
+            self.sendUpdateToAvatarId(avId, 'setLimits', [self.calcHouseItems(av)])
+            self.d_setMovie(PHONE_MOVIE_PICKUP, avId)
+            av.b_setCatalogNotify(0, av.mailboxNotify)
+            
+            self.air.questManager.toonCalledClarabelle(av)
+            
     def avatarExit(self):
-        avId = self.air.getAvatarIdFromSender()
-        if avId != self.avId:
-            self.air.writeServerEvent('suspicious', avId=avId, issue='Tried to exit a phone they weren\'t using!')
+        if not self.inUse:
+            self.notify.warning('Requested avatarExit but phone isn\'t in use!')
             return
+        avId = self.air.getAvatarIdFromSender()
+        if avId != self.currAvId:
+            self.notify.warning('Requested avatarExit from unknown avatar %s' %avId)
+            return
+        self.d_setMovie(PHONE_MOVIE_HANGUP, avId)
+        taskMgr.doMethodLater(1, self.resetMovie, self.taskName('resetMovie'))
+        self.setFree()
+        
+    def setFree(self):
+        self.inUse = False
+        self.currAvId = 0
+        
+    def setInUse(self, avId):
+        self.inUse = True
+        self.currAvId = avId
 
-        self.avId = None
-        self.d_setMovie(PhoneGlobals.PHONE_MOVIE_HANGUP, avId, globalClockDelta.getRealNetworkTime())
-        taskMgr.doMethodLater(1, self.__resetMovie, 'resetMovie-%d' % self.getDoId(), extraArgs=[])
+    def d_setMovie(self, movie, avId):
+        self.sendUpdate('setMovie', args=[movie, avId, globalClockDelta.getRealNetworkTime(bits=32)])
 
-    def freeAvatar(self):
-        pass
-
-    def setLimits(self, todo0):
-        pass
-
-    def setMovie(self, todo0, todo1, todo2):
-        pass
-
-    def d_setMovie(self, mode, avId, time):
-        self.sendUpdate('setMovie', [mode, avId, time])
-
-    def __resetMovie(self):
-        self.d_setMovie(PhoneGlobals.PHONE_MOVIE_CLEAR, 0, globalClockDelta.getRealNetworkTime())
+    def resetMovie(self, task):
+        self.d_setMovie(PHONE_MOVIE_CLEAR, 0)
+        return task.done
 
     def requestPurchaseMessage(self, context, item, optional):
         avId = self.air.getAvatarIdFromSender()
