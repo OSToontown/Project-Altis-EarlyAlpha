@@ -112,3 +112,4 @@ force-holiday-decorations 6
 active-holidays 63, 64, 65, 66
 want-arg-manager #t
 
+loading-threads 2

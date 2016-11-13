@@ -30,6 +30,7 @@ class ToontownLoadingScreen():
         base.graphicsEngine.renderFrame()
         self.background = OnscreenImage(image = 'phase_3.5/maps/loading/toon.jpg', parent = aspect2d)
         self.background.setScale(2, 1, 1)
+        self.background.setBin('background', 1)
         self.background.show()
         base.graphicsEngine.renderFrame()
         self.logo = OnscreenImage(
@@ -69,7 +70,7 @@ class ToontownLoadingScreen():
     def end(self):
         if self.loadingGui:
             self.loadingGui.removeNode()
-            del self.loadingGui
+            self.loadingGui = None
             
         if self.loadingText:
             self.loadingText.destroy()
@@ -94,7 +95,7 @@ class ToontownLoadingScreen():
         return (self.__expectedCount, self.__count)
 
     def abort(self):
-        self.gui.reparentTo(hidden)
+        self.loadingGui.reparentTo(hidden)
         self.loadingObj = None
         
     def tick(self):

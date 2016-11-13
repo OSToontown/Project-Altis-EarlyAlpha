@@ -80,6 +80,8 @@ class ToontownLoader(Loader.Loader):
                     base.cr.considerHeartbeat()
                 except:
                     pass
+                if self.loadingScreen.loadingObj:
+                    self.loadingScreen.loadingObj['text'] = ""
 
     def loadModel(self, *args, **kw):
         print("Loading model: " + str(args[0]))

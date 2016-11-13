@@ -229,7 +229,7 @@ CRSystemMessages = {
     101: 'Toon Council: Sorry, the name you submitted was rejected. You can log out and submit a new name on the main screen.',
     102: '%s just became the first Toon in Toon History to reach 137 Laff Points!'
 }
-CRTryConnectAgain = '\n\nTry to connect again?'
+CRTryConnectAgain = ''
 CRToontownUnavailable = 'The server appears to be temporarily unavailable, still trying...'
 CRToontownUnavailableCancel = lCancel
 CRNameCongratulations = 'CONGRATULATIONS!!'
