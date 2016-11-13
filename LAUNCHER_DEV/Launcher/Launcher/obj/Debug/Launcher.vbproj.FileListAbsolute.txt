@@ -1,0 +1,11 @@
+E:\Project-Altis\LAUNCHER_DEV\Launcher\Launcher\bin\Debug\Launcher.exe.config
+E:\Project-Altis\LAUNCHER_DEV\Launcher\Launcher\bin\Debug\Launcher.exe
+E:\Project-Altis\LAUNCHER_DEV\Launcher\Launcher\bin\Debug\Launcher.pdb
+E:\Project-Altis\LAUNCHER_DEV\Launcher\Launcher\bin\Debug\Launcher.xml
+E:\Project-Altis\LAUNCHER_DEV\Launcher\Launcher\obj\Debug\Launcher.vbprojResolveAssemblyReference.cache
+E:\Project-Altis\LAUNCHER_DEV\Launcher\Launcher\obj\Debug\Launcher.Login.resources
+E:\Project-Altis\LAUNCHER_DEV\Launcher\Launcher\obj\Debug\Launcher.Resources.resources
+E:\Project-Altis\LAUNCHER_DEV\Launcher\Launcher\obj\Debug\Launcher.vbproj.GenerateResource.Cache
+E:\Project-Altis\LAUNCHER_DEV\Launcher\Launcher\obj\Debug\Launcher.exe
+E:\Project-Altis\LAUNCHER_DEV\Launcher\Launcher\obj\Debug\Launcher.xml
+E:\Project-Altis\LAUNCHER_DEV\Launcher\Launcher\obj\Debug\Launcher.pdb
