@@ -12,7 +12,6 @@ class DistributedPolarPlaceEffectMgr(DistributedObject.DistributedObject):
 
     def announceGenerate(self):
         DistributedObject.DistributedObject.announceGenerate(self)
-        DistributedPolarPlaceEffectMgr.notify.debug('announceGenerate')
         self.accept(SpeedChatGlobals.SCStaticTextMsgEvent, self.phraseSaid)
 
     def phraseSaid(self, phraseId):
@@ -25,7 +24,6 @@ class DistributedPolarPlaceEffectMgr(DistributedObject.DistributedObject):
         DistributedObject.DistributedObject.delete(self)
 
     def addPolarPlaceEffect(self):
-        DistributedPolarPlaceEffectMgr.notify.debug('addResitanceEffect')
         av = base.localAvatar
         self.sendUpdate('addPolarPlaceEffect', [])
         msgTrack = Sequence(Func(av.setSystemMessage, 0, TTLocalizer.PolarPlaceEffect1), Wait(2), Func(av.setSystemMessage, 0, TTLocalizer.PolarPlaceEffect2), Wait(4), Func(av.setSystemMessage, 0, TTLocalizer.PolarPlaceEffect3))

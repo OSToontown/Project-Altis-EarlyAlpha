@@ -16,7 +16,6 @@ class DistributedAprilToonsMgr(DistributedObject):
         self.d_requestEventsList()
         
     def d_requestEventsList(self):
-        self.notify.debug("Requesting events list from AI.")
         self.sendUpdate('requestEventsList', [])
         
     def requestEventsListResp(self, eventIds):

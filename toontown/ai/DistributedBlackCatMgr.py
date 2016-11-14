@@ -26,7 +26,6 @@ class DistributedBlackCatMgr(DistributedObject.DistributedObject):
         DistributedObject.DistributedObject.__init__(self, cr)
 
     def announceGenerate(self):
-        DistributedBlackCatMgr.notify.debug('announceGenerate')
         DistributedObject.DistributedObject.announceGenerate(self)
         self.acceptOnce(DistributedBlackCatMgr.ActivateEvent, self.d_requestBlackCatTransformation)
         self.dustCloudIval = None
@@ -43,13 +42,10 @@ class DistributedBlackCatMgr(DistributedObject.DistributedObject):
         self.sendUpdate('requestBlackCatTransformation', [])
 
     def doBlackCatTransformation(self, avId):
-        DistributedBlackCatMgr.notify.debug('doBlackCatTransformation')
         toon = self.cr.doId2do.get(avId)
         if not toon:
-            DistributedBlackCatMgr.notify.warning("couldn't find Toon %s" % self.avId)
             return
         if toon.style.getAnimal() != 'cat':
-            DistributedBlackCatMgr.notify.warning('not a cat: %s' % self.avId)
             return
         self.dustCloudIval = getDustCloudIval(toon)
         self.dustCloudIval.start()

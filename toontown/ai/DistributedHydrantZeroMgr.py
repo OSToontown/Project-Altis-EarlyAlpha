@@ -15,7 +15,6 @@ class DistributedHydrantZeroMgr(DistributedPhaseEventMgr.DistributedPhaseEventMg
         messenger.send('hydrantZeroIsRunning', [self.isRunning])
 
     def delete(self):
-        self.notify.debug('deleting hydrantzeromgr')
         messenger.send('hydrantZeroIsRunning', [False])
         DistributedPhaseEventMgr.DistributedPhaseEventMgr.delete(self)
         if hasattr(self.cr, 'hydrantZeroMgr'):

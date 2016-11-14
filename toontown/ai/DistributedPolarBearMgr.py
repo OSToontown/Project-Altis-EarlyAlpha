@@ -25,7 +25,6 @@ class DistributedPolarBearMgr(DistributedObject.DistributedObject):
         DistributedObject.DistributedObject.__init__(self, cr)
         
     def announceGenerate(self):
-        DistributedPolarBearMgr.notify.debug('announceGenerate')
         DistributedObject.DistributedObject.announceGenerate(self)
         self.acceptOnce(DistributedPolarBearMgr.ActivateEvent, self.d_requestPolarBearTransformation)
         self.dustCloudIval = None
@@ -42,13 +41,10 @@ class DistributedPolarBearMgr(DistributedObject.DistributedObject):
         self.sendUpdate('requestPolarBearTransformation', [])
         
     def doPolarBearTransformation(self, avId):
-        DistributedPolarBearMgr.notify.debug('doPolarBearTransformation')
         toon = self.cr.doId2do.get(avId)
         if not toon:
-            DistributedPolarBearMgr.notify.warning("couldn't find Toon %s" % avId)
             return
         if toon.style.getAnimal() != 'bear':
-            DistributedPolarBearMgr.notify.warning('not a bear: %s' % avId)
             return
         self.dustCloudIval = getDustCloudIval(toon)
         self.dustCloudIval.start()

@@ -46,7 +46,6 @@ class DistributedPet(DistributedSmoothNode.DistributedSmoothNode, Pet.Pet, PetBa
         return
 
     def generate(self):
-        DistributedPet.notify.debug('generate(), fake=%s' % self.bFake)
         if not self.bFake:
             PetManager.acquirePetManager()
         DistributedSmoothNode.DistributedSmoothNode.generate(self)
@@ -121,43 +120,33 @@ class DistributedPet(DistributedSmoothNode.DistributedSmoothNode, Pet.Pet, PetBa
             self.__funcsToDelete.append(setterName)
 
     def setHead(self, head):
-        DistributedPet.notify.debug('setHead: %s' % head)
         self.head = head
 
     def setEars(self, ears):
-        DistributedPet.notify.debug('setEars: %s' % ears)
         self.ears = ears
 
     def setNose(self, nose):
-        DistributedPet.notify.debug('setNose: %s' % nose)
         self.nose = nose
 
     def setTail(self, tail):
-        DistributedPet.notify.debug('setTail: %s' % tail)
         self.tail = tail
 
     def setBodyTexture(self, bodyTexture):
-        DistributedPet.notify.debug('setBodyTexture: %s' % bodyTexture)
         self.bodyTexture = bodyTexture
 
     def setColor(self, color):
-        DistributedPet.notify.debug('setColor: %s' % color)
         self.color = color
 
     def setColorScale(self, colorScale):
-        DistributedPet.notify.debug('setColorScale: %s' % colorScale)
         self.colorScale = colorScale
 
     def setEyeColor(self, eyeColor):
-        DistributedPet.notify.debug('setEyeColor: %s' % eyeColor)
         self.eyeColor = eyeColor
 
     def setGender(self, gender):
-        DistributedPet.notify.debug('setGender: %s' % gender)
         self.gender = gender
 
     def setLastSeenTimestamp(self, timestamp):
-        DistributedPet.notify.debug('setLastSeenTimestamp: %s' % timestamp)
         self.lastSeenTimestamp = timestamp
 
     def getTimeSinceLastSeen(self):
@@ -203,7 +192,6 @@ class DistributedPet(DistributedSmoothNode.DistributedSmoothNode, Pet.Pet, PetBa
         return Pet.Pet.getName(self)
 
     def announceGenerate(self):
-        DistributedPet.notify.debug('announceGenerate(), fake=%s' % self.bFake)
         DistributedSmoothNode.DistributedSmoothNode.announceGenerate(self)
         if hasattr(self, 'petName'):
             Pet.Pet.setName(self, self.petName)
@@ -213,7 +201,6 @@ class DistributedPet(DistributedSmoothNode.DistributedSmoothNode, Pet.Pet, PetBa
             self.mood.setComponent(mood, value, announce=0)
 
         self.requiredMoodComponents = {}
-        DistributedPet.notify.debug('time since last seen: %s' % self.getTimeSinceLastSeen())
         self.setDNA([self.head,
          self.ears,
          self.nose,
@@ -248,7 +235,6 @@ class DistributedPet(DistributedSmoothNode.DistributedSmoothNode, Pet.Pet, PetBa
             self.accept(self.mood.getMoodChangeEvent(), self.moodComponentChanged)
 
     def disable(self):
-        DistributedPet.notify.debug('disable(), fake=%s' % self.bFake)
         if self.isLocalToon:
             base.localAvatar.enableSmartCameraViews()
             self.freeAvatar()
@@ -273,7 +259,6 @@ class DistributedPet(DistributedSmoothNode.DistributedSmoothNode, Pet.Pet, PetBa
 
     def delete(self):
         self.setBlend(frameBlend = True)
-        DistributedPet.notify.debug('delete(), fake=%s' % self.bFake)
         if self.trickIval is not None:
             self.trickIval.finish()
             del self.trickIval
