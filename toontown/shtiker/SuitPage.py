@@ -198,7 +198,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
         icon = icons.find('**/sales_icon')
         self.salesRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=(icon, icon, icon), image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.385), command=self.toggleRadar, extraArgs=[3])
         self.radarButtons.append(self.salesRadarButton)
-        icon = icons.find('**/sales_icon')
+        icon = icons.find('**/board_icon')
         self.boardRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=(icon, icon, icon), image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.615), command=self.toggleRadar, extraArgs=[4])
         self.radarButtons.append(self.boardRadarButton)
         for radarButton in self.radarButtons:
@@ -358,7 +358,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
                 panel.shadow = None
                 panel.count = 0
                 panel.summonButton = None
-                panel.hoverButton = DirectButton(parent=panel, relief=None, image_scale=(0.15, 0, 0.225), image='phase_3/maps/invisible.png', pressEffect=0)
+                panel.hoverButton = DirectButton(parent=panel, relief=None, image_scale=(0.15, 0, 0.180), image='phase_3/maps/invisible.png', pressEffect=0)
                 panel.hoverButton.setTransparency(True)
                 panel.hoverButton.panel = panel
                 self.addCogRadarLabel(panel)

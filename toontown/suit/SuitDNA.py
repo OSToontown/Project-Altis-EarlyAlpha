@@ -110,8 +110,8 @@ suitDeptModelPaths = {'c': '**/CorpIcon',
  2: '**/MoneyIcon',
  's': '**/SalesIcon',
  3: '**/SalesIcon',
- 'g': '**/HackerIcon',
- 4: '**/HackerIcon'}
+ 'g': '**/BoardIcon',
+ 4: '**/BoardIcon'}
 corpPolyColor = VBase4(0.95, 0.75, 0.75, 1.0)
 legalPolyColor = VBase4(0.75, 0.75, 0.95, 1.0)
 moneyPolyColor = VBase4(0.65, 0.95, 0.85, 1.0)

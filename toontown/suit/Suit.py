@@ -943,7 +943,7 @@ class Suit(Avatar.Avatar):
         elif dept == 'm':
             self.corpMedallion = icons.find('**/MoneyIcon').copyTo(chestNull)
         elif dept == 'g':
-            self.corpMedallion = icons.find('**/HackerIcon').copyTo(chestNull)
+            self.corpMedallion = icons.find('**/BoardIcon').copyTo(chestNull)
         self.corpMedallion.setPosHprScale(0.02, 0.05, 0.04, 180.0, 0.0, 0.0, 0.51, 0.51, 0.51)
         self.corpMedallion.setColor(self.medallionColors[dept])
         icons.removeNode()
