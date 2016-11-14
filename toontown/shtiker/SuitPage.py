@@ -510,7 +510,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
 
     def updateCogStatus(self, dept, type, status):
         if dept == 5:
-            pass # no monobots allowed
+            pass 
         if dept < 0 or dept > len(SuitDNA.suitDepts):
             print 'ucs: bad cog dept: ', dept
         elif type < 0 or type > SuitDNA.suitsPerDept:
