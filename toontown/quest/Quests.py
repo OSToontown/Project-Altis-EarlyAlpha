@@ -1713,8 +1713,6 @@ class RecoverItemQuest(LocationBasedQuest):
 class TrackChoiceQuest(Quest):
     def __init__(self, id, quest):
         Quest.__init__(self, id, quest)
-        self.checkTrackChoice(self.quest[0])
-        self.checkTrackChoice(self.quest[1])
 
     def getChoices(self):
         return (self.quest[0], self.quest[1])
@@ -2282,7 +2280,7 @@ QuestDict = {
        TTLocalizer.QuestDialogDict[172]),
  400: (TT_TIER + 1,
        Cont,
-       (TrackChoiceQuest),
+       (TrackChoiceQuest, ToontownBattleGlobals.ZAP_TRACK, ToontownBattleGlobals.ZAP_TRACK),
        Same,
        Same,
        400,
@@ -18404,11 +18402,11 @@ def getNextRewards(numChoices, tier, av):
             rewardTier.remove(rewardId)
         elif rewardId in optRewards:
             optRewards.remove(rewardId)
-        elif rewardId in (901, 902, 903, 904, 905, 906, 907):
+        elif rewardId in (901, 902, 903, 904, 905, 906, 907, 908):
             genericRewardId = 900
             if genericRewardId in rewardTier:
                 rewardTier.remove(genericRewardId)
-        elif rewardId > 1000 and rewardId < 1699:
+        elif rewardId > 1000 and rewardId < 1799:
             index = rewardId % 100
             genericRewardId = 800 + index
             if genericRewardId in rewardTier:

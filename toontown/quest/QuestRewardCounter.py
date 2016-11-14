@@ -26,6 +26,7 @@ class QuestRewardCounter:
          0,
          1,
          1,
+         0,
          0]
         self.trackProgressId = -1
         self.trackProgress = 0
