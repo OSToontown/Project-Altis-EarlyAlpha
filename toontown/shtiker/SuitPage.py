@@ -9,22 +9,26 @@ from toontown.battle import SuitBattleGlobals
 from CogPageGlobals import *
 SCALE_FACTOR = 1.5
 RADAR_DELAY = 0.2
-BUILDING_RADAR_POS = (0.375,
- 0.065,
- -0.225,
- -0.5)
+BUILDING_RADAR_POS = (0.3,
+ 0.052,
+ -0.180,
+ -0.4,
+ -0.248)
 PANEL_COLORS = (Vec4(0.8, 0.78, 0.77, 1),
  Vec4(0.75, 0.78, 0.8, 1),
  Vec4(0.75, 0.82, 0.79, 1),
- Vec4(0.825, 0.76, 0.77, 1))
+ Vec4(0.825, 0.76, 0.77, 1),
+ Vec4(.85, 0.85, .85, 1.0))
 PANEL_COLORS_COMPLETE1 = (Vec4(0.7, 0.725, 0.545, 1),
  Vec4(0.625, 0.725, 0.65, 1),
  Vec4(0.6, 0.75, 0.525, 1),
- Vec4(0.675, 0.675, 0.55, 1))
+ Vec4(0.675, 0.675, 0.55, 1),
+ Vec4(0.7, 0.7, 0.7, 1))
 PANEL_COLORS_COMPLETE2 = (Vec4(0.9, 0.725, 0.32, 1),
  Vec4(0.825, 0.725, 0.45, 1),
  Vec4(0.8, 0.75, 0.325, 1),
- Vec4(0.875, 0.675, 0.35, 1))
+ Vec4(0.875, 0.675, 0.35, 1),
+ Vec4(0.55, 0.55, 0.55, 1),)
 SHADOW_SCALE_POS = ((1.225,
   0,
   10,
@@ -186,14 +190,17 @@ class SuitPage(ShtikerPage.ShtikerPage):
         self.corpRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=icon, image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.575), command=self.toggleRadar, extraArgs=[0])
         self.radarButtons.append(self.corpRadarButton)
         icon = icons.find('**/legal_icon')
-        self.legalRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=icon, image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.575), command=self.toggleRadar, extraArgs=[1])
+        self.legalRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=icon, image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.525), command=self.toggleRadar, extraArgs=[1])
         self.radarButtons.append(self.legalRadarButton)
         icon = icons.find('**/money_icon')
-        self.moneyRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=(icon, icon, icon), image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.575), command=self.toggleRadar, extraArgs=[2])
+        self.moneyRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=(icon, icon, icon), image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.460), command=self.toggleRadar, extraArgs=[2])
         self.radarButtons.append(self.moneyRadarButton)
         icon = icons.find('**/sales_icon')
-        self.salesRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=(icon, icon, icon), image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.575), command=self.toggleRadar, extraArgs=[3])
+        self.salesRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=(icon, icon, icon), image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.385), command=self.toggleRadar, extraArgs=[3])
         self.radarButtons.append(self.salesRadarButton)
+        icon = icons.find('**/sales_icon')
+        self.boardRadarButton = DirectButton(parent=self.iconNode, relief=None, state=DGG.DISABLED, image=(icon, icon, icon), image_scale=(0.03375, 1, 0.045), image2_color=Vec4(1.0, 1.0, 1.0, 0.75), pos=(-0.2, 10, -0.615), command=self.toggleRadar, extraArgs=[4])
+        self.radarButtons.append(self.boardRadarButton)
         for radarButton in self.radarButtons:
             radarButton.building = 0
             radarButton.buildingRadarLabel = None
@@ -205,6 +212,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
         del gui
         self.makePanels()
         self.radarOn = [0,
+         0,
          0,
          0,
          0]
@@ -331,18 +339,18 @@ class SuitPage(ShtikerPage.ShtikerPage):
         xStart = -0.66
         yStart = -0.18
         xOffset = 0.199
-        yOffset = 0.284
+        yOffset = 0.2272
         gui = loader.loadModel('phase_3.5/models/gui/suit_detail_panel')
         gui.find('**/avatar_panel/shadow').setColor(1, 1, 1, 0.5)
         self.rolloverFrame = DirectFrame(parent=self.panelNode, relief=None, geom=gui.find('**/avatar_panel'), geom_color=(0.5, 0.5, 0.5, 1), geom_scale=(0.59, 0, 0.21), text_scale=0.06, text_pos=(0, 0.35), text='', text_fg=(1, 1, 1, 1), text_font=ToontownGlobals.getSuitFont(), pos=(0.8, 0, 0))
         self.rolloverFrame.setBin('gui-popup', 0)
         self.rolloverFrame.hide()
         gui.removeNode()
-        for dept in xrange(0, len(SuitDNA.suitDepts) - 1):
+        for dept in xrange(0, len(SuitDNA.suitDepts)):
             row = []
             color = PANEL_COLORS[dept]
             for type in xrange(0, SuitDNA.suitsPerDept):
-                panel = DirectLabel(parent=self.panelNode, pos=(xStart + type * xOffset, 0.0, yStart - dept * yOffset), relief=None, state=DGG.NORMAL, image=self.panelModel, image_scale=(1, 1, 1), image_color=color, text=TTLocalizer.SuitPageMystery, text_scale=0.045, text_fg=(0, 0, 0, 1), text_pos=(0, 0.185, 0), text_font=ToontownGlobals.getSuitFont(), text_wordwrap=7)
+                panel = DirectLabel(parent=self.panelNode, pos=(xStart + type * xOffset, 0.0, yStart - dept * yOffset), relief=None, state=DGG.NORMAL, image=self.panelModel, image_scale=(1, 1, 0.8), image_color=color, text=TTLocalizer.SuitPageMystery, text_scale=0.045, text_fg=(0, 0, 0, 1), text_pos=(0, 0.148, 0), text_font=ToontownGlobals.getSuitFont(), text_wordwrap=7)
                 panel.scale = 0.6
                 panel.setScale(panel.scale)
                 panel.quotaLabel = None
@@ -372,7 +380,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
             quota = str(COG_QUOTAS[0][index % SuitDNA.suitsPerDept])
         else:
             quota = str(COG_QUOTAS[1][index % SuitDNA.suitsPerDept])
-        quotaLabel = DirectLabel(parent=panel, pos=(0.0, 0.0, -0.215), relief=None, state=DGG.DISABLED, text=TTLocalizer.SuitPageQuota % (count, quota), text_scale=0.045, text_fg=(0, 0, 0, 1), text_font=ToontownGlobals.getSuitFont())
+        quotaLabel = DirectLabel(parent=panel, pos=(0.0, 0.0, -0.172), relief=None, state=DGG.DISABLED, text=TTLocalizer.SuitPageQuota % (count, quota), text_scale=0.045, text_fg=(0, 0, 0, 1), text_font=ToontownGlobals.getSuitFont())
         panel.quotaLabel = quotaLabel
         return
 
@@ -380,15 +388,18 @@ class SuitPage(ShtikerPage.ShtikerPage):
         panelIndex = self.panels.index(panel)
         shadow = panel.attachNewNode('shadow')
         shadowModel = self.shadowModels[panelIndex]
-        shadowModel.copyTo(shadow)
-        coords = SHADOW_SCALE_POS[panelIndex]
-        shadow.setScale(coords[0])
-        shadow.setPos(coords[1], coords[2], coords[3])
-        panel.shadow = shadow
+        try: #Until we get some boardbot shadow models, this will do
+            shadowModel.copyTo(shadow)
+            coords = SHADOW_SCALE_POS[panelIndex]
+            shadow.setScale(coords[0])
+            shadow.setPos(coords[1], coords[2], coords[3])
+            panel.shadow = shadow
+        except:
+            pass
         panel.head = Suit.attachSuitHead(panel, suitName)
 
     def addCogRadarLabel(self, panel):
-        cogRadarLabel = DirectLabel(parent=panel, pos=(0.0, 0.0, -0.215), relief=None, state=DGG.DISABLED, text='', text_scale=0.05, text_fg=(0, 0, 0, 1), text_font=ToontownGlobals.getSuitFont())
+        cogRadarLabel = DirectLabel(parent=panel, pos=(0.0, 0.0, -0.172), relief=None, state=DGG.DISABLED, text='', text_scale=0.05, text_fg=(0, 0, 0, 1), text_font=ToontownGlobals.getSuitFont())
         panel.cogRadarLabel = cogRadarLabel
         return
 
@@ -397,10 +408,10 @@ class SuitPage(ShtikerPage.ShtikerPage):
         okButtonList = (buttons.find('**/ChtBx_OKBtn_UP'), buttons.find('**/ChtBx_OKBtn_DN'), buttons.find('**/ChtBx_OKBtn_Rllvr'))
         gui = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
         iconGeom = gui.find('**/summons')
-        summonButton = DirectButton(parent=panel, pos=(0.1, 0.0, -0.13), scale=0.1, relief=None, state=DGG.NORMAL, image=okButtonList, image_scale=13.0, geom=iconGeom, geom_scale=0.7, text=('',
+        summonButton = DirectButton(parent=panel, pos=(0.1, 0.0, -0.104), scale=0.1, relief=None, state=DGG.NORMAL, image=okButtonList, image_scale=13.0, geom=iconGeom, geom_scale=0.7, text=('',
          TTLocalizer.IssueSummons,
          TTLocalizer.IssueSummons,
-         ''), text_scale=0.4, text_pos=(-1.1, -0.4), command=self.summonButtonPressed, extraArgs=[panel])
+         ''), text_scale=0.4, text_pos=(-1.1, -0.32), command=self.summonButtonPressed, extraArgs=[panel])
         panel.summonButton = summonButton
         return
 
@@ -490,7 +501,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
     def updatePage(self):
         index = 0
         cogs = base.localAvatar.cogs
-        for dept in xrange(0, len(SuitDNA.suitDepts)-1):
+        for dept in xrange(0, len(SuitDNA.suitDepts)):
             for type in xrange(0, SuitDNA.suitsPerDept):
                 self.updateCogStatus(dept, type, cogs[index])
                 index += 1
@@ -500,7 +511,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
     def updateCogStatus(self, dept, type, status):
         if dept == 5:
             pass # no monobots allowed
-        if dept < 0 or dept > len(SuitDNA.suitDepts)-1:
+        if dept < 0 or dept > len(SuitDNA.suitDepts):
             print 'ucs: bad cog dept: ', dept
         elif type < 0 or type > SuitDNA.suitsPerDept:
             print 'ucs: bad cog type: ', type
@@ -539,7 +550,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
         for panel in panels:
             panel.count = 0
         for cog in cogList:
-            if cog - ((len(SuitDNA.suitDepts)-1) * SuitDNA.suitsPerDept - 1) > 0: 
+            if cog - ((len(SuitDNA.suitDepts)) * SuitDNA.suitsPerDept - 1) > 0: 
                 pass 
             else:
                 self.panels[cog].count += 1
@@ -571,6 +582,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
             buildingList = base.cr.currSuitPlanner.buildingList
         else:
             buildingList = [0,
+             0,
              0,
              0,
              0]
