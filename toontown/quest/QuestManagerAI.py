@@ -220,7 +220,7 @@ class QuestManagerAI:
                 if isinstance(quest, Quests.TrackChoiceQuest):
                     # TrackTrainingRewards are a little different, as we now
                     # have to display the gag track selection menu.
-                    npc.presentTrackChoice(toonId, questId, quest.getChoices())
+                    npc.presentTrackChoice(toonId, questId, [0,1,2,3,4,5,6,7])
                     return
                 # This function is pretty weird... not sure why it's even here...
                 # But I'll include it just in case... (TMS says: "idk about this
