@@ -381,6 +381,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
         else:
             quota = str(COG_QUOTAS[1][index % SuitDNA.suitsPerDept])
         quotaLabel = DirectLabel(parent=panel, pos=(0.0, 0.0, -0.172), relief=None, state=DGG.DISABLED, text=TTLocalizer.SuitPageQuota % (count, quota), text_scale=0.045, text_fg=(0, 0, 0, 1), text_font=ToontownGlobals.getSuitFont())
+        quotaLabel.setBin("gui-popup", 50)
         panel.quotaLabel = quotaLabel
         return
 

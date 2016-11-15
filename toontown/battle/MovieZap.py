@@ -251,7 +251,7 @@ def __doJoybuzzer(zap, delay, fShowStun):
     if hp > 0:
         tracks.append(__getSplashTrack(targetPoint, scale, tSprayStarts + dSprayScale, battle))
     if hp > 0 or delay <= 0:
-        tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'rake-react', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
+        tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'shock', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
 
 
@@ -307,7 +307,7 @@ def __doRug(zap, delay, fShowStun):
     if hp > 0:
         tracks.append(__getSplashTrack(targetPoint, scale, tSpray + dSprayScale, battle))
     if hp > 0 or delay <= 0:
-        tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'rake-react', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
+        tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'shock', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
 
 
@@ -367,7 +367,7 @@ def __doBalloon(zap, delay, fShowStun):
     if hp > 0:
         tracks.append(__getSplashTrack(targetPoint, 0.3, tSpray + dSprayScale, battle))
     if hp > 0 or delay <= 0:
-        tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'rake-react', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
+        tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'shock', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
 
 
@@ -396,7 +396,7 @@ def __doBattery(zap, delay, fShowStun):
     scale = 0.3
     tAppearDelay = 0.7
     dHoseHold = 0.7
-    midPos = Point3(0, 0, 0)
+    midPos = Point3(toon.getX(battle)*.5, 0, 0)
     runDur = 1
     tSprayDelay = 2
     tSpray = 1
@@ -425,7 +425,7 @@ def __doBattery(zap, delay, fShowStun):
     if hp > 0:
         tracks.append(__getSplashTrack(targetPoint, 0.4, 2.7, battle, splashHold=1.5))
     if hp > 0 or delay <= 0:
-        tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'rake-react', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
+        tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'shock', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
 
 
@@ -455,7 +455,7 @@ def __doTazer(zap, delay, fShowStun):
     scale = 0.3
     tAppearDelay = 0.7
     dHoseHold = 0.7
-    midPos = Point3(0, 0, 0)
+    midPos = Point3(toon.getX(battle)*.5, 0, 0)
     runDur = 1
     tSprayDelay = 2
     tSpray = 1
@@ -484,7 +484,7 @@ def __doTazer(zap, delay, fShowStun):
     if hp > 0:
         tracks.append(__getSplashTrack(targetPoint, 0.4, 2.7, battle, splashHold=1.5))
     if hp > 0 or delay <= 0:
-        tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'rake-react', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
+        tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'shock', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
 
 
@@ -525,7 +525,7 @@ def __doTesla(zap, delay, fShowStun):
     toonTrack = Sequence(Func(MovieUtil.showProps, buttons, hands), Func(toon.headsUp, battle, suitPos), ActorInterval(toon, 'pushbutton'), Func(MovieUtil.removeProps, buttons), Func(toon.loop, 'neutral'), Func(toon.setHpr, battle, origHpr))
     tracks.append(toonTrack)
     coil = globalPropPool.getProp('tesla')
-    coilPos = Point3(0, 0, 0)
+    coilPos = Point3(toon.getX(), 2, 0)
     coilHpr = Point3(0, 0, 0)
     propTrack = Sequence()
     propTrack.append(Func(coil.show))
@@ -551,7 +551,7 @@ def __doTesla(zap, delay, fShowStun):
     if hp > 0:
         tracks.append(__getSplashTrack(targetPoint, 0.4, 2.7, battle, splashHold=1.5))
     if hp > 0 or delay <= 0:
-        tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'rake-react', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
+        tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'shock', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
 
 
@@ -614,7 +614,7 @@ def __doLightning(zap, delay, fShowStun, uberClone = 0):
 
         tracks.append(getCloudTrack(cloud, suit, cloudPosPoint, scaleUpPoint, rainDelay, cloudHold))
         if hp > 0 or delay <= 0:
-            tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'rake-react', died, leftSuits, rightSuits, battle, toon, fShowStun, beforeStun=2.6, afterStun=2.3, revived=revived))
+            tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'shock', died, leftSuits, rightSuits, battle, toon, fShowStun, beforeStun=2.6, afterStun=2.3, revived=revived))
     return tracks
 
 
