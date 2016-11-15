@@ -9,11 +9,10 @@ from toontown.battle import SuitBattleGlobals
 from CogPageGlobals import *
 SCALE_FACTOR = 1.5
 RADAR_DELAY = 0.2
-BUILDING_RADAR_POS = (0.3,
- 0.052,
- -0.180,
- -0.4,
- -0.248)
+BUILDING_RADAR_POS = (0.4,
+ 0.1,
+ -0.18,
+ -0.5,
 PANEL_COLORS = (Vec4(0.8, 0.78, 0.77, 1),
  Vec4(0.75, 0.78, 0.8, 1),
  Vec4(0.75, 0.82, 0.79, 1),
@@ -236,6 +235,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
         self.legalRadarButton.destroy()
         self.moneyRadarButton.destroy()
         self.salesRadarButton.destroy()
+        self.boardRadarButton.destroy()
         self.rolloverFrame.destroy()
         for panel in self.panels:
             panel.destroy()
