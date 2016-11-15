@@ -15,7 +15,7 @@ import hashlib
 import json
 
 def judgeName(name):
-    return True
+    return False #For now, we don't want names to be accepted instantly, so just reject them till I can implient a syystem'
 
 REPORT_REASONS = [
     'MODERATION_FOUL_LANGUAGE', 'MODERATION_PERSONAL_INFO',
