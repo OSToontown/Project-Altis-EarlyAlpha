@@ -1,6 +1,7 @@
 from direct.gui.DirectGui import *
 from pandac.PandaModules import *
 import Quests
+import random
 from toontown.toon import NPCToons
 from toontown.toon import ToonHead
 from toontown.toon import ToonDNA
@@ -11,7 +12,7 @@ from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import TTLocalizer
 import string, types
 from toontown.toon import LaffMeter
-from toontown.toonbase.ToontownBattleGlobals import AvPropsNew
+from toontown.toonbase.ToontownBattleGlobals import AvPropsNew, Tracks
 from toontown.toontowngui.TeaserPanel import TeaserPanel
 from direct.directnotify import DirectNotifyGlobal
 from toontown.toontowngui import TTDialog
@@ -419,12 +420,13 @@ class QuestPoster(DirectFrame):
         elif quest.getType() == Quests.TrackChoiceQuest:
             frameBgColor = 'green'
             invModel = loader.loadModel('phase_3.5/models/gui/inventory_icons')
-            track1, track2 = quest.getChoices()
-            lIconGeom = invModel.find('**/' + AvPropsNew[track1][1])
+            posChoices = []
+            access = base.localAvatar.getTrackAccess()
+            for i in xrange(len(Tracks)):
+                if access[i] == 0:
+                    posChoices.append(i)
+            lIconGeom = invModel.find('**/' + AvPropsNew[random.choice(posChoices)][1])
             if not fComplete:
-                auxText = TTLocalizer.QuestPosterAuxOr
-                lPos.setX(-0.18)
-                rIconGeom = invModel.find('**/' + AvPropsNew[track2][1])
                 infoText = TTLocalizer.QuestPageNameAndDestination % (toNpcName,
                  toNpcBuildingName,
                  toNpcStreetName,

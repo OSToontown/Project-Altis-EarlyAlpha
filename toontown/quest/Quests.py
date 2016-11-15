@@ -1714,9 +1714,6 @@ class TrackChoiceQuest(Quest):
     def __init__(self, id, quest):
         Quest.__init__(self, id, quest)
 
-    def getChoices(self):
-        return (self.quest[0], self.quest[1])
-
     def getCompletionStatus(self, av, questDesc, npc = None):
         questId, fromNpcId, toNpcId, rewardId, toonProgress = questDesc
         if npc and npcMatches(toNpcId, npc):
@@ -1730,22 +1727,11 @@ class TrackChoiceQuest(Quest):
         else:
             return NotChosenString
 
-    def getObjectiveStrings(self):
-        trackA, trackB = self.getChoices()
-        trackAName = ToontownBattleGlobals.Tracks[trackA].capitalize()
-        trackBName = ToontownBattleGlobals.Tracks[trackB].capitalize()
-        return [trackAName, trackBName]
-
     def getString(self):
-        return TTLocalizer.QuestsTrackChoiceQuestString % {'trackA': self.getObjectiveStrings()[0],
-         'trackB': self.getObjectiveStrings()[1]}
+        return TTLocalizer.QuestsTrackChoiceQuestString
 
     def getSCStrings(self, toNpcId, progress):
-        trackA, trackB = self.getChoices()
-        trackAName = ToontownBattleGlobals.Tracks[trackA].capitalize()
-        trackBName = ToontownBattleGlobals.Tracks[trackB].capitalize()
-        return [TTLocalizer.QuestsTrackChoiceQuestSCString % {'trackA': trackAName,
-          'trackB': trackBName}, TTLocalizer.QuestsTrackChoiceQuestMaybeSCString % trackAName, TTLocalizer.QuestsTrackChoiceQuestMaybeSCString % trackBName] + getVisitSCStrings(toNpcId)
+        return [TTLocalizer.QuestsTrackChoiceQuestSCString] + getVisitSCStrings(toNpcId)
 
     def getHeadlineString(self):
         return TTLocalizer.QuestsTrackChoiceQuestHeadline
@@ -2280,7 +2266,7 @@ QuestDict = {
        TTLocalizer.QuestDialogDict[172]),
  400: (TT_TIER + 1,
        Cont,
-       (TrackChoiceQuest, ToontownBattleGlobals.ZAP_TRACK, ToontownBattleGlobals.ZAP_TRACK),
+       (TrackChoiceQuest,),
        Same,
        Same,
        400,
@@ -3504,7 +3490,7 @@ QuestDict = {
 		TTLocalizer.QuestDialogDict[1307]),
  401: (DD_TIER,
        Cont,
-       (TrackChoiceQuest),
+       (TrackChoiceQuest,),
        Same,
        Same,
        400,
@@ -6125,7 +6111,7 @@ QuestDict = {
         DefaultDialog),
  4001: (DG_TIER,
         Start,
-        (TrackChoiceQuest),
+        (TrackChoiceQuest,),
         Any,
         ToonHQ,
         400,
@@ -6133,7 +6119,7 @@ QuestDict = {
         TTLocalizer.QuestDialogDict[4001]),
  4002: (DG_TIER,
         Start,
-        (TrackChoiceQuest),
+        (TrackChoiceQuest,),
         Any,
         ToonHQ,
         400,
@@ -7864,7 +7850,7 @@ QuestDict = {
         TTLocalizer.QuestDialogDict[5260]),
  5001: (BR_TIER,
         Cont,
-        (TrackChoiceQuest),
+        (TrackChoiceQuest,),
         Same,
         Same,
         400,
@@ -7872,7 +7858,7 @@ QuestDict = {
         TTLocalizer.TheBrrrghTrackQuestDict),
  5002: (BR_TIER,
         Cont,
-        (TrackChoiceQuest),
+        (TrackChoiceQuest,),
         Same,
         Same,
         400,
@@ -7880,7 +7866,7 @@ QuestDict = {
         TTLocalizer.TheBrrrghTrackQuestDict),
  5003: (BR_TIER,
         Cont,
-        (TrackChoiceQuest),
+        (TrackChoiceQuest,),
         Same,
         Same,
         400,
@@ -7888,7 +7874,7 @@ QuestDict = {
         TTLocalizer.TheBrrrghTrackQuestDict),
  5004: (BR_TIER,
         Cont,
-        (TrackChoiceQuest),
+        (TrackChoiceQuest,),
         Same,
         Same,
         400,
@@ -7896,7 +7882,7 @@ QuestDict = {
         TTLocalizer.TheBrrrghTrackQuestDict),
  5005: (BR_TIER,
         Cont,
-        (TrackChoiceQuest),
+        (TrackChoiceQuest,),
         Same,
         Same,
         400,
@@ -7904,7 +7890,7 @@ QuestDict = {
         TTLocalizer.TheBrrrghTrackQuestDict),
  5006: (BR_TIER,
         Cont,
-        (TrackChoiceQuest),
+        (TrackChoiceQuest,),
         Same,
         Same,
         400,
@@ -7912,7 +7898,7 @@ QuestDict = {
         TTLocalizer.TheBrrrghTrackQuestDict),
  5007: (BR_TIER,
         Cont,
-        (TrackChoiceQuest),
+        (TrackChoiceQuest,),
         Same,
         Same,
         400,
@@ -7920,7 +7906,7 @@ QuestDict = {
         TTLocalizer.TheBrrrghTrackQuestDict),
  5008: (BR_TIER,
         Cont,
-        (TrackChoiceQuest),
+        (TrackChoiceQuest,),
         Same,
         Same,
         400,
