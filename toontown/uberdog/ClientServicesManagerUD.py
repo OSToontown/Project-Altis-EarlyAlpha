@@ -50,8 +50,10 @@ class LocalAccountDB:
                       'databaseId': cookie})
         else:
             # Nope, let's return w/o account ID:
+            # Since this is for live, we can't let them create accounts on the fly'
             callback({'success': False,
                       'reason': 'Unlinked Cookie Specified!'})
+                      # Call back to the account sevrer here and blackhole their IP for a lil while
             return
 
     def storeAccountID(self, databaseId, accountId, callback):
