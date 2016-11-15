@@ -2086,40 +2086,45 @@ AvatarDetailPanelPlayerShort = '%(player)s\nWorld: %(world)s\nLocation: %(locati
 AvatarDetailPanelRealLife = 'Offline'
 AvatarDetailPanelOnline = 'District: %(district)s\nLocation: %(location)s'
 AvatarDetailPanelOnlinePlayer = 'District: %(district)s\nLocation: %(location)s\nPlayer: %(player)s'
-AvatarDetailPanelOffline = 'District: offline\nLocation: offline\nLast Seen: %(last_seen)s'
+AvatarDetailPanelOffline = 'District: offline\nLocation: offline'
 
 import time
-def getLastSeenString(timestamp):
-    # use int() to round down
-    seconds_passed = int(time.time()) - int(timestamp)
-    if timestamp == 0:
-        # This is the default. It means the db never had an update for lastSeen.
-        return "Never"
-    elif seconds_passed < 60:
-        return "Less than a minute ago"
-    elif seconds_passed < 60*2: # less than 2 minutes
-        return "1 minute ago"
-    elif seconds_passed < 60*60: # less than 1 hour
-        return "%d minutes ago" % int(seconds_passed/60)
-    elif seconds_passed < 60*60*2: # less than 2 hours
-        return "1 hour ago"
-    elif seconds_passed < 60*60*24: # less than 1 day
-        return "%d hours ago" % int(seconds_passed/(60*60))
-    elif seconds_passed < 60*60*24*2: # less than 2 days
-        return "1 day ago"
-    # optional: at this stage we could do weeks, but seems pointless.
-    # we also now pretend that each month always has 30 days.
-    elif seconds_passed < 60*60*24*30: # less than a month
-        return "%d days ago" % int(seconds_passed/(60*60*24))
-    elif seconds_passed < 60*60*24*30*2: # less than 2 months
-        return "1 month ago"
-    # assume 1 year = 365 days (ignoring .25 / leap years)
-    elif seconds_passed < 60*60*24*365: # less than a year
-        return "%d months ago" % int(seconds_passed/(60*60*24*30))
-    elif seconds_passed < 60*60*24*365*2: # less than 2 years
-        return "1 year ago"
+
+def getTimeString(timestamp, past = None):
+    if past:
+        seconds = int(time.time()) - int(timestamp)
     else:
-        return "A very long time ago... :("
+        seconds = int(timestamp) - int(time.time())
+    if timestamp == 0:
+        return 'Never'
+    else:
+        if seconds < 60:
+            string = 'Less than a minute'
+        elif seconds < 120:
+            string = '1 minute'
+        elif seconds < 3600:
+            string = '%d minutes' % int(seconds / 60)
+        elif seconds < 7200:
+            string = '1 hour'
+        elif seconds < 86400:
+            string = '%d hours' % int(seconds / 3600)
+        elif seconds < 172800:
+            string = '1 day'
+        elif seconds < 2592000:
+            string = '%d days' % int(seconds / 86400)
+        elif seconds < 5184000:
+            string = '1 month'
+        elif seconds < 31536000:
+            string = '%d months' % int(seconds / 2592000)
+        elif seconds < 63072000:
+            string = '1 year'
+        else:
+            if past:
+                return 'A very long time ago... :-('
+            return 'a long time'
+        if past:
+            return string + ' ago'
+        return string
 
 AvatarShowPlayer = 'Show Player'
 OfflineLocation = 'Offline'
@@ -5962,10 +5967,10 @@ QuestScript101_8 = 'Oh! You also need a Laff meter!'
 QuestScript101_9 = "If your Laff meter gets too low, you'll be sad!"
 QuestScript101_10 = 'A happy Toon is a healthy Toon!'
 QuestScript101_11 = "OH NO! There's a Cog outside my shop!"
-QuestScript101_12 = 'HELP ME, PLEASE! Defeat that Cog!'
+QuestScript101_12 = 'HELP ME, PLEASE! Defeat the Cog!'
 QuestScript101_13 = 'Here is your first ToonTask!'
-QuestScript101_14 = 'Hurry up! Go defeat that Flunky!'
-QuestScript110_1 = 'Good work defeating that Flunky. Let me give you a Shticker Book...'
+QuestScript101_14 = 'Hurry up! Go defeat the Flunky!'
+QuestScript110_1 = 'Good work defeating the Flunky. Let me give you a Shticker Book...'
 QuestScript110_2 = 'The book is full of good stuff.'
 QuestScript110_3 = "Open it, and I'll show you."
 QuestScript110_4 = "The map shows where you've been."

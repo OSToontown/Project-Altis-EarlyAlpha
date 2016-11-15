@@ -8,6 +8,7 @@ from toontown.fishing.DistributedFishingPondAI import DistributedFishingPondAI
 from toontown.fishing.DistributedFishingTargetAI import DistributedFishingTargetAI
 from toontown.fishing.DistributedPondBingoManagerAI import DistributedPondBingoManagerAI
 from toontown.fishing import FishingTargetGlobals
+from toontown.fishing import FishGlobals
 from toontown.safezone.DistributedFishingSpotAI import DistributedFishingSpotAI
 from toontown.safezone.SZTreasurePlannerAI import SZTreasurePlannerAI
 from toontown.safezone import TreasureGlobals
@@ -23,7 +24,7 @@ class DistributedEstateAI(DistributedObjectAI):
         self.toons = [0, 0, 0, 0, 0, 0]
         self.items = [[], [], [], [], [], []]
         self.decorData = []
-        self.estateType = 0 # NOT SURE IF THIS HAS ANY USE BUT THANKS DISNEY
+        self.estateType = 0 
         self.cloudType = 0
         self.dawnTime = 0
         self.lastEpochTimestamp = 0
@@ -382,6 +383,18 @@ class DistributedEstateAI(DistributedObjectAI):
 
     def completeFlowerSale(self, todo0):
         pass
+
+    def completeFishSale(self):
+        avId = self.air.getAvatarIdFromSender()
+        av = self.air.doId2do.get(avId)
+        
+        if not av:
+            return
+
+        if self.air.fishManager.creditFishTank(av):
+            self.sendUpdateToAvatarId(avId, 'thankSeller', [ToontownGlobals.FISHSALE_TROPHY, len(av.fishCollection), FishGlobals.getTotalNumFish()])
+        else:
+            self.sendUpdateToAvatarId(avId, 'thankSeller', [ToontownGlobals.FISHSALE_COMPLETE, 0, 0])
 
     def awardedTrophy(self, todo0):
         pass
