@@ -525,7 +525,7 @@ def __doTesla(zap, delay, fShowStun):
     toonTrack = Sequence(Func(MovieUtil.showProps, buttons, hands), Func(toon.headsUp, battle, suitPos), ActorInterval(toon, 'pushbutton'), Func(MovieUtil.removeProps, buttons), Func(toon.loop, 'neutral'), Func(toon.setHpr, battle, origHpr))
     tracks.append(toonTrack)
     coil = globalPropPool.getProp('tesla')
-    coilPos = Point3(toon.getX(), 2, 0)
+    coilPos = Point3(toon.getX(battle), 2, 0)
     coilHpr = Point3(0, 0, 0)
     propTrack = Sequence()
     propTrack.append(Func(coil.show))
