@@ -47,14 +47,12 @@ class LocalAccountDB:
             # Return it w/ account ID!
             callback({'success': True,
                       'accountId': int(self.dbm[cookie]),
-                      'databaseId': cookie,
-                      'adminAccess': 507})
+                      'databaseId': cookie})
         else:
             # Nope, let's return w/o account ID:
-            callback({'success': True,
-                      'accountId': 0,
-                      'databaseId': cookie,
-                      'adminAccess': 507})
+            callback({'success': False,
+                      'reason': 'Unlinked Cookie Specified!'})
+            return
 
     def storeAccountID(self, databaseId, accountId, callback):
         self.dbm[databaseId] = str(accountId)
