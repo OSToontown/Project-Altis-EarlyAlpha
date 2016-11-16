@@ -93,6 +93,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         self.partyManager = None
         self.inGameNewsMgr = None
         self.whitelistMgr = None
+        self.defaultShard = 0
 
         self.toontownTimeManager = ToontownTimeManager.ToontownTimeManager()
         self.csm = self.generateGlobalObject(OtpDoGlobals.OTP_DO_ID_CLIENT_SERVICES_MANAGER, 'ClientServicesManager')
@@ -470,7 +471,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
 
     def enterPlayingGame(self, *args, **kArgs):
         OTPClientRepository.OTPClientRepository.enterPlayingGame(self, *args, **kArgs)
-        self.gameFSM.request('waitOnEnterResponses', [None,
+        self.gameFSM.request('waitOnEnterResponses', [self.defaultShard,
          base.localAvatar.defaultZone,
          base.localAvatar.defaultZone,
          -1])

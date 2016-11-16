@@ -32,7 +32,7 @@ class ToontownLoadingScreen():
         self.background.setScale(2, 1, 1)
         self.background.setBin('background', 1)
         self.background.show()
-        self.background.wrtReparentTo(self.loadingGui)
+        self.background.reparentTo(self.loadingGui)
         base.graphicsEngine.renderFrame()
         self.logo = OnscreenImage(
             image='phase_3/maps/toontown-logo.png',

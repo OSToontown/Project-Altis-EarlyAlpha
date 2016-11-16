@@ -23,6 +23,7 @@ from toontown.toontowngui import TTDialog
 from toontown.toontowngui.TTGui import btnDn, btnRlvr, btnUp
 from toontown.toontowngui.TTDialog import *
 import PickAToonOptions
+from toontown.pickatoon import ShardPicker
 
 COLORS = (Vec4(0.917, 0.164, 0.164, 1),
  Vec4(0.152, 0.75, 0.258, 1),
@@ -57,6 +58,7 @@ class PickAToon:
         self.doneEvent = doneEvent
         self.jumpIn = None
         self.optionsMgr = PickAToonOptions.PickAToonOptions()
+        self.shardPicker = ShardPicker.ShardPicker()
         return
 
     def skyTrack(self, task):
@@ -110,11 +112,16 @@ class PickAToon:
         self.optionsButton.reparentTo(base.a2dBottomRight)
         self.optionsButton.setPos(-0.25, 0, 0.075)
         
+        # Shard Selector Button
+        self.shardsButton = DirectButton(image=(quitHover, quitHover, quitHover), relief=None, text="Districts", text_font=ToontownGlobals.getSignFont(), text_fg=(0.977, 0.816, 0.133, 1), text_pos=TTLocalizer.ACquitButtonPos, text_scale=0.08, image_scale=1, image1_scale=1.05, image2_scale=1.05, scale=1.05, pos=(1.08, 0, -0.907), command=self.openShardPicker)
+        self.shardsButton.reparentTo(base.a2dBottomLeft)
+        self.shardsButton.setPos(0.25, 0, 0.2)
+        
         gui.removeNode()
         gui2.removeNode()
         newGui.removeNode()
 
-		# Area toon is in
+        # Area toon is in
         self.area = OnscreenText(parent=self.patNode2d, font=ToontownGlobals.getToonFont(),
                                  pos=(-.1, -.1), scale=.075, text='', shadow=(0, 0, 0, 1), fg=COLORS[self.selectedToon])
 
@@ -319,6 +326,9 @@ class PickAToon:
         del self.quitButton
         self.optionsButton.destroy()
         del self.optionsButton
+        self.shardsButton.destroy()
+        del self.shardsButton
+        self.shardPicker.unload()
         del self.avatarList
         self.toon.removeNode()
         del self.toon
@@ -358,7 +368,6 @@ class PickAToon:
         messenger.send(self.doneEvent, [self.doneStatus])
 
     def openOptions(self):
-        #base.camera.posHprInterval(0.5, Point3(HQ_POS), VBase3(HQ_HPR), blendType = 'easeInOut').start() # ALTIS: This crashes the game for some reason, it worked on my game though
         self.optionsMgr.showOptions()
         self.optionsButton["text"] = "Back"
         self.optionsButton["command"] = self.hideOptions
@@ -368,10 +377,27 @@ class PickAToon:
             self.deleteButton.hide()
 
     def hideOptions(self):
-        #base.camera.posHprInterval(0.5, Point3(MAIN_POS), VBase3(MAIN_HPR), blendType = 'easeInOut').start() # ALTIS: This crashes the game for some reason, it worked on my game though
         self.optionsMgr.hideOptions()
         self.optionsButton["text"] = "Options"
         self.optionsButton["command"] = self.openOptions
+        self.patNode2d.show()
+        self.patNode.show()
+        if self.haveToon:
+            self.deleteButton.show()
+            
+    def openShardPicker(self):
+        self.shardPicker.showPicker()
+        self.shardsButton["text"] = "Back"
+        self.shardsButton["command"] = self.hideShardPicker
+        self.patNode2d.hide()
+        self.patNode.hide()
+        if self.haveToon:
+            self.deleteButton.hide()
+
+    def hideShardPicker(self):
+        self.shardPicker.hidePicker()
+        self.shardsButton["text"] = "Districts"
+        self.shardsButton["command"] = self.openShardPicker
         self.patNode2d.show()
         self.patNode.show()
         if self.haveToon:
