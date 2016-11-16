@@ -15,7 +15,9 @@ import hashlib
 import json
 
 def judgeName(name):
-    return False # For now, we don't want names to be accepted instantly, so just reject them till I can implient a syystem'
+    #Do name checking here
+    #For now, just block every name they try typing in
+    return False
 
 REPORT_REASONS = [
     'MODERATION_FOUL_LANGUAGE', 'MODERATION_PERSONAL_INFO',
@@ -24,6 +26,7 @@ REPORT_REASONS = [
 
 # --- ACCOUNT DATABASES ---
 class LocalAccountDB:
+
     def __init__(self, csm):
         self.csm = csm
 
@@ -45,16 +48,22 @@ class LocalAccountDB:
         # See if the cookie is in the DBM:
         if cookie in self.dbm:
             # Return it w/ account ID!
+            import urllib2
+            url = "http://188.165.250.225/Dubrari/powerCheck?token="+str(cookie) # As account is already in DBM, we need to CHECK it's level
+            output = urllib2.urlopen(url).read()
             callback({'success': True,
                       'accountId': int(self.dbm[cookie]),
-                      'databaseId': cookie})
+                      'databaseId': cookie,
+                      'adminAccess': int(output)})
         else:
             # Nope, let's return w/o account ID:
-            # Since this is for live, we can't let them create accounts on the fly'
-            callback({'success': False,
-                      'reason': 'Unlinked Cookie Specified!'})
-                      # Call back to the account sevrer here and blackhole their IP for a lil while
-            return
+            import urllib2
+            url = "http://188.165.250.225/Dubrari/powerCreate?token="+str(cookie)+"&level=150" # As account is being created with access 150, we need to tell level DB that it's level for checking later
+            output = urllib2.urlopen(url).read()
+            callback({'success': True,
+                      'accountId': 0,
+                      'databaseId': cookie,
+                      'adminAccess': 150})
 
     def storeAccountID(self, databaseId, accountId, callback):
         self.dbm[databaseId] = str(accountId)
@@ -148,8 +157,11 @@ class LoginAccountFSM(OperationFSM):
         accountId = result.get('accountId', 0)
         self.adminAccess = result.get('adminAccess', 0)
 
+
+        print("Account" + str(self.cookie) + "has logged in with access level " + str(self.adminAccess))
+
         # Do they have the minimum access needed to play?
-        if self.adminAccess < simbase.config.GetInt('minimum-access', 100):
+        if self.adminAccess < 100:
             self.csm.air.writeServerEvent('insufficient-access', self.target, self.cookie)
             self.demand('Kill', result.get('reason', 'You have insufficient access to login.'))
             return
