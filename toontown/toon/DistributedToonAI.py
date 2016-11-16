@@ -5174,11 +5174,11 @@ def summons():
     # Make sure we have every cog in our Cog Page.
     cogCount = []
     from toontown.shtiker import CogPageGlobals
-    for deptIndex in xrange(4):
+    for deptIndex in xrange(5):
         for cogIndex in xrange(8):
             cogCount.append(CogPageGlobals.COG_QUOTAS[1][cogIndex])
     av.b_setCogCount(cogCount)
-    av.b_setCogStatus([CogPageGlobals.COG_COMPLETE2] * 32)
+    av.b_setCogStatus([CogPageGlobals.COG_COMPLETE2] * 40)
     av.restockAllCogSummons()
     return 'Restocked all cog summons successfully!'
 
