@@ -17,6 +17,8 @@ class GZHoodAI(HoodAI):
         self.golfKarts = []
 
         self.createZone()
+        self.createTime()
+        self.createRain()
 
     def createZone(self):
         self.spawnObjects()
