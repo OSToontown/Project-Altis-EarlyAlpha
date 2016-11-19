@@ -29,6 +29,7 @@ from panda3d.core import TrueClock
 import otp.ai.DiagnosticMagicWords
 import time
 from toontown.options import GraphicsOptions
+from direct.filter.CommonFilters import CommonFilters
 
 class ToonBase(OTPBase.OTPBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('ToonBase')
@@ -151,6 +152,9 @@ class ToonBase(OTPBase.OTPBase):
         self.oldY = max(1, base.win.getYSize())
         self.aspectRatio = float(self.oldX) / self.oldY
         self.localAvatarStyle = None
+        self.filters = CommonFilters(self.win, self.cam)
+        self.filters.setBlurSharpen(1.2)
+        self.filters.setBloom(blend=(0.3, 0.4, 0.3, 0.0), mintrigger=0.6, maxtrigger=1.0, desat=0.6, intensity=0.6, size="small")
 
         self.wantCustomControls = settings.get('want-Custom-Controls', False)
 
