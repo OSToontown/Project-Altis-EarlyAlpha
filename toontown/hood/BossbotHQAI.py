@@ -1,5 +1,6 @@
 from CogHoodAI import CogHoodAI
 from toontown.toonbase import ToontownGlobals
+from toontown.suit import DistributedSuitPlannerAI
 from toontown.suit.DistributedBossbotBossAI import DistributedBossbotBossAI
 from toontown.building.DistributedBBElevatorAI import DistributedBBElevatorAI
 from toontown.coghq.DistributedCogHQDoorAI import DistributedCogHQDoorAI
@@ -17,6 +18,7 @@ class BossbotHQAI(CogHoodAI):
         self.notify.info("Creating zone... Bossbot HQ")
         self.karts = []
         self.createZone()
+        self.suitPlanners = []
 
     def createDoor(self):
         interiorDoor = DistributedCogHQDoorAI(self.air, 0, DoorTypes.INT_COGHQ, self.HOOD, doorIndex=0)
@@ -47,6 +49,9 @@ class BossbotHQAI(CogHoodAI):
 
         # Create CEO elevator.
         self.ceoElevator = self.createElevator(DistributedBBElevatorAI, self.lobbyMgr, ToontownGlobals.BossbotLobby, ToontownGlobals.BossbotLobby, boss=True)
+
+        # Create Suit Planners in the cog playground
+        self.createSuitPlanner(self.HOOD)
 
         # Make our doors.
         self.createDoor()

@@ -238,7 +238,7 @@ class InventoryNewNEW(InventoryBase.InventoryBase, DirectFrame):
         self.detailDataLabel = DirectLabel(parent=self.circleFrame, text='', text_fg=(0.05, 0.14, 0.4, 1), scale=0.03, pos=(0, 0, -0.1), text_font=getInterfaceFont(), text_align=TextNode.ACenter, relief=None)
         self.detailCreditLabel = DirectLabel(parent=self.circleFrame, text=TTLocalizer.InventorySkillCreditNone, text_fg=(0.05, -0.14, -0.2, 1), scale=0.04, pos=(0, 0, 0.05), text_font=getInterfaceFont(), text_align=TextNode.ACenter, relief=None)
         self.detailCreditLabel.hide()
-        self.totalLabel = DirectLabel(text='', parent=self.detailFrame, pos=(0, 0, -0.095), scale=0.05, text_fg=(0.05, 0.14, 0.4, 1), text_font=getInterfaceFont(), relief=None)
+        self.totalLabel = DirectLabel(text='', parent=self.circleFrame, pos=(0, 0, 0.02), scale=0.05, text_fg=(0.05, 0.14, 0.4, 1), text_font=getInterfaceFont(), relief=None)
         self.dialog = None
         self.updateTotalPropsText()
         self.trackRows = []
@@ -280,6 +280,7 @@ class InventoryNewNEW(InventoryBase.InventoryBase, DirectFrame):
                 self.buttons[track].append(button)
         for x in xrange(0, len(self.trackRows)):
             self.hideTrack(x)
+            self.trackRows[x].setBin("gui-popup", 50)
         for x in xrange(0, len(self.trackTabs)):
             self.trackTabs[x].hide()
         for x in xrange(0, len(self.trackTabs)):
