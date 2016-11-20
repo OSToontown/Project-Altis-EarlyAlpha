@@ -301,7 +301,8 @@ QuestsBuildingQuestFloorNumbers = ('',
  'two+',
  'three+',
  'four+',
- 'five+')
+ 'five+',
+ 'six')
 QuestsBuildingQuestBuilding = 'Building'
 QuestsBuildingQuestBuildings = 'Buildings'
 QuestsBuildingQuestHeadline = 'DEFEAT'
