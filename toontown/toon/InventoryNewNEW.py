@@ -1249,6 +1249,11 @@ class InventoryNewNEW(InventoryBase.InventoryBase, DirectFrame):
                     self.trackBars[track]['value'] = curExp
                 for level in range(0, len(Levels[track])):
                     self.updateButton(track, level)
+                for x in xrange(0, len(Tracks)):
+                    if self.toon.hasTrackAccess(x):
+                        self.trackTabs[x].show()
+                    else:
+                        self.trackTabs[x].hide()
 
         elif track != None and level != None:
             self.updateButton(track, level)
