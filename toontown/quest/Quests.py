@@ -5859,7 +5859,7 @@ QuestDict = {
         Cont,
         (BuildingQuest,
          Anywhere,
-         5,
+         2,
          Any,
          1),
         Same,
