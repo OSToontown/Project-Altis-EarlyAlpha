@@ -26,13 +26,12 @@ class ToontownLoadingScreen():
 
     def begin(self, range, label, gui, tipCategory, zoneId):
         self.loadingGui = aspect2d.attachNewNode('loadingUI')
-        self.loadingGui.reparentTo(aspect2d, NO_FADE_SORT_INDEX)
+        self.loadingGui.reparentTo(aspect2d, 4000)
         base.graphicsEngine.renderFrame()
-        self.background = OnscreenImage(image = 'phase_3.5/maps/loading/toon.jpg', parent = aspect2d)
+        self.background = OnscreenImage(image = 'phase_3.5/maps/loading/toon.jpg', parent = self.loadingGui)
         self.background.setScale(2, 1, 1)
         self.background.setBin('background', 1)
         self.background.show()
-        self.background.reparentTo(self.loadingGui)
         base.graphicsEngine.renderFrame()
         self.logo = OnscreenImage(
             image='phase_3/maps/toontown-logo.png',
