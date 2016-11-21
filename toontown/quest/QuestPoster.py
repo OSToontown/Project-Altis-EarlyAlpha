@@ -568,6 +568,72 @@ class QuestPoster(DirectFrame):
                 rIconGeom = None
                 lIconGeomScale = rIconGeomScale
                 rIconGeomScale = 1
+        elif quest.getType() == Quests.StageQuest:
+            frameBgColor = 'blue'
+            bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
+            lIconGeom = bookModel.find('**/LawBotStage')
+            bookModel.removeNode()
+            lIconGeomScale = 0.13
+            if not fComplete:
+                infoText = quest.getLocationName()
+                if infoText == '':
+                    infoText = TTLocalizer.QuestPosterAnywhere
+        elif quest.getType() == Quests.StageNewbieQuest:
+            frameBgColor = 'blue'
+            bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
+            rIconGeom = bookModel.find('**/LawBotStage')
+            bookModel.removeNode()
+            rIconGeomScale = 0.13
+            if not fComplete:
+                headlineString = TTLocalizer.QuestsNewbieQuestHeadline
+                captions = [quest.getCaption()]
+                captions.append(map(string.capwords, quest.getObjectiveStrings()))
+                auxText = TTLocalizer.QuestsCogNewbieQuestAux
+                lPos.setX(-0.18)
+                self.laffMeter = self.createLaffMeter(quest.getNewbieLevel())
+                self.laffMeter.setScale(0.04)
+                lIconGeom = None
+                infoText = quest.getLocationName()
+                if infoText == '':
+                    infoText = TTLocalizer.QuestPosterAnywhere
+            else:
+                lIconGeom = rIconGeom
+                rIconGeom = None
+                lIconGeomScale = rIconGeomScale
+                rIconGeomScale = 1
+        elif quest.getType() == Quests.ClubQuest:
+            frameBgColor = 'blue'
+            bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
+            lIconGeom = bookModel.find('**/BossBotKart')
+            bookModel.removeNode()
+            lIconGeomScale = 0.13
+            if not fComplete:
+                infoText = quest.getLocationName()
+                if infoText == '':
+                    infoText = TTLocalizer.QuestPosterAnywhere
+        elif quest.getType() == Quests.ClubNewbieQuest:
+            frameBgColor = 'blue'
+            bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
+            rIconGeom = bookModel.find('**/BossBotKart')
+            bookModel.removeNode()
+            rIconGeomScale = 0.13
+            if not fComplete:
+                headlineString = TTLocalizer.QuestsNewbieQuestHeadline
+                captions = [quest.getCaption()]
+                captions.append(map(string.capwords, quest.getObjectiveStrings()))
+                auxText = TTLocalizer.QuestsCogNewbieQuestAux
+                lPos.setX(-0.18)
+                self.laffMeter = self.createLaffMeter(quest.getNewbieLevel())
+                self.laffMeter.setScale(0.04)
+                lIconGeom = None
+                infoText = quest.getLocationName()
+                if infoText == '':
+                    infoText = TTLocalizer.QuestPosterAnywhere
+            else:
+                lIconGeom = rIconGeom
+                rIconGeom = None
+                lIconGeomScale = rIconGeomScale
+                rIconGeomScale = 1
         elif quest.getType() == Quests.CogPartQuest:
             frameBgColor = 'green'
             bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')

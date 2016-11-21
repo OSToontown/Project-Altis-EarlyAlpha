@@ -255,6 +255,12 @@ class Quest:
 
     def checkNumMints(self, num):
         self.check(1, 'invalid num mints: %s' % num)
+		
+    def checkNumStages(self, num):
+        self.check(1, 'invalid num mints: %s' % num)
+		
+    def checkNumClubs(self, num):
+        self.check(1, 'invalid num mints: %s' % num)
 
     def checkNumCogParts(self, num):
         self.check(1, 'invalid num cog parts: %s' % num)
@@ -1298,6 +1304,156 @@ class MintNewbieQuest(MintQuest, NewbieQuest):
 
     def doesMintCount(self, avId, location, avList):
         if MintQuest.doesMintCount(self, avId, location, avList):
+            return self.getNumNewbies(avId, avList)
+        else:
+            return num
+			
+class StageQuest(LocationBasedQuest):
+    def __init__(self, id, quest):
+        LocationBasedQuest.__init__(self, id, quest)
+        self.checkNumStages(self.quest[1])
+
+    def getNumQuestItems(self):
+        return self.getNumStages()
+
+    def getNumStages(self):
+        return self.quest[1]
+
+    def getCompletionStatus(self, av, questDesc, npc = None):
+        questId, fromNpcId, toNpcId, rewardId, toonProgress = questDesc
+        questComplete = toonProgress >= self.getNumStages()
+        return getCompleteStatusWithNpc(questComplete, toNpcId, npc)
+
+    def getProgressString(self, avatar, questDesc):
+        if self.getCompletionStatus(avatar, questDesc) == COMPLETE:
+            return CompleteString
+        elif self.getNumStages() == 1:
+            return ''
+        else:
+            return TTLocalizer.QuestsStageQuestProgressString % {'progress': questDesc[4],
+             'num': self.getNumStages()}
+
+    def getObjectiveStrings(self):
+        count = self.getNumStages()
+        if count == 1:
+            text = TTLocalizer.QuestsStageQuestDesc
+        else:
+            text = TTLocalizer.QuestsStageQuestDescC % {'count': count}
+        return (text,)
+
+    def getString(self):
+        return TTLocalizer.QuestsStageQuestString % self.getObjectiveStrings()[0]
+
+    def getSCStrings(self, toNpcId, progress):
+        if progress >= self.getNumStages():
+            return getFinishToonTaskSCStrings(toNpcId)
+        count = self.getNumStages()
+        if count == 1:
+            objective = TTLocalizer.QuestsStageQuestDesc
+        else:
+            objective = TTLocalizer.QuestsStageQuestDescI
+        location = self.getLocationName()
+        return TTLocalizer.QuestsStageQuestSCString % {'objective': objective,
+         'location': location}
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsStageQuestHeadline
+
+    def doesStageCount(self, avId, location, avList):
+        return self.isLocationMatch(location)
+
+
+class StageNewbieQuest(StageQuest, NewbieQuest):
+    def __init__(self, id, quest):
+        StageQuest.__init__(self, id, quest)
+        self.checkNewbieLevel(self.quest[2])
+
+    def getNewbieLevel(self):
+        return self.quest[2]
+
+    def getString(self):
+        return NewbieQuest.getString(self)
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsNewbieQuestHeadline
+
+    def doesStageCount(self, avId, location, avList):
+        if StageQuest.doesStageCount(self, avId, location, avList):
+            return self.getNumNewbies(avId, avList)
+        else:
+            return num
+			
+class ClubQuest(LocationBasedQuest):
+    def __init__(self, id, quest):
+        LocationBasedQuest.__init__(self, id, quest)
+        self.checkNumClubs(self.quest[1])
+
+    def getNumQuestItems(self):
+        return self.getNumClubs()
+
+    def getNumClubs(self):
+        return self.quest[1]
+
+    def getCompletionStatus(self, av, questDesc, npc = None):
+        questId, fromNpcId, toNpcId, rewardId, toonProgress = questDesc
+        questComplete = toonProgress >= self.getNumClubs()
+        return getCompleteStatusWithNpc(questComplete, toNpcId, npc)
+
+    def getProgressString(self, avatar, questDesc):
+        if self.getCompletionStatus(avatar, questDesc) == COMPLETE:
+            return CompleteString
+        elif self.getNumClubs() == 1:
+            return ''
+        else:
+            return TTLocalizer.QuestsClubQuestProgressString % {'progress': questDesc[4],
+             'num': self.getNumClubs()}
+
+    def getObjectiveStrings(self):
+        count = self.getNumClubs()
+        if count == 1:
+            text = TTLocalizer.QuestsClubQuestDesc
+        else:
+            text = TTLocalizer.QuestsClubQuestDescC % {'count': count}
+        return (text,)
+
+    def getString(self):
+        return TTLocalizer.QuestsClubQuestString % self.getObjectiveStrings()[0]
+
+    def getSCStrings(self, toNpcId, progress):
+        if progress >= self.getNumClubs():
+            return getFinishToonTaskSCStrings(toNpcId)
+        count = self.getNumClubs()
+        if count == 1:
+            objective = TTLocalizer.QuestsClubQuestDesc
+        else:
+            objective = TTLocalizer.QuestsClubQuestDescI
+        location = self.getLocationName()
+        return TTLocalizer.QuestsClubQuestSCString % {'objective': objective,
+         'location': location}
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsClubQuestHeadline
+
+    def doesClubCount(self, avId, location, avList):
+        return self.isLocationMatch(location)
+
+
+class ClubNewbieQuest(ClubQuest, NewbieQuest):
+    def __init__(self, id, quest):
+        ClubQuest.__init__(self, id, quest)
+        self.checkNewbieLevel(self.quest[2])
+
+    def getNewbieLevel(self):
+        return self.quest[2]
+
+    def getString(self):
+        return NewbieQuest.getString(self)
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsNewbieQuestHeadline
+
+    def doesClubCount(self, avId, location, avList):
+        if ClubQuest.doesClubCount(self, avId, location, avList):
             return self.getNumNewbies(avId, avList)
         else:
             return num

@@ -143,7 +143,30 @@ class QuestManagerAI:
         toon.updateQuests()
 
     def toonDefeatedStage(self, toon, stageId, activeToonVictors):
-        pass
+        """
+        This method is called whenever a toon defeats Lawbot HQ stage.
+        N.B: This is called once for each toon that defeated the stage.
+        """
+        for index, quest in enumerate(self.__toonQuestsList2Quests(toon.quests)):
+            if isinstance(quest, Quests.StageQuest):
+                # Oh lookie here, a stage quest! I love me some Polos.
+                for x in xrange(quest.doesStageCount(toon.getDoId(), stageId, activeToonVictors)):
+                    # Nom nom nom nom, progress!
+                    self.__incrementQuestProgress(toon.quests[index])
+        toon.updateQuests()
+		
+    def toonDefeatedCountryClub(self, toon, countryClubId, activeToonVictors):
+        """
+        This method is called whenever a toon defeats Bossbot HQ country club.
+        N.B: This is called once for each toon that defeated the country club.
+        """
+        for index, quest in enumerate(self.__toonQuestsList2Quests(toon.quests)):
+            if isinstance(quest, Quests.ClubQuest):
+                # Oh lookie here, a country club quest! I love me some Polos.
+                for x in xrange(quest.doesClubCount(toon.getDoId(), countryClubId, activeToonVictors)):
+                    # Nom nom nom nom, progress!
+                    self.__incrementQuestProgress(toon.quests[index])
+        toon.updateQuests()
 
     def toonRodeTrolleyFirstTime(self, toon):
         for index, quest in enumerate(self.__toonQuestsList2Quests(toon.quests)):
