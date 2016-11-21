@@ -245,7 +245,13 @@ class Quest:
         self.check(track in self._cogTracks, 'invalid building track: %s' % track)
 
     def checkBuildingFloors(self, floors):
-        self.check(floors >= 1 and floors <= 5, 'invalid num floors: %s' % floors)
+        self.check(floors >= 1 and floors <= 6, 'invalid num floors: %s' % floors)
+		
+    def checkNumCogdos(self, num):
+        self.check(1, 'invalid num buildings: %s' % num)
+
+    def checkCogdoTrack(self, track):
+        self.check(track in self._cogTracks, 'invalid building track: %s' % track)
 
     def checkNumFactories(self, num):
         self.check(1, 'invalid num factories: %s' % num)
@@ -1130,6 +1136,108 @@ class BuildingNewbieQuest(BuildingQuest, NewbieQuest):
         return TTLocalizer.QuestsNewbieQuestHeadline
 
     def doesBuildingCount(self, avId, avList):
+        return self.getNumNewbies(avId, avList)
+		
+class CogdoQuest(CogQuest):
+    trackCodes = ['c',
+     'l',
+     'm',
+     's',
+     'g']
+    trackNames = [TTLocalizer.Bossbot,
+     TTLocalizer.Lawbot,
+     TTLocalizer.Cashbot,
+     TTLocalizer.Sellbot,
+     TTLocalizer.Boardbot]
+
+    def __init__(self, id, quest):
+        CogQuest.__init__(self, id, quest)
+        self.checkNumCogdos(self.quest[1])
+        self.checkCogdoTrack(self.quest[2])
+
+    def getCogdoTrack(self):
+        return self.quest[2]
+
+    def getNumQuestItems(self):
+        return self.getNumCogdos()
+
+    def getNumCogdos(self):
+        return self.quest[1]
+
+    def getCompletionStatus(self, av, questDesc, npc = None):
+        questId, fromNpcId, toNpcId, rewardId, toonProgress = questDesc
+        questComplete = toonProgress >= self.getNumCogdos()
+        return getCompleteStatusWithNpc(questComplete, toNpcId, npc)
+
+    def getProgressString(self, avatar, questDesc):
+        if self.getCompletionStatus(avatar, questDesc) == COMPLETE:
+            return CompleteString
+        elif self.getNumCogdos() == 1:
+            return ''
+        else:
+            return TTLocalizer.QuestsCogdoQuestProgressString % {'progress': questDesc[4],
+             'num': self.getNumCogdos()}
+
+    def getObjectiveStrings(self):
+        count = self.getNumCogdos()
+        buildingTrack = self.getCogdoTrack()
+        if buildingTrack == Any:
+            type = TTLocalizer.Cog
+        else:
+            type = self.trackNames[self.trackCodes.index(buildingTrack)]
+        if count == 1:
+            text = TTLocalizer.QuestsCogdoQuestDesc
+        else:
+            text = TTLocalizer.QuestsCogdoQuestDescC
+        return (text % {'count': count,
+          'type': type},)
+
+    def getString(self):
+        return TTLocalizer.QuestsCogdoQuestString % self.getObjectiveStrings()[0]
+
+    def getSCStrings(self, toNpcId, progress):
+        if progress >= self.getNumCogdos():
+            return getFinishToonTaskSCStrings(toNpcId)
+        count = self.getNumCogdos()
+        buildingTrack = self.getCogdoTrack()
+        if buildingTrack == Any:
+            type = TTLocalizer.Cog
+        else:
+            type = self.trackNames[self.trackCodes.index(buildingTrack)]
+        if count == 1:
+            text = TTLocalizer.QuestsCogdoQuestDesc
+        else:
+            text = TTLocalizer.QuestsCogdoQuestDescI
+        objective = text % {'type': type,}
+        location = self.getLocationName()
+        return TTLocalizer.QuestsCogdoQuestSCString % {'objective': objective,
+         'location': location}
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsCogdoQuestHeadline
+
+    def doesCogCount(self, avId, cogDict, zoneId, avList):
+        return 0
+
+    def doesCogdoCount(self, avId, avList):
+        return 1
+
+
+class CogdoNewbieQuest(CogdoQuest, NewbieQuest):
+    def __init__(self, id, quest):
+        CogdoQuest.__init__(self, id, quest)
+        self.checkNewbieLevel(self.quest[3])
+
+    def getNewbieLevel(self):
+        return self.quest[3]
+
+    def getString(self):
+        return NewbieQuest.getString(self)
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsNewbieQuestHeadline
+
+    def doesCogdoCount(self, avId, avList):
         return self.getNumNewbies(avId, avList)
 
 
@@ -16762,6 +16870,39 @@ QuestDict = {
          Any,
          ToonTailor,
          1000,
+         NA,
+         DefaultDialog),
+ 10208: (ELDER_TIER,
+         Start,
+         (CogdoQuest,
+          Anywhere,
+          10,
+          Any),
+         Any,
+         ToonHQ,
+         Any,
+         NA,
+         DefaultDialog),
+ 10209: (ELDER_TIER,
+         Start,
+         (CogdoQuest,
+          Anywhere,
+          8,
+          's'),
+         Any,
+         ToonHQ,
+         Any,
+         NA,
+         DefaultDialog),
+ 10210: (ELDER_TIER,
+         Start,
+         (CogdoQuest,
+          Anywhere,
+          8,
+          'l'),
+         Any,
+         ToonHQ,
+         Any,
          NA,
          DefaultDialog),
  11000: (LAWBOT_HQ_TIER,

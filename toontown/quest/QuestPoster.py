@@ -178,9 +178,12 @@ class QuestPoster(DirectFrame):
         suit = None
         return head
 
-    def loadElevator(self, building, numFloors):
+    def loadElevator(self, building, numFloors, isCogdo=False):
         elevatorNodePath = hidden.attachNewNode('elevatorNodePath')
-        elevatorModel = loader.loadModel('phase_4/models/modules/elevator')
+        if not isCogdo:
+            elevatorModel = loader.loadModel('phase_4/models/modules/elevator')
+        else:
+            elevatorModel = loader.loadModel('phase_5/models/cogdominium/cogdominiumElevator')
         floorIndicator = [None,
          None,
          None,
@@ -480,6 +483,75 @@ class QuestPoster(DirectFrame):
                 bookModel.removeNode()
             if rIconGeom and track != Quests.Any:
                 self.loadElevator(rIconGeom, numFloors)
+                rIconGeom.setH(180)
+                self.fitGeometry(rIconGeom, fFlip=0)
+                rIconGeomScale = IMAGE_SCALE_SMALL
+            else:
+                rIconGeomScale = 0.13
+            if not fComplete:
+                headlineString = TTLocalizer.QuestsNewbieQuestHeadline
+                captions = [quest.getCaption()]
+                captions.append(map(string.capwords, quest.getObjectiveStrings()))
+                auxText = TTLocalizer.QuestsCogNewbieQuestAux
+                lPos.setX(-0.18)
+                self.laffMeter = self.createLaffMeter(quest.getNewbieLevel())
+                self.laffMeter.setScale(0.04)
+                lIconGeom = None
+                infoText = quest.getLocationName()
+                if infoText == '':
+                    infoText = TTLocalizer.QuestPosterAnywhere
+            else:
+                lIconGeom = rIconGeom
+                rIconGeom = None
+                lIconGeomScale = rIconGeomScale
+                rIconGeomScale = 1
+        elif quest.getType() == Quests.CogdoQuest:
+            frameBgColor = 'blue'
+            track = quest.getCogdoTrack()
+            numFloors = 1
+            if track == 'c':
+                lIconGeom = loader.loadModel('phase_5/models/cogdominium/tt_m_ara_cbe_fieldOfficeMoverShaker')
+            elif track == 'l':
+                lIconGeom = loader.loadModel('phase_5/models/cogdominium/tt_m_ara_cbe_fieldOfficeLegalEagle')
+            elif track == 'm':
+                lIconGeom = loader.loadModel('phase_5/models/cogdominium/tt_m_ara_cbe_fieldOfficeLoanShark')
+            elif track == 's':
+                lIconGeom = loader.loadModel('phase_5/models/cogdominium/tt_m_ara_cbe_fieldOfficeMoverShaker')
+            elif track == 'g':
+                lIconGeom = loader.loadModel('phase_5/models/cogdominium/tt_m_ara_cbe_fieldOfficeMoverShaker')
+            else:
+                bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
+                lIconGeom = bookModel.find('**/COG_building')
+                bookModel.removeNode()
+            if lIconGeom and track != Quests.Any:
+                self.loadElevator(lIconGeom, numFloors, isCogdo=True)
+                lIconGeom.setH(180)
+                self.fitGeometry(lIconGeom, fFlip=0)
+                lIconGeomScale = IMAGE_SCALE_SMALL
+            else:
+                lIconGeomScale = 0.13
+            if not fComplete:
+                infoText = quest.getLocationName()
+                if infoText == '':
+                    infoText = TTLocalizer.QuestPosterAnywhere
+        elif quest.getType() == Quests.CogdoNewbieQuest:
+            frameBgColor = 'blue'
+            track = quest.getCogdoTrack()
+            numFloors = 1
+            if track == 'c':
+                rIconGeom = loader.loadModel('phase_5/models/cogdominium/tt_m_ara_cbe_fieldOfficeMoverShaker')
+            elif track == 'l':
+                rIconGeom = loader.loadModel('phase_5/models/cogdominium/tt_m_ara_cbe_fieldOfficeLegalEagle')
+            elif track == 'm':
+                rIconGeom = loader.loadModel('phase_5/models/cogdominium/tt_m_ara_cbe_fieldOfficeLoanShark')
+            elif track == 's':
+                rIconGeom = loader.loadModel('phase_5/models/cogdominium/tt_m_ara_cbe_fieldOfficeMoverShaker')
+            else:
+                bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
+                rIconGeom = bookModel.find('**/COG_building')
+                bookModel.removeNode()
+            if rIconGeom and track != Quests.Any:
+                self.loadElevator(rIconGeom, numFloors, isCogdo=True)
                 rIconGeom.setH(180)
                 self.fitGeometry(rIconGeom, fFlip=0)
                 rIconGeomScale = IMAGE_SCALE_SMALL
