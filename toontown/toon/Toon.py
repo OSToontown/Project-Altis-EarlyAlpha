@@ -13,6 +13,7 @@ from otp.otpbase import OTPLocalizer
 from toontown.toonbase import TTLocalizer
 import random
 from toontown.effects import Wake
+from toontown.suit import Suit
 import TTEmote
 from otp.avatar import Emote
 import Motion
@@ -1199,26 +1200,29 @@ class Toon(Avatar.Avatar, ToonHead):
 
     def getDialogueArray(self):
         animalType = self.style.getType()
-        if animalType == 'dog':
-            dialogueArray = DogDialogueArray
-        elif animalType == 'cat':
-            dialogueArray = CatDialogueArray
-        elif animalType == 'horse':
-            dialogueArray = HorseDialogueArray
-        elif animalType == 'mouse':
-            dialogueArray = MouseDialogueArray
-        elif animalType == 'rabbit':
-            dialogueArray = RabbitDialogueArray
-        elif animalType == 'duck':
-            dialogueArray = DuckDialogueArray
-        elif animalType == 'monkey':
-            dialogueArray = MonkeyDialogueArray
-        elif animalType == 'bear':
-            dialogueArray = BearDialogueArray
-        elif animalType == 'pig':
-            dialogueArray = PigDialogueArray
+        if self.isDisguised:
+            dialogueArray = Suit.SuitDialogArray
         else:
-            dialogueArray = None
+            if animalType == 'dog':
+                dialogueArray = DogDialogueArray
+            elif animalType == 'cat':
+                dialogueArray = CatDialogueArray
+            elif animalType == 'horse':
+                dialogueArray = HorseDialogueArray
+            elif animalType == 'mouse':
+                dialogueArray = MouseDialogueArray
+            elif animalType == 'rabbit':
+                dialogueArray = RabbitDialogueArray
+            elif animalType == 'duck':
+                dialogueArray = DuckDialogueArray
+            elif animalType == 'monkey':
+                dialogueArray = MonkeyDialogueArray
+            elif animalType == 'bear':
+                dialogueArray = BearDialogueArray
+            elif animalType == 'pig':
+                dialogueArray = PigDialogueArray
+            else:
+                dialogueArray = None
         return dialogueArray
 
     def getShadowJoint(self):
@@ -4968,7 +4972,6 @@ class Toon(Avatar.Avatar, ToonHead):
             self.takeOffSuit()
         if launcher and not launcher.getPhaseComplete(5):
             return
-        from toontown.suit import Suit
         deptIndex = suitType
         suit = Suit.Suit()
         dna = SuitDNA.SuitDNA()
