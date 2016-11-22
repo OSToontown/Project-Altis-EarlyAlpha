@@ -26,38 +26,30 @@ class ToontownLoadingScreen():
 
     def begin(self, range, label, gui, tipCategory, zoneId):
         self.loadingGui = aspect2d.attachNewNode('loadingUI')
-        self.loadingGui.reparentTo(aspect2d, 4000)
-        base.graphicsEngine.renderFrame()
-        self.background = OnscreenImage(image = 'phase_3.5/maps/loading/toon.jpg', parent = self.loadingGui)
-        self.background.setScale(2, 1, 1)
-        self.background.setBin('background', 1)
-        self.background.show()
-        base.graphicsEngine.renderFrame()
+        self.loadingGui.reparentTo(aspect2d, 6000)
+
         self.logo = OnscreenImage(
             image='phase_3/maps/toontown-logo.png',
             scale=logoScale)
-        base.graphicsEngine.renderFrame()
         self.logo.setTransparency(TransparencyAttrib.MAlpha)
-        base.graphicsEngine.renderFrame()
         scale = self.logo.getScale()
-        base.graphicsEngine.renderFrame()
         self.logo.setPos(0, 0, 0.65)
         self.loadingObj = OnscreenText(text='', align=TextNode.ACenter, scale=0.04, style = 3, fg = (1, 1, 1, 1))
         self.loadingObj.setPos(0, -.8)
         self.loadingCircle = OnscreenImage(image = 'phase_3/maps/dmenu/loading_circle.png')
         self.loadingCircle.show()
-        base.graphicsEngine.renderFrame()
         self.loadingCircle.setScale(0.1)
         self.loadingCircle.setTransparency(TransparencyAttrib.MAlpha)
         self.loadingCircle.reparentTo(base.a2dBottomRight)
-        base.graphicsEngine.renderFrame()
         self.loadingCircle.setPos(-0.1, 0, 0.1)
-        base.graphicsEngine.renderFrame()
         self.loadingText = OnscreenText(text='Initializing Load...', align=TextNode.ACenter, scale=0.1, pos=(0, 0, 0))
         self.loadingText.reparentTo(aspect2d)
-        base.graphicsEngine.renderFrame()
         self.loadingText["text"] = label
         base.graphicsEngine.renderFrame()
+        self.background = OnscreenImage(image = 'phase_3.5/maps/loading/toon.jpg', parent = aspect2d)
+        self.background.setScale(2, 1, 1)
+        self.background.show()
+        self.background.wrtReparentTo(self.loadingGui)
         self.loadingText.wrtReparentTo(self.loadingGui)
         self.loadingObj.wrtReparentTo(self.loadingGui)
         self.loadingCircle.wrtReparentTo(self.loadingGui)
@@ -74,11 +66,11 @@ class ToontownLoadingScreen():
             
         if self.loadingText:
             self.loadingText.destroy()
-            del self.loadingText
+            self.loadingText = None
             
         if self.loadingCircle:
             self.loadingCircle.destroy()
-            del self.loadingCircle
+            self.loadingCircle = None
             
         if self.loadingObj:
             self.loadingObj.destroy()
@@ -86,11 +78,11 @@ class ToontownLoadingScreen():
             
         if self.background:
             self.background.destroy()
-            del self.background
+            self.background = None
             
         if self.logo:
             self.logo.destroy()
-            del self.logo
+            self.logo = None
             
         return (self.__expectedCount, self.__count)
 

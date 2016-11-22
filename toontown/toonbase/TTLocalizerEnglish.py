@@ -315,9 +315,18 @@ QuestsBuildingQuestDescC = '%(count)s %(type)s Buildings'
 QuestsBuildingQuestDescCF = '%(count)s %(floors)s story %(type)s Buildings'
 QuestsBuildingQuestDescI = 'some %(type)s Buildings'
 QuestsBuildingQuestDescIF = 'some %(floors)s story %(type)s Buildings'
+QuestsCogdoQuestCogdo = 'Field Office'
+QuestsCogdoQuestCogdos = 'Field Offices'
+QuestsCogdoQuestHeadline = 'DEFEAT'
+QuestsCogdoQuestProgressString = '%(progress)s of %(num)s defeated'
+QuestsCogdoQuestString = 'Defeat %s'
+QuestsCogdoQuestSCString = 'I need to defeat %(objective)s%(location)s.'
+QuestsCogdoQuestDesc = 'a %(type)s Field Office'
+QuestsCogdoQuestDescC = '%(count)s %(type)s Field Offices'
+QuestsCogdoQuestDescI = 'some %(type)s Field Offices'
 QuestFactoryQuestFactory = 'Factory'
 QuestsFactoryQuestFactories = 'Factories'
-QuestsFactoryQuestHeadline = 'DEFEAT'
+QuestsFactoryQuestHeadline = 'INFILTRATE'
 QuestsFactoryQuestProgressString = '%(progress)s of %(num)s defeated'
 QuestsFactoryQuestString = 'Defeat %s'
 QuestsFactoryQuestSCString = 'I need to defeat %(objective)s%(location)s.'
@@ -326,13 +335,31 @@ QuestsFactoryQuestDescC = '%(count)s %(type)s Factories'
 QuestsFactoryQuestDescI = 'some %(type)s Factories'
 QuestMintQuestMint = 'Mint'
 QuestsMintQuestMints = 'Mints'
-QuestsMintQuestHeadline = 'DEFEAT'
+QuestsMintQuestHeadline = 'INFILTRATE'
 QuestsMintQuestProgressString = '%(progress)s of %(num)s defeated'
 QuestsMintQuestString = 'Defeat %s'
 QuestsMintQuestSCString = 'I need to defeat %(objective)s%(location)s.'
 QuestsMintQuestDesc = 'a Cog Mint'
 QuestsMintQuestDescC = '%(count)s Cog Mints'
 QuestsMintQuestDescI = 'some Cog Mints'
+QuestStageQuestStage = 'DA Office'
+QuestsStageQuestStages = 'DA Offices'
+QuestsStageQuestHeadline = 'INFILTRATE'
+QuestsStageQuestProgressString = '%(progress)s of %(num)s defeated'
+QuestsStageQuestString = 'Defeat %s'
+QuestsStageQuestSCString = 'I need to defeat %(objective)s%(location)s.'
+QuestsStageQuestDesc = 'a DA Office'
+QuestsStageQuestDescC = '%(count)s DA Offices'
+QuestsStageQuestDescI = 'some DA Offices'
+QuestClubQuestClub = 'Club'
+QuestsClubQuestClubs = 'Cog Golf Courses'
+QuestsClubQuestHeadline = 'INFILTRATE'
+QuestsClubQuestProgressString = '%(progress)s of %(num)s defeated'
+QuestsClubQuestString = 'Defeat %s'
+QuestsClubQuestSCString = 'I need to defeat %(objective)s%(location)s.'
+QuestsClubQuestDesc = 'a Cog Golf Course'
+QuestsClubQuestDescC = '%(count)s Cog Golf Courses'
+QuestsClubQuestDescI = 'some Cog Golf Courses'
 QuestsRescueQuestProgress = '%(progress)s of %(numToons)s rescued'
 QuestsRescueQuestHeadline = 'RESCUE'
 QuestsRescueQuestSCStringS = 'I need to rescue a Toon%(toonLoc)s.'
@@ -504,6 +531,8 @@ QuestsItemDict = {1: ['Pair of Glasses', 'Pairs of Glasses', 'a '],
  42: ['Boarding Ticket', 'Boarding Tickets', 'a '],
  43: ['Suitcase', 'Suitcases', 'a '],
  44: ['Glasses', 'Pairs of Glasses', 'Dr. Friezeframe\'s '],
+ 45: ['Bowl of Soup', 'Bowls of Soup', 'a '],
+ 46: ['Ice Skates', 'Ice Skates', 'some '],
  110: ['TIP Clothing Ticket', 'Clothing Tickets', 'a '],
  1000: ['Clothing Ticket', 'Clothing Tickets', 'a '],
  2001: ['Inner Tube', 'Inner Tubes', 'an '],
@@ -1206,146 +1235,79 @@ QuestDialogDict = {160: {GREETING: '',
         QUEST: "Help!!! Help!!! I can't take it anymore!\x07Those Minglers are driving me batty!!!"},
  5219: {GREETING: '',
         LEAVING: '',
-        INCOMPLETE_PROGRESS: "That can't be all of them.  I just saw one!!!",
-        QUEST: "Oh, thanks, but now it's the Corporate Raiders!!!\x07You've got to help me!!!"},
+        INCOMPLETE_PROGRESS: "That can't be all of them.  I just saw one!",
+        QUEST: "Oh thanks, but now it's the Corporate Raiders.\x07You have to help help me!"},
  5220: {GREETING: '',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'No, no, no there was one just here!',
         QUEST: "I realize now that it's those Loan Sharks!!!\x07I thought you were going to save me!!!"},
  5221: {GREETING: '',
         LEAVING: '',
-        QUEST: "You know what, maybe it isn't the Cogs at all!\x07Could you ask Fanny to make me a soothing potion?  Maybe that would help...._where_"},
+        QUEST: "You know what? Maybe it isn't the Cogs after all.\x07Could you ask Fanny to make me a soothing potion? Maybe that would help...._where_"},
  5222: {LEAVING: '',
         QUEST: "Oh, that Harry, he sure is a card!\x07I'll whip up something that will fix him right up!\x07Oh, I appear to be out of sardine whiskers...\x07Be a dear and run down to the pond and catch some for me.",
         INCOMPLETE_PROGRESS: 'Got those whiskers for me yet?'},
  5223: {QUEST: 'Okay.  Thanks, hon.\x07Here, now take this to Harry.  It should calm him right down.',
         GREETING: '',
         LEAVING: '',
-        INCOMPLETE_PROGRESS: 'Go on now, take the potion to Harry.'},
+        INCOMPLETE_PROGRESS: 'Please go on and take the potion to Harry.'},
  5224: {GREETING: '',
         LEAVING: '',
-        INCOMPLETE_PROGRESS: 'Go get those Legal Eagles for me, will you?',
-        QUEST: "Oh thank goodness you're back!\x07Give me the potion, quick!!!\x07Glug, glug, glug...\x07That tasted awful!\x07You know, what, though?  I feel much calmer.  Now that I can think clearly, I realize that...\x07It was the Legal Eagles that were driving me crazy all this time!!!",
-        COMPLETE: "Oh boy!  Now I can relax!\x07I'm sure there's something here I can give you.  Oh, take this!"},
- 5225: {QUEST: 'Ever since the incident with the turnip bread, Grumpy Phil has been mad at _toNpcName_.\x07Maybe you could help Gus fix things between them?_where_'},
- 5226: {QUEST: 'Yeah, you probably heard Grumpy Phil is mad at me...\x07I was just trying to be nice with that turnip bread.\x07Maybe you can help cheer him up.\x07Phil really hates those Cashbot Cogs, especially their buildings.\x07If you reclaim some Cashbot buildings, it might help.',
+        INCOMPLETE_PROGRESS: 'Go defeat those Legal Eagles for me.',
+        QUEST: "Oh thank goodness you're back!\x07Give me the potion, quick!\x07Glug, glug, glug...\x07That tasted awful!\x07You know what though? I feel a lot calmer. Now that I can think clearly, I realize that...\x07It wasn't the Legal Eagles that were driving me crazy after all this time.",
+        COMPLETE: "Oh boy, now I can relax!\x07I'm sure there's something here I can give you.  Here you go!"},
+ 5225: {QUEST: '_toNpcName_ is hosting a skiing party and needs help preparing._where_'},
+ 5226: {QUEST: 'As you have heard, I am hosting a skiing party for a bunch of guests, but I have three things I need you to help me with.\x07First off, the Ambulance Chasers on this street can be a bit rough.\x07They usually take my guests and break their legs after these events.\x07Seeing this as problematic, please defeat at least 10 of them.',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Maybe a few more buildings?'},
- 5227: {QUEST: "That's terrific!  Go tell Phil what you've done._where_"},
- 5228: {QUEST: 'Oh he did, did he?\x07That Gus thinks he can get off so easy, does he?\x07Only broke my tooth, he did, with that turnip bread of his!\x07Maybe if you took my tooth to Dr. Mumbleface for me he could fix it.',
-        GREETING: 'Mmmmrrphh.',
-        LEAVING: 'Grumble, grumble.',
+ 5227: {QUEST: "Great job on those Chasers.\x07Next, I need you to get me some of _toNpcName_'s world famous soup, for I have a cold and do not need it spreading._where_"},
+ 5228: {QUEST: 'Need some soup?\x07Sure thing.\x07Just take down some big, pesky Sellbot Buildings on this street for me while I prepare the soup.',
+        GREETING: '',
+        LEAVING: '',
         INCOMPLETE_PROGRESS: 'You again?  I thought you were going to get my tooth fixed for me.'},
  5229: {GREETING: '',
         LEAVING: '',
         INCOMPLETE_PROGRESS: "I'm still working on the tooth.  It will be a bit longer.",
-        QUEST: "Yes, that tooth looks pretty bad, alrighty.\x07Maybe I can do something, but it will be a little while.\x07Maybe you could clear some of those Cashbot Cogs off the streets while you're waiting?\x07They're scaring off my customers."},
- 5267: {GREETING: '',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: "I'm still working on the tooth.  It will be a bit longer.",
-        QUEST: "Yes, that tooth looks pretty bad, alrighty.\x07Maybe I can do something, but it will be a little while.\x07Maybe you could clear some of those Sellbot Cogs off the streets while you're waiting?\x07They're scaring off my customers."},
- 5268: {GREETING: '',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: "I'm still working on the tooth.  It will be a bit longer.",
-        QUEST: "Yes, that tooth looks pretty bad, alrighty.\x07Maybe I can do something, but it will be a little while.\x07Maybe you could clear some of those Lawbot Cogs off the streets while you're waiting?\x07They're scaring off my customers."},
- 5269: {GREETING: '',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: "I'm still working on the tooth.  It will be a bit longer.",
-        QUEST: "Yes, that tooth looks pretty bad, alrighty.\x07Maybe I can do something, but it will be a little while.\x07Maybe you could clear some of those Bossbot Cogs off the streets while you're waiting?\x07They're scaring off my customers."},
+        QUEST: "Great job on those buildings.\x07Deliver this to _toNpcName_, pronto!"},
  5230: {GREETING: '',
-        QUEST: "I'm glad you're back!\x07I gave up trying to fix that old tooth, and made a new gold tooth for Phil instead.\x07Unfortunately a Robber Baron came in and took it from me.\x07Maybe you can catch him if you hurry.",
+        QUEST: "Thank you so much for the soup.\x07Slurp, Slurp.\x07I'm starting feel better already.\x07For my final request, I need some skates for this event from Kate._where_",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Did you find that tooth yet?'},
- 5270: {GREETING: '',
-        QUEST: "I'm glad you're back!\x07I gave up trying to fix that old tooth, and made a new gold tooth for Phil instead.\x07Unfortunately a Big Cheese came in and took it from me.\x07Maybe you can catch him if you hurry.",
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'Did you find that tooth yet?'},
- 5271: {GREETING: '',
-        QUEST: "I'm glad you're back!\x07I gave up trying to fix that old tooth, and made a new gold tooth for Phil instead.\x07Unfortunately Mr. Hollywood came in and took it from me.\x07Maybe you can catch him if you hurry.",
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'Did you find that tooth yet?'},
- 5272: {GREETING: '',
-        QUEST: "I'm glad you're back!\x07I gave up trying to fix that old tooth, and made a new gold tooth for Phil instead.\x07Unfortunately a Big Wig came in and took it from me.\x07Maybe you can catch him if you hurry.",
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'Did you find that tooth yet?'},
- 5231: {QUEST: "Great, that's the tooth alrighty!\x07Why don't you just run it over to Phil for me?",
+ 5231: {QUEST: "You need some skates?\x07First you'll have to do me a favor.\x07The Head Hunters on this street freak me out.\x07Please defeat some of them for me.",
         GREETING: '',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'I bet Phil would like to see his new tooth.'},
- 5232: {QUEST: "Oh, thanks.\x07Mmmrrrphhhh\x07How's that look, huh?\x07Okay, you can tell Gus that I forgive him.",
+ 5232: {QUEST: "A deal's a deal.\x07Run these over to _toNpcName_.",
         LEAVING: '',
-        GREETING: ''},
- 5233: {QUEST: "Oh, that's great to hear.\x07I figured old Phil couldn't stay mad at me.\x07As a gesture of goodwill, I baked him this Pine cone bread.\x07Could you run it over to him for me?",
         GREETING: '',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: "Better hurry.  Pine cone bread is better when it's hot.",
-        COMPLETE: "Oh, what's this?  For me?\x07Munch, munch...\x07Owwww!  My tooth!  That Gus Gooseburger!\x07Oh well, it wasn't your fault.  Here, you can have this for your trouble."},
+		COMPLETE: 'Thanks for all your help.\x07You deserve this reward.'},
  903: {QUEST: 'You may be ready to see _toNpcName_ the Blizzard Wizard for your final test._where_'},
  5234: {GREETING: '',
-        QUEST: 'Aha, you are back.\x07Before we begin, we must eat.\x07Bring us some lumpy cheese for our broth.\x07Lumpy cheese can only be gathered from Big Cheese Cogs.',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'We still need lumpy cheese'},
- 5278: {GREETING: '',
-        QUEST: 'Aha, you are back.\x07Before we begin, we must eat.\x07Bring us some caviar for our broth.\x07Caviar can only be gathered from Mr. Hollywood Cogs.',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'We still need caviar'},
+		QUEST: "Ahh, welcome back young apprentice.\x07I see you have completed all 15 Track Frames. Congrats!\x07However, you must pass my final test in order to prove yourself ready.\x07Start by shutting down 3 Sellbot Factories.",
+		LEAVING: '',
+		INCOMPLETE_PROGRESS: "I may be old, but I know you haven't finished your quest yet. You can't fool me that easily."},
  5235: {GREETING: '',
-        QUEST: 'A simple man eats with a simple spoon.\x07A Cog took my simple spoon, so I simply can not eat.\x07Return my spoon to me.  I think a Robber Baron took it.',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'I simply must have my spoon.'},
- 5279: {GREETING: '',
-        QUEST: 'A simple man eats with a simple spoon.\x07A Cog took my simple spoon, so I can not eat.\x07Return my spoon to me.  I think a Big Wig took it.',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'I simply must have my spoon.'},
+		QUEST: "Welcome back.\x07Great job on shutting down those factories.\x07Next, I want you to take down some Lawbot Field Offices.",
+		LEAVING: '',
+		INCOMPLETE_PROGRESS: "I may be old, but I know you haven't finished your quest yet. You can't fool me that easily."},
  5236: {GREETING: '',
-        QUEST: 'Many thanks.\x07Slurp, slurp...\x07Ahhh, now you must catch a talking toad.  Try fishing in the pond.',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'Where is that talking toad?'},
- 5237: {GREETING: '',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'You have not yet obtained dessert.',
-        QUEST: "Oh, that is certainly a talking toad.  Give him to me.\x07What's that you say, toad?\x07Uh huh.\x07Uh huh...\x07The toad has spoken.  We need dessert.\x07Bring us some ice cream cones from _toNpcName_.\x07The toad likes red bean flavored ice cream for some reason._where_"},
+		QUEST: "Welcome back.\x07Great job on shutting down those factories.\x07Next, I want you to take down some Sellbot Field Offices.",
+		LEAVING: '',
+		INCOMPLETE_PROGRESS: "I may be old, but I know you haven't finished your quest yet. You can't fool me that easily."},
+ 5237: {QUEST: "Now, I want you to defeat some of the strongest Cogs out there.\x07Afterwards, I will give you my final quest for you.",
+		GREETING: '',
+		LEAVING: '',
+		INCOMPLETE_PROGRESS: 'Too weak for those Cogs?'},
  5238: {GREETING: '',
-        QUEST: "So the wizard sent you.  I'm sad to say we're fresh out of red bean ice cream cones.\x07You see, a bunch of Cogs came in and just took them.\x07They said they were for Mr. Hollywood, or some such nonsense.\x07I'd sure appreciate if you could round them back up for me.",
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'Have you found all my ice cream cones yet?'},
- 5280: {GREETING: '',
-        QUEST: "So the wizard sent you.  I'm sad to say we're fresh out of red bean ice cream cones.\x07You see, a bunch of Cogs came in and just took them.\x07They said they were for The Big Cheese, or some such nonsense.\x07I'd sure appreciate if you could round them back up for me.",
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'Have you found all my ice cream cones yet?'},
- 5239: {QUEST: "Thanks for bringing back my ice cream cones!\x07Here's one for Lil Oldman.",
-        GREETING: '',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'You better bring that ice cream to Lil Oldman before it melts.'},
- 5240: {GREETING: '',
-        QUEST: 'Very good.  Here you go toad...\x07Slurp, slurp...\x07Okay, now we are almost ready.\x07If you can just bring me some powder to dry my hands.\x07I think those Big Wig Cogs sometimes have powder from their wigs.',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'Did you find any powder?'},
- 5281: {GREETING: '',
-        QUEST: 'Very good.  Here you go toad...\x07Slurp, slurp...\x07Okay, now we are almost ready.\x07If you can just bring me some powder to dry my hands.\x07I think those Mr. Hollywood Cogs sometimes keep powder for their noses.',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'Did you find any powder?'},
- 5241: {QUEST: 'Okay.\x07As I once said, to truly throw a pie, you must throw not with the hand...\x07...but with the soul.\x07I know not what that means, so I will sit and contemplate while you restore buildings.\x07Return when you have completed your task.',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'Your task is not yet complete.'},
- 5242: {GREETING: '',
-        QUEST: 'Although I still know not what I am talking about, you truly are worthy.\x07I give you a final task...\x07The talking toad would like a girlfriend.\x07Find another talking toad.  The toad has spoken.',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'Where is that other talking toad?',
+		QUEST: 'Okay.\x07As I once said, to truly throw a pie, you must throw not with the hand...\x07...but with the soul.\x07I know not what that means, so I will sit and contemplate while take down some of the strongest Cog Buildings.\x07Return when you have completed your task.',
+		LEAVING: '',
         COMPLETE: 'Whew!  I am tired from all this effort.  I must rest now.\x07Here, take your reward and be off.'},
- 5243: {QUEST: 'Sweaty Pete is starting to stink up the street.\x07Can you talk him into taking a shower or something?_where_'},
+ 5243: {QUEST: '_toNpcName_ has a strong fear of the new Boardbot Cog Buildings, more than any other Toon in Toontown._where_'},
  5244: {GREETING: '',
-        QUEST: "Yeah, I guess I do work up quite a sweat in here.\x07Mmmm, maybe if I could fix that leaky pipe in my shower...\x07I figure a gear from one of those tiny Cogs would do the trick.\x07Go find a gear from a Micromanager and we'll try it.",
+        QUEST: "Egad!\x07Boardbots keep taking over building after building!\x07Please take some down before they decide to take over MY shop!",
         LEAVING: '',
-        INCOMPLETE_PROGRESS: "Where's that gear you were going to get?"},
- 5245: {GREETING: '',
-        QUEST: 'Yup, that seemed to do the trick.\x07But I get lonely when I shower...\x07Could you go fish me up a rubber ducky to keep me company?',
-        LEAVING: '',
-        INCOMPLETE_PROGRESS: 'Any luck with that duck?'},
- 5246: {QUEST: "The ducky's great, but...\x07All those buildings around here make me nervous.\x07I'd feel a lot more relaxed if there were fewer buildings around.",
-        LEAVING: '',
-        COMPLETE: "Okay, I'll shower up now.  And here's something for you too.",
-        INCOMPLETE_PROGRESS: "I'm still worried about buildings."},
+        INCOMPLETE_PROGRESS: "Where's that gear you were going to get?",
+		COMPLETE: "Thank you."},
  5251: {QUEST: '_toNpcName_ is preparing a trip around the world, but the Cogs just don\'t want her to go!_where_'},
  5252: {GREETING: '',
         QUEST: 'Please help me!\x07Every time I prepare for a trip, the Cogs keep stealing all I need to travel.\x07This time, a Boardbot has taken my Boarding Ticket.\x07That Cog should still be somewhere around this playground...',

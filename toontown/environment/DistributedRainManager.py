@@ -40,7 +40,8 @@ class DistributedRainManager(DistributedWeatherMGR):
         
         
     def enterRain(self, timestamp):
-        self.rain = BattleParticles.loadParticleFile('raindisk.ptf')
+        #self.rain = BattleParticles.loadParticleFile('raindisk.ptf')
+        self.rain = BattleParticles.loadParticleFile('snowdisk.ptf')
         self.rain.setPos(0, 0, 20)
         self.rainRender = render.attachNewNode('rainRender')
         self.rainRender.setDepthWrite(0)

@@ -109,8 +109,24 @@ class QuestManagerAI:
                                 self.__incrementQuestProgress(toon.quests[index])
         toon.updateQuests()
 
-    def toonKilledCogdo(self, toon, difficulty, floors, zoneId, activeToons):
-        pass
+    def toonKilledCogdo(self, toon, track, difficulty, zoneId, activeToons):
+        """
+        This method is called whenever a toon defeats a field office.
+        N.B: This is called once for each toon that defeated the field office.
+        """
+        for index, quest in enumerate(self.__toonQuestsList2Quests(toon.quests)):
+            if isinstance(quest, Quests.CogdoQuest):
+                # This quest is a building quest, time to see if it counts towards
+                # our progress!
+                if quest.isLocationMatch(zoneId):
+                    # We defeated the building in the correct zone, and the building counts!
+                    if quest.getCogdoTrack() == Quests.Any or quest.getCogdoTrack() == track:
+                        for x in xrange(quest.doesCogdoCount(toon.getDoId(), activeToons)):
+                            # Works the same as Cog Quests. Increment by one if it's a
+                            # normal quest, or by the amount of newbies if it's a
+                            # newbie quest.
+                            self.__incrementQuestProgress(toon.quests[index])
+        toon.updateQuests()
 
     def toonRecoveredCogSuitPart(self, toon, zoneId, toonList):
         pass
@@ -143,7 +159,30 @@ class QuestManagerAI:
         toon.updateQuests()
 
     def toonDefeatedStage(self, toon, stageId, activeToonVictors):
-        pass
+        """
+        This method is called whenever a toon defeats Lawbot HQ stage.
+        N.B: This is called once for each toon that defeated the stage.
+        """
+        for index, quest in enumerate(self.__toonQuestsList2Quests(toon.quests)):
+            if isinstance(quest, Quests.StageQuest):
+                # Oh lookie here, a stage quest! I love me some Polos.
+                for x in xrange(quest.doesStageCount(toon.getDoId(), stageId, activeToonVictors)):
+                    # Nom nom nom nom, progress!
+                    self.__incrementQuestProgress(toon.quests[index])
+        toon.updateQuests()
+		
+    def toonDefeatedCountryClub(self, toon, countryClubId, activeToonVictors):
+        """
+        This method is called whenever a toon defeats Bossbot HQ country club.
+        N.B: This is called once for each toon that defeated the country club.
+        """
+        for index, quest in enumerate(self.__toonQuestsList2Quests(toon.quests)):
+            if isinstance(quest, Quests.ClubQuest):
+                # Oh lookie here, a country club quest! I love me some Polos.
+                for x in xrange(quest.doesClubCount(toon.getDoId(), countryClubId, activeToonVictors)):
+                    # Nom nom nom nom, progress!
+                    self.__incrementQuestProgress(toon.quests[index])
+        toon.updateQuests()
 
     def toonRodeTrolleyFirstTime(self, toon):
         for index, quest in enumerate(self.__toonQuestsList2Quests(toon.quests)):

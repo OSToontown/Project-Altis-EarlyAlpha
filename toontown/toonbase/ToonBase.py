@@ -154,7 +154,7 @@ class ToonBase(OTPBase.OTPBase):
         self.localAvatarStyle = None
         self.filters = CommonFilters(self.win, self.cam)
         self.filters.setBlurSharpen(1.2)
-        self.filters.setBloom(blend=(0.3, 0.4, 0.3, 0.0), mintrigger=0.6, maxtrigger=1.0, desat=0.6, intensity=0.6, size="small")
+        #self.filters.setBloom(blend=(0.3, 0.4, 0.3, 0.0), mintrigger=0.6, maxtrigger=0.8, desat=0.6, intensity=0.3, size="small")
 
         self.wantCustomControls = settings.get('want-Custom-Controls', False)
 

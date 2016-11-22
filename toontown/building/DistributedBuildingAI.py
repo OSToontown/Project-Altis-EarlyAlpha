@@ -348,6 +348,7 @@ class DistributedBuildingAI(DistributedObjectAI.DistributedObjectAI):
                     cogdoNumFloors = 3
                 else:
                     cogdoNumFloors = 2
+                self.air.questManager.toonKilledCogdo(toon, self.track, self.difficulty, self.zoneId, activeToons)
                 self.air.questManager.toonKilledBuilding(toon, self.track, self.difficulty, cogdoNumFloors, self.zoneId, activeToons)
                 continue
 

@@ -245,7 +245,13 @@ class Quest:
         self.check(track in self._cogTracks, 'invalid building track: %s' % track)
 
     def checkBuildingFloors(self, floors):
-        self.check(floors >= 1 and floors <= 5, 'invalid num floors: %s' % floors)
+        self.check(floors >= 1 and floors <= 6, 'invalid num floors: %s' % floors)
+		
+    def checkNumCogdos(self, num):
+        self.check(1, 'invalid num buildings: %s' % num)
+
+    def checkCogdoTrack(self, track):
+        self.check(track in self._cogTracks, 'invalid building track: %s' % track)
 
     def checkNumFactories(self, num):
         self.check(1, 'invalid num factories: %s' % num)
@@ -254,6 +260,12 @@ class Quest:
         self.check(type in self._factoryTypes, 'invalid factory type: %s' % type)
 
     def checkNumMints(self, num):
+        self.check(1, 'invalid num mints: %s' % num)
+		
+    def checkNumStages(self, num):
+        self.check(1, 'invalid num mints: %s' % num)
+		
+    def checkNumClubs(self, num):
         self.check(1, 'invalid num mints: %s' % num)
 
     def checkNumCogParts(self, num):
@@ -1125,6 +1137,108 @@ class BuildingNewbieQuest(BuildingQuest, NewbieQuest):
 
     def doesBuildingCount(self, avId, avList):
         return self.getNumNewbies(avId, avList)
+		
+class CogdoQuest(CogQuest):
+    trackCodes = ['c',
+     'l',
+     'm',
+     's',
+     'g']
+    trackNames = [TTLocalizer.Bossbot,
+     TTLocalizer.Lawbot,
+     TTLocalizer.Cashbot,
+     TTLocalizer.Sellbot,
+     TTLocalizer.Boardbot]
+
+    def __init__(self, id, quest):
+        CogQuest.__init__(self, id, quest)
+        self.checkNumCogdos(self.quest[1])
+        self.checkCogdoTrack(self.quest[2])
+
+    def getCogdoTrack(self):
+        return self.quest[2]
+
+    def getNumQuestItems(self):
+        return self.getNumCogdos()
+
+    def getNumCogdos(self):
+        return self.quest[1]
+
+    def getCompletionStatus(self, av, questDesc, npc = None):
+        questId, fromNpcId, toNpcId, rewardId, toonProgress = questDesc
+        questComplete = toonProgress >= self.getNumCogdos()
+        return getCompleteStatusWithNpc(questComplete, toNpcId, npc)
+
+    def getProgressString(self, avatar, questDesc):
+        if self.getCompletionStatus(avatar, questDesc) == COMPLETE:
+            return CompleteString
+        elif self.getNumCogdos() == 1:
+            return ''
+        else:
+            return TTLocalizer.QuestsCogdoQuestProgressString % {'progress': questDesc[4],
+             'num': self.getNumCogdos()}
+
+    def getObjectiveStrings(self):
+        count = self.getNumCogdos()
+        buildingTrack = self.getCogdoTrack()
+        if buildingTrack == Any:
+            type = TTLocalizer.Cog
+        else:
+            type = self.trackNames[self.trackCodes.index(buildingTrack)]
+        if count == 1:
+            text = TTLocalizer.QuestsCogdoQuestDesc
+        else:
+            text = TTLocalizer.QuestsCogdoQuestDescC
+        return (text % {'count': count,
+          'type': type},)
+
+    def getString(self):
+        return TTLocalizer.QuestsCogdoQuestString % self.getObjectiveStrings()[0]
+
+    def getSCStrings(self, toNpcId, progress):
+        if progress >= self.getNumCogdos():
+            return getFinishToonTaskSCStrings(toNpcId)
+        count = self.getNumCogdos()
+        buildingTrack = self.getCogdoTrack()
+        if buildingTrack == Any:
+            type = TTLocalizer.Cog
+        else:
+            type = self.trackNames[self.trackCodes.index(buildingTrack)]
+        if count == 1:
+            text = TTLocalizer.QuestsCogdoQuestDesc
+        else:
+            text = TTLocalizer.QuestsCogdoQuestDescI
+        objective = text % {'type': type,}
+        location = self.getLocationName()
+        return TTLocalizer.QuestsCogdoQuestSCString % {'objective': objective,
+         'location': location}
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsCogdoQuestHeadline
+
+    def doesCogCount(self, avId, cogDict, zoneId, avList):
+        return 0
+
+    def doesCogdoCount(self, avId, avList):
+        return 1
+
+
+class CogdoNewbieQuest(CogdoQuest, NewbieQuest):
+    def __init__(self, id, quest):
+        CogdoQuest.__init__(self, id, quest)
+        self.checkNewbieLevel(self.quest[3])
+
+    def getNewbieLevel(self):
+        return self.quest[3]
+
+    def getString(self):
+        return NewbieQuest.getString(self)
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsNewbieQuestHeadline
+
+    def doesCogdoCount(self, avId, avList):
+        return self.getNumNewbies(avId, avList)
 
 
 class FactoryQuest(LocationBasedQuest):
@@ -1298,6 +1412,156 @@ class MintNewbieQuest(MintQuest, NewbieQuest):
 
     def doesMintCount(self, avId, location, avList):
         if MintQuest.doesMintCount(self, avId, location, avList):
+            return self.getNumNewbies(avId, avList)
+        else:
+            return num
+			
+class StageQuest(LocationBasedQuest):
+    def __init__(self, id, quest):
+        LocationBasedQuest.__init__(self, id, quest)
+        self.checkNumStages(self.quest[1])
+
+    def getNumQuestItems(self):
+        return self.getNumStages()
+
+    def getNumStages(self):
+        return self.quest[1]
+
+    def getCompletionStatus(self, av, questDesc, npc = None):
+        questId, fromNpcId, toNpcId, rewardId, toonProgress = questDesc
+        questComplete = toonProgress >= self.getNumStages()
+        return getCompleteStatusWithNpc(questComplete, toNpcId, npc)
+
+    def getProgressString(self, avatar, questDesc):
+        if self.getCompletionStatus(avatar, questDesc) == COMPLETE:
+            return CompleteString
+        elif self.getNumStages() == 1:
+            return ''
+        else:
+            return TTLocalizer.QuestsStageQuestProgressString % {'progress': questDesc[4],
+             'num': self.getNumStages()}
+
+    def getObjectiveStrings(self):
+        count = self.getNumStages()
+        if count == 1:
+            text = TTLocalizer.QuestsStageQuestDesc
+        else:
+            text = TTLocalizer.QuestsStageQuestDescC % {'count': count}
+        return (text,)
+
+    def getString(self):
+        return TTLocalizer.QuestsStageQuestString % self.getObjectiveStrings()[0]
+
+    def getSCStrings(self, toNpcId, progress):
+        if progress >= self.getNumStages():
+            return getFinishToonTaskSCStrings(toNpcId)
+        count = self.getNumStages()
+        if count == 1:
+            objective = TTLocalizer.QuestsStageQuestDesc
+        else:
+            objective = TTLocalizer.QuestsStageQuestDescI
+        location = self.getLocationName()
+        return TTLocalizer.QuestsStageQuestSCString % {'objective': objective,
+         'location': location}
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsStageQuestHeadline
+
+    def doesStageCount(self, avId, location, avList):
+        return self.isLocationMatch(location)
+
+
+class StageNewbieQuest(StageQuest, NewbieQuest):
+    def __init__(self, id, quest):
+        StageQuest.__init__(self, id, quest)
+        self.checkNewbieLevel(self.quest[2])
+
+    def getNewbieLevel(self):
+        return self.quest[2]
+
+    def getString(self):
+        return NewbieQuest.getString(self)
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsNewbieQuestHeadline
+
+    def doesStageCount(self, avId, location, avList):
+        if StageQuest.doesStageCount(self, avId, location, avList):
+            return self.getNumNewbies(avId, avList)
+        else:
+            return num
+			
+class ClubQuest(LocationBasedQuest):
+    def __init__(self, id, quest):
+        LocationBasedQuest.__init__(self, id, quest)
+        self.checkNumClubs(self.quest[1])
+
+    def getNumQuestItems(self):
+        return self.getNumClubs()
+
+    def getNumClubs(self):
+        return self.quest[1]
+
+    def getCompletionStatus(self, av, questDesc, npc = None):
+        questId, fromNpcId, toNpcId, rewardId, toonProgress = questDesc
+        questComplete = toonProgress >= self.getNumClubs()
+        return getCompleteStatusWithNpc(questComplete, toNpcId, npc)
+
+    def getProgressString(self, avatar, questDesc):
+        if self.getCompletionStatus(avatar, questDesc) == COMPLETE:
+            return CompleteString
+        elif self.getNumClubs() == 1:
+            return ''
+        else:
+            return TTLocalizer.QuestsClubQuestProgressString % {'progress': questDesc[4],
+             'num': self.getNumClubs()}
+
+    def getObjectiveStrings(self):
+        count = self.getNumClubs()
+        if count == 1:
+            text = TTLocalizer.QuestsClubQuestDesc
+        else:
+            text = TTLocalizer.QuestsClubQuestDescC % {'count': count}
+        return (text,)
+
+    def getString(self):
+        return TTLocalizer.QuestsClubQuestString % self.getObjectiveStrings()[0]
+
+    def getSCStrings(self, toNpcId, progress):
+        if progress >= self.getNumClubs():
+            return getFinishToonTaskSCStrings(toNpcId)
+        count = self.getNumClubs()
+        if count == 1:
+            objective = TTLocalizer.QuestsClubQuestDesc
+        else:
+            objective = TTLocalizer.QuestsClubQuestDescI
+        location = self.getLocationName()
+        return TTLocalizer.QuestsClubQuestSCString % {'objective': objective,
+         'location': location}
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsClubQuestHeadline
+
+    def doesClubCount(self, avId, location, avList):
+        return self.isLocationMatch(location)
+
+
+class ClubNewbieQuest(ClubQuest, NewbieQuest):
+    def __init__(self, id, quest):
+        ClubQuest.__init__(self, id, quest)
+        self.checkNewbieLevel(self.quest[2])
+
+    def getNewbieLevel(self):
+        return self.quest[2]
+
+    def getString(self):
+        return NewbieQuest.getString(self)
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsNewbieQuestHeadline
+
+    def doesClubCount(self, avId, location, avList):
+        if ClubQuest.doesClubCount(self, avId, location, avList):
             return self.getNumNewbies(avId, avList)
         else:
             return num
@@ -9360,210 +9624,96 @@ QuestDict = {
         Start,
         (VisitQuest,),
         Any,
-        3106,
+        3329,
         NA,
         5226,
         TTLocalizer.QuestDialogDict[5225]),
  5226: (BR_TIER + 1,
-        Start,
-        (BuildingQuest,
-         Anywhere,
-         3,
-         'm',
-         4),
-        3106,
-        Same,
-        NA,
-        5227,
-        TTLocalizer.QuestDialogDict[5226]),
+		Start,
+		(CogQuest,
+		 3300,
+		 10,
+		 'ac'),
+		3329,
+		Same,
+		NA,
+		5227,
+		TTLocalizer.QuestDialogDict[5226]),
  5227: (BR_TIER + 1,
-        Cont,
-        (VisitQuest,),
-        Same,
-        3208,
-        NA,
-        5228,
-        TTLocalizer.QuestDialogDict[5227]),
+		Cont,
+		(VisitQuest,),
+		Same,
+		3201,
+		NA,
+		5228,
+		TTLocalizer.QuestDialogDict[5227]),
  5228: (BR_TIER + 1,
-        Cont,
-        (DeliverItemQuest, 3009),
-        Same,
-        3207,
-        NA,
-        (5229,
-         5267,
-         5268,
-         5269),
-        TTLocalizer.QuestDialogDict[5228]),
+		Cont,
+		(BuildingQuest,
+		 3200,
+		 4,
+		 's',
+		 3),
+		3201,
+		Same,
+		NA,
+		5229,
+		TTLocalizer.QuestDialogDict[5228]),
  5229: (BR_TIER + 1,
-        Cont,
-        (CogTrackQuest,
-         ToontownGlobals.TheBrrrgh,
-         8,
-         'm'),
-        Same,
-        Same,
-        NA,
-        5230,
-        TTLocalizer.QuestDialogDict[5229]),
- 5267: (BR_TIER + 1,
-        Cont,
-        (CogTrackQuest,
-         ToontownGlobals.TheBrrrgh,
-         8,
-         's'),
-        Same,
-        Same,
-        NA,
-        5230,
-        TTLocalizer.QuestDialogDict[5267]),
- 5268: (BR_TIER + 1,
-        Cont,
-        (CogTrackQuest,
-         ToontownGlobals.TheBrrrgh,
-         8,
-         'l'),
-        Same,
-        Same,
-        NA,
-        5230,
-        TTLocalizer.QuestDialogDict[5268]),
- 5269: (BR_TIER + 1,
-        Cont,
-        (CogTrackQuest,
-         ToontownGlobals.TheBrrrgh,
-         8,
-         'c'),
-        Same,
-        Same,
-        NA,
-        (5230,
-         5270,
-         5271,
-         5272),
-        TTLocalizer.QuestDialogDict[5269]),
+		Cont,
+		(DeliverItemQuest, 45),
+		Same,
+		3329,
+		NA,
+		5230,
+		TTLocalizer.QuestDialogDict[5229]),
  5230: (BR_TIER + 1,
-        Cont,
-        (RecoverItemQuest,
-         Anywhere,
-         1,
-         3010,
-         Hard,
-         'rb'),
-        Same,
-        Same,
-        NA,
-        5231,
-        TTLocalizer.QuestDialogDict[5230]),
- 5270: (BR_TIER + 1,
-        Cont,
-        (RecoverItemQuest,
-         Anywhere,
-         1,
-         3010,
-         Hard,
-         'tbc'),
-        Same,
-        Same,
-        NA,
-        5231,
-        TTLocalizer.QuestDialogDict[5270]),
- 5271: (BR_TIER + 1,
-        Cont,
-        (RecoverItemQuest,
-         Anywhere,
-         1,
-         3010,
-         Hard,
-         'mh'),
-        Same,
-        Same,
-        NA,
-        5231,
-        TTLocalizer.QuestDialogDict[5271]),
- 5272: (BR_TIER + 1,
-        Cont,
-        (RecoverItemQuest,
-         Anywhere,
-         1,
-         3010,
-         Medium,
-         'bw'),
-        Same,
-        Same,
-        NA,
-        5231,
-        TTLocalizer.QuestDialogDict[5272]),
+		Cont,
+		(VisitQuest,),
+		3329,
+		3109,
+		NA,
+		5231,
+		TTLocalizer.QuestDialogDict[5230]),
  5231: (BR_TIER + 1,
-        Cont,
-        (DeliverItemQuest, 3010),
-        Same,
-        3208,
-        NA,
-        5232,
-        TTLocalizer.QuestDialogDict[5231]),
+		Cont,
+		(CogQuest,
+		 3100,
+		 10,
+		 'hh'),
+		3109,
+		Same,
+		NA,
+		5232,
+		TTLocalizer.QuestDialogDict[5231]),
  5232: (BR_TIER + 1,
-        Cont,
-        (VisitQuest,),
-        Same,
-        3106,
-        NA,
-        5233,
-        TTLocalizer.QuestDialogDict[5232]),
- 5233: (BR_TIER + 1,
-        Cont,
-        (DeliverItemQuest, 3011),
-        Same,
-        3208,
-        304,
-        NA,
-        TTLocalizer.QuestDialogDict[5233]),
+		Cont,
+		(DeliverItemQuest, 46),
+		Same,
+		3329,
+		304,
+		NA,
+		TTLocalizer.QuestDialogDict[5232]),
  5243: (BR_TIER + 1,
         Start,
         (VisitQuest,),
         Any,
-        3217,
+        3324,
         NA,
         5244,
         TTLocalizer.QuestDialogDict[5243]),
  5244: (BR_TIER + 1,
         Start,
-        (RecoverItemQuest,
-         Anywhere,
-         1,
-         2007,
-         VeryHard,
-         'mm'),
-        3217,
-        Same,
-        NA,
-        5245,
-        TTLocalizer.QuestDialogDict[5244]),
- 5245: (BR_TIER + 1,
-        Cont,
-        (RecoverItemQuest,
-         Anywhere,
-         1,
-         3017,
-         Hard,
-         AnyFish),
-        Same,
-        Same,
-        NA,
-        5246,
-        TTLocalizer.QuestDialogDict[5245]),
- 5246: (BR_TIER + 1,
-        Cont,
         (BuildingQuest,
-         ToontownGlobals.TheBrrrgh,
-         5,
-         Any,
-         1),
-        Same,
+		 Anywhere,
+		 3,
+		 'g',
+		 1),
+        3324,
         Same,
         101,
         NA,
-        TTLocalizer.QuestDialogDict[5246]),
+        TTLocalizer.QuestDialogDict[5244]),
  5251: (BR_TIER + 1,
         Start,
         (VisitQuest,),
@@ -9923,166 +10073,61 @@ QuestDict = {
        Any,
        3112,
        NA,
-       (5234, 5278),
+       5234,
        TTLocalizer.QuestDialogDict[903]),
  5234: (BR_TIER + 2,
-        Start,
-        (RecoverItemQuest,
-         Anywhere,
-         6,
-         3012,
-         Medium,
-         'tbc'),
-        3112,
-        Same,
-        NA,
-        (5235, 5279),
-        TTLocalizer.QuestDialogDict[5234]),
- 5278: (BR_TIER + 2,
-        Start,
-        (RecoverItemQuest,
-         Anywhere,
-         6,
-         3022,
-         Medium,
-         'mh'),
-        3112,
-        Same,
-        NA,
-        (5235, 5279),
-        TTLocalizer.QuestDialogDict[5278]),
+		Start,
+		(FactoryQuest, ToontownGlobals.SellbotHQ, 3),
+		3112,
+		Same,
+		NA,
+		(5235, 5236),
+		TTLocalizer.QuestDialogDict[5234]),
  5235: (BR_TIER + 2,
-        Cont,
-        (RecoverItemQuest,
-         Anywhere,
-         1,
-         3013,
-         Hard,
-         'rb'),
-        Same,
-        Same,
-        NA,
-        5236,
-        TTLocalizer.QuestDialogDict[5235]),
- 5279: (BR_TIER + 2,
-        Cont,
-        (RecoverItemQuest,
-         Anywhere,
-         1,
-         3013,
-         Medium,
-         'bw'),
-        Same,
-        Same,
-        NA,
-        5236,
-        TTLocalizer.QuestDialogDict[5279]),
+		Cont,
+		(CogdoQuest,
+		 Anywhere,
+		 5,
+		 'l'),
+		Same,
+		Same,
+		NA,
+		5237,
+		TTLocalizer.QuestDialogDict[5235]),
  5236: (BR_TIER + 2,
-        Cont,
-        (RecoverItemQuest,
-         Anywhere,
-         1,
-         3014,
-         VeryHard,
-         AnyFish),
-        Same,
-        Same,
-        NA,
-        5237,
-        TTLocalizer.QuestDialogDict[5236]),
+		Cont,
+		(CogdoQuest,
+		 Anywhere,
+		 5,
+		 's'),
+		Same,
+		Same,
+		NA,
+		5237,
+		TTLocalizer.QuestDialogDict[5236]),
  5237: (BR_TIER + 2,
-        Cont,
-        (VisitQuest,),
-        Same,
-        3128,
-        NA,
-        (5238, 5280),
-        TTLocalizer.QuestDialogDict[5237]),
+		Cont,
+		(CogLevelQuest,
+		 Anywhere,
+		 20,
+		 8),
+		Same,
+		Same,
+		NA,
+		5238,
+		TTLocalizer.QuestDialogDict[5237]),
  5238: (BR_TIER + 2,
-        Cont,
-        (RecoverItemQuest,
-         Anywhere,
-         10,
-         3015,
-         VeryEasy,
-         'mh'),
-        Same,
-        Same,
-        NA,
-        5239,
-        TTLocalizer.QuestDialogDict[5238]),
- 5280: (BR_TIER + 2,
-        Cont,
-        (RecoverItemQuest,
-         Anywhere,
-         10,
-         3015,
-         VeryEasy,
-         'tbc'),
-        Same,
-        Same,
-        NA,
-        5239,
-        TTLocalizer.QuestDialogDict[5280]),
- 5239: (BR_TIER + 2,
-        Cont,
-        (DeliverItemQuest, 3015),
-        Same,
-        3112,
-        NA,
-        (5240, 5281),
-        TTLocalizer.QuestDialogDict[5239]),
- 5240: (BR_TIER + 2,
-        Cont,
-        (RecoverItemQuest,
-         Anywhere,
-         1,
-         3016,
-         Hard,
-         'bw'),
-        Same,
-        Same,
-        NA,
-        5241,
-        TTLocalizer.QuestDialogDict[5240]),
- 5281: (BR_TIER + 2,
-        Cont,
-        (RecoverItemQuest,
-         Anywhere,
-         1,
-         3023,
-         Hard,
-         'mh'),
-        Same,
-        Same,
-        NA,
-        5241,
-        TTLocalizer.QuestDialogDict[5281]),
- 5241: (BR_TIER + 2,
-        Cont,
-        (BuildingQuest,
-         Anywhere,
-         20,
-         Any,
-         4),
-        Same,
-        Same,
-        NA,
-        5242,
-        TTLocalizer.QuestDialogDict[5241]),
- 5242: (BR_TIER + 2,
-        Cont,
-        (RecoverItemQuest,
-         Anywhere,
-         1,
-         3014,
-         VeryHard,
-         AnyFish),
-        Same,
-        Same,
-        900,
-        NA,
-        TTLocalizer.QuestDialogDict[5242]),
+		Cont,
+		(BuildingQuest,
+		 Anywhere,
+		 5,
+		 Any,
+		 5),
+		Same,
+		Same,
+		900,
+		NA,
+		TTLocalizer.QuestDialogDict[5238]),
  5320: (BR_TIER + 2,
         Start,
         (CogQuest,
@@ -16722,6 +16767,39 @@ QuestDict = {
          1000,
          NA,
          DefaultDialog),
+ 10208: (ELDER_TIER,
+         Start,
+         (CogdoQuest,
+          Anywhere,
+          10,
+          Any),
+         Any,
+         ToonHQ,
+         Any,
+         NA,
+         DefaultDialog),
+ 10209: (ELDER_TIER,
+         Start,
+         (CogdoQuest,
+          Anywhere,
+          8,
+          's'),
+         Any,
+         ToonHQ,
+         Any,
+         NA,
+         DefaultDialog),
+ 10210: (ELDER_TIER,
+         Start,
+         (CogdoQuest,
+          Anywhere,
+          8,
+          'l'),
+         Any,
+         ToonHQ,
+         Any,
+         NA,
+         DefaultDialog),
  11000: (LAWBOT_HQ_TIER,
          Start,
          (VisitQuest,),
@@ -19017,13 +19095,13 @@ RequiredRewardTrackDict = {TT_TIER: (500,
  DL_TIER + 2: (100,
                101,
                102,
-               103),
+               103,
+               207),
  DL_TIER + 3: (100,
                101,
                102,
                102,
-               707,
-               207),
+               707),
  LAWBOT_HQ_TIER: (4100,),
  LAWBOT_HQ_TIER + 1: (4101,),
  LAWBOT_HQ_TIER + 2: (4102,),
