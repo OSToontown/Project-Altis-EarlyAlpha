@@ -881,7 +881,7 @@ QuestDialogDict = {160: {GREETING: '',
         LEAVING: ''},
  2205: {QUEST: "Thanks for recovering that acid.\x07My sister, _toNpcName_ has also been working on this with me.\x07Could you take the waste to her place?_where_",
         LEAVING: '',
-        INCOMPLETE_PROGRESS: 'Sorry. No flunky frames, no monocle.'},
+        INCOMPLETE_PROGRESS: 'Deliver the Toxic Waste to _toNpcName_!'},
  2206: {QUEST: 'Hey, thanks for that toxic waste.\x07However, this is a top secret project we\'re working on.\x07The Middlemen around here will find it suspicious that the toons are taking some toxic waste.\x07Please defeat a few before the word gets out!',
         GREETING: '',
         LEAVING: '',
@@ -3293,14 +3293,14 @@ FADoorCodes_DEFEAT_FLUNKY_HQ = 'Come back here when you have defeated the Flunky
 FADoorCodes_TALK_TO_HQ = 'Go get your reward from HQ Harry!'
 FADoorCodes_WRONG_DOOR_HQ = 'Wrong door! Take the other door to the playground!'
 FADoorCodes_GO_TO_PLAYGROUND = 'Wrong way! You need to go to the playground!'
-FADoorCodes_DEFEAT_FLUNKY_TOM = 'Walk up to that Flunky to battle him!'
+FADoorCodes_DEFEAT_FLUNKY_TOM = 'Walk up to the Flunky to battle him!'
 FADoorCodes_TALK_TO_HQ_TOM = 'Go get your reward from Toon Headquarters!'
 FADoorCodes_SUIT_APPROACHING = None
 FADoorCodes_BUILDING_TAKEOVER = "Watch out! There's a Cog in there!"
 FADoorCodes_SB_DISGUISE_INCOMPLETE = "You'll get caught going in there as a Toon! You need to complete your Sellbot Disguise first!\n\nBuild your Sellbot Disguise out of parts from the Factory."
-FADoorCodes_CB_DISGUISE_INCOMPLETE = "You'll get caught going in there as a Toon! You need to complete your Cashbot Disguise first!\n\nBuild your Cashbot Disguise by doing ToonTasks in Donald's Dreamland."
-FADoorCodes_LB_DISGUISE_INCOMPLETE = "You'll get caught going in there as a Toon! You need to complete your Lawbot Disguise first!\n\nBuild your Lawbot Disguise by doing the ToonTasks after Donald's Dreamland."
-FADoorCodes_BB_DISGUISE_INCOMPLETE = "You'll get caught going in there as a Toon! You need to complete your Bossbot Disguise first!\n\nBuild your Bossbot Disguise by doing the ToonTasks after Donald's Dreamland."
+FADoorCodes_CB_DISGUISE_INCOMPLETE = "You'll get caught going in there as a Toon! You need to complete your Cashbot Disguise first!\n\nBuild your Cashbot Disguise out of parts from the Mint."
+FADoorCodes_LB_DISGUISE_INCOMPLETE = "You'll get caught going in there as a Toon! You need to complete your Lawbot Disguise first!\n\nBuild your Lawbot Disguise out of parts from the DA Office."
+FADoorCodes_BB_DISGUISE_INCOMPLETE = "You'll get caught going in there as a Toon! You need to complete your Bossbot Disguise first!\n\nBuild your Bossbot Disguise out of parts from the Country Club."
 KnockKnockDoorNames = { 44: DoorNametag,
         2: 'Furr Elise',
         1:  'Overwhelming October',
