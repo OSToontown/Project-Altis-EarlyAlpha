@@ -16,6 +16,9 @@ class StreetAI:
         self.air = air
         self.zoneId = zoneId
         
+        # If it is a time where we want snow
+        self.wantSnow = True
+        
         self.air.dnaStoreMap[self.zoneId] = self.air.loadDNA(self.air.genDNAFileName(self.zoneId)).generateData()
         self.spawnObjects()
         self.createTime()
@@ -39,7 +42,7 @@ class StreetAI:
     def createRain(self):
         self.rainMgr = DistributedRainManagerAI.DistributedRainManagerAI(self.air)
         self.rainMgr.generateWithRequired(self.zoneId)  
-        if self.zoneId in [1100, 1200, 1300]:
+        if self.zoneId in [1100, 1200, 1300] or self.wantSnow:
             self.rainMgr.start(True) # We want it to always rain in donalds dock
         else:
             self.rainMgr.start(False)

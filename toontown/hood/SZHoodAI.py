@@ -29,6 +29,9 @@ class SZHoodAI(HoodAI):
         self.trolley = None
         self.pond = None
         self.buildingMgr = None
+        
+        # If it is a time where we want snow
+        self.wantSnow = True
 
         self.createZone()
         self.createStreets()
@@ -73,7 +76,7 @@ class SZHoodAI(HoodAI):
     def createRain(self):
         self.rainMgr = DistributedRainManagerAI.DistributedRainManagerAI(self.air)
         self.rainMgr.generateWithRequired(self.HOOD)  
-        if self.HOOD == 1000:
+        if self.HOOD == 1000 or self.wantSnow:
             self.rainMgr.start(True) # We want it to always rain in donalds dock
         else:
             self.rainMgr.start(False)
