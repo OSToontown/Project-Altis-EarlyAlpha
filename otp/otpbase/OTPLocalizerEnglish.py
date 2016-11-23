@@ -615,7 +615,7 @@ SuitFaceoffTaunts = {'b': ['Do you have a donation for me?',
        'Let me introduce myself.',
        "You're mingling with defeat.",
        "I'm going to mingle in your business.",
-       "Are you sure you're ready to mingle?"
+       "Are you sure you're ready to mingle?",
        "Enough with the games, let's mingle.",
        'I think you and I will get along well.'],
 'sw': ["I'm always swindling from the bottom to the top.",
