@@ -472,6 +472,7 @@ class Toon(Avatar.Avatar, ToonHead):
         self.shoes = (0, 0, 0)
         self.isStunned = 0
         self.isDisguised = 0
+        self.cogHead = 0
         self.defaultColorScale = None
         self.jar = None
         self.setBlend(frameBlend = True)
@@ -1200,7 +1201,7 @@ class Toon(Avatar.Avatar, ToonHead):
 
     def getDialogueArray(self):
         animalType = self.style.getType()
-        if self.isDisguised:
+        if self.isDisguised or self.cogHead:
             dialogueArray = Suit.SuitDialogArray
         else:
             if animalType == 'dog':
@@ -3693,6 +3694,68 @@ class Toon(Avatar.Avatar, ToonHead):
             self.takeOffSuit()
         return track
 
+    def __doYesManHeadSwitch(self, lerpTime, toYesMan):
+        node = self.getGeomNode()
+
+        def getDustCloudIval():
+            dustCloud = DustCloud.DustCloud(fBillboard=0, wantSound=1)
+            dustCloud.setBillboardAxis(2.0)
+            dustCloud.setZ(3)
+            dustCloud.setScale(0.4)
+            dustCloud.createTrack()
+            return Sequence(Func(dustCloud.reparentTo, self), dustCloud.track, Func(dustCloud.destroy), name='dustCloadIval')
+
+        dust = getDustCloudIval()
+        track = Sequence()
+        if toYesMan:
+            track.append(Func(self.stopBlink))
+            track.append(Func(self.closeEyes))
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            def hideParts():
+                self.notify.debug('HidePaths')
+                for hi in xrange(self.headParts.getNumPaths()):
+                    head = self.headParts[hi]
+                    parts = head.getChildren()
+                    for pi in xrange(parts.getNumPaths()):
+                        p = parts[pi]
+                        if not p.isHidden():
+                            p.hide()
+                            p.setTag('yesman', 'enabled')
+
+            track.append(Func(hideParts))
+            track.append(Func(self.enableYesMen, True))
+            self.cogHead = 1
+            self.setFont(ToontownGlobals.getSuitFont())
+        else:
+            if lerpTime > 0.0:
+                track.append(Func(dust.start))
+                track.append(Wait(0.5))
+            else:
+                dust.finish()
+
+            def showHiddenParts():
+                self.notify.debug('ShowHiddenPaths')
+                for hi in xrange(self.headParts.getNumPaths()):
+                    head = self.headParts[hi]
+                    parts = head.getChildren()
+                    for pi in xrange(parts.getNumPaths()):
+                        p = parts[pi]
+                        if not self.yesMen.hasPath(p) and p.getTag('yesman') == 'enabled':
+                            p.show()
+                            p.setTag('yesman', 'disabled')
+
+            track.append(Func(showHiddenParts))
+            track.append(Func(self.enableYesMen, False))
+            track.append(Func(self.startBlink))
+            self.cogHead = 0
+            self.setFont(ToontownGlobals.getToonFont())
+        return track
+
     def __doGreenToon(self, lerpTime, toGreen):
         track = Sequence()
         greenTrack = Parallel()
@@ -4761,6 +4824,8 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doBackStabber(lerpTime, toBackStabber=True)
         elif effect == ToontownGlobals.CEBottomFeeder:
             return self.__doBottomFeeder(lerpTime, toBottomFeeder=True)
+        elif effect == ToontownGlobals.CEYesManHead:
+            return self.__doYesManHeadSwitch(lerpTime, toYesMan=True)
         elif effect == ToontownGlobals.CEGreenToon:
             return self.__doGreenToon(lerpTime, toGreen=True)
         elif effect == ToontownGlobals.CERogerDog:
@@ -4923,6 +4988,8 @@ class Toon(Avatar.Avatar, ToonHead):
             return self.__doBackStabber(lerpTime, toBackStabber=False)
         elif effect == ToontownGlobals.CEBottomFeeder:
             return self.__doBottomFeeder(lerpTime, toBottomFeeder=False)
+        elif effect == ToontownGlobals.CEYesManHead:
+            return self.__doYesManHeadSwitch(lerpTime, toYesMan=False)
         elif effect == ToontownGlobals.CEGreenToon:
             return self.__doGreenToon(lerpTime, toGreen=False)
         elif effect == ToontownGlobals.CERogerDog:
