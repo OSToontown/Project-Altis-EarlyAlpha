@@ -574,8 +574,7 @@
 						<hpr h="180" p="0" r="0" />
 					</prop> -->
 					<sign code="tunnel_sign_blue">
-						<pos x="0" y="0" z="-0.830334" />
-						<scale x="1.18118" y="1" z="1.20103" />
+                        <scale x="1.6" y="1" z="1.6" />
 						<baseline code="mickey" kern="-0.00178057" stomp="0.0262698" width="37.081" height="37.081" flags="d">
 							<color r="0" g="0.501961" b="0.752941" a="1" />
 							<pos x="0.0633007" y="0" z="-0.559566" />
