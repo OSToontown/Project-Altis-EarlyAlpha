@@ -463,7 +463,7 @@
 					</wall>
 				</flat_building>
 				<prop name="linktunnel_br_3126_DNARoot" code="prop_safe_zone_tunnel">
-					<pos x="160.26" y="-80.77" z="-0.62" />
+					<pos x="160.26" y="-80.77" z="-0.52" />
 					<nhpr h="90" p="0" r="0" />
 					<sign code="tunnel_sign_blue">
 						<scale x="1.6" y="1" z="1.6" />
@@ -488,7 +488,7 @@
 					</sign>
 				</prop>
 				<prop name="linktunnel_br_3233_DNARoot" code="prop_safe_zone_tunnel">
-					<pos x="-22.77" y="-253.67" z="-0.85" />
+					<pos x="-22.77" y="-253.67" z="-0.52" />
 					<nhpr h="23" p="0" r="0" />
 					<sign code="tunnel_sign_blue">
 						<scale x="1.6" y="1" z="1.6" />
@@ -567,7 +567,7 @@
 					</sign>
 				</landmark_building>
 				<prop name="linktunnel_br_3301_DNARoot" code="prop_safe_zone_tunnel">
-					<pos x="100.11" y="152.01" z="-0.54" />
+					<pos x="100.11" y="152.01" z="-0.52" />
 					<nhpr h="150" p="0" r="0" />
 					<!-- <prop name="tunnelBlocker" code="prop_construction_sign">
 						<pos x="59.8" y="91" z="7" />
