@@ -329,7 +329,8 @@ Shirts = [
  'phase_4/maps/tt_t_chr_avt_shirt_anniversary.jpg',
  'phase_4/maps/tt_t_chr_avt_shirt_sora.jpg',                               # 150 - Sora, Unused
  'phase_4/maps/tt_t_chr_avt_shirt_slappy.jpg',                             # 151 - Slappy
- 'phase_4/maps/tt_t_chr_avt_shirt_electionFlippy.jpg'                      # 152 - Alpha
+ 'phase_4/maps/tt_t_chr_avt_shirt_electionFlippy.jpg',                     # 152 - Alpha
+ 'phase_4/maps/BossbotShirt.jpg'
 ]
 BoyShirts = [
  (0, 0),
@@ -522,7 +523,8 @@ Sleeves = ['phase_3/maps/desat_sleeve_1.jpg',
  'phase_4/maps/tt_t_chr_avt_shirtSleeve_anniversary.jpg',
  'phase_4/maps/tt_t_chr_avt_shirtSleeve_sora.jpg',                         # 137 - Sora, Unused
  'phase_4/maps/tt_t_chr_avt_shirtSleeve_slappy.jpg',                       # 138 - Slappy
- 'phase_4/maps/tt_t_chr_avt_shirtSleeve_electionFlippy.jpg']               # 139 - Alpha
+ 'phase_4/maps/tt_t_chr_avt_shirtSleeve_electionFlippy.jpg',               # 139 - Alpha
+ 'phase_4/maps/BossbotSleeve.jpg']
 BoyShorts = ['phase_3/maps/desat_shorts_1.jpg',
  'phase_3/maps/desat_shorts_2.jpg',
  'phase_3/maps/desat_shorts_4.jpg',
@@ -582,7 +584,8 @@ BoyShorts = ['phase_3/maps/desat_shorts_1.jpg',
  'phase_4/maps/tt_t_chr_avt_shorts_racing04.jpg',
  'phase_4/maps/tt_t_chr_avt_shorts_racing05.jpg',
  'phase_4/maps/tt_t_chr_avt_shorts_sora.jpg',
- 'phase_4/maps/tt_t_chr_avt_shorts_slappy.jpg']
+ 'phase_4/maps/tt_t_chr_avt_shorts_slappy.jpg',
+ 'phase_4/maps/BossbotShorts.jpg']
 SHORTS = 0
 SKIRT = 1
 GirlBottoms = [('phase_3/maps/desat_skirt_1.jpg', SKIRT),
@@ -647,7 +650,8 @@ GirlBottoms = [('phase_3/maps/desat_skirt_1.jpg', SKIRT),
  ('phase_4/maps/tt_t_chr_avt_skirt_golf03.jpg', SKIRT),
  ('phase_4/maps/tt_t_chr_avt_skirt_golf04.jpg', SKIRT),
  ('phase_4/maps/tt_t_chr_avt_skirt_racing04.jpg', SKIRT),
- ('phase_4/maps/tt_t_chr_avt_skirt_racing05.jpg', SKIRT)]
+ ('phase_4/maps/tt_t_chr_avt_skirt_racing05.jpg', SKIRT),
+ ('phase_4/maps/BossbotShorts.jpg', SHORTS)]
 ClothesColors = [VBase4(0.933594, 0.265625, 0.28125, 1.0),
  VBase4(0.863281, 0.40625, 0.417969, 1.0),
  VBase4(0.710938, 0.234375, 0.4375, 1.0),

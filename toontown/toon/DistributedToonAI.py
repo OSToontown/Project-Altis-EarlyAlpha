@@ -5013,6 +5013,44 @@ def dna(part, value):
             return "DNA: Legs index out of range."
         dna.legs = ToonDNA.toonLegTypes[value]
 
+    #Shirt, sleeves and bottom texture/color goe here.
+    elif part == 'toptex':
+        value = int(value)
+        if not 0 <= value <= len(ToonDNA.Shirts):
+            return 'Top texture index out of range (0-%d).' % len(ToonDNA.Shirts)
+        dna.topTex = value
+    elif part == 'toptexcolor':
+        value = int(value)
+        if not 0 <= value <= len(ToonDNA.ClothesColors):
+            return 'Top texture color index out of range(0-%d).' % len(ToonDNA.ClothesColors)
+        dna.topTexColor = value
+    elif part == 'sleevetex':
+        value = int(value)
+        if not 0 <= value <= len(ToonDNA.Sleeves):
+            return 'Sleeve texture index out of range(0-%d).' % len(ToonDNA.Sleeves)
+        dna.sleeveTex = value
+    elif part == 'sleevetexcolor':
+        value = int(value)
+        if not 0 <= value <= len(ToonDNA.ClothesColors):
+            return 'Sleeve texture color index out of range(0-%d).' % len(ToonDNA.ClothesColors)
+        dna.sleeveTexColor = value
+    elif part == 'bottex':
+        if dna.gender not in ('m', 'f'):
+            return 'Unknown gender.'
+        if dna.gender == 'm':
+            bottoms = ToonDNA.BoyShorts
+        else:
+            bottoms = ToonDNA.GirlBottoms
+        value = int(value)
+        if not 0 <= value <= len(bottoms):
+            return 'Bottom texture index out of range (0-%d).' % len(bottoms)
+        dna.botTex = value
+    elif part == 'bottexcolor':
+        value = int(value)
+        if not 0 <= value <= len(ToonDNA.ClothesColors):
+            return 'Bottom texture color index out of range(0-%d).' % len(ToonDNA.ClothesColors)
+        dna.botTexColor = value
+
     # Allow Admins to back up a toons current DNA before making changes.
     elif part=='save':
         av.mwDNABackup[spellbook.getInvoker().doId] = av.getDNAString()
