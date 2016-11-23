@@ -494,6 +494,8 @@ class ToonHead(Actor.Actor):
                 self.yesMen = NodePathCollection()
             suitAPath = 'phase_4/models/char/suitA-heads'
             model = loader.loadModel(suitAPath).find('**/yesman')
+            texture = loader.loadTexture('phase_4/maps/yes_man.jpg')
+            model.setTexture(texture, 1)
             if model:
                 model.setZ(-0.5)
                 if lod:
