@@ -3731,6 +3731,7 @@ class Toon(Avatar.Avatar, ToonHead):
             track.append(Func(self.enableYesMen, True))
             self.cogHead = 1
             self.setFont(ToontownGlobals.getSuitFont())
+            self.setSpeechFont(ToontownGlobals.getSuitFont())
         else:
             if lerpTime > 0.0:
                 track.append(Func(dust.start))
@@ -3754,6 +3755,7 @@ class Toon(Avatar.Avatar, ToonHead):
             track.append(Func(self.startBlink))
             self.cogHead = 0
             self.setFont(ToontownGlobals.getToonFont())
+            self.setSpeechFont(ToontownGlobals.getToonFont())
         return track
 
     def __doGreenToon(self, lerpTime, toGreen):
