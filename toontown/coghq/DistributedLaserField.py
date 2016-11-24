@@ -137,9 +137,7 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         if success:
             self.successTrack.start()
         else:
-            self.startBattle()
             self.failTrack.start()
-            self.cSphereNodePath.setPos(self.blockerX, self.blockerY, 0)
 
     def makeGridSymbols(self):
         symbolBlank = [0, (1.0, 0.0, 0.0), ()]
@@ -682,19 +680,6 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
                 self.gridBeamGN.removeAllGeoms()
             if self.gridWireGN and self.gridBeamGN:
                 self.createGrid()
-
-    def hideSuit(self, suitIdarray):
-        for suitId in suitIdarray:
-            suit = base.cr.doId2do.get(suitId)
-            if suit:
-                suit.stash()
-
-    def showSuit(self, suitIdarray):
-        for suitId in suitIdarray:
-            suit = base.cr.doId2do.get(suitId)
-            if suit:
-                suit.unstash()
-                suit.setVirtual()
 
     def initCollisionGeom(self):
         print 'Laser Field initCollisionGeom'

@@ -5,9 +5,6 @@ from toontown.coghq import LawbotOfficeOilRoom_Battle00_Cogs
 from toontown.coghq import LawbotOfficeOilRoom_Battle01_Cogs
 from toontown.coghq import LawbotOfficeBoilerRoom_Battle00_Cogs
 from toontown.coghq import LawbotOfficeBoilerRoom_Trap00
-from toontown.coghq import LawbotOfficeBoilerRoom_Trap00_Cogs
-from toontown.coghq import LawbotOfficeLobby_Trap00_Cogs
-from toontown.coghq import LawbotOfficeDiamondRoom_Trap00_Cogs
 from toontown.coghq import LawbotOfficeDiamondRoom_Battle00_Cogs
 from toontown.coghq import LawbotOfficeGearRoom_Battle00_Cogs
 
@@ -79,9 +76,6 @@ CogSpecModules = {'LawbotOfficeOilRoom_Battle00': LawbotOfficeOilRoom_Battle00_C
  'LawbotOfficeBoilerRoom_Action01': LawbotOfficeBoilerRoom_Action01_Cogs,
  'LawbotOfficeOilRoom_Battle01': LawbotOfficeOilRoom_Battle01_Cogs,
  'LawbotOfficeBoilerRoom_Battle00': LawbotOfficeBoilerRoom_Battle00_Cogs,
- 'LawbotOfficeBoilerRoom_Trap00': LawbotOfficeBoilerRoom_Trap00_Cogs,
- 'LawbotOfficeLobby_Trap00': LawbotOfficeLobby_Trap00_Cogs,
- 'LawbotOfficeDiamondRoom_Trap00': LawbotOfficeDiamondRoom_Trap00_Cogs,
  'LawbotOfficeDiamondRoom_Battle00': LawbotOfficeDiamondRoom_Battle00_Cogs,
  'LawbotOfficeGearRoom_Battle00': LawbotOfficeGearRoom_Battle00_Cogs}
 roomId2numBattles = {}

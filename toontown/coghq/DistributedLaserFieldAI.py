@@ -26,7 +26,6 @@ class DistributedLaserFieldAI(BattleBlockerAI.BattleBlockerAI, NodePath, BasicEn
         if not hasattr(self, 'gridGame'):
             self.gridGame = 'Roll'
         self.enabled = 1
-        self.hasShownSuits = 0
         self.healReady = 1
         self.playedSound = 0
         self.canButton = 1
@@ -69,7 +68,6 @@ class DistributedLaserFieldAI(BattleBlockerAI.BattleBlockerAI, NodePath, BasicEn
 
     def registerBlocker(self):
         BattleBlockerAI.BattleBlockerAI.registerBlocker(self)
-        taskMgr.doMethodLater(1, self.hideSuits, 'hide-suits')
 
     def delete(self):
         taskMgr.remove(self.detectName)
@@ -136,21 +134,21 @@ class DistributedLaserFieldAI(BattleBlockerAI.BattleBlockerAI, NodePath, BasicEn
             self.game.win()
 
     def trapFire(self):
+        self.enabled = 0
         self.game.lose()
-        self.showSuits()
         stage = self.air.getDo(self.level.stageDoId)
+        if self.healReady:
+            for avId in self.level.presentAvIds:
+                av = self.air.doId2do.get(avId)
+                if av:
+                    av.takeDamage(20, quietly=0)
+                    continue
         stage.resetPuzzelReward()
         self.healReady = 0
-        if not __dev__ and 1:
-            self.canButton = 0
         self.sendUpdate('setActiveLF', [0])
         if not self.playedSound:
             self.sendUpdate('setSuccess', [0])
         self.playedSound = 1
-
-    def setBattleFinished(self):
-        print 'battle Finished'
-        BattleBlockerAI.BattleBlockerAI.setBattleFinished(self)
         messenger.send(self.getOutputEventName(), [1])
         self.switchFire()
 
@@ -163,11 +161,7 @@ class DistributedLaserFieldAI(BattleBlockerAI.BattleBlockerAI, NodePath, BasicEn
 
     def trapDisable(self):
         self.enabled = 0
-        suits = self.level.planner.battleCellId2suits.get(self.cellId)
         messenger.send(self.getOutputEventName(), [1])
-        if self.hasShownSuits == 0:
-            for suit in suits:
-                suit.requestRemoval()
 
         self.sendUpdate('setActiveLF', [0])
         stage = self.air.getDo(self.level.stageDoId)
@@ -178,34 +172,9 @@ class DistributedLaserFieldAI(BattleBlockerAI.BattleBlockerAI, NodePath, BasicEn
                 if av:
                     av.toonUp(reward)
                     continue
-            stage.increasePuzzelReward()
+                stage.increasePuzzelReward()
         self.healReady = 0
         if not self.playedSound:
             self.sendUpdate('setSuccess', [1])
         self.playedSound = 1
         self.switchFire()
-
-    def hideSuits(self, taskName):
-        suits = self.level.planner.battleCellId2suits.get(self.cellId)
-        suitArray = []
-        for suit in suits:
-            suitArray.append(suit.doId)
-
-        if suitArray:
-            self.sendUpdate('hideSuit', [suitArray])
-
-    def showSuits(self):
-        if self.hasShownSuits == 0:
-            suits = self.level.planner.battleCellId2suits.get(self.cellId)
-            suitArray = []
-            for suit in suits:
-                suit.setVirtual()
-                suitArray.append(suit.doId)
-
-            if suitArray:
-                self.sendUpdate('showSuit', [suitArray])
-        self.hasShownSuits = 1
-
-    def addSuit(self, suit):
-        print 'Adding Suit %s' % suit.doId
-        BattleBlockerAI.BattleBlockerAI.addSuit(self, suit)
