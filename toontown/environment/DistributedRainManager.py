@@ -47,7 +47,8 @@ class DistributedRainManager(DistributedWeatherMGR):
         self.rainRender.setDepthWrite(0)
         self.rainRender.setBin('fixed', 1)
         self.rain.start(camera, self.rainRender)
-        self.rainSound = base.loadSfx('phase_12/audio/sfx/CHQ_rain_ambient.ogg')
+        #self.rainSound = base.loadSfx('phase_12/audio/sfx/CHQ_rain_ambient.ogg')
+        self.rainSound = base.loadSfx('phase_8/audio/sfx/SZ_TB_wind_%s.ogg' % random.randint(1,3))
         base.playSfx(self.rainSound, looping=1, volume=0.25)
         self.currentWeather = 0
         
