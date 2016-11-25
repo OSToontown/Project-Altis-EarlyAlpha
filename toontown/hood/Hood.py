@@ -113,7 +113,7 @@ class Hood(StateData.StateData):
         del self.parentFSM
         self.dnaStore.reset(scope='hood')
         del self.dnaStore
-        self.sky.removeNode()
+        #self.sky.removeNode()
         del self.sky
         self.ignoreAll()
         ModelPool.garbageCollect()
