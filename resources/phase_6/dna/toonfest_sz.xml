@@ -8,77 +8,7 @@
 					<pos x="0" y="0" z="0" />
 					<nhpr h="0" p="0" r="0" />
 				</prop>
-				<!--  chineseCheckers1 -->
-				<node name="game_table_1">
-					<prop name="prop_game_table_DNARoot" code="prop_game_table">
-						<pos x="71" y="-135" z="12.85" />
-						<nhpr h="114" p="4" r="-4" />
-					</prop>
-				</node>
-				<!-- chineseCheckers2 -->
-				<node name="game_table_2">
-					<prop name="prop_game_table_DNARoot" code="prop_game_table">
-						<pos x="109" y="32" z="6.7" />
-						<nhpr h="-121" p="-8.5" r="0" />
-					</prop>
-				</node>
-				<!-- chineseCheckers3 -->
-				<node name="game_table_3">
-					<prop name="prop_game_table_DNARoot" code="prop_game_table">
-						<pos x="321" y="18" z="8.2" />
-						<nhpr h="-231" p="-3" r="1" />
-					</prop>
-				</node>
-				<!-- chineseCheckers4 -->
-				<node name="game_table_4">
-					<prop name="prop_game_table_DNARoot" code="prop_game_table">
-						<pos x="354" y="-118" z="9.63" />
-						<nhpr h="105" p="0" r="0" />
-					</prop>
-				</node>
-				<!-- chineseCheckers5 -->
-				<node name="game_table_5">
-					<prop name="prop_game_table_DNARoot" code="prop_game_table">
-						<pos x="326" y="-514" z="0.93" />
-						<nhpr h="-260" p="0" r="0" />
-					</prop>
-				</node>
-				<!-- chineseCheckers6 -->
-				<node name="game_table_6">
-					<prop name="prop_game_table_DNARoot" code="prop_game_table">
-						<pos x="100" y="-355" z="8.4" />
-						<nhpr h="310" p="0" r="0" />
-					</prop>
-				</node>
-				<!-- Entrance picnic -->
-				<node name="picnic_table_1">
-					<prop name="prop_picnic_table_DNARoot" code="prop_picnic_table">
-						<pos x="136" y="-332" z="8.35" />
-						<nhpr h="10" p="0" r="0" />
-					</prop>
-				</node>
-				<!-- Fishing picnic -->
-				<node name="picnic_table_2">
-					<prop name="prop_picnic_table_DNARoot" code="prop_picnic_table">
-						<pos x="319" y="-535" z="1.0" />
-						<nhpr h="20" p="0" r="0" />
-					</prop>
-				</node>
-				<!-- Tower-left picnic -->
-				<node name="picnic_table_3">
-					<prop name="prop_picnic_table_DNARoot" code="prop_picnic_table">
-						<pos x="66" y="-180" z="11.15" />
-						<nhpr h="-75" p="-1" r="3" />
-					</prop>
-				</node>
-				<!-- Tower-right picnic -->
-				<node name="picnic_table_3">
-					<prop name="prop_picnic_table_DNARoot" code="prop_picnic_table">
-						<pos x="227" y="-173" z="4.6" />
-						<nhpr h="-36" p="0" r="0" />
-					</prop>
-				</node>
-        <!-- NPCs -->
+                <!-- NPCs -->
 				<prop name="npc_prizeclerk_origin_0" code="DCS">
 					<pos x="220" y="-72" z="8.5" />
 					<nhpr h="180" p="0" r="0" />
