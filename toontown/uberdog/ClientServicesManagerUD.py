@@ -49,7 +49,7 @@ class LocalAccountDB:
         if cookie in self.dbm:
             # Return it w/ account ID!
             import urllib2
-            url = "http://188.165.250.225/Dubrari/powerCheck?token="+str(cookie) # As account is already in DBM, we need to CHECK it's level
+            url = "http://188.165.250.225/Dubrari/powerCheck.php?token="+str(cookie) # As account is already in DBM, we need to CHECK it's level
             output = urllib2.urlopen(url).read()
             callback({'success': True,
                       'accountId': int(self.dbm[cookie]),
@@ -58,7 +58,7 @@ class LocalAccountDB:
         else:
             # Nope, let's return w/o account ID:
             import urllib2
-            url = "http://188.165.250.225/Dubrari/powerCreate?token="+str(cookie)+"&level=150" # As account is being created with access 150, we need to tell level DB that it's level for checking later
+            url = "http://188.165.250.225/Dubrari/powerCreate.php?token="+str(cookie)+"&level=150" # As account is being created with access 150, we need to tell level DB that it's level for checking later
             output = urllib2.urlopen(url).read()
             callback({'success': True,
                       'accountId': 0,
