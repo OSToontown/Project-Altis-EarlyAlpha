@@ -21,13 +21,13 @@
 						<baseline code="TT_Comedy" wiggle="3" stomp="0.0367716">
 							<color r="0.439216" g="0.247059" b="0.184314" a="1" />
 							<scale x="1.5" y="1" z="1.4" />
-							<text>ToonFest</text>
+							<text>Developer</text>
 						</baseline>
 						<baseline code="TT_Comedy" wiggle="3" stomp="0.0367716">
 							<color r="0.439216" g="0.247059" b="0.184314" a="1" />
 							<pos x="0" y="0" z="-1.2" />
 							<scale x="1.2" y="0.7" z="1.1" />
-							<text>Event Grounds</text>
+							<text>Land</text>
 						</baseline>
 					</sign>
 				</prop>
