@@ -43,7 +43,6 @@ class TTHood(ToonHood.ToonHood):
         return SkyUtil.cloudSkyTrack(task)
 
     def startSky(self):
-        self.sky.setTransparency(TransparencyAttrib.MDual, 1)
         self.notify.debug('The sky is: %s' % self.sky)
         if not self.sky.getTag('sky') == 'Regular':
             self.endSpookySky()
