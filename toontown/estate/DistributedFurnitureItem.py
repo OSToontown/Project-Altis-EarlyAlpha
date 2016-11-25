@@ -12,8 +12,6 @@ import HouseGlobals
 
 class DistributedFurnitureItem(DistributedHouseItem.DistributedHouseItem, DistributedSmoothNode.DistributedSmoothNode):
     notify = directNotify.newCategory('DistributedFurnitureItem')
-    deferFor = 1
-
     def __init__(self, cr):
         DistributedHouseItem.DistributedHouseItem.__init__(self, cr)
         DistributedSmoothNode.DistributedSmoothNode.__init__(self, cr)
@@ -54,12 +52,13 @@ class DistributedFurnitureItem(DistributedHouseItem.DistributedHouseItem, Distri
         DistributedSmoothNode.DistributedSmoothNode.delete(self)
 
     def setItem(self, furnitureMgrId, blob):
-        self.furnitureMgr = self.cr.doId2do[furnitureMgrId]
-        self.furnitureMgr.dfitems.append(self)
-        self.item = CatalogItem.getItem(blob, store=CatalogItem.Customization)
-        self.assign(self.loadModel())
-        interior = self.furnitureMgr.getInteriorObject()
-        self.reparentTo(interior.interior)
+        self.furnitureMgr = self.cr.doId2do.get(furnitureMgrId)
+        if self.furnitureMgr:
+            self.furnitureMgr.dfitems.append(self)
+            self.item = CatalogItem.getItem(blob, store=CatalogItem.Customization)
+            self.assign(self.loadModel())
+            interior = self.furnitureMgr.getInteriorObject()
+            self.reparentTo(interior.interior)
 
     def loadModel(self):
         return self.item.loadModel()
@@ -96,14 +95,7 @@ class DistributedFurnitureItem(DistributedHouseItem.DistributedHouseItem, Distri
 
     def sendRequestPosHpr(self, final, x, y, z, h, p, r):
         t = globalClockDelta.getFrameNetworkTime()
-        self.sendUpdate('requestPosHpr', (final,
-         x,
-         y,
-         z,
-         h,
-         p,
-         r,
-         t))
+        self.sendUpdate('requestPosHpr', (final, x, y, z, h, 0, 0, t))
 
     def setMode(self, mode, avId):
         if mode == HouseGlobals.FURNITURE_MODE_START:
@@ -124,15 +116,10 @@ class DistributedFurnitureItem(DistributedHouseItem.DistributedHouseItem, Distri
         else:
             pos = self.getPos(self.transmitRelativeTo)
             hpr = self.getHpr(self.transmitRelativeTo)
-        return (pos[0],
-         pos[1],
-         pos[2],
-         hpr[0],
-         hpr[1],
-         hpr[2])
+        return (pos[0], pos[1], pos[2], hpr[0], 0, 0)
 
     def __comparePosHpr(self, a, b, threshold):
-        for i in range(len(a)):
+        for i in xrange(len(a)):
             if abs(a[i] - b[i]) >= threshold:
                 return 1
 
