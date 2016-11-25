@@ -1,4 +1,7 @@
 This is for typing up changelogs for each update that will be posted on the official website
++ Added something
+* Changed something
+- Removed something
 
 Alpha 1.0.0 (Launch)
 *TODO: Put everything that was changed since TTO's closure
