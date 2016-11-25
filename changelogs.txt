@@ -7,7 +7,7 @@ Alpha 1.0.0 (Launch)
 *TODO: Put everything that was changed since TTO's closure
 
 Features:
-+ A new cog department is invading toontown: Boardbots!
++ A new cog department is invading Toontown: Boardbots!
 + Boardbot Cog Buildings
 + The scientists at Looney Labs have created new ZAP gags!
 + Day and Night cycle
@@ -16,6 +16,17 @@ Features:
 + A bunch of new toontasks
 + The cogs are getting smarter, they have started to build cog buildings with 6 stories!
 + More toon colors
++ Silly Surges, Animated Props, and Silly Meter
++ Rank 8 Cogs go up to Level 50
++ Sellbot and Lawbot Field Offices
++ 4K HD Resoultion Support
++ Rain in Bossbot HQ
++ Ability to delete SOS Cards
++ Spinning Piano in Melodyland
++ Match Kion, the new matching minigame, that replaces Match Minnie
++ Music Temp now changes in Races, like in Toontown Online
++ Cog Randomizers for Cog Thief, Tug of War, and Catching Game
+
 
 (incomplete)
 
@@ -31,8 +42,14 @@ Tweaks:
 * Smoother tunnel exiting camera animations
 * Smoother trolley camera animations
 * Revamped loading screen
+* Roof Floor for Cog Buildings
+* All Cog Types in CEO
+* Cog Suit Parts from Facilities, instead of ToonTasks
+
+
 
 (incomplete)
 
 Bug Fixes:
 * Game will freeze less when loading
+* Fixed knockback from TTO
