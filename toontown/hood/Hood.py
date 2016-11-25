@@ -284,8 +284,6 @@ class Hood(StateData.StateData):
 
     def skyTransition(self, sky):
         if self.id != DonaldsDreamland or self.id != DonaldsDock or self.id != TheBrrrgh:
-            if hasattr(self, 'sky') and self.sky:
-                self.stopSky()
             self.oldSky = self.sky
             if sky == 'mml':
                 self.newSky = loader.loadModel(self.mmlSkyFile)
@@ -313,10 +311,17 @@ class Hood(StateData.StateData):
             self.newSky.node().setEffect(ce)
             self.newSky.reparentTo(camera)
             newFadeIn = LerpColorScaleInterval(self.newSky, 5, Vec4(1, 1, 1, 1), startColorScale=Vec4(1, 1, 1, 0), blendType='easeInOut')
+            oldFadeOut = LerpColorScaleInterval(self.oldSky, 5, Vec4(1, 1, 1, 0), startColorScale=Vec4(1, 1, 1, 1), blendType='easeInOut')
             def end():
                 self.sky = self.newSky
                 self.oldSky = None
                 self.newSky = None
-            Sequence(newFadeIn, Func(end)).start()
-
+            Sequence(
+            Parallel(
+            newFadeIn,
+            oldFadeOut
+            ),
+            Func(self.oldSky.reparentTo, hidden),
+            Func(end)).start()
+        
             #TODO: Fix the fade sequence

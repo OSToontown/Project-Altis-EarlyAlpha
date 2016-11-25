@@ -28,6 +28,10 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.hood = base.cr.playGame.hood
         self.interval = 150
         
+    def setSky(self, sky):
+        hood = base.cr.playGame.hood
+        hood.skyTransition(str(sky)) 
+        
     def announceGenerate(self):
         DistributedWeatherMGR.announceGenerate(self)
         
@@ -40,6 +44,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[0], DayTimeGlobals.COLORS[23])
         self.currSeq.start()
         print 'Daytime Manager: Entered T0'
+        self.setSky('night')
         
     def exitT0(self):
         self.currSeq.finish()
@@ -49,6 +54,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[1], DayTimeGlobals.COLORS[0])
         self.currSeq.start()
         print 'Daytime Manager: Entered T1'
+        self.setSky('night')
         
     def exitT1(self):
         self.currSeq.finish()
@@ -58,6 +64,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[2], DayTimeGlobals.COLORS[1])
         self.currSeq.start()
         print 'Daytime Manager: Entered T2'
+        self.setSky('night')
         
     def exitT2(self):
         self.currSeq.finish()
@@ -67,6 +74,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[3], DayTimeGlobals.COLORS[2])
         self.currSeq.start()
         print 'Daytime Manager: Entered T3'
+        self.setSky('night')
         
     def exitT3(self):
         self.currSeq.finish()
@@ -76,6 +84,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[4], DayTimeGlobals.COLORS[3])
         self.currSeq.start()
         print 'Daytime Manager: Entered T4'
+        self.setSky('night')
         
     def exitT4(self):
         self.currSeq.finish()
@@ -85,6 +94,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[5], DayTimeGlobals.COLORS[4])
         self.currSeq.start()
         print 'Daytime Manager: Entered T5'
+        self.setSky('night')
         
     def exitT5(self):
         self.currSeq.finish()
@@ -94,6 +104,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[6], DayTimeGlobals.COLORS[5])
         self.currSeq.start()
         print 'Daytime Manager: Entered T6'
+        self.setSky('mml')
         
     def exitT6(self):
         self.currSeq.finish()
@@ -103,6 +114,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[7], DayTimeGlobals.COLORS[6])
         self.currSeq.start()
         print 'Daytime Manager: Entered T7'
+        self.setSky('mml')
         
     def exitT7(self):
         self.currSeq.finish()
@@ -112,6 +124,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[8], DayTimeGlobals.COLORS[7])
         self.currSeq.start()
         print 'Daytime Manager: Entered T8'
+        self.setSky('mml')
         
     def exitT8(self):
         self.currSeq.finish()
@@ -121,6 +134,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[9], DayTimeGlobals.COLORS[8])
         self.currSeq.start()
         print 'Daytime Manager: Entered T9'
+        self.setSky('day')
         
     def exitT9(self):
         self.currSeq.finish()
@@ -130,6 +144,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[10], DayTimeGlobals.COLORS[9])
         self.currSeq.start()
         print 'Daytime Manager: Entered T10'
+        self.setSky('day')
         
     def exitT10(self):
         self.currSeq.finish()
@@ -139,6 +154,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[11], DayTimeGlobals.COLORS[10])
         self.currSeq.start()
         print 'Daytime Manager: Entered T11'
+        self.setSky('day')
         
     def exitT11(self):
         self.currSeq.finish()
@@ -148,6 +164,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[12], DayTimeGlobals.COLORS[11])
         self.currSeq.start()
         print 'Daytime Manager: Entered T12'
+        self.setSky('day')
         
     def exitT12(self):
         self.currSeq.finish()
@@ -157,6 +174,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[13], DayTimeGlobals.COLORS[12])
         self.currSeq.start()
         print 'Daytime Manager: Entered T13'
+        self.setSky('day')
 
     def exitT13(self):
         self.currSeq.finish()
@@ -166,6 +184,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[14], DayTimeGlobals.COLORS[13])
         self.currSeq.start()
         print 'Daytime Manager: Entered T14'
+        self.setSky('day')
 
     def exitT14(self):
         self.currSeq.finish()
@@ -175,6 +194,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[15], DayTimeGlobals.COLORS[14])
         self.currSeq.start()
         print 'Daytime Manager: Entered T15'
+        self.setSky('day')
 
     def exitT15(self):
         self.currSeq.finish()
@@ -184,6 +204,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[16], DayTimeGlobals.COLORS[15])
         self.currSeq.start()
         print 'Daytime Manager: Entered T16'
+        self.setSky('mml')
 
     def exitT16(self):
         self.currSeq.finish()
@@ -193,6 +214,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[17], DayTimeGlobals.COLORS[16])
         self.currSeq.start()
         print 'Daytime Manager: Entered T17'
+        self.setSky('mml')
 
     def exitT17(self):
         self.currSeq.finish()
@@ -211,15 +233,18 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[19], DayTimeGlobals.COLORS[18])
         self.currSeq.start()
         print 'Daytime Manager: Entered T19'
+        self.setSky('mml')
 
     def exitT19(self):
         self.currSeq.finish()
         self.currSeq = None
+        self.setSky('night')
 
     def enterT20(self, timestamp):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[20], DayTimeGlobals.COLORS[19])
         self.currSeq.start()
         print 'Daytime Manager: Entered T20'
+        self.setSky('night')
 
     def exitT20(self):
         self.currSeq.finish()
@@ -229,6 +254,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[21], DayTimeGlobals.COLORS[20])
         self.currSeq.start()
         print 'Daytime Manager: Entered T21'
+        self.setSky('night')
 
     def exitT21(self):
         self.currSeq.finish()
@@ -238,6 +264,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[22], DayTimeGlobals.COLORS[21])
         self.currSeq.start()
         print 'Daytime Manager: Entered T22'
+        self.setSky('night')
 
     def exitT22(self):
         self.currSeq.finish()
@@ -247,6 +274,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[23], DayTimeGlobals.COLORS[22])
         self.currSeq.start()
         print 'Daytime Manager: Entered T23'
+        self.setSky('night')
 
     def exitT23(self):
         self.currSeq.finish()
