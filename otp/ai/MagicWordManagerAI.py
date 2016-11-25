@@ -46,5 +46,5 @@ class MagicWordManagerAI(DistributedObjectAI):
                                   invokerId=invokerId, invokerAccess=invoker.getAdminAccess(),
                                   targetId=targetId, targetAccess=targetAccess,
                                   word=word, response=response[0])
-        with open("backups/tools/magic-words.txt", "a") as text_file:
+        with open("backups/tools/magic-words.altis", "a") as text_file:
             text_file.write("%s | %s : %s\n" % (now, invokerId, word))
