@@ -48,7 +48,6 @@ from toontown.distributed import ToontownDistrictStats
 from toontown.makeatoon import TTPickANamePattern
 from toontown.parties import ToontownTimeManager
 from toontown.toon import Toon, DistributedToon
-from toontown.credits.CreditsSequence import CreditsSequence
 from ToontownMsgTypes import *
 import HoodMgr
 import PlayGame
@@ -128,12 +127,6 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         state.addTransition('skipTutorialRequest')
         state = self.gameFSM.getStateNamed('playGame')
         state.addTransition('skipTutorialRequest')
-
-        # Alpha Credits
-        self.credits = CreditsSequence('alpha')
-        self.loginFSM.addState(State.State('credits', self.enterCredits, self.exitCredits, ['gameOff', 'noConnection']))
-        state = self.loginFSM.getStateNamed('playingGame')
-        state.addTransition('credits')
 
         self.wantCogdominiums = config.GetBool('want-cogdominiums', 1)
         self.wantEmblems = config.GetBool('want-emblems', 0)

@@ -5,8 +5,6 @@ from toontown.hood import ZoneUtil
 from direct.gui.DirectGui import *
 from pandac.PandaModules import *
 from toontown.toonbase import TTLocalizer
-from toontown.toontowngui import TTDialog
-from toontown.election import SafezoneInvasionGlobals
 
 class MapPage(ShtikerPage.ShtikerPage):
 
@@ -222,12 +220,6 @@ class MapPage(ShtikerPage.ShtikerPage):
         messenger.send(self.doneEvent)
 
     def goHome(self):
-        if config.GetBool('want-doomsday', False):
-            self.confirm = TTDialog.TTGlobalDialog(doneEvent='confirmDone', message=SafezoneInvasionGlobals.LeaveToontownCentralAlert, style=TTDialog.Acknowledge)
-            self.confirm.show()
-            self.accept('confirmDone', self.handleConfirm)
-            return
-
         if config.GetBool('want-qa-regression', 0):
             self.notify.info('QA-REGRESSION: VISITESTATE: Visit estate')
         self.doneStatus = {'mode': 'gohome',
@@ -235,22 +227,8 @@ class MapPage(ShtikerPage.ShtikerPage):
         messenger.send(self.doneEvent)
 
     def __buttonCallback(self, hood):
-        if config.GetBool('want-doomsday', False):
-            self.confirm = TTDialog.TTGlobalDialog(doneEvent='confirmDone', message=SafezoneInvasionGlobals.LeaveToontownCentralAlert, style=TTDialog.Acknowledge)
-            self.confirm.show()
-            self.accept('confirmDone', self.handleConfirm)
-            return
-
         if hood in base.localAvatar.getTeleportAccess() and hood in base.cr.hoodMgr.getAvailableZones():
             base.localAvatar.sendUpdate('checkTeleportAccess', [hood])
             self.doneStatus = {'mode': 'teleport',
              'hood': hood}
             messenger.send(self.doneEvent)
-
-    def handleConfirm(self):
-        status = self.confirm.doneStatus
-        self.ignore('confirmDone')
-        self.confirm.cleanup()
-        del self.confirm
-        if status == 'ok':
-            pass

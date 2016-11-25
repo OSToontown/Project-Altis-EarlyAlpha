@@ -248,17 +248,11 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             # Teleportation access stuff.
             if 100 <= zoneId < ToontownGlobals.DynamicZonesBegin:
                 hood = ZoneUtil.getHoodId(zoneId)
-                if not config.GetBool('want-doomsday', False):
-                    self.sendUpdate('setLastHood', [hood])
-                    self.b_setDefaultZone(hood)
 
                 hoodsVisited = list(self.getHoodsVisited())
                 if not hood in hoodsVisited:
                     hoodsVisited.append(hood)
                     self.b_setHoodsVisited(hoodsVisited)
-                    # TODO: REMOVE THIS AFTER ARG IS OVER.
-                    if hood == ToontownGlobals.LawbotHQ:
-                        self.air.writeServerEvent("arg-complete", avId=self.getDoId(), message="%s has unlocked LBHQ!" % self.getName())
 
                 if zoneId == ToontownGlobals.GoofySpeedway or zoneId == ToontownGlobals.OutdoorZone:
                     tpAccess = self.getTeleportAccess()
