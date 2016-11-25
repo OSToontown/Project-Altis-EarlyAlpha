@@ -15,8 +15,8 @@ class TFHood(ToonHood):
         self.townLoaderClass = TTTownLoader # Temporary
         self.safeZoneLoaderClass = TFSafeZoneLoader
         self.storageDNAFile = 'phase_6/dna/storage_TF.xml'
-        self.skyFile = 'phase_9/models/cogHQ/old_sky'
-        self.titleColor = (0.5, 0.5, 0.5, 1.0)
+        self.skyFile = 'phase_3.5/models/props/TT_sky'
+        self.titleColor = (1.0, 0.5, 0.4, 1.0)
 
     def load(self):
         ToonHood.load(self)

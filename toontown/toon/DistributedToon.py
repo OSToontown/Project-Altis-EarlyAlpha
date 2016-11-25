@@ -2723,8 +2723,9 @@ def gardenGame():
     base.localAvatar.game = GardenDropGame.GardenDropGame()
 
 @magicWord(category=CATEGORY_MODERATION)
-def cogfest():
+def granddad():
     spellbook.getInvoker().magicTeleportInitiate(7000, 7000)
+    return "FLEENSTONES???"
     
 @magicWord(category=CATEGORY_MODERATION)
 def loopysballs():
