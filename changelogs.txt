@@ -2,3 +2,34 @@ This is for typing up changelogs for each update that will be posted on the offi
 
 Alpha 1.0.0 (Launch)
 *TODO: Put everything that was changed since TTO's closure
+
+Features:
++ A new cog department is invading toontown: Boardbots!
++ Boardbot Cog Buildings
++ The scientists at Looney Labs have created new ZAP gags!
++ Day and Night cycle
++ Weather cycle
++ Brand new togglable battle GUI
++ A bunch of new toontasks
++ The cogs are getting smarter, they have started to build cog buildings with 6 stories!
++ More toon colors
+
+(incomplete)
+
+Tweaks:
+* Revamped PICK-A-TOON screen
++ Added options to the PICK-A-TOON screen
++ Added key remapping
+* All animations are now interpolated - everything will look smooth as butter!
+* DA Office lazer puzzles no longer have cogs, instead a laff penalty is applied
+* Updated cog building textures to be colorized based on department
+* The snow has picked up in toontown!
+* Cogs now roam Bossbot HQ
+* Smoother tunnel exiting camera animations
+* Smoother trolley camera animations
+* Revamped loading screen
+
+(incomplete)
+
+Bug Fixes:
+* Game will freeze less when loading
