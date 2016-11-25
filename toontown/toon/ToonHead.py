@@ -387,6 +387,7 @@ class ToonHead(Actor.Actor):
                 pLoaded = self.loadPumpkin(headStyle[1], None, copy)
                 self.loadSnowMan(headStyle[1], None, copy)
                 self.loadYesMan(None, copy)
+                self.loadDownsizer(None, copy)
             if not copy:
                 self.showAllParts('head')
             if fix != None:
@@ -407,6 +408,7 @@ class ToonHead(Actor.Actor):
                     pLoaded = self.loadPumpkin(headStyle[1], lod, copy)
                     self.loadSnowMan(headStyle[1], lod, copy)
                     self.loadYesMan(lod, copy)
+                    self.loadDownsizer(lod, copy)
                 if not copy:
                     self.showAllParts('head', lod)
                 if fix != None:
@@ -511,6 +513,27 @@ class ToonHead(Actor.Actor):
         else:
             ToonHead.notify.debug('phase_4 not loaded yet.')
 
+    def loadDownsizer(self, lod, copy):
+        if hasattr(base, 'launcher') and (not base.launcher or base.launcher and base.launcher.getPhaseComplete(4)):
+            if not hasattr(self, 'downsizer'):
+                self.downsizer = NodePathCollection()
+            suitBPath = 'phase_4/models/char/suitB-heads'
+            model = loader.loadModel(suitBPath).find('**/beancounter')
+            if model:
+                model.setZ(-0.5)
+                if lod:
+                    model.reparentTo(self.getPart('head', lod))
+                else:
+                    model.reparentTo(self.find('**/__Actor_head'))
+                self.downsizer.addPath(model)
+                model.stash()
+                return True
+            else:
+                del self.yesMen
+                return False
+        else:
+            ToonHead.notify.debug('phase_4 not loaded yet.')
+
     def __fixPumpkin(self, style, lodName = None, copy = 1):
         if lodName == None:
             searchRoot = self
@@ -604,6 +627,30 @@ class ToonHead(Actor.Actor):
                     if self.__eyelashClosed:
                         self.__eyelashClosed.unstash()
                 self.yesMen.stash()
+        return
+
+    def enableDownsizer(self, enable):
+        if not hasattr(self, 'downsizer'):
+            if len(self.__lods) == 1:
+                self.loadDownsizer(None, self.__copy)
+            else:
+                for lod in self.__lds:
+                    self.loadDownsizer(lod, self.__copy)
+
+        if hasattr(self, 'downsizer'):
+            if enable:
+                if self.__eyelashOpen:
+                    self.__eyelashOpen.stash()
+                if self.__eyelashClosed:
+                    self.__eyelashClosed.stash()
+                self.downsizer.unstash()
+            else:
+                if not self.__eyelashesHiddenByGlasses:
+                    if self.__eyelashOpen:
+                        self.__eyelashOpen.unstash()
+                    if self.__eyelashClosed:
+                        self.__eyelashClosed.unstash()
+                self.downsizer.stash()
         return
 
     def hideEars(self):
