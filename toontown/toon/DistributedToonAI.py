@@ -338,8 +338,13 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             self.keepAliveTask = None
         return
 
-    def ban(self, comment):
+    def ban(self, time, comment):
         #simbase.air.banManager.ban(self.doId, self.DISLid, comment)
+        pass
+        
+        
+    def pban(self, comment):
+        #simbase.air.banManager.pban(self.doId, self.DISLid, comment)
         pass
 
     def disconnect(self):
@@ -4787,15 +4792,25 @@ def kick(reason):
     simbase.air.send(dg)
     return "You kicked %s with reason '%s'." % (spellbook.getTarget().getName(), reason)
 
-@magicWord(category=CATEGORY_MODERATION, types=[str, bool, bool], access=400) # Set to 400 for now...
-def ban(reason="Unknown reason.", confirmed=False, overrideSelfBan=False):
+@magicWord(category=CATEGORY_MODERATION, types=[int, str, bool, bool], access=400) # Set to 400 for now...
+def ban(timeInMinutes, reason="Unknown reason.", confirmed=False, overrideSelfBan=False):
     """Ban the player from the game server."""
     return 'banManager is not currently implemented!' # Disabled until we have a working banManager.
     if not confirmed:
-        return "Are you sure you want to ban this player? Use '~~ban REASON True' if you are."
+        return "Are you sure you want to ban this player? Use '~~ban TIME REASON True' if you are."
     if not overrideSelfBan and spellbook.getTarget() == spellbook.getInvoker():
-        return "Are you sure you want to ban yourself? Use '~ban REASON True True' if you are."
-    spellbook.getTarget().ban(reason)
+        return "Are you sure you want to ban yourself? Use '~ban TIME REASON True True' if you are."
+    spellbook.getTarget().ban(time, reason)
+    
+@magicWord(category=CATEGORY_MODERATION, types = [str, bool, bool])
+def pban(reason="Unknown reason.", confirmed=False, overrideSelfBan=False):
+    """Ban the player from the game server."""
+    return 'banManager is not currently implemented!' # Disabled until we have a working banManager.
+    if not confirmed:
+        return "Are you sure you want to ban this player? Use '~~pban REASON True' if you are."
+    if not overrideSelfBan and spellbook.getTarget() == spellbook.getInvoker():
+        return "Are you sure you want to ban yourself? Use '~pban REASON True True' if you are."
+    spellbook.getTarget().pban(reason)
 
 #This command has been disabled due to many breakingnessings. GG developers, you suck at sanity >:C
 '''
