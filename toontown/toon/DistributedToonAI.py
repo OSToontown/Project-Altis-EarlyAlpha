@@ -4869,7 +4869,7 @@ def togGM():
             spellbook.getInvoker().b_setGM(3)
         return 'You have enabled your GM icon.'
 
-@magicWord(category=CATEGORY_MODERATION)
+@magicWord(category=CATEGORY_VIP)
 def ghost():
     """Set toon to invisible."""
     if spellbook.getInvoker().ghostMode == 0:
