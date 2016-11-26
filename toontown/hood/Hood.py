@@ -298,31 +298,33 @@ class Hood(StateData.StateData):
             if sky == 'rain':
                 self.newSky = loader.loadModel(self.snowySkyFile)
                 self.newSky.setTag('sky', 'Rain')
-            self.newSky.setTransparency(TransparencyAttrib.MDual, 1)
-            self.oldSky.setTransparency(TransparencyAttrib.MDual, 1)
-            self.newSky.setScale(1.0)
-            self.newSky.setDepthTest(0)
-            self.newSky.setDepthWrite(0)
-            self.newSky.setColorScale(1, 1, 1, 0)
-            self.newSky.setBin('background', 100)
-            self.newSky.setFogOff()
-            self.newSky.setZ(0.0)
-            self.newSky.setHpr(0.0, 0.0, 0.0)
-            ce = CompassEffect.make(NodePath(), CompassEffect.PRot | CompassEffect.PZ)
-            self.newSky.node().setEffect(ce)
-            self.newSky.reparentTo(camera)
-            newFadeIn = LerpColorScaleInterval(self.newSky, 5, Vec4(1, 1, 1, 1), startColorScale=Vec4(1, 1, 1, 0), blendType='easeInOut')
-            oldFadeOut = LerpColorScaleInterval(self.oldSky, 5, Vec4(1, 1, 1, 0), startColorScale=Vec4(1, 1, 1, 1), blendType='easeInOut')
-            def end():
-                self.sky = self.newSky
-                self.oldSky = None
-                self.newSky = None
-            Sequence(
-            Parallel(
-            newFadeIn,
-            oldFadeOut
-            ),
-            Func(self.oldSky.reparentTo, hidden),
-            Func(end)).start()
+            if self.oldSky:
+                self.oldSky.setTransparency(TransparencyAttrib.MDual, 1)
+            if self.newSky:
+                self.newSky.setTransparency(TransparencyAttrib.MDual, 1)
+                self.newSky.setScale(1.0)
+                self.newSky.setDepthTest(0)
+                self.newSky.setDepthWrite(0)
+                self.newSky.setColorScale(1, 1, 1, 0)
+                self.newSky.setBin('background', 100)
+                self.newSky.setFogOff()
+                self.newSky.setZ(0.0)
+                self.newSky.setHpr(0.0, 0.0, 0.0)
+                ce = CompassEffect.make(NodePath(), CompassEffect.PRot | CompassEffect.PZ)
+                self.newSky.node().setEffect(ce)
+                self.newSky.reparentTo(camera)
+                newFadeIn = LerpColorScaleInterval(self.newSky, 5, Vec4(1, 1, 1, 1), startColorScale=Vec4(1, 1, 1, 0), blendType='easeInOut')
+                oldFadeOut = LerpColorScaleInterval(self.oldSky, 5, Vec4(1, 1, 1, 0), startColorScale=Vec4(1, 1, 1, 1), blendType='easeInOut')
+                def end():
+                    self.sky = self.newSky
+                    self.oldSky = None
+                    self.newSky = None
+                Sequence(
+                Parallel(
+                newFadeIn,
+                oldFadeOut
+                ),
+                Func(self.oldSky.reparentTo, hidden),
+                Func(end)).start()
         
             #TODO: Fix the fade sequence
