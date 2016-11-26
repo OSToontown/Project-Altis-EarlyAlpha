@@ -314,7 +314,10 @@ class Hood(StateData.StateData):
                 self.newSky.node().setEffect(ce)
                 self.newSky.reparentTo(camera)
                 newFadeIn = LerpColorScaleInterval(self.newSky, 5, Vec4(1, 1, 1, 1), startColorScale=Vec4(1, 1, 1, 0), blendType='easeInOut')
-                oldFadeOut = LerpColorScaleInterval(self.oldSky, 5, Vec4(1, 1, 1, 0), startColorScale=Vec4(1, 1, 1, 1), blendType='easeInOut')
+                if self.oldSky:
+                    oldFadeOut = LerpColorScaleInterval(self.oldSky, 5, Vec4(1, 1, 1, 0), startColorScale=Vec4(1, 1, 1, 1), blendType='easeInOut')
+                else:
+                    oldFadeOut = None
                 def end():
                     self.sky = self.newSky
                     self.oldSky = None
