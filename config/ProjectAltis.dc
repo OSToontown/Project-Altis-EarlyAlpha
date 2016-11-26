@@ -957,7 +957,7 @@ dclass DistributedToon : DistributedPlayer {
   setTrackAccess(uint16 trackArray[] = [0,0,0,0,1,1,0,0]) required broadcast ownrecv db;
   setTrackProgress(int8 trackId = -1, uint32 progress = 0) required ownrecv db;
   setTrackBonusLevel(int8 trackArray[] = [-1,-1,-1,-1,-1,-1,-1,-1]) required broadcast ownrecv db;
-  setInventory(blob inventoryNetString = [0*7, 0*7, 0*7, 0*7, 1, 0*6, 1, 0*6, 0*7, 0*7]) required broadcast db;
+  setInventory(blob inventoryNetString = [0*7, 0*7, 0*7, 0*7, 1, 0*6, 1, 0*6, 0*7, 0*7]) required ownrecv db;
   setMaxNPCFriends(uint16 max = 16) required ownrecv db;
   setNPCFriendsDict(FriendEntry NPCFriendsList[] = []) required ownrecv db;
   setDefaultShard(uint32 shard = 0) required ownrecv broadcast db;
