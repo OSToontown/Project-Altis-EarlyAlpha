@@ -132,6 +132,8 @@ CATEGORY_SYSADMIN = MagicWordCategory('Sysadmin commands', defaultAccess=500,
     doc='These Magic Words are useful for executing/viewing system information.'
         ' Note that these Magic Words may have an impact on the server\'s'
         ' stability and speed, and should be used with caution.')
+CATEGORY_VIP = MagicWordCategory('VIP Commands', defaultAccess=250,
+    doc='For VIPS')
 
 
 class MagicWord:
