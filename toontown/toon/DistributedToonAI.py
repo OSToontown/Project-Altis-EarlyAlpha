@@ -5378,23 +5378,18 @@ def nametag(styleName):
 def animations():
     """
     Unlock all of the animations on the target toon.
-    This exclutes the "Toons of the world unite!" phrase. (because it sucks)
     """
 
-    av = spellbook.getTarget()
+    av = spellbook.getInvoker()
     emotes = list(av.getEmoteAccess())
 
-    # Ripped directly from alpha days, cause I'm lazy.
-    # Get this list out of OTPLocalizerEnglish.py
-    ALPHA_EMOTES = ['Wave', 'Happy', 'Sad', 'Angry', 'Sleepy',
-                    'Dance', 'Think', 'Bored', 'Applause', 'Cringe',
-                    'Confused', 'Bow', 'Delighted', 'Belly Flop', 'Banana Peel',
-                    'Shrug', 'Surprise', 'Furious',
-                    'Laugh', 'Cry']
-
-    for emote in ALPHA_EMOTES:
-        emoteId = OTPLocalizer.EmoteFuncDict.get(emote)
-        if emoteId is None: continue
+    for emoteId in OTPLocalizer.EmoteFuncDict.values():
+        if emoteId >= len(emotes):
+            continue
+        # The following emotions are ignored because they are unable to be
+        # obtained:
+        if emoteId in (17, 18, 19):
+            continue
         emotes[emoteId] = 1
 
     av.b_setEmoteAccess(emotes)
