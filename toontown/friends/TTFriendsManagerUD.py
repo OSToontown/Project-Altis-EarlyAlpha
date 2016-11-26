@@ -3,6 +3,7 @@ from direct.distributed.PyDatagram import *
 from direct.task import Task
 from direct.directnotify.DirectNotifyGlobal import directNotify
 import functools
+import time
 
 class TTFriendsManagerUD(DistributedObjectGlobalUD):
     notify = directNotify.newCategory('TTFriendsManagerUD')
@@ -14,9 +15,12 @@ class TTFriendsManagerUD(DistributedObjectGlobalUD):
         self.toonNames = {}
         self.toonAccIds = {}
         self.tpRequests = {}
+        self.whisperRequests = {}
         self.friendsLists = {}
         self.friendIndexes = {}
         self.listResponses = {}
+        self.delayTime = 1.0
+        self.delayTime = 1.0
 
     def removeFriend(self, friendId):
         avId = self.air.getAvatarIdFromSender()
@@ -204,6 +208,8 @@ class TTFriendsManagerUD(DistributedObjectGlobalUD):
 
     def routeTeleportQuery(self, toId):
         fromId = self.air.getAvatarIdFromSender()
+        if fromId in self.tpRequests.values():
+			return
         self.tpRequests[fromId] = toId
         self.sendUpdateToAvatarId(toId, 'teleportQuery', [fromId])
         taskMgr.doMethodLater(5, self.giveUpTeleportQuery, 'tp-query-timeout-%d' % fromId, extraArgs=[fromId, toId])
@@ -230,18 +236,46 @@ class TTFriendsManagerUD(DistributedObjectGlobalUD):
 
     def whisperSCTo(self, toId, msgIndex):
         fromId = self.air.getAvatarIdFromSender()
+        currStamp = time.time()
+        if fromId in self.whisperRequests:
+            elapsed = self.whisperRequests[fromId] - currStamp
+            if elapsed < self.delayTime:
+                self.whisperRequests[fromId] = currStamp
+                return
+        self.whisperRequests[fromId] = currStamp
         self.sendUpdateToAvatarId(toId, 'setWhisperSCFrom', [fromId, msgIndex])
 
     def whisperSCCustomTo(self, toId, msgIndex):
         fromId = self.air.getAvatarIdFromSender()
+        currStamp = time.time()
+        if fromId in self.whisperRequests:
+            elapsed = self.whisperRequests[fromId] - currStamp
+            if elapsed < self.delayTime:
+                self.whisperRequests[fromId] = currStamp
+                return
+        self.whisperRequests[fromId] = currStamp
         self.sendUpdateToAvatarId(toId, 'setWhisperSCCustomFrom', [fromId, msgIndex])
 
     def whisperSCEmoteTo(self, toId, msgIndex):
         fromId = self.air.getAvatarIdFromSender()
+        currStamp = time.time()
+        if fromId in self.whisperRequests:
+            elapsed = self.whisperRequests[fromId] - currStamp
+            if elapsed < self.delayTime:
+                self.whisperRequests[fromId] = currStamp
+                return
+        self.whisperRequests[fromId] = currStamp
         self.sendUpdateToAvatarId(toId, 'setWhisperSCEmoteFrom', [fromId, msgIndex])
 
     def sendTalkWhisper(self, toId, message):
         fromId = self.air.getAvatarIdFromSender()
+        currStamp = time.time()
+        if fromId in self.whisperRequests:
+            elapsed = self.whisperRequests[fromId] - currStamp
+            if elapsed < self.delayTime:
+                self.whisperRequests[fromId] = currStamp
+                return
+        self.whisperRequests[fromId] = currStamp
         self.sendUpdateToAvatarId(toId, 'receiveTalkWhisper', [fromId, message])
         self.air.writeServerEvent('whisper-said', fromId, toId, message)
 
