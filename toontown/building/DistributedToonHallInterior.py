@@ -54,6 +54,7 @@ class DistributedToonHallInterior(DistributedToonInterior):
          'phaseFourToFive': 'phase_4/models/props/tt_a_ara_ttc_sillyMeter_phaseFourToFive',
          'phaseFive': 'phase_4/models/props/tt_a_ara_ttc_sillyMeter_phaseFive'})
         self.sillyMeter.reparentTo(self.interior)
+        self.sillyMeter.setBlend(frameBlend = True)
         self.smPhase1 = self.sillyMeter.find('**/stage1')
         self.smPhase2 = self.sillyMeter.find('**/stage2')
         self.smPhase3 = self.sillyMeter.find('**/stage3')

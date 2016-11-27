@@ -20,6 +20,7 @@ class DistributedNPCPartyPerson(DistributedNPCToonBase):
         self.button = None
         self.askGui = None
         self.teaserDialog = None
+        self.npcType = 'Party Planner'
         return
 
     def disable(self):

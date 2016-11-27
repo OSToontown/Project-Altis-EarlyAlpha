@@ -9,14 +9,14 @@ from toontown.toontowngui import TeaserPanel
 from otp.nametag.NametagConstants import *
 ChoiceTimeout = 20
 
-class DistributedNPCToon(DistributedNPCToonBase):
+class DistributedNPCHQOfficer(DistributedNPCToonBase):
 
     def __init__(self, cr):
         DistributedNPCToonBase.__init__(self, cr)
         self.curQuestMovie = None
         self.questChoiceGui = None
         self.trackChoiceGui = None
-        self.npcType = 'Shopkeeper'
+        self.npcType = 'HQ Officer'
         return
 
     def delayDelete(self):

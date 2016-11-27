@@ -17,6 +17,7 @@ class DistributedNPCKartClerk(DistributedNPCToonBase):
         self.button = None
         self.popupInfo = None
         self.kartShopGui = None
+        self.npcType = 'Kart Clerk'
         return
 
     def disable(self):

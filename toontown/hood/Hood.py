@@ -317,17 +317,18 @@ class Hood(StateData.StateData):
                 if self.oldSky:
                     oldFadeOut = LerpColorScaleInterval(self.oldSky, 5, Vec4(1, 1, 1, 0), startColorScale=Vec4(1, 1, 1, 1), blendType='easeInOut')
                 else:
-                    oldFadeOut = None
+                    oldFadeOut = Wait(0) # Just do that to please the sequence so it doesnt crash
                 def end():
                     self.sky = self.newSky
                     self.oldSky = None
                     self.newSky = None
                 Sequence(
-                Parallel(
-                newFadeIn,
-                oldFadeOut
-                ),
-                Func(self.oldSky.reparentTo, hidden),
-                Func(end)).start()
-        
+                    Parallel(
+                        newFadeIn,
+                        oldFadeOut
+                    ),
+                    Func(self.oldSky.reparentTo, hidden),
+                    Func(end)
+                ).start()
+            
             #TODO: Fix the fade sequence
