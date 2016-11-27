@@ -338,8 +338,13 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             self.keepAliveTask = None
         return
 
-    def ban(self, comment):
+    def ban(self, time, comment):
         #simbase.air.banManager.ban(self.doId, self.DISLid, comment)
+        pass
+        
+        
+    def pban(self, comment):
+        #simbase.air.banManager.pban(self.doId, self.DISLid, comment)
         pass
 
     def disconnect(self):
@@ -4787,15 +4792,25 @@ def kick(reason):
     simbase.air.send(dg)
     return "You kicked %s with reason '%s'." % (spellbook.getTarget().getName(), reason)
 
-@magicWord(category=CATEGORY_MODERATION, types=[str, bool, bool], access=400) # Set to 400 for now...
-def ban(reason="Unknown reason.", confirmed=False, overrideSelfBan=False):
+@magicWord(category=CATEGORY_MODERATION, types=[int, str, bool, bool], access=400) # Set to 400 for now...
+def ban(timeInMinutes, reason="Unknown reason.", confirmed=False, overrideSelfBan=False):
     """Ban the player from the game server."""
     return 'banManager is not currently implemented!' # Disabled until we have a working banManager.
     if not confirmed:
-        return "Are you sure you want to ban this player? Use '~~ban REASON True' if you are."
+        return "Are you sure you want to ban this player? Use '~~ban TIME REASON True' if you are."
     if not overrideSelfBan and spellbook.getTarget() == spellbook.getInvoker():
-        return "Are you sure you want to ban yourself? Use '~ban REASON True True' if you are."
-    spellbook.getTarget().ban(reason)
+        return "Are you sure you want to ban yourself? Use '~ban TIME REASON True True' if you are."
+    spellbook.getTarget().ban(time, reason)
+    
+@magicWord(category=CATEGORY_MODERATION, types = [str, bool, bool])
+def pban(reason="Unknown reason.", confirmed=False, overrideSelfBan=False):
+    """Ban the player from the game server."""
+    return 'banManager is not currently implemented!' # Disabled until we have a working banManager.
+    if not confirmed:
+        return "Are you sure you want to ban this player? Use '~~pban REASON True' if you are."
+    if not overrideSelfBan and spellbook.getTarget() == spellbook.getInvoker():
+        return "Are you sure you want to ban yourself? Use '~pban REASON True True' if you are."
+    spellbook.getTarget().pban(reason)
 
 #This command has been disabled due to many breakingnessings. GG developers, you suck at sanity >:C
 '''
@@ -4869,7 +4884,7 @@ def togGM():
             spellbook.getInvoker().b_setGM(3)
         return 'You have enabled your GM icon.'
 
-@magicWord(category=CATEGORY_MODERATION)
+@magicWord(category=CATEGORY_VIP)
 def ghost():
     """Set toon to invisible."""
     if spellbook.getInvoker().ghostMode == 0:
@@ -5378,23 +5393,18 @@ def nametag(styleName):
 def animations():
     """
     Unlock all of the animations on the target toon.
-    This exclutes the "Toons of the world unite!" phrase. (because it sucks)
     """
 
-    av = spellbook.getTarget()
+    av = spellbook.getInvoker()
     emotes = list(av.getEmoteAccess())
 
-    # Ripped directly from alpha days, cause I'm lazy.
-    # Get this list out of OTPLocalizerEnglish.py
-    ALPHA_EMOTES = ['Wave', 'Happy', 'Sad', 'Angry', 'Sleepy',
-                    'Dance', 'Think', 'Bored', 'Applause', 'Cringe',
-                    'Confused', 'Bow', 'Delighted', 'Belly Flop', 'Banana Peel',
-                    'Shrug', 'Surprise', 'Furious',
-                    'Laugh', 'Cry']
-
-    for emote in ALPHA_EMOTES:
-        emoteId = OTPLocalizer.EmoteFuncDict.get(emote)
-        if emoteId is None: continue
+    for emoteId in OTPLocalizer.EmoteFuncDict.values():
+        if emoteId >= len(emotes):
+            continue
+        # The following emotions are ignored because they are unable to be
+        # obtained:
+        if emoteId in (17, 18, 19):
+            continue
         emotes[emoteId] = 1
 
     av.b_setEmoteAccess(emotes)
