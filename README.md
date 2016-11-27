@@ -25,6 +25,7 @@ Contributors
 
 Thanks To Disney, Toontown Offline, Toontown Rewritten, Toontown Infinite, Toontown Fellowship, Toontown House, Toontown Stride, Toontown World Online, and the Toontown community for making this game possible and to keep the Toontown spirit alive.
 
-# Inspirations
-* Toontown Rewritten, repowering the spirit of Toontown after Toontown Online closed on September 19, 2013
-* Toontown Infinite, increased difficulty for Project Altis
+# Inspirations and Credits
+* Toontown Rewritten- repowering the spirit of Toontown after Toontown Online closed on September 19, 2013
+* Toontown Infinite- increased difficulty for Project Altis
+* Toontown Offline- code fixes for Parties

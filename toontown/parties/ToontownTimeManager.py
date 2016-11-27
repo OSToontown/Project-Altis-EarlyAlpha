@@ -34,7 +34,7 @@ class ToontownTimeZone(tzinfo):
         offset = timedelta(hours=self.OFFSET)
         offset += self.dst(dt)
         return offset
-
+    
     def tzname(self, dt):
         standard_name, dst_name = self.NAMES
         if self.dst(dt):
