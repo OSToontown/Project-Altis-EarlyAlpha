@@ -2,7 +2,7 @@ from direct.directnotify import DirectNotifyGlobal
 from direct.distributed.DistributedObjectAI import DistributedObjectAI
 from toontown.catalog.CatalogItemList import CatalogItemList
 from toontown.catalog import CatalogItem
-from toontown.catalog.CatalogFurnitureItem import CatalogFurnitureItem, FLCloset, FLBank, FLPhone, FLTrunk, FLChair
+from toontown.catalog.CatalogFurnitureItem import CatalogFurnitureItem, FLCloset, FLBank, FLPhone, FLTrunk
 from toontown.catalog.CatalogWallpaperItem import CatalogWallpaperItem
 from toontown.catalog.CatalogMouldingItem import CatalogMouldingItem
 from toontown.catalog.CatalogFlooringItem import CatalogFlooringItem
@@ -13,7 +13,6 @@ from DistributedBankAI import DistributedBankAI
 from DistributedPhoneAI import DistributedPhoneAI
 from DistributedClosetAI import DistributedClosetAI
 from DistributedTrunkAI import DistributedTrunkAI
-from DistributedChairAI import DistributedChairAI
 
 class FurnitureError(Exception):
     def __init__(self, code):
@@ -241,8 +240,6 @@ class DistributedFurnitureManagerAI(DistributedObjectAI):
             do = DistributedBankAI(self.air, self, item)
         elif item.getFlags() & FLPhone:
             do = DistributedPhoneAI(self.air, self, item)
-        elif item.getFlags() & FLChair:
-            do = DistributedChairAI(self.air, self, item)
         else:
             do = DistributedFurnitureItemAI(self.air, self, item)
         
