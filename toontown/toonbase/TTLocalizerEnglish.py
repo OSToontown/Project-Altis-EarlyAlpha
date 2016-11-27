@@ -7008,7 +7008,7 @@ CatalogOnlyOnePurchase = 'You may only have one of these items at a time.  If yo
 CatalogExitButtonText = 'Hang Up'
 CatalogCurrentButtonText = 'To Current Items'
 CatalogPastButtonText = 'To Past Items'
-TutorialHQOfficerName = 'HQ Harry'
+TutorialHQOfficerName = 'Harry'
 NPCToonNames = {20000: 'Tutorial Tom',
  999: 'Toon Tailor',
  1000: lToonHQ,
