@@ -595,6 +595,7 @@ from toontown.coghq import DistributedCogHQDoor/AI
 from toontown.coghq import DistributedSellbotHQDoor/AI
 from toontown.toon import DistributedNPCToonBase/AI
 from toontown.toon import DistributedNPCToon/AI
+from toontown.toon import DistributedNPCHQOfficer/AI
 from toontown.toon import DistributedNPCSnowballGiver/AI
 from toontown.toon import DistributedNPCSpecialQuestGiver/AI
 from toontown.toon import DistributedNPCFlippyInToonHall/AI
@@ -2310,6 +2311,13 @@ dclass DistributedNPCToonBase : DistributedNode {
 };
 
 dclass DistributedNPCToon : DistributedNPCToonBase {
+  setMovie(uint8 mode, uint32 npcId, uint32 avId, uint16 quests[], int16 timestamp) broadcast ram;
+  setMovieDone() airecv clsend;
+  chooseQuest(uint16 questId) airecv clsend;
+  chooseTrack(int8 trackId) airecv clsend;
+};
+
+dclass DistributedNPCHQOfficer : DistributedNPCToonBase {
   setMovie(uint8 mode, uint32 npcId, uint32 avId, uint16 quests[], int16 timestamp) broadcast ram;
   setMovieDone() airecv clsend;
   chooseQuest(uint16 questId) airecv clsend;

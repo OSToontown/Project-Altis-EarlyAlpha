@@ -17,6 +17,7 @@ class DistributedNPCClerk(DistributedNPCToonBase):
         self.isLocalToon = 0
         self.av = None
         self.purchaseDoneEvent = 'purchaseDone'
+        self.npcType = 'Gag Clerk'
         return
 
     def disable(self):

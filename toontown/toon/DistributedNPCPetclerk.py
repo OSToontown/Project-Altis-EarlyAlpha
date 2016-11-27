@@ -21,6 +21,7 @@ class DistributedNPCPetclerk(DistributedNPCToonBase):
         self.petshopGui = None
         self.petSeeds = None
         self.waitingForPetSeeds = False
+        self.npcType = 'Pet Clerk'
         return
 
     def disable(self):

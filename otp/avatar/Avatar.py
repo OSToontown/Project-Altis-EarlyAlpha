@@ -30,6 +30,7 @@ class Avatar(Actor, ShadowCaster):
 
     def __init__(self, other = None):
         self.name = ''
+        self.npcType = None
         try:
             self.Avatar_initialized
             return
@@ -240,13 +241,22 @@ class Avatar(Actor, ShadowCaster):
                 return
         self.name = name
         if hasattr(self, 'nametag'):
-            self.nametag.setName(name)
+            self.setNametagWithTag(name)
 
     def setDisplayName(self, str):
         if hasattr(self, 'isDisguised'):
             if self.isDisguised:
                 return
-        self.nametag.setDisplayName(str)
+        self.setNametagWithTag(str)
+        
+    def setNametagWithTag(self, name = None):
+        if not name:
+            name = self.name
+            
+        if self.npcType:
+            name += ('\n\1textShadow\1%s\2' % self.npcType)
+        
+        self.nametag.setName(name)
 
     def getFont(self):
         return self.__font
