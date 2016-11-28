@@ -695,11 +695,6 @@ QuestDialogDict = {160: {GREETING: '',
  170: {QUEST: 'Oh good, you\'re back. I was getting worried that you got lost!\x07Do you understand the difference between the 5 Cogs now?\x07I think that you\'re ready to go ahead and start training for a new gag track.\x07_toNpcName_ is an expert on gags. He can give you some expert advice on your next track._where_'},
  171: {QUEST: 'Oh good, you\'re back. I was getting worried that you got lost!\x07Do you understand the difference between the 5 Cogs now?\x07I think that you\'re ready to go ahead and start training for a new gag track.\x07_toNpcName_ is an expert on gags. He can give you some expert advice on your next track._where_'},
  172: {QUEST: 'Oh good, you\'re back. I was getting worried that you got lost!\x07Do you understand the difference between the 5 Cogs now?\x07I think that you\'re ready to go ahead and start training for a new gag track.\x07_toNpcName_ is an expert on gags. She can give you some expert advice on your next track._where_'},
- 175: {GREETING: '',
-       QUEST: "Say, did you know that you own an Estate, your very own neighborhood?\x07Every toon on your Pick-a-Toon Panel has their own house there, including you!\x07Clarabelle Cow runs a phone-in Cattlelog where you can order furniture to decorate your house.\x07You can also buy SpeedChat phrases, clothing, and other fun things!\x07I'll phone Clarabelle to send you your first catalog now.\x07After this first issue, she\'ll send you a new one every week!\x07There, your Cattlelog should be on it\'s way. Go home and check it out!",
-       INCOMPLETE_PROGRESS: 'To head home, click the yellow button on the map page in your Shtickerbook. The movers already installed your phone!',
-       COMPLETE: 'Did you buy anything nice?\x07I just finished redecorating my house, and I must say it looks Toontastic.\x07Come back here any time for more ToonTasks - we have plenty of them!',
-       LEAVING: QuestsDefaultLeaving},
  400: {GREETING: '',
        QUEST: 'Throw and Squirt are great, but you\'re going to need more gags to fight those higher level Cogs.\x07When you team up with other Toons against the Cogs, you can combine your gags for even more giggles!\x07Try different combinations of gags to see what works best.\x07I understand it\'s a tough decision, so take your time to choose wisely.\x07You may want to ask a few friends what they think so you can plan strategies together.\x07When you are ready to decide, come back here and take your pick.',
        INCOMPLETE_PROGRESS: 'Back so soon?  Are you ready to choose?',
@@ -5673,10 +5668,6 @@ QuestScript140_1 = 'Good job finding the trolley!\x07By the way, I have this fri
 QuestScript141_1 = 'Oh, yes, this book almost completes my collection.\x07Let me see...\x07Uh oh...\x07Now where did I put my glasses?\x07I had them just before those Cogs took over my building.\x07Defeat Cogs to find my stolen glasses.\x07When you find them, bring them back to me for a reward.'
 QuestScript145_1 = 'I see you had no problem with the trolley!\x07Listen, the Cogs have stolen our blackboard eraser.\x07Go into the streets and fight Cogs until you recover the eraser.\x07To reach the streets go through one of the tunnels like this:'
 QuestScript145_2 = "When you find our eraser, bring it back here.\x07Don't forget, if you need gags, ride the trolley.\x07Also, if you need to recover Laff points, collect ice cream cones in the Playground."
-QuestScript150_1 = 'Great work!\x07Toontown is more fun when you have friends!'
-QuestScript150_2 = 'To make friends, find another player, and use the New Friend button.'
-QuestScript150_3 = 'Once you have made a friend, come back here.'
-QuestScript150_4 = 'Some tasks are too difficult to do alone!'
 MissingKeySanityCheck = 'Ignore me'
 SellbotBossName = 'Senior V. P.'
 CashbotBossName = 'C. F. O.'
