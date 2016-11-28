@@ -29,21 +29,21 @@ class StaffManagerAI(DistributedObjectAI):
     def removeModFromOnline(self, doId):
         if doId not in self.getActiveStaff():
             return
-        self.modsOnline.remove[doId]
+        self.modsOnline.remove(doId)
         for toon in self.getActiveStaff():
             self.sendUpdate('staffOffline', [doId])
 			
     def removeAdminFromOnline(self, doId):
         if doId not in self.getActiveStaff():
             return
-        self.adminsOnline.remove[doId]
+        self.adminsOnline.remove(doId)
         for toon in self.getActiveStaff():
             self.sendUpdate('staffOffline', [doId])
 			
     def removeSysAdminFromOnline(self, doId):
         if doId not in self.getActiveStaff():
             return
-        self.sysadminsOnline.remove[doId]
+        self.sysadminsOnline.remove(doId)
         for toon in self.getActiveStaff():
             self.sendUpdate('staffOffline', [doId])
 			
