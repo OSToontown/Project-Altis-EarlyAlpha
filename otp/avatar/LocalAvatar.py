@@ -77,6 +77,9 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
         self.lastNeedH = None
         self.accept('friendOnline', self.__friendOnline)
         self.accept('friendOffline', self.__friendOffline)
+        self.accept('modOnline', self.__modOnline)
+        self.accept('adminOnline', self.__adminOnline)
+        self.accept('sysadminOnline', self.__sysadminOnline)
         self.accept('clickedWhisper', self.clickedWhisper)
         self.accept('playerOnline', self.__playerOnline)
         self.accept('playerOffline', self.__playerOffline)
@@ -1215,6 +1218,21 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar, DistributedSmoothNode.Dis
         friend = base.cr.identifyFriend(doId)
         if friend != None:
             self.setSystemMessage(0, OTPLocalizer.WhisperFriendLoggedOut % friend.getName())
+        return
+		
+    def __modOnline(self, doId):
+        mod = base.cr.identifyFriend(doId)
+        self.setSystemMessage(doId, OTPLocalizer.WhisperModComingOnline % mod.getName())
+        return
+		
+    def __adminOnline(self, doId):
+        admin = base.cr.identifyFriend(doId)
+        self.setSystemMessage(doId, OTPLocalizer.WhisperAdminComingOnline % admin.getName())
+        return
+		
+    def __sysadminOnline(self, doId):
+        sysadmin = base.cr.identifyFriend(doId)
+        self.setSystemMessage(doId, OTPLocalizer.WhisperSysAdminComingOnline % sysadmin.getName())
         return
 
     def __playerOnline(self, playerId):

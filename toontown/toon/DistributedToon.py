@@ -2410,6 +2410,9 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
             partyReply = replies[i]
             repliesForOneParty = PartyReplyInfoBase(*partyReply)
             self.partyReplyInfoBases.append(repliesForOneParty)
+			
+    def setMessage(self, message):
+        self.setSystemMessage(0, message)
 
     def setPartyCanStart(self, partyId):
         DistributedToon.partyNotify.debug('setPartyCanStart called passing in partyId=%s' % partyId)

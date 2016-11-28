@@ -6,6 +6,7 @@ from otp.ai.TimeManagerAI import TimeManagerAI
 from otp.ai.MagicWordManagerAI import MagicWordManagerAI
 from toontown.ai.HolidayManagerAI import HolidayManagerAI
 from toontown.ai.NewsManagerAI import NewsManagerAI
+from toontown.ai.StaffManagerAI import StaffManagerAI
 from toontown.ai.FishManagerAI import FishManagerAI
 from toontown.distributed.ToontownInternalRepository import ToontownInternalRepository
 from toontown.toon import NPCToons
@@ -179,6 +180,9 @@ class ToontownAIRepository(ToontownInternalRepository):
 
         self.newsManager = NewsManagerAI(self)
         self.newsManager.generateWithRequired(2)
+		
+        self.staffManager = StaffManagerAI(self)
+        self.staffManager.generateWithRequired(2)
 
         self.magicWordManager = MagicWordManagerAI(self)
         self.magicWordManager.generateWithRequired(2)
@@ -220,26 +224,26 @@ class ToontownAIRepository(ToontownInternalRepository):
             while self.readerPollOnce():
                 pass
 
-        self.hoods.append(TTHoodAI.TTHoodAI(self))
-        clearQueue()
-        self.hoods.append(DDHoodAI.DDHoodAI(self))
-        clearQueue()
-        self.hoods.append(DGHoodAI.DGHoodAI(self))
-        clearQueue()
-        self.hoods.append(BRHoodAI.BRHoodAI(self))
-        clearQueue()
-        self.hoods.append(MMHoodAI.MMHoodAI(self))
-        clearQueue()
-        self.hoods.append(DLHoodAI.DLHoodAI(self))
-        clearQueue()
-        self.hoods.append(GSHoodAI.GSHoodAI(self))
-        clearQueue()
-        self.hoods.append(OZHoodAI.OZHoodAI(self))
-        clearQueue()
-        self.hoods.append(GZHoodAI.GZHoodAI(self))
-        clearQueue()
-        self.hoods.append(TFHoodAI.TFHoodAI(self))
-        clearQueue()
+        #self.hoods.append(TTHoodAI.TTHoodAI(self))
+        #clearQueue()
+        #self.hoods.append(DDHoodAI.DDHoodAI(self))
+        #clearQueue()
+        #self.hoods.append(DGHoodAI.DGHoodAI(self))
+        #clearQueue()
+        #self.hoods.append(BRHoodAI.BRHoodAI(self))
+        #clearQueue()
+        #self.hoods.append(MMHoodAI.MMHoodAI(self))
+        #clearQueue()
+        #self.hoods.append(DLHoodAI.DLHoodAI(self))
+        #clearQueue()
+        #self.hoods.append(GSHoodAI.GSHoodAI(self))
+        #clearQueue()
+        #self.hoods.append(OZHoodAI.OZHoodAI(self))
+        #clearQueue()
+        #self.hoods.append(GZHoodAI.GZHoodAI(self))
+        #clearQueue()
+        #self.hoods.append(TFHoodAI.TFHoodAI(self))
+        #clearQueue()
 
         if config.GetBool('want-sbhq', True):
             self.hoods.append(SellbotHQAI.SellbotHQAI(self))

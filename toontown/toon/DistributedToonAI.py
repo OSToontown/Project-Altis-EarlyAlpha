@@ -279,6 +279,12 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def delete(self):
         self.notify.debug('----Deleting DistributedToonAI %d ' % self.doId)
+        if self.doId in simbase.air.staffManager.getOnlineMods():
+            simbase.air.staffManager.removeModFromOnline(self.doId)
+        elif self.doId in simbase.air.staffManager.getOnlineAdmins():
+            simbase.air.staffManager.removeAdminFromOnline(self.doId)
+        elif self.doId in simbase.air.staffManager.getOnlineSysAdmins():
+            simbase.air.staffManager.removeSysAdminFromOnline(self.doId)
         if self._dbCheckDoLater:
             taskMgr.remove(self._dbCheckDoLater)
             self._dbCheckDoLater = None
@@ -2478,6 +2484,9 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def getGiftSchedule(self):
         return self.onGiftOrder.getBlob(store=CatalogItem.Customization | CatalogItem.DeliveryDate)
+		
+    def setMessage(self, message):
+        self.sendUpdate('setMessage', [message])
 
     def __deliverGiftPurchase(self, task):
         now = int(time.time() / 60 + 0.5)
@@ -4791,6 +4800,62 @@ def kick(reason):
     dg.addString(reason)
     simbase.air.send(dg)
     return "You kicked %s with reason '%s'." % (spellbook.getTarget().getName(), reason)
+	
+@magicWord(category=CATEGORY_VIP, types=[])
+def callMod():
+    """Calls all mods currently online."""
+    invoker = spellbook.getInvoker()
+    for id in simbase.air.staffManager.getOnlineMods():
+        toon = simbase.air.doId2do.get(id)
+        toon.setMessage(invoker.getName() + ' needs help from a moderator in zone ID ' + str(invoker.zoneId) + ' use ~goto ' + str(invoker.doId-100000000) + ' to go to them.')
+    return "Called mods."
+	
+@magicWord(category=CATEGORY_MODERATION, types=[])
+def callAdmin():
+    """Calls all admins currently online."""
+    invoker = spellbook.getInvoker()
+    for id in simbase.air.staffManager.getOnlineAdmins():
+        toon = simbase.air.doId2do.get(id)
+        toon.setMessage(invoker.getName() + ' needs help from an admin in zone ID ' + str(invoker.zoneId) + ' use ~goto ' + str(invoker.doId-100000000) + ' to go to them.')
+    return "Called admins."
+	
+@magicWord(category=CATEGORY_VIP, types=[])
+def getAdmins():
+    toons = []
+    for id in simbase.air.staffManager.getOnlineAdmins():
+        toon = simbase.air.doId2do.get(id)
+        toons.append(toon.getName())
+    return toons
+	
+@magicWord(category=CATEGORY_VIP, types=[])
+def getMods():
+    toons = []
+    for id in simbase.air.staffManager.getOnlineMods():
+        toon = simbase.air.doId2do.get(id)
+        toons.append(toon.getName())
+    return toons
+	
+@magicWord(category=CATEGORY_MODERATION, types=[])
+def registerToSM():
+    """Adds you to the list of currently online staff members."""
+    invoker = spellbook.getInvoker()
+    if not spellbook.getTarget() == invoker:
+        return "You may only add yourself to the Staff Manager!"
+    elif invoker.doId in simbase.air.staffManager.getActiveStaff():
+        return "You are already on the staff roster!"
+    else:
+        access = spellbook.getInvokerAccess()
+        if access > 299 and access <= 399:
+            simbase.air.staffManager.addModOnline(invoker.doId)
+            return "You are now added to the active Moderator roster."
+        elif access >= 400 and access < 500:
+            simbase.air.staffManager.addAdminOnline(invoker.doId)
+            return "You are now added to the active Admin roster."
+        elif access >= 500:
+            simbase.air.staffManager.addSysAdminOnline(invoker.doId)
+            return "You are now added to the active System Admin roster."
+        else:
+            return "You aren't in a staff position!"
 
 @magicWord(category=CATEGORY_MODERATION, types=[int, str, bool, bool], access=400) # Set to 400 for now...
 def ban(timeInMinutes, reason="Unknown reason.", confirmed=False, overrideSelfBan=False):

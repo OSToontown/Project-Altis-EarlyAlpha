@@ -572,6 +572,7 @@ from toontown.estate import DistributedHouseInterior/AI
 from toontown.estate import DistributedGarden/AI
 from toontown.shtiker import DeleteManager/AI
 from toontown.ai import NewsManager/AI
+from toontown.ai import StaffManager/AI
 from toontown.shtiker import PurchaseManager/AI
 from toontown.shtiker import NewbiePurchaseManager/AI
 from toontown.tutorial import TutorialManager/AI
@@ -1130,6 +1131,7 @@ dclass DistributedToon : DistributedPlayer {
   keepAlive() ownsend airecv;
   setLastSeen(uint32 timestamp = 0) required db;
   attemptSubtractNPCFriend(uint32 npcId) clsend airecv;
+  setMessage(string message) ownrecv;
 };
 
 dclass DistributedCCharBase : DistributedObject {
@@ -1979,6 +1981,13 @@ dclass NewsManager : DistributedObject {
   setRelativelyCalendarHolidays(relativelyCalendarHoliday relativelyCalendarHolidays[]) required broadcast ram;
   setMultipleStartHolidays(multipleStartHoliday multipleStartHolidays[]) required broadcast ram;
   sendSystemMessage(string message, uint8 style) broadcast ram;
+};
+
+dclass StaffManager : DistributedObject {
+  modOnline(uint32);
+  adminOnline(uint32);
+  sysadminOnline(uint32);
+  staffOffline(uint32);
 };
 
 dclass PurchaseManager : DistributedObject {
