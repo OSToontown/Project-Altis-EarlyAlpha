@@ -373,7 +373,7 @@ class ObjectManager(NodePath, DirectObject):
         self.createAtticPicker()
         self.initializeDistributedFurnitureItems(furnitureManager.dfitems)
         self.setCamPosIndex(DEFAULT_CAM_INDEX)
-        base.localAvatar.controlManager.collisionsOff()
+        base.localAvatar.setGhostMode(1)
         taskMgr.remove('editModeTransition')
         self.orientCamH(base.localAvatar.getH(self.targetNodePath))
         self.accept('mouse1', self.moveObjectStart)
@@ -1342,19 +1342,12 @@ class ObjectManager(NodePath, DirectObject):
         if self.deleteMode:
             self.requestDelete(item, itemIndex, self.deleteWallpaperFromAttic)
             return
-        room = self.getRoom()
+        if base.localAvatar.getY() < 2.3:
+            room = 0
+        else:
+            room = 1
         self.furnitureManager.moveWallpaperFromAttic(itemIndex, room, self.__bringWallpaperFromAtticCallback)
 
-    def getRoom(self):
-        x, y, z = base.localAvatar.getPos()
-
-        if (x <= -13.5 and y <= -7.6 and y >= 0.0) or (z >= 4.5 and z <= 10):
-            return 0
-        elif base.localAvatar.getZ() > 5.0:
-            return 1
-        elif base.localAvatar.getY() < 2.3:
-            return 2
-        return 3
     def __bringWallpaperFromAtticCallback(self, retcode, itemIndex, room):
         self.__enableItemButtons(1)
         if retcode < 0:
@@ -1388,10 +1381,10 @@ class ObjectManager(NodePath, DirectObject):
         if self.deleteMode:
             self.requestDelete(item, itemIndex, self.deleteWindowFromAttic)
             return
-        room = self.getRoom()
-        if room == 0:
-            room = 1
-        slot = room * 2
+        if base.localAvatar.getY() < 2.3:
+            slot = 2
+        else:
+            slot = 4
         self.furnitureManager.moveWindowFromAttic(itemIndex, slot, self.__bringWindowFromAtticCallback)
 
     def __bringWindowFromAtticCallback(self, retcode, itemIndex, slot):

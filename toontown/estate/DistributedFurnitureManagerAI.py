@@ -208,10 +208,13 @@ class DistributedFurnitureManagerAI(DistributedObjectAI):
             self.air.writeServerEvent('suspicious', avId=directorId, issue='Tried to move furniture without being on the shard!')
             return
 
+        if self.director:
+            self.director.b_setGhostMode(0)
         if director:
             if director.zoneId != self.zoneId:
                 self.air.writeServerEvent('suspicious', avId=directorId, issue='Tried to become director from another zone!')
                 return
+            director.b_setGhostMode(1)
 
         self.director = director
         self.sendUpdate('setDirector', [directorId])
@@ -293,7 +296,7 @@ class DistributedFurnitureManagerAI(DistributedObjectAI):
             self.air.writeServerEvent('suspicious', avId=self.air.getAvatarIdFromSender(), issue='Invalid wallpaper at index %s' % index)
             return ToontownGlobals.FM_InvalidIndex
 
-        if room > 3:
+        if room > 1:
             # This is not a valid room!
             self.air.writeServerEvent('suspicious', avId=self.air.getAvatarIdFromSender(), issue='Tried to apply a wallpaper in an invalid room %d!' % room)
             return ToontownGlobals.FM_InvalidItem
@@ -334,7 +337,7 @@ class DistributedFurnitureManagerAI(DistributedObjectAI):
 
         window = self.getAtticFurniture(self.atticWindows, index)
 
-        if slot > 7:
+        if slot > 5:
             # This is not a valid slot! HACKER!!!
             self.air.writeServerEvent('suspicious', avId=self.air.getAvatarIdFromSender(),
                                       issue='Tried to move window to invalid slot %d!' % slot)
@@ -360,7 +363,7 @@ class DistributedFurnitureManagerAI(DistributedObjectAI):
         if window is None:
             return ToontownGlobals.FM_InvalidIndex
 
-        if toSlot > 7:
+        if toSlot > 5:
             # This is not a valid slot! HACKER!!!
             self.air.writeServerEvent('suspicious', avId=self.air.getAvatarIdFromSender(),
                                       issue='DistributedfTried to move window to invalid slot %d!' % toSlot)
