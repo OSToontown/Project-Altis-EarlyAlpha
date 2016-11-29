@@ -5,8 +5,6 @@ import os
 
 
 if __debug__:
-    # __debug__ is only 1 in dev builds; Mirai's builder will set it to 0
-    # (and it will, in fact, remove entire if __debug__: sections)
     loadPrcFile('config/dev.prc')
 
 # The VirtualFileSystem, which has already initialized, doesn't see the mount
@@ -87,16 +85,6 @@ except:
     __builtin__.launcher = launcher
 
 pollingDelay = 0.5
-
-
-ping_str = "-n 1" if  platform.system().lower()=="windows" else "-c 1"
-AuthServerLive = os.system("ping " + ping_str + " " + "188.165.250.225") == 0
-if AuthServerLive == False:
-    print("The Dubrari Authentication Server was not found, or has moved. Please try again later.")
-    raise SystemExit
-else:
-    print("Auth Server Online")
-
 
 print('Starting the game...')
 tempLoader = Loader()
