@@ -327,9 +327,8 @@ Shirts = [
  'phase_4/maps/tt_t_chr_avt_shirt_saveBuilding4.jpg',
  'phase_4/maps/tt_t_chr_avt_shirt_saveBuilding05.jpg',
  'phase_4/maps/tt_t_chr_avt_shirt_anniversary.jpg',
- 'phase_4/maps/tt_t_chr_avt_shirt_sora.jpg',                               # 150 - Sora, Unused
- 'phase_4/maps/tt_t_chr_avt_shirt_slappy.jpg',                             # 151 - Slappy
- 'phase_4/maps/tt_t_chr_avt_shirt_electionFlippy.jpg',                     # 152 - Alpha
+ 'phase_4/maps/tt_t_chr_avt_shirt_sora.jpg',                               
+ 'phase_4/maps/tt_t_chr_avt_shirt_slappy.jpg',                             
  'phase_4/maps/BossbotShirt.jpg'
 ]
 BoyShirts = [
@@ -521,9 +520,8 @@ Sleeves = ['phase_3/maps/desat_sleeve_1.jpg',
  'phase_4/maps/tt_t_chr_avt_shirtSleeve_saveBuilding4.jpg',
  'phase_4/maps/tt_t_chr_avt_shirtSleeve_saveBuilding05.jpg',
  'phase_4/maps/tt_t_chr_avt_shirtSleeve_anniversary.jpg',
- 'phase_4/maps/tt_t_chr_avt_shirtSleeve_sora.jpg',                         # 137 - Sora, Unused
- 'phase_4/maps/tt_t_chr_avt_shirtSleeve_slappy.jpg',                       # 138 - Slappy
- 'phase_4/maps/tt_t_chr_avt_shirtSleeve_electionFlippy.jpg',               # 139 - Alpha
+ 'phase_4/maps/tt_t_chr_avt_shirtSleeve_sora.jpg',                         
+ 'phase_4/maps/tt_t_chr_avt_shirtSleeve_slappy.jpg',
  'phase_4/maps/BossbotSleeve.jpg']
 BoyShorts = ['phase_3/maps/desat_shorts_1.jpg',
  'phase_3/maps/desat_shorts_2.jpg',
