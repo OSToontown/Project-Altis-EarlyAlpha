@@ -7,7 +7,7 @@ from direct.stdpy.file import open
 from direct.stdpy import threading
 
 class ToontownLoader(Loader.Loader):
-    TickPeriod = 0.06
+    TickPeriod = 0.2
 
     def __init__(self, base):
         Loader.Loader.__init__(self, base)
@@ -23,9 +23,6 @@ class ToontownLoader(Loader.Loader):
 
     def loadDNA(self, filename):
         filename = '/' + filename
-
-        if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading DNA:\n" + str(filename)
             
         with open(filename, 'r') as f:
             tree = DNAParser.parse(f)
@@ -79,14 +76,9 @@ class ToontownLoader(Loader.Loader):
                     base.cr.considerHeartbeat()
                 except:
                     pass
-                if self.loadingScreen.loadingObj:
-                    self.loadingScreen.loadingObj['text'] = ""
 
     def loadModel(self, *args, **kw):
-        if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading model:\n" + str(args[0])
         ret = Loader.Loader.loadModel(self, *args, **kw)
-        
         if ret:
             gsg = base.win.getGsg()
             if gsg:
@@ -95,15 +87,11 @@ class ToontownLoader(Loader.Loader):
         return ret
 
     def loadFont(self, *args, **kw):
-        if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading font:\n" + str(args[0])
         ret = Loader.Loader.loadFont(self, *args, **kw)
         self.tick()
         return ret
 
     def loadTexture(self, texturePath, alphaPath = None, okMissing = False):
-        if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading texture:\n" + str(texturePath)
         ret = Loader.Loader.loadTexture(self, texturePath, alphaPath, okMissing=okMissing)
         self.tick()
         if alphaPath:
@@ -111,15 +99,11 @@ class ToontownLoader(Loader.Loader):
         return ret
 
     def loadSfx(self, soundPath):
-        if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading SFX:\n" + str(soundPath)
         ret = Loader.Loader.loadSfx(self, soundPath)
         self.tick()
         return ret
 
     def loadMusic(self, soundPath):
-        if self.loadingScreen.loadingObj:
-            self.loadingScreen.loadingObj['text'] = "Loading music:\n " + str(soundPath)
         ret = Loader.Loader.loadMusic(self, soundPath)
         self.tick()
         return ret

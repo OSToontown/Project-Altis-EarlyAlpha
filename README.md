@@ -10,12 +10,13 @@ A vision of what Toontown Online could have been in 2016.
 * Malverde - Game & Networking Programmer
 * Old Geezer - Game Programmer & 3D Modeler
 * Barks - Game Programmer
-* Mango Monkey - 3D Modeler & Storyline Writer
 * Drew - Game Programmer
 * James Midnight - Texture Artist
 * Sir Tubby Cheesyfish- Game Programmer
-* Junior- Game Programmer
 * Dubito- Game Programmer & Security Manager
+
+Potential Members
+* Jon-Jon - General Artist
 
 Contributors
 * Swag Foreman for occasional models.

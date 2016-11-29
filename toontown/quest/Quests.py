@@ -18940,19 +18940,19 @@ def avatarHasCompletedFirstCogQuest(av):
 
 
 def avatarHasFriendQuest(av):
-    return len(av.quests) == 1 and av.quests[0][0] == FRIEND_QUEST_ID
+    return False
 
 
 def avatarHasCompletedFriendQuest(av):
-    return av.quests[0][4] > 0
+    return True
 
 
 def avatarHasPhoneQuest(av):
-    return len(av.quests) == 1 and av.quests[0][0] == PHONE_QUEST_ID
+    return False
 
 
 def avatarHasCompletedPhoneQuest(av):
-    return av.quests[0][4] > 0
+    return True
 
 
 def avatarWorkingOnRequiredRewards(av):
