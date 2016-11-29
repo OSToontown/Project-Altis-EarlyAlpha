@@ -4,7 +4,7 @@
 		<visgroup zone="7000:safe_zone" vis="7000:safe_zone">
 			<group name="props">
 				<!-- Geom -->
-        <prop name="toonfest_DNARoot" code="tf_grounds_1">
+        <prop name="toonfest_DNARoot" code="test_area">
 					<pos x="0" y="0" z="0" />
 					<nhpr h="0" p="0" r="0" />
 				</prop>

@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <storage scope="global">
-
-	<model path="phase_6/models/events/ttr_m_ww_grounds" scope="place">
-		<store_node root="prop" code="tf_grounds_1" node="" />
-	</model>
-	<model path="phase_6/models/events/ttr_m_ww_tree_s" scope="place">
-			<store_node root="prop" code="tf_tree_s" node="" />
-	</model>
-	<model path="phase_6/models/events/ttr_m_ww_tree_m" scope="place">
-			<store_node root="prop" code="tf_tree_m" node="" />
-	</model>
-	<model path="phase_6/models/events/ttr_m_ww_tree_l" scope="place">
-			<store_node root="prop" code="tf_tree_l" node="" />
-	</model>
-	<model path="phase_6/models/golf/picnic_table" scope="place">
-		<store_node root="prop" code="prop_picnic_table" node="" />
-	</model>
-	<model path="phase_6/models/golf/game_table" scope="place">
-		<store_node root="prop" code="prop_game_table" node="" />
-	</model>
-	<model path="phase_6/models/cogHQ/Cog_Tunnel" scope="place">
-		<store_node root="prop" code="prop_outdoor_zone_entrance" node="" />
-	</model>
-	<model path="phase_6/models/props/signs_DD" scope="hood">
-		<store_node root="sign" code="DD_sign2" />
-	</model>
-	<model path="phase_6/models/cogHQ/WaterTowerSimple" scope="place">
-		<store_node root="prop" code="tf_tower" node="" />
-	</model>
-	<model path="phase_6/models/events/ttr_m_tf_ducktank" scope="place">
-		<store_node root="prop" code="tf_ducktank" node="" />
-	</model>
-	<model path="phase_6/models/events/ttr_m_tf_booth" scope="place">
-		<store_node root="prop" code="tf_booth" node="" />
+	<!--  Parties -->
+	<model path="phase_6/models/modules/partyGate_MM">
+		<store_node root="prop" code="prop_party_gate" node="" />
 	</model>
 
+	<model path="phase_6/models/events/test_area" scope="place">
+		<store_node root="prop" code="test_area" node="" />
+	</model>
+
+	<model path="phase_6/models/neighborhoods/minnies_melody_land" scope="place">
+		<store_node root="prop" code="minnies_melody_land" />
+	</model>
+
+	<model path="phase_6/models/modules/safe_zone_tunnel_MM" scope="place">
+		<store_node root="prop" code="prop_safe_zone_tunnel" />
+	</model>
+
+	<model path="phase_6/models/modules/trolley_station_MM" scope="place">
+		<store_node root="prop" code="prop_trolley_station" />
+	</model>
+
+	<model path="phase_6/models/modules/gagShop_MM" scope="place">
+		<store_node root="toon_landmark" code="toon_landmark_MM_gag_shop" node="" />
+	</model>
+
+	<model path="phase_6/models/modules/PetShopExterior_MM" scope="place">
+		<store_node root="toon_landmark" code="toon_landmark_MM_pet_shop" node="" />
+	</model>
+
+	<model path="phase_6/models/modules/clothshopMM" scope="place">
+		<store_node root="toon_landmark" code="toon_landmark_MM_clothes_shop" node="" />
+	</model>
+
+	<model path="phase_4/models/props/exteriorfish-zero" scope="place">
+		<store_node root="prop" code="animated_prop_PetShopFishAnimatedProp" node="exteriorfish" />
+	</model>
 </storage>
