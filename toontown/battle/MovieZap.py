@@ -137,23 +137,6 @@ def __suitTargetPoint(suit):
     pnt.setZ(pnt[2] + suit.getHeight() * 0.66)
     return Point3(pnt)
 
-
-def __getSplashTrack(point, scale, delay, battle, splashHold = 0.01):
-
-    def prepSplash(splash, point):
-        if callable(point):
-            point = point()
-        splash.reparentTo(render)
-        splash.setPos(point)
-        scale = splash.getScale()
-        splash.setBillboardPointWorld()
-        splash.setScale(scale)
-
-    splash = globalPropPool.getProp('splash-from-splat')
-    splash.setScale(scale)
-    return Sequence(Func(battle.movie.needRestoreRenderProp, splash), Wait(delay), Func(prepSplash, splash, point), ActorInterval(splash, 'splash-from-splat'), Wait(splashHold), Func(MovieUtil.removeProp, splash), Func(battle.movie.clearRenderProp, splash))
-
-
 def __getSuitTrack(suit, tContact, tDodge, hp, hpbonus, kbbonus, anim, died, leftSuits, rightSuits, battle, toon, fShowStun, beforeStun = 0.5, afterStun = 1.8, geyser = 0, uberRepeat = 0, revived = 0):
     if hp > 0:
         suitTrack = Sequence()
@@ -248,8 +231,6 @@ def __doJoybuzzer(zap, delay, fShowStun):
         return p
 
     sprayTrack = MovieUtil.getZapTrack(battle, WaterSprayColor, getSprayStartPos, targetPoint, dSprayScale, dSprayHold, dSprayScale, horizScale=scale, vertScale=scale)
-    if hp > 0:
-        tracks.append(__getSplashTrack(targetPoint, scale, tSprayStarts + dSprayScale, battle))
     if hp > 0 or delay <= 0:
         tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'shock', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
@@ -304,8 +285,6 @@ def __doRug(zap, delay, fShowStun):
 
     sprayTrack = MovieUtil.getZapTrack(battle, WaterSprayColor, getSprayStartPos, targetPoint, dSprayScale, dSprayHold, dSprayScale, horizScale=scale, vertScale=scale)
     tracks.append(Sequence(Wait(tSpray), sprayTrack))
-    if hp > 0:
-        tracks.append(__getSplashTrack(targetPoint, scale, tSpray + dSprayScale, battle))
     if hp > 0 or delay <= 0:
         tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'shock', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
@@ -364,8 +343,6 @@ def __doBalloon(zap, delay, fShowStun):
     pistolTrack.append(Func(hand_jointpath0.removeNode))
     pistolTrack.append(Func(MovieUtil.removeProp, pistol))
     tracks.append(pistolTrack)
-    if hp > 0:
-        tracks.append(__getSplashTrack(targetPoint, 0.3, tSpray + dSprayScale, battle))
     if hp > 0 or delay <= 0:
         tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'shock', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
@@ -422,8 +399,6 @@ def __doBattery(zap, delay, fShowStun):
     sprayTrack.append(Wait(tSprayDelay))
     sprayTrack.append(MovieUtil.getZapTrack(battle, WaterSprayColor, getSprayStartPos, targetPoint, dSprayScale, dSprayHold, dSprayScale, horizScale=scale, vertScale=scale))
     tracks.append(sprayTrack)
-    if hp > 0:
-        tracks.append(__getSplashTrack(targetPoint, 0.4, 2.7, battle, splashHold=1.5))
     if hp > 0 or delay <= 0:
         tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'shock', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
@@ -481,8 +456,6 @@ def __doTazer(zap, delay, fShowStun):
     sprayTrack.append(Wait(tSprayDelay))
     sprayTrack.append(MovieUtil.getZapTrack(battle, WaterSprayColor, getSprayStartPos, targetPoint, dSprayScale, dSprayHold, dSprayScale, horizScale=scale, vertScale=scale))
     tracks.append(sprayTrack)
-    if hp > 0:
-        tracks.append(__getSplashTrack(targetPoint, 0.4, 2.7, battle, splashHold=1.5))
     if hp > 0 or delay <= 0:
         tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'shock', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
@@ -548,8 +521,6 @@ def __doTesla(zap, delay, fShowStun):
     sprayTrack.append(Wait(tSprayDelay))
     sprayTrack.append(MovieUtil.getZapTrack(battle, WaterSprayColor, getSprayStartPos, targetPoint, dSprayScale, dSprayHold, dSprayScale, horizScale=scale, vertScale=scale))
     tracks.append(sprayTrack)
-    if hp > 0:
-        tracks.append(__getSplashTrack(targetPoint, 0.4, 2.7, battle, splashHold=1.5))
     if hp > 0 or delay <= 0:
         tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'shock', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
