@@ -14,8 +14,6 @@ class ToontownLoadingScreen():
         self.loadingGui = None
         self.range = None
         self.loadingText = None
-        self.loadingObj = None
-        self.loadingCircle = None
         self.background = None
         self.logo = None
         base.graphicsEngine.renderFrame()
@@ -36,12 +34,6 @@ class ToontownLoadingScreen():
         self.logo.setPos(0, 0, 0.65)
         self.loadingObj = OnscreenText(text='', align=TextNode.ACenter, scale=0.04, style = 3, fg = (1, 1, 1, 1))
         self.loadingObj.setPos(0, -.8)
-        self.loadingCircle = OnscreenImage(image = 'phase_3/maps/dmenu/loading_circle.png')
-        self.loadingCircle.show()
-        self.loadingCircle.setScale(0.1)
-        self.loadingCircle.setTransparency(TransparencyAttrib.MAlpha)
-        self.loadingCircle.reparentTo(base.a2dBottomRight)
-        self.loadingCircle.setPos(-0.1, 0, 0.1)
         self.loadingText = OnscreenText(text='Initializing Load...', align=TextNode.ACenter, scale=0.1, pos=(0, 0, 0))
         self.loadingText.reparentTo(aspect2d)
         self.loadingText["text"] = label
@@ -51,8 +43,6 @@ class ToontownLoadingScreen():
         self.background.show()
         self.background.wrtReparentTo(self.loadingGui)
         self.loadingText.wrtReparentTo(self.loadingGui)
-        self.loadingObj.wrtReparentTo(self.loadingGui)
-        self.loadingCircle.wrtReparentTo(self.loadingGui)
         self.logo.wrtReparentTo(self.loadingGui)
         base.graphicsEngine.renderFrame()
 
@@ -67,14 +57,6 @@ class ToontownLoadingScreen():
         if self.loadingText:
             self.loadingText.destroy()
             self.loadingText = None
-            
-        if self.loadingCircle:
-            self.loadingCircle.destroy()
-            self.loadingCircle = None
-            
-        if self.loadingObj:
-            self.loadingObj.destroy()
-            self.loadingObj = None
             
         if self.background:
             self.background.destroy()
@@ -93,8 +75,3 @@ class ToontownLoadingScreen():
     def tick(self):
         self.__count = self.__count + 1
         base.graphicsEngine.renderFrame()
-        try:
-            if self.loadingCircle:
-                self.loadingCircle.setHpr(0, 0, self.__count * 15)
-        except:
-            pass
