@@ -14,38 +14,38 @@ class StaffManagerAI(DistributedObjectAI):
     def addModOnline(self, doId):
         self.modsOnline.append(doId)
         for toon in self.getActiveStaff():
-            self.sendUpdate('modOnline', [doId])
+            self.sendUpdateToAvatarId(toon, 'modOnline', [doId])
 			
     def addAdminOnline(self, doId):
         self.adminsOnline.append(doId)
         for toon in self.getActiveStaff():
-            self.sendUpdate('adminOnline', [doId])
+            self.sendUpdateToAvatarId(toon, 'adminOnline', [doId])
 			
     def addSysAdminOnline(self, doId):
         self.sysadminsOnline.append(doId)
         for toon in self.getActiveStaff():
-            self.sendUpdate('sysadminOnline', [doId])
+            self.sendUpdateToAvatarId(toon, 'sysadminOnline', [doId])
 			
     def removeModFromOnline(self, doId):
         if doId not in self.getActiveStaff():
             return
         self.modsOnline.remove(doId)
         for toon in self.getActiveStaff():
-            self.sendUpdate('staffOffline', [doId])
+            self.sendUpdateToAvatarId(toon, 'staffOffline', [doId])
 			
     def removeAdminFromOnline(self, doId):
         if doId not in self.getActiveStaff():
             return
         self.adminsOnline.remove(doId)
         for toon in self.getActiveStaff():
-            self.sendUpdate('staffOffline', [doId])
+            self.sendUpdateToAvatarId(toon, 'staffOffline', [doId])
 			
     def removeSysAdminFromOnline(self, doId):
         if doId not in self.getActiveStaff():
             return
         self.sysadminsOnline.remove(doId)
         for toon in self.getActiveStaff():
-            self.sendUpdate('staffOffline', [doId])
+            self.sendUpdateToAvatarId(toon, 'staffOffline', [doId])
 			
     def getOnlineMods(self):
         return self.modsOnline
