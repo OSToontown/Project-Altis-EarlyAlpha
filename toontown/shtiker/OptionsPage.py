@@ -13,6 +13,7 @@ from toontown.toonbase import TTLocalizer, ToontownGlobals
 from toontown.toon import Toon
 from toontown.toontowngui import TTDialog
 from toontown.shtiker import ControlRemapDialog
+from toontown.toontowngui import FeatureComingSoonDialog
 
 speedChatStyles = (
     (
@@ -760,22 +761,23 @@ class SpecialOptionsTabPage(DirectFrame):
         del self.keymapDialogButton
 
     def __doToggleNewGui(self):
-        if settings['newGui'] == True:
-            settings['newGui'] = False
-            base.localAvatar.setSystemMessage(0, 'Old Battle GUI is toggled for activation, log back in to see effects.')
-        else:
-            settings['newGui'] = True
-            base.localAvatar.setSystemMessage(0, 'New Battle GUI is toggled for activation, log back in to see effects.')
-        self.settingsChanged = 1
-        self.__setNewGuiButton()
+        FeatureComingSoonDialog.FeatureComingSoonDialog()
+        #if settings['newGui'] == True:
+        #   settings['newGui'] = False
+        #   base.localAvatar.setSystemMessage(0, 'Old Battle GUI is toggled for activation, log back in to see effects.')
+        #else:
+        #    settings['newGui'] = True
+        #    base.localAvatar.setSystemMessage(0, 'New Battle GUI is toggled for activation, log back in to see effects.')
+        #self.settingsChanged = 1
+        #self.__setNewGuiButton()
 
     def __setNewGuiButton(self):
         if settings['newGui'] == True:
             self.newGui_Label['text'] = 'Using the New Battle GUI.'
-            self.newGui_toggleButton['text'] = 'Change'
+            self.newGui_toggleButton['text'] = 'Toggle'
         else:
-            self.newGui_Label['text'] = 'Using the Old Battle GUI.'
-            self.newGui_toggleButton['text'] = 'Change'
+            self.newGui_Label['text'] = 'Using the Classic Battle GUI.'
+            self.newGui_toggleButton['text'] = 'Toggle'
 
     def __doToggleWASD(self):
         messenger.send('wakeup')

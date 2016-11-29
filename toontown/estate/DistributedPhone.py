@@ -1,21 +1,24 @@
-from toontown.toonbase import ToontownGlobals
-import PhoneGlobals
-from toontown.catalog import CatalogScreen
-from toontown.catalog import CatalogItem
-from toontown.toontowngui import TTDialog
-from toontown.toonbase import TTLocalizer
-import DistributedHouseInterior
 from direct.actor import Actor
-import DistributedFurnitureItem
+from direct.directnotify.DirectNotifyGlobal import *
 from direct.distributed import ClockDelta
+from direct.interval.IntervalGlobal import *
 from direct.showbase import PythonUtil
 from direct.showutil import Rope
-from direct.directnotify.DirectNotifyGlobal import *
-from pandac.PandaModules import *
-from direct.interval.IntervalGlobal import *
-import string
-from toontown.quest import Quests
 from direct.task import Task
+from pandac.PandaModules import *
+import string
+
+import DistributedFurnitureItem
+import DistributedHouseInterior
+import PhoneGlobals
+from toontown.catalog import CatalogItem
+from toontown.catalog import CatalogScreen
+from toontown.quest import Quests
+from toontown.toonbase import TTLocalizer
+from toontown.toonbase import ToontownGlobals
+from toontown.toontowngui import TTDialog
+from toontown.toontowngui import FeatureComingSoonDialog
+
 
 class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
     notify = directNotify.newCategory('DistributedPhone')
@@ -44,6 +47,7 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
         self.intervalAvatar = None
         self.phoneInUse = 0
         self.origToonHpr = None
+        self.enableCatalog = False # We don't want this to be open to the public yet - set this to true for testing
         return
 
     def announceGenerate(self):
@@ -173,16 +177,19 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
         if base.localAvatar.doId == self.lastAvId and globalClock.getFrameTime() <= self.lastTime + 0.5:
             self.notify.debug('Ignoring duplicate entry for avatar.')
             return
-        if self.hasLocalAvatar:
-            self.freeAvatar()
-        if config.GetBool('want-pets', 1):
-            base.localAvatar.lookupPetDNA()
-        self.notify.debug('Entering Phone Sphere....')
-        taskMgr.remove(self.uniqueName('ringDoLater'))
-        self.ignore(self.phoneSphereEnterEvent)
-        self.cr.playGame.getPlace().detectedPhoneCollision()
-        self.hasLocalAvatar = 1
-        self.sendUpdate('avatarEnter', [])
+        if not self.enableCatalog:
+            FeatureComingSoonDialog.FeatureComingSoonDialog()
+        else:
+            if self.hasLocalAvatar:
+                self.freeAvatar()
+            if config.GetBool('want-pets', 1):
+                base.localAvatar.lookupPetDNA()
+            self.notify.debug('Entering Phone Sphere....')
+            taskMgr.remove(self.uniqueName('ringDoLater'))
+            self.ignore(self.phoneSphereEnterEvent)
+            self.cr.playGame.getPlace().detectedPhoneCollision()
+            self.hasLocalAvatar = 1
+            self.sendUpdate('avatarEnter', [])
 
     def __handlePhoneDone(self):
         self.sendUpdate('avatarExit')
