@@ -683,7 +683,7 @@ NPCToonDict = {
         'm',
         1,
         NPC_SCIENTIST),
- # Slappy, Flippy's competitor during the election
+ # Slappy
  2023: (-1,
         lnames[2023],
         ('fls',
@@ -703,7 +703,7 @@ NPCToonDict = {
         'm',
         0,
         NPC_REGULAR),
- # Alec Tinn, an Eccentric Elector for the election and other votes
+ # Alec Tinn
  2022: (-1,
         lnames[2022],
         ('cll',

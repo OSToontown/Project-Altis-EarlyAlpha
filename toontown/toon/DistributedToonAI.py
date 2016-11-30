@@ -248,6 +248,8 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             # Teleportation access stuff.
             if 100 <= zoneId < ToontownGlobals.DynamicZonesBegin:
                 hood = ZoneUtil.getHoodId(zoneId)
+                self.sendUpdate('setLastHood', [hood])
+                self.b_setDefaultZone(hood)
 
                 hoodsVisited = list(self.getHoodsVisited())
                 if not hood in hoodsVisited:
@@ -4991,7 +4993,7 @@ def Tickets(tixVal):
 
 @magicWord(category=CATEGORY_OVERRIDE, types=[int])
 def CogIndex(indexVal):
-    """Transform into a cog/suit. THIS SHOULD ONLY BE USED WHERE NEEDED, E.G. ELECTIONS"""
+    """Transform into a cog/suit."""
     if not -1 <= indexVal <= 4:
         return 'CogIndex value %s is invalid.' % str(indexVal)
     spellbook.getTarget().b_setCogIndex(indexVal)

@@ -10,7 +10,6 @@ from direct.directnotify import DirectNotifyGlobal
 from pandac.PandaModules import NodePath
 from toontown.toonbase import TTLocalizer
 from toontown.toonbase import ToontownGlobals
-from toontown.election import ElectionGlobals
 from toontown.toon import NPCToons, Toon
 from toontown.pets import Pet
 import DistributedTFTower
@@ -129,29 +128,13 @@ class DistributedTFEvent(DistributedObject.DistributedObject):
         wheelbarrowJoint = self.flippyStand.find('**/Box_Joint').attachNewNode('Pie_Joint')
         wheelbarrow = self.flippyStand.find('**/Box')
         wheelbarrow.setPosHprScale(-2.39, 0.0, 1.77, 0.0, 0.0, 6.0, 1.14, 1.54, 0.93)
-        pie = loader.loadModel('phase_3.5/models/props/tart')
-        pieS = pie.copyTo(flippyTable)
-        pieS.setPosHprScale(-2.61, -0.37, -1.99, 355.6, 90.0, 4.09, 1.6, 1.6, 1.6)
-        for pieSettings in ElectionGlobals.FlippyWheelbarrowPies:
-            pieModel = pie.copyTo(wheelbarrowJoint)
-            pieModel.setPosHprScale(*pieSettings)
 
         wheelbarrowJoint.setPosHprScale(3.94, 0.0, 1.06, 270.0, 344.74, 0.0, 1.43, 1.12, 1.0)
-        self.restockSfx = loader.loadSfx('phase_9/audio/sfx/CHQ_SOS_pies_restock.ogg')
         cs = CollisionBox(Point3(7, 0, 0), 12, 5, 18)
         self.pieCollision = self.flippyStand.attachNewNode(CollisionNode('wheelbarrow_collision'))
         self.pieCollision.node().addSolid(cs)
         self.accept('enter' + self.pieCollision.node().getName(), self.handleWheelbarrowCollisionSphereEnter)
         self.flippyStand.loop('idle')
-
-    def handleWheelbarrowCollisionSphereEnter(self, collEntry):
-        if base.localAvatar.numPies >= 0 and base.localAvatar.numPies < 20:
-            if not self.restockSfx:
-                return
-            self.sendUpdate('wheelbarrowAvatarEnter', [])
-            self.restockSfx.play()
-        else:
-            self.notify.debug('Avatar requested pies, but has the max amount!')
 
     def initializeCogDummies(self):
         self.hasCogDummies = True

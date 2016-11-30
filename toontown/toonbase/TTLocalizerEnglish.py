@@ -8113,16 +8113,6 @@ PetTrait2descriptions = {'hungerThreshold': ('Always Hungry',
                         'Often Affectionate',
                         'Always Affectionate')}
 
-# Election stuff
-# FireworksInstructions = 'Flippy: Look up using the "Page Up" key to see, or hop in Slappy\'s Balloon for a ride over the sky!'
-# startFireworksResponse = "Usage: startFireworksShow ['num']\n 'num' = %s - New Years\n %s - Party Summer \n %s - 4th of July"
-# FireworksJuly4Beginning = 'Flippy: Hiya, Toons! Get ready to see some fireworks to celebrate this last week of the election!'
-# FireworksJuly4Ending = 'Flippy: Hope you enjoyed the show. Don\'t forget to stop by Toontown Central for some pies!'
-# FireworksNewYearsEveBeginning = 'Flippy: Hiya, Toons! Get ready to see some fireworks to celebrate this last week of the election!'
-# FireworksNewYearsEveEnding =  'Flippy: Hope you enjoyed the show. Don\'t forget to stop by Toontown Central for some pies!'
-# FireworksComboBeginning = 'Flippy: Hiya, Toons! Get ready to see some fireworks to celebrate this last week of the election!'
-# FireworksComboEnding = 'Flippy: Hope you enjoyed the show. Don\'t forget to stop by Toontown Central for some pies!'
-
 # Regular fireworks stuff
 FireworksInstructions = lToonHQ + ': Hit the "Page Up" key to see better.'
 startFireworksResponse = "Usage: startFireworksShow ['num']\n 'num' = %s - New Years\n %s - Party Summer \n %s - 4th of July"
