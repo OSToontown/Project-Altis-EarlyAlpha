@@ -29,7 +29,6 @@ from panda3d.core import TrueClock
 import otp.ai.DiagnosticMagicWords
 import time
 from toontown.options import GraphicsOptions
-from direct.filter.CommonFilters import CommonFilters
 
 class ToonBase(OTPBase.OTPBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('ToonBase')
