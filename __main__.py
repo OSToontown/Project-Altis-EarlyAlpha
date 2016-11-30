@@ -12,11 +12,14 @@ class Main:
         self.logsDir = self.userData + 'logs/'
         self.logPrefix = 'ProjectAltis-'
         self.isPandaWindowOpen = False
+        self.setup()
+
 
     def setup(self):
         self.prepareDirs()
         self.createNewLog()
         self.evaluateArguments()
+        self.startGame(self.playToken, self.gameServer)
 
     def setRegistry(self, type, value):
         # TODO!
@@ -47,7 +50,7 @@ class Main:
 
     def getGameServer(self):
          if self.gameServer:
-		    return self.gameServer
+             return self.gameServer
 
     def getPlayToken(self):
         if self.playToken:
@@ -115,14 +118,18 @@ class Main:
             os.makedirs(self.resourcesDir)
 
     def evaluateArguments(self):
-        playToken = os.environ.get('TOONTOWN_LOGIN_PLAYTOKEN')
-        gameServer = os.environ.get('GAME_SERVER')
+        #playToken = os.environ.get('TOONTOWN_LOGIN_PLAYTOKEN')
+        playToken = "123"
+        gameServer = "188.165.250.225:7199"
+       # gameServer = os.environ.get('GAME_SERVER')
         if playToken != None:
             if len(playToken) == 0:
+                print("Error: No playtoken found!")
                 sys.exit()
 	    elif gameServer == None:
 		    gameServer = '188.165.250.225:7199'
         else:
+            print("Error: No playtoken found!")
             sys.exit()
 
         exec ('from pandac.PandaModules import *')
@@ -138,3 +145,4 @@ class Main:
         ToontownStart = ToontownStart
         
         return
+Main()
