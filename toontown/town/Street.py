@@ -115,9 +115,6 @@ class Street(BattlePlace.BattlePlace):
             geom = base.cr.playGame.getPlace().loader.geom
             self.loader.hood.eventLights = geom.findAllMatches('**/*light*')
             self.loader.hood.eventLights += geom.findAllMatches('**/*lamp*')
-            self.loader.hood.eventLights += geom.findAllMatches('**/prop_snow_tree*')
-            self.loader.hood.eventLights += geom.findAllMatches('**/prop_tree*')
-            self.loader.hood.eventLights += geom.findAllMatches('**/*christmas*')
             for light in self.loader.hood.eventLights:
                 light.setColorScaleOff(1)
 
@@ -395,8 +392,6 @@ class Street(BattlePlace.BattlePlace):
         geom = base.cr.playGame.getPlace().loader.geom
         self.eventLights = geom.findAllMatches('**/*light*')
         self.eventLights += geom.findAllMatches('**/*lamp*')
-        self.eventLights += geom.findAllMatches('**/prop_snow_tree*')
-        self.eventLights += geom.findAllMatches('**/prop_tree*')
         self.eventLights += geom.findAllMatches('**/*christmas*')
         for light in self.eventLights:
             light.setColorScaleOff(1)

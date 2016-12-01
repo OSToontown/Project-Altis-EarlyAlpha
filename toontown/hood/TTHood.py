@@ -44,8 +44,9 @@ class TTHood(ToonHood.ToonHood):
 
     def startSky(self):
         self.notify.debug('The sky is: %s' % self.sky)
-        if not self.sky.getTag('sky') == 'Regular':
-            self.endSpookySky()
+        if self.sky:
+            if not self.sky.getTag('sky') == 'Regular':
+                self.endSpookySky()
         SkyUtil.startCloudSky(self)
 
     def startSpookySky(self):

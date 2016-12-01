@@ -40,8 +40,9 @@ class DGHood(ToonHood.ToonHood):
         return SkyUtil.cloudSkyTrack(task)
 
     def startSky(self):
-        if not self.sky.getTag('sky') == 'Regular':
-            self.endSpookySky()
+        if self.sky:
+            if not self.sky.getTag('sky') == 'Regular':
+                self.endSpookySky()
         SkyUtil.startCloudSky(self)
 
     def startSpookySky(self):
