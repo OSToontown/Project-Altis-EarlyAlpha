@@ -29,7 +29,7 @@ class InventoryNewOLD(InventoryBase.InventoryBase, DirectFrame):
     ShadowColor = Vec4(0, 0, 0, 0)
     ShadowBuffedColor = Vec4(1, 1, 1, 1)
     UnpressableShadowBuffedColor = Vec4(1, 1, 1, 0.3)
-    TrackYOffset = 0.0
+    TrackYOffset = 0.081
     TrackYSpacing = -0.12
     ButtonXOffset = -0.31
     ButtonXSpacing = 0.18
@@ -480,7 +480,7 @@ class InventoryNewOLD(InventoryBase.InventoryBase, DirectFrame):
     def bookActivateButtons(self):
         self.setPos(0, 0, 0.52)
         self.setScale(1.0)
-        self.detailFrame.setPos(-1.1, 0, -0.855)
+        self.detailFrame.setPos(0.1, 0, -0.855)
         self.detailFrame.setScale(0.75)
         self.deleteEnterButton.hide()
         self.deleteAllButton.hide()
