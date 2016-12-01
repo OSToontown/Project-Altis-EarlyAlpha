@@ -73,7 +73,6 @@ class game:
 __builtin__.game = game()
 import time
 import sys
-import random
 import __builtin__
 import os
 import platform
@@ -107,8 +106,8 @@ DirectGuiGlobals.setDefaultDialogGeom(loader.loadModel('phase_3/models/gui/dialo
 import TTLocalizer
 if base.musicManagerIsValid:
     import random
-    themes = ('phase_3/audio/bgm/tt_theme.ogg', 'phase_3/audio/bgm/tt_theme_2.ogg' )
-    music = base.loadMusic(random.choice(themes))
+    theme = ('phase_3/audio/bgm/tt_theme.ogg')
+    music = base.loadMusic(theme)
     if music:
         music.setLoop(1)
         music.play()
