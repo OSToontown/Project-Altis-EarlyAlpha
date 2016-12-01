@@ -545,6 +545,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     TOTAL_BWEIGHT_PER_TRACK = [0,
      0,
      0,
+     0,
      0]
     TOTAL_BWEIGHT_PER_HEIGHT = [0,
      0,
@@ -573,6 +574,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         TOTAL_BWEIGHT_PER_TRACK[1] += weight * tracks[1]
         TOTAL_BWEIGHT_PER_TRACK[2] += weight * tracks[2]
         TOTAL_BWEIGHT_PER_TRACK[3] += weight * tracks[3]
+        TOTAL_BWEIGHT_PER_TRACK[4] += weight * tracks[4]
         TOTAL_BWEIGHT_PER_HEIGHT[0] += weight * heights[0]
         TOTAL_BWEIGHT_PER_HEIGHT[1] += weight * heights[1]
         TOTAL_BWEIGHT_PER_HEIGHT[2] += weight * heights[2]
@@ -1162,6 +1164,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             numPerTrack['l'] += sp.pendingBuildingTracks.count('l')
             numPerTrack['m'] += sp.pendingBuildingTracks.count('m')
             numPerTrack['s'] += sp.pendingBuildingTracks.count('s')
+            numPerTrack['g'] += sp.pendingBuildingTracks.count('g')
 
         numPerHeight = {0: 0,
          1: 0,
@@ -1179,7 +1182,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         while numToAssign > 0:
             smallestCount = None
             smallestTracks = []
-            for trackIndex in range(4):
+            for trackIndex in range(5):
                 if totalWeightPerTrack[trackIndex]:
                     track = SuitDNA.suitDepts[trackIndex]
                     count = numPerTrack[track]
@@ -1241,6 +1244,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
                     totalWeightPerTrack[1] -= weight * tracks[1]
                     totalWeightPerTrack[2] -= weight * tracks[2]
                     totalWeightPerTrack[3] -= weight * tracks[3]
+                    totalWeightPerTrack[4] -= weight * tracks[4]
                     totalWeightPerHeight[0] -= weight * heights[0]
                     totalWeightPerHeight[1] -= weight * heights[1]
                     totalWeightPerHeight[2] -= weight * heights[2]
