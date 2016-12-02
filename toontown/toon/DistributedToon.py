@@ -2727,7 +2727,7 @@ def gardenGame():
 
 @magicWord(category=CATEGORY_MODERATION)
 def granddad():
-    spellbook.getInvoker().magicTeleportInitiate(7000, 7000)
+    #spellbook.getInvoker().magicTeleportInitiate(7000, 7000)
     return "FLEENSTONES???"
     
 @magicWord(category=CATEGORY_MODERATION)
