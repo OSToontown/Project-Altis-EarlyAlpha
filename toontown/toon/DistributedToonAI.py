@@ -346,13 +346,13 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             self.keepAliveTask = None
         return
 
-    def ban(self, time, comment):
-        #simbase.air.banManager.ban(self.doId, self.DISLid, comment)
+    def ban(self, comment, time):
+        simbase.air.banManager.ban(self.air.getAccountId(self.doId), comment, time)
         pass
         
         
     def pban(self, comment):
-        #simbase.air.banManager.pban(self.doId, self.DISLid, comment)
+        simbase.air.banManager.pban(self.air.getAccountId(self.doId), comment)
         pass
 
     def disconnect(self):

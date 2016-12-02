@@ -573,6 +573,7 @@ from toontown.estate import DistributedGarden/AI
 from toontown.shtiker import DeleteManager/AI
 from toontown.ai import NewsManager/AI
 from toontown.ai import StaffManager/AI
+from toontown.ai import BanManager/AI
 from toontown.shtiker import PurchaseManager/AI
 from toontown.shtiker import NewbiePurchaseManager/AI
 from toontown.tutorial import TutorialManager/AI
@@ -3707,6 +3708,11 @@ dclass DistributedPartyManager : DistributedObject {
   requestMw(uint32 todo0, string todo1, uint32 todo2, uint32 todo3);
   mwResponseUdToAllAi(uint32 todo0, string todo1, uint32 todo2, uint32 todo3) airecv;
   receiveId(uint64 ids[]) airecv;
+};
+
+dclass BanManager : DistributedObject {
+  ban(uint32, string reason, int32);
+  pban(uint32, string reason);
 };
 
 dclass DistributedObjectGlobal : DistributedObject {

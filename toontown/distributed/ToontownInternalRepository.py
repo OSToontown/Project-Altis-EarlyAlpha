@@ -41,6 +41,9 @@ class ToontownInternalRepository(AstronInternalRepository):
 
     def getAccountIdFromSender(self):
         return int((self.getMsgSender()>>32) & 0xFFFFFFFF)
+		
+    def getAccountId(self, id):
+        return int((id>>32) & 0xFFFFFFFF)
         
     def setAllowClientSend(self, avId, dObj, fieldNameList=[]):
         dg = PyDatagram()

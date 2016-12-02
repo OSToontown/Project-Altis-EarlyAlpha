@@ -7,6 +7,7 @@ from otp.ai.MagicWordManagerAI import MagicWordManagerAI
 from toontown.ai.HolidayManagerAI import HolidayManagerAI
 from toontown.ai.NewsManagerAI import NewsManagerAI
 from toontown.ai.StaffManagerAI import StaffManagerAI
+from toontown.ai.BanManagerAI import BanManagerAI
 from toontown.ai.FishManagerAI import FishManagerAI
 from toontown.distributed.ToontownInternalRepository import ToontownInternalRepository
 from toontown.toon import NPCToons
@@ -29,8 +30,8 @@ from toontown.estate.EstateManagerAI import EstateManagerAI
 
 # Par-tay!
 if config.GetBool('want-parties', True):
-    from toontown.uberdog.DistributedPartyManagerAI import DistributedPartyManagerAI
     from otp.distributed.OtpDoGlobals import *
+    from toontown.uberdog.DistributedPartyManagerAI import DistributedPartyManagerAI
 
 # Fireworks!
 from direct.task import Task
@@ -183,6 +184,9 @@ class ToontownAIRepository(ToontownInternalRepository):
 		
         self.staffManager = StaffManagerAI(self)
         self.staffManager.generateWithRequired(2)
+		
+        self.banManager = BanManagerAI(self)
+        self.banManager.generateWithRequired(2)
 
         self.magicWordManager = MagicWordManagerAI(self)
         self.magicWordManager.generateWithRequired(2)
