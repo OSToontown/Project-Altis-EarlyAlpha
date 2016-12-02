@@ -1170,7 +1170,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
          1: 0,
          2: 0,
          3: 0,
-         4: 0}
+         4: 0,
+         5: 0}
         for sp in self.air.suitPlanners.values():
             sp.countNumBuildingsPerHeight(numPerHeight)
             numPerHeight[0] += sp.pendingBuildingHeights.count(0)
@@ -1178,6 +1179,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             numPerHeight[2] += sp.pendingBuildingHeights.count(2)
             numPerHeight[3] += sp.pendingBuildingHeights.count(3)
             numPerHeight[4] += sp.pendingBuildingHeights.count(4)
+            numPerHeight[5] += sp.pendingBuildingHeights.count(5)
 
         while numToAssign > 0:
             smallestCount = None
@@ -1199,7 +1201,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             buildingTrackIndex = SuitDNA.suitDepts.index(buildingTrack)
             smallestCount = None
             smallestHeights = []
-            for height in range(5):
+            for height in range(6):
                 if totalWeightPerHeight[height]:
                     count = float(numPerHeight[height]) / float(self.BUILDING_HEIGHT_DISTRIBUTION[height])
                     if smallestCount == None or count < smallestCount:
