@@ -226,9 +226,11 @@ class CatalogAccessoryItem(CatalogItem.CatalogItem):
 
     def getPicture(self, avatar):
         model = self.loadModel()
-        spin = 1
+        spin = 0
         model.setBin('unsorted', 0, 1)
         self.hasPicture = True
+        model.setHpr(160, -25, 0)
+        base.graphicsEngine.renderFrame()
         return self.makeFrameModel(model, spin)
 
     def applyColor(self, model, color):

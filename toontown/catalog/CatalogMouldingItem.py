@@ -48,6 +48,7 @@ class CatalogMouldingItem(CatalogSurfaceItem):
         b.hide()
         c.hide()
         sample.reparentTo(frame)
+        base.graphicsEngine.renderFrame()
         return (frame, None)
 
     def output(self, store = -1):

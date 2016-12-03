@@ -21,11 +21,11 @@ NUM_CATALOG_ROWS = 3
 NUM_CATALOG_COLS = 2
 CatalogPanelCenters = [[Point3(-0.95, 0, 0.91), Point3(-0.275, 0, 0.91)], [Point3(-0.95, 0, 0.275), Point3(-0.275, 0, 0.275)], [Point3(-0.95, 0, -0.4), Point3(-0.275, 0, -0.4)]]
 CatalogPanelColors = {CatalogItemTypes.FURNITURE_ITEM: Vec4(0.733, 0.78, 0.933, 1.0),
- CatalogItemTypes.CHAT_ITEM: Vec4(0.922, 0.922, 0.753, 1.0),
- CatalogItemTypes.CLOTHING_ITEM: Vec4(0.918, 0.69, 0.69, 1.0),
- CatalogItemTypes.EMOTE_ITEM: Vec4(0.922, 0.922, 0.753, 1.0),
- CatalogItemTypes.WALLPAPER_ITEM: Vec4(0.749, 0.984, 0.608, 1.0),
- CatalogItemTypes.WINDOW_ITEM: Vec4(0.827, 0.91, 0.659, 1.0)}
+ CatalogItemTypes.CHAT_ITEM: Vec4(0.733, 0.78, 0.933, 1.0),
+ CatalogItemTypes.CLOTHING_ITEM: Vec4(0.733, 0.78, 0.933, 1.0),
+ CatalogItemTypes.EMOTE_ITEM: Vec4(0.733, 0.78, 0.933, 1.0),
+ CatalogItemTypes.WALLPAPER_ITEM: Vec4(0.733, 0.78, 0.933, 1.0),
+ CatalogItemTypes.WINDOW_ITEM: Vec4(0.733, 0.78, 0.933, 1.0)}
 
 class CatalogScreen(DirectFrame):
     notify = DirectNotifyGlobal.directNotify.newCategory('CatalogScreen')

@@ -353,6 +353,7 @@ class CatalogItem:
     def makeFrameModel(self, model, spin = 1):
         frame = self.makeFrame()
         ival = None
+        spin = 0
         if model:
             model.setDepthTest(1)
             model.setDepthWrite(1)
@@ -379,6 +380,7 @@ class CatalogItem:
                 model.setPos(-center[0], 2, -center[2])
                 corner = Vec3(bMax - center)
                 scale.setScale(1.0 / max(corner[0], corner[1], corner[2]))
+            base.graphicsEngine.renderFrame()
         return (frame, ival)
 
     def getBlob(self, store = 0):

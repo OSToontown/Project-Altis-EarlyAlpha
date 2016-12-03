@@ -1066,6 +1066,7 @@ class CatalogFurnitureItem(CatalogAtticItem.CatalogAtticItem):
         model = self.loadModel()
         spin = 1
         flags = self.getFlags()
+        model.setH(-45)
         if flags & FLRug:
             spin = 0
             model.setP(90)

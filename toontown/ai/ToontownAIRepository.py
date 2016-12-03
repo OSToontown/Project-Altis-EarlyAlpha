@@ -11,7 +11,7 @@ from toontown.ai.BanManagerAI import BanManagerAI
 from toontown.ai.FishManagerAI import FishManagerAI
 from toontown.distributed.ToontownInternalRepository import ToontownInternalRepository
 from toontown.toon import NPCToons
-from toontown.hood import TTHoodAI, DDHoodAI, DGHoodAI, BRHoodAI, MMHoodAI, DLHoodAI, OZHoodAI, GSHoodAI, GZHoodAI, TFHoodAI, ZoneUtil
+from toontown.hood import TTHoodAI, DDHoodAI, DGHoodAI, BRHoodAI, MMHoodAI, DLHoodAI, OZHoodAI, GSHoodAI, GZHoodAI, ZoneUtil
 from toontown.hood import SellbotHQAI, CashbotHQAI, LawbotHQAI, BossbotHQAI
 from toontown.toonbase import ToontownGlobals
 from direct.distributed.PyDatagram import *
@@ -245,8 +245,6 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.hoods.append(OZHoodAI.OZHoodAI(self))
         clearQueue()
         self.hoods.append(GZHoodAI.GZHoodAI(self))
-        clearQueue()
-        self.hoods.append(TFHoodAI.TFHoodAI(self))
         clearQueue()
 
         if config.GetBool('want-sbhq', True):

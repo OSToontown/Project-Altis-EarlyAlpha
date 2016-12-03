@@ -445,8 +445,9 @@ class CatalogClothingItem(CatalogItem.CatalogItem):
             for piece in toon.findAllMatches(name):
                 piece.wrtReparentTo(model)
 
-        model.setH(180)
+        model.setH(135)
         toon.delete()
+        base.graphicsEngine.renderFrame()
         return self.makeFrameModel(model)
 
     def requestPurchase(self, phone, callback):

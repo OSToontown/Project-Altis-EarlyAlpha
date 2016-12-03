@@ -64,6 +64,7 @@ class CatalogNametagItem(CatalogItem.CatalogItem):
             inFont = ToontownGlobals.getNametagFont(self.nametagStyle)
         nameTagDemo = DirectLabel(parent=frame, relief=None, pos=(0, 0, 0.24), scale=0.5, text=localAvatar.getName(), text_fg=(1.0, 1.0, 1.0, 1), text_shadow=(0, 0, 0, 1), text_font=inFont, text_wordwrap=9)
         self.hasPicture = True
+        base.graphicsEngine.renderFrame()
         return (frame, None)
 
     def output(self, store = -1):

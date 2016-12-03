@@ -72,6 +72,8 @@ class CatalogRentalItem(CatalogItem.CatalogItem):
         elif self.typeIndex == ToontownGlobals.RentalGameTable:
             model = loader.loadModel('phase_6/models/golf/game_table')
         self.hasPicture = True
+        model.setH(45)
+        base.graphicsEngine.renderFrame()
         return self.makeFrameModel(model, spin)
 
     def output(self, store = -1):
