@@ -42,7 +42,7 @@ from toontown.quest import QuestParser
 from toontown.toonbase.ToontownGlobals import *
 from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import TTLocalizer
-from toontown.catalog import CatalogNotifyDialog
+#from toontown.catalog import CatalogNotifyDialog
 from toontown.chat import ToontownChatManager
 from toontown.chat import TTTalkAssistant
 from toontown.estate import GardenGlobals
@@ -1017,17 +1017,17 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         if self.__clarabelleButton == None:
             return
         claraXPos = ClaraBaseXPos
-        notifyXPos = CatalogNotifyDialog.CatalogNotifyBaseXPos
+        #notifyXPos = CatalogNotifyDialog.CatalogNotifyBaseXPos
         if show:
             claraXPos += AdjustmentForNewsButton
-            notifyXPos += AdjustmentForNewsButton
+            #notifyXPos += AdjustmentForNewsButton
         newPos = (claraXPos, 1.0, -0.63)
         self.__clarabelleButton.setPos(newPos)
-        if self.__catalogNotifyDialog == None or self.__catalogNotifyDialog.frame == None:
-            return
-        notifyPos = self.__catalogNotifyDialog.frame.getPos()
-        notifyPos[0] = notifyXPos
-        self.__catalogNotifyDialog.frame.setPos(notifyPos)
+        #if self.__catalogNotifyDialog == None or self.__catalogNotifyDialog.frame == None:
+            #return
+        #notifyPos = self.__catalogNotifyDialog.frame.getPos()
+        #notifyPos[0] = notifyXPos
+        #self.__catalogNotifyDialog.frame.setPos(notifyPos)
         return
 
     def loadClarabelleGui(self):
@@ -1289,10 +1289,10 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
             message = (oldStr,)
         if message == None:
             return
-        if self.__catalogNotifyDialog:
-            self.__catalogNotifyDialog.cleanup()
-        self.__catalogNotifyDialog = CatalogNotifyDialog.CatalogNotifyDialog(message)
-        base.playSfx(self.soundPhoneRing)
+        #if self.__catalogNotifyDialog:
+            #self.__catalogNotifyDialog.cleanup()
+        #self.__catalogNotifyDialog = CatalogNotifyDialog.CatalogNotifyDialog(message)
+        #base.playSfx(self.soundPhoneRing)
         return
 
     def allowHardLand(self):
