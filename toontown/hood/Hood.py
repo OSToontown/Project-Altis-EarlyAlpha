@@ -283,6 +283,11 @@ class Hood(StateData.StateData):
             self.sky.setScale(1.0)
             self.startSky()
 
+    def end():
+        self.sky = self.newSky
+        self.oldSky = None
+        self.newSky = None
+
     def skyTransition(self, sky):
         if self.id != DonaldsDreamland or self.id != DonaldsDock or self.id != TheBrrrgh:
             self.oldSky = self.sky
@@ -318,17 +323,11 @@ class Hood(StateData.StateData):
                     oldFadeOut = LerpColorScaleInterval(self.oldSky, 5, Vec4(1, 1, 1, 0), startColorScale=Vec4(1, 1, 1, 1), blendType='easeInOut')
                 else:
                     oldFadeOut = Wait(0) # Just do that to please the sequence so it doesnt crash
-                def end():
-                    self.sky = self.newSky
-                    self.oldSky = None
-                    self.newSky = None
                 Sequence(
                     Parallel(
                         newFadeIn,
                         oldFadeOut
                     ),
                     Func(self.oldSky.reparentTo, hidden),
-                    Func(end)
+                    Func(self.end)
                 ).start()
-            
-            #TODO: Fix the fade sequence
