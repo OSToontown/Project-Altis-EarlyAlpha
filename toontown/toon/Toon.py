@@ -5200,7 +5200,7 @@ class Toon(Avatar.Avatar, ToonHead):
             name = self.getAvIdName()
         else:
             name = self.getName()
-        self.setDisplayName(name)
+        self.nametag.setDisplayName(name)
         if self.isLocal():
             if hasattr(self, 'book'):
                 self.book.obscureButton(0)
