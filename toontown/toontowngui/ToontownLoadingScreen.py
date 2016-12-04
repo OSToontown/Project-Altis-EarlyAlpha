@@ -74,3 +74,4 @@ class ToontownLoadingScreen():
         
     def tick(self):
         self.__count = self.__count + 1
+        base.graphicsEngine.renderFrame()
