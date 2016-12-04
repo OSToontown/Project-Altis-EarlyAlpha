@@ -62,8 +62,9 @@ loadPrcFileData('Settings: res', 'win-size %d %d' % tuple(settings['res']))
 loadPrcFileData('Settings: fullscreen', 'fullscreen %s' % settings['fullscreen'])
 loadPrcFileData('Settings: musicVol', 'audio-master-music-volume %s' % settings['musicVol'])
 loadPrcFileData('Settings: sfxVol', 'audio-master-sfx-volume %s' % settings['sfxVol'])
-loadPrcFileData('Settings: loadDisplay', 'load-display %s' % settings['loadDisplay'])
+#loadPrcFileData('Settings: loadDisplay', 'load-display %s' % settings['loadDisplay'])
 loadPrcFileData('Settings: newGui', 'newGui %s' % settings['newGui'])
+loadPrcFileData('', 'load-display pandagl')
 
 class game:
     name = 'toontown'
