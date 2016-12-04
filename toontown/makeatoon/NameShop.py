@@ -25,6 +25,7 @@ from toontown.toon import NPCToons
 from direct.task import Task
 from toontown.makeatoon.TTPickANamePattern import TTPickANamePattern
 from pandac.PandaModules import TextEncoder
+from toontown.toontowngui import FeatureComingSoonDialog
 MAX_NAME_WIDTH = TTLocalizer.NSmaxNameWidth
 ServerDialogTimeout = 3.0
 
@@ -33,6 +34,7 @@ class NameShop(StateData.StateData):
 
     def __init__(self, makeAToon, doneEvent, avList, index, isPaid):
         StateData.StateData.__init__(self, doneEvent)
+        self.wantTypeAName = False
         self.makeAToon = makeAToon
         self.isPaid = isPaid
         self.avList = avList
@@ -751,23 +753,27 @@ class NameShop(StateData.StateData):
         self.nameEntry['focus'] = 1
 
     def __typeAName(self):
-        if base.cr.productName in ['JP',
-         'DE',
-         'BR',
-         'FR']:
-            if base.restrictTrialers:
-                if not base.cr.isPaid():
-                    dialog = TeaserPanel.TeaserPanel(pageName='typeAName')
-                    return
-        if self.fsm.getCurrentState().getName() == 'TypeAName':
-            self.typeANameButton['text'] = TTLocalizer.TypeANameButton
-            self.typeANameButton.wrtReparentTo(self.namePanel, sort=2)
-            self.fsm.request('PickAName')
+        if not self.wantTypeAName:
+            FeatureComingSoonDialog.FeatureComingSoonDialog(text="That feature is \1textShadow\1coming soon\2! Sorry about that!")
+        
         else:
-            self.typeANameButton['text'] = TTLocalizer.PickANameButton
-            self.typeANameButton.wrtReparentTo(aspect2d, sort=2)
-            self.typeANameButton.show()
-            self.fsm.request('TypeAName')
+            if base.cr.productName in ['JP',
+             'DE',
+             'BR',
+             'FR']:
+                if base.restrictTrialers:
+                    if not base.cr.isPaid():
+                        dialog = TeaserPanel.TeaserPanel(pageName='typeAName')
+                        return
+            if self.fsm.getCurrentState().getName() == 'TypeAName':
+                self.typeANameButton['text'] = TTLocalizer.TypeANameButton
+                self.typeANameButton.wrtReparentTo(self.namePanel, sort=2)
+                self.fsm.request('PickAName')
+            else:
+                self.typeANameButton['text'] = TTLocalizer.PickANameButton
+                self.typeANameButton.wrtReparentTo(aspect2d, sort=2)
+                self.typeANameButton.show()
+                self.fsm.request('TypeAName')
 
     def __typedAName(self, *args):
         self.notify.debug('__typedAName')
