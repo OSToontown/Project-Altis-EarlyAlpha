@@ -283,7 +283,7 @@ class Hood(StateData.StateData):
             self.sky.setScale(1.0)
             self.startSky()
 
-    def end():
+    def end(self):
         self.sky = self.newSky
         self.oldSky = None
         self.newSky = None
