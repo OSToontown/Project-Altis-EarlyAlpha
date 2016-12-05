@@ -8,7 +8,7 @@ A vision of what Toontown Online could have been in 2016.
 * Dank Mickey/ KHDecoder - Game Programmer, Texture Editor, & Co-Founder
 * Stormish - 3D Modeler & Animator
 * Malverde - Game & Networking Programmer
-* Old Geezer - Game Programmer & 3D Modeler
+* Old Geezer - Game Programmer, 3D Modeler, & Composer
 * Barks - Game Programmer
 * Drew - Game Programmer
 * James Midnight - Texture Artist
