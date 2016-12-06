@@ -1,6 +1,7 @@
 from toontown.suit.DistributedSuitPlannerAI import DistributedSuitPlannerAI
 from toontown.building.DistributedBuildingMgrAI import DistributedBuildingMgrAI
 from toontown.environment import DistributedDayTimeManagerAI
+from toontown.dna.DNAParser import DNAStorage, DNAGroup, DNAVisGroup
 from toontown.environment import DistributedRainManagerAI
 
 class StreetAI:
@@ -19,7 +20,8 @@ class StreetAI:
         # If it is a time where we want snow
         self.wantSnow = True
         
-        self.air.dnaStoreMap[self.zoneId] = self.air.loadDNA(self.air.genDNAFileName(self.zoneId)).generateData()
+        dnaStore = DNAStorage()
+        self.air.dnaStoreMap[self.zoneId] = dnaStore
         self.spawnObjects()
         self.createTime()
         self.createRain()

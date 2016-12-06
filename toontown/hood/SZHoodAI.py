@@ -7,6 +7,7 @@ from toontown.building.DistributedHQInteriorAI import DistributedHQInteriorAI
 from toontown.safezone import TreasureGlobals
 from toontown.town.StreetAI import StreetAI
 from toontown.safezone.SZTreasurePlannerAI import SZTreasurePlannerAI
+from toontown.dna.DNAParser import DNAStorage, DNAGroup, DNAVisGroup
 from toontown.toon import NPCToons
 from toontown.environment import DistributedDayTimeManagerAI
 from toontown.environment import DistributedRainManagerAI
@@ -40,7 +41,8 @@ class SZHoodAI(HoodAI):
 
     def createZone(self, genTrolley = True):
         HoodAI.createZone(self)
-        self.air.dnaStoreMap[self.HOOD] = self.air.loadDNA(self.air.genDNAFileName(self.HOOD)).generateData()
+        dnaStore = DNAStorage()
+        self.air.dnaStoreMap[self.HOOD] = dnaStore
         if genTrolley:
             self.createTrolley()
         self.createTreasurePlanner()

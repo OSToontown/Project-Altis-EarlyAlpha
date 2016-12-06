@@ -77,17 +77,18 @@ class SuitBase:
             self.notify.warning('called getActualLevel with no DNA, returning 1 for level')
             return 1
 
-    def setPath(self, suitGraph, path):
-        self.suitGraph = suitGraph
+    def setPath(self, path):
         self.path = path
+        self.pathLength = self.path.getNumPoints()
 
     def getPath(self):
         return self.path
 
     def printPath(self):
-        print '%d points in path' % len(self.path)
-        for currPathPt in self.path:
-            print '\t', currPathPt
+        print '%d points in path' % self.pathLength
+        for currPathPt in xrange(self.pathLength):
+            indexVal = self.path.getPointIndex(currPathPt)
+            print '\t', self.sp.dnaStore.getSuitPointWithIndex(indexVal)
 
     def makeLegList(self):
-        self.legList = SuitLegList(self.suitGraph, self.path)
+        self.legList = SuitLegList(self.path, self.sp.dnaStore)

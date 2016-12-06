@@ -21,15 +21,8 @@ class ToontownLoader(Loader.Loader):
         del self.loadingScreen
         Loader.Loader.destroy(self)
 
-    def loadDNA(self, filename):
-        filename = '/' + filename
-            
-        with open(filename, 'r') as f:
-            tree = DNAParser.parse(f)
-            
-        self.tick()
-
-        return tree
+    def loadDNAFile(self, dnastore, filename):
+        return loadDNAFile(dnastore, filename)
 
     def beginBulkLoad(self, name, label, range, gui, tipCategory, zoneId):
         self._loadStartT = globalClock.getRealTime()

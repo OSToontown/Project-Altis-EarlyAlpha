@@ -1,41 +1,56 @@
-from toontown.hood.HoodAI import *
-from toontown.toonbase import ToontownGlobals
+from pandac.PandaModules import *
+from toontown.dna.DNAParser import DNAGroup, DNAVisGroup
+from toontown.hood import HoodAI
+from toontown.hood import ZoneUtil
 from toontown.safezone.DistributedGolfKartAI import DistributedGolfKartAI
-from toontown.environment import DistributedDayTimeManagerAI
-from toontown.environment import DistributedRainManagerAI
-from toontown.golf import GolfGlobals
+from toontown.toonbase import ToontownGlobals
 
-class GZHoodAI(HoodAI):
-    notify = directNotify.newCategory('HoodAI')
-    notify.setInfo(True)
-    HOOD = ToontownGlobals.GolfZone
 
+class GZHoodAI(HoodAI.HoodAI):
     def __init__(self, air):
-        HoodAI.__init__(self, air)
-        self.notify.info("Creating zone... Chip 'n Dale's MiniGolf")
+        HoodAI.HoodAI.__init__(self, air,
+                               ToontownGlobals.GolfZone,
+                               ToontownGlobals.GolfZone)
 
         self.golfKarts = []
 
-        self.createZone()
-        self.createTime()
-        self.createRain()
+        self.startup()
 
-    def createZone(self):
-        self.spawnObjects()
+    def startup(self):
+        HoodAI.HoodAI.startup(self)
 
-    def spawnObjects(self):
-        HoodAI.spawnObjects(self)
-        filename = self.air.genDNAFileName(self.HOOD)
-        self.air.dnaSpawner.spawnObjects(filename, self.HOOD)
-		
-    def createTime(self):
-        self.dayTimeMgr = DistributedDayTimeManagerAI.DistributedDayTimeManagerAI(self.air)
-        self.dayTimeMgr.generateWithRequired(self.HOOD)  
-        self.dayTimeMgr.start()
-        self.notify.info('Day Time Manager turned on for zone ' + str(self.HOOD))
-            
-    def createRain(self):
-        self.rainMgr = DistributedRainManagerAI.DistributedRainManagerAI(self.air)
-        self.rainMgr.generateWithRequired(self.HOOD)  
-        self.rainMgr.start(False)
-        self.notify.info('Rain Manager turned on for zone ' + str(self.HOOD))
+        self.createGolfKarts()
+
+    def findGolfKarts(self, dnaGroup, zoneId, area, overrideDNAZone=False):
+        golfKarts = []
+        if isinstance(dnaGroup, DNAGroup) and ('golf_kart' in dnaGroup.getName()):
+            nameInfo = dnaGroup.getName().split('_')
+            golfCourse = int(nameInfo[2])
+            for i in xrange(dnaGroup.getNumChildren()):
+                childDnaGroup = dnaGroup.at(i)
+                if 'starting_block' in childDnaGroup.getName():
+                    pos = childDnaGroup.getPos()
+                    hpr = childDnaGroup.getHpr()
+                    golfKart = DistributedGolfKartAI(
+                        self.air, golfCourse,
+                        pos[0], pos[1], pos[2], hpr[0], hpr[1], hpr[2])
+                    golfKart.generateWithRequired(zoneId)
+                    golfKarts.append(golfKart)
+        elif isinstance(dnaGroup, DNAVisGroup) and (not overrideDNAZone):
+            zoneId = ZoneUtil.getTrueZoneId(int(dnaGroup.getName().split(':')[0]), zoneId)
+        for i in xrange(dnaGroup.getNumChildren()):
+            foundGolfKarts = self.findGolfKarts(dnaGroup.at(i), zoneId, area, overrideDNAZone=overrideDNAZone)
+            golfKarts.extend(foundGolfKarts)
+        return golfKarts
+
+    def createGolfKarts(self):
+        self.golfKarts = []
+        for zoneId in self.getZoneTable():
+            dnaData = self.air.dnaDataMap.get(zoneId, None)
+            zoneId = ZoneUtil.getTrueZoneId(zoneId, self.zoneId)
+            if dnaData.getName() == 'root':
+                area = ZoneUtil.getCanonicalZoneId(zoneId)
+                foundGolfKarts = self.findGolfKarts(dnaData, zoneId, area, overrideDNAZone=True)
+                self.golfKarts.extend(foundGolfKarts)
+        for golfKart in self.golfKarts:
+            golfKart.start()

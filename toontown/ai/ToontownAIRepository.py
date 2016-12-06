@@ -16,8 +16,7 @@ from toontown.hood import SellbotHQAI, CashbotHQAI, LawbotHQAI, BossbotHQAI
 from toontown.toonbase import ToontownGlobals
 from direct.distributed.PyDatagram import *
 from otp.ai.AIZoneData import *
-from toontown.dna import DNAParser
-from toontown.dna.DNASpawnerAI import DNASpawnerAI
+from toontown.dna.DNAParser import loadDNAFileAI
 from direct.stdpy.file import open
 import time
 import random
@@ -76,8 +75,6 @@ class ToontownAIRepository(ToontownInternalRepository):
     def __init__(self, baseChannel, serverId, districtName):
         ToontownInternalRepository.__init__(self, baseChannel, serverId, dcSuffix='AI')
 
-        self.dnaSpawner = DNASpawnerAI(self)
-
         self.districtName = districtName
 
         self.zoneAllocator = UniqueIdAllocator(ToontownGlobals.DynamicZonesBegin,
@@ -88,9 +85,22 @@ class ToontownAIRepository(ToontownInternalRepository):
 
         self.hoods = []
         self.zoneDataStore = AIZoneDataStore()
+        self.dnaStoreMap = {}
+        self.dnaDataMap = {}
 
         self.useAllMinigames = self.config.GetBool('want-all-minigames', False)
         self.doLiveUpdates = self.config.GetBool('want-live-updates', True)
+        self.wantFishing = self.config.GetBool('want-fishing', True)
+        self.wantHousing = self.config.GetBool('want-housing', True)
+        self.wantPets = self.config.GetBool('want-pets', True)
+        self.wantParties = self.config.GetBool('want-parties', True)
+        self.wantCogbuildings = self.config.GetBool('want-cogbuildings', True)
+        self.wantCogdominiums = self.config.GetBool('want-cogdominiums', True)
+        self.doLiveUpdates = self.config.GetBool('want-live-updates', False)
+        self.wantTrackClsends = self.config.GetBool('want-track-clsends', False)
+        self.baseXpMultiplier = self.config.GetFloat('base-xp-multiplier', 1.0)
+        self.wantHalloween = self.config.GetBool('want-halloween', False)
+        self.wantChristmas = self.config.GetBool('want-christmas', False)
 
         self.holidayManager = HolidayManagerAI(self)
 
@@ -251,22 +261,22 @@ class ToontownAIRepository(ToontownInternalRepository):
             self.hoods.append(SellbotHQAI.SellbotHQAI(self))
             clearQueue()
 
-        if config.GetBool('want-cbhq', True):
-            self.hoods.append(CashbotHQAI.CashbotHQAI(self))
-            clearQueue()
+        #if config.GetBool('want-cbhq', True):
+         #   self.hoods.append(CashbotHQAI.CashbotHQAI(self))
+          #  clearQueue()
 
-        if config.GetBool('want-lbhq', True):
-            self.hoods.append(LawbotHQAI.LawbotHQAI(self))
-            clearQueue()
+     #   if config.GetBool('want-lbhq', True):
+      #      self.hoods.append(LawbotHQAI.LawbotHQAI(self))
+       #     clearQueue()
 
-        if config.GetBool('want-bbhq', True):
-            self.hoods.append(BossbotHQAI.BossbotHQAI(self))
-            clearQueue()
+    #    if config.GetBool('want-bbhq', True):
+     #       self.hoods.append(BossbotHQAI.BossbotHQAI(self))
+      #      clearQueue()
 
         for sp in self.suitPlanners.values():
             sp.assignInitialSuitBuildings()
 
-    def genDNAFileName(self, zoneId):
+    def lookupDNAFileName(self, zoneId):
         zoneId = ZoneUtil.getCanonicalZoneId(zoneId)
         hoodId = ZoneUtil.getCanonicalHoodId(zoneId)
         hood = ToontownGlobals.dnaMap[hoodId]
@@ -276,14 +286,10 @@ class ToontownAIRepository(ToontownInternalRepository):
         else:
             phase = ToontownGlobals.streetPhaseMap[hoodId]
 
-        return 'phase_%s/dna/%s_%s.xml' % (phase, hood, zoneId)
+        return 'phase_%s/dna/%s_%s.pdna' % (phase, hood, zoneId)
 
-    def loadDNA(self, filename):
-        with open('/' + filename) as f:
-            tree = DNAParser.parse(f)
-
-        return tree
-
+    def loadDNAFileAI(self, dnastore, filename):
+        return loadDNAFileAI(dnastore, filename)
 
 @magicWord(category=CATEGORY_SYSADMIN, types=[str, int])
 def pstats(host='localhost', port=5185):

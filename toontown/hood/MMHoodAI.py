@@ -1,21 +1,34 @@
 from toontown.toonbase import ToontownGlobals
-from SZHoodAI import SZHoodAI
+from toontown.hood import HoodAI
 from toontown.toon import NPCToons
 from toontown.safezone import DistributedMMPianoAI
+from toontown.safezone import DistributedTrolleyAI
+from toontown.ai import DistributedTrickOrTreatTargetAI
 
-class MMHoodAI(SZHoodAI):
-    notify = directNotify.newCategory('SZHoodAI')
-    notify.setInfo(True)
-    HOOD = ToontownGlobals.MinniesMelodyland
+class MMHoodAI(HoodAI.HoodAI):
+    def __init__(self, air):
+        HoodAI.HoodAI.__init__(self, air,
+                               ToontownGlobals.MinniesMelodyland,
+                               ToontownGlobals.MinniesMelodyland)
 
-    def createZone(self):
-        self.notify.info("Creating zone... Minnie's Melodyland")
-        self.piano = None
-        self.classicChar = None
+        self.trolley = None
 
-        SZHoodAI.createZone(self)
+        self.startup()
 
+    def startup(self):
+        HoodAI.HoodAI.startup(self)
+
+        if simbase.config.GetBool('want-minigames', True):
+            self.createTrolley()
+
+        if simbase.air.wantHalloween:
+            self.TrickOrTreatTargetManager = DistributedTrickOrTreatTargetAI.DistributedTrickOrTreatTargetAI(self.air)
+            self.TrickOrTreatTargetManager.generateWithRequired(4835)
+			
         self.piano = DistributedMMPianoAI.DistributedMMPianoAI(self.air)
-        self.piano.generateWithRequired(self.safezone)   
+        self.piano.generateWithRequired(self.zoneId)   
 
-        self.spawnObjects()
+    def createTrolley(self):
+        self.trolley = DistributedTrolleyAI.DistributedTrolleyAI(self.air)
+        self.trolley.generateWithRequired(self.zoneId)
+        self.trolley.start()
