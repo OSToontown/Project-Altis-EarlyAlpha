@@ -163,20 +163,30 @@ class FactoryExterior(BattlePlace.BattlePlace):
             self.notify.error('Unknown mode: ' + where + ' in handleElevatorDone')
             
     def updateVis(self, zone):
-        if not self.visGroups:
-            dna = loader.loadDNA(self.dnaFile)
-            self.visGroups = DNAUtil.getVisGroups(dna)
-        visZones = []
-        for vg in self.visGroups:
-            if vg.getZone() == zone:
-                visZones = vg.getVisibleZones()
-                visZones.append(ToontownGlobals.SellbotFactoryExt) # :dolphin:
-                break
-        if not self.visInterest:
-            self.visInterest = base.cr.addInterest(base.localAvatar.defaultShard, visZones, 'cogHQVis')
-        else:
-            base.cr.alterInterest(self.visInterest, base.localAvatar.defaultShard, visZones)
-            
+        self.zoneId = requestStatus['zoneId']
+
+        # Load the CogHQ DNA file:
+        dnaStore = DNAStorage()
+        dnaFileName = self.genDNAFileName(self.zoneId)
+
+        if not dnaFileName.endswith('13200.pdna'):
+
+         loadDNAFileAI(dnaStore, dnaFileName)
+
+         # Collect all of the vis group zone IDs:
+         self.zoneVisDict = {}
+         for i in xrange(dnaStore.getNumDNAVisGroupsAI()):
+             groupFullName = dnaStore.getDNAVisGroupName(i)
+             visGroup = dnaStore.getDNAVisGroupAI(i)
+             visZoneId = int(base.cr.hoodMgr.extractGroupName(groupFullName))
+              visZoneId = ZoneUtil.getTrueZoneId(visZoneId, self.zoneId)
+              visibles = []
+              for i in xrange(visGroup.getNumVisibles()):
+                visibles.append(int(visGroup.visibles[i]))
+              visibles.append(int(visGroup.getVisible(i)))
+              visibles.append(ZoneUtil.getBranchZone(visZoneId))
+              self.zoneVisDict[visZoneId] = visibles
+                
     def doEnterZone(self, newZoneId):
         self.updateVis(newZoneId)
         if newZoneId != self.zoneId:

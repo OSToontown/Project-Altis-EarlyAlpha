@@ -21,7 +21,7 @@ import copy
 import DistributedSuitBase
 from otp.otpbase import OTPLocalizer
 import random
-from SuitLegList import *
+from libpandadna import *
 from otp.nametag.NametagConstants import *
 from otp.nametag import NametagGlobals
 STAND_OUTSIDE_DOOR = 2.5
@@ -52,7 +52,7 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
         self.pathState = 0
         self.path = None
         self.localPathState = 0
-        self.currentLeg = -1
+        self.currentLeg = 0
         self.pathStartTime = 0.0
         self.legList = None
         self.initState = None
@@ -216,7 +216,7 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
         self.maxPathLen = maxPathLen
         self.path = None
         self.pathLength = 0
-        self.currentLeg = -1
+        self.currentLeg = 0
         self.legList = None
         if self.maxPathLen == 0:
             return
@@ -225,7 +225,7 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
         self.startPoint = self.sp.pointIndexes[self.pathEndpointStart]
         self.endPoint = self.sp.pointIndexes[self.pathEndpointEnd]
         path = self.sp.genPath(self.startPoint, self.endPoint, self.minPathLen, self.maxPathLen)
-        self.setPath(self.sp.dnaData.suitGraph, path)
+        self.setPath(path)
         self.makeLegList()
         return
 
@@ -330,7 +330,7 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
         numLegs = self.legList.getNumLegs()
         if self.currentLeg != nextLeg:
             self.currentLeg = nextLeg
-            self.doPathLeg(self.legList[nextLeg], elapsed - self.legList.getStartTime(nextLeg))
+            self.doPathLeg(self.legList.getLeg(nextLeg), elapsed - self.legList.getStartTime(nextLeg))
         nextLeg += 1
         if nextLeg < numLegs:
             nextTime = self.legList.getStartTime(nextLeg)
@@ -347,7 +347,7 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
     def stopPathNow(self):
         name = self.taskName('move')
         taskMgr.remove(name)
-        self.currentLeg = -1
+        self.currentLeg = 0
 
     def calculateHeading(self, a, b):
         xdelta = b[0] - a[0]

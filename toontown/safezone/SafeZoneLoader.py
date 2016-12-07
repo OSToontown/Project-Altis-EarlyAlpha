@@ -94,15 +94,22 @@ class SafeZoneLoader(StateData.StateData):
             self.geom.prepareScene(gsg)
         self.geom.flattenMedium()
 
-    def makeDictionaries(self, sceneTree):
+    def makeDictionaries(self, dnaStore):
         self.nodeList = []
-        #for visgroup in base.cr.playGame.dnaData.visgroups:
-         #   groupNode = self.geom.find('**/' + visgroup.name)
-          #  if groupNode.isEmpty():
-           #     self.notify.error('Could not find visgroup')
-           # self.nodeList.append(groupNode)
+        for i in xrange(dnaStore.getNumDNAVisGroups()):
+            groupFullName = dnaStore.getDNAVisGroupName(i)
+            groupName = base.cr.hoodMgr.extractGroupName(groupFullName)
+            groupNode = self.geom.find('**/' + groupFullName)
+            if groupNode.isEmpty():
+                self.notify.error('Could not find visgroup')
+            groupNode.flattenMedium()
+            self.nodeList.append(groupNode)
 
         self.removeLandmarkBlockNodes()
+        self.hood.dnaStore.resetPlaceNodes()
+        self.hood.dnaStore.resetDNAGroups()
+        self.hood.dnaStore.resetDNAVisGroups()
+        self.hood.dnaStore.resetDNAVisGroupsAI()
 
     def removeLandmarkBlockNodes(self):
         npc = self.geom.findAllMatches('**/suit_building_origin')

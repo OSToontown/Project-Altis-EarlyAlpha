@@ -195,17 +195,19 @@ class HoodAI:
             self.air.suitPlanners[zoneId] = suitPlanner
 			
     def createTime(self):
-        if self.zoneId != 9000:
-            self.dayTimeMgr = DistributedDayTimeManagerAI.DistributedDayTimeManagerAI(self.air)
-            self.dayTimeMgr.generateWithRequired(self.zoneId)  
-            self.dayTimeMgr.start()
-            self.notify.info('Day Time Manager turned on for zone ' + str(self.zoneId))
+        for zoneId in self.getZoneTable():
+            if self.zoneId != 9000:
+                self.dayTimeMgr = DistributedDayTimeManagerAI.DistributedDayTimeManagerAI(self.air)
+                self.dayTimeMgr.generateWithRequired(zoneId)  
+                self.dayTimeMgr.start()
+                self.notify.info('Day Time Manager turned on for zone ' + str(zoneId))
             
     def createRain(self):
-        self.rainMgr = DistributedRainManagerAI.DistributedRainManagerAI(self.air)
-        self.rainMgr.generateWithRequired(self.zoneId)  
-        if self.zoneId == 1000 or self.wantSnow:
-            self.rainMgr.start(True) # We want it to always rain in donalds dock
-        else:
-            self.rainMgr.start(False)
-        self.notify.info('Rain Manager turned on for zone ' + str(self.zoneId))
+        for zoneId in self.getZoneTable():
+            self.rainMgr = DistributedRainManagerAI.DistributedRainManagerAI(self.air)
+            self.rainMgr.generateWithRequired(zoneId)
+            if self.wantSnow:
+                self.rainMgr.start(True)
+            else:
+                self.rainMgr.start()
+            self.notify.info('Rain Manager turned on for zone ' + str(zoneId))

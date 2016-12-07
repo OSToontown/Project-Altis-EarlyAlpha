@@ -11,7 +11,7 @@ from direct.distributed import DistributedObject
 from direct.fsm import State
 import random
 import ToonInteriorColors
-from toontown.dna.DNADoor import DNADoor
+from toontown.dna.DNAParser import *
 from toontown.hood import ZoneUtil
 from toontown.toon import ToonDNA
 from toontown.toon import ToonHead
@@ -102,19 +102,18 @@ class DistributedToonInterior(DistributedObject.DistributedObject):
         door_origin.setScale(0.8, 0.8, 0.8)
         door_origin.setPos(door_origin, 0, -0.025, 0)
         color = self.randomGenerator.choice(self.colors['TI_door'])
-        DNADoor.setupDoor(doorNP, self.interior, door_origin, self.dnaStore, str(self.block), color)
+        setupDoor(doorNP, self.interior, door_origin, self.dnaStore, str(self.block), color)
         doorFrame = doorNP.find('door_*_flat')
         doorFrame.wrtReparentTo(self.interior)
         doorFrame.setColor(color)
-        sign = hidden.find('**/tb%s:*_landmark_*_DNARoot/**/sign;+s' % (self.block,))
+        sign = hidden.find('**/tb%s:*_landmark_*_DNARoot/**/sign_origin;+s' % (self.block))
         if not sign.isEmpty():
             signOrigin = self.interior.find('**/sign_origin;+s')
             newSignNP = sign.copyTo(signOrigin)
             newSignNP.setDepthWrite(1, 1)
-            #TODO: getSignTransform
-            #mat = self.dnaStore.getSignTransformFromBlockNumber(int(self.block))
+            mat = self.interior.getNetTransform().getMat()
             inv = Mat4(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-            #inv.invertFrom(mat)
+            inv.invertFrom(mat)
             newSignNP.setMat(inv)
             newSignNP.flattenLight()
             ll = Point3()
