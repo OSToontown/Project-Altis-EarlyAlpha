@@ -122,7 +122,7 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         self.storageDNAFile = self.data['DNA_TRIO'][1]
         self.dnaFile = self.data['DNA_TRIO'][2]
         self.dnaStore = DNAStorage()
-        loader.loadDNA('phase_4/dna/storage.xml').store(self.dnaStore)
+        loader.loadDNA('phase_4/dna/storage.pdna').store(self.dnaStore)
         loader.loadDNA(self.storageDNAFile).store(self.dnaStore)
         loader.loadDNA(self.safeZoneStorageDNAFile).store(self.dnaStore)
         sceneTree = loader.loadDNA(self.dnaFile)

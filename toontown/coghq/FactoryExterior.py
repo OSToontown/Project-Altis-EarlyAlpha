@@ -11,7 +11,7 @@ from otp.nametag import NametagGlobals
 
 class FactoryExterior(BattlePlace.BattlePlace):
     notify = DirectNotifyGlobal.directNotify.newCategory('FactoryExterior')
-    dnaFile = 'phase_9/dna/cog_hq_sellbot_11200.xml'
+    dnaFile = 'phase_9/dna/cog_hq_sellbot_11200.pdna'
 
     def __init__(self, loader, parentFSM, doneEvent):
         BattlePlace.BattlePlace.__init__(self, loader, doneEvent)
