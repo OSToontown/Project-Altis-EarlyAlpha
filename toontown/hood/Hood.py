@@ -80,28 +80,18 @@ class Hood(StateData.StateData):
         return
 
     def load(self):
+        files = []
         if self.storageDNAFile:
-            loader.loadDNA(self.storageDNAFile).store(self.dnaStore)
-        newsManager = base.cr.newsManager
-        if newsManager:
-            holidayIds = base.cr.newsManager.getDecorationHolidayId()
-            for holiday in holidayIds:
-                for storageFile in self.holidayStorageDNADict.get(holiday, []):
-                    loader.loadDNA(storageFile).store(self.dnaStore)
+            files.append(self.storageDNAFile)
 
-            if ToontownGlobals.HALLOWEEN_COSTUMES not in holidayIds and ToontownGlobals.SPOOKY_COSTUMES not in holidayIds or not self.spookySkyFile:
-                self.sky = loader.loadModel(self.skyFile)
-                self.sky.setTag('sky', 'Regular')
-                self.sky.setScale(1.0)
-                self.sky.setFogOff()
-            else:
-                self.sky = loader.loadModel(self.spookySkyFile)
-                self.sky.setTag('sky', 'Halloween')
-        if not newsManager:
-            self.sky = loader.loadModel(self.skyFile)
-            self.sky.setTag('sky', 'Regular')
-            self.sky.setScale(1.0)
-            self.sky.setFogOff()
+        newsManager = base.cr.newsManager
+        self.sky = loader.loadModel(self.skyFile)
+        self.sky.setTag('sky', 'Regular')
+        self.sky.setScale(1.0)
+        self.sky.setFogOff()
+
+        dnaBulk = DNABulkLoader(self.dnaStore, tuple(files))
+        dnaBulk.loadDNAFiles()
 
     def unload(self):
         if hasattr(self, 'loader'):
@@ -111,9 +101,9 @@ class Hood(StateData.StateData):
             del self.loader
         del self.fsm
         del self.parentFSM
-        self.dnaStore.reset(scope='hood')
+        self.dnaStore.resetHood()
         del self.dnaStore
-        #self.sky.removeNode()
+        self.sky.removeNode()
         del self.sky
         self.ignoreAll()
         ModelPool.garbageCollect()

@@ -22,7 +22,7 @@ class DNABulkLoader:
 def loadDNABulk(dnaStorage, file):
     dnaLoader = DNALoader.DNALoader()
     if __debug__:
-        file = '/resources/' + file
+        file = 'resources/' + file
     else:
         file = '/' + file
     dnaLoader.loadDNAFile(dnaStorage, file)

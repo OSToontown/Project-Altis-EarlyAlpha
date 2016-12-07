@@ -72,41 +72,35 @@ class SafeZoneLoader(StateData.StateData):
         self.fsm.request(stateName, [requestStatus])
 
     def createSafeZone(self, dnaFile):
-        '''self.geom = NodePath('')
-        self.nodeList = []
-        self.holidayPropTransforms = {}
-        self.animPropDict = {}'''
         if self.safeZoneStorageDNAFile:
-            loader.loadDNA(self.safeZoneStorageDNAFile).store(self.hood.dnaStore)
-        sceneTree = loader.loadDNA(dnaFile)
-        node = sceneTree.generate(self.hood.dnaStore)
-        base.cr.playGame.dnaData = sceneTree.generateData()
+            dnaBulk = DNABulkLoader(self.hood.dnaStore, (self.safeZoneStorageDNAFile,))
+            dnaBulk.loadDNAFiles()
+        node = loadDNAFile(self.hood.dnaStore, dnaFile)
         if node.getNumParents() == 1:
             self.geom = NodePath(node.getParent(0))
             self.geom.reparentTo(hidden)
         else:
             self.geom = hidden.attachNewNode(node)
-        self.makeDictionaries(sceneTree)
+        self.makeDictionaries(self.hood.dnaStore)
         self.createAnimatedProps(self.nodeList)
         self.holidayPropTransforms = {}
         npl = self.geom.findAllMatches('**/=DNARoot=holiday_prop')
-        for i in range(npl.getNumPaths()):
+        for i in xrange(npl.getNumPaths()):
             np = npl.getPath(i)
             np.setTag('transformIndex', `i`)
             self.holidayPropTransforms[i] = np.getNetTransform()
-
-        self.geom.flattenMedium()
         gsg = base.win.getGsg()
         if gsg:
             self.geom.prepareScene(gsg)
+        self.geom.flattenMedium()
 
     def makeDictionaries(self, sceneTree):
         self.nodeList = []
-        for visgroup in base.cr.playGame.dnaData.visgroups:
-            groupNode = self.geom.find('**/' + visgroup.name)
-            if groupNode.isEmpty():
-                self.notify.error('Could not find visgroup')
-            self.nodeList.append(groupNode)
+        #for visgroup in base.cr.playGame.dnaData.visgroups:
+         #   groupNode = self.geom.find('**/' + visgroup.name)
+          #  if groupNode.isEmpty():
+           #     self.notify.error('Could not find visgroup')
+           # self.nodeList.append(groupNode)
 
         self.removeLandmarkBlockNodes()
 

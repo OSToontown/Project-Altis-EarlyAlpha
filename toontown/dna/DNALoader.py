@@ -86,14 +86,14 @@ class DNALoader:
         for _ in xrange(numTextures):
             code = DNAUtil.dgiExtractString8(dgi)
             filename = DNAUtil.dgiExtractString8(dgi)
-            self.dnaStorage.storeTexture(code, loader.pdnaTexture(filename, okMissing=True))
+            self.dnaStorage.storeTexture(code, loader.loadTexture(filename, okMissing=True))
 
         # Fonts
         numFonts = dgi.getUint16()
         for _ in xrange(numFonts):
             code = DNAUtil.dgiExtractString8(dgi)
             filename = DNAUtil.dgiExtractString8(dgi)
-            self.dnaStorage.storeFont(code, loader.pdnaFont(filename))
+            self.dnaStorage.storeFont(code, loader.loadFont(filename))
 
         # Nodes
         self.handleNode(dgi, target = self.dnaStorage.storeNode)
@@ -180,7 +180,7 @@ class DNALoader:
             code = DNAUtil.dgiExtractString8(dgi)
             file = DNAUtil.dgiExtractString8(dgi)
             node = DNAUtil.dgiExtractString8(dgi)
-            np = NodePath(loader.pdnaModel(file))
+            np = NodePath(loader.loadModel(file))
             if node:
                 newNode = np.find('**/' + node).copyTo(NodePath())
                 np.removeNode()

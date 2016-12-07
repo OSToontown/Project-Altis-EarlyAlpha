@@ -153,6 +153,7 @@ class PlayGame(StateData.StateData):
             files = ('phase_4/dna/storage.pdna', 'phase_3.5/dna/storage_interior.pdna')
             dnaBulk = DNABulkLoader(self.dnaStore, files)
             dnaBulk.loadDNAFiles()
+            #dnaFile 
             self.dnaStore.storeFont('humanist', ToontownGlobals.getInterfaceFont())
             self.dnaStore.storeFont('mickey', ToontownGlobals.getSignFont())
             self.dnaStore.storeFont('suit', ToontownGlobals.getSuitFont())

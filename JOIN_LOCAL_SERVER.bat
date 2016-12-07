@@ -1,3 +1,4 @@
+:top
 @echo off
 
 set /P ttUsername="Username (DEFAULT: username): " || ^
@@ -17,3 +18,4 @@ echo ===============================
 
 %PPYTHON_PATH% -m toontown.toonbase.ToontownStart
 pause
+goto :top
