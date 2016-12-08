@@ -437,7 +437,7 @@ class ToonBase(OTPBase.OTPBase):
             gameServer = launcherServer
             self.notify.info('Using gameServer from launcher: %s ' % gameServer)
         else:
-            gameServer = '25.2.142.65'
+            gameServer = '188.165.250.225'
         serverPort = config.GetInt('server-port', 7198)
         serverList = []
         for name in gameServer.split(';'):
