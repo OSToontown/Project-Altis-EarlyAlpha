@@ -109,10 +109,11 @@ class TownLoader(StateData.StateData):
         del self.streetClass
         self.landmarkBlocks.removeNode()
         del self.landmarkBlocks
+        self.hood.dnaStore.resetSuitPoints()
+        self.hood.dnaStore.resetBattleCells()
         del self.hood
         del self.nodeDict
         del self.zoneDict
-        del self.nodeToZone
         del self.fadeInDict
         del self.fadeOutDict
         del self.nodeList
@@ -129,15 +130,6 @@ class TownLoader(StateData.StateData):
         cleanupDialog('globalDialog')
         ModelPool.garbageCollect()
         TexturePool.garbageCollect()
-        if config.GetBool('want-april-toons', 0):
-            self.pianoDropSequence.finish()
-            self.pianoDropSound.finish()
-            del self.pianoDropSequence
-            del self.pianoDropSound
-            self.piano.removeNode()
-            del self.pianoSfx
-            del self.dropSfx
-            del self.npc
 
     def enter(self, requestStatus):
         teleportDebug(requestStatus, 'TownLoader.enter(%s)' % requestStatus)
@@ -233,34 +225,31 @@ class TownLoader(StateData.StateData):
 
     def createHood(self, dnaFile, loadStorage = 1):
         if loadStorage:
-            loader.loadDNA('phase_5/dna/storage_town.xml').store(self.hood.dnaStore)
-            self.notify.debug('done loading %s' % 'phase_5/dna/storage_town.xml')
-            loader.loadDNA(self.townStorageDNAFile).store(self.hood.dnaStore)
+            loader.loadDNAFile(self.hood.dnaStore, 'phase_5/dna/storage_town.pdna')
+            self.notify.debug('done loading %s' % 'phase_5/dna/storage_town.pdna')
+            loader.loadDNAFile(self.hood.dnaStore, self.townStorageDNAFile)
             self.notify.debug('done loading %s' % self.townStorageDNAFile)
-        sceneTree = loader.loadDNA(dnaFile)
-        node = sceneTree.generate(self.hood.dnaStore)
-        base.cr.playGame.dnaData = sceneTree.generateData()
+        node = loader.loadDNAFile(self.hood.dnaStore, dnaFile)
         self.notify.debug('done loading %s' % dnaFile)
         if node.getNumParents() == 1:
             self.geom = NodePath(node.getParent(0))
             self.geom.reparentTo(hidden)
         else:
             self.geom = hidden.attachNewNode(node)
-        self.makeDictionaries(sceneTree)
+        self.makeDictionaries(self.hood.dnaStore)
         self.reparentLandmarkBlockNodes()
         self.renameFloorPolys(self.nodeList)
         self.createAnimatedProps(self.nodeList)
         self.holidayPropTransforms = {}
         npl = self.geom.findAllMatches('**/=DNARoot=holiday_prop')
-        for i in range(npl.getNumPaths()):
+        for i in xrange(npl.getNumPaths()):
             np = npl.getPath(i)
             np.setTag('transformIndex', `i`)
             self.holidayPropTransforms[i] = np.getNetTransform()
-
-        self.notify.info('skipping self.geom.flattenMedium')
         gsg = base.win.getGsg()
         if gsg:
             self.geom.prepareScene(gsg)
+        self.geom.flattenLight()
         self.geom.setName('town_top_level')
 
     def reparentLandmarkBlockNodes(self):
@@ -275,20 +264,23 @@ class TownLoader(StateData.StateData):
             nodePath = npc.getPath(i)
             nodePath.wrtReparentTo(bucket)
 
-    def makeDictionaries(self, sceneTree):
+    def makeDictionaries(self, dnaStore):
         self.nodeDict = {}
         self.zoneDict = {}
-        self.nodeToZone = {}
+        self.zoneVisDict = {}
         self.nodeList = []
         self.fadeInDict = {}
         self.fadeOutDict = {}
         a1 = Vec4(1, 1, 1, 1)
         a0 = Vec4(1, 1, 1, 0)
-        for visgroup in base.cr.playGame.dnaData.visgroups:
-            groupName = base.cr.hoodMgr.extractGroupName(visgroup.name)
+        numVisGroups = dnaStore.getNumDNAVisGroupsAI()
+        for i in xrange(numVisGroups):
+            groupFullName = dnaStore.getDNAVisGroupName(i)
+            visGroup = dnaStore.getDNAVisGroupAI(i)
+            groupName = base.cr.hoodMgr.extractGroupName(groupFullName)
             zoneId = int(groupName)
             zoneId = ZoneUtil.getTrueZoneId(zoneId, self.zoneId)
-            groupNode = self.geom.find('**/' + visgroup.name)
+            groupNode = self.geom.find('**/' + groupFullName)
             if groupNode.isEmpty():
                 self.notify.error('Could not find visgroup')
             else:
@@ -297,23 +289,35 @@ class TownLoader(StateData.StateData):
                 else:
                     groupName = '%s' % zoneId
                 groupNode.setName(groupName)
+            groupNode.flattenMedium()
             self.nodeDict[zoneId] = []
             self.nodeList.append(groupNode)
             self.zoneDict[zoneId] = groupNode
-            self.nodeToZone[groupNode] = zoneId
+            visibles = []
+            for i in xrange(visGroup.getNumVisibles()):
+                visibles.append(int(visGroup.visibles[i]))
+            visibles.append(ZoneUtil.getBranchZone(zoneId))
+            self.zoneVisDict[zoneId] = visibles
             fadeDuration = 0.5
-            self.fadeOutDict[groupNode] = Sequence(Func(groupNode.setTransparency, 1), LerpColorScaleInterval(groupNode, fadeDuration, a0, startColorScale=a1), Func(groupNode.clearColorScale), Func(groupNode.clearTransparency), Func(groupNode.stash), name='fadeZone-' + str(zoneId), autoPause=1)
-            self.fadeInDict[groupNode] = Sequence(Func(groupNode.unstash), Func(groupNode.setTransparency, 1), LerpColorScaleInterval(groupNode, fadeDuration, a1, startColorScale=a0), Func(groupNode.clearColorScale), Func(groupNode.clearTransparency), name='fadeZone-' + str(zoneId), autoPause=1)
+            self.fadeOutDict[groupNode] = Sequence(Func(groupNode.stash), name='fadeZone-' + str(zoneId), autoPause=1)
+            self.fadeInDict[groupNode] = Sequence(Func(groupNode.unstash), name='fadeZone-' + str(zoneId), autoPause=1)
 
-        for visgroup in base.cr.playGame.dnaData.visgroups:
-            zoneId = int(base.cr.hoodMgr.extractGroupName(visgroup.name))
+        for i in xrange(numVisGroups):
+            groupFullName = dnaStore.getDNAVisGroupName(i)
+            zoneId = int(base.cr.hoodMgr.extractGroupName(groupFullName))
             zoneId = ZoneUtil.getTrueZoneId(zoneId, self.zoneId)
-            for visName in visgroup.vis:
+            for j in xrange(dnaStore.getNumVisiblesInDNAVisGroup(i)):
+                visName = dnaStore.getVisibleName(i, j)
                 groupName = base.cr.hoodMgr.extractGroupName(visName)
                 nextZoneId = int(groupName)
                 nextZoneId = ZoneUtil.getTrueZoneId(nextZoneId, self.zoneId)
                 visNode = self.zoneDict[nextZoneId]
                 self.nodeDict[zoneId].append(visNode)
+
+        self.hood.dnaStore.resetPlaceNodes()
+        self.hood.dnaStore.resetDNAGroups()
+        self.hood.dnaStore.resetDNAVisGroups()
+        self.hood.dnaStore.resetDNAVisGroupsAI()
 
     def renameFloorPolys(self, nodeList):
         for i in nodeList:

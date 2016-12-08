@@ -1,18 +1,33 @@
-from toontown.toonbase import ToontownGlobals
-from SZHoodAI import SZHoodAI
+import HoodAI
 from toontown.toon import NPCToons
+from toontown.safezone import DistributedTrolleyAI
+from toontown.toonbase import ToontownGlobals
 from toontown.ai import DistributedPolarPlaceEffectMgrAI
-class BRHoodAI(SZHoodAI):
-    notify = directNotify.newCategory('SZHoodAI')
-    notify.setInfo(True)
-    HOOD = ToontownGlobals.TheBrrrgh
+from toontown.ai import DistributedTrickOrTreatTargetAI
+class BRHoodAI(HoodAI.HoodAI):
+    def __init__(self, air):
+        HoodAI.HoodAI.__init__(self, air,
+                               ToontownGlobals.TheBrrrgh,
+                               ToontownGlobals.TheBrrrgh)
 
-    def createZone(self):
-        self.notify.info("Creating zone... The Brrrgh")
+        self.trolley = None
 
-        SZHoodAI.createZone(self)
+        self.startup()
 
-        self.polarPlaceEffectManager = DistributedPolarPlaceEffectMgrAI.DistributedPolarPlaceEffectMgrAI(self.air)
-        self.polarPlaceEffectManager.generateWithRequired(3821)
+    def startup(self):
+        HoodAI.HoodAI.startup(self)
 
-        self.spawnObjects()
+        if simbase.config.GetBool('want-minigames', True):
+            self.createTrolley()
+
+        self.PolarPlaceEffectManager = DistributedPolarPlaceEffectMgrAI.DistributedPolarPlaceEffectMgrAI(self.air)
+        self.PolarPlaceEffectManager.generateWithRequired(3821)
+        
+        if simbase.air.wantHalloween:
+            self.TrickOrTreatTargetManager = DistributedTrickOrTreatTargetAI.DistributedTrickOrTreatTargetAI(self.air)
+            self.TrickOrTreatTargetManager.generateWithRequired(3707)
+
+    def createTrolley(self):
+        self.trolley = DistributedTrolleyAI.DistributedTrolleyAI(self.air)
+        self.trolley.generateWithRequired(self.zoneId)
+        self.trolley.start()

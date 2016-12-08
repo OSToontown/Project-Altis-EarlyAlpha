@@ -7,9 +7,6 @@ from toontown.safezone import DistributedChineseCheckersAI
 from toontown.safezone import DistributedCheckersAI
 from toontown.safezone import DistributedFindFourAI
 
-from toontown.dna.DNASpawnerAI import *
-from toontown.dna.DNANode import DNANode
-
 class DistributedPicnicTableAI(DistributedNodeAI):
 
     def __init__(self, air, zone, name, x, y, z, h, p, r):
@@ -345,14 +342,3 @@ class DistributedPicnicTableAI(DistributedNodeAI):
 
     def getTableIndex(self):
         return self._tableIndex
-
-@dnaSpawn(DNANode, 'game_table_([0-9]+)')
-def spawn(air, zone, element, match):
-    if config.GetBool('want-picnic-games', True):
-        index = int(match.group(1))
-        for child in element.children:
-            x, y, z = child.getPos()
-            h, p, r = child.getHpr()
-            game = DistributedPicnicTableAI(air, zone, index, x, y, z, h, p, r)
-            game.generateWithRequired(zone)
-            game.start()

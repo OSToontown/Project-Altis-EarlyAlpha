@@ -120,4 +120,3 @@ model "phase_3.5/models/modules/ending_table" [
         store_node [ "TI_ending_table" "TI_ending_table" "" ]
         ]
 
-

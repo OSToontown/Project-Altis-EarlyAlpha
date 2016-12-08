@@ -2,7 +2,6 @@ from toontown.toonbase import ToontownGlobals
 from HoodAI import HoodAI
 from toontown.suit.DistributedSuitPlannerAI import DistributedSuitPlannerAI
 from toontown.coghq.DistributedCogHQDoorAI import DistributedCogHQDoorAI
-from toontown.coghq import DistributedCogKartAI
 from toontown.coghq.LobbyManagerAI import LobbyManagerAI
 from toontown.building import DistributedBoardingPartyAI
 
@@ -16,8 +15,8 @@ class CogHoodAI(HoodAI):
     spawning the Cog Elevators, Cog Doors and the SuitPlanners.
     """
 
-    def __init__(self, air):
-        HoodAI.__init__(self, air)
+    def __init__(self, air, zoneId, canonicalHoodId):
+        HoodAI.__init__(self, air, zoneId, canonicalHoodId)
         self.doors = []
         self.elevators = []
         self.suitPlanners = []

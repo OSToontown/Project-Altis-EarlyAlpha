@@ -71,7 +71,7 @@ class GenericAnimatedProp(AnimatedProp.AnimatedProp):
         splits = fullString.split('/')
 
         if len(splits) >= 5:
-            visId = int(splits[3])
+            visId = int(splits[4])
             self.visId = visId
             self.hoodId = ZoneUtil.getCanonicalHoodId(visId)
             self.notify.debug('calcHoodId %d from %s' % (self.hoodId, fullString))
@@ -93,11 +93,15 @@ class GenericAnimatedProp(AnimatedProp.AnimatedProp):
         if not sound:
             sound = loader.loadSfx('%s/%s.ogg' % (self.soundPath, origAnimName.replace('tt_a_ara', 'tt_s_ara')))
             self.origAnimNameToSound[origAnimName] = sound
+            
 
         if sound:
             soundDur = sound.length()
             soundDur = maximumDuration
-
-            return SoundInterval(sound, node=self.node, listenerNode=base.localAvatar, volume=1.0, cutOff=45, startTime=0, duration=maximumDuration)
+            if not hasattr(self, 'soundNode'):
+                self.soundNode = render.attachNewNode('Sound Node')
+                self.soundNode.setPos(self.trashcan.getBounds().getCenter())
+                
+            return SoundInterval(sound, node=self.soundNode, listenerNode=base.localAvatar, volume=1.0, cutOff=45, startTime=0, duration=maximumDuration)
         else:
            return Sequence()

@@ -225,7 +225,7 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
         self.startPoint = self.sp.pointIndexes[self.pathEndpointStart]
         self.endPoint = self.sp.pointIndexes[self.pathEndpointEnd]
         path = self.sp.genPath(self.startPoint, self.endPoint, self.minPathLen, self.maxPathLen)
-        self.setPath(self.sp.dnaData.suitGraph, path)
+        self.setPath(path)
         self.makeLegList()
         return
 
@@ -330,7 +330,7 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
         numLegs = self.legList.getNumLegs()
         if self.currentLeg != nextLeg:
             self.currentLeg = nextLeg
-            self.doPathLeg(self.legList[nextLeg], elapsed - self.legList.getStartTime(nextLeg))
+            self.doPathLeg(self.legList.getLeg(nextLeg), elapsed - self.legList.getStartTime(nextLeg))
         nextLeg += 1
         if nextLeg < numLegs:
             nextTime = self.legList.getStartTime(nextLeg)
@@ -341,7 +341,7 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
         return Task.done
 
     def doPathLeg(self, leg, time):
-        self.fsm.request(SuitLeg.getTypeName(leg.getType()), [leg, time])
+        self.fsm.request(leg.getTypeName(), [leg, time])
         return 0
 
     def stopPathNow(self):

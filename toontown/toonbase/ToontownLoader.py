@@ -2,7 +2,7 @@ from panda3d.core import *
 from direct.directnotify.DirectNotifyGlobal import *
 from direct.showbase import Loader
 from toontown.toontowngui import ToontownLoadingScreen
-from toontown.dna import DNAParser
+from toontown.dna.DNAParser import *
 from direct.stdpy.file import open
 from direct.stdpy import threading
 
@@ -21,15 +21,8 @@ class ToontownLoader(Loader.Loader):
         del self.loadingScreen
         Loader.Loader.destroy(self)
 
-    def loadDNA(self, filename):
-        filename = '/' + filename
-            
-        with open(filename, 'r') as f:
-            tree = DNAParser.parse(f)
-            
-        self.tick()
-
-        return tree
+    def loadDNAFile(self, dnastore, filename):
+        return loadDNAFile(dnastore, filename)
 
     def beginBulkLoad(self, name, label, range, gui, tipCategory, zoneId):
         self._loadStartT = globalClock.getRealTime()
