@@ -57,6 +57,7 @@ if 'toonChatSounds' not in settings:
     settings['toonChatSounds'] = True
 if 'newGui' not in settings:
     settings['newGui'] = False
+settings['newGui'] = False # Force this to be false
 
 loadPrcFileData('Settings: res', 'win-size %d %d' % tuple(settings['res']))
 loadPrcFileData('Settings: fullscreen', 'fullscreen %s' % settings['fullscreen'])
