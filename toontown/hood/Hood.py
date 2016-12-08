@@ -275,6 +275,8 @@ class Hood(StateData.StateData):
 
     def end(self):
         self.sky = self.newSky
+        if self.oldSky:
+            self.oldSky.reparentTo(hidden)
         self.oldSky = None
         self.newSky = None
 
@@ -318,6 +320,5 @@ class Hood(StateData.StateData):
                         newFadeIn,
                         oldFadeOut
                     ),
-                    Func(self.oldSky.reparentTo, hidden),
                     Func(self.end)
                 ).start()
