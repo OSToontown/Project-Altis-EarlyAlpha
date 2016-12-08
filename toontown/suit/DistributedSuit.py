@@ -21,7 +21,7 @@ import copy
 import DistributedSuitBase
 from otp.otpbase import OTPLocalizer
 import random
-from libpandadna import *
+from SuitLegList import *
 from otp.nametag.NametagConstants import *
 from otp.nametag import NametagGlobals
 STAND_OUTSIDE_DOOR = 2.5
@@ -52,7 +52,7 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
         self.pathState = 0
         self.path = None
         self.localPathState = 0
-        self.currentLeg = 0
+        self.currentLeg = -1
         self.pathStartTime = 0.0
         self.legList = None
         self.initState = None
@@ -216,7 +216,7 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
         self.maxPathLen = maxPathLen
         self.path = None
         self.pathLength = 0
-        self.currentLeg = 0
+        self.currentLeg = -1
         self.legList = None
         if self.maxPathLen == 0:
             return
@@ -341,13 +341,13 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
         return Task.done
 
     def doPathLeg(self, leg, time):
-        self.fsm.request(SuitLeg.getTypeName(leg.getType()), [leg, time])
+        self.fsm.request(leg.getTypeName(), [leg, time])
         return 0
 
     def stopPathNow(self):
         name = self.taskName('move')
         taskMgr.remove(name)
-        self.currentLeg = 0
+        self.currentLeg = -1
 
     def calculateHeading(self, a, b):
         xdelta = b[0] - a[0]

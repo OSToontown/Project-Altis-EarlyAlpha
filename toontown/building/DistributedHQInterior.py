@@ -8,7 +8,7 @@ from direct.directnotify import DirectNotifyGlobal
 import ToonInteriorColors
 import cPickle
 from toontown.toonbase import TTLocalizer
-from toontown.dna.DNAParser import *
+from toontown.dna.DNADoor import DNADoor
 
 
 class DistributedHQInterior(DistributedObject.DistributedObject):
@@ -166,7 +166,7 @@ class DistributedHQInterior(DistributedObject.DistributedObject):
 			doorOrigin.setPos(doorOrigin, 0, -0.025, 0)
 			doorColor = self.randomGenerator.choice(self.colors['TI_door'])
 			triggerId = str(self.block) + '_' + doorOriginIndexStr
-			setupDoor(
+			DNADoor.setupDoor(
 				doorNP,
 				newNodePath,
 				doorOrigin,

@@ -1,6 +1,7 @@
 from direct.directnotify import DirectNotifyGlobal
 from toontown.coghq import CogHQExterior
 from toontown.dna.DNAParser import loadDNAFileAI, DNAStorage
+from toontown.hood import ZoneUtil
 
 class SellbotHQExterior(CogHQExterior.CogHQExterior):
     notify = DirectNotifyGlobal.directNotify.newCategory('SellbotHQExterior')
@@ -24,7 +25,7 @@ class SellbotHQExterior(CogHQExterior.CogHQExterior):
             visZoneId = ZoneUtil.getTrueZoneId(visZoneId, self.zoneId)
             visibles = []
             for i in xrange(visGroup.getNumVisibles()):
-                visibles.append(int(visGroup.getVisible(i)))
+                visibles.append(int(visGroup.visibles[i]))
             visibles.append(ZoneUtil.getBranchZone(visZoneId))
             self.zoneVisDict[visZoneId] = visibles
 

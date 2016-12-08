@@ -14,7 +14,7 @@ from toontown.building import FADoorCodes
 import DistributedSuitBaseAI
 from toontown.hood import ZoneUtil
 import random
-from libpandadna import *
+from SuitLegList import *
 
 class DistributedSuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
     SUIT_BUILDINGS = config.GetBool('want-suit-buildings', 1)

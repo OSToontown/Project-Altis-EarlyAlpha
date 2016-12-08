@@ -7,6 +7,7 @@ from toontown.building import Elevator
 from pandac.PandaModules import *
 from toontown.coghq import CogHQExterior
 from toontown.dna.DNAParser import loadDNAFileAI, DNAStorage
+from toontown.hood import ZoneUtil
 
 class BossbotHQExterior(CogHQExterior.CogHQExterior):
     notify = DirectNotifyGlobal.directNotify.newCategory('BossbotHQExterior')
@@ -39,7 +40,7 @@ class BossbotHQExterior(CogHQExterior.CogHQExterior):
             visZoneId = ZoneUtil.getTrueZoneId(visZoneId, self.zoneId)
             visibles = []
             for i in xrange(visGroup.getNumVisibles()):
-                visibles.append(int(visGroup.getVisible(i)))
+                visibles.append(int(visGroup.visibles[i]))
             visibles.append(ZoneUtil.getBranchZone(visZoneId))
             self.zoneVisDict[visZoneId] = visibles
 

@@ -176,16 +176,15 @@ class FactoryExterior(BattlePlace.BattlePlace):
          # Collect all of the vis group zone IDs:
          self.zoneVisDict = {}
          for i in xrange(dnaStore.getNumDNAVisGroupsAI()):
-             groupFullName = dnaStore.getDNAVisGroupName(i)
-             visGroup = dnaStore.getDNAVisGroupAI(i)
-             visZoneId = int(base.cr.hoodMgr.extractGroupName(groupFullName))
-              visZoneId = ZoneUtil.getTrueZoneId(visZoneId, self.zoneId)
-              visibles = []
-              for i in xrange(visGroup.getNumVisibles()):
+            groupFullName = dnaStore.getDNAVisGroupName(i)
+            visGroup = dnaStore.getDNAVisGroupAI(i)
+            visZoneId = int(base.cr.hoodMgr.extractGroupName(groupFullName))
+            visZoneId = ZoneUtil.getTrueZoneId(visZoneId, self.zoneId)
+            visibles = []
+            for i in xrange(visGroup.getNumVisibles()):
                 visibles.append(int(visGroup.visibles[i]))
-              visibles.append(int(visGroup.getVisible(i)))
-              visibles.append(ZoneUtil.getBranchZone(visZoneId))
-              self.zoneVisDict[visZoneId] = visibles
+            visibles.append(ZoneUtil.getBranchZone(visZoneId))
+            self.zoneVisDict[visZoneId] = visibles
                 
     def doEnterZone(self, newZoneId):
         self.updateVis(newZoneId)
