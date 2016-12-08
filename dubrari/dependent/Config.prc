@@ -7,7 +7,6 @@ want-dev #f
 preload-avatars #t
 texture-anisotropic-degree 16
 icon-filename phase_3/etc/icon.ico
-audio-library-name p3fmod_audio
 default-directnotify-level info
 smooth-lag 0.4
 support-stencil #f
