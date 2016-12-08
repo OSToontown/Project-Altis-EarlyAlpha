@@ -1,18 +1,18 @@
-from panda3d.core import *
-
-import argparse, struct
-import sys, glob
+from direct.distributed.PyDatagram import PyDatagram
+import argparse
+import sys
 import os
 
-#sys.path.append('nirai/src')
+sys.path.append('..\src')
 
+from panda3d.core import Datagram
 from niraitools import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--compile-cxx', '-c', action='store_true',
-                    help='Compile the CXX codes and generate AltisEngine.exe into built.')
+                    help='Compile the CXX codes and generate TT2.exe into built.')
 parser.add_argument('--make-nri', '-n', action='store_true',
-                    help='Generate TPA NRI.')
+                    help='Generate TT2 NRI.')
 parser.add_argument('--make-mfs', '-m', action='store_true',
                     help='Make multifiles')
 args = parser.parse_args()
@@ -45,7 +45,7 @@ niraimarshal.niraicall_obfuscate = niraicall_obfuscate
 
 class TT2Packager(NiraiPackager):
     HEADER = 'TPA'
-    BASEDIR = '..' + os.sep
+    BASEDIR = 'Project-Altis/' + os.sep
 
     def __init__(self, outfile, configPath=None):
         NiraiPackager.__init__(self, outfile)
@@ -62,8 +62,8 @@ class TT2Packager(NiraiPackager):
         self.add_file('data/%s.py' % file, mangler=lambda x: x[mb:])
 
     def __mangler(self, name):
-        if name.endswith('AI') or name.endswith('UD') or name in ('AIRepository', 'UberdogRepository',
-                                                                  'AIStart', 'UDStart'):
+        if name.endswith('AI') or name.endswith('UD') or name in ('ToontownAIRepository', 'ToontownUberRepository',
+                                                                  'ToontownInternalRepository', 'ServiceStart'):
             if not 'NonRepeatableRandomSource' in name:
                 return ''
 
@@ -71,20 +71,16 @@ class TT2Packager(NiraiPackager):
 
     def generate_niraidata(self):
         print 'Generating niraidata'
-        if self.globalConfigPath is not None:
-            config = self.get_file_contents(self.globalConfigPath)
-        else:
-            config = self.get_file_contents('dependent/Config.prc')
-            #config += '\n\n' + self.get_file_contents('dependent/dev.prc')
+        
+        config = self.get_file_contents('dependent/Config.prc')
 
         config_iv = self.generate_key(16)
-        config_key = self.generate_key(32)
+        config_key = self.generate_key(16)
         config = config_iv + config_key + aes.encrypt(config, config_key, config_iv)
         niraidata = 'CONFIG = %r' % config
         
         # DC
-        niraidata += '\nDC = %r' % self.get_file_contents('dependent/toon.dc', True)
-        niraidata += '\nDC = %r' % self.get_file_contents('dependent/otp.dc', True)
+        niraidata += '\nDC = %r' % self.get_file_contents('dependent/ProjectAltis.dc', True)
         self.add_module('niraidata', niraidata, compile=True)
 
     def process_modules(self):
@@ -100,15 +96,15 @@ class TT2Packager(NiraiPackager):
 
         data = dg.getMessage()
         iv = self.generate_key(16)
-        key = self.generate_key(32)
-        fixed_key = ''.join(chr((i ^ (7 * i + 16)) % ((i + 5) * 3)) for i in xrange(32))
+        key = self.generate_key(16)
+        fixed_key = ''.join(chr((i ^ (7 * i + 16)) % ((i + 5) * 3)) for i in xrange(16))
         fixed_iv = ''.join(chr((i ^ (2 * i + 53)) % ((i + 9) * 6)) for i in xrange(16))
         securekeyandiv = aes.encrypt(iv + key, fixed_key, fixed_iv)
         return securekeyandiv + aes.encrypt(data, key, iv)
 
 # Compile the engine
 if args.compile_cxx:
-    compiler = NiraiCompiler('AltisEngine.exe')
+    compiler = NiraiCompiler('Altis.exe')
 
     compiler.add_nirai_files()
     compiler.add_source('src/AltisEngine.cxx')
@@ -129,14 +125,16 @@ if args.make_nri:
     pkg.write_out()
 
 if args.make_mfs:
-    os.chdir('../resources')
+    os.chdir('../LiveAltis/resources')
     cmd = ''
     for phasenum in ['3', '3.5', '4', '5', '5.5', '6', '7', '8', '9', '10', '11', '12', '13']:
         print 'phase_%s' % (phasenum)
-        cmd = 'multify -cf ../build/built/resources/default/phase_%s.mf phase_%s' % (phasenum, phasenum)
+        cmd = 'multify -cf phase_%s.mf phase_%s' % (phasenum, phasenum)
         p = subprocess.Popen(cmd, stdout=sys.stdout, stderr=sys.stderr)
         v = p.wait()
 
         if v != 0:
             print 'The following command returned non-zero value (%d): %s' % (v, cmd[:100] + '...')
             sys.exit(1)
+			
+
