@@ -271,9 +271,7 @@ class DistributedTrolleyAI(DistributedObjectAI.DistributedObjectAI):
             startingVotes = None
             metagameRound = -1
             trolleyGoesToMetagame = simbase.config.GetBool('want-travel-game', 0)
-            trolleyHoliday = bboard.get(TrolleyHolidayMgrAI.TrolleyHolidayMgrAI.PostName)
-            trolleyWeekend = bboard.get(TrolleyWeekendMgrAI.TrolleyWeekendMgrAI.PostName)
-            if trolleyGoesToMetagame and (trolleyHoliday or trolleyWeekend):
+            if trolleyGoesToMetagame:
                 metagameRound = 0
                 if len(playerArray) == 1:
                     metagameRound = -1

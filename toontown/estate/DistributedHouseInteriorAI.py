@@ -1,4 +1,3 @@
-from direct.directnotify import DirectNotifyGlobal
 from direct.distributed.DistributedObjectAI import DistributedObjectAI
 from DistributedFurnitureManagerAI import *
 from toontown.catalog import CatalogItem
@@ -7,13 +6,21 @@ from toontown.catalog.CatalogWallpaperItem import CatalogWallpaperItem
 from toontown.catalog.CatalogMouldingItem import CatalogMouldingItem
 from toontown.catalog.CatalogFlooringItem import CatalogFlooringItem
 from toontown.catalog.CatalogWainscotingItem import CatalogWainscotingItem
-from toontown.catalog.CatalogFurnitureItem import CatalogFurnitureItem
-from toontown.dna.DNAParser import *
 from DNAFurnitureReaderAI import DNAFurnitureReaderAI
-from toontown.toonbase import ToontownGlobals
+from toontown.dna.DNAParser import *
 import HouseGlobals
 import random
-# 2?
+
+# The house interior DNA files for each
+houseInteriors = [
+    'phase_5.5/dna/house_interior3.pdna',
+    'phase_5.5/dna/house_interior4.pdna',
+    'phase_5.5/dna/house_interior5.pdna',
+    'phase_5.5/dna/house_interior7.pdna',
+    'phase_5.5/dna/house_interior8.pdna',
+    'phase_5.5/dna/house_interior10.pdna',
+]
+
 defaultWindows = [
     CatalogWindowItem(20, placement=2), CatalogWindowItem(20, placement=4)
 ]
@@ -29,13 +36,14 @@ defaultWallpaper = [
     CatalogWainscotingItem(1010, 4),
 ]
 
+
 class DistributedHouseInteriorAI(DistributedObjectAI):
-    notify = DirectNotifyGlobal.directNotify.newCategory("DistributedHouseInteriorAI")
-    
+    notify = directNotify.newCategory("DistributedHouseInteriorAI")
+
     def __init__(self, air, house):
         DistributedObjectAI.__init__(self, air)
-        self.house = house
 
+        self.house = house
         self.houseId = 0
         self.houseIndex = 0
         self.wallpaper = ''
@@ -55,16 +63,14 @@ class DistributedHouseInteriorAI(DistributedObjectAI):
 
     def initialize(self):
         # Get DNA file appropriate to this house...
-        interior = random.choice(HouseGlobals.interiors)
-        
-        dnaFile = interior[0]
-        phonePos = interior[4]
+        dnaFile = houseInteriors[self.houseIndex]
 
         # Load DNA...
-        dnaData = self.air.loadDNA(dnaFile)
+        dnaStorage = DNAStorage()
+        dnaData = loadDNAFileAI(dnaStorage, dnaFile)
 
         # Read it into furniture...
-        furnitureReader = DNAFurnitureReaderAI(dnaData, phonePos)
+        furnitureReader = DNAFurnitureReaderAI(dnaData, [-11, 2, 0, 0, 0, 0])
 
         # Set furniture:
         self.furnitureManager.setItems(furnitureReader.getBlob())
@@ -82,54 +88,54 @@ class DistributedHouseInteriorAI(DistributedObjectAI):
 
     def setHouseId(self, houseId):
         self.houseId = houseId
-        
+
     def d_setHouseId(self, houseId):
         self.sendUpdate('setHouseId', [houseId])
-        
+
     def b_setHouseId(self, houseId):
         self.setHouseId(houseId)
         self.d_setHouseId(houseId)
-        
+
     def getHouseId(self):
         return self.houseId
 
     def setHouseIndex(self, index):
         self.houseIndex = index
-        
+
     def d_setHouseIndex(self, index):
         self.sendUpdate('setHouseIndex', [index])
-        
+
     def b_setHouseIndex(self, index):
         self.setHouseIndex(index)
         self.d_setHouseIndex(index)
 
     def getHouseIndex(self):
         return self.houseIndex
-    
+
     def setWallpaper(self, wallpaper):
         self.wallpaper = wallpaper
-        
+
     def d_setWallpaper(self, wallpaper):
         self.sendUpdate('setWallpaper', [wallpaper])
-        
+
     def b_setWallpaper(self, wallpaper):
         self.setWallpaper(wallpaper)
         if self.isGenerated():
             self.d_setWallpaper(wallpaper)
-        
+
     def getWallpaper(self):
         return self.wallpaper
 
     def setWindows(self, windows):
         self.windows = windows
-        
+
     def d_setWindows(self, windows):
         self.sendUpdate('setWindows', [windows])
-        
+
     def b_setWindows(self, windows):
         self.setWindows(windows)
         if self.isGenerated():
             self.d_setWindows(windows)
-        
+
     def getWindows(self):
         return self.windows
