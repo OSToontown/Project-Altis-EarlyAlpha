@@ -451,6 +451,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             return
         dnaStore = self.cr.playGame.dnaStore
         level = int(self.difficulty / 2) + 1
+        if level > 6:
+            self.notify.warning('Level is bigger than 6: %s' % level)
         suitNP = dnaStore.findNode('suit_landmark_' + chr(self.track) + str(level))
         zoneId = dnaStore.getZoneFromBlockNumber(self.block)
         zoneId = ZoneUtil.getTrueZoneId(zoneId, self.interiorZoneId)
@@ -550,17 +552,16 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         return
 
     def setupCogdo(self, nodePath):
-        dnaData = base.cr.playGame.dnaData
         dnaStore = self.cr.playGame.dnaStore
         level = int(self.difficulty / 2) + 1
         suitNP = dnaStore.findNode(FO_DICT[chr(self.track)])
         if not suitNP:
             suitNP = loader.loadModel('phase_5/models/cogdominium/%s' % FO_DICT[chr(self.track)])
-        zoneId = dnaData.getBlock(self.block).zone
+        zoneId = dnaStore.getZoneFromBlockNumber(self.block)
         zoneId = ZoneUtil.getTrueZoneId(zoneId, self.interiorZoneId)
         newParentNP = base.cr.playGame.hood.loader.zoneDict[zoneId]
         suitBuildingNP = suitNP.copyTo(newParentNP)
-        buildingTitle = dnaData.getBlock(self.block).title
+        buildingTitle = dnaStore.getTitleFromBlockNumber(self.block)
         if not buildingTitle:
             buildingTitle = TTLocalizer.Cogdominiums
         else:
