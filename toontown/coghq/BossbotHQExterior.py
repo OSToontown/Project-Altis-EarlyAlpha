@@ -25,7 +25,8 @@ class BossbotHQExterior(CogHQExterior.CogHQExterior):
         state.addTransition('elevator')
         return
         
-    def enter(self):
+    def enter(self, requestStatus):
+        CogHQExterior.CogHQExterior.enter(self, requestStatus)
         # Load the CogHQ DNA file:
         dnaStore = DNAStorage()
         dnaFileName = self.genDNAFileName(self.zoneId)

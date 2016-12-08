@@ -261,17 +261,17 @@ class ToontownAIRepository(ToontownInternalRepository):
             self.hoods.append(SellbotHQAI.SellbotHQAI(self))
             clearQueue()
 
-        #if config.GetBool('want-cbhq', True):
-         #   self.hoods.append(CashbotHQAI.CashbotHQAI(self))
-          #  clearQueue()
+        if config.GetBool('want-cbhq', True):
+            self.hoods.append(CashbotHQAI.CashbotHQAI(self))
+            clearQueue()
 
-     #   if config.GetBool('want-lbhq', True):
-      #      self.hoods.append(LawbotHQAI.LawbotHQAI(self))
-       #     clearQueue()
+        if config.GetBool('want-lbhq', True):
+            self.hoods.append(LawbotHQAI.LawbotHQAI(self))
+            clearQueue()
 
-    #    if config.GetBool('want-bbhq', True):
-     #       self.hoods.append(BossbotHQAI.BossbotHQAI(self))
-      #      clearQueue()
+        if config.GetBool('want-bbhq', True):
+            self.hoods.append(BossbotHQAI.BossbotHQAI(self))
+            clearQueue()
 
         for sp in self.suitPlanners.values():
             sp.assignInitialSuitBuildings()

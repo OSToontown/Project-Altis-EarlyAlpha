@@ -13,7 +13,8 @@ class LawbotHQExterior(CogHQExterior.CogHQExterior):
     notify = DirectNotifyGlobal.directNotify.newCategory('LawbotHQExterior')
     dnaFile = 'phase_11/dna/cog_hq_lawbot_sz.pdna'
 
-    def enter(self):
+    def enter(self, requestStatus):
+        CogHQExterior.CogHQExterior.enter(self, requestStatus)
         # Load the CogHQ DNA file:
         dnaStore = DNAStorage()
         dnaFileName = self.genDNAFileName(self.zoneId)
