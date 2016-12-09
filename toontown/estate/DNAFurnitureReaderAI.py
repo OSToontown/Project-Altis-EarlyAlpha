@@ -55,7 +55,6 @@ class DNAFurnitureReaderAI:
                 interior = child
                 break
         else:
-        else:
             self.notify.error('Could not find "interior" in DNA!')
 
         self.itemList.append(CatalogFurnitureItem(1399, posHpr=self.phonePos))
