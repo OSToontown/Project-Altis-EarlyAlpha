@@ -727,7 +727,7 @@ class Suit(Avatar.Avatar):
             self.generateBody()
             #self.headTexture = 'yes_man.jpg'
             self.generateHead('yesman')
-            self.generateHead('group')
+            self.generateHead('shades')
             self.setHeight(8.95)
         self.setName(SuitBattleGlobals.SuitAttributes[dna.name]['name'])
         self.getGeomNode().setScale(self.scale)
