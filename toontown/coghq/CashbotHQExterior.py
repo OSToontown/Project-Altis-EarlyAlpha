@@ -6,6 +6,7 @@ from toontown.building import Elevator
 from toontown.coghq import CogHQExterior
 from toontown.safezone import Train
 from toontown.dna.DNAParser import loadDNAFileAI, DNAStorage
+from toontown.hood import ZoneUtil
 
 class CashbotHQExterior(CogHQExterior.CogHQExterior):
     notify = DirectNotifyGlobal.directNotify.newCategory('CashbotHQExterior')
