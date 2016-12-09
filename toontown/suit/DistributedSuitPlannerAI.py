@@ -16,7 +16,7 @@ from toontown.dna.DNAParser import DNASuitPoint
 import math
 import time
 import random
-from SuitLegList import *
+from libpandadna import *
 from otp.ai.MagicWordGlobal import *
 from toontown.toonbase import ToontownBattleGlobals
 from toontown.toonbase import ToontownGlobals
