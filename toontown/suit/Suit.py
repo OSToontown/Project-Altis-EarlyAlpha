@@ -476,7 +476,7 @@ class Suit(Avatar.Avatar):
             self.setHeight(4.88)
         elif dna.name == 'cn':
             self.scale = scale / bSize
-            self.handColor = VBase4(0.95, 0.95, 1.0, 1.0),
+            self.handColor = VBase4(0.95, 0.95, 1.0, 1.0)
             self.generateBody()
             self.generateHead('downsizer')
             self.generateHead('group')

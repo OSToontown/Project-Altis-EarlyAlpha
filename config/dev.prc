@@ -28,7 +28,6 @@ allow-async-bind #t
 gl-immutable-texture-storage #f
 gl-dump-compiled-shaders #f
 show-buffers #f
-garbage-collect-states #f
 framebuffer-multisample #f
 multisamples 0
 # Pretty sure you're gonna want membership...

@@ -1,0 +1,14 @@
+Metadata-Version: 1.0
+Name: txAMQP
+Version: 0.6.2
+Summary: Python library for communicating with AMQP peers and brokers using Twisted
+Home-page: https://launchpad.net/txamqp
+Author: Esteve Fernandez
+Author-email: esteve@fluidinfo.com
+License: UNKNOWN
+Description: This project contains all the necessary code to connect, send and receive messages to/from an AMQP-compliant peer or broker (Qpid, OpenAMQ, RabbitMQ) using Twisted.
+        
+        It also includes support for using Thrift RPC over AMQP in Twisted applications.
+        
+        txAMQP is sponsored by the friendly folks at Fluidinfo (http://www.fluidinfo.com).
+Platform: UNKNOWN
