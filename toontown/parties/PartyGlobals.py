@@ -744,7 +744,7 @@ MUSIC_MIN_LENGTH_SECONDS = 50.0
 MUSIC_GAP = 2.5
 PhaseToMusicData = {3.5: {'TC_SZ.ogg': [TTLocalizer.MusicTcSz, 57]},
  3: {'create_a_toon.ogg': [TTLocalizer.MusicCreateAToon, 175],
-     'tt_theme.ogg': [TTLocalizer.MusicTtTheme, 51]},
+     'tt_theme.ogg': [TTLocalizer.MusicTtTheme, 68]},
  4: {'TC_nbrhood.ogg': [TTLocalizer.MusicTcNbrhood, 59],
      'MG_TwoDGame.ogg': [TTLocalizer.MusicMgTwodgame, 60],
      'MG_Vine.ogg': [TTLocalizer.MusicMgVine, 32],
@@ -766,7 +766,7 @@ PhaseToMusicData40 = {3.5: {'encntr_general_bg.ogg': [TTLocalizer.MusicEncntrGen
        'TC_SZ.ogg': [TTLocalizer.MusicTcSz, 57],
        'TC_SZ_activity.ogg': [TTLocalizer.MusicTcSzActivity, 53]},
  3: {'create_a_toon.ogg': [TTLocalizer.MusicCreateAToon, 175],
-     'tt_theme.ogg': [TTLocalizer.MusicTtTheme, 51]},
+     'tt_theme.ogg': [TTLocalizer.MusicTtTheme, 68]},
  4: {'minigame_race.ogg': [TTLocalizer.MusicMinigameRace, 77],
      'TC_nbrhood.ogg': [TTLocalizer.MusicTcNbrhood, 59],
      'MG_TwoDGame.ogg': [TTLocalizer.MusicMgTwodgame, 60],
@@ -814,11 +814,12 @@ PhaseToMusicData40 = {3.5: {'encntr_general_bg.ogg': [TTLocalizer.MusicEncntrGen
      'encntr_head_suit_theme.ogg': [TTLocalizer.MusicEncntrHeadSuitTheme, 29]},
  11: {'LB_juryBG.ogg': [TTLocalizer.MusicLbJurybg, 30],
       'LB_courtyard.ogg': [TTLocalizer.MusicLbCourtyard, 32]},
- 12: {'Bossbot_Factory_v1.ogg': [TTLocalizer.MusicBossbotFactoryV1, 30]}}
-'''
- 14: {'SE_SZ.ogg': [TTLocalizer.MusicSeSz, 68],
-      'SE_nbrhood.ogg': [TTLocalizer.MusicSeNbrhood, 54]]}}
-'''
+ 12: {'Bossbot_Factory_v1.ogg': [TTLocalizer.MusicBossbotFactoryV1, 30],
+      'BossBot_CEO_v1.ogg': [TTLocalizer.MusicBossbotCeoV1, 31]},
+ 13: {'party_original_theme.ogg': [TTLocalizer.MusicPartyOriginalTheme, 56],
+      'party_polka_dance.ogg': [TTLocalizer.MusicPartyPolkaDance, 63],
+      'party_waltz_dance.ogg': [TTLocalizer.MusicPartyWaltzDance, 63],
+      'party_generic_theme_jazzy.ogg': [TTLocalizer.MusicPartyGenericThemeJazzy, 64]}}
 
 def countMusic():
     numMusic = 0
