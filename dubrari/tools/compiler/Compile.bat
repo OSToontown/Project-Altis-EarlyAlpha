@@ -17,6 +17,6 @@ set outFile=X
 echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 echo Starting Compilation of %inpFile%.
 rem replace my panda python path with yours! (Should be future compatible)
-..\..\..\Panda3D-1.9.0\python\python.exe compile.py --output Output\%outFile%.pdna %inpFile% --verbose --compress
+..\..\..\Panda3D-1.10.0\python\python.exe compile.py --output Output\%outFile%.pdna %inpFile% --verbose --compress
 echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 pause
