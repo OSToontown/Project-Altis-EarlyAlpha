@@ -18,6 +18,7 @@ from MakeAToonGlobals import *
 from direct.interval.IntervalGlobal import *
 from direct.directnotify import DirectNotifyGlobal
 from toontown.toontowngui import TTDialog
+from decimal import Decimal
 import GenderShop
 import BodyShop
 import ColorShop
@@ -462,9 +463,11 @@ class MakeAToon(StateData.StateData):
         if BODYSHOP not in self.shopsVisited:
             self.shopsVisited.append(BODYSHOP)
             if not self.toonRotateSlider:
-                self.toonRotateSlider = DirectSlider(parent = self.guiBottomBar, thumb_geom=(guiButton.find('**/QuitBtn_UP')), frameSize = (-0.6, 0.6, 0.1, -0.1), thumb_relief=None, thumb_geom_scale=1, text = 'Rotate', text_fg = (1, 1, 1, 1), text_scale = 0.18, text_pos = (0.7, -0.04), text_align = TextNode.ALeft, scale = 1, value = 0, range = (-1, 1), command = self.rotateToonSlider)
+                self.toonRotateSlider = DirectSlider(parent = self.guiBottomBar, thumb_geom=(guiButton.find('**/QuitBtn_UP')), frameSize = (-0.8, 0.8, 0.1, -0.1), thumb_relief=None, thumb_geom_scale=1, text = 'Rotate', text_fg = (1, 1, 1, 1), text_style = 3, text_scale = 0.18, text_pos = (0.8, -0.04), text_align = TextNode.ALeft, scale = 1, value = 0, range = (-180, 180), command = self.rotateToonSlider)
                 self.toonRotateSlider.setPos(-0.1, 0, -0.07)
                 self.toonRotateSlider.setScale(0.5)
+                self.toonRotateSliderRotationText = OnscreenText("0.0", scale=.1, pos=(0, .1), fg=(1, 1, 1, 1), style = 3)
+                self.toonRotateSliderRotationText.reparentTo(self.toonRotateSlider.thumb)
                 self.toonRotateSlider['extraArgs'] = [self.toonRotateSlider]
         self.bodyShopOpening()
 
@@ -761,7 +764,9 @@ class MakeAToon(StateData.StateData):
         
     def rotateToonSlider(self, slider):
         value = slider['value']
-        self.lastRot = value * 180 + self.defaultH
+        self.lastRot = value + self.defaultH
+        dec = Decimal(self.lastRot - self.defaultH)
+        self.toonRotateSliderRotationText['text'] = str(round(dec, 1))
         self.rotateToon()
 
     def rotateToon(self):
