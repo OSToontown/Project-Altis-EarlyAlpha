@@ -202,11 +202,11 @@ class PickAToon:
             self.showToon()
             taskMgr.add(self.turnHead, "turnHead")
             camZ = self.toon.getHeight()
-            base.camera.posInterval(.5, Point3(-60, 0, 8 + camZ), blendType = 'easeInOut').start()
+            base.camera.setPos(-60, 0, 8 + camZ)
             self.deleteButton.show()
         else:
             self.toon.hide()
-            base.camera.posInterval(.5, Point3(-60, 0, 11), blendType = 'easeInOut').start()
+            base.camera.setPos(-60, 0, 11)
             taskMgr.remove("turnHead")
             self.deleteButton.hide()
         self.checkPlayButton()

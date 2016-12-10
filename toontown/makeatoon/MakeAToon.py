@@ -84,6 +84,9 @@ class MakeAToon(StateData.StateData):
         self.focusOutIval = None
         self.focusInIval = None
         self.toon = None
+        self.defaultH = 180
+        self.lastRot = self.defaultH
+        self.toonRotateSlider = None
         return
 
     def getToon(self):
@@ -174,22 +177,6 @@ class MakeAToon(StateData.StateData):
         self.guiLastButton.setPos(-0.498, 0, 0.121)
         self.guiLastButton.reparentTo(base.a2dBottomRight)
         self.guiLastButton.hide()
-        self.rotateLeftButton = DirectButton(parent=self.guiBottomBar, relief=None, image=(rotateUp,
-         rotateDown,
-         rotateUp,
-         rotateDown), image_scale=(-0.4, 0.4, 0.4), image1_scale=(-0.5, 0.5, 0.5), image2_scale=(-0.5, 0.5, 0.5), pos=(-0.319249, 0, 0.343))
-        self.rotateLeftButton.reparentTo(base.a2dBottomCenter)
-        self.rotateLeftButton.hide()
-        self.rotateLeftButton.bind(DGG.B1PRESS, self.rotateToonLeft)
-        self.rotateLeftButton.bind(DGG.B1RELEASE, self.stopToonRotateLeftTask)
-        self.rotateRightButton = DirectButton(parent=self.guiBottomBar, relief=None, image=(rotateUp,
-         rotateDown,
-         rotateUp,
-         rotateDown), image_scale=(0.4, 0.4, 0.4), image1_scale=(0.5, 0.5, 0.5), image2_scale=(0.5, 0.5, 0.5), pos=(0.319249, 0, 0.346))
-        self.rotateRightButton.reparentTo(base.a2dBottomCenter)
-        self.rotateRightButton.hide()
-        self.rotateRightButton.bind(DGG.B1PRESS, self.rotateToonRight)
-        self.rotateRightButton.bind(DGG.B1RELEASE, self.stopToonRotateRightTask)
         gui.removeNode()
         self.roomDropActor = Actor()
         self.roomDropActor.loadModel('phase_3/models/makeatoon/roomAnim_model')
@@ -299,8 +286,8 @@ class MakeAToon(StateData.StateData):
         self.eee.destroy()
         self.guiNextButton.destroy()
         self.guiLastButton.destroy()
-        self.rotateLeftButton.destroy()
-        self.rotateRightButton.destroy()
+        if self.toonRotateSlider is not None:
+            self.toonRotateSlider.destroy()
         del self.guiTopBar
         del self.guiBottomBar
         del self.guiCancelButton
@@ -308,8 +295,7 @@ class MakeAToon(StateData.StateData):
         del self.eee
         del self.guiNextButton
         del self.guiLastButton
-        del self.rotateLeftButton
-        del self.rotateRightButton
+        del self.toonRotateSlider
         del self.names
         del self.dnastring
         del self.nameList
@@ -441,8 +427,9 @@ class MakeAToon(StateData.StateData):
         self.gs.enter()
         self.guiNextButton.show()
         self.gs.showButtons()
-        self.rotateLeftButton.hide()
-        self.rotateRightButton.hide()
+        
+        if self.toonRotateSlider:
+            self.toonRotateSlider.hide()
 
     def exitGenderShop(self):
         self.squishRoom(self.genderWalls)
@@ -459,10 +446,10 @@ class MakeAToon(StateData.StateData):
         self.bs.showButtons()
         self.guiNextButton.show()
         self.guiLastButton.show()
-        self.rotateLeftButton.show()
-        self.rotateRightButton.show()
+        self.toonRotateSlider.show()
 
     def enterBodyShop(self):
+        guiButton = loader.loadModel('phase_3/models/gui/quit_button')
         base.cr.centralLogger.writeClientEvent('MAT - enteringBodyShop')
         self.toon.show()
         self.shop = BODYSHOP
@@ -474,6 +461,11 @@ class MakeAToon(StateData.StateData):
         self.bs.enter(self.toon, self.shopsVisited)
         if BODYSHOP not in self.shopsVisited:
             self.shopsVisited.append(BODYSHOP)
+            if not self.toonRotateSlider:
+                self.toonRotateSlider = DirectSlider(parent = self.guiBottomBar, thumb_geom=(guiButton.find('**/QuitBtn_UP')), frameSize = (-0.6, 0.6, 0.1, -0.1), thumb_relief=None, thumb_geom_scale=1, text = 'Rotate', text_fg = (1, 1, 1, 1), text_scale = 0.18, text_pos = (0.7, -0.04), text_align = TextNode.ALeft, scale = 1, value = 0, range = (-1, 1), command = self.rotateToonSlider)
+                self.toonRotateSlider.setPos(-0.1, 0, -0.07)
+                self.toonRotateSlider.setScale(0.5)
+                self.toonRotateSlider['extraArgs'] = [self.toonRotateSlider]
         self.bodyShopOpening()
 
     def exitBodyShop(self):
@@ -496,8 +488,7 @@ class MakeAToon(StateData.StateData):
         self.cos.showButtons()
         self.guiNextButton.show()
         self.guiLastButton.show()
-        self.rotateLeftButton.show()
-        self.rotateRightButton.show()
+        self.toonRotateSlider.show()
 
     def enterColorShop(self):
         base.cr.centralLogger.writeClientEvent('MAT - enteringColorShop')
@@ -533,8 +524,7 @@ class MakeAToon(StateData.StateData):
         self.guiNextButton.show()
         self.guiLastButton.show()
         self.cls.showButtons()
-        self.rotateLeftButton.show()
-        self.rotateRightButton.show()
+        self.toonRotateSlider.show()
 
     def enterClothesShop(self):
         base.cr.centralLogger.writeClientEvent('MAT - enteringClothesShop')
@@ -589,8 +579,7 @@ class MakeAToon(StateData.StateData):
         self.spotlight.setPos(1.96, -1.95, 0.41)
         self.toon.setPos(Point3(1.5, -4, 0))
         self.toon.setH(120)
-        self.rotateLeftButton.hide()
-        self.rotateRightButton.hide()
+        self.toonRotateSlider.hide()
         if self.progressing:
             waittime = self.leftTime
         else:
@@ -769,3 +758,12 @@ class MakeAToon(StateData.StateData):
 
     def stopToonRotateRightTask(self, event):
         taskMgr.remove('rotateToonRightTask')
+        
+    def rotateToonSlider(self, slider):
+        value = slider['value']
+        self.lastRot = value * 180 + self.defaultH
+        self.rotateToon()
+
+    def rotateToon(self):
+        hpr = self.toon.getHpr()
+        self.toon.setHpr(self.lastRot, hpr[1], hpr[2])
