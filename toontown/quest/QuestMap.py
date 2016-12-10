@@ -24,8 +24,8 @@ class QuestMap(DirectFrame):
         bg.setColor(0.5, 0.5, 0.5, 0.5)
         bg.setBin('fixed', 0)
         self.cogInfoFrame['geom'] = bg
-        self.cogInfoFrame['geom_pos'] = (0, 0, 0)
-        self.cogInfoFrame['geom_scale'] = (6, 1, 2)
+        self.cogInfoFrame['geom_pos'] = (1.2, 0, 0)
+        self.cogInfoFrame['geom_scale'] = (9, 1, 2)
         self.cogInfoFrame.setScale(0.05)
         self.cogInfoFrame.setPos(0, 0, 0.6)
         self.buildingMarkers = []
