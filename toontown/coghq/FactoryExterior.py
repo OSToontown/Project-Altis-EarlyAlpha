@@ -7,6 +7,8 @@ from toontown.toonbase import ToontownGlobals
 from toontown.building import Elevator
 from pandac.PandaModules import *
 from toontown.dna.DNAParser import *
+from toontown.dna.DNAParser import loadDNAFileAI, DNAStorage
+from toontown.hood import ZoneUtil
 from otp.nametag import NametagGlobals
 
 class FactoryExterior(BattlePlace.BattlePlace):
@@ -64,7 +66,30 @@ class FactoryExterior(BattlePlace.BattlePlace):
 
     def enter(self, requestStatus):
         self.zoneId = requestStatus['zoneId']
-        self.updateVis(self.zoneId)
+
+        # Load the CogHQ DNA file:
+        dnaStore = DNAStorage()
+        dnaFileName = self.genDNAFileName(self.zoneId)
+
+        if not dnaFileName.endswith('13200.pdna'):
+
+            loadDNAFileAI(dnaStore, dnaFileName)
+
+            # Collect all of the vis group zone IDs:
+            self.zoneVisDict = {}
+            for i in xrange(dnaStore.getNumDNAVisGroupsAI()):
+                groupFullName = dnaStore.getDNAVisGroupName(i)
+                visGroup = dnaStore.getDNAVisGroupAI(i)
+                visZoneId = int(base.cr.hoodMgr.extractGroupName(groupFullName))
+                visibles = []
+                for i in xrange(visGroup.getNumVisibles()):
+                    visibles.append(int(visGroup.getVisible(i)))
+                visibles.append(ZoneUtil.getBranchZone(visZoneId))
+                self.zoneVisDict[visZoneId] = visibles
+
+            # Next, we want interest in all vis groups due to this being a Cog HQ:
+            base.cr.sendSetZoneMsg(self.zoneId, self.zoneVisDict.values()[0])
+
         BattlePlace.BattlePlace.enter(self)
         self.fsm.enterInitialState()
         base.playMusic(self.loader.music, looping=1, volume=0.8)
@@ -91,8 +116,6 @@ class FactoryExterior(BattlePlace.BattlePlace):
         del self.tunnelOriginList
         del self.nodeList
         self.ignoreAll()
-        if self.visInterest:
-            base.cr.removeInterest(self.visInterest)
         BattlePlace.BattlePlace.exit(self)
 
     def enterTunnelOut(self, requestStatus):
