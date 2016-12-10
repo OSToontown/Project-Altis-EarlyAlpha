@@ -32,6 +32,7 @@ class DistributedPartyJukeboxActivityBase(DistributedPartyActivity):
         self.jukebox = Actor('phase_13/models/parties/jukebox_model', {'dance': 'phase_13/models/parties/jukebox_dance'})
         self.jukebox.reparentTo(self.root)
         self.jukebox.loop('dance', fromFrame=0, toFrame=48)
+        self.jukebox.setBlend(frameBlend = True)
         self.collNode = CollisionNode(self.getCollisionName())
         self.collNode.setCollideMask(ToontownGlobals.CameraBitmask | ToontownGlobals.WallBitmask)
         collTube = CollisionTube(0, 0, 0, 0.0, 0.0, 4.25, 2.25)
