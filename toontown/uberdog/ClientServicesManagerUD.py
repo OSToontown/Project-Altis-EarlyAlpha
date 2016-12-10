@@ -54,16 +54,16 @@ class LocalAccountDB:
             callback({'success': True,
                       'accountId': int(self.dbm[cookie]),
                       'databaseId': cookie,
-                      'adminAccess': 507})
+                      int(output)})
         else:
             # Nope, let's return w/o account ID:
             import urllib2
-            url = "http://188.165.250.225/Dubrari/powerCreate.php?token="+str(cookie)+"&level=507" # As account is being created with access 150, we need to tell level DB that it's level for checking later
+            url = "http://188.165.250.225/Dubrari/powerCreate.php?token="+str(cookie)+"&level=150" # As account is being created with access 150, we need to tell level DB that it's level for checking later
             output = urllib2.urlopen(url).read()
             callback({'success': True,
                       'accountId': 0,
                       'databaseId': cookie,
-                      'adminAccess': 507})
+                      'adminAccess': 150})
 
     def storeAccountID(self, databaseId, accountId, callback):
         self.dbm[databaseId] = str(accountId)
