@@ -185,6 +185,8 @@ class ToonBase(OTPBase.OTPBase):
         self.currentScale = settings.get('texture-scale', 1.0)
         self.setTextureScale()
         self.setRatio()
+        
+        self.showDisclaimer = settings.get('show-disclaimer', True) # Show this the first time the user starts the game, it is set in the settings to False once they pick a toon
             
     def updateAspectRatio(self):
         fadeSequence = Sequence(

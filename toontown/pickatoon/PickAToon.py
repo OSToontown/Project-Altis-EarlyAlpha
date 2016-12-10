@@ -24,6 +24,7 @@ from toontown.toontowngui.TTGui import btnDn, btnRlvr, btnUp
 from toontown.toontowngui.TTDialog import *
 import PickAToonOptions
 from toontown.pickatoon import ShardPicker
+from toontown.toontowngui import FeatureComingSoonDialog
 
 COLORS = (Vec4(0.917, 0.164, 0.164, 1),
  Vec4(0.152, 0.75, 0.258, 1),
@@ -57,6 +58,8 @@ class PickAToon:
         self.selectedToon = 0
         self.doneEvent = doneEvent
         self.jumpIn = None
+        if base.showDisclaimer:
+            FeatureComingSoonDialog.FeatureComingSoonDialog(text="\1textShadow\1Disclaimer:\2\nThis is an ALPHA build of Project Altis! There may be many bugs and crashes! If you encounter any, PLEASE report them to the developers! Thanks, and enjoy Project Altis!")
         self.optionsMgr = PickAToonOptions.PickAToonOptions()
         self.shardPicker = ShardPicker.ShardPicker()
         return
@@ -66,6 +69,8 @@ class PickAToon:
         
     def enter(self):
         base.disableMouse()
+        if base.showDisclaimer:
+            settings['show-disclaimer'] = False
         self.title.reparentTo(aspect2d)
         self.quitButton.show()
         self.deleteButton.show()
@@ -196,9 +201,12 @@ class PickAToon:
         if self.haveToon:
             self.showToon()
             taskMgr.add(self.turnHead, "turnHead")
+            camZ = self.toon.getHeight()
+            base.camera.posInterval(.5, Point3(-60, 0, 8 + camZ), blendType = 'easeInOut').start()
             self.deleteButton.show()
         else:
             self.toon.hide()
+            base.camera.posInterval(.5, Point3(-60, 0, 11), blendType = 'easeInOut').start()
             taskMgr.remove("turnHead")
             self.deleteButton.hide()
         self.checkPlayButton()

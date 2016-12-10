@@ -57,6 +57,8 @@ if 'toonChatSounds' not in settings:
     settings['toonChatSounds'] = True
 if 'newGui' not in settings:
     settings['newGui'] = False
+if 'show-disclaimer' not in settings:
+    settings['show-disclaimer'] = True
 settings['newGui'] = False # Force this to be false
 
 loadPrcFileData('Settings: res', 'win-size %d %d' % tuple(settings['res']))
@@ -65,6 +67,7 @@ loadPrcFileData('Settings: musicVol', 'audio-master-music-volume %s' % settings[
 loadPrcFileData('Settings: sfxVol', 'audio-master-sfx-volume %s' % settings['sfxVol'])
 #loadPrcFileData('Settings: loadDisplay', 'load-display %s' % settings['loadDisplay'])
 loadPrcFileData('Settings: newGui', 'newGui %s' % settings['newGui'])
+loadPrcFileData('Settings: show-disclaimer', 'show-disclaimer %s' % settings['show-disclaimer'])
 loadPrcFileData('', 'load-display pandagl')
 
 class game:

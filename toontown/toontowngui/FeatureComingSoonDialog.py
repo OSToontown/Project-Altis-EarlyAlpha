@@ -11,7 +11,9 @@ class FeatureComingSoonDialog:
             text_pos=(0, 0, -0.8), suppressKeys = True, suppressMouse = True
         )
         self.dialog.accept('exitDialog', self.exitDialog)
+        base.transitions.fadeScreen(.5)
         
     def exitDialog(self):
+        base.transitions.noFade()
         self.dialog.cleanup()
         del self.dialog
