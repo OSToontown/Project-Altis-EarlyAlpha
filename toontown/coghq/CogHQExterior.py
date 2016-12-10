@@ -7,7 +7,7 @@ from pandac.PandaModules import *
 from otp.distributed.TelemetryLimiter import RotationLimitToH, TLGatherAllAvs
 from otp.nametag import NametagGlobals
 from pandac.PandaModules import *
-from toontown.dna import DNAUtil
+from toontown.dna.DNAParser import *
 
 class CogHQExterior(BattlePlace.BattlePlace):
     notify = DirectNotifyGlobal.directNotify.newCategory('CogHQExterior')

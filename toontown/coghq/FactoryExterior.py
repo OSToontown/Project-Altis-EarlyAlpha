@@ -6,7 +6,7 @@ from otp.distributed.TelemetryLimiter import RotationLimitToH, TLGatherAllAvs
 from toontown.toonbase import ToontownGlobals
 from toontown.building import Elevator
 from pandac.PandaModules import *
-from toontown.dna import DNAUtil
+from toontown.dna.DNAParser import *
 from otp.nametag import NametagGlobals
 
 class FactoryExterior(BattlePlace.BattlePlace):
@@ -182,7 +182,7 @@ class FactoryExterior(BattlePlace.BattlePlace):
             visZoneId = ZoneUtil.getTrueZoneId(visZoneId, self.zoneId)
             visibles = []
             for i in xrange(visGroup.getNumVisibles()):
-                visibles.append(int(visGroup.visibles[i]))
+                visibles.append(int(visGroup.getVisible(i)))
             visibles.append(ZoneUtil.getBranchZone(visZoneId))
             self.zoneVisDict[visZoneId] = visibles
                 

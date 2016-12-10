@@ -18,7 +18,7 @@ from toontown.toonbase import TTLocalizer
 from toontown.golf import BuildGeometry
 from toontown.toon import Toon
 from toontown.toon import ToonDNA
-from toontown.dna.DNAStorage import DNAStorage
+from toontown.dna.DNAParser import *
 from otp.nametag import NametagGroup
 from direct.interval.IntervalGlobal import *
 import random
