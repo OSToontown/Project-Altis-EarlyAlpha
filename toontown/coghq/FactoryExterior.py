@@ -6,7 +6,6 @@ from otp.distributed.TelemetryLimiter import RotationLimitToH, TLGatherAllAvs
 from toontown.toonbase import ToontownGlobals
 from toontown.building import Elevator
 from pandac.PandaModules import *
-from toontown.dna.DNAParser import *
 from toontown.dna.DNAParser import loadDNAFileAI, DNAStorage
 from toontown.hood import ZoneUtil
 from otp.nametag import NametagGlobals
@@ -19,8 +18,6 @@ class FactoryExterior(BattlePlace.BattlePlace):
         BattlePlace.BattlePlace.__init__(self, loader, doneEvent)
         self.parentFSM = parentFSM
         self.elevatorDoneEvent = 'elevatorDone'
-        self.visInterest = None
-        self.visGroups = None
 
     def load(self):
         self.fsm = ClassicFSM.ClassicFSM('FactoryExterior', [State.State('start', self.enterStart, self.exitStart, ['walk',
@@ -184,36 +181,3 @@ class FactoryExterior(BattlePlace.BattlePlace):
             messenger.send(self.doneEvent)
         else:
             self.notify.error('Unknown mode: ' + where + ' in handleElevatorDone')
-            
-    def updateVis(self, zone):
-        self.zoneId = requestStatus['zoneId']
-
-        # Load the CogHQ DNA file:
-        dnaStore = DNAStorage()
-        dnaFileName = self.genDNAFileName(self.zoneId)
-
-        if not dnaFileName.endswith('13200.pdna'):
-
-         loadDNAFileAI(dnaStore, dnaFileName)
-
-         # Collect all of the vis group zone IDs:
-         self.zoneVisDict = {}
-         for i in xrange(dnaStore.getNumDNAVisGroupsAI()):
-            groupFullName = dnaStore.getDNAVisGroupName(i)
-            visGroup = dnaStore.getDNAVisGroupAI(i)
-            visZoneId = int(base.cr.hoodMgr.extractGroupName(groupFullName))
-            visZoneId = ZoneUtil.getTrueZoneId(visZoneId, self.zoneId)
-            visibles = []
-            for i in xrange(visGroup.getNumVisibles()):
-                visibles.append(int(visGroup.getVisible(i)))
-            visibles.append(ZoneUtil.getBranchZone(visZoneId))
-            self.zoneVisDict[visZoneId] = visibles
-                
-    def doEnterZone(self, newZoneId):
-        self.updateVis(newZoneId)
-        if newZoneId != self.zoneId:
-            if newZoneId != None:
-                base.cr.sendSetZoneMsg(newZoneId)
-                self.notify.debug('Entering Zone %d' % newZoneId)
-            self.zoneId = newZoneId
-        return
