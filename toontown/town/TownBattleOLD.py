@@ -205,7 +205,7 @@ class TownBattleOLD(StateData.StateData):
     def __cogPanels(self, num):
         for panel in self.cogPanels:
             panel.hide()
-            panel.setPos(0, 0, 0.615)
+            panel.setPos(0, 0, 0.7)
 
         if num == 1:
             self.cogPanels[0].setX(self.oddPos[1])
