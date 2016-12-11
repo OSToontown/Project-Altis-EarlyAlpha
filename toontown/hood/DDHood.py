@@ -32,7 +32,6 @@ class DDHood(ToonHood.ToonHood):
         self.parentFSM.getStateNamed('DDHood').removeChild(self.fsm)
         ToonHood.ToonHood.unload(self)
         self.fog = None
-        return
 
     def enter(self, *args):
         ToonHood.ToonHood.enter(self, *args)
@@ -53,6 +52,10 @@ class DDHood(ToonHood.ToonHood):
             self.fog.setLinearRange(0.0, 400.0)
             render.clearFog()
             render.setFog(self.fog)
+            
+            if not self.sky:
+                return
+            
             self.sky.clearFog()
             self.sky.setFog(self.fog)
 
