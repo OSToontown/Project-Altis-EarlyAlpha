@@ -343,15 +343,15 @@ QuestsMintQuestSCString = 'I need to defeat %(objective)s%(location)s.'
 QuestsMintQuestDesc = 'a Cog Mint'
 QuestsMintQuestDescC = '%(count)s Cog Mints'
 QuestsMintQuestDescI = 'some Cog Mints'
-QuestStageQuestStage = 'DA Office'
-QuestsStageQuestStages = 'DA Offices'
+QuestStageQuestStage = 'District Authority Office'
+QuestsStageQuestStages = 'District Authority Offices'
 QuestsStageQuestHeadline = 'INFILTRATE'
 QuestsStageQuestProgressString = '%(progress)s of %(num)s defeated'
 QuestsStageQuestString = 'Defeat %s'
 QuestsStageQuestSCString = 'I need to defeat %(objective)s%(location)s.'
-QuestsStageQuestDesc = 'a DA Office'
-QuestsStageQuestDescC = '%(count)s DA Offices'
-QuestsStageQuestDescI = 'some DA Offices'
+QuestsStageQuestDesc = 'a District Authority Office'
+QuestsStageQuestDescC = '%(count)s District Authority Offices'
+QuestsStageQuestDescI = 'some District Authority Offices'
 QuestClubQuestClub = 'Club'
 QuestsClubQuestClubs = 'Cog Golf Courses'
 QuestsClubQuestHeadline = 'INFILTRATE'
@@ -544,6 +544,8 @@ QuestsItemDict = {1: ['Pair of Glasses', 'Pairs of Glasses', 'a '],
  54: ['Pair of Tap Dancing Shoes', 'Pairs of Tap Dancing Shoes', 'a '],
  55: ['Pillows', 'Pillows', 'some '],
  56: ['Watch', 'Watches', 'a '],
+ 57: ['Record', 'Records', 'a '],
+ 58: ['Power Generator', 'Power Generators', 'a '],
  110: ['TIP Clothing Ticket', 'Clothing Tickets', 'a '],
  1000: ['Clothing Ticket', 'Clothing Tickets', 'a '],
  2001: ['Inner Tube', 'Inner Tubes', 'an '],
@@ -1488,6 +1490,32 @@ QuestDialogDict = {160: {GREETING: '',
 		QUEST: "It's just awful how those Boardbots treat me!\x07I just fixed 10 watches for my customers. amd they just came in and stole them all!\x07Please go get them back for me! The customers will be here soon!\x07The Boardbots couldn't of gone far...",
 		LEAVING: '',
 		COMPLETE: "Thank you so much! Here's a larger bean bag for you."},
+ 8301: {QUEST: "_toNpcName_ has a bad feeling about the Lawbot Clerk._where_"},
+ 8302: {QUEST: "Ever since the Lawbot Offices have requested more Cogs, their Clerk has been getting stronger.\x07People don't believe me when I say this, but rumor has it that the Clerk is a Level 16 Cog!\x07Crazy, right!\x07I want you to prove it by defeating a Lawbot Office A.",
+		COMPLETE: "You saw it?\x07Oh my Galoshes!\x07Anyways, here's your reward..."},
+ 8303: {QUEST: "Living near Lawbot Headquarters can be so brutal, says _toNpcName_._where_"},
+ 8304: {GREETING: '',
+		QUEST: "Dude.\x07Like, those Lawbots man! They just keep coming in here and, like, totally steal all my records that I listen to!\x07They, like, have a groovy party in the Office B and they totally don't invite me!\x07Can you, like, get all 20 of my records back, dude?",
+		LEAVING: "Like, peace out man.",
+		COMPLETE: "Dude!\x07You are like, totally whicked man!\x07Here's, like, your reward..."},
+ 8305: {QUEST: "Hmm... There has been a report of a power outage on Walrus Way.\x07Go to _toNpcName_, he manages the power around The Brrrgh._where_"},
+ 8306: {GREETING: '',
+		QUEST: "Many shops on this street have been experiencing power outages, and it's all because a Spin Doctor came in and took the power generator.\x07He told me that I need to pay my fair share to the Cogs and to give up the generator to give more power to the Lawbot Office C.\x07I don't even know what that's suppose to mean!\x07You should hurry and get that generator back before it's too late!",
+		LEAVING: ''},
+ 8307: {GREETING: '',
+		QUEST: "Good job getting it back.\x07Now let's just put this into the socket...\x07Huh? That's weird. It's not working!\x07Oh no, it seems we're too late!\x07The Lawbot Building in The Brrrgh have taken all the power!\x07If you can take down 5 Lawbot Buildings, the power should be up and running perfectly again.",
+		LEAVING: '',
+		COMPLETE: "We're up and running!\x07Here's your reward..."},
+ 8308: {QUEST: "We believe that _toNpcName_ has some intel on Lawbot Offices._where_"},
+ 8309: {GREETING: '',
+		QUEST: "So I've been researching, and the Lawbot Office D consists of some of the strongest Cogs in Toontown.\x07I want you to defeat 30 of the highest Cogs in there.\x07Then, I will give you a big reward.",
+		LEAVING: '',
+		COMPLETE: "A promise is a promise."},
+ 8310: {QUEST: "Professor Flake is astonished at the fact that Cogs have started to go higher than level 12!_where_"},
+ 8311: {GREETING: "",
+		QUEST: "Oh, this is bad...\x07The Cashbot Supervisors can go up to Level 14 and the Lawbot Clerks can go up to Level 16!\x07This is big news to me!\x07I want you to defeat several Level 16 Cogs in the DA Offices, maybe that'll calm me down.",
+		LEAVING: '',
+		COMPLETE: "I wonder what made those Cogs so strong...\x07Here is a reward for you..."},
  11000: {GREETING: '',
          LEAVING: '',
          QUEST: '_toNpcName_ has some dirt on how to teleport to Sellbot Headquarters._where_'},
