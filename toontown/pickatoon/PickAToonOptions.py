@@ -14,7 +14,7 @@ from toontown.toonbase import ToontownGlobals
 from toontown.toontowngui.TTGui import btnDn, btnRlvr, btnUp
 from toontown.toontowngui import TTDialog
 from toontown.options import GraphicsOptions
-from toontown.shtiker import ControlRemapDialog
+from toontown.shtiker import ControlRemapDialog, DisplaySettingsDialog
 
 resolution_table = [
     (800, 600),
@@ -234,6 +234,17 @@ class NewPickAToonOptions:
         self.keymapDialogButton = None
         self.Widescreen_Label = None
         self.AspectRatioList = None
+        self.DisplaySettings_Label = None
+        self.DisplaySettingsButton = None
+        
+                
+        self.displaySettings = None
+        self.displaySettingsChanged = 0
+        self.displaySettingsSize = (None, None)
+        self.displaySettingsFullscreen = None
+        self.displaySettingsBorderless = None
+        self.displaySettingsApi = None
+        self.displaySettingsApiChanged = 0
 
     def showOptions(self):
         #base.playSfx(self.optionsOpenSfx) # ALTIS: TODO: Add sound effects
@@ -342,6 +353,10 @@ class NewPickAToonOptions:
         self.AspectRatioList.set(base.Widescreen)
         self.Widescreen_Label = DirectLabel(parent = self.optionsNode, relief = None, text = 'Aspect Ratio', text_align = TextNode.ACenter, text_scale = 0.052, pos = (0, 0, .4))
 
+        self.DisplaySettings_Label = DirectLabel(parent=self.optionsNode, relief=None, text='', text_align=TextNode.ACenter, text_scale=0.052, text_wordwrap=16, pos=(0, 0, .2))
+        self.DisplaySettingsButton = DirectButton(parent=self.optionsNode, relief=None, image=(self.guiButton.find('**/QuitBtn_UP'), self.guiButton.find('**/QuitBtn_DN'), self.guiButton.find('**/QuitBtn_RLVR')), image3_color=Vec4(0.5, 0.5, 0.5, 0.5), image_scale=(0.7, 1, 1), text=TTLocalizer.OptionsPageChange, text3_fg=(0.5, 0.5, 0.5, 0.75), text_scale=0.052, text_pos=(0, -.02), pos=(0, 0, .1), command=self.__doDisplaySettings)
+        
+        self.__setDisplaySettings()
         # TODO: Add more graphics options like Resolution, and more graphics options like in POTCO to allow changing quality of textures, etc.
         
     def delSoundOptions(self):
@@ -390,6 +405,14 @@ class NewPickAToonOptions:
         if self.AspectRatioList:
             self.AspectRatioList.destroy()
             self.AspectRatioList = None
+            
+        if self.DisplaySettings_Label:
+            self.DisplaySettings_Label.destroy()
+            self.DisplaySettings_Label = None
+            
+        if self.DisplaySettingsButton:
+            self.DisplaySettingsButton.destroy()
+            self.DisplaySettingsButton = None
         
     def delAllOptions(self):
         self.delSoundOptions()
@@ -477,3 +500,34 @@ class NewPickAToonOptions:
     def __openKeyRemapDialog(self):
         if base.wantCustomControls:
             self.controlDialog = ControlRemapDialog.ControlRemap()
+            
+    def __doDisplaySettings(self):
+        if self.displaySettings == None:
+            self.displaySettings = DisplaySettingsDialog.DisplaySettingsDialog()
+            self.displaySettings.load()
+            base.accept(self.displaySettings.doneEvent, self.__doneDisplaySettings)
+        self.displaySettings.enter(True, False)
+
+    def __doneDisplaySettings(self, anyChanged, apiChanged):
+        if anyChanged:
+            self.__setDisplaySettings()
+            properties = base.win.getProperties()
+            self.displaySettingsChanged = 1
+            self.displaySettingsSize = (properties.getXSize(), properties.getYSize())
+            self.displaySettingsFullscreen = properties.getFullscreen()
+            self.displaySettingsBorderless = properties.getUndecorated()
+            self.displaySettingsApi = base.pipe.getInterfaceName()
+            self.displaySettingsApiChanged = apiChanged
+
+    def __setDisplaySettings(self):
+        properties = base.win.getProperties()
+        if properties.getFullscreen():
+            screensize = 'Fullscreen | %s x %s' % (properties.getXSize(), properties.getYSize())
+        elif properties.getUndecorated():
+            screensize = 'Borderless Windowed | %s x %s' % (properties.getXSize(), properties.getYSize())
+        else:
+            screensize = 'Windowed'
+        api = base.pipe.getInterfaceName()
+        settings = {'screensize': screensize, 'api': api}
+        text = TTLocalizer.OptionsPageDisplaySettings % settings
+        self.DisplaySettings_Label['text'] = text
