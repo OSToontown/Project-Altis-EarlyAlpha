@@ -238,7 +238,7 @@ class NewPickAToonOptions:
     def showOptions(self):
         #base.playSfx(self.optionsOpenSfx) # ALTIS: TODO: Add sound effects
         self.displayOptions()
-        zoomIn = (LerpScaleInterval(self.optionsNode, .1, Vec3(1, 1, 1), Vec3(.5, .5, .5), blendType = 'easeOut')).start()
+        zoomIn = (LerpScaleInterval(self.optionsNode, .1, Vec3(1, 1, 1), Vec3(0, 0, 0), blendType = 'easeOut')).start()
 
     def hideOptions(self):
         #base.playSfx(self.optionsCloseSfx) # ALTIS: TODO: Add sound effects
@@ -258,7 +258,7 @@ class NewPickAToonOptions:
         self.optionsBox = OnscreenImage(image = 'phase_3/maps/stat_board.png')
         self.optionsBox.setTransparency(TransparencyAttrib.MAlpha)
         self.optionsBox.setPos(0, 0, 0)
-        self.optionsBox.setScale(1.5, 1, 1)
+        self.optionsBox.setScale(1.3, 1, 1)
         self.optionsBox.reparentTo(self.optionsNode)
         
         self.soundOptionsButton = DirectButton(relief = None, text_style = 3, text_fg = (1, 1, 1, 1), text = "Sound", text_scale = .1, scale = 0.95, command = self.displaySoundOptions)
