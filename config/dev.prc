@@ -1,3 +1,10 @@
+# DO NOT ENABLE UNLESS IN DEVELOPMENT
+# Requirements:
+# LibPandaDNA Built with 1.10.0 Pre-Release Non Static Lib
+# OR
+# Python DNA Reader
+want-pipeline-renderer false
+
 # Client settings
 window-title Project Altis
 server-version 1.0.0
