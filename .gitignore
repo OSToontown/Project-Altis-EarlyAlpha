@@ -2,6 +2,7 @@
 *.log
 *.json
 *.yaml
+*.pyo
 .idea/workspace.xml
 .idea/vcs.xml
 .idea/Project-Altis.iml
