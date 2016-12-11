@@ -29,7 +29,7 @@ from panda3d.core import TrueClock
 import otp.ai.DiagnosticMagicWords
 import time
 from toontown.options import GraphicsOptions
-from rpcore import RenderPipeline, SpotLight
+
 
 class ToonBase(OTPBase.OTPBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('ToonBase')
@@ -190,7 +190,8 @@ class ToonBase(OTPBase.OTPBase):
         self.showDisclaimer = settings.get('show-disclaimer', True) # Show this the first time the user starts the game, it is set in the settings to False once they pick a toon
 
         # enable this feature, if you have render pipeline installed
-        if self.config.getBool('want-pipeline-renderer', True):
+        if config.GetBool('want-pipeline-renderer', True):
+            from rpcore import RenderPipeline, SpotLight
             self.loadPipeline()
 
     def loadPipeline(self):
