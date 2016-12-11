@@ -16,7 +16,6 @@ class ToontownLoadingScreen():
         self.loadingText = None
         self.background = None
         self.logo = None
-        self.waitBar = None
         base.graphicsEngine.renderFrame()
         return
 
@@ -26,16 +25,13 @@ class ToontownLoadingScreen():
     def begin(self, range, label, gui, tipCategory, zoneId):
         self.loadingGui = aspect2d.attachNewNode('loadingUI')
         self.loadingGui.reparentTo(aspect2d, 6000)
-        self.__count = 0
-        self.__expectedCount = range
+
         self.logo = OnscreenImage(
             image='phase_3/maps/toontown-logo.png',
             scale=logoScale)
         self.logo.setTransparency(TransparencyAttrib.MAlpha)
         scale = self.logo.getScale()
         self.logo.setPos(0, 0, 0.65)
-        self.waitBar = DirectWaitBar(guiId='ToontownLoadingScreenWaitBar', parent = aspect2d, frameSize=(-1.06, 1.06, -0.03, 0.03), pos=(0, 0, -0.85), text='')
-        self.waitBar.update(self.__count)
         self.loadingObj = OnscreenText(text='', align=TextNode.ACenter, scale=0.04, style = 3, fg = (1, 1, 1, 1))
         self.loadingObj.setPos(0, -.8)
         self.loadingText = OnscreenText(text='Initializing Load...', align=TextNode.ACenter, scale=0.1, pos=(0, 0, 0))
@@ -48,18 +44,12 @@ class ToontownLoadingScreen():
         self.background.wrtReparentTo(self.loadingGui)
         self.loadingText.wrtReparentTo(self.loadingGui)
         self.logo.wrtReparentTo(self.loadingGui)
-        self.waitBar.reparentTo(self.loadingGui)
         base.graphicsEngine.renderFrame()
 
     def destroy(self):
         pass
         
     def end(self):
-        if self.waitBar:
-            self.waitBar.finish()
-            self.waitBar.destroy()
-            self.waitBar = None
-            
         if self.loadingGui:
             self.loadingGui.removeNode()
             self.loadingGui = None
@@ -84,5 +74,4 @@ class ToontownLoadingScreen():
         
     def tick(self):
         self.__count = self.__count + 1
-        self.waitBar.update(self.__count)
         base.graphicsEngine.renderFrame()
