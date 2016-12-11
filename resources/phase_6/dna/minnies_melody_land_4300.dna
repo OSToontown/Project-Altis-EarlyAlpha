@@ -12209,6 +12209,144 @@ group "minniesMelodyLand" [
    texture [ "street_sidewalk_MM_tex" ]
    texture [ "street_curb_MM_tex" ]
   ]
+  
+  // linktunnel_mm_4401_DNARoot -- That should be the prop name, but we want the street disabled for now
+  prop "prop_safe_zone_entrance_tunnel" [
+   code [ "prop_safe_zone_entrance_tunnel" ]
+   pos [ 160 240 .5 ]
+   nhpr [ 0 0 0 ]
+   sign [
+    code [ "tunnel_sign_magenta" ]
+    pos [ 0 0 0 ]
+    scale [ 1.5 1 1.5 ]
+    baseline [
+     code [ "mickey" ]
+     color [ 0.443137 0.541176 0.941176 1 ]
+     pos [ 0 0 -0.81 ]
+     nhpr [ -0 0 2 ]
+     scale [ 1.5 1 1.5 ]
+     wiggle [ 2.60407 ]
+     width [ 33.3333 ]
+     height [ 33.3333 ]
+     text [
+      letters [ "S" ]
+     ]
+     text [
+      letters [ "O" ]
+     ]
+     text [
+      letters [ "P" ]
+     ]
+     text [
+      letters [ "R" ]
+     ]
+     text [
+      letters [ "A" ]
+     ]
+     text [
+      letters [ "N" ]
+     ]
+     text [
+      letters [ "O" ]
+     ]
+     text [
+      letters [ " " ]
+     ]
+     text [
+      letters [ "S" ]
+     ]
+     text [
+      letters [ "T" ]
+     ]    
+     text [
+      letters [ "R" ]
+     ]
+     text [
+      letters [ "E" ]
+     ]
+     text [
+      letters [ "E" ]
+     ]
+     text [
+      letters [ "T" ]
+     ]
+    ]
+    baseline [
+     pos [ 0 0 1.71 ]
+     scale [ 2.5 1 2.5 ]
+     graphic [
+      code [ "minnieSZ" ]
+     ]
+    ]
+    baseline [
+     code [ "mickey" ]
+     color [ 0.501961 0.501961 1 1 ]
+     pos [ 0 0 -1.89 ]
+     nhpr [ -0 0 2 ]
+     scale [ 0.8 1 0.8 ]
+     width [ 45.4545 ]
+     height [ 45.4545 ]
+     text [
+      letters [ "M" ]
+     ]
+     text [
+      letters [ "I" ]
+     ]
+     text [
+      letters [ "N" ]
+     ]
+     text [
+      letters [ "N" ]
+     ]
+     text [
+      letters [ "I" ]
+     ]
+     text [
+      letters [ "E" ]
+     ]
+     text [
+      letters [ "'" ]
+     ]
+     text [
+      letters [ "S" ]
+     ]
+     text [
+      letters [ " " ]
+     ]
+     text [
+      letters [ "M" ]
+     ]
+     text [
+      letters [ "E" ]
+     ]
+     text [
+      letters [ "L" ]
+     ]
+     text [
+      letters [ "O" ]
+     ]
+     text [
+      letters [ "D" ]
+     ]
+     text [
+      letters [ "Y" ]
+     ]
+     text [
+      letters [ "L" ]
+     ]
+     text [
+      letters [ "A" ]
+     ]
+     text [
+      letters [ "N" ]
+     ]
+     text [
+      letters [ "D" ]
+     ]
+    ]
+   ]
+  ]
+  
   flat_building "tb27:random_DNARoot" [
    pos [ 200 260 0 ]
    nhpr [ -90 0 -0 ]

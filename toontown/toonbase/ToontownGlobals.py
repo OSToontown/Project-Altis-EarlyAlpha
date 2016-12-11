@@ -170,6 +170,7 @@ PolarPlace = 3300
 AltoAvenue = 4100
 BaritoneBoulevard = 4200
 TenorTerrace = 4300
+SopranoStreet = 4400
 ElmStreet = 5100
 MapleStreet = 5200
 OakStreet = 5300
@@ -179,7 +180,7 @@ ToonHall = 2513
 HoodHierarchy = {ToontownCentral: (SillyStreet, LoopyLane, PunchlinePlace),
  DonaldsDock: (BarnacleBoulevard, SeaweedStreet, LighthouseLane),
  TheBrrrgh: (WalrusWay, SleetStreet, PolarPlace),
- MinniesMelodyland: (AltoAvenue, BaritoneBoulevard, TenorTerrace),
+ MinniesMelodyland: (AltoAvenue, BaritoneBoulevard, TenorTerrace, SopranoStreet),
  DaisyGardens: (ElmStreet, MapleStreet, OakStreet),
  DonaldsDreamland: (LullabyLane, PajamaPlace),
  GoofySpeedway: ()}
