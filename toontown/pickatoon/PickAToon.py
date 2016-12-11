@@ -60,7 +60,8 @@ class PickAToon:
         self.jumpIn = None
         if base.showDisclaimer:
             FeatureComingSoonDialog.FeatureComingSoonDialog(text="\1textShadow\1Disclaimer:\2\nThis is an ALPHA build of Project Altis! There may be many bugs and crashes! If you encounter any, PLEASE report them to the developers! Thanks, and enjoy Project Altis!")
-        self.optionsMgr = PickAToonOptions.PickAToonOptions()
+        #self.optionsMgr = PickAToonOptions.PickAToonOptions()
+        self.optionsMgr = PickAToonOptions.NewPickAToonOptions() # This is for the revamped options screen
         self.shardPicker = ShardPicker.ShardPicker()
         return
 
@@ -379,6 +380,7 @@ class PickAToon:
         self.optionsMgr.showOptions()
         self.optionsButton["text"] = "Back"
         self.optionsButton["command"] = self.hideOptions
+        self.shardsButton.hide()
         self.patNode2d.hide()
         self.patNode.hide()
         if self.haveToon:
@@ -388,6 +390,7 @@ class PickAToon:
         self.optionsMgr.hideOptions()
         self.optionsButton["text"] = "Options"
         self.optionsButton["command"] = self.openOptions
+        self.shardsButton.show()
         self.patNode2d.show()
         self.patNode.show()
         if self.haveToon:
