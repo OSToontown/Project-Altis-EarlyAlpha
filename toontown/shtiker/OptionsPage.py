@@ -728,7 +728,7 @@ class SpecialOptionsTabPage(DirectFrame):
         self.speed_chat_scale = 0.055    
         self.WASD_Label = DirectLabel(parent=self, relief=None, text='', text_align=TextNode.ALeft, text_scale=options_text_scale, text_wordwrap=16, pos=(leftMargin, 0, textStartHeight - textRowHeight))
         self.WASD_toggleButton = DirectButton(parent=self, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=button_image_scale, text='', text_scale=options_text_scale, text_pos=button_textpos, pos=(buttonbase_xcoord, 0.0, buttonbase_ycoord - textRowHeight), command=self.__doToggleWASD)
-        self.keymapDialogButton = DirectButton(parent=self, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=button_image_scale, text='Configure Keymap', text_scale=(0.03, 0.05, 1), text_pos=button_textpos, pos=(buttonbase_xcoord + 0.0, 0.0, buttonbase_ycoord), command=self.__openKeyRemapDialog) 
+        self.keymapDialogButton = DirectButton(parent=self, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=button_image_scale, text='Change Keybinds', text_scale=(0.03, 0.05, 1), text_pos=button_textpos, pos=(buttonbase_xcoord + 0.0, 0.0, buttonbase_ycoord), command=self.__openKeyRemapDialog) 
         self.keymapDialogButton.setScale(1.55, 1.0, 1.0)
         self.newGui_Label = DirectLabel(parent=self, relief=None, text='', text_align=TextNode.ALeft,
                                       text_scale=options_text_scale, text_wordwrap=16,
@@ -796,11 +796,11 @@ class SpecialOptionsTabPage(DirectFrame):
 
     def __setWASDButton(self):
         if base.wantCustomControls:
-            self.WASD_Label['text'] = 'Custom Keymapping is on.'
+            self.WASD_Label['text'] = 'Custom Keymapping is enabled.'
             self.WASD_toggleButton['text'] = TTLocalizer.OptionsPageToggleOff
             self.keymapDialogButton.show()
         else:
-            self.WASD_Label['text'] = 'Custom Keymapping is off.'
+            self.WASD_Label['text'] = 'Custom Keymapping is disabled.'
             self.WASD_toggleButton['text'] = TTLocalizer.OptionsPageToggleOn
             self.keymapDialogButton.hide()
      

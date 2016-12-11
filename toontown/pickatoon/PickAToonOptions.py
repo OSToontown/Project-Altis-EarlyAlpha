@@ -14,6 +14,7 @@ from toontown.toonbase import ToontownGlobals
 from toontown.toontowngui.TTGui import btnDn, btnRlvr, btnUp
 from toontown.toontowngui import TTDialog
 from toontown.options import GraphicsOptions
+from toontown.shtiker import ControlRemapDialog
 
 resolution_table = [
     (800, 600),
@@ -65,26 +66,36 @@ class PickAToonOptions:
         self.Music_toggleSlider.show()
 
         # SFX Slider
-        self.SoundFX_toggleSlider = DirectSlider(parent = self.optionsNode, pos = (0, 0.0, 0.1),
+        self.SoundFX_toggleSlider = DirectSlider(parent = self.optionsNode, pos = (0, 0.0, 0.2),
                                                value = settings['sfxVol'] * 100, pageSize = 5, range = (0, 100), command = self.__doSfxLevel)
         self.SoundFX_toggleSlider.setScale(0.4, 0.4, 0.4)
         # SFX Label
-        self.SoundFX_Label = DirectLabel(parent = self.optionsNode, relief = None, text = 'SFX Volume', text_align = TextNode.ACenter, text_scale = 0.052, pos = (0, 0, 0.2))
+        self.SoundFX_Label = DirectLabel(parent = self.optionsNode, relief = None, text = 'SFX Volume', text_align = TextNode.ACenter, text_scale = 0.052, pos = (0, 0, 0.3))
 
         # Toon Chat Sound Effects
         self.ToonChatSounds_toggleButton = DirectButton(parent = self.optionsNode, relief = None, image = (guiButton.find('**/QuitBtn_UP'),
          guiButton.find('**/QuitBtn_DN'),
          guiButton.find('**/QuitBtn_RLVR'),
-         guiButton.find('**/QuitBtn_UP')), image3_color = Vec4(0.5, 0.5, 0.5, 0.5), image_scale = (0.7, 1, 1), text = '', text3_fg = (0.5, 0.5, 0.5, 0.75), text_scale = 0.052, text_pos = (0, -.02), pos = (0, 0, -0.2), command = self.__doToggleToonChatSounds)
+         guiButton.find('**/QuitBtn_UP')), image3_color = Vec4(0.5, 0.5, 0.5, 0.5), image_scale = (0.7, 1, 1), text = '', text3_fg = (0.5, 0.5, 0.5, 0.75), text_scale = 0.052, text_pos = (0, -.02), pos = (0, 0, 0), command = self.__doToggleToonChatSounds)
         self.ToonChatSounds_toggleButton.setScale(0.8)
-        self.ToonChatSounds_Label = DirectLabel(parent = self.optionsNode, relief = None, text = 'Toon Chat Sounds', text_align = TextNode.ACenter, text_scale = 0.052, pos = (0, 0, -0.1))
+        self.ToonChatSounds_Label = DirectLabel(parent = self.optionsNode, relief = None, text = 'Toon Chat Sounds', text_align = TextNode.ACenter, text_scale = 0.052, pos = (0, 0, .1))
+        
+        # Key Remapping
+        self.WASD_Label = DirectLabel(parent=self.optionsNode, relief=None, text='', text_align=TextNode.ACenter, text_scale=0.052, text_wordwrap=16, pos=(0, 0, -0.1))
+        self.WASD_toggleButton = DirectButton(parent=self.optionsNode, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale = (0.7, 1, 1), text='', text_scale = 0.052, text_pos=(0, -.02), pos=(0, 0, -0.2), command=self.__doToggleWASD)
+        
+        self.keymapDialogButton = DirectButton(parent=self.optionsNode, relief = None, image = (guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale = (0.7, 1, 1), text='Change Keybinds', text_scale=(0.03, 0.05, 1), text_pos = (0, -.02), pos = (0, 0, -0.3), command = self.__openKeyRemapDialog) 
+        self.keymapDialogButton.setScale(1.55, 1.0, 1.0)
 
         # Aspect Ratio Options
-        self.AspectRatioList = DirectOptionMenu(relief = None, parent = self.optionsNode, text_align =TextNode.ACenter, pressEffect = 1, items = GraphicsOptions.AspectRatioLabels, command = self.__doWidescreen, text_scale = .6,
+        self.AspectRatioList = DirectOptionMenu(relief = None, parent = self.optionsNode, text_align = TextNode.ACenter, items = GraphicsOptions.AspectRatioLabels, command = self.__doWidescreen, text_scale = .6,
+        popupMarker_pos = (-1, 0, 0),
+        popupMarker_relief = None,
+        highlightScale = (1.1, 1.1),
         image = (guiButton.find('**/QuitBtn_UP'),
         guiButton.find('**/QuitBtn_DN'),
         guiButton.find('**/QuitBtn_RLVR'),
-        guiButton.find('**/QuitBtn_UP')), image_scale = 8, image3_color = Vec4(0.5, 0.5, 0.5, 0.5), text = '', text3_fg = (0.5, 0.5, 0.5, 0.75), text_pos = (1, -.02), pos = (-0.1, 0, -0.5), image_pos = (1, 0, 0))
+        guiButton.find('**/QuitBtn_UP')), image_scale = 8, image3_color = Vec4(0.5, 0.5, 0.5, 0.5), text = '', text3_fg = (0.5, 0.5, 0.5, 0.75), text_pos = (0, -.02), pos = (0, 0, -0.5), image_pos = (0, 0, 0), item_text_align = TextNode.ACenter, popupMenu_text_scale = .5, item_relief = None, item_pressEffect = 1)
         self.AspectRatioList.setScale(0.1)
         self.AspectRatioList.set(base.Widescreen)
         self.Widescreen_Label = DirectLabel(parent = self.optionsNode, relief = None, text = 'Aspect Ratio', text_align = TextNode.ACenter, text_scale = 0.052, pos = (0, 0, -0.4))
@@ -93,26 +104,33 @@ class PickAToonOptions:
 
         # Set Button Text
         self.__setToonChatSoundsButton()
+        self.__setWASDButton()
 
     def delOptions(self):
-        self.optionsBox.hide()
+        self.optionsBox.destroy()
         del self.optionsBox
-        self.Music_Label.hide()
+        self.Music_Label.destroy()
         del self.Music_Label
-        self.Music_toggleSlider.hide()
+        self.Music_toggleSlider.destroy()
         del self.Music_toggleSlider
-        self.SoundFX_Label.hide()
+        self.SoundFX_Label.destroy()
         del self.SoundFX_Label
-        self.SoundFX_toggleSlider.hide()
+        self.SoundFX_toggleSlider.destroy()
         del self.SoundFX_toggleSlider
-        self.ToonChatSounds_Label.hide()
+        self.ToonChatSounds_Label.destroy()
         del self.ToonChatSounds_Label
-        self.ToonChatSounds_toggleButton.hide()
+        self.ToonChatSounds_toggleButton.destroy()
         del self.ToonChatSounds_toggleButton
-        self.Widescreen_Label.hide()
+        self.Widescreen_Label.destroy()
         del self.Widescreen_Label
-        self.AspectRatioList.hide()
+        self.AspectRatioList.destroy()
         del self.AspectRatioList
+        self.WASD_Label.destroy()
+        del self.WASD_Label
+        self.WASD_toggleButton.destroy()
+        del self.WASD_toggleButton
+        self.keymapDialogButton.destroy()
+        del self.keymapDialogButton
         self.optionsNode.removeNode()
         del self.optionsNode
 
@@ -165,3 +183,29 @@ class PickAToonOptions:
             settings['Widescreen'] = ratio
             self.settingsChanged = 1
             base.updateAspectRatio()
+            
+    def __doToggleWASD(self):
+        messenger.send('wakeup')
+        if base.wantCustomControls:
+            base.wantCustomControls = False
+            settings['want-Custom-Controls'] = False     
+        else:
+            base.wantCustomControls = True
+            settings['want-Custom-Controls'] = True
+        base.reloadControls()
+        self.settingsChanged = 1
+        self.__setWASDButton()
+
+    def __setWASDButton(self):
+        if base.wantCustomControls:
+            self.WASD_Label['text'] = 'Custom Keymapping is enabled.'
+            self.WASD_toggleButton['text'] = TTLocalizer.OptionsPageToggleOff
+            self.keymapDialogButton.show()
+        else:
+            self.WASD_Label['text'] = 'Custom Keymapping is disabled.'
+            self.WASD_toggleButton['text'] = TTLocalizer.OptionsPageToggleOn
+            self.keymapDialogButton.hide()
+     
+    def __openKeyRemapDialog(self):
+        if base.wantCustomControls:
+            self.controlDialog = ControlRemapDialog.ControlRemap()
