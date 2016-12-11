@@ -285,6 +285,7 @@ class OptionsTabPage(DirectFrame):
         self.displaySettingsChanged = 0
         self.displaySettingsSize = (None, None)
         self.displaySettingsFullscreen = None
+        self.displaySettingsBorderless = None
         self.displaySettingsApi = None
         self.displaySettingsApiChanged = 0
         guiButton = loader.loadModel('phase_3/models/gui/quit_button')
@@ -493,24 +494,21 @@ class OptionsTabPage(DirectFrame):
             self.displaySettingsChanged = 1
             self.displaySettingsSize = (properties.getXSize(), properties.getYSize())
             self.displaySettingsFullscreen = properties.getFullscreen()
+            self.displaySettingsBorderless = properties.getUndecorated()
             self.displaySettingsApi = base.pipe.getInterfaceName()
             self.displaySettingsApiChanged = apiChanged
 
     def __setDisplaySettings(self):
         properties = base.win.getProperties()
         if properties.getFullscreen():
-            screensize = '%s x %s' % (properties.getXSize(), properties.getYSize())
+            screensize = 'Fullscreen | %s x %s' % (properties.getXSize(), properties.getYSize())
+        elif properties.getUndecorated():
+            screensize = 'Borderless Windowed | %s x %s' % (properties.getXSize(), properties.getYSize())
         else:
-            screensize = TTLocalizer.OptionsPageDisplayWindowed
+            screensize = 'Windowed'
         api = base.pipe.getInterfaceName()
-        settings = {'screensize': screensize,
-         'api': api}
-        if self.ChangeDisplayAPI:
-            OptionsPage.notify.debug('change display settings...')
-            text = TTLocalizer.OptionsPageDisplaySettings % settings
-        else:
-            OptionsPage.notify.debug('no change display settings...')
-            text = TTLocalizer.OptionsPageDisplaySettingsNoApi % settings
+        settings = {'screensize': screensize, 'api': api}
+        text = TTLocalizer.OptionsPageDisplaySettings % settings
         self.DisplaySettings_Label['text'] = text
 
     def __doSpeedChatStyleLeft(self):
