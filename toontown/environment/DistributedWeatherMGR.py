@@ -7,10 +7,11 @@ class DistributedWeatherMGR(DistributedObject, FSM):
     def __init__(self, cr):
         DistributedObject.__init__(self, cr)
         FSM.__init__(self, self.__class__.__name__)
+        self.cr.dayTimeManager = self
         self.currSeq = None
     
     def announceGenerate(self):
-        self.cr.dayTimeManager = self
+        pass
     
     def start(self):
         pass
