@@ -25,6 +25,15 @@ class TemperatureManagerAI:
         
         self._temperatures[zoneId] = self.calculateRandom(*TemperatureGlobals.hood2average[
             zoneId])
+        
+        for hood in self.air.hoods:
+            if hood.zoneId is not zoneId:
+                continue
+                
+            if self._temperatures[zoneId] <= TemperatureGlobals.TemperatureFreezingPoint:
+                hood.rainMgr.b_setState('Snow')
+            elif self._temperatures[zoneId] > TemperatureGlobals.TemperatureFreezingPoint:
+                hood.rainMgr.b_setState('Rain')
     
     def unloadHood(self, zoneId):
         if zoneId not in self._temperatures.keys():
