@@ -38,27 +38,33 @@ class DistributedRainManager(DistributedWeatherMGR):
             if self.rainSound:
                 self.rainSound.stop()
                 del self.rainSound
+            
             del self.rain
             del self.rainRender
 
     def enterRain(self, timestamp):
-        #self.rain = BattleParticles.loadParticleFile('raindisk.ptf')
-        self.rain = BattleParticles.loadParticleFile('snowdisk.ptf')
+        if base.config.getBool('want-rain', True):
+            self.rain = BattleParticles.loadParticleFile('raindisk.ptf')
+        else:
+            self.rain = BattleParticles.loadParticleFile('snowdisk.ptf')
+        
         self.rain.setPos(0, 0, 20)
         self.rainRender = render.attachNewNode('rainRender')
         self.rainRender.setDepthWrite(0)
         self.rainRender.setBin('fixed', 1)
         self.rain.start(camera, self.rainRender)
-        #self.rainSound = base.loadSfx('phase_12/audio/sfx/CHQ_rain_ambient.ogg')
-        self.rainSound = None
-        base.playSfx(self.rainSound, looping=1, volume=0.25)
-        self.currentWeather = 0
         
-        # Winter time stuff
-        self.wind1Sound = base.loadSfx('phase_8/audio/sfx/SZ_TB_wind_1.ogg')
-        self.wind2Sound = base.loadSfx('phase_8/audio/sfx/SZ_TB_wind_2.ogg')
-        self.wind3Sound = base.loadSfx('phase_8/audio/sfx/SZ_TB_wind_3.ogg')
-        taskMgr.add(self.snowWindSoundTask, 'snowWind')
+        if base.config.getBool('want-rain', True):
+            self.rainSound = base.loadSfx('phase_12/audio/sfx/CHQ_rain_ambient.ogg')
+            base.playSfx(self.rainSound, looping=1, volume=0.25)
+        else:
+            # Winter time stuff
+            self.wind1Sound = base.loadSfx('phase_8/audio/sfx/SZ_TB_wind_1.ogg')
+            self.wind2Sound = base.loadSfx('phase_8/audio/sfx/SZ_TB_wind_2.ogg')
+            self.wind3Sound = base.loadSfx('phase_8/audio/sfx/SZ_TB_wind_3.ogg')
+            taskMgr.add(self.snowWindSoundTask, 'snowWind')
+        
+        self.currentWeather = 0
         
     def exitRain(self):
         pass
@@ -69,9 +75,11 @@ class DistributedRainManager(DistributedWeatherMGR):
             if self.rainSound:
                 self.rainSound.stop()
                 del self.rainSound
+            
             del self.rain
             del self.rainRender
             taskMgr.remove('snowWind')
+        
         self.currentWeather = 1
 
     def exitSunny(self):
@@ -81,6 +89,7 @@ class DistributedRainManager(DistributedWeatherMGR):
         now = globalClock.getFrameTime()
         if now < self.nextWindTime:
             return Task.cont
+        
         randNum = random.random()
         wind = int(randNum * 100) % 3 + 1
         if wind == 1:
@@ -89,6 +98,7 @@ class DistributedRainManager(DistributedWeatherMGR):
             base.playSfx(self.wind2Sound)
         elif wind == 3:
             base.playSfx(self.wind3Sound)
+        
         self.nextWindTime = now + randNum * 8.0
         return Task.cont
         
