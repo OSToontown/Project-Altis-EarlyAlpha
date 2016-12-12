@@ -35,7 +35,7 @@ class ToontownLoadingScreen:
         self.loadingObj.setPos(0, -.8)
         self.loadingText = OnscreenText(text='Initializing Load...', align=TextNode.ACenter, scale=0.1, pos=(0, 0, 0))
         self.loadingText.reparentTo(aspect2d)
-        self.loadingText['tex'] = label
+        self.loadingText['text'] = label
         base.graphicsEngine.renderFrame()
         self.background = OnscreenImage(image = 'phase_3.5/maps/loading/toon.jpg', parent = aspect2d)
         self.background.setScale(2, 1, 1)
