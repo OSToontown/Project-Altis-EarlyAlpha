@@ -18,6 +18,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
     
     def __init__(self, air):
         DistributedWeatherMGRAI.__init__(self, air)
+        self.air = air
 
     def start(self):
         DistributedWeatherMGRAI.start(self)
@@ -76,6 +77,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
             
     def enterT0(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(0)
         
     def exitT0(self):
         if self.currSeq is not None:
@@ -84,6 +86,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         
     def enterT1(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(1)
         
     def exitT1(self):
         if self.currSeq is not None:
@@ -92,6 +95,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         
     def enterT2(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(2)
         
     def exitT2(self):
         if self.currSeq is not None:
@@ -100,6 +104,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         
     def enterT3(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(3)
         
     def exitT3(self):
         if self.currSeq is not None:
@@ -108,6 +113,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         
     def enterT4(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(4)
         
     def exitT4(self):
         if self.currSeq is not None:
@@ -116,6 +122,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         
     def enterT5(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(5)
         
     def exitT5(self):
         if self.currSeq is not None:
@@ -124,6 +131,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         
     def enterT6(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(6)
         
     def exitT6(self):
         if self.currSeq is not None:
@@ -132,6 +140,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         
     def enterT7(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(7)
         
     def exitT7(self):
         if self.currSeq is not None:
@@ -140,6 +149,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         
     def enterT8(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(8)
         
     def exitT8(self):
         if self.currSeq is not None:
@@ -148,6 +158,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         
     def enterT9(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(9)
         
     def exitT9(self):
         if self.currSeq is not None:
@@ -156,6 +167,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         
     def enterT10(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(10)
         
     def exitT10(self):
         if self.currSeq is not None:
@@ -164,6 +176,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         
     def enterT11(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(11)
         
     def exitT11(self):
         if self.currSeq is not None:
@@ -172,6 +185,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         
     def enterT12(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(12)
         
     def exitT12(self):
         if self.currSeq is not None:
@@ -180,6 +194,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
 
     def enterT13(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(13)
 
     def exitT13(self):
         if self.currSeq is not None:
@@ -188,6 +203,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
 
     def enterT14(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(14)
 
     def exitT14(self):
         if self.currSeq is not None:
@@ -196,6 +212,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
 
     def enterT15(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(15)
 
     def exitT15(self):
         if self.currSeq is not None:
@@ -204,6 +221,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
 
     def enterT16(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(16)
 
     def exitT16(self):
         if self.currSeq is not None:
@@ -212,6 +230,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
 
     def enterT17(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(17)
 
     def exitT17(self):
         if self.currSeq is not None:
@@ -220,6 +239,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
 
     def enterT18(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(18)
 
     def exitT18(self):
         if self.currSeq is not None:
@@ -228,6 +248,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
 
     def enterT19(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(19)
 
     def exitT19(self):
         if self.currSeq is not None:
@@ -236,6 +257,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
 
     def enterT20(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(20)
 
     def exitT20(self):
         if self.currSeq is not None:
@@ -244,6 +266,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
 
     def enterT21(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(21)
 
     def exitT21(self):
         if self.currSeq is not None:
@@ -252,6 +275,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
 
     def enterT22(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(22)
 
     def exitT22(self):
         if self.currSeq is not None:
@@ -260,6 +284,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
 
     def enterT23(self):
         self.currSeq = Sequence(Wait(self.interval)).start()
+        self.air.setHour(23)
 
     def exitT23(self):
         if self.currSeq is not None:

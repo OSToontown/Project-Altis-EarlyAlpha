@@ -87,6 +87,9 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.zoneDataStore = AIZoneDataStore()
         self.dnaStoreMap = {}
         self.dnaDataMap = {}
+        
+        self.currentHour = 0
+        self.isRaining = False
 
         self.useAllMinigames = self.config.GetBool('want-all-minigames', False)
         self.doLiveUpdates = self.config.GetBool('want-live-updates', True)
@@ -158,6 +161,10 @@ class ToontownAIRepository(ToontownInternalRepository):
 
     def decrementPopulation(self):
         self.districtStats.b_setAvatarCount(self.districtStats.getAvatarCount() - 1)
+        self.statusSender.sendStatus()
+        
+    def setHour(self, hour):
+        self.districtStats.b_setHour(hour)
         self.statusSender.sendStatus()
 
     def allocateZone(self, owner=None):

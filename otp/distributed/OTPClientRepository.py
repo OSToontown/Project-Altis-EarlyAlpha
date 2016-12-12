@@ -1648,7 +1648,8 @@ class OTPClientRepository(ClientRepositoryBase):
                 list.append((s.doId,
                  s.name,
                  s.avatarCount,
-                 s.newAvatarCount))
+                 s.newAvatarCount,
+                 s.currentHour))
 
         return list
 
