@@ -14,6 +14,8 @@ A vision of what Toontown Online could have been in 2016.
 * James Midnight - Texture Artist
 * Sir Tubby Cheesyfish- Game Programmer
 * Dubito- Game Programmer & Security Manager
+* SkippsDev- Game Programmer
+* John Linderman- 3D Modeler
 
 Potential Members
 * Jon-Jon - General Artist
