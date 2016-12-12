@@ -36,6 +36,9 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         # update the AI's current time.
         self.air.setHour(self.currentHour)
         
+        # send time update to change sky state
+        self.sendUpdate('update', [self.currentHour])
+        
         # loop task preserving the timeout interval
         return task.again
     
