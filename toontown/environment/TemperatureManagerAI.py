@@ -9,7 +9,7 @@ class TemperatureManagerAI:
         self.air = air
         self._temperatures = {}
     
-    def calculateRandom(self, high, low):
+    def calculateRandom(self, low, high):
         return random.randint(low, high) # todo: kinda cheep way of randomly setting starting tempearture
     
     def update(self, task, zoneId):
@@ -23,8 +23,9 @@ class TemperatureManagerAI:
         if zoneId not in ToontownGlobals.Hoods:
             return
         
-        self._temperatures[zoneId] = self.calculateRandom(*TemperatureGlobals.hood2average[
-            zoneId])
+        (low, high) = TemperatureGlobals.hood2average[zoneId]
+        self._temperatures[zoneId] = self.calculateRandom(
+            low, high)
         
         for hood in self.air.hoods:
             if hood.zoneId is not zoneId:
