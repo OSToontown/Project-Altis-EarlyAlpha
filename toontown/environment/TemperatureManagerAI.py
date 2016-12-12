@@ -30,9 +30,9 @@ class TemperatureManagerAI:
             if hood.zoneId is not zoneId:
                 continue
                 
-            if self._temperatures[zoneId] <= TemperatureGlobals.TemperatureFreezingPoint:
+            if self.getTemperature(zoneId) <= TemperatureGlobals.TemperatureFreezingPoint:
                 hood.rainMgr.b_setState('Snow')
-            elif self._temperatures[zoneId] > TemperatureGlobals.TemperatureFreezingPoint:
+            elif self.getTemperature(zoneId) > TemperatureGlobals.TemperatureFreezingPoint:
                 hood.rainMgr.b_setState('Rain')
     
     def unloadHood(self, zoneId):
