@@ -16,6 +16,9 @@ class TemperatureManagerAI:
         # todo, update temperature based on time of day.
         return task.again
     
+    def getTemperature(self, zoneId):
+        return self._temperatures[zoneId]
+    
     def loadHood(self, zoneId):
         if zoneId not in ToontownGlobals.Hoods:
             return
