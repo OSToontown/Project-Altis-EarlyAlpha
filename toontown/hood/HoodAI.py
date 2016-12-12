@@ -70,6 +70,8 @@ class HoodAI:
         self.createBuildingManagers()
         if simbase.config.GetBool('want-suit-planners', True):
             self.createSuitPlanners()
+	
+	self.air.temperatureManager.loadHood(self.zoneId)
 
     def shutdown(self):
         if self.treasurePlanner:
@@ -87,6 +89,8 @@ class HoodAI:
         del self.fishingPonds
         for distObj in self.doId2do.values():
             distObj.requestDelete()
+	
+	self.air.temperatureManager.unloadHood(self.zoneId)
 
     def findFishingPonds(self, dnaGroup, zoneId, area):
         fishingPonds = []
