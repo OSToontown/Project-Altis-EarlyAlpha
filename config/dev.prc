@@ -41,6 +41,9 @@ multisamples 0
 want-membership #t
 want-speedhack-fix #t
 
+# Disable after the holidays
+want-rain #f
+
 
 # VFS for resources.
 vfs-mount resources/phase_3 /phase_3
