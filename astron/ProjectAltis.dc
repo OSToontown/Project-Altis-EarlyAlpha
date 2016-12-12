@@ -3888,7 +3888,7 @@ dclass DistributedWeatherMGR : DistributedObject {
 };
 
 dclass DistributedDayTimeManager : DistributedWeatherMGR {
-
+  update(int8) broadcast ram;
 };
 
 dclass DistributedRainManager : DistributedWeatherMGR {

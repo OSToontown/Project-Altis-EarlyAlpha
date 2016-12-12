@@ -26,9 +26,9 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         DistributedWeatherMGRAI.start(self)
         
         # start the ticking process
-        taskMgr.doMethodLater(self.interval, self.tick, 'time-update')
+        taskMgr.doMethodLater(self.interval, self.update, 'time-update')
 
-    def tick(self, task):
+    def update(self, task):
         if self.currentHour >= 23:
             # reset current time back to 0
             self.currentHour = 0
