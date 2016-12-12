@@ -9,6 +9,7 @@ from toontown.ai.NewsManagerAI import NewsManagerAI
 from toontown.ai.StaffManagerAI import StaffManagerAI
 from toontown.ai.BanManagerAI import BanManagerAI
 from toontown.ai.FishManagerAI import FishManagerAI
+from toontown.environment.TemperatureManagerAI import TemperatureManagerAI
 from toontown.distributed.ToontownInternalRepository import ToontownInternalRepository
 from toontown.toon import NPCToons
 from toontown.hood import TTHoodAI, DDHoodAI, DGHoodAI, BRHoodAI, MMHoodAI, DLHoodAI, OZHoodAI, GSHoodAI, GZHoodAI, ZoneUtil
@@ -118,6 +119,7 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.cogSuitMgr = CogSuitManagerAI(self)
         self.suitInvasionManager = SuitInvasionManagerAI(self)
         self.wantCogdominiums = self.config.GetBool('want-cogdominums', False)
+	self.temperatureManager = TemperatureManagerAI(self)
 
         self.statusSender = ShardStatusSender(self)
 
