@@ -43,7 +43,7 @@ class DistributedRainManager(DistributedWeatherMGR):
             del self.rainRender
 
     def enterRain(self, timestamp):
-        if base.config.getBool('want-rain', True):
+        if base.config.GetBool('want-rain', True):
             self.rain = BattleParticles.loadParticleFile('raindisk.ptf')
         else:
             self.rain = BattleParticles.loadParticleFile('snowdisk.ptf')
@@ -54,7 +54,7 @@ class DistributedRainManager(DistributedWeatherMGR):
         self.rainRender.setBin('fixed', 1)
         self.rain.start(camera, self.rainRender)
         
-        if base.config.getBool('want-rain', True):
+        if base.config.GetBool('want-rain', True):
             self.rainSound = base.loadSfx('phase_12/audio/sfx/CHQ_rain_ambient.ogg')
             base.playSfx(self.rainSound, looping=1, volume=0.25)
         else:
