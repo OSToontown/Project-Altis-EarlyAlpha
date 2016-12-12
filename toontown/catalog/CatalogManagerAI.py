@@ -13,9 +13,12 @@ class CatalogManagerAI(DistributedObjectAI):
 
     def startCatalog(self):
         avId = self.air.getAvatarIdFromSender()
-        av = self.air.doId2do.get(avId)
-        if av:
-            self.deliverCatalogFor(av)    
+
+        if avId not in self.air.doId2do:
+            return
+
+        self.deliverCatalogFor(self.air.doId2do.get(
+            avId))
     
     def deliverCatalogFor(self, av):
         monthlyCatalog = self.catalogGenerator.generateMonthlyCatalog(av, time.time() / 60)
@@ -28,4 +31,3 @@ class CatalogManagerAI(DistributedObjectAI):
     
     def isItemReleased(self, accessory):
         return 1
-

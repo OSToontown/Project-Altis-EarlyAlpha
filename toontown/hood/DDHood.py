@@ -44,6 +44,9 @@ class DDHood(ToonHood.ToonHood):
             self.fog.setColor(self.underwaterFogColor)
             self.fog.setLinearRange(0.1, 100.0)
             render.setFog(self.fog)
+            if not self.sky:
+                return
+
             self.sky.setFog(self.fog)
 
     def setWhiteFog(self):
@@ -52,7 +55,6 @@ class DDHood(ToonHood.ToonHood):
             self.fog.setLinearRange(0.0, 400.0)
             render.clearFog()
             render.setFog(self.fog)
-            
             if not self.sky:
                 return
             

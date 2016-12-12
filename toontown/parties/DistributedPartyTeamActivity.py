@@ -22,7 +22,6 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
         self._startDelay = config.GetFloat('party-team-activity-start-delay', startDelay)
         self._willBalanceTeams = balanceTeams
         self._currentStatus = ''
-        return
 
     def load(self):
         DistributedPartyActivity.load(self)
@@ -81,7 +80,6 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
                 self.sendUpdate('toonExitRequest', [team])
         else:
             self.notify.warning('Not sending exitRequest as localToon has no team.')
-        return
 
     def joinRequestDenied(self, reason):
         DistributedPartyActivity.joinRequestDenied(self, reason)
@@ -103,6 +101,7 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
     def d_toonSwitchTeamRequest(self):
         if not self._canSwitchTeams:
             return
+        
         self.sendUpdate('toonSwitchTeamRequest')
 
     def switchTeamRequestDenied(self, reason):
@@ -183,7 +182,6 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
             self.teamActivityGui.unload()
             self.isLocalToonPlaying = False
             self.localToonTeam = None
-        return
 
     def handleRulesDone(self):
         self.notify.debug('handleRulesDone')
@@ -213,10 +211,8 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
                 if oldToonIds[i].index(toonId) != newToonIds[i].index(toonId):
                     shifters.append(toonId)
 
-        return (list(exitedToons),
-         list(joinedToons),
-         shifters,
-         switchers)
+        return (list(exitedToons), list(joinedToons), 
+            shifters, switchers)
 
     def getMaxPlayersPerTeam(self):
         return self._maxPlayersPerTeam
@@ -272,7 +268,6 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
         self.teamActivityGui.showWaitToStartCountdown(self._startDelay, self.waitToStartTimestamp, almostDoneCallback=self._onCountdownAlmostDone)
         self.showStatus()
         self.teamActivityGui.enableExitButton()
-        return
 
     def _onCountdownAlmostDone(self):
         if self._canSwitchTeams:
@@ -291,12 +286,10 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
     def showStatus(self):
         if self.teamActivityGui is not None:
             self.teamActivityGui.showStatus(self._currentStatus)
-        return
 
     def hideStatus(self):
         if self.teamActivityGui is not None:
             self.teamActivityGui.hideStatus()
-        return
 
     def toonsCanSwitchTeams(self):
         return self._canSwitchTeams
@@ -331,7 +324,6 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
             if self._canSwitchTeams:
                 self.teamActivityGui.disableSwitchButton()
         self.waitToStartTimestamp = None
-        return
 
     def startRules(self):
         self.notify.debug('startRules')

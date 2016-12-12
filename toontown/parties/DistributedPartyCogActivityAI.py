@@ -7,6 +7,7 @@ from toontown.parties import PartyGlobals
 class DistributedPartyCogActivityAI(DistributedPartyTeamActivityAI):
     notify = DirectNotifyGlobal.directNotify.newCategory("DistributedPartyCogActivityAI")
     startDelay = PartyGlobals.CogActivityStartDelay
+    maxDistance = 1.0
 
     def announceGenerate(self):
         self.highscore = ['', 0]

@@ -26,16 +26,16 @@ class DistributedPartyTeamActivityAI(DistributedPartyActivityAI):
             return
 
         if not self.fsm.state in ('WaitForEnough', 'WaitToStart'):
-            self.sendUpdateToAvatarId(av.doId, 'joinTeamRequestDenied', [PartyGlobals.DenialReasons.Default])
+            self.sendUpdateToAvatarId(av.doId, 'joinRequestDenied', [PartyGlobals.DenialReasons.Default])
             return
 
         if len(self.toonIds[team]) >= self.getPlayersPerTeam()[1]:
-            self.sendUpdateToAvatarId(av.doId, 'joinTeamRequestDenied', [PartyGlobals.DenialReasons.Full])
+            self.sendUpdateToAvatarId(av.doId, 'joinRequestDenied', [PartyGlobals.DenialReasons.Full])
             return
 
         if av.doId in self.toonsPlaying:
             self.air.writeServerEvent('suspicious', av.doId, 'tried to join party team activity again!')
-            self.sendUpdateToAvatarId(av.doId, 'joinTeamRequestDenied', [PartyGlobals.DenialReasons.Default])
+            self.sendUpdateToAvatarId(av.doId, 'joinRequestDenied', [PartyGlobals.DenialReasons.Default])
             return
 
         # idgaf if they exit unexpectedly in this case
@@ -92,7 +92,7 @@ class DistributedPartyTeamActivityAI(DistributedPartyActivityAI):
 
     def getPlayersPerTeam(self):
         return (PartyGlobals.CogActivityMinPlayersPerTeam,
-                PartyGlobals.CogActivityMaxPlayersPerTeam)
+            PartyGlobals.CogActivityMaxPlayersPerTeam)
 
     def __areTeamsCorrect(self):
         minPlayers = self.getPlayersPerTeam()[0]
@@ -146,6 +146,7 @@ class DistributedPartyTeamActivityAI(DistributedPartyActivityAI):
         pass
 
     def startWaitToStart(self, data):
+        
         def advance(task):
             self.fsm.request('WaitClientsReady')
             self.d_setState('Rules')

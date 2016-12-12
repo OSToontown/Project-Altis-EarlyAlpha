@@ -29,14 +29,11 @@ class DistributedPartyCogActivity(DistributedPartyTeamActivity):
                 if toon:
                     self.view.handleToonJoined(toon, i, lateEntry=True)
 
-        return
-
     def unload(self):
         if hasattr(self, 'view') and self.view is not None:
             self.view.unload()
             del self.view
         DistributedPartyTeamActivity.unload(self)
-        return
 
     def enable(self):
         DistributedPartyTeamActivity.enable(self)
@@ -76,6 +73,7 @@ class DistributedPartyCogActivity(DistributedPartyTeamActivity):
     def pieHitsToon(self, toonId, timestamp, x, y, z):
         if toonId not in self.toonIds:
             return
+        
         self.view.pieHitsToon(toonId, timestamp, Point3(x, y, z))
 
     def d_broadcastPieHitsToon(self, toonId, timestamp, pos):
@@ -92,6 +90,7 @@ class DistributedPartyCogActivity(DistributedPartyTeamActivity):
     def pieHitsCog(self, toonId, timestamp, hitCogNum, x, y, z, direction, part):
         if toonId not in self.toonIds:
             return
+        
         if toonId != base.localAvatar.doId:
             self.view.pieHitsCog(timestamp, hitCogNum, Point3(x, y, z), direction, part)
 
@@ -121,7 +120,6 @@ class DistributedPartyCogActivity(DistributedPartyTeamActivity):
         team = self.getTeam(toonId)
         if toon is not None and self.view is not None:
             self.view.handleToonJoined(toon, team)
-        return
 
     def handleToonExited(self, toonId):
         toon = base.cr.doId2do.get(toonId, None)
@@ -130,7 +128,6 @@ class DistributedPartyCogActivity(DistributedPartyTeamActivity):
         if self.view is not None:
             self.view.handleToonExited(toon)
         DistributedPartyTeamActivity.handleToonExited(self, toonId)
-        return
 
     def handleToonShifted(self, toonId):
         toon = base.cr.doId2do.get(toonId, None)
@@ -138,7 +135,6 @@ class DistributedPartyCogActivity(DistributedPartyTeamActivity):
             return
         if self.view is not None:
             self.view.handleToonShifted(toon)
-        return
 
     def handleToonSwitchedTeams(self, toonId):
         DistributedPartyTeamActivity.handleToonSwitchedTeams(self, toonId)
@@ -147,12 +143,10 @@ class DistributedPartyCogActivity(DistributedPartyTeamActivity):
             return
         if self.view is not None:
             self.view.handleToonSwitchedTeams(toon)
-        return
 
     def handleToonDisabled(self, toonId):
         if self.view is not None:
             self.view.handleToonDisabled(toonId)
-        return
 
     def startWaitForEnough(self):
         DistributedPartyTeamActivity.startWaitForEnough(self)

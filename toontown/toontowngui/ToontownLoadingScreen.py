@@ -4,9 +4,9 @@ from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import TTLocalizer
 from toontown.hood import ZoneUtil
 import random
-logoScale = (0.5, 1.0, 0.25)  # Scale for our logo.
-class ToontownLoadingScreen():
-    __module__ = __name__
+
+class ToontownLoadingScreen:
+    logoScale = (0.5, 1.0, 0.25)  # Scale for our logo.
 
     def __init__(self):
         self.__expectedCount = 0
@@ -17,7 +17,6 @@ class ToontownLoadingScreen():
         self.background = None
         self.logo = None
         base.graphicsEngine.renderFrame()
-        return
 
     def getTip(self, tipCategory):
         return TTLocalizer.TipTitle + '\n' + random.choice(TTLocalizer.TipDict.get(tipCategory))
@@ -25,10 +24,10 @@ class ToontownLoadingScreen():
     def begin(self, range, label, gui, tipCategory, zoneId):
         self.loadingGui = aspect2d.attachNewNode('loadingUI')
         self.loadingGui.reparentTo(aspect2d, 6000)
-
         self.logo = OnscreenImage(
             image='phase_3/maps/toontown-logo.png',
-            scale=logoScale)
+            scale=self.logoScale)
+       
         self.logo.setTransparency(TransparencyAttrib.MAlpha)
         scale = self.logo.getScale()
         self.logo.setPos(0, 0, 0.65)
@@ -36,7 +35,7 @@ class ToontownLoadingScreen():
         self.loadingObj.setPos(0, -.8)
         self.loadingText = OnscreenText(text='Initializing Load...', align=TextNode.ACenter, scale=0.1, pos=(0, 0, 0))
         self.loadingText.reparentTo(aspect2d)
-        self.loadingText["text"] = label
+        self.loadingText['tex'] = label
         base.graphicsEngine.renderFrame()
         self.background = OnscreenImage(image = 'phase_3.5/maps/loading/toon.jpg', parent = aspect2d)
         self.background.setScale(2, 1, 1)

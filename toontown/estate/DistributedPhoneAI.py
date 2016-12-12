@@ -125,7 +125,7 @@ class DistributedPhoneAI(DistributedFurnitureItemAI):
 
             resp = item.recordPurchase(av, optional)
             if resp < 0: # refund if purchase unsuccessful
-                    av.addMoney(price)
+				av.addMoney(price)
 
             self.sendUpdateToAvatarId(avId, 'requestPurchaseResponse', [context, resp])
 
