@@ -3,6 +3,7 @@ from direct.gui.DirectGui import *
 from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import TTLocalizer
 from toontown.hood import ZoneUtil
+from direct.interval.IntervalGlobal import Wait, Func, Sequence
 import random
 
 class ToontownLoadingScreen:
@@ -16,6 +17,7 @@ class ToontownLoadingScreen:
         self.loadingText = None
         self.background = None
         self.logo = None
+        self.loadingCircle = None
         base.graphicsEngine.renderFrame()
 
     def getTip(self, tipCategory):
@@ -44,6 +46,13 @@ class ToontownLoadingScreen:
         self.loadingText.wrtReparentTo(self.loadingGui)
         self.logo.wrtReparentTo(self.loadingGui)
         base.graphicsEngine.renderFrame()
+        self.loadingCircle = OnscreenImage(image = 'phase_3/maps/dmenu/loading_circle.png', pos=(-0.1, 0, 0.1))
+        self.loadingCircle.setScale(0.1)
+        self.loadingCircle.setTransparency(TransparencyAttrib.MAlpha)
+        self.loadingCircle.reparentTo(base.a2dBottomRight)
+        self.loadingCircle.show()
+        self.loadingCircle.wrtReparentTo(self.loadingGui)
+        base.graphicsEngine.renderFrame()
 
     def destroy(self):
         pass
@@ -64,6 +73,10 @@ class ToontownLoadingScreen:
         if self.logo:
             self.logo.destroy()
             self.logo = None
+
+        if self.loadingCircle:
+            self.loadingCircle.destroy()
+            self.loadingCircle = None
             
         return (self.__expectedCount, self.__count)
 
@@ -73,4 +86,9 @@ class ToontownLoadingScreen:
         
     def tick(self):
         self.__count = self.__count + 1
+        
+        if self.loadingCircle is not None:
+            # update the rotation on every tick
+            self.loadingCircle.setR(self.loadingCircle.getR() + 10)
+        
         base.graphicsEngine.renderFrame()

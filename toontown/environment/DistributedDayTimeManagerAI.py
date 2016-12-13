@@ -19,12 +19,21 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
     def __init__(self, air):
         DistributedWeatherMGRAI.__init__(self, air)
         self.air = air
-        self.interval = 1
+        self.interval = 150
         self.currentHour = 0
+
+    def announceGenerate(self):
+        DistributedWeatherMGRAI.announceGenerate(self)
+
+        # send update to start initial hour
+        self.d_update(self.currentHour)
 
     def start(self):
         DistributedWeatherMGRAI.start(self)
-        
+
+        # set AI's initial time, then allow update to change this...
+        self.air.setHour(self.currentHour)
+
         # start the ticking process
         taskMgr.doMethodLater(self.interval, self.update, 'time-update')
 
@@ -32,17 +41,25 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
         if self.currentHour >= 23:
             # reset current time back to 0
             self.currentHour = 0
+
+        # update the currentHour variable
+        self.currentHour += 1
         
         # update the AI's current time.
         self.air.setHour(self.currentHour)
         
         # send time update to change sky state
-        self.sendUpdate('update', [self.currentHour])
+        self.d_update(self.currentHour)
         
         # loop task preserving the timeout interval
         return task.again
+
+    def d_update(self, currentHour):
+        self.sendUpdate('update', [currentHour])
     
     def stop(self):
+        # reset currentHour, and remove time update task
+        self.currentHour = 0
         taskMgr.remove('time-update')
 
 

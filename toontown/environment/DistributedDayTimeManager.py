@@ -1,5 +1,3 @@
-# TODO: Make the sky texture change
-
 from panda3d.core import *
 from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
@@ -26,42 +24,37 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         self.hood = base.cr.playGame.hood
         self.interval = 150
         self.hour2sky = {
-            0: 'night',
-            1: 'night',
-            2: 'night',
-            3: 'night',
-            4: 'night',
-            5: 'night',
-            6: 'mml',
-            7: 'mml',
+            0: 'mml',
+            1: 'mml',
+            2: 'mml',
+            3: 'day',
+            4: 'day',
+            5: 'day',
+            6: 'day',
+            7: 'day',
             8: 'day',
             9: 'day',
             10: 'day',
             11: 'day',
             12: 'day',
             13: 'day',
-            14: 'day',
-            15: 'day',
-            16: 'day',
-            17: 'mml',
-            18: 'mml',
-            19: 'mml',
+            14: 'mml',
+            15: 'mml',
+            16: 'mml',
+            17: 'night',
+            18: 'night',
+            19: 'night',
             20: 'night',
             21: 'night',
             22: 'night',
             23: 'night'
         }
         
-    def setSky(self, sky):
-        self.hood.skyTransition(str(sky)) 
-        
     def announceGenerate(self):
         DistributedWeatherMGR.announceGenerate(self)
-        
-    def delete(self):
-        self.currSeq.finish()
-        render.setColorScale(Vec4(1, 1, 1, 1))
-        DistributedWeatherMGR.delete(self)
+
+    def setSky(self, sky):
+        self.hood.skyTransition(str(sky))
     
     def update(self, currentHour):
         self.currSeq = LerpColorScaleInterval(render, self.interval, DayTimeGlobals.COLORS[
@@ -69,7 +62,12 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         
         self.currSeq.start()
         
-        # update sky
+        # update the sky
         self.setSky(self.hour2sky[currentHour])
 
-# TODO: Add the next 12 hours, for now im just going to use this in reverse to go to night, but we should add the next 12 to make it look more like its going into night time, liek make the sky more orange
+    def delete(self):
+        self.currSeq.finish()
+        render.setColorScale(Vec4(1, 1, 1, 1))
+        DistributedWeatherMGR.delete(self)
+
+

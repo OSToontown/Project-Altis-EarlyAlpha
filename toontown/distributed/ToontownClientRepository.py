@@ -388,6 +388,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
             self.ttFriendsManager.d_getAvatarDetails(avId)
 
         return
+        
         datagram = PyDatagram()
         avatar = self.__queryAvatarMap[avId].avatar
         datagram.addUint16(avatar.getRequestID())
@@ -415,7 +416,6 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         # a list containing a list of the field and value. For example:
         # To set the hp and maxHp of an avatar, my fields list would be
         # fields = [['setHp', 15], ['setMaxHp', 15]]
-
         for currentField in fields:
             getattr(pad.avatar, currentField[0])(currentField[1])
 
