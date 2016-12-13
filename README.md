@@ -15,7 +15,7 @@ A vision of what Toontown Online could have been in 2016.
 * Sir Tubby Cheesyfish- Game Programmer
 * Dubito- Game Programmer & Security Manager
 * SkippsDev- Game Programmer
-* John Linderman- 3D Modeler
+* John Linderman- 3D Modeler & Game Programmer
 
 Potential Members
 * Jon-Jon - General Artist
