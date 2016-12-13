@@ -53,8 +53,7 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
         }
         
     def setSky(self, sky):
-        hood = base.cr.playGame.hood
-        hood.skyTransition(str(sky)) 
+        self.hood.skyTransition(str(sky)) 
         
     def announceGenerate(self):
         DistributedWeatherMGR.announceGenerate(self)
