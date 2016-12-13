@@ -19,7 +19,7 @@ class DistributedDayTimeManagerAI(DistributedWeatherMGRAI):
     def __init__(self, air):
         DistributedWeatherMGRAI.__init__(self, air)
         self.air = air
-        self.interval = 150
+        self.interval = 1
         self.currentHour = 0
 
     def start(self):
