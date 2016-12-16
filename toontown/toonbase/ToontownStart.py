@@ -1,4 +1,4 @@
-from pandac.PandaModules import *
+from panda3d.core import *
 from toontown.distributed import PythonUtil
 import __builtin__
 import os
