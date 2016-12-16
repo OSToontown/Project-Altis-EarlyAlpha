@@ -12,7 +12,7 @@ from direct.showbase.BulletinBoardGlobal import *
 from direct.showbase.EventManagerGlobal import *
 from direct.showbase.JobManagerGlobal import *
 from direct.showbase.MessengerGlobal import *
-from direct.showbase.PythonUtil import *
+from toontown.toonbase.ToonPythonUtil import *
 from direct.task import Task
 from direct.task.TaskManagerGlobal import *
 from otp.otpbase import BackupManager
