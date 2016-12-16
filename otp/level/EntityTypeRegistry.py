@@ -3,7 +3,7 @@ from direct.directnotify import DirectNotifyGlobal
 import types
 import AttribDesc
 import EntityTypeDesc
-from direct.showbase.PythonUtil import mostDerivedLast
+from toontown.toonbase.ToonPythonUtil import mostDerivedLast
 import os
 import string
 
