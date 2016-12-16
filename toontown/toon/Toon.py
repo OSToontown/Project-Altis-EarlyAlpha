@@ -21,7 +21,7 @@ from toontown.hood import ZoneUtil
 from toontown.battle import SuitBattleGlobals
 from otp.otpbase import OTPGlobals
 from toontown.effects import DustCloud
-from direct.showbase.PythonUtil import Functor
+from toontown.toonbase.ToonPythonUtil import Functor
 from toontown.distributed import DelayDelete
 from otp.nametag.NametagConstants import *
 import AccessoryGlobals

@@ -18,7 +18,7 @@ from toontown.effects.Sparks import Sparks
 from direct.interval.ProjectileInterval import *
 from toontown.battle.BattleProps import *
 import random
-from direct.showbase.PythonUtil import randFloat
+from toontown.toonbase.ToonPythonUtil import randFloat
 from direct.task.Task import Task
 from otp.nametag import NametagGlobals
 import math

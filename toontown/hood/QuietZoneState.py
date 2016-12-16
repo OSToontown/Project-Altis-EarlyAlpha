@@ -1,5 +1,5 @@
 from pandac.PandaModules import *
-from direct.showbase.PythonUtil import Functor
+from toontown.toonbase.ToonPythonUtil import Functor
 from toontown.distributed.PythonUtil import PriorityCallbacks
 from direct.task import Task
 from toontown.distributed.ToontownMsgTypes import *

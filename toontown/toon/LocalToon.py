@@ -5,7 +5,7 @@ import re
 import zlib
 from direct.interval.IntervalGlobal import *
 from direct.distributed.ClockDelta import *
-from direct.showbase.PythonUtil import *
+from toontown.toonbase.ToonPythonUtil import *
 from direct.gui.DirectGui import *
 from direct.task import Task
 from direct.showbase import PythonUtil

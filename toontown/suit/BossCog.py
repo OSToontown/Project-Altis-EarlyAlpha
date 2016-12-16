@@ -13,7 +13,7 @@ import Suit
 from direct.task.Task import Task
 import SuitDNA
 from toontown.battle import BattleProps
-from direct.showbase.PythonUtil import Functor
+from toontown.toonbase.ToonPythonUtil import Functor
 import string
 import types
 GenericModel = 'phase_9/models/char/bossCog'
