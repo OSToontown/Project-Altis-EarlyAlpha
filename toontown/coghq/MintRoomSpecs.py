@@ -18,6 +18,7 @@ from toontown.coghq import CashbotMintPipeRoom_Battle00_Cogs
 from toontown.coghq import CashbotMintPipeRoom_Battle01_Cogs
 from toontown.coghq import CashbotMintPaintMixer_Battle00
 from toontown.coghq import CashbotMintPaintMixer_Battle00_Cogs
+from toontown.coghq import CashbotMintStomperAlley_Action01
 
 # Explicit imports for the below room modules:
 from toontown.coghq import CashbotMintEntrance_Action00
@@ -78,19 +79,20 @@ CashbotMintRoomId2RoomName = {0: 'CashbotMintEntrance_Action00',
  15: 'CashbotMintPipeRoom_Action00',
  16: 'CashbotMintPipeRoom_Battle00',
  17: 'CashbotMintStomperAlley_Action00',
- 18: 'CashbotMintBoilerRoom_Battle01',
- 19: 'CashbotMintControlRoom_Battle00',
- 20: 'CashbotMintDuctRoom_Battle01',
- 21: 'CashbotMintGearRoom_Battle01',
- 22: 'CashbotMintLavaRoomFoyer_Battle01',
- 23: 'CashbotMintOilRoom_Battle00',
- 24: 'CashbotMintLobby_Battle01',
- 25: 'CashbotMintPaintMixerReward_Battle00',
- 26: 'CashbotMintPipeRoom_Battle01'}
+ 18: 'CashbotMintStomperAlley_Action01',
+ 19: 'CashbotMintBoilerRoom_Battle01',
+ 20: 'CashbotMintControlRoom_Battle00',
+ 21: 'CashbotMintDuctRoom_Battle01',
+ 22: 'CashbotMintGearRoom_Battle01',
+ 23: 'CashbotMintLavaRoomFoyer_Battle01',
+ 24: 'CashbotMintOilRoom_Battle00',
+ 25: 'CashbotMintLobby_Battle01',
+ 26: 'CashbotMintPaintMixerReward_Battle00',
+ 27: 'CashbotMintPipeRoom_Battle01'}
 CashbotMintRoomName2RoomId = invertDict(CashbotMintRoomId2RoomName)
 CashbotMintEntranceIDs = (0,)
-CashbotMintMiddleRoomIDs = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
-CashbotMintFinalRoomIDs = (17, 18, 19, 20, 21, 22, 23, 24, 25)
+CashbotMintMiddleRoomIDs = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18)
+CashbotMintFinalRoomIDs = (19, 20, 21, 22, 23, 24, 25, 26, 27)
 CashbotMintConnectorRooms = ('phase_10/models/cashbotHQ/connector_7cubeL2', 'phase_10/models/cashbotHQ/connector_7cubeR2')
 CashbotMintSpecModules = {}
 for roomName, roomId in CashbotMintRoomName2RoomId.items():
