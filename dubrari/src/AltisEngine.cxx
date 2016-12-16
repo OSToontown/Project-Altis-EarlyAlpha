@@ -136,6 +136,8 @@ int niraicall_onLoadGameData()
     memset(&fzns[num_modules], 0, sizeof(_frozen));
     PyImport_FrozenModules = fzns;
     
+    init_libpandadna();
+    initlibpandadna();
 
     return 0;
 }
