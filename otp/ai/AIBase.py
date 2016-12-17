@@ -16,7 +16,8 @@ from toontown.toonbase.ToonPythonUtil import *
 from direct.task import Task
 from direct.task.TaskManagerGlobal import *
 from otp.otpbase import BackupManager
-from pandac.PandaModules import *
+from panda3d.core import *
+from panda3d.direct import *
 
 
 class AIBase:
