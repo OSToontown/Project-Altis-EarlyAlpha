@@ -30,7 +30,7 @@ class Avatar(Actor, ShadowCaster):
     ManagesNametagAmbientLightChanged = False
 
     def __init__(self, other = None):
-        self.name = ''
+        self._name = ''
         self.npcType = None
         try:
             self.Avatar_initialized
