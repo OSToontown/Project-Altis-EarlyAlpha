@@ -1,4 +1,5 @@
 from panda3d.core import *
+from panda3d.direct import *
 from toontown.distributed import PythonUtil
 import __builtin__
 import os

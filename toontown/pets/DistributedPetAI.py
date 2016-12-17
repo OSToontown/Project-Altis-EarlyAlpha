@@ -1,4 +1,5 @@
-from pandac.PandaModules import *
+from panda3d.core import *
+from panda3d.direct import *
 from toontown.toonbase.ToonPythonUtil import weightedChoice, randFloat, lerp
 from toontown.toonbase.ToonPythonUtil import contains, list2dict
 from toontown.distributed.PythonUtil import clampScalar
