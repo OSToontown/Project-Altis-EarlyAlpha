@@ -1651,4 +1651,9 @@ group "daisysGarden" [
   nhpr [ -30 0 0 ]
   scale [ 3 3 3 ]
  ]
+ prop "prop_construction_sign_DNARoot" [
+  code [ "prop_construction_sign" ]
+  pos [ 108.897 264.801 14 ]
+  nhpr [ -64 0 0 ]
+ ]
 ]
