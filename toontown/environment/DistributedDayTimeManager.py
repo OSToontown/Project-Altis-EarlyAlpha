@@ -67,7 +67,8 @@ class DistributedDayTimeManager(DistributedWeatherMGR):
 
     def delete(self):
         self.currSeq.finish()
-        render.setColorScale(Vec4(1, 1, 1, 1))
         DistributedWeatherMGR.delete(self)
+        render.setColorScale(Vec4(1, 1, 1, 1))
+
 
 
