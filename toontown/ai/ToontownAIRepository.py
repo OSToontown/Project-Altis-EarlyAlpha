@@ -72,9 +72,6 @@ import otp.ai.DiagnosticMagicWords
 # Code Redemption
 from toontown.coderedemption.TTCodeRedemptionMgrAI import TTCodeRedemptionMgrAI
 
-# Welcome Valley
-from toontown.ai.WelcomeValleyManagerAI import WelcomeValleyManagerAI
-
 class ToontownAIRepository(ToontownInternalRepository):
     def __init__(self, baseChannel, serverId, districtName):
         ToontownInternalRepository.__init__(self, baseChannel, serverId, dcSuffix='AI')
@@ -83,9 +80,6 @@ class ToontownAIRepository(ToontownInternalRepository):
 
         self.zoneAllocator = UniqueIdAllocator(ToontownGlobals.DynamicZonesBegin,
                                                ToontownGlobals.DynamicZonesEnd)
-	
-	self.welcomeValleyZoneAllocator = UniqueIdAllocator(ToontownGlobals.WelcomeValleyBegin,
-                                               ToontownGlobals.WelcomeValleyEnd)
         self.zoneId2owner = {}
 
         NPCToons.generateZone2NpcDict()
@@ -175,25 +169,16 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.districtStats.b_setHour(hour)
         self.statusSender.sendStatus()
 
-    def allocateZone(self, owner=None, welcomeValley=False):
-		if welcomeValley:
-			return self.welcomeValleyZoneAllocator.allocate()
-	
+    def allocateZone(self, owner=None):
         zoneId = self.zoneAllocator.allocate()
         if owner:
             self.zoneId2owner[zoneId] = owner
-        
-		return zoneId
+        return zoneId
 
-    def deallocateZone(self, zone, welcomeValley=False):
-		if welcomeValley:
-			self.welcomeValleyZoneAllocator.free(zone):
-			return
-		
+    def deallocateZone(self, zone):
         if self.zoneId2owner.get(zone):
             del self.zoneId2owner[zone]
-        
-		self.zoneAllocator.free(zone)
+        self.zoneAllocator.free(zone)
 
     def getZoneDataStore(self):
         return self.zoneDataStore
@@ -227,9 +212,6 @@ class ToontownAIRepository(ToontownInternalRepository):
 
         self.friendManager = FriendManagerAI(self)
         self.friendManager.generateWithRequired(2)
-	
-	self.welcomeValleyManager = WelcomeValleyManagerAI(self)
-	self.welcomeValleyManager.generateWithRequired(2)
 
         if config.GetBool('want-parties', True):
             self.partyManager = DistributedPartyManagerAI(self)
