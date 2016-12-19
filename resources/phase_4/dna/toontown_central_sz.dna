@@ -35,7 +35,7 @@ group "toontownCentral" [
    prop "fishing_spot_DNARoot" [
     code [ "fishing_spot" ]
     pos [ -96.9206 20.7935 -3 ]
-    nhpr [ -90 0 0 ]
+    nhpr [ -90 0 -0 ]
    ]
    prop "fishing_spot_DNARoot" [
     code [ "fishing_spot" ]
@@ -46,7 +46,7 @@ group "toontownCentral" [
   group "props" [
    prop "linktunnel_tt_2226_DNARoot" [
     code [ "prop_safe_zone_tunnel" ]
-    pos [ 182.043 -62.2241 -2.65 ]
+    pos [ 182.043 -52.2241 -2.65 ]
     nhpr [ 90 0 -0 ]
     sign [
      code [ "tunnel_sign_orange" ]
@@ -656,7 +656,7 @@ group "toontownCentral" [
     code [ "toon_landmark_TT_clothes_shop" ]
     building_type [ "clotheshop" ]
     title [ "Clothing Shop" ]
-    pos [ 88.0427 -34.339 3.99999 ]
+    pos [ 85.0432 -40.3391 3.99999 ]
     nhpr [ -97 0 -0 ]
     door [
      code [ "door_double_clothesshop_ur" ]
@@ -883,11 +883,6 @@ group "toontownCentral" [
     ]
    ]
   ]
-  prop "toontown_central_DNARoot" [
-   code [ "toontown_central" ]
-   pos [ 0.00012207 -1.52588e-005 0 ]
-   nhpr [ -90 0 -0 ]
-  ]
   prop "prop_tree_large_ur_DNARoot" [
    code [ "prop_tree_large_ur" ]
    pos [ -163.422 33.0334 0 ]
@@ -906,7 +901,7 @@ group "toontownCentral" [
   prop "prop_gazebo_DNARoot" [
    code [ "prop_gazebo" ]
    pos [ -60.228 -10.9224 -1.99998 ]
-   nhpr [ -180 0 0 ]
+   nhpr [ 180 0 -0 ]
   ]
   prop "prop_tree_small_ur_DNARoot" [
    code [ "prop_tree_small_ur" ]
@@ -936,7 +931,7 @@ group "toontownCentral" [
   prop "neighborhood_sign_MM_DNARoot" [
    code [ "neighborhood_sign_DG" ]
    pos [ -145 15 0 ]
-   nhpr [ -120 0 0 ]
+   nhpr [ -120 0 -0 ]
   ]
   prop "neighborhood_sign_MM_DNARoot" [
    code [ "neighborhood_sign_DG" ]
@@ -945,13 +940,13 @@ group "toontownCentral" [
   ]
   prop "neighborhood_sign_MM_DNARoot" [
    code [ "neighborhood_sign_MM" ]
-   pos [ 85 -14 4 ]
-   nhpr [ 60 0 0 ]
+   pos [ 85.0001 -9.00002 4 ]
+   nhpr [ 60 0 -0 ]
   ]
   prop "neighborhood_sign_MM_DNARoot" [
    code [ "neighborhood_sign_MM" ]
-   pos [ 85 10 4 ]
-   nhpr [ -60 0 0 ]
+   pos [ 85.0002 19.9999 4 ]
+   nhpr [ -60 0 -0 ]
   ]
   prop "neighborhood_sign_MM_DNARoot" [
    code [ "neighborhood_sign_DD" ]
@@ -995,8 +990,8 @@ group "toontownCentral" [
   ]
   prop "prop_big_planter_DNARoot" [
    code [ "prop_big_planter" ]
-   pos [ 21.2328 49.5553 4.95837 ]
-   nhpr [ -135 0 -0 ]
+   pos [ -56.5687 -127.279 0 ]
+   nhpr [ -135 0 0 ]
   ]
   prop "prop_tree_fat_ul_DNARoot" [
    code [ "prop_tree_fat_ul" ]
@@ -1078,7 +1073,7 @@ group "toontownCentral" [
    building_type [ "hq" ]
    title [ "Toon HQ" ]
    pos [ 46 -47 4 ]
-   nhpr [ 45 0 0 ]
+   nhpr [ 45 0 -0 ]
    prop "animated_prop_HQPeriscopeAnimatedProp_DNARoot" [
     code [ "animated_prop_HQPeriscopeAnimatedProp" ]
     pos [ 7.17 -7.67 19.07 ]
@@ -1175,12 +1170,7 @@ group "toontownCentral" [
   prop "prop_post_three_light_DNARoot" [
    code [ "prop_post_three_light" ]
    pos [ 66.214 31.7961 4 ]
-   nhpr [ 180 0 -0 ]
-  ]
-  prop "prop_post_three_light_DNARoot" [
-   code [ "prop_post_three_light" ]
-   pos [ 85.456 13.3882 4 ]
-   nhpr [ 180 0 -0 ]
+   nhpr [ -180 0 -0 ]
   ]
   prop "prop_post_three_light_DNARoot" [
    code [ "prop_post_three_light" ]
@@ -1212,7 +1202,7 @@ group "toontownCentral" [
    building_type [ "petshop" ]
    title [ "Pet Shop" ]
    pos [ 59 45 4 ]
-   nhpr [ -30 0 0 ]
+   nhpr [ -30 0 -0 ]
    door [
     code [ "door_double_round_ur" ]
     color [ 1 0.87 0.38 1 ]
@@ -1412,7 +1402,7 @@ group "toontownCentral" [
  prop "gs_tires_DNARoot" [
   code [ "gs_tires" ]
   pos [ -17.1761 85.6816 -1 ]
-  nhpr [ 30 0 0 ]
+  nhpr [ 30 0 -0 ]
  ]
  prop "interactive_prop_phase_5_models_char__ttc_trashcan_DNARoot" [
   code [ "interactive_prop_phase_5_models_char__ttc_trashcan" ]
@@ -1567,7 +1557,7 @@ group "toontownCentral" [
  ]
  flat_building "tb0:random_DNARoot" [
   pos [ 152.661 -1.69656 4 ]
-  nhpr [ 120 0 0 ]
+  nhpr [ 120 0 -0 ]
   width [ 15 ]
   wall [
    height [ 10 ]
@@ -1673,5 +1663,20 @@ group "toontownCentral" [
   code [ "prop_tree_small_ur" ]
   pos [ 157.776 -108.833 3.00001 ]
   nhpr [ -15 0 -0 ]
+ ]
+ prop "tunnel_gate_DNARoot" [
+  code [ "tunnel_gate" ]
+  pos [ 0 0 0 ]
+  nhpr [ 0 0 0 ]
+ ]
+ prop "tunnel_gate_DNARoot" [
+  code [ "tunnel_gate" ]
+  pos [ 0 0 0 ]
+  nhpr [ 0 0 0 ]
+ ]
+ prop "tunnel_gate_DNARoot" [
+  code [ "tunnel_gate" ]
+  pos [ 0 0 0 ]
+  nhpr [ -90 0 0 ]
  ]
 ]
