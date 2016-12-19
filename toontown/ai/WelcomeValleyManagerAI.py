@@ -12,8 +12,7 @@ class WelcomeValleyManagerAI(DistributedObjectAI):
     def generate(self):
         DistributedObjectAI.generate(self)
 
-        # allocate the initial zone for welcome valley to be located in
-        self.welcomeValleyZoneId = self.air.allocateZone(welcomeValley=True)
+        # todo: allocate welcome valley zone using unique id allocator, and assign welcomeValleyZoneId
 
     def announceGenerate(self):
         DistributedObjectAI.announceGenerate(self)
@@ -51,5 +50,4 @@ class WelcomeValleyManagerAI(DistributedObjectAI):
 
     def delete(self):
         DistributedObjectAI.delete(self)
-        self.air.deallocateZone(self.welcomeValleyZoneId, welcomeValley=True)
         self.welcomeValleyZoneId = 0
