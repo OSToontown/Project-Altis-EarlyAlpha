@@ -124,14 +124,13 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         self.storageDNAFile = self.data['DNA_TRIO'][1]
         self.dnaFile = self.data['DNA_TRIO'][2]
         self.dnaStore = DNAStorage()
-        loader.loadDNA('phase_4/dna/storage.pdna').store(self.dnaStore)
-        loader.loadDNA(self.storageDNAFile).store(self.dnaStore)
-        loader.loadDNA(self.safeZoneStorageDNAFile).store(self.dnaStore)
-        sceneTree = loader.loadDNA(self.dnaFile)
-        node = sceneTree.generate(self.dnaStore)
-        self.sceneData = sceneTree.generateData()
+        loader.loadDNAFile(self.dnaStore, 'phase_4/dna/storage.pdna')
+        loader.loadDNAFile(self.dnaStore, self.storageDNAFile)
+        loader.loadDNAFile(self.dnaStore, self.safeZoneStorageDNAFile)
+        node = loader.loadDNAFile(self.dnaStore, self.dnaFile)
         self.scene = hidden.attachNewNode(node)
         self.construct()
+        purchaseModels = loader.loadModel('phase_4/models/gui/purchase_gui')
         self.filmImage = loader.loadModel('phase_4/models/minigames/photogame_filmroll')
         self.filmImage.reparentTo(hidden)
         self.tripodModel = loader.loadModel('phase_4/models/minigames/toon_cannon')
@@ -150,7 +149,6 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         self.viewfinderNode.setDepthWrite(1)
         self.viewfinderNode.setDepthTest(1)
         self.viewfinderNode.setY(-1.0)
-        self.viewfinderNode.hide()
         self.screenSizeMult = 0.5
         self.screenSizeX = (base.a2dRight - base.a2dLeft) * self.screenSizeMult
         self.screenSizeZ = (base.a2dTop - base.a2dBottom) * self.screenSizeMult

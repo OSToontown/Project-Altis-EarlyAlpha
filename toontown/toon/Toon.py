@@ -476,7 +476,7 @@ class Toon(Avatar.Avatar, ToonHead):
         self.defaultColorScale = None
         self.jar = None
         self.setBlend(frameBlend = True)
-        self.setLODAnimation(750, 40, .4)
+        self.setLODAnimation(base.lodMaxRange, base.lodMinRange, base.lodDelayFactor)
         self.setTag('pieCode', str(ToontownGlobals.PieCodeToon))
         self.setFont(ToontownGlobals.getToonFont())
         self.setSpeechFont(ToontownGlobals.getToonFont())
@@ -604,7 +604,7 @@ class Toon(Avatar.Avatar, ToonHead):
             newDNA.torso = newDNA.torso + 's'
         self.setDNA(newDNA)
         self.setBlend(frameBlend = True)
-        self.setLODAnimation(750, 40, .4)
+        self.setLODAnimation(base.lodMaxRange, base.lodMinRange, base.lodDelayFactor)
 
     def setDNA(self, dna):
         if hasattr(self, 'isDisguised'):
@@ -669,7 +669,7 @@ class Toon(Avatar.Avatar, ToonHead):
         self.resetHeight()
         self.setupToonNodes()
         self.setBlend(frameBlend = True)
-        self.setLODAnimation(750, 40, .4)
+        self.setLODAnimation(base.lodMaxRange, base.lodMinRange, base.lodDelayFactor)
 
     def setupToonNodes(self):
         rightHand = NodePath('rightHand')
