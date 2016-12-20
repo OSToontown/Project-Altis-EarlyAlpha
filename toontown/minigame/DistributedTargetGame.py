@@ -1250,12 +1250,6 @@ class DistributedTargetGame(DistributedMinigame):
                 self.launchLaterial = TargetGameGlobals.MAX_LAT
             pos[0] = self.getToonPlace(self.localAvId)[0] - self.launchLaterial
         lift = (self.speedForward - self.speedStall) / self.speedStall * liftMult
-        onScreenDebug.removeAllWithPrefix(self.getDisplayPrefix())
-        onScreenDebug.add('%s Vel' % self.getDisplayPrefix(), self.zVel)
-        onScreenDebug.add('%s Lift' % self.getDisplayPrefix(), lift)
-        onScreenDebug.add('%s Gravity' % self.getDisplayPrefix(), self.gravity)
-        onScreenDebug.add('%s Pos' % self.getDisplayPrefix(), pos[2])
-        onScreenDebug.add('%s Drifty' % self.getDisplayPrefix(), self.driftY)
         if lift < 0:
             lift = 0
         upforce = lift * 10.0 - self.gravity
