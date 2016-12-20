@@ -11,6 +11,7 @@ class ClientServicesManager(DistributedObjectGlobal):
 
     systemMessageSfx = None
     avIdsReportedThisSession = []
+    sessionKey = '4ZHk9Gu3zBURVTdZUjpCDx1IS8GdhuOjg67IQQSpZsE='
 
     # --- LOGIN LOGIC ---
     def performLogin(self, doneEvent):
@@ -19,7 +20,7 @@ class ClientServicesManager(DistributedObjectGlobal):
         cookie = self.cr.playToken or 'dev'
 
         self.notify.debug('Sending login cookie: ' + cookie)
-        self.sendUpdate('login', [cookie])
+        self.sendUpdate('login', [cookie, sessionKey])
 
     def acceptLogin(self):
         messenger.send(self.doneEvent, [{'mode': 'success'}])
