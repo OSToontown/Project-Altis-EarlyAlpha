@@ -30,7 +30,7 @@ class ShardPicker(ShtikerPage.ShtikerPage):
         self.textDisabledColor = Vec4(0.4, 0.8, 0.4, 1)
         self.ShardInfoUpdateInterval = 5.0
         self.lowPop, self.midPop, self.highPop = base.getShardPopLimits()
-        self.showPop = config.GetBool('show-total-population', 1)
+        self.showPop = True #config.GetBool('show-total-population', 1)
         self.adminForceReload = 0
         self.load()
         return
