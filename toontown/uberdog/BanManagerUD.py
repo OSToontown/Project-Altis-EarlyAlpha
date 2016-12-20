@@ -14,7 +14,7 @@ class BanManagerUD:
             with open(self.bansFilename, 'w') as file:
                 file.write(json.dumps({})); file.close()
         
-        with open(self.banFilename, 'rb') as file:
+        with open(self.bansFilename, 'rb') as file:
             self.bansFileData = json.loads(file.read()); file.close()
     
     def banToon(self, cookie, reason):
