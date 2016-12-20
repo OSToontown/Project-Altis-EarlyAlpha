@@ -929,7 +929,7 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
             self.killConnectionFSM(sender)
             return
         
-        if sessionKey is not self.sessionKey:
+        if sessionKey != self.sessionKey:
             self.killConnection(sender, 'Failed to login, recieved a bad login cookie!')
             
             # notify the admin that someone tried to login with a custom client.

@@ -20,7 +20,7 @@ class ClientServicesManager(DistributedObjectGlobal):
         cookie = self.cr.playToken or 'dev'
 
         self.notify.debug('Sending login cookie: ' + cookie)
-        self.sendUpdate('login', [cookie, sessionKey])
+        self.sendUpdate('login', [cookie, self.sessionKey])
 
     def acceptLogin(self):
         messenger.send(self.doneEvent, [{'mode': 'success'}])
