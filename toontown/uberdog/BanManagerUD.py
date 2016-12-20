@@ -29,10 +29,10 @@ class BanManagerUD:
             file.write(json.dumps(self.bansFileData)); file.close()
     
     def getToonBanned(self, cookie):
-        if cookie in self.bandFileData.keys():
+        if cookie in self.bansFileData.keys():
             return True
         
         return False
     
     def getToonBanReason(self, cookie):
-        return self.banFileData[cookie]
+        return self.bansFileData[cookie]
