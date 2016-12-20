@@ -456,7 +456,7 @@ class ToonBase(OTPBase.OTPBase):
             gameServer = launcherServer
             self.notify.info('Using gameServer from launcher: %s ' % gameServer)
         else:
-            gameServer = '188.165.250.225'
+            gameServer = 'gs1.projectaltis.com'
         serverPort = config.GetInt('server-port', 7198)
         serverList = []
         for name in gameServer.split(';'):

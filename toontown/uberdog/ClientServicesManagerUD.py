@@ -6,6 +6,7 @@ from toontown.toon.ToonDNA import ToonDNA
 from toontown.makeatoon.NameGenerator import NameGenerator
 from toontown.toonbase import TTLocalizer
 from otp.distributed import OtpDoGlobals
+from toontown.uberdog.BanManagerUD import BanManagerUD
 from sys import platform
 import dumbdbm
 import anydbm
@@ -59,7 +60,7 @@ class LocalAccountDB:
         if cookie in self.dbm:
             # Return it w/ account ID!
             import urllib2
-            url = "http://188.165.250.225/Dubrari/powerCheck.php?token="+str(cookie) # As account is already in DBM, we need to CHECK it's level
+            url = "http://gs1.projectaltis.com/Dubrari/powerCheck.php?token="+str(cookie) # As account is already in DBM, we need to CHECK it's level
             output = urllib2.urlopen(url).read()
             callback({'success': True,
                       'accountId': int(self.dbm[cookie]),
@@ -68,7 +69,7 @@ class LocalAccountDB:
         else:
             # Nope, let's return w/o account ID:
             import urllib2
-            url = "http://188.165.250.225/Dubrari/powerCreate.php?token="+str(cookie)+"&level=150" # As account is being created with access 150, we need to tell level DB that it's level for checking later
+            url = "http://gs1.projectaltis.com/Dubrari/powerCreate.php?token="+str(cookie)+"&level=150" # As account is being created with access 150, we need to tell level DB that it's level for checking later
             output = urllib2.urlopen(url).read()
             callback({'success': True,
                       'accountId': 0,
@@ -844,6 +845,10 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
 
         # For processing name patterns.
         self.nameGenerator = NameGenerator()
+        
+        # Setup ban manager
+        self.banManager = BanManagerUD(self.air)
+        self.banManager.setup()
 
         # Instantiate our account DB interface using config:
         dbtype = config.GetString('accountdb-type', 'local')
@@ -919,6 +924,10 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
 
         if sender in self.connection2fsm:
             self.killConnectionFSM(sender)
+            return
+        
+        if self.banManager.getToonBanned(cookie):
+            self.killConnection(sender, self.banManager.getToonBanReason(cookie))
             return
 
         self.connection2fsm[sender] = LoginAccountFSM(self, sender)
