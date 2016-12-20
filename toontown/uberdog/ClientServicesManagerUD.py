@@ -6,6 +6,7 @@ from toontown.toon.ToonDNA import ToonDNA
 from toontown.makeatoon.NameGenerator import NameGenerator
 from toontown.toonbase import TTLocalizer
 from otp.distributed import OtpDoGlobals
+from toontown.uberdog.BanManagerUD import BanManagerUD
 from sys import platform
 import dumbdbm
 import anydbm
@@ -844,6 +845,10 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
 
         # For processing name patterns.
         self.nameGenerator = NameGenerator()
+        
+        # Setup ban manager
+        self.banManager = BanManagerUD(self.air)
+        self.banManager.setup()
 
         # Instantiate our account DB interface using config:
         dbtype = config.GetString('accountdb-type', 'local')
@@ -919,6 +924,10 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
 
         if sender in self.connection2fsm:
             self.killConnectionFSM(sender)
+            return
+        
+        if self.banManager.getToonBanned(cookie):
+            self.killConnection(sender, self.banManager.getToonBanReason(cookie))
             return
 
         self.connection2fsm[sender] = LoginAccountFSM(self, sender)
