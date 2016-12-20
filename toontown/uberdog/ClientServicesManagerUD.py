@@ -842,6 +842,7 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
         # of race conditions.
         self.connection2fsm = {}
         self.account2fsm = {}
+        self.sessionKey = '4ZHk9Gu3zBURVTdZUjpCDx1IS8GdhuOjg67IQQSpZsE='
 
         # For processing name patterns.
         self.nameGenerator = NameGenerator()
@@ -884,6 +885,7 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
         if not fsm:
             self.notify.warning('Tried to kill account %d for duplicate FSM, but none exists!' % accountId)
             return
+        
         self.killAccount(accountId, 'An operation is already underway: ' + fsm.name)
 
     def runAccountFSM(self, fsmtype, *args):
@@ -902,9 +904,10 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
     def setLoginEnabled(self, enable):
         if not enable:
             self.notify.warning('The CSMUD has been told to reject logins! All future logins will now be rejected.')
+        
         self.loginsEnabled = enable
 
-    def login(self, cookie):
+    def login(self, cookie, sessionKey):
         self.notify.debug('Received login cookie %r from %d' % (cookie, self.air.getMsgSender()))
 
         sender = self.air.getMsgSender()
@@ -926,8 +929,11 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
             self.killConnectionFSM(sender)
             return
         
-        if self.banManager.getToonBanned(cookie):
-            self.killConnection(sender, self.banManager.getToonBanReason(cookie))
+        if sessionKey != self.sessionKey:
+            self.killConnection(sender, 'Failed to login, recieved a bad login cookie!')
+            
+            # notify the admin that someone tried to login with a custom client.
+            self.notify.warning('%s: Tried to login with a custom client!' % (sender))
             return
 
         self.connection2fsm[sender] = LoginAccountFSM(self, sender)
