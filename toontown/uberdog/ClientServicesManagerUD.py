@@ -935,6 +935,9 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
             # notify the admin that someone tried to login with a custom client.
             self.notify.warning('%s: Tried to login with a custom client!' % (sender))
             return
+        
+        if self.banManager.getToonBanned(cookie):
+            self.killConnection(sender, self.banManager.getToonBanReason(cookie))
 
         self.connection2fsm[sender] = LoginAccountFSM(self, sender)
         self.connection2fsm[sender].request('Start', cookie)
