@@ -52,12 +52,10 @@ class PopupDialog:
             self.yesButton.setPos(0, 0, -.4)
         
     def doYesButton(self):
-        self.doneStatus = 'ok'
-        messenger.send(self.doneEvent)
+        messenger.send('ok')
     
     def doNoButton(self):
-        self.doneStatus = 'cancel'
-        messenger.send(self.doneEvent)
+        messenger.send('cancel')
         
     def stop(self):
         if self.popupGui:
