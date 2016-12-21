@@ -938,6 +938,7 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
         
         if self.banManager.getToonBanned(cookie):
             self.killConnection(sender, self.banManager.getToonBanReason(cookie))
+            return
 
         self.connection2fsm[sender] = LoginAccountFSM(self, sender)
         self.connection2fsm[sender].request('Start', cookie)
