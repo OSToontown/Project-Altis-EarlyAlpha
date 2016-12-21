@@ -926,8 +926,9 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
             return
 
         if sender in self.connection2fsm:
-            self.killConnectionFSM(sender)
-            return
+            # hot fix, remove the sender from the fsm and request the fsm state OFF
+            self.connection2fsm[sender].demand('Off')
+            del self.connection2fsm[sender]
         
         if sessionKey != self.sessionKey:
             self.killConnection(sender, 'Failed to login, recieved a bad login cookie!')
