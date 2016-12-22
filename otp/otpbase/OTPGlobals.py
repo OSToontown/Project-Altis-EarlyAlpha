@@ -443,7 +443,11 @@ headHeightDict = {'dls': 0.75,
  'sls': 0.75,
  'sss': 0.5,
  'ssl': 0.5,
- 'sll': 0.75}
+ 'sll': 0.75,
+ 'xls': 0.75,
+ 'xss': 0.5,
+ 'xsl': 0.5,
+ 'xll': 0.75}
 RandomButton = 'Randomize'
 TypeANameButton = 'Type Name'
 PickANameButton = 'Pick-A-Name'
