@@ -13,7 +13,11 @@ class BanManagerUD:
         if not os.path.exists(self.bansFilename):
             with open(self.bansFilename, 'w') as file:
                 file.write(json.dumps({})); file.close()
-        
+
+        # update the ban information from the file
+        self.update()
+
+    def update(self):
         with open(self.bansFilename, 'rb') as file:
             self.bansFileData = json.loads(file.read()); file.close()
     
@@ -29,6 +33,9 @@ class BanManagerUD:
             file.write(json.dumps(self.bansFileData)); file.close()
     
     def getToonBanned(self, cookie):
+        # update the ban information from the file
+        self.update()
+        
         if cookie in self.bansFileData.keys():
             return True
         

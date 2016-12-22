@@ -898,6 +898,10 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
             # Hot fix for potential toons that's FSM is stuck in state.
             self.account2fsm[sender].demand('Off')
 
+            # kick the client because there is a major issue!
+            self.killAccount(sender, 'Failed to login, because your account is already in FSM state!')
+            return
+
         self.account2fsm[sender] = fsmtype(self, sender)
         self.account2fsm[sender].request('Start', *args)
 
@@ -920,7 +924,7 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
             dg.addString('Logins are currently disabled. Please try again later.')
             self.air.send(dg)
 
-        if sender>>32:
+        if sender >> 32:
             # Oops, they have an account ID on their connection already!
             self.killConnection(sender, 'Client is already logged in.')
             return
@@ -928,12 +932,18 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
         if sender in self.connection2fsm:
             # Hot fix for potential toons that's FSM is stuck in state.
             self.connection2fsm[sender].demand('Off')
+
+            # kick the client because there is a major issue!
+            self.killConnection(sender, 'Failed to login, because your account is already in FSM state!')
+            return
         
         if sessionKey != self.sessionKey:
             self.killConnection(sender, 'Failed to login, recieved a bad login cookie!')
             
             # notify the admin that someone tried to login with a custom client.
-            self.notify.warning('%s: Tried to login with a custom client!' % (sender))
+            self.notify.warning('%s: Tried to login with a custom client using sessionKey, %s!' % (sender, str(
+                sessionKey)))
+            
             return
         
         if self.banManager.getToonBanned(cookie):

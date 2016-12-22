@@ -166,4 +166,10 @@ base.loader = base.loader
 __builtin__.loader = base.loader
 autoRun = ConfigVariableBool('toontown-auto-run', 1)
 if autoRun:
-    base.run()
+    try:
+        base.run()
+    except Exception as e:
+        raise (e)
+    except:
+        print describeException()
+        raise

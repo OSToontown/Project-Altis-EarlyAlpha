@@ -17,10 +17,8 @@ class ClientServicesManager(DistributedObjectGlobal):
     def performLogin(self, doneEvent):
         self.doneEvent = doneEvent
 
-        cookie = self.cr.playToken or 'dev'
-
-        self.notify.debug('Sending login cookie: ' + cookie)
-        self.sendUpdate('login', [cookie, self.sessionKey])
+        # send login cookie to uberdog for auth
+        self.sendUpdate('login', [self.cr.playToken, self.sessionKey])
 
     def acceptLogin(self):
         messenger.send(self.doneEvent, [{'mode': 'success'}])
