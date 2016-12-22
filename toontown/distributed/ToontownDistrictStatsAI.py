@@ -6,6 +6,7 @@ class ToontownDistrictStatsAI(DistributedObjectAI):
     districtId = 0
     avatarCount = 0
     newAvatarCount = 0
+    currenthour = 0
 
     def settoontownDistrictId(self, districtId):
         self.districtId = districtId
@@ -45,3 +46,16 @@ class ToontownDistrictStatsAI(DistributedObjectAI):
     def b_setNewAvatarCount(self, newAvCount):
         self.d_setNewAvatarCount(newAvCount)
         self.setNewAvatarCount(newAvCount)
+
+    def setHour(self, hour):
+        self.currenthour = hour
+
+    def getHour(self):
+        return self.currenthour
+
+    def d_setHour(self, hour):
+        self.sendUpdate('setHour', [hour])
+
+    def b_setHour(self, hour):
+        self.d_setHour(hour)
+        self.setHour(hour)
