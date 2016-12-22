@@ -895,8 +895,8 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
             self.killAccount(sender, 'Client is not logged in.')
 
         if sender in self.account2fsm:
-            self.killAccountFSM(sender)
-            return
+            # Hot fix for potential toons that's FSM is stuck in state.
+            self.account2fsm[sender].demand('Off')
 
         self.account2fsm[sender] = fsmtype(self, sender)
         self.account2fsm[sender].request('Start', *args)
@@ -926,9 +926,8 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
             return
 
         if sender in self.connection2fsm:
-            # hot fix, remove the sender from the fsm and request the fsm state OFF
+            # Hot fix for potential toons that's FSM is stuck in state.
             self.connection2fsm[sender].demand('Off')
-            del self.connection2fsm[sender]
         
         if sessionKey != self.sessionKey:
             self.killConnection(sender, 'Failed to login, recieved a bad login cookie!')
