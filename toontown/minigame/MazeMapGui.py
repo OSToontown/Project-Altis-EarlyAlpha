@@ -180,6 +180,8 @@ class MazeMapGui(DirectFrame):
         hType = toon.style.getType()
         if hType == 'rabbit':
             hType = 'bunny'
+        if hType == 'deer':
+            hType = 'horse'
         return self._laffMeterModel.find('**/' + hType + 'head')
 
     def addToon(self, toon, tX, tY):
