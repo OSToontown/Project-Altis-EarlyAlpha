@@ -100,11 +100,13 @@ class Hood(StateData.StateData):
         self.dnaStore.resetHood()
         del self.dnaStore
         if hasattr(self, 'sky'):
-            self.sky.removeNode()
-            del self.sky
+            if self.sky:
+                self.sky.removeNode()
+                del self.sky
         if hasattr(self, 'newSky'):
-            self.newSky.removeNode()
-            del self.newSky
+            if self.sky:
+                self.newSky.removeNode()
+                del self.newSky
             
         self.ignoreAll()
         ModelPool.garbageCollect()
