@@ -406,7 +406,7 @@ def loadDialog():
     for file in pigDialogueFiles:
         PigDialogueArray.append(base.loadSfx(loadPath + file + '.ogg'))
 
-    deerDialogueFiles = ('AV_mouse_short', 'AV_mouse_med', 'AV_mouse_long', 'AV_mouse_question', 'AV_mouse_exclaim', 'AV_mouse_howl')
+    deerDialogueFiles = ('AV_deer_short', 'AV_deer_med', 'AV_deer_long', 'AV_deer_question', 'AV_deer_exclaim', 'AV_deer_howl')
     global DeerDialogueArray
     for file in deerDialogueFiles:
         DeerDialogueArray.append(base.loadSfx(loadPath + file + '.ogg'))
@@ -1233,6 +1233,8 @@ class Toon(Avatar.Avatar, ToonHead):
                 dialogueArray = BearDialogueArray
             elif animalType == 'pig':
                 dialogueArray = PigDialogueArray
+            elif animalType == 'deer':
+                dialogueArray = DeerDialogueArray
             else:
                 dialogueArray = None
         return dialogueArray
