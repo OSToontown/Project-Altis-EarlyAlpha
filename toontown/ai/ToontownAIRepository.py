@@ -165,10 +165,6 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.districtStats.b_setAvatarCount(self.districtStats.getAvatarCount() - 1)
         self.statusSender.sendStatus()
         
-    def setHour(self, hour):
-        self.districtStats.b_setHour(hour)
-        self.statusSender.sendStatus()
-
     def allocateZone(self, owner=None):
         zoneId = self.zoneAllocator.allocate()
         if owner:

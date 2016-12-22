@@ -84,7 +84,6 @@ class ShardStatusSender:
                   'population': self.air.districtStats.getAvatarCount(),
                   'avg-frame-rate': round(globalClock.getAverageFrameRate(), 5),
                   'invasion': invasion,
-                  'currentHour': self.air.districtStats.getHour(),
                   'heap': self.heap_status
                  }
         if HAS_PSUTIL:

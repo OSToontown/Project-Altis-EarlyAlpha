@@ -920,8 +920,7 @@ dclass ToontownDistrictStats : DistributedObject {
   settoontownDistrictId(uint32 value) broadcast required ram;
   setAvatarCount(uint32 avatarCount) broadcast required ram;
   setNewAvatarCount(uint32 newAvatarCount) broadcast required ram;
-  setHour(uint32 hour) broadcast required ram;
-  setStats : setAvatarCount, setNewAvatarCount, setHour;
+  setStats : setAvatarCount, setNewAvatarCount;
 };
 
 dclass WelcomeValleyManager : DistributedObject {
