@@ -86,6 +86,10 @@ class Hood(StateData.StateData):
             files.append(self.storageDNAFile)
 
         newsManager = base.cr.newsManager
+        self.sky = loader.loadModel(self.skyFile)
+        self.sky.setTag('sky', 'Regular')
+        self.sky.setScale(1.0)
+        self.sky.setFogOff()
         dnaBulk = DNABulkLoader(self.dnaStore, tuple(files))
         dnaBulk.loadDNAFiles()
 
