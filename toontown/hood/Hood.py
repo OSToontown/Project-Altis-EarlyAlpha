@@ -104,7 +104,7 @@ class Hood(StateData.StateData):
                 self.sky.removeNode()
                 del self.sky
         if hasattr(self, 'newSky'):
-            if self.sky:
+            if self.newSky:
                 self.newSky.removeNode()
                 del self.newSky
             
