@@ -1,34 +1,62 @@
-# Project Altis
-A vision of what Toontown Online could have been in 2016.
-  
-# Current Team
- 
-* Josh Zimmer - Founder, Game Programmer & Project Manager
-* Owen - Project Supervisor & Moderative Staff Director
-* Dubito- Security Manager & Game Programmer
-* Dank Mickey/ KHDecoder - Game Programmer, Texture Editor, & Co-Founder
-* Stormish - 3D Modeler & Animator
-* Malverde - Game & Networking Programmer
-* Old Geezer - Game Programmer, 3D Modeler, & Composer
-* Barks - Game Programmer
-* Drew - Game Programmer
-* James Midnight - Texture Artist
-* Sir Tubby Cheesyfish- Game Programmer
-* SkippsDev- Game Programmer
-* John Linderman- 3D Modeler & Game Programmer
+<img src="https://raw.githubusercontent.com/NormalNed/Project-Altis/53168140c5b29f018467bedec35b4e59a83d0609/resources/phase_3.5/etc/transicon.png" align="right" width="200"/>
 
-Potential Members
-* Jon-Jon - General Artist
+# Project Altis Alpha
+Project Altis Early Alpha Source, that just works.
 
-Contributors
-* Swag Foreman for occasional models.
-* Loonatic xxx for occasional textures.
+# ❓ What is Project Altis
+Project Altis is a Private Server aimed around adding a crap ton of new features. We are going to keep up this tradition finishing and polishing up Altis for the community.
+This project is not related to Corporate Clash. We simply are porting the Altis Codebase and continuing it not adding everything clash did.
 
-# Thanks
+# 🔨 Setting Up
+Support is currently being worked on for MacOS and Non Arch Based Linux Distros
 
-Thanks To Disney, Toontown Offline, Toontown Rewritten, Toontown Infinite, Toontown Fellowship, Toontown House, Toontown Stride, Toontown World Online, and the Toontown community for making this game possible and to keep the Toontown spirit alive.
+## 💻 Windows
 
-# Inspirations and Credits
-* Toontown Rewritten- repowering the spirit of Toontown after Toontown Online closed on September 19, 2013
-* Toontown Infinite- increased difficulty for Project Altis
-* Toontown Offline- code fixes for Parties
+Run the [Start.bat](Start.bat) file to launch the game.
+
+## 🐧 Linux
+### Gathering Basic Dependencies
+##### Arch / Manjaro
+```yay -S xorg-server  xterm  libgl  python  openssl  libjpeg  libpng  freetype2  gtk2  libtiff  nvidia-cg-toolkit  openal  zlib  libxxf86dga  assimp  bullet  eigen  ffmpeg  fmodex  libxcursor  libxrandr  git  opencv  libgles  libegl```
+
+##### Debian / Ubuntu / Linux Mint
+```sudo apt-get install build-essential xterm pkg-config fakeroot python-dev libpng-dev libjpeg-dev libtiff-dev zlib1g-dev libssl-dev libx11-dev libgl1-mesa-dev libxrandr-dev libxxf86dga-dev libxcursor-dev bison flex libfreetype6-dev libvorbis-dev libeigen3-dev libopenal-dev libode-dev libbullet-dev nvidia-cg-toolkit libgtk2.0-dev libassimp-dev libopenexr-dev```
+
+### Getting Python 2
+
+The First step to get this Source running is obtaining a version of Python 2. The Python we use is located [here](https://github.com/NormalNed/python) but feel free to use the one in your package manager (should be **python2**)
+
+### Installing Pip
+
+Once you get the Python installed you need to type these following commands to install Pip
+```bash
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python2 get-pip.py
+```
+
+### Installing Pip Dependencies
+The next part is to get our Dependencies. Open a Terminal inside of the Stride Project and follow these instructions below.
+```bash
+pip2.7 install -r requirements.txt
+```
+
+### Installing "our" Panda 3D
+We use a version of Astron Panda3D that is upstream code from the main repo. To set it up follow these instructions
+
+```bash
+git clone https://github.com/NormalNed/panda3d.git
+cd panda3d
+python2 makepanda/makepanda.py --everything --installer --no-egl --no-gles --no-gles2 --no-opencv --threads=4
+sudo python2 makepanda/installpanda.py
+sudo ldconfig
+```
+
+### Running the Game
+Now run the [Start.sh](Start.sh) file to launch the game.
+
+# 📝 Notice
+
+This repository contains code derived from the [BigNed repository.](https://github.com/BigNed/ToontownStride)
+
+BigNed is operated by rocketprogrammer, toonjoey, Jeeperpretzel, and EliasTDev.
+
