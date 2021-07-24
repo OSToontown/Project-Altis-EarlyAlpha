@@ -6,7 +6,7 @@ class BanManagerUD:
     def __init__(self, air):
         self.air = air
         
-        self.bansFilename = 'bannedPlayers.json'
+        self.bansFilename = 'user/bannedPlayers.json'
         self.bansFileData = {}
     
     def setup(self):

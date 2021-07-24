@@ -11,7 +11,7 @@ from toontown.toonbase import TTLocalizer
 class StreetSign(DistributedObject.DistributedObject):
     RedownloadTaskName = 'RedownloadStreetSign'
     StreetSignFileName = ('texture.jpg')
-    StreetSignBaseDir = ('sign')
+    StreetSignBaseDir = ('resources/sign')
     # SOMEONE MAKE THIS ONTHE WEBSITE K THX <3 - Drew
     StreetSignUrl = ('http://cdn.toontown.disney.go.com/toontown/en/street-signs/img/')
     notify = DirectNotifyGlobal.directNotify.newCategory('StreetSign')

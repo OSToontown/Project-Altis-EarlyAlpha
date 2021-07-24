@@ -38,7 +38,7 @@ notify.setInfo(True)
 
 settingsFilename = ConfigVariableString(
     'preferences-filename',
-    'preferences.json'
+    'user/preferences.json'
 ).getValue()
 
 notify.info('Reading %s...' % settingsFilename)

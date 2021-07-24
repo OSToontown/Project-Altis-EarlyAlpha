@@ -51,11 +51,13 @@ try:
 except SystemExit:
     raise
 except Exception:
-    if not os.path.exists('logs/'):
-        os.mkdir('logs/')
+    if not os.path.exists('user/'):
+        os.mkdir('user/')
+    if not os.path.exists('user/logs/'):
+        os.mkdir('user/logs/')
     info = describeException()
     simbase.air.writeServerEvent('ai-exception', avId=simbase.air.getAvatarIdFromSender(), accId=simbase.air.getAccountIdFromSender(), exception=info)
-    with open(config.GetString('ai-crash-log-name', 'logs/ai-crash.log'), 'w+') as file:
+    with open(config.GetString('ai-crash-log-name', 'user/logs/ai-crash.log'), 'w+') as file:
         # This creates a txt file known as "ai-crash.log" in the logs directory, with all the
         # other Toontown log files. This will, as stated, log AI crashes. It only logs the most
         # recent crash, meaning the file is cleared every time there's another crash.
