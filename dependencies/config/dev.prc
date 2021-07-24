@@ -6,11 +6,11 @@
 want-pipeline-renderer false
 
 # Client settings
-window-title Project Altis
+window-title Project Altis [BETA 1.1.0]
 server-version 1.1.0
 build-version dev
 sync-video #f
-want-dev #f
+want-dev #t
 preload-avatars #t
 texture-anisotropic-degree 16
 icon-filename phase_3/etc/icon.ico

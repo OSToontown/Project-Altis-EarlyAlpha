@@ -38,3 +38,4 @@ Panda3D-1.9.0/python/Lib/site-packages/pyflakes/test/test_undefined_names.py
 Panda3D-1.9.0/python/Scripts/pyflakes.exe
 sign/texture.jpg
 *.altis
+user/

@@ -40,41 +40,11 @@ class LocalAccountDB:
             self.dbm = anydbm.open(filename, 'c')
 
     def lookup(self, cookie, callback):
-        if cookie.startswith('.'):
-            # Beginning a cookie with . symbolizes "invalid"
-            callback({'success': False,
-                      'reason': 'Invalid cookie specified!'})
-            return
 
-        if cookie.__len__() != 64:
-            # Cookies should be exactly 64 Characters long!
-            callback({'success': False,
-                      'reason': 'False Cookie Specified. Gosh Darn Hacker!'})
-            return
-
-        # IF I WANT TO BE BITCHEY, I CAN WRITE A LOOKUP HERE TO MAKE SURE THAT THE PLAYCOOKIE IS ACTUALLY IN OUR ACCOUNTS DB, BUT THAT'S NOT NEEDED FOR ALPHA
-
-        # SECONDARILY, HERE'S WHERE WE CAN SPIN OFF TO DUBRARI'S "TOON GUARD" SYSTEM TO ENSURE THAT THE RIGHT IP IS LOGGING INTO THE ACCOUNT, AGAIN, NOT NEEDED FOR ALPHA
-
-        # See if the cookie is in the DBM:
-        if cookie in self.dbm:
-            # Return it w/ account ID!
-            import urllib2
-            url = "http://gs1.projectaltis.com/Dubrari/powerCheck.php?token="+str(cookie) # As account is already in DBM, we need to CHECK it's level
-            output = urllib2.urlopen(url).read()
-            callback({'success': True,
-                      'accountId': int(self.dbm[cookie]),
-                      'databaseId': cookie,
-                      'adminAccess': int(output)})
-        else:
-            # Nope, let's return w/o account ID:
-            import urllib2
-            url = "http://gs1.projectaltis.com/Dubrari/powerCreate.php?token="+str(cookie)+"&level=150" # As account is being created with access 150, we need to tell level DB that it's level for checking later
-            output = urllib2.urlopen(url).read()
-            callback({'success': True,
-                      'accountId': 0,
-                      'databaseId': cookie,
-                      'adminAccess': 150})
+        callback({'success': True,
+                  'accountId': 0,
+                  'databaseId': cookie,
+                  'adminAccess': 150})
 
     def storeAccountID(self, databaseId, accountId, callback):
         self.dbm[databaseId] = str(accountId)
