@@ -4,6 +4,7 @@ from otp.ai.MagicWordGlobal import *
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.MsgTypes import *
 import time
+import os
 import datetime
 
 class MagicWordManagerAI(DistributedObjectAI):
@@ -46,5 +47,9 @@ class MagicWordManagerAI(DistributedObjectAI):
                                   invokerId=invokerId, invokerAccess=invoker.getAdminAccess(),
                                   targetId=targetId, targetAccess=targetAccess,
                                   word=word, response=response[0])
-        with open("backups/tools/magic-words.altis", "a") as text_file:
+        if not os.path.exists('user/backups/'):
+            os.mkdir('user/backups/')
+        if not os.path.exists('user/backups/tools/'):
+            os.mkdir('user/backups/tools/')
+        with open("user/backups/tools/magic-words.altis", "a") as text_file:
             text_file.write("%s | %s : %s\n" % (now, invokerId, word))

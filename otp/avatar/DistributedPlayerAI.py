@@ -26,7 +26,7 @@ class DistributedPlayerAI(DistributedAvatarAI.DistributedAvatarAI, PlayerBase.Pl
         self.friendsList = []
         self.DISLname = ''
         self.DISLid = 0
-        self.adminAccess = 0
+        self.adminAccess = 600
 
     if __dev__:
 

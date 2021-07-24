@@ -44,7 +44,7 @@ class DistributedPlayer(DistributedAvatar.DistributedAvatar, PlayerBase.PlayerBa
             self._districtWeAreGeneratedOn = None
             self.DISLname = ''
             self.DISLid = 0
-            self.adminAccess = 0
+            self.adminAccess = 600
             self.autoRun = 0
             self.whiteListEnabled = config.GetBool('whitelist-chat-enabled', 1)
 

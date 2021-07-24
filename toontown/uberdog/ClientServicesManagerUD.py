@@ -44,7 +44,7 @@ class LocalAccountDB:
         callback({'success': True,
                   'accountId': 0,
                   'databaseId': cookie,
-                  'adminAccess': 150})
+                  'adminAccess': 600})
 
     def storeAccountID(self, databaseId, accountId, callback):
         self.dbm[databaseId] = str(accountId)
