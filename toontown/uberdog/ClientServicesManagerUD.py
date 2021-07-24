@@ -33,7 +33,7 @@ class LocalAccountDB:
 
         # This uses dbm, so we open the DB file:
         filename = simbase.config.GetString('accountdb-local-file',
-                                            'astron/databases/accounts.db')
+                                            'dependencies/astron/databases/accounts.db')
         if platform == 'darwin':
             self.dbm = dumbdbm.open(filename, 'c')
         else:

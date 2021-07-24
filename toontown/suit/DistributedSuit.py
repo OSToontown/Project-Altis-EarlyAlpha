@@ -22,7 +22,7 @@ import copy
 import DistributedSuitBase
 from otp.otpbase import OTPLocalizer
 import random
-from libpandadna import *
+from dependencies.libpandadna import *
 from otp.nametag.NametagConstants import *
 from otp.nametag import NametagGlobals
 STAND_OUTSIDE_DOOR = 2.5

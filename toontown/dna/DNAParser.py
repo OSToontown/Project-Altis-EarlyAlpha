@@ -1,4 +1,4 @@
-from libpandadna import *
+from dependencies.libpandadna import *
 
 class DNABulkLoader:
     def __init__(self, storage, files):
